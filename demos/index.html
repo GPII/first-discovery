@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>First Discovery Tool</title>
+
+        <link rel="stylesheet" href="../src/lib/normalize/normalize.css" />
+        <link rel="stylesheet" href="../src/lib/foundation/css/foundation.min.css" />
+        <link rel="stylesheet" href="../src/css/style.css" />
+    </head>
+
+    <body class="fd-tool">
+
+        <section class="fd-top">
+            <button class="fd-mute"><span class="fd-icon"></span>turn voice OFF</button>
+            <button class="fd-help">help</button>
+        </section>
+
+        <section class="fd-main">
+            <div class="fd-instructions">Adjust the text to a size you like best.</div>
+            <div class="fd-controlsContainer row">
+                <div class="fd-status small-3 columns">
+                    <input class="fd-range" disabled type="range" min=0 max=10 value=7 orient="vertical"/>
+                </div>
+                <div class="fd-controls small-9 columns">
+                    <div class="fd-control">
+                        <input type="button" value="+" class="fd-increase" id="fd-increase" />
+                        <label class="fd-label" for="fd-increase">larger</label>                            
+                    </div>
+                    <div class="fd-control">
+                        <input type="button" value="-" class="fd-decrease" id="fd-decrease" />
+                        <label class="fd-label" for="fd-decrease">smaller</label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <nav class="fd-nav">
+            <div class="fd-backNext">
+                <button class="fd-back"><span class="fd-icon"></span>back</button>
+                <button class="fd-next">next<span class="fd-icon"></span></button>
+            </div>
+            <div class="fd-navIcons">
+                <ul>
+
+                    <li class="fd-navIcon fd-icon fd-lang fd-done"></li>
+                    <li class="fd-navIcon fd-icon fd-volume fd-done"></span></li>
+                    <li class="fd-navIcon fd-icon fd-text fd-active"></li>
+                    <li class="fd-navIcon fd-icon fd-contrast"></li>
+                </ul>
+            </div>
+        </nav>
+
+    </body>
+</html>

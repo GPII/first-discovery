@@ -1,0 +1,201 @@
+/* Page-wide styles */
+@font-face {
+    font-family: 'InfusionIcons';
+    src: url('../fonts/InfusionIcons-PrefsEditor.ttf'),
+         url('../fonts/InfusionIcons-PrefsEditor.eot');
+}
+html {
+    background-color: #939393; /* grey */
+}
+body {
+    color: #ffffff;
+    background-color: #354e65; /* blue-grey */
+    font-size: 3rem;
+    width: 35rem;
+    margin: 0 auto;
+}
+.fd-tool :focus {
+    border: 3px solid red;
+}
+.fd-tool button {
+    color: inherit;
+    background-color: inherit;
+    font-family: inherit;
+    border: none;
+    font-size: inherit;
+}
+.fd-icon {
+    font-family: "InfusionIcons" !important;
+    font-size: 3rem;
+    margin: 0.2rem 0.3rem 0 0;
+    text-transform: none;
+}
+
+/* Top section, with mute and help buttons */
+.fd-top {
+    padding: 1rem 0.5rem;
+}
+.fd-top:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+.fd-mute {
+    float: left;
+    padding: 0.5rem 0;
+}
+.fd-mute .fd-icon:before {
+    content:  "\e00c";
+}
+button.fd-help {
+    float: right;
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+    padding: 0.5rem;
+    background-color: #354e65; /* blue-grey */
+}
+
+/* Main section, containing adjuster and instructions */
+.fd-main {
+    color: #354e65; /* blue-grey */
+    background-color: #ffffff;
+    clear: both;
+    padding: 2rem;
+}
+
+/* controls */
+.fd-controlsContainer {
+    margin: 0.5em 0;
+}
+.fd-label {
+    color: inherit;
+    background-color: inherit;
+    font-size: inherit;
+    display: table-cell;
+    vertical-align: middle;
+}
+.fd-controls {
+    display: table;
+}
+.fd-control {
+    display: table-row;
+    vertical-align: center;
+    height: 1rem;
+}
+.fd-increase, .fd-decrease {
+    width: 4rem;
+    display: table-cell;
+    float: left;
+    color: #ffffff;
+    background-color: #354e65; /* blue-grey */
+    border-radius: 7px;
+}
+
+/* vertical 'range status' indicator beside adjuster */
+.fd-status {
+    padding-right: 0;
+}
+.fd-range { /* <input> range indicator */
+    width: 1rem;
+    height: 10rem;
+    float: right;
+    -webkit-appearance: slider-vertical;
+}
+.fd-range::-webkit-slider-thumb {
+    border: 2px solid #354e65; /* blue-grey */
+    height: 0.5rem;
+    width: 0.5rem;
+    border-radius: 50%;
+    background: #fed73a; /* yellow */
+
+
+}
+.fd-range::-webkit-slider-runnable-track {
+    height: inherit;
+    width: 0.5rem;
+    background: #fed73a; /* yellow */
+    border: none;
+    border-radius: 3px;
+}
+
+/* Navigation section at bottom, containing back/next and icons */
+.nav * {
+    padding: 0rem;
+}
+.fd-backNext {
+    color: #354e65; /* blue-grey */
+    background-color: #ffffff;
+}
+.fd-back, .fd-next {
+    border: none;
+    color: inherit;
+    background-color: inherit;
+}
+.fd-back {
+    float: left;
+}
+.fd-back.fd-icon:before {
+    content:  "\e002";
+}
+.fd-back .fd-icon:before {
+    content:  "\e002";
+}
+.fd-next {
+    float: right;
+}
+.fd-next .fd-icon:after {
+    content:  "\e001";
+}
+.fd-backNext:after {
+  content:"";
+  display:table;
+  clear:both;
+}
+.fd-navIcons {
+    clear: both;
+    margin-top: 1rem; /* gap between main body and icons*/
+}
+.fd-navIcon {
+    padding: 1rem;
+    color: #354e65; /* blue-grey */
+    background-color: #ffffff;
+    display: inline;
+    border-radius: 5px;
+    width: 4rem;
+    height: 4rem;
+}
+.fd-lang:before {
+    content:  "\e00e";
+}
+.fd-volume:before {
+    content:  "\e00f";
+}
+.fd-text:before {
+    content:  "\e006";
+}
+.fd-contrast:before {
+    content:  "\e005";
+}
+
+/* status/navigation styles */
+.fd-active {
+    background-color: #fed73a; /* yellow */
+}
+.fd-active:after {
+    content:  "\e003";
+    position: relative;
+    top: -2.6rem;
+    left: -3rem;
+    color: #ffffff;
+    background-color: transparent;
+}
+.fd-done:after {
+    content:  "\e008";
+    color: #ffffff;
+    background-color: #279841; /* green */
+    font-size: 2rem;
+    position: relative;
+    top: 2rem;
+    left: -3.5rem;
+}
+
