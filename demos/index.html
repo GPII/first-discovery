@@ -12,36 +12,81 @@
 
     <body class="fd-tool">
 
-        <section class="fd-top">
-            <button class="fd-mute"><span class="fd-icon"></span>turn voice OFF</button>
-            <button class="fd-help">help</button>
-        </section>
+        <button class="fd-help">help</button>
 
-        <section class="fd-main">
-            <div class="fd-instructions">Adjust the text to a size you like best.</div>
-            <div class="fd-controlsContainer row">
-                <div class="fd-status small-3 columns">
-                    <progress class="fd-range" value="7" max="10"></progress>
-                </div>
-                <div class="fd-controls small-9 columns">
-                    <div class="fd-control">
-                        <input type="button" value="+" class="fd-increase" id="fd-increase" tabindex="1" />
-                        <label class="fd-label" for="fd-increase">larger</label>                            
-                    </div>
-                    <div class="fd-control">
-                        <input type="button" value="-" class="fd-decrease" id="fd-decrease" tabindex="2"  />
-                        <label class="fd-label" for="fd-decrease">smaller</label>
+        <section class="fdc-prefsEditorContainer">
+            <div class="fdc-muteContainer fd-top">
+                <button class="fd-mute"><span class="fd-icon"></span>turn voice OFF</button>
+            </div>
+
+            <div class="fdc-adjusterContainer-tts fd-main">
+                <div class="fd-instructions">Do you prefer to have items on the screen read aloud to you?</div>
+                <div class="fd-controlsContainer">
+                    <div class="fd-controls">
+                        <div class="fd-choice">
+                            <input class="flc-prefsEditor-tts fl-hidden-accessible" name="tts" id="tts-yes" value="yes" type="radio" checked>
+                            <span class="fd-icon fd-indicator"></span>
+                            <label for="tts-yes" class="flc-prefsEditor-tts-label fd-yesNo" id="tts-yes-label">Yes</label>
+                        </div>
+                        <div class="fd-choice">
+                            <input class="flc-prefsEditor-tts fl-hidden-accessible" name="tts" id="tts-no" value="no" type="radio">
+                            <span class="fd-icon fd-indicator"></span>
+                            <label for="tts-no" class="flc-prefsEditor-tts-label fd-yesNo" id="tts-no-label">No</label>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="fdc-adjusterContainer-size fd-main">
+                <div class="fd-instructions">Adjust the text to a size you like best.</div>
+                <div class="fd-controlsContainer row">
+                    <div class="fd-status small-3 columns">
+                        <progress class="fd-range" value="7" max="10"></progress>
+                    </div>
+                    <div class="fd-controls small-9 columns">
+                        <div class="fd-control">
+                            <input type="button" value="+" class="fd-increase" id="fd-increase" tabindex="1" />
+                            <label class="fd-label" for="fd-increase">larger</label>
+                        </div>
+                        <div class="fd-control">
+                            <input type="button" value="-" class="fd-decrease" id="fd-decrease" tabindex="2"  />
+                            <label class="fd-label" for="fd-decrease">smaller</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fdc-adjusterContainer-contrast fd-main fd-current">
+                <div class="fd-instructions">You can choose a screen colour to make things easier to see.</div>
+                <div class="fd-controlsContainer">
+                    <div class="fd-controls">
+                        <div class="fd-choice">
+                            <input class="flc-prefsEditor-theme fl-hidden-accessible" name="theme" id="theme-default" value="default" type="radio" checked>
+                            <span class="fd-icon fd-indicator"></span>
+                            <label for="theme-yes" class="flc-prefsEditor-theme-label fd-theme fd-theme-default" id="theme-yes-label">no change</label>
+                        </div>
+                        <div class="fd-choice">
+                            <input class="flc-prefsEditor-theme fl-hidden-accessible" name="theme" id="theme-bw" value="bw" type="radio">
+                            <span class="fd-icon fd-indicator"></span>
+                            <label for="theme-bw" class="flc-prefsEditor-theme-label fd-theme fd-theme-bw" id="theme-bw-label">black on white</label>
+                        </div>
+                        <div class="fd-choice">
+                            <input class="flc-prefsEditor-theme fl-hidden-accessible" name="theme" id="theme-wb" value="wb" type="radio">
+                            <span class="fd-icon fd-indicator"></span>
+                            <label for="theme-wb" class="flc-prefsEditor-theme-label fd-theme fd-theme-wb" id="theme-no-label">white on black</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </section>
 
         <nav class="fd-nav">
-            <div class="fd-backNext">
+            <div class="fdc-backNextContainer fd-backNext">
                 <button class="fd-back" tabindex="3" ><span class="fd-icon"></span>back</button>
                 <button class="fd-next" tabindex="4" >next<span class="fd-icon"></span></button>
             </div>
-            <div class="fd-navIcons">
+            <div class="fdc-navIconsContainer fd-navIcons">
                 <ul>
                     <li class="fd-navIcon fd-lang"><div class="fd-done"></div><div class="fd-activeInd fd-hidden"></div></li>
                     <li class="fd-navIcon fd-volume"><div class="fd-done"></div><div class="fd-activeInd fd-hidden"></div></li>

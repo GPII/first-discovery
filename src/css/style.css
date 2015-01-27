@@ -31,6 +31,16 @@ body {
     margin: 0.2rem 0.3rem 0 0;
     text-transform: none;
 }
+.fl-hidden-accessible {
+    border: 0 none;
+    clip: rect(0px, 0px, 0px, 0px);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
 
 /* Top section, with mute and help buttons */
 .fd-top {
@@ -58,13 +68,20 @@ button.fd-help {
 
 /* Main section, containing adjuster and instructions */
 .fd-main {
+    display: none; /* hidden unless active */
     color: #354e65; /* blue-grey */
     background-color: #ffffff;
     clear: both;
     padding: 2rem;
 }
+.fd-main.fd-current {
+    display: inherit;
+}
 
 /* controls */
+/* to try to keep the +/- buttons centred in the page,
+ * look at http://css-tricks.com/snippets/css/a-guide-to-flexbox/
+ * for ideas */
 .fd-controlsContainer {
     margin: 0.5em 0;
 }
@@ -83,9 +100,61 @@ button.fd-help {
     vertical-align: middle;
     height: 1rem;
 }
-/* to try to keep the +/- buttons centred in the page,
- * look at http://css-tricks.com/snippets/css/a-guide-to-flexbox/
- * for ideas */
+
+/* tts yes/no controls */
+.fd-choice {
+    margin-bottom: 0.3rem;
+    margin-left: 2rem;
+}
+.fd-yesNo {
+    font-size: inherit;
+    display: inline-block;
+    width: 13rem;
+    text-align: center;
+    color: #ffffff;
+    background-color: #354e65; /* blue-grey */
+    border-radius: 7px;
+}
+.fd-indicator {
+    width: 1rem;
+    display: inline-block;
+}
+.fd-choice input:checked + span:before {
+    content: "\e60d";
+    color: #fed73a; /* yellow */
+}
+.fd-choice input:checked ~ label.fd-yesNo {
+    color: #fed73a; /* yellow */
+}
+
+/* theme controls */
+.fd-theme {
+    font-size: inherit;
+    display: inline-block;
+    width: 22rem;
+    text-align: center;
+    color: #ffffff;
+    background-color: #354e65; /* blue-grey */
+    border-width: 2px;
+    border-style: solid;
+}
+.fd-theme-default {
+    color: #354e65; !important;
+    background-color: #eeeeee !important;
+    border-color: #354e65; !important;
+}
+.fd-theme-bw {
+    color: #000000 !important;
+    background-color: #ffffff !important;
+    border-color: #000000 !important;
+}
+.fd-theme-wb {
+    color: #ffffff !important;
+    background-color: #000000 !important;
+    border-color: #000000 !important;
+}
+
+/* text size increase/decrease controls */
 .fd-increase, .fd-decrease {
     width: 4rem;
     display: table-cell;
@@ -210,6 +279,8 @@ button.fd-help {
     color: #ffffff;
     background-color: transparent;
 }
-.fd-hidden {
+.fd-hidden { /* used for nav icons to maintain positioning */
     visibility: hidden;
+}
+.fd-hide { /* used to completely hide */
 }
