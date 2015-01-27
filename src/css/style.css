@@ -109,7 +109,7 @@ button.fd-help {
 }
 .fd-range { /* <progress> range indicator */
     -webkit-appearance: none;
-    width: 10rem;
+    width: 9rem;
     height: 1rem;
     float: right;
     -webkit-transform: rotate(-90deg);
@@ -160,16 +160,21 @@ button.fd-help {
 }
 .fd-navIcons {
     clear: both;
-    margin-top: 1rem; /* gap between main body and icons*/
+    margin-top: 0.8rem; /* gap between main body and icons*/
 }
 .fd-navIcon {
-    padding: 1rem;
+    padding: 0rem 1rem 1rem 1rem;
     color: #354e65; /* blue-grey */
     background-color: #ffffff;
-    display: inline;
+    display: inline-block;
     border-radius: 5px;
-    width: 4rem;
-    height: 4rem;
+    width: 5rem;
+    height: 5rem;
+    font-family: "InfusionIcons" !important;
+    font-size: 3rem;
+    margin: 0.2rem 0.6rem 0 0;
+    text-transform: none;
+    line-height: initial;
 }
 .fd-lang:before {
     content:  "\e62a";
@@ -185,24 +190,35 @@ button.fd-help {
 }
 
 /* status/navigation styles */
-.fd-active {
-    background-color: #fed73a; /* yellow */
+.fd-done {
+    display: inline;
 }
-.fd-active:after {
-    content:  "\e607";
-    position: relative;
-    top: -2.85rem;
-    left: -3rem;
-    color: #ffffff;
-    background-color: transparent;
-}
-.fd-done:after {
+.fd-done:before {
     content:  "\e60f";
-    color: #ffffff;
-    background-color: #279841; /* green */
     font-size: 2rem;
     position: relative;
     top: 2rem;
-    left: -3.5rem;
+    left: -3.7rem;
+    color: #ffffff;
+    background-color: #279841;
+    border-radius: 2rem;
+    border: 1px solid #ffffff;
 }
-
+.fd-active {
+    background-color: #fed73a;
+}
+.fd-activeInd {
+    display: inline;
+}
+.fd-activeInd:before {
+    content:  "\e607";
+    font-size: 4rem;
+    position: relative;
+    top: -2.3rem;
+    left: -5.5rem;
+    color: #ffffff;
+    background-color: transparent;
+}
+.fd-hidden {
+    visibility: hidden;
+}
