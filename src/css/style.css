@@ -1,0 +1,215 @@
+/* Page-wide styles */
+@font-face {
+    font-family: 'C4A';
+    src:url('../fonts/c4a-all-icons.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/c4a-all-icons.eot'),
+         url('../fonts/c4a-all-icons.ttf');
+}
+html {
+    background-color: #939393; /* grey */
+}
+body {
+    color: #ffffff;
+    background-color: #354e65; /* blue-grey */
+    font-size: 3rem;
+    width: 35rem;
+    margin: 0 auto;
+}
+.fd-tool :focus {
+    border: 3px solid red;
+}
+.fd-tool button {
+    color: inherit;
+    background-color: inherit;
+    font-family: inherit;
+    border: none;
+    font-size: inherit;
+}
+.fd-icon {
+    font-family: "C4A" !important;
+    font-size: 3rem;
+    margin: 0.2rem 0.3rem 0 0;
+    text-transform: none;
+}
+
+/* Top section, with mute and help buttons */
+.fd-top {
+    padding: 1rem 0.5rem;
+}
+.fd-top:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+.fd-mute {
+    float: left;
+    padding: 0.5rem 0;
+}
+.fd-mute .fd-icon:before {
+    content: "\e64f";
+}
+button.fd-help {
+    float: right;
+    border: 2px solid #ffffff;
+    border-radius: 10px;
+    padding: 0.5rem;
+    background-color: #354e65; /* blue-grey */
+}
+
+/* Main section, containing adjuster and instructions */
+.fd-main {
+    color: #354e65; /* blue-grey */
+    background-color: #ffffff;
+    clear: both;
+    padding: 2rem;
+}
+
+/* controls */
+.fd-controlsContainer {
+    margin: 0.5em 0;
+}
+.fd-label {
+    color: inherit;
+    background-color: inherit;
+    font-size: inherit;
+    display: table-cell;
+    vertical-align: middle;
+}
+.fd-controls {
+    display: table;
+}
+.fd-control {
+    display: table-row;
+    vertical-align: middle;
+    height: 1rem;
+}
+/* to try to keep the +/- buttons centred in the page,
+ * look at http://css-tricks.com/snippets/css/a-guide-to-flexbox/
+ * for ideas */
+.fd-increase, .fd-decrease {
+    width: 4rem;
+    display: table-cell;
+    float: left;
+    color: #ffffff;
+    background-color: #354e65; /* blue-grey */
+    border-radius: 7px;
+}
+
+/* vertical 'range status' indicator beside adjuster */
+.fd-status {
+    padding-right: 0;
+}
+.fd-range { /* <progress> range indicator */
+    -webkit-appearance: none;
+    width: 9rem;
+    height: 1rem;
+    float: right;
+    -webkit-transform: rotate(-90deg);
+    -webkit-transform-origin: 100% 0%;
+}
+.fd-range::-webkit-progress-bar {
+    background: #ffffff;
+    border: 1px solid #354e65; /* blue-grey */
+}
+.fd-range::-webkit-progress-value {
+    background: #fed73a; /* yellow */
+}
+
+/* Navigation section at bottom, containing back/next and icons */
+.nav * {
+    padding: 0rem;
+}
+.fd-backNext {
+    color: #354e65; /* blue-grey */
+    background-color: #ffffff;
+}
+.fd-back, .fd-next {
+    border: none;
+    color: inherit;
+    background-color: inherit;
+}
+.fd-back {
+    float: left;
+}
+.fd-back .fd-icon:before {
+    content:  "\e603";
+    border: 2px #354e65 solid;
+    border-radius: 1.5rem
+}
+.fd-next {
+    float: right;
+}
+.fd-next .fd-icon:after {
+    content: "\e605";
+    border: 2px #354e65 solid;
+    border-radius: 1.5rem
+}
+.fd-backNext:after {
+  content:"";
+  display:table;
+  clear:both;
+}
+.fd-navIcons {
+    clear: both;
+    margin-top: 0.8rem; /* gap between main body and icons*/
+}
+.fd-navIcon {
+    padding: 0rem 1rem 1rem 1rem;
+    color: #354e65; /* blue-grey */
+    background-color: #ffffff;
+    display: inline-block;
+    border-radius: 5px;
+    width: 5rem;
+    height: 5rem;
+    font-family: "C4A" !important;
+    font-size: 3rem;
+    margin: 0.2rem 0.6rem 0 0;
+    text-transform: none;
+    line-height: initial;
+}
+.fd-lang:before {
+    content:  "\e62a";
+}
+.fd-volume:before {
+    content:  "\e650";
+}
+.fd-text:before {
+    content:  "\e648";
+}
+.fd-contrast:before {
+    content:  "\e613";
+}
+
+/* status/navigation styles */
+.fd-done {
+    display: inline;
+}
+.fd-done:before {
+    content:  "\e60f";
+    font-size: 2rem;
+    position: relative;
+    top: 2rem;
+    left: -3.7rem;
+    color: #ffffff;
+    background-color: #279841;
+    border-radius: 2rem;
+    border: 1px solid #ffffff;
+}
+.fd-active {
+    background-color: #fed73a;
+}
+.fd-activeInd {
+    display: inline;
+}
+.fd-activeInd:before {
+    content:  "\e607";
+    font-size: 4rem;
+    position: relative;
+    top: -2.3rem;
+    left: -5.5rem;
+    color: #ffffff;
+    background-color: transparent;
+}
+.fd-hidden {
+    visibility: hidden;
+}

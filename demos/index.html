@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>First Discovery Tool</title>
+
+        <link rel="stylesheet" href="../src/lib/normalize/normalize.css" />
+        <link rel="stylesheet" href="../src/lib/foundation/css/foundation.min.css" />
+        <link rel="stylesheet" href="../src/css/style.css" />
+    </head>
+
+    <body class="fd-tool">
+
+        <section class="fd-top">
+            <button class="fd-mute"><span class="fd-icon"></span>turn voice OFF</button>
+            <button class="fd-help">help</button>
+        </section>
+
+        <section class="fd-main">
+            <div class="fd-instructions">Adjust the text to a size you like best.</div>
+            <div class="fd-controlsContainer row">
+                <div class="fd-status small-3 columns">
+                    <progress class="fd-range" value="7" max="10"></progress>
+                </div>
+                <div class="fd-controls small-9 columns">
+                    <div class="fd-control">
+                        <input type="button" value="+" class="fd-increase" id="fd-increase" tabindex="1" />
+                        <label class="fd-label" for="fd-increase">larger</label>                            
+                    </div>
+                    <div class="fd-control">
+                        <input type="button" value="-" class="fd-decrease" id="fd-decrease" tabindex="2"  />
+                        <label class="fd-label" for="fd-decrease">smaller</label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <nav class="fd-nav">
+            <div class="fd-backNext">
+                <button class="fd-back" tabindex="3" ><span class="fd-icon"></span>back</button>
+                <button class="fd-next" tabindex="4" >next<span class="fd-icon"></span></button>
+            </div>
+            <div class="fd-navIcons">
+                <ul>
+                    <li class="fd-navIcon fd-lang"><div class="fd-done"></div><div class="fd-activeInd fd-hidden"></div></li>
+                    <li class="fd-navIcon fd-volume"><div class="fd-done"></div><div class="fd-activeInd fd-hidden"></div></li>
+                    <li class="fd-navIcon fd-text fd-active"><div class="fd-done fd-hidden"></div><div class="fd-activeInd"></div></li>
+                    <li class="fd-navIcon fd-contrast"><div class="fd-done fd-hidden"></div><div class="fd-activeInd fd-hidden"></div></li>
+                </ul>
+            </div>
+        </nav>
+
+    </body>
+</html>
