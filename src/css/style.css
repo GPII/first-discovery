@@ -1,18 +1,10 @@
 /* Page-wide styles */
 @font-face {
-    font-family: 'InfusionIcons';
+    font-family: 'C4A';
     src:url('../fonts/c4a-all-icons.eot?#iefix') format('embedded-opentype'),
          url('../fonts/c4a-all-icons.eot'),
          url('../fonts/c4a-all-icons.ttf');
 }
-
-/*
- New font:
- https://github.com/simonbates/universal/tree/GPII-17/gpii/node_modules/gpii-oauth2/gpii-oauth2-authz-server/public/src/core/fonts
- and related css:
- https://github.com/simonbates/universal/blob/GPII-17/gpii/node_modules/gpii-oauth2/gpii-oauth2-authz-server/public/src/core/css/c4a-all-icons.css
- */
-
 html {
     background-color: #939393; /* grey */
 }
@@ -34,7 +26,7 @@ body {
     font-size: inherit;
 }
 .fd-icon {
-    font-family: "InfusionIcons" !important;
+    font-family: "C4A" !important;
     font-size: 3rem;
     margin: 0.2rem 0.3rem 0 0;
     text-transform: none;
@@ -88,7 +80,7 @@ button.fd-help {
 }
 .fd-control {
     display: table-row;
-    vertical-align: center;
+    vertical-align: middle;
     height: 1rem;
 }
 /* to try to keep the +/- buttons centred in the page,
@@ -113,7 +105,6 @@ button.fd-help {
     height: 1rem;
     float: right;
     -webkit-transform: rotate(-90deg);
-    translateY(-1000%);
     -webkit-transform-origin: 100% 0%;
 }
 .fd-range::-webkit-progress-bar {
@@ -170,7 +161,7 @@ button.fd-help {
     border-radius: 5px;
     width: 5rem;
     height: 5rem;
-    font-family: "InfusionIcons" !important;
+    font-family: "C4A" !important;
     font-size: 3rem;
     margin: 0.2rem 0.6rem 0 0;
     text-transform: none;
