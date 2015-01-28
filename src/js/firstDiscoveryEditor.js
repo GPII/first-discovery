@@ -22,8 +22,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.defaults("gpii.firstDiscovery.firstDiscoveryEditor", {
         gradeNames: ["fluid.viewRelayComponent", "fluid.prefs.prefsEditorLoader", "autoInit"],
         selectors: {
-            prefsEditor: ".fdc-prefsEditor",
-            help: ".fdc-help"
+            prefsEditor: ".gpiic-prefsEditor",
+            help: ".gpiic-help"
         },
         selectorsToIgnore: [],
         components: {

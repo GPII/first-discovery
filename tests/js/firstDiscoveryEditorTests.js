@@ -35,7 +35,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     jqUnit.asyncTest("Initialization", function () {
-        gpii.tests.firstDiscovery("#fdc-tool", {
+        gpii.tests.firstDiscovery("#gpiic-tool", {
             prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor",
             components: {
                 prefsEditorLoader: {
