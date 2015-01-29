@@ -11,42 +11,44 @@
     </head>
 
     <body>
-        <div class="fd-tool">
-            <header class="row fd-top">
-                <button class="fd-mute left"><span class="fd-icon"></span>turn voice OFF</button>
-                <button class="fd-help right">help</button>
+        <div class="small-12 gpii-tool">
+            <header class="row gpii-top">
+                <button class="left gpii-mute"><span class="gpii-icon"></span>turn voice OFF</button>
+                <button class="right gpii-help">help</button>
             </header>
 
-            <section class="row fd-main">
-                <p class="fd-instructions">Adjust the text to a size you like best.</p>
-                <div class="fd-controlsContainer">
-                    <div class="fd-status small-3 columns">
-                        <progress class="fd-range" value="7" max="10"></progress>
+            <section class="gpii-main">
+                <p class="gpii-instructions">Adjust the text to a size you like best.</p>
+                <div class="row gpii-controlsContainer">
+                    <div class="small-offset-1 small-1 medium-offset-4 columns gpii-status">
                     </div>
-                    <div class="fd-controls small-9 columns">
-                        <div class="fd-control">
-                            <input type="button" value="+" class="fd-increase" id="fd-increase" tabindex="1" />
-                            <label class="fd-label" for="fd-increase">larger</label>
+                    <div class="small-7 medium-6 end columns gpii-controls">
+                        <div class="row gpii-control">
+                            <input type="button" value="+" class="left gpii-increase" id="gpii-increase" tabindex="1" />
+                            <label class="gpii-control-label" for="gpii-increase">larger</label>
                         </div>
-                        <div class="fd-control">
-                            <input type="button" value="-" class="fd-decrease" id="fd-decrease" tabindex="2"  />
-                            <label class="fd-label" for="fd-decrease">smaller</label>
+                        <div class="row gpii-control">
+                            <input type="button" value="-" class="left gpii-decrease" id="gpii-decrease" tabindex="2"  />
+                            <label class="gpii-control-label" for="gpii-decrease">smaller</label>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <nav class="fd-nav">
-                <div class="fd-backNext">
-                    <button class="fd-back" tabindex="3" ><span class="fd-icon"></span>back</button>
-                    <button class="fd-next" tabindex="4" >next<span class="fd-icon"></span></button>
+            <nav class="gpii-nav">
+                <div class="gpii-backNext">
+                    <button class="left gpii-back" tabindex="3" ><span class="gpii-icon"></span>back</button>
+                    <button class="right gpii-next" tabindex="4" >next<span class="gpii-icon"></span></button>
                 </div>
-                <div class="fd-navIcons">
+                <div class="text-center gpii-navIcons">
                     <ul>
-                        <li class="fd-navIcon fd-lang"><div class="fd-done"></div><div class="fd-activeInd fd-hidden"></div></li>
-                        <li class="fd-navIcon fd-volume"><div class="fd-done"></div><div class="fd-activeInd fd-hidden"></div></li>
-                        <li class="fd-navIcon fd-text fd-active"><div class="fd-done fd-hidden"></div><div class="fd-activeInd"></div></li>
-                        <li class="fd-navIcon fd-contrast"><div class="fd-done fd-hidden"></div><div class="fd-activeInd fd-hidden"></div></li>
+                        <li class="gpii-navIcon gpii-lang"><div class="gpii-doneIndicator"></div><div class="gpii-activeIndicator gpii-hidden"></div></li>
+                        <li class="gpii-navIcon gpii-volume"><div class="gpii-doneIndicator"></div><div class="gpii-activeIndicator gpii-hidden"></div></li>
+                        <li class="gpii-navIcon gpii-text gpii-active">
+                            <div class="gpii-activeIndicator gpii-show"></div>
+                            <div class="gpii-doneIndicator gpii-show"></div>
+                        </li>
+                        <li class="gpii-navIcon gpii-contrast"><div class="gpii-doneIndicator gpii-hidden"></div><div class="gpii-activeIndicator gpii-hidden"></div></li>
                     </ul>
                 </div>
             </nav>

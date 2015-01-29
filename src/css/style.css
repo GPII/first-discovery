@@ -8,32 +8,33 @@
 html {
     background-color: #939393; /* grey */
 }
-.fd-tool,
-.fd-tool p {
+.gpii-tool,
+.gpii-tool p {
     font-size: 2.5rem; /*base font size */
 }
 
-.fd-tool {
+.gpii-tool {
     font-family: 'Open Sans', sans-serif;
     color: #ffffff;
-    background-color: #354e65; /* blue-grey */
+    background-color: #425165; /* blue-grey */
+    min-width:31rem;
 }
-.fd-tool:focus {
+.gpii-tool:focus {
     border: 3px solid red;
 }
-.fd-tool button {
+.gpii-tool button {
     color: inherit;
     background-color: inherit;
     font-size: inherit;
 }
-.fd-icon {
+.gpii-icon {
     font-family: "C4A";
     font-size: 3rem;
     margin: 0.2rem 0.3rem 0 0;
     text-transform: none;
 }
 
-.fd-hidden-accessible {
+.gpii-hidden-accessible {
     border: 0 none;
     clip: rect(0px, 0px, 0px, 0px);
     height: 1px;
@@ -45,37 +46,36 @@ html {
 }
 
 /* Top section, with mute and help buttons */
-.fd-tool header {
+.gpii-tool header {
     padding: 1.5rem;
 }
 
-.fd-mute {
+.gpii-mute {
     padding: 0rem;
 }
 
-.fd-mute .fd-icon:before {
+.gpii-mute .gpii-icon:before {
     content: "\e64f";
     border: 0.2rem solid #ffffff;
     border-radius: 50rem;
     padding: 0.5rem;
     position: relative;
 }
-.fd-help {
+.gpii-help {
     border: 0.2rem solid #ffffff;
     border-radius: 0.5rem;
     padding: 0.5rem;
 }
 
 /* Main section, containing adjuster and instructions */
-.fd-main {
+.gpii-main {
     display: default; /* hidden unless active */
-    color: #354e65; /* blue-grey */
+    color: #425165; /* blue-grey */
     background-color: #ffffff;
     padding: 1.5rem;
-
-
 }
-.fd-main.fd-current {
+
+.gpii-main.gpii-current {
     display: inherit;
 }
 
@@ -83,165 +83,157 @@ html {
 /* to try to keep the +/- buttons centred in the page,
  * look at http://css-tricks.com/snippets/css/a-guide-to-flexbox/
  * for ideas */
-.fd-controlsContainer {
-    margin: 0.5em 0;
+
+.gpii-controlsContainer {
+    height: 13rem;
 }
-.fd-label {
+.gpii-range {
+    -ms-transform: rotate(-90deg); /* IE 9 */
+    -webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+    transform: rotate(-90deg);
+}
+
+.gpii-control-label {
     color: inherit;
     background-color: inherit;
     font-size: inherit;
-    display: table-cell;
+    display: inline-block;
     vertical-align: middle;
+    padding-left: 1rem;
+    line-height: 5rem;
+    height: 6rem;
 }
-.fd-controls {
-    display: table;
+.gpii-tool .gpii-control {
+    vertical-align: middle;
+    margin-bottom: 1rem;
 }
-.fdc-adjusterContainer-tts .fd-controls {
+
+.gpiic-adjusterContainer-tts .gpii-controls {
     margin-left: 6rem;
 }
-.fdc-adjusterContainer-size .fd-controls {
+.gpiic-adjusterContainer-size .gpii-controls {
     margin-left: 2rem;
 }
-.fdc-adjusterContainer-contrast .fd-controls {
+.gpiic-adjusterContainer-contrast .gpii-controls {
     margin-left: 2rem;
-}
-.fd-control {
-    display: table-row;
-    vertical-align: middle;
-    height: 1rem;
 }
 
 /* tts yes/no controls */
-.fd-choice {
+.gpii-choice {
     margin-bottom: 0.3rem;
     margin-left: 2rem;
 }
-.fd-yesNo {
+.gpii-yesNo {
     font-size: inherit;
     display: inline-block;
     width: 13rem;
     text-align: center;
     color: #ffffff;
-    background-color: #354e65; /* blue-grey */
+    background-color: #425165; /* blue-grey */
     border-radius: 7px;
 }
-.fd-indicator {
+.gpii-indicator {
     width: 1rem;
     display: inline-block;
 }
-.fd-choice input:checked + span:before {
+.gpii-choice input:checked + span:before {
     content: "\e60d";
     color: #fed73a; /* yellow */
 }
-.fd-choice input:checked ~ label.fd-yesNo {
+.gpii-choice input:checked ~ label.gpii-yesNo {
     color: #fed73a; /* yellow */
 }
 
 /* theme controls */
-.fd-theme {
+.gpii-theme {
     font-size: inherit;
     display: inline-block;
     width: 22rem;
     text-align: center;
     color: #ffffff;
-    background-color: #354e65; /* blue-grey */
+    background-color: #425165; /* blue-grey */
     border-width: 2px;
     border-style: solid;
 }
-.fd-theme-default {
-    color: #354e65; !important;
+.gpii-theme-default {
+    color: #425165; !important;
     background-color: #eeeeee !important;
-    border-color: #354e65; !important;
+    border-color: #425165; !important;
 }
-.fd-theme-bw {
+.gpii-theme-bw {
     color: #000000 !important;
     background-color: #ffffff !important;
     border-color: #000000 !important;
 }
-.fd-theme-wb {
+.gpii-theme-wb {
     color: #ffffff !important;
     background-color: #000000 !important;
     border-color: #000000 !important;
 }
 
 /* text size increase/decrease controls */
-.fd-increase, .fd-decrease {
-    width: 4rem;
-    display: table-cell;
-    float: left;
+.gpii-increase, .gpii-decrease {
+    width: 6rem;
+    height: 6rem;
     color: #ffffff;
-    background-color: #354e65; /* blue-grey */
-    border-radius: 7px;
+    background-color: #425165; /* blue-grey */
+    border: 0.2rem solid #fff;
+    border-radius: 0.7rem;
+    box-shadow: 0 0 0.3rem #000;
+    font-size: 4rem;
 }
 
 /* vertical 'range status' indicator beside adjuster */
-.fd-status {
+.gpii-status {
     padding-right: 0;
-}
-.fd-range { /* <progress> range indicator */
-    -webkit-appearance: none;
-    width: 9rem;
-    height: 1rem;
-    float: right;
-    -webkit-transform: rotate(-90deg);
-    -webkit-transform-origin: 100% 0%;
-}
-.fd-range::-webkit-progress-bar {
-    background: #ffffff;
-    border: 1px solid #354e65; /* blue-grey */
-}
-.fd-range::-webkit-progress-value {
-    background: #fed73a; /* yellow */
+    background-color: #425165; /* blue-grey */
+    background-image: linear-gradient(rgba(255, 255, 255, 1) 10%, transparent 10%, transparent);
+    background-size: 50px 100%;
+    height: 100%;
+    width: 2rem;
+    margin-right: 1rem;
+    border: 0.2rem solid #425165; /* blue-grey */
 }
 
 /* Navigation section at bottom, containing back/next and icons */
-.nav * {
-    padding: 0rem;
-}
-.fd-backNext {
-    color: #354e65; /* blue-grey */
+.gpii-backNext {
+    color: #425165; /* blue-grey */
     background-color: #ffffff;
 }
-.fd-back, .fd-next {
+.gpii-back, .gpii-next {
     border: none;
-    color: inherit;
-    background-color: inherit;
 }
-.fd-back {
-    float: left;
-}
-.fd-back .fd-icon:before,
-.fd-next .fd-icon:after {
-    background-color: #354e65; /* blue-grey */
+
+.gpii-back .gpii-icon:before,
+.gpii-next .gpii-icon:after {
+    background-color: #425165; /* blue-grey */
     color: #ffffff;
     border-radius: 2rem;
     position: relative;
     top: 0.3rem;
     padding: 0.5rem;
 }
-.fd-back .fd-icon:before {
+.gpii-back .gpii-icon:before {
     content:  "\e603";
     left: -0.3rem;
 }
-.fd-next {
-    float: right;
-}
-.fd-next .fd-icon:after {
+
+.gpii-next .gpii-icon:after {
     content: "\e605";
     left: 0.5rem;
 }
-.fd-backNext:after {
+.gpii-backNext:after {
   content:"";
   display:table;
   clear:both;
 }
-.fd-navIcons {
+.gpii-navIcons {
     clear: both;
     margin-top: 0.8rem; /* gap between main body and icons*/
 }
-.fd-navIcon {
-    padding: 0rem 1rem 1rem 1rem;
-    color: #354e65; /* blue-grey */
+.gpii-navIcon {
+    padding: 0.6rem 1rem 1rem 1rem;
+    color: #425165; /* blue-grey */
     background-color: #ffffff;
     display: inline-block;
     border-radius: 5px;
@@ -253,29 +245,29 @@ html {
     text-transform: none;
     line-height: initial;
 }
-.fd-lang:before {
+.gpii-lang:before {
     content:  "\e62a";
 }
-.fd-volume:before {
+.gpii-volume:before {
     content:  "\e650";
 }
-.fd-text:before {
+.gpii-text:before {
     content:  "\e648";
 }
-.fd-contrast:before {
+.gpii-contrast:before {
     content:  "\e613";
 }
 
 /* status/navigation styles */
-.fd-doneInd,
-.fd-activeInd {
+.gpii-doneIndicator,
+.gpii-activeIndicator {
     display: inline;
     visibility: hidden; /* use visibility instead of display to maintain positioning */
 }
-.fd-show {
+.gpii-show {
     visibility: visible;
 }
-.fd-doneInd:before {
+.gpii-doneIndicator:before {
     content:  "\e60f";
     font-size: 2rem;
     position: relative;
@@ -286,15 +278,15 @@ html {
     border-radius: 2rem;
     border: 1px solid #ffffff;
 }
-.fd-active {
+.gpii-active {
     background-color: #fed73a;
 }
-.fd-activeInd:before {
+.gpii-activeIndicator:before {
     content:  "\e607";
     font-size: 4rem;
     position: relative;
-    top: -2.3rem;
-    left: -5.5rem;
+    top: -7.5rem;
+    left: -0.5rem;
     color: #ffffff;
     background-color: transparent;
 }
