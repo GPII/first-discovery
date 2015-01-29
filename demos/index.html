@@ -10,41 +10,16 @@
         <link rel="stylesheet" href="../src/css/style.css" />
     </head>
 
-    <body class="fd-tool">
+    <body>
+        <div class="fd-tool">
+            <header class="row fd-top">
+                <button class="fd-mute left"><span class="fd-icon"></span>turn voice OFF</button>
+                <button class="fd-help right">help</button>
+            </header>
 
-        <button class="fd-help">help</button>
-
-        <section class="fdc-prefsEditorContainer">
-            <!-- ---- begin PrefsEditor template ---- -->
-            <div class="fdc-muteContainer fd-top">
-                <button class="fd-mute"><span class="fd-icon"></span>turn voice OFF</button>
-            </div>
-
-            <!-- 'fd-main' divs are hidden by default, only shown when 'fd-current' class is added -->
-            <div class="fdc-adjusterContainer-tts fd-main">
-                <!-- ---- begin TTS adjuster template ---- -->
-                <div class="fd-instructions">Do you prefer to have items on the screen read aloud to you?</div>
+            <section class="row fd-main">
+                <p class="fd-instructions">Adjust the text to a size you like best.</p>
                 <div class="fd-controlsContainer">
-                    <div class="fd-controls">
-                        <div class="fd-choice">
-                            <input class="flc-prefsEditor-tts fd-hidden-accessible" name="tts" id="tts-yes" value="yes" type="radio" checked>
-                            <span class="fd-icon fd-indicator"></span>
-                            <label for="tts-yes" class="flc-prefsEditor-tts-label fd-yesNo" id="tts-yes-label">Yes</label>
-                        </div>
-                        <div class="fd-choice">
-                            <input class="flc-prefsEditor-tts fd-hidden-accessible" name="tts" id="tts-no" value="no" type="radio">
-                            <span class="fd-icon fd-indicator"></span>
-                            <label for="tts-no" class="flc-prefsEditor-tts-label fd-yesNo" id="tts-no-label">No</label>
-                        </div>
-                    </div>
-                </div>
-                <!-- ---- end TTS adjuster template ---- -->
-            </div>
-
-            <div class="fdc-adjusterContainer-size fd-main fd-current">
-                <!-- ---- begin Size adjuster template ---- -->
-                <div class="fd-instructions">Adjust the text to a size you like best.</div>
-                <div class="fd-controlsContainer row">
                     <div class="fd-status small-3 columns">
                         <progress class="fd-range" value="7" max="10"></progress>
                     </div>
@@ -59,55 +34,25 @@
                         </div>
                     </div>
                 </div>
-                <!-- ---- end Size adjuster template ---- -->
-            </div>
+            </section>
 
-            <div class="fdc-adjusterContainer-contrast fd-main">
-                <!-- ---- begin Contrast adjuster template ---- -->
-                <div class="fd-instructions">You can choose a screen colour to make things easier to see.</div>
-                <div class="fd-controlsContainer">
-                    <div class="fd-controls">
-                        <div class="fd-choice">
-                            <input class="flc-prefsEditor-theme fd-hidden-accessible" name="theme" id="theme-default" value="default" type="radio" checked>
-                            <span class="fd-icon fd-indicator"></span>
-                            <label for="theme-yes" class="flc-prefsEditor-theme-label fd-theme fd-theme-default" id="theme-yes-label">no change</label>
-                        </div>
-                        <div class="fd-choice">
-                            <input class="flc-prefsEditor-theme fd-hidden-accessible" name="theme" id="theme-bw" value="bw" type="radio">
-                            <span class="fd-icon fd-indicator"></span>
-                            <label for="theme-bw" class="flc-prefsEditor-theme-label fd-theme fd-theme-bw" id="theme-bw-label">black on white</label>
-                        </div>
-                        <div class="fd-choice">
-                            <input class="flc-prefsEditor-theme fd-hidden-accessible" name="theme" id="theme-wb" value="wb" type="radio">
-                            <span class="fd-icon fd-indicator"></span>
-                            <label for="theme-wb" class="flc-prefsEditor-theme-label fd-theme fd-theme-wb" id="theme-no-label">white on black</label>
-                        </div>
-                    </div>
+            <nav class="fd-nav">
+                <div class="fd-backNext">
+                    <button class="fd-back" tabindex="3" ><span class="fd-icon"></span>back</button>
+                    <button class="fd-next" tabindex="4" >next<span class="fd-icon"></span></button>
                 </div>
-                <!-- ---- end Contrast adjuster template ---- -->
-            </div>
-            <!-- ---- end PrefsEditor template ---- -->
+                <div class="fd-navIcons">
+                    <ul>
+                        <li class="fd-navIcon fd-lang"><div class="fd-done"></div><div class="fd-activeInd fd-hidden"></div></li>
+                        <li class="fd-navIcon fd-volume"><div class="fd-done"></div><div class="fd-activeInd fd-hidden"></div></li>
+                        <li class="fd-navIcon fd-text fd-active"><div class="fd-done fd-hidden"></div><div class="fd-activeInd"></div></li>
+                        <li class="fd-navIcon fd-contrast"><div class="fd-done fd-hidden"></div><div class="fd-activeInd fd-hidden"></div></li>
+                    </ul>
+                </div>
+            </nav>
 
-        </section>
+        </div>
 
-        <nav class="fd-nav">
-            <div class="fdc-backNextContainer fd-backNext">
-                <!-- ---- begin Back/Next template ---- -->
-                <button class="fd-back" tabindex="3" ><span class="fd-icon"></span>back</button>
-                <button class="fd-next" tabindex="4" >next<span class="fd-icon"></span></button>
-                <!-- ---- end Back/Next template ---- -->
-            </div>
-            <div class="fdc-navIconsContainer fd-navIcons">
-                <!-- ---- begin Nav Icons template ---- -->
-                <ul>
-                    <li class="fd-navIcon fd-lang"><div class="fd-doneInd fd-show"></div><div class="fd-activeInd"></div></li>
-                    <li class="fd-navIcon fd-volume"><div class="fd-doneInd fd-show"></div><div class="fd-activeInd"></div></li>
-                    <li class="fd-navIcon fd-text fd-active"><div class="fd-doneInd"></div><div class="fd-activeInd fd-show"></div></li>
-                    <li class="fd-navIcon fd-contrast"><div class="fd-doneInd"></div><div class="fd-activeInd"></div></li>
-                </ul>
-                <!-- ---- end Nav Icons template ---- -->
-            </div>
-        </nav>
 
     </body>
 </html>
