@@ -1,4 +1,4 @@
-The version of Infusion included in this folder was created using a custom build from the infusion master branch:
+The version of Infusion included in this folder was created using a custom build from a development branch:
 
 https://github.com/cindyli/infusion/tree/FLUID-5552
 
