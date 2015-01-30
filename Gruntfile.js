@@ -21,15 +21,21 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON("package.json"),
         jshint: {
             all: ["**/*.js"],
+            buildScripts: ["Gruntfile.js"],
             options: {
                 jshintrc: true
             }
+        },
+        jsonlint: {
+            all: ["src/**/*.json", "tests/**/*.json", "demos/**/*.json"]
         }
     });
 
     // Load the plugin(s):
     grunt.loadNpmTasks("grunt-contrib-jshint");
+    grunt.loadNpmTasks("grunt-jsonlint");
 
     // Custom tasks:
-    grunt.registerTask("default", ["jshint"]);
+    grunt.registerTask("lint", "Apply jshint and jsonlint", ["jshint", "jsonlint"]);
+    grunt.registerTask("default", ["lint"]);
 };
