@@ -23,9 +23,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         gradeNames: ["fluid.viewRelayComponent", "fluid.prefs.prefsEditorLoader", "autoInit"],
         selectors: {
             prefsEditor: ".gpiic-prefsEditor",
-            help: ".gpiic-help"
+            panelContainer: ".gpiic-firstDiscovery-panel",
+            navButtons: ".gpiic-buttons"
         },
-        selectorsToIgnore: [],
         components: {
             prefsEditor: {
                 container: "{that}.dom.prefsEditor",
@@ -37,11 +37,56 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         }
                     }
                 }
+            },
+            navButtons: {
+                type: "gpii.firstDiscovery.navButtons",
+                container: "{that}.dom.navButtons",
+                createOnEvent: "onCreateNavButtons",
+                options: {
+                    panelTotalNum: "{firstDiscoveryEditor}.panelTotal",
+                    model: {
+                        currentPanelNum: "{firstDiscoveryEditor}.model.currentPanelNum"
+                    }
+                }
             }
         },
+        modelListeners: {
+            "currentPanelNum": "{that}.showPanel"
+        },
         events: {
-            onPrefsEditorReady: null
+            onPrefsEditorReady: null,
+            onCreateNavButtons: null
+        },
+        listeners: {
+            "onPrefsEditorReady.getPanelTotal": {
+                listener: "gpii.firstDiscovery.getPanelTotal",
+                args: ["{that}"],
+                priority: "first"
+            },
+            "onPrefsEditorReady.showInitialPanel": {
+                listener: "{that}.applier.change",
+                args: ["currentPanelNum", 1]
+            },
+            "onPrefsEditorReady.createNavButtons": {
+                listener: "{that}.events.onCreateNavButtons"
+            }
+        },
+        invokers: {
+            showPanel: {
+                funcName: "gpii.firstDiscovery.showPanel",
+                args: ["{that}.panels", "{that}.model.currentPanelNum"]
+            }
         }
     });
 
+    gpii.firstDiscovery.getPanelTotal = function (that) {
+        that.panels = that.prefsEditor.container.find(that.options.selectors.panelContainer);
+        that.panelTotal = that.panels.length;
+    };
+
+    gpii.firstDiscovery.showPanel = function (panels, toShow) {
+        fluid.each(panels, function (panel, index) {
+            $(panel)[toShow === index + 1 ? "show" : "hide"]();
+        });
+    };
 })(jQuery, fluid);

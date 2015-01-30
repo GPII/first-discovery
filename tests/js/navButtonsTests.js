@@ -1,5 +1,5 @@
 /*!
-Copyright 2013-2014 OCAD University
+Copyright 2015 OCAD University
 
 Licensed under the New BSD license. You may not use this file except in
 compliance with this License.
@@ -13,29 +13,64 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.registerNamespace("gpii.tests");
 
+    gpii.tests.verifyStates = function (msg, backButton, nextButton, backDisabled, backVisible, nextDisabled, nextVisible) {
+        jqUnit[backDisabled? "assertTrue" : "assertFalse"](msg + " - The back button is disabled", backButton.is(":disabled"));
+        jqUnit[backVisible? "assertTrue" : "assertFalse"](msg + " - The back button is hidden", backButton.is(":visible"));
+        jqUnit[nextDisabled? "assertTrue" : "assertFalse"](msg + " - The next button is enabled", nextButton.is(":disabled"));
+        jqUnit[nextVisible? "assertTrue" : "assertFalse"](msg + " - The next button is shown", nextButton.is(":visible"));
+    };
+
+    gpii.tests.verifyButtons = function (that, currentPanelNum) {
+        jqUnit.assertEquals("The model value has been updated", currentPanelNum, that.model.currentPanelNum);
+
+        var msg;
+        var start = that.options.panelStartNum;
+        var end = that.options.panelTotalNum;
+        var backButton = that.locate("back");
+        var nextButton = that.locate("next");
+
+        if (currentPanelNum === start) {
+            msg = "On the start panel";
+            gpii.tests.verifyStates(msg, backButton, nextButton, true, false, false, true);
+            jqUnit.assertEquals(msg + " - The text on the next button is properly set", that.options.strings.start, nextButton.html());
+        }
+
+        if (currentPanelNum > start && currentPanelNum < end) {
+            msg = "On a panel in btw the start and the last panels";
+            gpii.tests.verifyStates(msg, backButton, nextButton, false, true, false, true);
+            jqUnit.assertEquals(msg + " - The text on the back button is properly set", that.options.strings.back, backButton.html());
+            jqUnit.assertEquals(msg + " - The text on the next button is properly set", that.options.strings.next, nextButton.html());
+        }
+
+        if (currentPanelNum === end) {
+            msg = "On the last panel";
+            gpii.tests.verifyStates(msg, backButton, nextButton, false, true, false, true);
+            jqUnit.assertEquals(msg + " - The text on the back button is properly set", that.options.strings.back, backButton.html());
+            jqUnit.assertEquals(msg + " - The text on the next button is properly set", that.options.strings.finish, nextButton.html());
+        }
+    };
+
     jqUnit.test("Nav buttons", function () {
-        jqUnit.expect(11);
+        jqUnit.expect(26);
 
         var that = gpii.firstDiscovery.navButtons(".gpiic-nav", {
             panelTotalNum: 6
         });
 
-        that.applier.change("currentPanelNum", 1);
-        jqUnit.assertFalse("On the start panel - The back button is hidden", that.locate("back").is(":visible"));
-        jqUnit.assertTrue("On the start panel - The next button is shown", that.locate("next").is(":visible"));
-        jqUnit.assertEquals("On the start panel - The text on the next button is properly set", that.options.strings.start, that.locate("next").html());
+        var backButton = that.locate("back");
+        var nextButton = that.locate("next");
 
-        that.applier.change("currentPanelNum", 3);
-        jqUnit.assertTrue("On a panel in btw the start and the last panels - The back button is shown", that.locate("back").is(":visible"));
-        jqUnit.assertTrue("On a panel in btw the start and the last panels - The next button is shown", that.locate("next").is(":visible"));
-        jqUnit.assertEquals("On a panel in btw the start and the last panels - The text on the back button is properly set", that.options.strings.back, that.locate("back").html());
-        jqUnit.assertEquals("On a panel in btw the start and the last panels - The text on the next button is properly set", that.options.strings.next, that.locate("next").html());
+        that.applier.change("currentPanelNum", 1);
+        gpii.tests.verifyButtons(that, 1);
+
+        nextButton.click();
+        gpii.tests.verifyButtons(that, 2);
+
+        backButton.click();
+        gpii.tests.verifyButtons(that, 1);
 
         that.applier.change("currentPanelNum", 6);
-        jqUnit.assertTrue("On the last panel - The back button is shown", that.locate("back").is(":visible"));
-        jqUnit.assertTrue("On the last panel - The next button is shown", that.locate("next").is(":visible"));
-        jqUnit.assertEquals("On the last panel - The text on the back button is properly set", that.options.strings.back, that.locate("back").html());
-        jqUnit.assertEquals("On the last panel - The text on the next button is properly set", that.options.strings.finish, that.locate("next").html());
+        gpii.tests.verifyButtons(that, 6);
     });
 
 })(jQuery, fluid);

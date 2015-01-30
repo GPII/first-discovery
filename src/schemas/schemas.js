@@ -16,6 +16,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     fluid.registerNamespace("gpii.firstDiscovery");
 
+    /*******************************************************************************
+     * Auxiliary Schema
+    *******************************************************************************/
+
     fluid.defaults("gpii.firstDiscovery.auxSchema", {
         gradeNames: ["fluid.prefs.auxSchema", "autoInit"],
         auxiliarySchema: {
@@ -24,8 +28,17 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "template": "../src/html/firstDiscovery.html",
             "messagePrefix": "../src/messages/",
             "message": "%prefix/firstDiscovery.json",
+            "audio": {
+                "type": "gpii.firstDiscovery.audio",
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.audio",
+                    "container": ".gpiic-audio",
+                    "template": "%prefix/audio.html",
+                    "message": "%prefix/audio.json"
+                }
+            },
             "textSize": {
-                "type": "fluid.prefs.textSize",
+                "type": "gpii.firstDiscovery.textSize",
                 "enactor": {
                     "type": "fluid.prefs.enactor.textSize"
                 },
@@ -35,6 +48,56 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "template": "%prefix/textSize.html",
                     "message": "%prefix/textSize.json"
                 }
+            },
+            "contrast": {
+                "type": "gpii.firstDiscovery.contrast",
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.contrast",
+                    "container": ".gpiic-contrast",
+                    "template": "%prefix/contrast.html",
+                    "message": "%prefix/contrast.json"
+                }
+            }
+        }
+    });
+
+    /*******************************************************************************
+     * Primary schema grades
+     *******************************************************************************/
+
+    fluid.defaults("gpii.firstDiscovery.schemas.textSize", {
+        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.textSize": {
+                "type": "number",
+                "default": 1,
+                "minimum": 1,
+                "maximum": 2,
+                "divisibleBy": 0.1
+            }
+        }
+    });
+
+    fluid.defaults("gpii.firstDiscovery.schemas.audio", {
+        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.audio": {
+                "type": "number",
+                "default": 1,
+                "minimum": 1,
+                "maximum": 2,
+                "divisibleBy": 0.1
+            }
+        }
+    });
+
+    fluid.defaults("fluid.prefs.schemas.contrast", {
+        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.contrast": {
+                "type": "string",
+                "default": "default",
+                "enum": ["default", "bw", "wb"]
             }
         }
     });

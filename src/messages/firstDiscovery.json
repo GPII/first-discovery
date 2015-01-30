@@ -1,4 +1,6 @@
 {
-    "slidingPanelShowText": "+ Show Display Preferences",
-    "slidingPanelHideText": "- Hide"
+    "back": "Back",
+    "next": "Next",
+    "start": "Start",
+    "finish": "Finish"
 }
