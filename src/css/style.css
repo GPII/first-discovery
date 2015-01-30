@@ -28,8 +28,6 @@
 .gpii-icon {
     font-family: "C4A";
     font-size: 3rem;
-    margin: 0.2rem 0.3rem 0 0;
-    text-transform: none;
 }
 
 .gpii-hidden-accessible {
@@ -45,24 +43,21 @@
 
 /* Top section, with mute and help buttons */
 .gpii-tool header {
-    padding: 1.5rem;
+    padding: 1.5rem 1.5rem 0 1.5rem;
 }
 
+.gpii-help,
 .gpii-mute {
-    padding: 0rem;
+    border: 0.2rem solid #ffffff;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    line-height: 2rem;
 }
 
 .gpii-mute .gpii-icon:before {
     content: "\e64f";
-    border: 0.2rem solid #ffffff;
-    border-radius: 50rem;
     padding: 0.5rem;
     position: relative;
-}
-.gpii-help {
-    border: 0.2rem solid #ffffff;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
 }
 
 /* Main section, containing adjuster and instructions */
@@ -172,9 +167,23 @@
 
 /* vertical 'range status' indicator beside adjuster */
 .gpii-status {
-    padding-right: 0;
+    /* The status bar effect is created by adjusting the position of
+       two colour stops - blue (66,81,101), and white (255,255,255).
+
+       To change the blue bar level, change the percentage values. Note, if the
+       percentage values do not match, there will be a visible gradient which
+       may not be desirable.
+
+       linear-gradient: (0deg, rgb(66,81,101) XX%, rgb(255, 255, 255) XX%);
+            0deg : rotates the gradient so it starts with white on top, and blue on bottom.
+            rgb (66,81,101) : the blue colour of the bar.
+            XX% : the percentage of the container which the blue bar occupies.
+    */
+
     background-color: #425165; /* blue-grey */
-    background-image: linear-gradient(rgba(255, 255, 255, 1) 10%, transparent 10%, transparent);
+    background-image: linear-gradient(0deg, rgb(66,81,101) 10%, rgb(255, 255, 255) 10%);
+
+    padding-right: 0;
     background-size: 50px 100%;
     height: 100%;
     width: 2rem;
