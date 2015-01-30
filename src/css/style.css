@@ -5,9 +5,7 @@
          url('../fonts/c4a-all-icons.eot'),
          url('../fonts/c4a-all-icons.ttf');
 }
-html {
-    background-color: #939393; /* grey */
-}
+
 .gpii-tool,
 .gpii-tool p {
     font-size: 2.5rem; /*base font size */
@@ -69,10 +67,11 @@ html {
 
 /* Main section, containing adjuster and instructions */
 .gpii-main {
-    display: default; /* hidden unless active */
+    display: none; /* hidden unless active */
     color: #425165; /* blue-grey */
     background-color: #ffffff;
     padding: 1.5rem;
+    min-height: 22rem;
 }
 
 .gpii-main.gpii-current {
@@ -87,11 +86,6 @@ html {
 .gpii-controlsContainer {
     height: 13rem;
 }
-.gpii-range {
-    -ms-transform: rotate(-90deg); /* IE 9 */
-    -webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
-    transform: rotate(-90deg);
-}
 
 .gpii-control-label {
     color: inherit;
@@ -104,21 +98,21 @@ html {
     height: 6rem;
 }
 .gpii-tool .gpii-control {
-    vertical-align: middle;
     margin-bottom: 1rem;
 }
 
-.gpiic-adjusterContainer-tts .gpii-controls {
+.gpii-adjusterContainer-tts .gpii-controls {
     margin-left: 6rem;
 }
-.gpiic-adjusterContainer-size .gpii-controls {
-    margin-left: 2rem;
+.gpii-adjusterContainer-size .gpii-controls {
+    margin-left: 0rem;
 }
-.gpiic-adjusterContainer-contrast .gpii-controls {
+.gpii-adjusterContainer-contrast .gpii-controls {
     margin-left: 2rem;
 }
 
 /* tts yes/no controls */
+/* currently not used - clean up once TTS panel is implemented */
 .gpii-choice {
     margin-bottom: 0.3rem;
     margin-left: 2rem;
@@ -246,47 +240,45 @@ html {
     line-height: initial;
 }
 .gpii-lang:before {
-    content:  "\e62a";
+    content: "\e62a";
 }
 .gpii-volume:before {
-    content:  "\e650";
+    content: "\e650";
 }
 .gpii-text:before {
-    content:  "\e648";
+    content: "\e648";
 }
 .gpii-contrast:before {
-    content:  "\e613";
+    content: "\e613";
 }
 
 /* status/navigation styles */
 .gpii-doneIndicator,
 .gpii-activeIndicator {
-    display: inline;
     visibility: hidden; /* use visibility instead of display to maintain positioning */
 }
+
+.gpii-activeIndicator{
+    width: 0;
+    height: 0;
+    border-left: 1.25rem solid transparent;
+    border-right: 1.25rem solid transparent;
+    border-top: 1rem solid #fff;
+    margin: -5.5rem auto 3rem auto;
+}
+
 .gpii-show {
     visibility: visible;
 }
 .gpii-doneIndicator:before {
     content:  "\e60f";
     font-size: 2rem;
-    position: relative;
-    top: 2rem;
-    left: -3.7rem;
     color: #ffffff;
     background-color: #279841;
     border-radius: 2rem;
     border: 1px solid #ffffff;
+    margin-left: -2rem;
 }
 .gpii-active {
     background-color: #fed73a;
-}
-.gpii-activeIndicator:before {
-    content:  "\e607";
-    font-size: 4rem;
-    position: relative;
-    top: -7.5rem;
-    left: -0.5rem;
-    color: #ffffff;
-    background-color: transparent;
 }

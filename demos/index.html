@@ -12,12 +12,32 @@
 
     <body>
         <div class="small-12 gpii-tool">
-            <header class="row gpii-top">
+            <header class="gpiic-muteContainer row gpii-top">
                 <button class="left gpii-mute"><span class="gpii-icon"></span>turn voice OFF</button>
                 <button class="right gpii-help">help</button>
             </header>
 
-            <section class="gpii-main">
+            <!-- 'gpii-main' divs are hidden by default, only shown when 'gpii-current' class is added -->
+            <section class="gpiic-adjusterContainer-tts gpii-adjusterContainer-tts gpii-main">
+                <!-- ---- begin TTS adjuster template ---- -->
+                <div class="gpii-instructions">Do you prefer to have items on the screen read aloud to you?</div>
+                <div class="gpii-controls">
+                    <div class="gpii-choice">
+                        <input class="flc-prefsEditor-tts gpii-hidden-accessible" name="tts" id="tts-yes" value="yes" type="radio" checked>
+                        <span class="gpii-icon gpii-indicator"></span>
+                        <label for="tts-yes" class="flc-prefsEditor-tts-label gpii-yesNo" id="tts-yes-label">Yes</label>
+                    </div>
+                    <div class="gpii-choice">
+                        <input class="flc-prefsEditor-tts gpii-hidden-accessible" name="tts" id="tts-no" value="no" type="radio">
+                        <span class="gpii-icon gpii-indicator"></span>
+                        <label for="tts-no" class="flc-prefsEditor-tts-label gpii-yesNo" id="tts-no-label">No</label>
+                    </div>
+                </div>
+                <!-- ---- end TTS adjuster template ---- -->
+            </section>
+
+            <section class="gpiic-adjusterContainer-size gpii-adjusterContainer-size gpii-main gpii-current">
+                <!-- ---- begin Size adjuster template ---- -->
                 <p class="gpii-instructions">Adjust the text to a size you like best.</p>
                 <div class="row gpii-controlsContainer">
                     <div class="small-offset-1 small-1 medium-offset-4 columns gpii-status">
@@ -28,11 +48,37 @@
                             <label class="gpii-control-label" for="gpii-increase">larger</label>
                         </div>
                         <div class="row gpii-control">
-                            <input type="button" value="-" class="left gpii-decrease" id="gpii-decrease" tabindex="2"  />
+                            <input type="button" value="-" class="left gpii-decrease" id="gpii-decrease" tabindex="2" />
                             <label class="gpii-control-label" for="gpii-decrease">smaller</label>
                         </div>
                     </div>
                 </div>
+                <!-- ---- end Size adjuster template ---- -->
+            </section>
+
+            <section class="gpiic-adjusterContainer-contrast gpii-adjusterContainer-contrast gpii-main">
+                <!-- ---- begin Contrast adjuster template ---- -->
+                <p class="gpii-instructions">You can choose a screen colour to make things easier to see.</p>
+                <div class="gpii-controlsContainer">
+                    <div class="gpii-controls">
+                        <div class="gpii-choice">
+                            <input class="flc-prefsEditor-theme gpii-hidden-accessible" name="theme" id="theme-default" value="default" type="radio" checked>
+                            <span class="gpii-icon gpii-indicator"></span>
+                            <label for="theme-yes" class="flc-prefsEditor-theme-label gpii-theme gpii-theme-default" id="theme-yes-label">no change</label>
+                        </div>
+                        <div class="gpii-choice">
+                            <input class="flc-prefsEditor-theme gpii-hidden-accessible" name="theme" id="theme-bw" value="bw" type="radio">
+                            <span class="gpii-icon gpii-indicator"></span>
+                            <label for="theme-bw" class="flc-prefsEditor-theme-label gpii-theme gpii-theme-bw" id="theme-bw-label">black on white</label>
+                        </div>
+                        <div class="gpii-choice">
+                            <input class="flc-prefsEditor-theme gpii-hidden-accessible" name="theme" id="theme-wb" value="wb" type="radio">
+                            <span class="gpii-icon gpii-indicator"></span>
+                            <label for="theme-wb" class="flc-prefsEditor-theme-label gpii-theme gpii-theme-wb" id="theme-no-label">white on black</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- ---- end Contrast adjuster template ---- -->
             </section>
 
             <nav class="gpii-nav">
@@ -42,13 +88,22 @@
                 </div>
                 <div class="text-center gpii-navIcons">
                     <ul>
-                        <li class="gpii-navIcon gpii-lang"><div class="gpii-doneIndicator"></div><div class="gpii-activeIndicator gpii-hidden"></div></li>
-                        <li class="gpii-navIcon gpii-volume"><div class="gpii-doneIndicator"></div><div class="gpii-activeIndicator gpii-hidden"></div></li>
+                        <li class="gpii-navIcon gpii-lang">
+                            <div class="gpii-activeIndicator gpii-hidden"></div>
+                            <div class="gpii-doneIndicator"></div>
+                        </li>
+                        <li class="gpii-navIcon gpii-volume">
+                            <div class="gpii-activeIndicator gpii-hidden"></div>
+                            <div class="gpii-doneIndicator"></div>
+                        </li>
                         <li class="gpii-navIcon gpii-text gpii-active">
                             <div class="gpii-activeIndicator gpii-show"></div>
                             <div class="gpii-doneIndicator gpii-show"></div>
                         </li>
-                        <li class="gpii-navIcon gpii-contrast"><div class="gpii-doneIndicator gpii-hidden"></div><div class="gpii-activeIndicator gpii-hidden"></div></li>
+                        <li class="gpii-navIcon gpii-contrast">
+                            <div class="gpii-activeIndicator gpii-hidden"></div>
+                            <div class="gpii-doneIndicator gpii-hidden"></div>
+                        </li>
                     </ul>
                 </div>
             </nav>
