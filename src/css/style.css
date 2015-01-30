@@ -84,7 +84,8 @@
  * for ideas */
 
 .gpii-controlsContainer {
-    height: 13rem;
+    height: 15rem;
+    padding-top: 2rem;
 }
 
 .gpii-control-label {
@@ -97,30 +98,16 @@
     line-height: 5rem;
     height: 6rem;
 }
-.gpii-tool .gpii-control {
-    margin-bottom: 1rem;
-}
-
-.gpii-adjusterContainer-tts .gpii-controls {
-    margin-left: 6rem;
-}
-.gpii-adjusterContainer-size .gpii-controls {
-    margin-left: 0rem;
-}
-.gpii-adjusterContainer-contrast .gpii-controls {
-    margin-left: 2rem;
-}
 
 /* tts yes/no controls */
 /* currently not used - clean up once TTS panel is implemented */
 .gpii-choice {
     margin-bottom: 0.3rem;
-    margin-left: 2rem;
 }
 .gpii-yesNo {
     font-size: inherit;
     display: inline-block;
-    width: 13rem;
+    width: 14rem;
     text-align: center;
     color: #ffffff;
     background-color: #425165; /* blue-grey */
@@ -130,11 +117,17 @@
     width: 1rem;
     display: inline-block;
 }
-.gpii-choice input:checked + span:before {
-    content: "\e60d";
-    color: #fed73a; /* yellow */
+
+.gpii-choice input:checked + .gpii-indicator {
+    /* Arrow pointing right. */
+    width: 0;
+    height: 0;
+    border-top: 1.25rem solid transparent;
+    border-bottom: 1.25rem solid transparent;
+    border-left: 1rem solid #fed73a;
 }
-.gpii-choice input:checked ~ label.gpii-yesNo {
+
+.gpii-choice input:checked ~ .gpii-indicator.gpii-yesNo {
     color: #fed73a; /* yellow */
 }
 
@@ -146,13 +139,12 @@
     text-align: center;
     color: #ffffff;
     background-color: #425165; /* blue-grey */
-    border-width: 2px;
-    border-style: solid;
+    border: 0.2rem solid #000;
 }
 .gpii-theme-default {
     color: #425165; !important;
     background-color: #eeeeee !important;
-    border-color: #425165; !important;
+    border-color: #425165 !important;
 }
 .gpii-theme-bw {
     color: #000000 !important;
@@ -175,6 +167,7 @@
     border-radius: 0.7rem;
     box-shadow: 0 0 0.3rem #000;
     font-size: 4rem;
+    margin-bottom: 1rem;
 }
 
 /* vertical 'range status' indicator beside adjuster */
