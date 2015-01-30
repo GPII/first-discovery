@@ -51,7 +51,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         invokers: {
             setButtonStates: {
                 funcName: "gpii.firstDiscovery.navButtons.setButtonStates",
-                args: ["{that}.model.currentPanelNum", "{that}.options.panelStartNum", "{that}.options.panelTotalNum", "{that}.dom.back", "{that}.dom.next", "{that}.options.strings"]
+                args: ["{that}"]
             },
             setModel: {
                 funcName: "gpii.firstDiscovery.navButtons.setModel",
@@ -68,18 +68,38 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    gpii.firstDiscovery.navButtons.setButtonStates = function (currentPanelNum, panelStartNum, panelTotalNum, backButton, nextButton, strings) {
+    gpii.firstDiscovery.navButtons.setButtonStates = function (that) {
+        var currentPanelNum = that.model.currentPanelNum,
+            panelStartNum = that.options.panelStartNum,
+            panelTotalNum = that.options.panelTotalNum,
+            strings = that.options.strings,
+            backButton = that.locate("back"),
+            nextButton = that.locate("next");
+
+        if (!that.backTooltip) {
+            that.backTooltip = fluid.tooltip(that.locate("back"));
+        }
+
+        if (!that.nextTooltip) {
+            that.nextTooltip = fluid.tooltip(that.locate("next"));
+        }
+
         if (currentPanelNum === panelStartNum) {
             backButton.prop("disabled", true);
             backButton.hide();
             nextButton.show();
             nextButton.html(strings.start);
+            that.nextTooltip.updateContent(strings.start);
         } else {
             backButton.show();
             backButton.prop("disabled", false);
             nextButton.show();
             backButton.html(strings.back);
-            nextButton.html(currentPanelNum === panelTotalNum ? strings.finish : strings.next);
+            that.backTooltip.updateContent(strings.back);
+
+            var nextLabel = currentPanelNum === panelTotalNum ? strings.finish : strings.next;
+            nextButton.html(nextLabel);
+            that.nextTooltip.updateContent(nextLabel);
         }
     };
 

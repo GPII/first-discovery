@@ -43,6 +43,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 container: "{that}.dom.navButtons",
                 createOnEvent: "onCreateNavButtons",
                 options: {
+                    gradeNames: ["fluid.prefs.msgLookup"],
+                    members: {
+                        messageResolver: "{firstDiscoveryEditor}.msgResolver"
+                    },
+                    strings: {
+                        back: "{that}.msgLookup.back",
+                        next: "{that}.msgLookup.next",
+                        start: "{that}.msgLookup.start",
+                        finish: "{that}.msgLookup.finish"
+                    },
                     panelTotalNum: "{firstDiscoveryEditor}.panelTotal",
                     model: {
                         currentPanelNum: "{firstDiscoveryEditor}.model.currentPanelNum"
