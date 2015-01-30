@@ -1,0 +1,38 @@
+{
+  "name": "first-discovery",
+  "description": "A preferences editor tool that helps users discovery their initial preferences.",
+  "version": "0.1.0-SNAPSHOT",
+  "author": "Fluid Project",
+  "bugs": "http://issues.fluidproject.org/browse/FLOE",
+  "homepage": "http://www.floeproject.org",
+  "dependencies": {},
+  "licenses": [
+    {
+      "type": "BSD-3-Clause",
+      "url": "http://www.opensource.org/licenses/BSD-3-Clause"
+    },
+    {
+      "type": "ECL-2.0",
+      "url": "http://www.opensource.org/licenses/ECL-2.0"
+    }
+  ],
+  "keywords": [
+    "discovery",
+    "accessibility",
+    "settings",
+    "fluid",
+    "components",
+    "modules",
+    "feedback"
+  ],
+  "repository": "git@github.com:fluid-project/first-discovery.git",
+  "main": "",
+  "engines": {
+    "node": ">=0.1.9"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.9.0",
+    "grunt-jsonlint": "~1.0.4"
+  }
+}

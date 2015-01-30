@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <!-- CSS required for the Prefs Editor -->
+        <link rel="stylesheet" type="text/css" href="../src/lib/infusion/src/framework/preferences/css/Enactors.css" />
+        <link rel="stylesheet" type="text/css" href="../src/lib/infusion/src/framework/preferences/css/PrefsEditor.css" />
+
+        <script type="text/javascript" src="../src/lib/infusion/infusion-custom.js"></script>
+        <script type="text/javascript" src="../src/schemas/schemas.js"></script>
+        <script type="text/javascript" src="../src/js/firstDiscoveryEditor.js"></script>
+
+        <title>First Discovery Tool</title>
+    </head>
+
+    <body>
+        <div id="gpiic-tool">
+            <div class="gpiic-prefsEditor"></div>
+        </div>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                fluid.prefs.create("#gpiic-tool", {
+                    build: {
+                        gradeNames: ["gpii.firstDiscovery.auxSchema"]
+                    },
+                    prefsEditor: {
+                        prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor"
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
