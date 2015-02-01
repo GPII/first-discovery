@@ -23,6 +23,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         gradeNames: ["fluid.viewRelayComponent", "autoInit"],
         panelTotalNum: null,   // Must be supplied by integrators
         panelStartNum: 1,
+        tooltipOptions: {
+            delay: 0,
+            duration: 0,
+            position: {
+                my: "left+35 bottom-20"
+            }
+        },
         selectors: {
             back: ".gpiic-back",
             next: ".gpiic-next"
@@ -77,11 +84,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             nextButton = that.locate("next");
 
         if (!that.backTooltip) {
-            that.backTooltip = fluid.tooltip(that.locate("back"));
+            that.backTooltip = fluid.tooltip(backButton, that.options.tooltipOptions);
         }
-
         if (!that.nextTooltip) {
-            that.nextTooltip = fluid.tooltip(that.locate("next"));
+            that.nextTooltip = fluid.tooltip(nextButton, that.options.tooltipOptions);
         }
 
         if (currentPanelNum === panelStartNum) {
