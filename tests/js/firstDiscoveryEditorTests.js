@@ -15,6 +15,19 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.defaults("gpii.tests.firstDiscovery", {
         gradeNames: ["fluid.viewRelayComponent", "{that}.assembledPrefsEditorGrade", "autoInit"],
+        prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor",
+        components: {
+            prefsEditorLoader: {
+                options: {
+                    listeners: {
+                        onPrefsEditorReady: "{firstDiscovery}.events.onReady"
+                    }
+                }
+            }
+        },
+        events: {
+            onReady: null
+        },
         invokers: {
             assembledPrefsEditorGrade: {
                 funcName: "gpii.tests.getPrefsEditorGrade"
@@ -52,48 +65,45 @@ https://github.com/gpii/universal/LICENSE.txt
 
     jqUnit.asyncTest("The first discovery tool editor", function () {
         gpii.tests.firstDiscovery("#gpiic-tool", {
-            prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor",
-            components: {
-                prefsEditorLoader: {
-                    options: {
-                        listeners: {
-                            onPrefsEditorReady: {
-                                listener: function (that) {
-                                    jqUnit.expect(26);
-                                    var backButton = that.navButtons.locate("back");
-                                    var nextButton = that.navButtons.locate("next");
+            listeners: {
+                onReady: {
+                    listener: function (that) {
+                        jqUnit.expect(26);
+                        var backButton = that.navButtons.locate("back");
+                        var nextButton = that.navButtons.locate("next");
 
-                                    jqUnit.assertNotUndefined("The subcomponent \"prefsEditor\" has been instantiated", that.prefsEditor);
-                                    jqUnit.assertNotUndefined("The subcomponent \"navButtons\" has been instantiated", that.navButtons);
-                                    gpii.tests.verifyStates(that, 1, false, true, {
-                                        isVisible: [".gpiic-firstDiscovery-panel-audio"],
-                                        notVisible: [".gpiic-firstDiscovery-panel-size", ".gpiic-firstDiscovery-panel-contrast"]
-                                    });
+                        // Test the initial panel
+                        jqUnit.assertNotUndefined("The subcomponent \"prefsEditor\" has been instantiated", that.prefsEditor);
+                        jqUnit.assertNotUndefined("The subcomponent \"navButtons\" has been instantiated", that.navButtons);
+                        gpii.tests.verifyStates(that, 1, false, true, {
+                            isVisible: [".gpiic-firstDiscovery-panel-audio"],
+                            notVisible: [".gpiic-firstDiscovery-panel-size", ".gpiic-firstDiscovery-panel-contrast"]
+                        });
 
-                                    nextButton.click();
-                                    gpii.tests.verifyStates(that, 2, true, true, {
-                                        isVisible: [".gpiic-firstDiscovery-panel-size"],
-                                        notVisible: [".gpiic-firstDiscovery-panel-audio", ".gpiic-firstDiscovery-panel-contrast"]
-                                    });
+                        // Clicking the next button leads to the 2nd panel
+                        nextButton.click();
+                        gpii.tests.verifyStates(that, 2, true, true, {
+                            isVisible: [".gpiic-firstDiscovery-panel-size"],
+                            notVisible: [".gpiic-firstDiscovery-panel-audio", ".gpiic-firstDiscovery-panel-contrast"]
+                        });
 
-                                    backButton.click();
-                                    gpii.tests.verifyStates(that, 1, false, true, {
-                                        isVisible: [".gpiic-firstDiscovery-panel-audio"],
-                                        notVisible: [".gpiic-firstDiscovery-panel-size", ".gpiic-firstDiscovery-panel-contrast"]
-                                    });
+                        // Clicking the back button brings back the first panel
+                        backButton.click();
+                        gpii.tests.verifyStates(that, 1, false, true, {
+                            isVisible: [".gpiic-firstDiscovery-panel-audio"],
+                            notVisible: [".gpiic-firstDiscovery-panel-size", ".gpiic-firstDiscovery-panel-contrast"]
+                        });
 
-                                    that.applier.change("currentPanelNum", 3);
-                                    gpii.tests.verifyStates(that, 3, true, true, {
-                                        isVisible: [".gpiic-firstDiscovery-panel-contrast"],
-                                        notVisible: [".gpiic-firstDiscovery-panel-audio", ".gpiic-firstDiscovery-panel-size"]
-                                    });
+                        // Directs to the last panel by firing a change request directly
+                        that.applier.change("currentPanelNum", 3);
+                        gpii.tests.verifyStates(that, 3, true, true, {
+                            isVisible: [".gpiic-firstDiscovery-panel-contrast"],
+                            notVisible: [".gpiic-firstDiscovery-panel-audio", ".gpiic-firstDiscovery-panel-size"]
+                        });
 
-                                    jqUnit.start();
-                                },
-                                priority: "last"
-                            }
-                        }
-                    }
+                        jqUnit.start();
+                    },
+                    priority: "last"
                 }
             }
         });

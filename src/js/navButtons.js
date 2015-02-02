@@ -40,6 +40,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             start: "Let's start",
             finish: "Finish"
         },
+        modelRelay: {
+            target: "currentPanelNum",
+            singleTransform: {
+                type: "fluid.transforms.limitRange",
+                input: "{that}.model.currentPanelNum",
+                min: "{that}.options.panelStartNum",
+                max: "{that}.options.panelTotalNum"
+            }
+        },
         modelListeners: {
             currentPanelNum: "{that}.setButtonStates"
         },
@@ -61,16 +70,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 // Calls on "{that}.backTooltip", "{that}.nextTooltip" to force the instantiate of these sub-components
                 args: ["{that}", "{that}.backTooltip", "{that}.nextTooltip"]
             },
-            setModel: {
-                funcName: "gpii.firstDiscovery.navButtons.setModel",
+            adjustCurrentPanelNum: {
+                funcName: "gpii.firstDiscovery.navButtons.adjustCurrentPanelNum",
                 args: ["{that}", "{arguments}.0"]
             },
             backButtonClicked: {
-                funcName: "gpii.firstDiscovery.navButtons.setModel",
+                funcName: "gpii.firstDiscovery.navButtons.adjustCurrentPanelNum",
                 args: ["{that}", -1]
             },
             nextButtonClicked: {
-                funcName: "gpii.firstDiscovery.navButtons.setModel",
+                funcName: "gpii.firstDiscovery.navButtons.adjustCurrentPanelNum",
                 args: ["{that}", 1]
             }
         },
@@ -104,12 +113,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         nextTooltip.updateContent(nextLabel);
     };
 
-    gpii.firstDiscovery.navButtons.setModel = function (that, toChange) {
+    gpii.firstDiscovery.navButtons.adjustCurrentPanelNum = function (that, toChange) {
         var newValue = that.model.currentPanelNum + toChange;
-
-        if (newValue >= that.options.panelStartNum && newValue <= that.options.panelTotalNum) {
-            that.applier.change("currentPanelNum", newValue);
-        }
+        that.applier.change("currentPanelNum", newValue);
     };
 
 })(jQuery, fluid);

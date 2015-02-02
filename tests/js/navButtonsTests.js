@@ -93,17 +93,21 @@ https://github.com/gpii/universal/LICENSE.txt
         var backButton = that.locate("back"),
             nextButton = that.locate("next");
 
+        // Test button states of being on the first panel
         that.applier.change("currentPanelNum", 1);
         jqUnit.assertNotUndefined("The tooltip for the back button has been created", that.backTooltip);
         jqUnit.assertNotUndefined("The tooltip for the next button has been created", that.nextTooltip);
         gpii.tests.verifyButtons(that, 1);
 
+        // Clicking the next button increases the current panel number and changes button states
         nextButton.click();
         gpii.tests.verifyButtons(that, 2);
 
+        // Clicking the back button decreases the current panel number and brings back the states of being on the first panel
         backButton.click();
         gpii.tests.verifyButtons(that, 1);
 
+        // Test the button states of being on the last panel
         that.applier.change("currentPanelNum", 6);
         gpii.tests.verifyButtons(that, 6);
     });
