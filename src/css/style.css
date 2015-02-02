@@ -16,6 +16,7 @@
     color: #ffffff;
     background-color: #425165; /* blue-grey */
     min-width:31rem;
+    max-width: 60rem;
 }
 .gpii-tool:focus {
     border: 3px solid red;
