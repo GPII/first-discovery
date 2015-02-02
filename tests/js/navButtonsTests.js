@@ -13,11 +13,20 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.registerNamespace("gpii.tests");
 
-    gpii.tests.verifyStates = function (msg, backButton, nextButton, backDisabled, backVisible, nextDisabled, nextVisible) {
-        jqUnit[backDisabled? "assertTrue" : "assertFalse"](msg + " - The back button is disabled", backButton.is(":disabled"));
-        jqUnit[backVisible? "assertTrue" : "assertFalse"](msg + " - The back button is hidden", backButton.is(":visible"));
-        jqUnit[nextDisabled? "assertTrue" : "assertFalse"](msg + " - The next button is enabled", nextButton.is(":disabled"));
-        jqUnit[nextVisible? "assertTrue" : "assertFalse"](msg + " - The next button is shown", nextButton.is(":visible"));
+    gpii.tests.verifyStates = function (msg, backButton, nextButton, states) {
+        jqUnit.assertEquals(msg + " - The back button is disabled", states.backDisabled, backButton.is(":disabled"));
+        jqUnit.assertEquals(msg + " - The back button is hidden", states.backVisible, backButton.is(":visible"));
+        jqUnit.assertEquals(msg + " - The next button is enabled", states.nextDisabled, nextButton.is(":disabled"));
+        jqUnit.assertEquals(msg + " - The next button is shown", states.nextVisible, nextButton.is(":visible"));
+    };
+
+    gpii.tests.verifyLabels = function (msg, backButton, backTooltip, nextButton, nextTooltip, states) {
+        if (states.backLabel) {
+            jqUnit.assertEquals(msg + " - The text on the back button is properly set", states.backLabel, backButton.html());
+            jqUnit.assertEquals(msg + " - The tooltip content for the back button is properly set", states.backLabel, backTooltip.model.content);
+        }
+        jqUnit.assertEquals(msg + " - The text on the next button is properly set", states.nextLabel, nextButton.html());
+        jqUnit.assertEquals(msg + " - The tooltip content for the next button is properly set", states.nextLabel, nextTooltip.model.content);
     };
 
     gpii.tests.verifyButtons = function (that, currentPanelNum) {
@@ -33,27 +42,44 @@ https://github.com/gpii/universal/LICENSE.txt
 
         if (currentPanelNum === start) {
             msg = "On the start panel";
-            gpii.tests.verifyStates(msg, backButton, nextButton, true, false, false, true);
-            jqUnit.assertEquals(msg + " - The text on the next button is properly set", that.options.strings.start, nextButton.html());
-            jqUnit.assertEquals(msg + " - The tooltip content for the next button is properly set", that.options.strings.start, nextTooltip.model.content);
+            gpii.tests.verifyStates(msg, backButton, nextButton, {
+                backDisabled: true,
+                backVisible: false,
+                nextDisabled: false,
+                nextVisible: true
+            });
+            gpii.tests.verifyLabels(msg, backButton, backTooltip, nextButton, nextTooltip, {
+                backLabel: undefined,
+                nextLabel: that.options.strings.start
+            });
         }
 
         if (currentPanelNum > start && currentPanelNum < end) {
             msg = "On a panel in btw the start and the last panels";
-            gpii.tests.verifyStates(msg, backButton, nextButton, false, true, false, true);
-            jqUnit.assertEquals(msg + " - The text on the back button is properly set", that.options.strings.back, backButton.html());
-            jqUnit.assertEquals(msg + " - The tooltip content for the back button is properly set", that.options.strings.back, backTooltip.model.content);
-            jqUnit.assertEquals(msg + " - The text on the next button is properly set", that.options.strings.next, nextButton.html());
-            jqUnit.assertEquals(msg + " - The tooltip content for the next button is properly set", that.options.strings.next, nextTooltip.model.content);
+            gpii.tests.verifyStates(msg, backButton, nextButton, {
+                backDisabled: false,
+                backVisible: true,
+                nextDisabled: false,
+                nextVisible: true
+            });
+            gpii.tests.verifyLabels(msg, backButton, backTooltip, nextButton, nextTooltip, {
+                backLabel: that.options.strings.back,
+                nextLabel: that.options.strings.next
+            });
         }
 
         if (currentPanelNum === end) {
             msg = "On the last panel";
-            gpii.tests.verifyStates(msg, backButton, nextButton, false, true, false, true);
-            jqUnit.assertEquals(msg + " - The text on the back button is properly set", that.options.strings.back, backButton.html());
-            jqUnit.assertEquals(msg + " - The tooltip content for the back button is properly set", that.options.strings.back, backTooltip.model.content);
-            jqUnit.assertEquals(msg + " - The text on the next button is properly set", that.options.strings.finish, nextButton.html());
-            jqUnit.assertEquals(msg + " - The tooltip content for the next button is properly set", that.options.strings.finish, nextTooltip.model.content);
+            gpii.tests.verifyStates(msg, backButton, nextButton, {
+                backDisabled: false,
+                backVisible: true,
+                nextDisabled: false,
+                nextVisible: true
+            });
+            gpii.tests.verifyLabels(msg, backButton, backTooltip, nextButton, nextTooltip, {
+                backLabel: that.options.strings.back,
+                nextLabel: that.options.strings.finish
+            });
         }
     };
 

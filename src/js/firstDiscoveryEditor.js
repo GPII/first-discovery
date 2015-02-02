@@ -23,13 +23,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         gradeNames: ["fluid.viewRelayComponent", "fluid.prefs.prefsEditorLoader", "autoInit"],
         selectors: {
             prefsEditor: ".gpiic-prefsEditor",
-            panelContainer: ".gpiic-firstDiscovery-panel",
+            panel: ".gpiic-firstDiscovery-panel",
             navButtons: ".gpiic-buttons"
         },
         components: {
             prefsEditor: {
                 container: "{that}.dom.prefsEditor",
                 options: {
+                    selectors: {
+                        panel: "{firstDiscoveryEditor}.options.selectors.panel"
+                    },
                     listeners: {
                         onReady: {
                             listener: "{firstDiscoveryEditor}.events.onPrefsEditorReady",
@@ -60,8 +63,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 }
             }
         },
+        model: {
+            currentPanelNum: 1
+        },
         modelListeners: {
-            "currentPanelNum": "{that}.showPanel"
+            "currentPanelNum": {
+                listener: "{that}.showPanel",
+                excludeSource: "init"
+            }
         },
         events: {
             onPrefsEditorReady: null,
@@ -74,8 +83,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 priority: "first"
             },
             "onPrefsEditorReady.showInitialPanel": {
-                listener: "{that}.applier.change",
-                args: ["currentPanelNum", 1]
+                listener: "{that}.showPanel",
+                args: ["{that}.model.currentPanelNum"]
             },
             "onPrefsEditorReady.createNavButtons": {
                 listener: "{that}.events.onCreateNavButtons"
@@ -90,13 +99,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     gpii.firstDiscovery.getPanelTotal = function (that) {
-        that.panels = that.prefsEditor.container.find(that.options.selectors.panelContainer);
+        that.panels = that.prefsEditor.locate("panel");
         that.panelTotal = that.panels.length;
     };
 
     gpii.firstDiscovery.showPanel = function (panels, toShow) {
         fluid.each(panels, function (panel, index) {
-            $(panel)[toShow === index + 1 ? "show" : "hide"]();
+            $(panel).toggle(toShow === (index + 1));
         });
     };
 })(jQuery, fluid);

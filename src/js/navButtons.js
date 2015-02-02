@@ -31,8 +31,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         selectors: {
-            back: ".gpiic-back",
-            next: ".gpiic-next"
+            back: ".gpiic-firstDiscovery-navButtons-back",
+            next: ".gpiic-firstDiscovery-navButtons-next"
         },
         strings: {
             back: "Back",
@@ -47,66 +47,61 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "onCreate.bindBack": {
                 "this": "{that}.dom.back",
                 "method": "click",
-                args: ["{that}.onBackClick"]
+                args: ["{that}.backButtonClicked"]
             },
             "onCreate.bindNext": {
                 "this": "{that}.dom.next",
                 "method": "click",
-                args: ["{that}.onNextClick"]
+                args: ["{that}.nextButtonClicked"]
             }
         },
         invokers: {
             setButtonStates: {
                 funcName: "gpii.firstDiscovery.navButtons.setButtonStates",
-                args: ["{that}"]
+                // Calls on "{that}.backTooltip", "{that}.nextTooltip" to force the instantiate of these sub-components
+                args: ["{that}", "{that}.backTooltip", "{that}.nextTooltip"]
             },
             setModel: {
                 funcName: "gpii.firstDiscovery.navButtons.setModel",
                 args: ["{that}", "{arguments}.0"]
             },
-            onBackClick: {
+            backButtonClicked: {
                 funcName: "gpii.firstDiscovery.navButtons.setModel",
                 args: ["{that}", -1]
             },
-            onNextClick: {
+            nextButtonClicked: {
                 funcName: "gpii.firstDiscovery.navButtons.setModel",
                 args: ["{that}", 1]
+            }
+        },
+        components: {
+            backTooltip: {
+                type: "fluid.tooltip",
+                container: "{that}.dom.back",
+                options: "{navButtons}.options.tooltipOptions"
+            },
+            nextTooltip: {
+                type: "fluid.tooltip",
+                container: "{that}.dom.next",
+                options: "{navButtons}.options.tooltipOptions"
             }
         }
     });
 
-    gpii.firstDiscovery.navButtons.setButtonStates = function (that) {
+    gpii.firstDiscovery.navButtons.setButtonStates = function (that, backTooltip, nextTooltip) {
         var currentPanelNum = that.model.currentPanelNum,
-            panelStartNum = that.options.panelStartNum,
-            panelTotalNum = that.options.panelTotalNum,
             strings = that.options.strings,
             backButton = that.locate("back"),
-            nextButton = that.locate("next");
+            nextButton = that.locate("next"),
+            isFirstPanel = currentPanelNum === that.options.panelStartNum,
+            nextLabel = isFirstPanel ? strings.start : (currentPanelNum === that.options.panelTotalNum ? strings.finish : strings.next);
 
-        if (!that.backTooltip) {
-            that.backTooltip = fluid.tooltip(backButton, that.options.tooltipOptions);
-        }
-        if (!that.nextTooltip) {
-            that.nextTooltip = fluid.tooltip(nextButton, that.options.tooltipOptions);
-        }
-
-        if (currentPanelNum === panelStartNum) {
-            backButton.prop("disabled", true);
-            backButton.hide();
-            nextButton.show();
-            nextButton.html(strings.start);
-            that.nextTooltip.updateContent(strings.start);
-        } else {
-            backButton.show();
-            backButton.prop("disabled", false);
-            nextButton.show();
-            backButton.html(strings.back);
-            that.backTooltip.updateContent(strings.back);
-
-            var nextLabel = currentPanelNum === panelTotalNum ? strings.finish : strings.next;
-            nextButton.html(nextLabel);
-            that.nextTooltip.updateContent(nextLabel);
-        }
+        backButton.prop("disabled", isFirstPanel);
+        backButton.toggle(!isFirstPanel);
+        backButton.html(strings.back);
+        nextButton.html(nextLabel);
+        backTooltip.updateContent(strings.back);
+        nextTooltip.updateContent(nextLabel);
     };
 
     gpii.firstDiscovery.navButtons.setModel = function (that, toChange) {

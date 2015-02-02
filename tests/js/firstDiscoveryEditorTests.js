@@ -40,12 +40,12 @@ https://github.com/gpii/universal/LICENSE.txt
         var nextButton = that.navButtons.locate("next");
 
         jqUnit.assertEquals("The model value for \"currentPanelNum\" has been set to " + currentPanelNum, currentPanelNum, that.model.currentPanelNum);
-        jqUnit[panel1Visible ? "assertTrue" : "assertFalse"]("The visibility of the first panel is " + panel1Visible, prefsEditorContainer.find(".gpiic-audio").is(":visible"));
-        jqUnit[panel2Visible ? "assertTrue" : "assertFalse"]("The visibility of the second panel is " + panel2Visible, prefsEditorContainer.find(".gpiic-size").is(":visible"));
-        jqUnit[panel3Visible ? "assertTrue" : "assertFalse"]("The visibility of the third panel is " + panel3Visible, prefsEditorContainer.find(".gpiic-contrast").is(":visible"));
+        jqUnit.assertEquals("The visibility of the first panel is " + panel1Visible, panel1Visible, prefsEditorContainer.find(".gpiic-audio").is(":visible"));
+        jqUnit.assertEquals("The visibility of the second panel is " + panel2Visible, panel2Visible, prefsEditorContainer.find(".gpiic-size").is(":visible"));
+        jqUnit.assertEquals("The visibility of the third panel is " + panel3Visible, panel3Visible, prefsEditorContainer.find(".gpiic-contrast").is(":visible"));
 
-        jqUnit[backVisible ? "assertTrue" : "assertFalse"]("The visibility of the back button is " + backVisible, backButton.is(":visible"));
-        jqUnit[nextVisible ? "assertTrue" : "assertFalse"]("The visibility of the next button is " + nextVisible, nextButton.is(":visible"));
+        jqUnit.assertEquals("The visibility of the back button is " + backVisible, backVisible, backButton.is(":visible"));
+        jqUnit.assertEquals("The visibility of the next button is " + nextVisible, nextVisible, nextButton.is(":visible"));
     };
 
     jqUnit.asyncTest("The first discovery tool editor", function () {
