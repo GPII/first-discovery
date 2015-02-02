@@ -1,0 +1,292 @@
+/* Page-wide styles */
+@font-face {
+    font-family: 'C4A';
+    src:url('../fonts/c4a-all-icons.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/c4a-all-icons.eot'),
+         url('../fonts/c4a-all-icons.ttf');
+}
+
+body {
+    background-color: #dddddd;
+}
+.gpii-tool,
+.gpii-tool p {
+    font-size: 2.5rem; /*base font size */
+    padding: 0 2rem;
+}
+
+.gpii-tool {
+    font-family: 'Open Sans', sans-serif;
+    color: #ffffff;
+    background-color: #425165; /* blue-grey */
+    padding: 0.2rem;
+    width: 36rem;
+    margin: 0 auto;
+}
+.gpii-tool:focus {
+    border: 3px solid red;
+}
+.gpii-tool button {
+    color: inherit;
+    background-color: inherit;
+    font-size: inherit;
+}
+.gpii-icon {
+    font-family: "C4A";
+    font-size: 3rem;
+}
+
+.gpii-hidden-accessible {
+    border: 0 none;
+    clip: rect(0px, 0px, 0px, 0px);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/* Top section, with mute and help buttons */
+.gpii-topButtons {
+    padding: 1.5rem 1.5rem 0 1.5rem;
+}
+
+.gpii-help,
+.gpii-mute {
+    border: 0.2rem solid #ffffff;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    line-height: 2rem;
+}
+
+.gpii-mute .gpii-icon:before {
+    content: "\e64f";
+    padding: 0.5rem;
+    position: relative;
+}
+
+/* Main section, containing adjuster and instructions */
+.gpii-main {
+    display: none; /* hidden unless active */
+    color: #425165; /* blue-grey */
+    background-color: #ffffff;
+    padding: 1.5rem;
+    min-height: 22rem;
+}
+
+.gpii-main.gpii-current {
+    display: inherit;
+}
+
+/* controls */
+/* to try to keep the +/- buttons centred in the page,
+ * look at http://css-tricks.com/snippets/css/a-guide-to-flexbox/
+ * for ideas */
+
+.gpii-controlsContainer {
+    height: 15rem;
+    padding-top: 2rem;
+}
+
+.gpii-control-label {
+    color: inherit;
+    background-color: inherit;
+    font-size: inherit;
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 1rem;
+    line-height: 5rem;
+    height: 6rem;
+}
+
+/* tts yes/no controls */
+/* currently not used - clean up once TTS panel is implemented */
+.gpii-choice {
+    margin-bottom: 0.3rem;
+}
+.gpii-yesNo {
+    font-size: inherit;
+    display: inline-block;
+    width: 14rem;
+    text-align: center;
+    color: #ffffff;
+    background-color: #425165; /* blue-grey */
+    border-radius: 7px;
+}
+.gpii-indicator {
+    width: 1rem;
+    display: inline-block;
+}
+
+.gpii-choice input:checked + .gpii-indicator {
+    /* Arrow pointing right. */
+    width: 0;
+    height: 0;
+    border-top: 1.25rem solid transparent;
+    border-bottom: 1.25rem solid transparent;
+    border-left: 1rem solid #fed73a;
+}
+
+.gpii-choice input:checked ~ .gpii-indicator.gpii-yesNo {
+    color: #fed73a; /* yellow */
+}
+
+/* theme controls */
+.gpii-theme {
+    font-size: inherit;
+    display: inline-block;
+    width: 22rem;
+    text-align: center;
+    color: #ffffff;
+    background-color: #425165; /* blue-grey */
+    border: 0.2rem solid #000;
+}
+.gpii-theme-default {
+    color: #425165; !important;
+    background-color: #eeeeee !important;
+    border-color: #425165 !important;
+}
+.gpii-theme-bw {
+    color: #000000 !important;
+    background-color: #ffffff !important;
+    border-color: #000000 !important;
+}
+.gpii-theme-wb {
+    color: #ffffff !important;
+    background-color: #000000 !important;
+    border-color: #000000 !important;
+}
+
+/* text size increase/decrease controls */
+.gpii-increase, .gpii-decrease {
+    width: 6rem;
+    height: 6rem;
+    color: #ffffff;
+    background-color: #425165; /* blue-grey */
+    border: 0.2rem solid #fff;
+    border-radius: 0.7rem;
+    box-shadow: 0 0 0.3rem #000;
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+/* vertical 'range status' indicator beside adjuster */
+.gpii-status {
+    /* The status bar effect is created by adjusting the position of
+       two colour stops - blue (66,81,101), and white (255,255,255).
+
+       To change the blue bar level, change the percentage values. Note, if the
+       percentage values do not match, there will be a visible gradient which
+       may not be desirable.
+
+       linear-gradient: (0deg, rgb(66,81,101) XX%, rgb(255, 255, 255) XX%);
+            0deg : rotates the gradient so it starts with white on top, and blue on bottom.
+            rgb (66,81,101) : the blue colour of the bar.
+            XX% : the percentage of the container which the blue bar occupies.
+    */
+
+    background-color: #425165; /* blue-grey */
+    background-image: linear-gradient(0deg, rgb(66,81,101) 80%, rgb(255, 255, 255) 80%);
+
+    padding-right: 0;
+    background-size: 50px 100%;
+    height: 100%;
+    width: 2rem;
+    margin-right: 1rem;
+    border: 0.2rem solid #425165; /* blue-grey */
+}
+
+/* Navigation section at bottom, containing back/next and icons */
+.gpii-backNext {
+    color: #425165; /* blue-grey */
+    background-color: #ffffff;
+}
+.gpii-back, .gpii-next {
+    border: none;
+}
+
+.gpii-back .gpii-icon:before,
+.gpii-next .gpii-icon:after {
+    background-color: #425165; /* blue-grey */
+    color: #ffffff;
+    border-radius: 2rem;
+    position: relative;
+    top: 0.3rem;
+    padding: 0.5rem;
+}
+.gpii-back .gpii-icon:before {
+    content:  "\e603";
+    left: -0.3rem;
+}
+
+.gpii-next .gpii-icon:after {
+    content: "\e605";
+    left: 0.5rem;
+}
+.gpii-backNext:after {
+  content:"";
+  display:table;
+  clear:both;
+}
+.gpii-navIcons {
+    clear: both;
+    margin-top: 0.8rem; /* gap between main body and icons*/
+}
+.gpii-navIcon {
+    padding: 0.6rem 1rem 1rem 1rem;
+    color: #425165; /* blue-grey */
+    background-color: #ffffff;
+    display: inline-block;
+    border-radius: 5px;
+    width: 5rem;
+    height: 5rem;
+    font-family: "C4A" !important;
+    font-size: 3rem;
+    margin: 0.2rem 0.6rem 0 0;
+    text-transform: none;
+    line-height: initial;
+}
+.gpii-lang:before {
+    content: "\e62a";
+}
+.gpii-volume:before {
+    content: "\e650";
+}
+.gpii-text:before {
+    content: "\e648";
+}
+.gpii-contrast:before {
+    content: "\e613";
+}
+
+/* status/navigation styles */
+.gpii-doneIndicator,
+.gpii-activeIndicator {
+    visibility: hidden; /* use visibility instead of display to maintain positioning */
+}
+
+.gpii-activeIndicator{
+    width: 0;
+    height: 0;
+    border-left: 1.25rem solid transparent;
+    border-right: 1.25rem solid transparent;
+    border-top: 1rem solid #fff;
+    margin: -5.5rem auto 3rem auto;
+}
+
+.gpii-show {
+    visibility: visible;
+}
+.gpii-doneIndicator:before {
+    content:  "\e60f";
+    font-size: 2rem;
+    color: #ffffff;
+    background-color: #279841;
+    border-radius: 2rem;
+    border: 1px solid #ffffff;
+    margin-left: -2rem;
+}
+.gpii-active {
+    background-color: #fed73a;
+}
