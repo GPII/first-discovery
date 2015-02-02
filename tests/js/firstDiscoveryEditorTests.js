@@ -34,18 +34,20 @@ https://github.com/gpii/universal/LICENSE.txt
         return builder.options.assembledPrefsEditorGrade;
     };
 
-    gpii.tests.verifyStates = function (that, currentPanelNum, panel1Visible, panel2Visible, panel3Visible, backVisible, nextVisible) {
+    gpii.tests.verifyStates = function (that, currentPanelNum, backVisible, nextVisible, panelsVisibility) {
         var prefsEditorContainer = that.locate("prefsEditor");
         var backButton = that.navButtons.locate("back");
         var nextButton = that.navButtons.locate("next");
 
         jqUnit.assertEquals("The model value for \"currentPanelNum\" has been set to " + currentPanelNum, currentPanelNum, that.model.currentPanelNum);
-        jqUnit.assertEquals("The visibility of the first panel is " + panel1Visible, panel1Visible, prefsEditorContainer.find(".gpiic-audio").is(":visible"));
-        jqUnit.assertEquals("The visibility of the second panel is " + panel2Visible, panel2Visible, prefsEditorContainer.find(".gpiic-size").is(":visible"));
-        jqUnit.assertEquals("The visibility of the third panel is " + panel3Visible, panel3Visible, prefsEditorContainer.find(".gpiic-contrast").is(":visible"));
+        fluid.each(panelsVisibility, function (panelSelectors, state) {
+            fluid.each(panelSelectors, function (selector) {
+                jqUnit[state]("The visibility of the panel " + selector + " is " + state, prefsEditorContainer.find(selector));
+            })
+        });
 
-        jqUnit.assertEquals("The visibility of the back button is " + backVisible, backVisible, backButton.is(":visible"));
-        jqUnit.assertEquals("The visibility of the next button is " + nextVisible, nextVisible, nextButton.is(":visible"));
+        jqUnit[backVisible ? "isVisible" : "notVisible"]("The visibility of the back button is " + backVisible, backButton);
+        jqUnit[nextVisible ? "isVisible" : "notVisible"]("The visibility of the next button is " + nextVisible, nextButton);
     };
 
     jqUnit.asyncTest("The first discovery tool editor", function () {
@@ -63,16 +65,29 @@ https://github.com/gpii/universal/LICENSE.txt
 
                                     jqUnit.assertNotUndefined("The subcomponent \"prefsEditor\" has been instantiated", that.prefsEditor);
                                     jqUnit.assertNotUndefined("The subcomponent \"navButtons\" has been instantiated", that.navButtons);
-                                    gpii.tests.verifyStates(that, 1, true, false, false, false, true);
+                                    gpii.tests.verifyStates(that, 1, false, true, {
+                                        isVisible: [".gpiic-firstDiscovery-panel-audio"],
+                                        notVisible: [".gpiic-firstDiscovery-panel-size", ".gpiic-firstDiscovery-panel-contrast"]
+                                    });
 
                                     nextButton.click();
-                                    gpii.tests.verifyStates(that, 2, false, true, false, true, true);
+                                    gpii.tests.verifyStates(that, 2, true, true, {
+                                        isVisible: [".gpiic-firstDiscovery-panel-size"],
+                                        notVisible: [".gpiic-firstDiscovery-panel-audio", ".gpiic-firstDiscovery-panel-contrast"]
+                                    });
 
                                     backButton.click();
-                                    gpii.tests.verifyStates(that, 1, true, false, false, false, true);
+                                    gpii.tests.verifyStates(that, 1, false, true, {
+                                        isVisible: [".gpiic-firstDiscovery-panel-audio"],
+                                        notVisible: [".gpiic-firstDiscovery-panel-size", ".gpiic-firstDiscovery-panel-contrast"]
+                                    });
 
                                     that.applier.change("currentPanelNum", 3);
-                                    gpii.tests.verifyStates(that, 3, false, false, true, true, true);
+                                    gpii.tests.verifyStates(that, 3, true, true, {
+                                        isVisible: [".gpiic-firstDiscovery-panel-contrast"],
+                                        notVisible: [".gpiic-firstDiscovery-panel-audio", ".gpiic-firstDiscovery-panel-size"]
+                                    });
+
                                     jqUnit.start();
                                 },
                                 priority: "last"

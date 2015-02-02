@@ -22,9 +22,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.defaults("gpii.firstDiscovery.firstDiscoveryEditor", {
         gradeNames: ["fluid.viewRelayComponent", "fluid.prefs.prefsEditorLoader", "autoInit"],
         selectors: {
-            prefsEditor: ".gpiic-prefsEditor",
+            prefsEditor: ".gpiic-firstDiscovery-prefsEditor",
             panel: ".gpiic-firstDiscovery-panel",
-            navButtons: ".gpiic-buttons"
+            navButtons: ".gpiic-firstDiscovery-navButtons"
         },
         components: {
             prefsEditor: {
@@ -82,10 +82,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 args: ["{that}"],
                 priority: "first"
             },
-            "onPrefsEditorReady.showInitialPanel": {
-                listener: "{that}.showPanel",
-                args: ["{that}.model.currentPanelNum"]
-            },
+            "onPrefsEditorReady.showInitialPanel": "{that}.showPanel",
             "onPrefsEditorReady.createNavButtons": {
                 listener: "{that}.events.onCreateNavButtons"
             }

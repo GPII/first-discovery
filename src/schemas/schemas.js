@@ -32,7 +32,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "type": "gpii.firstDiscovery.audio",
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.audio",
-                    "container": ".gpiic-audio",
+                    "container": ".gpiic-firstDiscovery-panel-audio",
                     "template": "%prefix/audio.html",
                     "message": "%prefix/audio.json"
                 }
@@ -44,7 +44,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 },
                 "panel": {
                     "type": "fluid.prefs.panel.textSize",
-                    "container": ".gpiic-size",
+                    "container": ".gpiic-firstDiscovery-panel-size",
                     "template": "%prefix/textSize.html",
                     "message": "%prefix/textSize.json"
                 }
@@ -53,7 +53,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "type": "gpii.firstDiscovery.contrast",
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.contrast",
-                    "container": ".gpiic-contrast",
+                    "container": ".gpiic-firstDiscovery-panel-contrast",
                     "template": "%prefix/contrast.html",
                     "message": "%prefix/contrast.json"
                 }
