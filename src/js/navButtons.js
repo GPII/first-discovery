@@ -50,7 +50,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         modelListeners: {
-            currentPanelNum: "{that}.setButtonStates"
+            currentPanelNum: {
+                listener: "{that}.setButtonStates",
+                exclude: "init"
+            }
         },
         listeners: {
             "onCreate.bindBack": {
@@ -67,8 +70,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         invokers: {
             setButtonStates: {
                 funcName: "gpii.firstDiscovery.navButtons.setButtonStates",
-                // Calls on "{that}.backTooltip", "{that}.nextTooltip" to force the instantiate of these sub-components
-                args: ["{that}", "{that}.backTooltip", "{that}.nextTooltip"]
+                // Calls on "{that}.tooltip" to force the instantiate of this sub-components
+                args: ["{that}", "{that}.tooltip"]
             },
             adjustCurrentPanelNum: {
                 funcName: "gpii.firstDiscovery.navButtons.adjustCurrentPanelNum",
@@ -84,20 +87,35 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         components: {
-            backTooltip: {
+            tooltip: {
                 type: "fluid.tooltip",
-                container: "{navButtons}.dom.back",
-                options: "{navButtons}.options.tooltipOptions"
-            },
-            nextTooltip: {
-                type: "fluid.tooltip",
-                container: "{navButtons}.dom.next",
-                options: "{navButtons}.options.tooltipOptions"
+                container: "{navButtons}.container",
+                options: {
+                    expander: {
+                        funcName: "gpii.firstDiscovery.navButtons.getTooltipOptions",
+                        args: ["{navButtons}"]
+                    }
+                }
             }
         }
     });
 
-    gpii.firstDiscovery.navButtons.setButtonStates = function (that, backTooltip, nextTooltip) {
+    gpii.firstDiscovery.navButtons.getTooltipOptions = function (that) {
+        that.backButtonId = fluid.allocateSimpleId(that.locate("back"));
+        that.nextButtonId = fluid.allocateSimpleId(that.locate("next"));
+
+        var idToContent = {};
+        idToContent[that.backButtonId] = that.options.strings.back;
+        idToContent[that.nextButtonId] = that.options.strings.next;
+
+        return $.extend(true, {}, that.options.tooltipOptions, {
+            model: {
+                idToContent: idToContent
+            }
+        });
+    };
+
+    gpii.firstDiscovery.navButtons.setButtonStates = function (that, tooltip) {
         var currentPanelNum = that.model.currentPanelNum,
             strings = that.options.strings,
             backButton = that.locate("back"),
@@ -109,8 +127,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         backButton.toggle(!isFirstPanel);
         backButton.html(strings.back);
         nextButton.html(nextLabel);
-        backTooltip.updateContent(strings.back);
-        nextTooltip.updateContent(nextLabel);
+        tooltip.applier.change("idToContent." + that.backButtonId, strings.back);
+        tooltip.applier.change("idToContent." + that.nextButtonId, nextLabel);
     };
 
     gpii.firstDiscovery.navButtons.adjustCurrentPanelNum = function (that, toChange) {
