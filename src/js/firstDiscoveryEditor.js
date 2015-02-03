@@ -20,7 +20,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * The new prefs editor type for the first discovery tool
      */
     fluid.defaults("gpii.firstDiscovery.firstDiscoveryEditor", {
-        gradeNames: ["fluid.viewRelayComponent", "fluid.prefs.prefsEditorLoader", "autoInit"],
+        gradeNames: ["fluid.viewComponent", "fluid.prefs.prefsEditorLoader", "autoInit"],
         components: {
             prefsEditor: {
                 container: "{that}.dom.prefsEditor",
