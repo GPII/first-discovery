@@ -31,8 +31,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         selectors: {
-            back: "#gpiic-back",
-            next: "#gpiic-next"
+            back: "#gpiic-fd-navButtons-back",
+            next: "#gpiic-fd-navButtons-next"
         },
         strings: {
             back: "Back",

@@ -64,7 +64,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     jqUnit.asyncTest("The first discovery tool editor", function () {
-        gpii.tests.firstDiscovery("#gpiic-tool", {
+        gpii.tests.firstDiscovery("#gpiic-fd", {
             listeners: {
                 onReady: {
                     listener: function (that) {
