@@ -21,11 +21,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      */
     fluid.defaults("gpii.firstDiscovery.firstDiscoveryEditor", {
         gradeNames: ["fluid.viewRelayComponent", "fluid.prefs.prefsEditorLoader", "autoInit"],
-        selectors: {
-            prefsEditor: ".gpiic-fd-prefsEditor",
-            panel: ".gpiic-firstDiscovery-panel",
-            navButtons: ".gpiic-fd-navButtons"
-        },
         components: {
             prefsEditor: {
                 container: "{that}.dom.prefsEditor",
@@ -56,12 +51,22 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         start: "{that}.msgLookup.start",
                         finish: "{that}.msgLookup.finish"
                     },
+                    styles: "{firstDiscoveryEditor}.options.styles",
                     panelTotalNum: "{firstDiscoveryEditor}.panelTotal",
                     model: {
                         currentPanelNum: "{firstDiscoveryEditor}.model.currentPanelNum"
                     }
                 }
             }
+        },
+        selectors: {
+            prefsEditor: ".gpiic-fd-prefsEditor",
+            panel: ".gpiic-firstDiscovery-panel",
+            navButtons: ".gpiic-fd-navButtons"
+        },
+        styles: {
+            hide: "gpii-fd-hidden",
+            currentPanel: "gpii-fd-current"
         },
         model: {
             currentPanelNum: 1
@@ -90,7 +95,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         invokers: {
             showPanel: {
                 funcName: "gpii.firstDiscovery.showPanel",
-                args: ["{that}.panels", "{that}.model.currentPanelNum"]
+                args: ["{that}.panels", "{that}.model.currentPanelNum", "{that}.options.styles.currentPanel"]
             }
         }
     });
@@ -100,9 +105,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         that.panelTotal = that.panels.length;
     };
 
-    gpii.firstDiscovery.showPanel = function (panels, toShow) {
+    gpii.firstDiscovery.showPanel = function (panels, toShow, selectorForCurrent) {
         fluid.each(panels, function (panel, index) {
-            $(panel).toggle(toShow === (index + 1));
+            $(panel).toggleClass(selectorForCurrent, toShow === (index + 1));
         });
     };
 })(jQuery, fluid);

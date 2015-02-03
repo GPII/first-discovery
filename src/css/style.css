@@ -275,6 +275,10 @@ body {
     margin: -5.5rem auto 3rem auto;
 }
 
+.gpii-fd-hidden {
+    visibility: hidden;
+}
+
 .gpii-fd-show {
     visibility: visible;
 }

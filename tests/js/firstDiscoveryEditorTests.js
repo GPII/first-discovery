@@ -56,7 +56,7 @@ https://github.com/gpii/universal/LICENSE.txt
         fluid.each(panelsVisibility, function (panelSelectors, state) {
             fluid.each(panelSelectors, function (selector) {
                 jqUnit[state]("The visibility of the panel " + selector + " is " + state, prefsEditorContainer.find(selector));
-            })
+            });
         });
 
         jqUnit[backVisible ? "isVisible" : "notVisible"]("The visibility of the back button is " + backVisible, backButton);

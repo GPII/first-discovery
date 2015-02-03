@@ -42,8 +42,7 @@ https://github.com/gpii/universal/LICENSE.txt
             start = that.options.panelStartNum,
             end = that.options.panelTotalNum,
             backButton = that.locate("back"),
-            nextButton = that.locate("next"),
-            tooltip = that.tooltip;
+            nextButton = that.locate("next");
 
         if (currentPanelNum === start) {
             msg = "On the start panel";

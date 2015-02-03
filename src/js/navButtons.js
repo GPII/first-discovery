@@ -34,6 +34,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             back: "#gpiic-fd-navButtons-back",
             next: "#gpiic-fd-navButtons-next"
         },
+        styles: {
+            hide: "gpii-fd-hidden"
+        },
         strings: {
             back: "Back",
             next: "Next",
@@ -120,13 +123,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             strings = that.options.strings,
             backButton = that.locate("back"),
             nextButton = that.locate("next"),
+            hideSelector = that.options.styles.hide,
             isFirstPanel = currentPanelNum === that.options.panelStartNum,
             nextLabel = isFirstPanel ? strings.start : (currentPanelNum === that.options.panelTotalNum ? strings.finish : strings.next);
 
         backButton.prop("disabled", isFirstPanel);
-        backButton.toggle(!isFirstPanel);
+        backButton.toggleClass(hideSelector, isFirstPanel);
         backButton.html(strings.back);
         nextButton.html(nextLabel);
+        nextButton.removeClass(hideSelector);
         tooltip.applier.change("idToContent." + that.backButtonId, strings.back);
         tooltip.applier.change("idToContent." + that.nextButtonId, nextLabel);
     };
