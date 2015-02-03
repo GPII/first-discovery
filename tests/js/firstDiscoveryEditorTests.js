@@ -48,7 +48,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.hasClass = function (elementName, element, selector, hasClass) {
-        jqUnit.assertEquals("The visibility of " + elementName + " is " + hasClass ? "visible" : "invisible", hasClass, element.hasClass(selector));
+        jqUnit.assertEquals("The visibility of " + elementName + " is " + (hasClass ? "visible" : "invisible"), hasClass, element.hasClass(selector));
     };
 
     gpii.tests.verifyStates = function (that, currentPanelNum, backVisible, nextVisible, panelsVisibility) {
