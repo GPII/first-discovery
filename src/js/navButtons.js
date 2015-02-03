@@ -31,8 +31,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         selectors: {
-            back: ".gpiic-firstDiscovery-navButtons-back",
-            next: ".gpiic-firstDiscovery-navButtons-next"
+            back: "#gpiic-back",
+            next: "#gpiic-next"
         },
         strings: {
             back: "Back",
@@ -86,12 +86,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         components: {
             backTooltip: {
                 type: "fluid.tooltip",
-                container: "{that}.dom.back",
+                container: "{navButtons}.dom.back",
                 options: "{navButtons}.options.tooltipOptions"
             },
             nextTooltip: {
                 type: "fluid.tooltip",
-                container: "{that}.dom.next",
+                container: "{navButtons}.dom.next",
                 options: "{navButtons}.options.tooltipOptions"
             }
         }

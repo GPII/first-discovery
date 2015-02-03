@@ -27,6 +27,17 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
+    fluid.defaults("gpii.firstDiscovery.panel.textSize", {
+        gradeNames: ["fluid.prefs.panel", "autoInit"],
+        preferenceMap: {
+            "gpii.firstDiscovery.textSize": {
+                "model.textSize": "default",
+                "range.min": "minimum",
+                "range.max": "maximum"
+            }
+        }
+    });
+
     fluid.defaults("gpii.firstDiscovery.panel.contrast", {
         gradeNames: ["fluid.prefs.panel", "autoInit"],
         preferenceMap: {
