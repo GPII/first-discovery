@@ -204,6 +204,7 @@ body {
 }
 .gpii-fd-navButtons-back, .gpii-fd-navButtons-next {
     border: none;
+    visibility: hidden;
 }
 
 .gpii-fd-navButtons-back .gpii-fd-icon:before,
@@ -275,10 +276,6 @@ body {
     margin: -5.5rem auto 3rem auto;
 }
 
-.gpii-fd-hidden {
-    visibility: hidden;
-}
-
 .gpii-fd-show {
     visibility: visible;
 }
@@ -292,5 +289,14 @@ body {
     margin-left: -2rem;
 }
 .gpii-fd-active {
+    background-color: #fed73a;
+}
+
+/* Tooltips */
+.gpii-fd-tooltip {
+    width: auto;
+    max-width: 5em;
+    font-size: 2rem;
+    padding: 0.5rem;
     background-color: #fed73a;
 }

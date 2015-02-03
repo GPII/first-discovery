@@ -47,20 +47,26 @@ https://github.com/gpii/universal/LICENSE.txt
         return builder.options.assembledPrefsEditorGrade;
     };
 
+    gpii.tests.hasClass = function (elementName, element, selector, hasClass) {
+        jqUnit.assertEquals("The visibility of " + elementName + " is " + hasClass ? "visible" : "invisible", hasClass, element.hasClass(selector));
+    };
+
     gpii.tests.verifyStates = function (that, currentPanelNum, backVisible, nextVisible, panelsVisibility) {
-        var prefsEditorContainer = that.locate("prefsEditor");
-        var backButton = that.navButtons.locate("back");
-        var nextButton = that.navButtons.locate("next");
+        var prefsEditorContainer = that.locate("prefsEditor"),
+            backButton = that.navButtons.locate("back"),
+            nextButton = that.navButtons.locate("next"),
+            showSelector = that.options.styles.show;
 
         jqUnit.assertEquals("The model value for \"currentPanelNum\" has been set to " + currentPanelNum, currentPanelNum, that.model.currentPanelNum);
-        fluid.each(panelsVisibility, function (panelSelectors, state) {
+        fluid.each(panelsVisibility, function (panelSelectors, visibility) {
             fluid.each(panelSelectors, function (selector) {
-                jqUnit[state]("The visibility of the panel " + selector + " is " + state, prefsEditorContainer.find(selector));
+                var isVisible = visibility === "isVisible" ? true : false;
+                gpii.tests.hasClass(selector, prefsEditorContainer.find(selector), that.options.styles.currentPanel, isVisible);
             });
         });
 
-        jqUnit[backVisible ? "isVisible" : "notVisible"]("The visibility of the back button is " + backVisible, backButton);
-        jqUnit[nextVisible ? "isVisible" : "notVisible"]("The visibility of the next button is " + nextVisible, nextButton);
+        gpii.tests.hasClass("the back button", backButton, showSelector, backVisible);
+        gpii.tests.hasClass("the next button", nextButton, showSelector, nextVisible);
     };
 
     jqUnit.asyncTest("The first discovery tool editor", function () {

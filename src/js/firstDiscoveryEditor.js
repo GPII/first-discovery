@@ -65,7 +65,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             navButtons: ".gpiic-fd-navButtons"
         },
         styles: {
-            hide: "gpii-fd-hidden",
+            show: "gpii-fd-show",
             currentPanel: "gpii-fd-current"
         },
         model: {

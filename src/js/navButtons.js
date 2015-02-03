@@ -27,7 +27,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             delay: 0,
             duration: 0,
             position: {
-                my: "left+35 bottom-20"
+                my: "left+70 bottom-70"
+            },
+            styles: {
+                tooltip: "gpii-fd-tooltip"
             }
         },
         selectors: {
@@ -35,7 +38,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             next: "#gpiic-fd-navButtons-next"
         },
         styles: {
-            hide: "gpii-fd-hidden"
+            show: "gpii-fd-show"
         },
         strings: {
             back: "Back",
@@ -94,16 +97,22 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 type: "fluid.tooltip",
                 container: "{navButtons}.container",
                 options: {
-                    expander: {
-                        funcName: "gpii.firstDiscovery.navButtons.getTooltipOptions",
-                        args: ["{navButtons}"]
+                    model: {
+                        expander: {
+                            funcName: "gpii.firstDiscovery.navButtons.getTooltipInitialModel",
+                            args: ["{navButtons}"]
+                        }
                     }
                 }
             }
+        },
+        distributeOptions: {
+            source: "{that}.options.tooltipOptions",
+            target: "{that > tooltip}.options"
         }
     });
 
-    gpii.firstDiscovery.navButtons.getTooltipOptions = function (that) {
+    gpii.firstDiscovery.navButtons.getTooltipInitialModel = function (that) {
         that.backButtonId = fluid.allocateSimpleId(that.locate("back"));
         that.nextButtonId = fluid.allocateSimpleId(that.locate("next"));
 
@@ -111,11 +120,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         idToContent[that.backButtonId] = that.options.strings.back;
         idToContent[that.nextButtonId] = that.options.strings.next;
 
-        return $.extend(true, {}, that.options.tooltipOptions, {
-            model: {
-                idToContent: idToContent
-            }
-        });
+        return {
+            idToContent: idToContent
+        };
     };
 
     gpii.firstDiscovery.navButtons.setButtonStates = function (that, tooltip) {
@@ -123,16 +130,21 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             strings = that.options.strings,
             backButton = that.locate("back"),
             nextButton = that.locate("next"),
-            hideSelector = that.options.styles.hide,
+            showSelector = that.options.styles.show,
             isFirstPanel = currentPanelNum === that.options.panelStartNum,
             nextLabel = isFirstPanel ? strings.start : (currentPanelNum === that.options.panelTotalNum ? strings.finish : strings.next);
 
         backButton.prop("disabled", isFirstPanel);
-        backButton.toggleClass(hideSelector, isFirstPanel);
+        backButton.toggleClass(showSelector, !isFirstPanel);
         backButton.html(strings.back);
         nextButton.html(nextLabel);
-        nextButton.removeClass(hideSelector);
-        tooltip.applier.change("idToContent." + that.backButtonId, strings.back);
+        nextButton.addClass(showSelector);
+        if (isFirstPanel) {
+            tooltip.close();  // Close the existing tooltip for the back button otherwise it will linger after the back button becomes hidden
+            tooltip.applier.fireChangeRequest({path: "idToContent." + that.backButtonId, type: "DELETE"});
+        } else {
+            tooltip.applier.change("idToContent." + that.backButtonId, strings.back);
+        }
         tooltip.applier.change("idToContent." + that.nextButtonId, nextLabel);
     };
 

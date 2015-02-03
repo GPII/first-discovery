@@ -13,11 +13,15 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.registerNamespace("gpii.tests");
 
-    gpii.tests.verifyStates = function (msg, backButton, nextButton, states) {
+    gpii.tests.verifyStates = function (msg, that, states) {
+        var backButton = that.locate("back"),
+            nextButton = that.locate("next"),
+            showSelector = that.options.styles.show;
+
         jqUnit.assertEquals(msg + " - The back button is disabled", states.backDisabled, backButton.is(":disabled"));
-        jqUnit.assertEquals(msg + " - The back button is hidden", states.backVisible, backButton.is(":visible"));
+        jqUnit.assertEquals(msg + " - The back button is hidden", states.backVisible, backButton.hasClass(showSelector));
         jqUnit.assertEquals(msg + " - The next button is enabled", states.nextDisabled, nextButton.is(":disabled"));
-        jqUnit.assertEquals(msg + " - The next button is shown", states.nextVisible, nextButton.is(":visible"));
+        jqUnit.assertEquals(msg + " - The next button is shown", states.nextVisible, nextButton.hasClass(showSelector));
     };
 
     gpii.tests.verifyLabels = function (msg, that, states) {
@@ -40,13 +44,11 @@ https://github.com/gpii/universal/LICENSE.txt
 
         var msg,
             start = that.options.panelStartNum,
-            end = that.options.panelTotalNum,
-            backButton = that.locate("back"),
-            nextButton = that.locate("next");
+            end = that.options.panelTotalNum;
 
         if (currentPanelNum === start) {
             msg = "On the start panel";
-            gpii.tests.verifyStates(msg, backButton, nextButton, {
+            gpii.tests.verifyStates(msg, that, {
                 backDisabled: true,
                 backVisible: false,
                 nextDisabled: false,
@@ -60,7 +62,7 @@ https://github.com/gpii/universal/LICENSE.txt
 
         if (currentPanelNum > start && currentPanelNum < end) {
             msg = "On a panel in btw the start and the last panels";
-            gpii.tests.verifyStates(msg, backButton, nextButton, {
+            gpii.tests.verifyStates(msg, that, {
                 backDisabled: false,
                 backVisible: true,
                 nextDisabled: false,
@@ -74,7 +76,7 @@ https://github.com/gpii/universal/LICENSE.txt
 
         if (currentPanelNum === end) {
             msg = "On the last panel";
-            gpii.tests.verifyStates(msg, backButton, nextButton, {
+            gpii.tests.verifyStates(msg, that, {
                 backDisabled: false,
                 backVisible: true,
                 nextDisabled: false,
