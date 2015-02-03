@@ -57,7 +57,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         //     }
         // },
         modelListeners: {
-            "currentPanelNum": "{that}.setButtonStates"
+            currentPanelNum: "{that}.setButtonStates"
         },
         listeners: {
             "onCreate.bindBack": {
