@@ -30,9 +30,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "type": "fluid.prefs.enactor.textSize"
                 },
                 "panel": {
-                    "type": "fluid.prefs.panel.textSize",
-                    "container": ".gpiic-size",
-                    "template": "%prefix/textSize.html",
+                    "type": "gpii.firstDiscovery.panel.textSize",
+                    "container": ".gpiic-adjusterContainer-size",
+                    "template": "%prefix/rangeTemplate.html",
                     "message": "%prefix/textSize.json"
                 }
             }
