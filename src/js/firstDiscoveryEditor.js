@@ -62,7 +62,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         selectors: {
             prefsEditor: ".gpiic-fd-prefsEditor",
-            panel: ".gpiic-firstDiscovery-panel",
+            panel: ".gpiic-fd-prefsEditor-panel",
             navButtons: ".gpiic-fd-navButtons"
         },
         styles: {
