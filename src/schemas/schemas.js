@@ -29,7 +29,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "messagePrefix": "../src/messages/",
             "message": "%prefix/firstDiscovery.json",
             "tts": {
-                "type": "gpii.firstDiscovery.tts",
+                "type": "fluid.prefs.speak",
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.tts",
                     "container": ".gpiic-fd-prefsEditor-panel-tts",
@@ -38,7 +38,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 }
             },
             "textSize": {
-                "type": "gpii.firstDiscovery.textSize",
+                "type": "fluid.prefs.textSize",
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.textSize",
                     "container": ".gpiic-fd-prefsEditor-panel-size",
@@ -47,54 +47,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 }
             },
             "contrast": {
-                "type": "gpii.firstDiscovery.contrast",
+                "type": "fluid.prefs.contrast",
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.contrast",
                     "container": ".gpiic-fd-prefsEditor-panel-contrast",
                     "template": "%prefix/contrast.html",
                     "message": "%prefix/contrast.json"
                 }
-            }
-        }
-    });
-
-    /*******************************************************************************
-     * Primary schema grades
-     *******************************************************************************/
-
-    fluid.defaults("gpii.firstDiscovery.schemas.textSize", {
-        gradeNames: ["autoInit", "fluid.prefs.schemas"],
-        schema: {
-            "gpii.firstDiscovery.textSize": {
-                "type": "number",
-                "default": 1,
-                "minimum": 1,
-                "maximum": 2,
-                "divisibleBy": 0.1
-            }
-        }
-    });
-
-    fluid.defaults("gpii.firstDiscovery.schemas.tts", {
-        gradeNames: ["autoInit", "fluid.prefs.schemas"],
-        schema: {
-            "gpii.firstDiscovery.tts": {
-                "type": "number",
-                "default": 1,
-                "minimum": 1,
-                "maximum": 2,
-                "divisibleBy": 0.1
-            }
-        }
-    });
-
-    fluid.defaults("fluid.prefs.schemas.contrast", {
-        gradeNames: ["autoInit", "fluid.prefs.schemas"],
-        schema: {
-            "gpii.firstDiscovery.contrast": {
-                "type": "string",
-                "default": "default",
-                "enum": ["default", "bw", "wb"]
             }
         }
     });
