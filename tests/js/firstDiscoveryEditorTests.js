@@ -82,29 +82,29 @@ https://github.com/gpii/universal/LICENSE.txt
                         jqUnit.assertNotUndefined("The subcomponent \"prefsEditor\" has been instantiated", that.prefsEditor);
                         jqUnit.assertNotUndefined("The subcomponent \"navButtons\" has been instantiated", that.navButtons);
                         gpii.tests.verifyStates(that, 1, false, true, {
-                            isVisible: [".gpiic-firstDiscovery-panel-audio"],
-                            notVisible: [".gpiic-firstDiscovery-panel-size", ".gpiic-firstDiscovery-panel-contrast"]
+                            isVisible: [".gpiic-fd-prefsEditor-panel-audio"],
+                            notVisible: [".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
                         });
 
                         // Clicking the next button leads to the 2nd panel
                         nextButton.click();
                         gpii.tests.verifyStates(that, 2, true, true, {
-                            isVisible: [".gpiic-firstDiscovery-panel-size"],
-                            notVisible: [".gpiic-firstDiscovery-panel-audio", ".gpiic-firstDiscovery-panel-contrast"]
+                            isVisible: [".gpiic-fd-prefsEditor-panel-size"],
+                            notVisible: [".gpiic-fd-prefsEditor-panel-audio", ".gpiic-fd-prefsEditor-panel-contrast"]
                         });
 
                         // Clicking the back button brings back the first panel
                         backButton.click();
                         gpii.tests.verifyStates(that, 1, false, true, {
-                            isVisible: [".gpiic-firstDiscovery-panel-audio"],
-                            notVisible: [".gpiic-firstDiscovery-panel-size", ".gpiic-firstDiscovery-panel-contrast"]
+                            isVisible: [".gpiic-fd-prefsEditor-panel-audio"],
+                            notVisible: [".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
                         });
 
                         // Directs to the last panel by firing a change request directly
                         that.applier.change("currentPanelNum", 3);
                         gpii.tests.verifyStates(that, 3, true, true, {
-                            isVisible: [".gpiic-firstDiscovery-panel-contrast"],
-                            notVisible: [".gpiic-firstDiscovery-panel-audio", ".gpiic-firstDiscovery-panel-size"]
+                            isVisible: [".gpiic-fd-prefsEditor-panel-contrast"],
+                            notVisible: [".gpiic-fd-prefsEditor-panel-audio", ".gpiic-fd-prefsEditor-panel-size"]
                         });
 
                         jqUnit.start();
