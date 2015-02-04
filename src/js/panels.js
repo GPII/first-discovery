@@ -114,4 +114,28 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         }
     });
+
+    fluid.registerNamespace("gpii.firstDiscovery.panel");
+
+    fluid.defaults("gpii.firstDiscovery.panel.audio", {
+        gradeNames: ["fluid.prefs.panel", "autoInit"],
+        preferenceMap: {
+            "gpii.firstDiscovery.audio": {
+                "model.audio": "default",
+                "range.min": "minimum",
+                "range.max": "maximum"
+            }
+        }
+    });
+
+    fluid.defaults("gpii.firstDiscovery.panel.contrast", {
+        gradeNames: ["fluid.prefs.panel", "autoInit"],
+        preferenceMap: {
+            "gpii.firstDiscovery.contrast": {
+                "model.value": "default",
+                "controlValues.theme": "enum"
+            }
+        }
+    });
+
 })(jQuery, fluid);

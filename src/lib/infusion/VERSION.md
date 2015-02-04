@@ -1,8 +1,8 @@
-The version of Infusion included in this folder was created using a custom build from a development branch:
+The version of Infusion included in this folder was created using a custom build from the infusion master branch:
 
-https://github.com/cindyli/infusion/tree/FLUID-5552
+https://github.com/fluid-project/infusion
 
-commit#: e6e27673c40b6fd2bea2eb20d9efe9960e07d8e9
+commit#: 4413d0020a62585e30a37331edd49c4d0e61b1ad
 
 ```
     grunt custom --source=true --include="preferences, tooltip"
@@ -14,6 +14,7 @@ The following directories were stripped out of the build since they contain code
 * src/lib/infusion/src/components/tableOfContents/js/
 * src/lib/infusion/src/components/tableOfContents/tableOfContentsDependencies.json
 * src/lib/infusion/src/components/textfieldSlider/
+* src/lib/infusion/src/components/textToSpeech/
 * src/lib/infusion/src/components/tooltip/
 * src/lib/infusion/src/framework/core/frameworkDependencies.json
 * src/lib/infusion/src/framework/core/js/

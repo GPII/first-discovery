@@ -20,16 +20,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * The new prefs editor type for the first discovery tool
      */
     fluid.defaults("gpii.firstDiscovery.firstDiscoveryEditor", {
-        gradeNames: ["fluid.viewRelayComponent", "fluid.prefs.prefsEditorLoader", "autoInit"],
-        selectors: {
-            prefsEditor: ".gpiic-prefsEditor",
-            help: ".gpiic-help"
-        },
-        selectorsToIgnore: [],
+        gradeNames: ["fluid.viewComponent", "fluid.prefs.prefsEditorLoader", "autoInit"],
         components: {
             prefsEditor: {
                 container: "{that}.dom.prefsEditor",
                 options: {
+                    selectors: {
+                        panel: "{firstDiscoveryEditor}.options.selectors.panel"
+                    },
                     listeners: {
                         onReady: {
                             listener: "{firstDiscoveryEditor}.events.onPrefsEditorReady",
@@ -37,11 +35,80 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         }
                     }
                 }
+            },
+            navButtons: {
+                type: "gpii.firstDiscovery.navButtons",
+                container: "{that}.dom.navButtons",
+                createOnEvent: "onCreateNavButtons",
+                options: {
+                    gradeNames: ["fluid.prefs.msgLookup"],
+                    members: {
+                        // TODO: when switching to use relay components, the line below to share applier can be removed
+                        applier: "{firstDiscoveryEditor}.applier",
+                        messageResolver: "{firstDiscoveryEditor}.msgResolver"
+                    },
+                    // TODO: when switching to use relay components, rather than sharing the entire model, only the needed model paths need to be shared
+                    model: "{firstDiscoveryEditor}.model",
+                    strings: {
+                        back: "{that}.msgLookup.back",
+                        next: "{that}.msgLookup.next",
+                        start: "{that}.msgLookup.start",
+                        finish: "{that}.msgLookup.finish"
+                    },
+                    styles: "{firstDiscoveryEditor}.options.styles",
+                    panelTotalNum: "{firstDiscoveryEditor}.panelTotal"
+                }
+            }
+        },
+        selectors: {
+            prefsEditor: ".gpiic-fd-prefsEditor",
+            panel: ".gpiic-fd-prefsEditor-panel",
+            navButtons: ".gpiic-fd-navButtons"
+        },
+        styles: {
+            show: "gpii-fd-show",
+            currentPanel: "gpii-fd-current"
+        },
+        model: {
+            currentPanelNum: 1
+        },
+        modelListeners: {
+            "currentPanelNum": {
+                listener: "{that}.showPanel",
+                excludeSource: "init"
             }
         },
         events: {
-            onPrefsEditorReady: null
+            onPrefsEditorReady: null,
+            onCreateNavButtons: null
+        },
+        listeners: {
+            "onPrefsEditorReady.getPanelTotal": {
+                listener: "gpii.firstDiscovery.getPanelTotal",
+                args: ["{that}"],
+                priority: "first"
+            },
+            "onPrefsEditorReady.showInitialPanel": "{that}.showPanel",
+            "onPrefsEditorReady.createNavButtons": {
+                listener: "{that}.events.onCreateNavButtons"
+            }
+        },
+        invokers: {
+            showPanel: {
+                funcName: "gpii.firstDiscovery.showPanel",
+                args: ["{that}.panels", "{that}.model.currentPanelNum", "{that}.options.styles.currentPanel"]
+            }
         }
     });
 
+    gpii.firstDiscovery.getPanelTotal = function (that) {
+        that.panels = that.prefsEditor.locate("panel");
+        that.panelTotal = that.panels.length;
+    };
+
+    gpii.firstDiscovery.showPanel = function (panels, toShow, selectorForCurrent) {
+        fluid.each(panels, function (panel, index) {
+            $(panel).toggleClass(selectorForCurrent, toShow === (index + 1));
+        });
+    };
 })(jQuery, fluid);
