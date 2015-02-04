@@ -58,18 +58,4 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    /*******************************************************************************
-    * Primary Schema
-    *******************************************************************************/
-
-    fluid.defaults("fluid.prefs.schemas.speak", {
-        gradeNames: ["autoInit", "fluid.prefs.schemas"],
-        schema: {
-            "fluid.prefs.speak": {
-                "type": "boolean",
-                "default": false
-            }
-        }
-    });
-
 })(jQuery, fluid);
