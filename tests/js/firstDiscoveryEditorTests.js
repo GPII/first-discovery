@@ -69,46 +69,50 @@ https://github.com/gpii/universal/LICENSE.txt
         gpii.tests.hasClass("the next button", nextButton, showSelector, nextVisible);
     };
 
+    gpii.tests.testFirstDiscoveryEditor = function (that) {
+        jqUnit.expect(26);
+        var backButton = that.navButtons.locate("back");
+        var nextButton = that.navButtons.locate("next");
+
+        // Test the initial panel
+        jqUnit.assertNotUndefined("The subcomponent \"prefsEditor\" has been instantiated", that.prefsEditor);
+        jqUnit.assertNotUndefined("The subcomponent \"navButtons\" has been instantiated", that.navButtons);
+        gpii.tests.verifyStates(that, 1, false, true, {
+            isVisible: [".gpiic-fd-prefsEditor-panel-audio"],
+            notVisible: [".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
+        });
+
+        // Clicking the next button leads to the 2nd panel
+        nextButton.click();
+        gpii.tests.verifyStates(that, 2, true, true, {
+            isVisible: [".gpiic-fd-prefsEditor-panel-size"],
+            notVisible: [".gpiic-fd-prefsEditor-panel-audio", ".gpiic-fd-prefsEditor-panel-contrast"]
+        });
+
+        // Clicking the back button brings back the first panel
+        backButton.click();
+        gpii.tests.verifyStates(that, 1, false, true, {
+            isVisible: [".gpiic-fd-prefsEditor-panel-audio"],
+            notVisible: [".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
+        });
+
+        // Directs to the last panel by firing a change request directly
+        that.applier.change("currentPanelNum", 3);
+        gpii.tests.verifyStates(that, 3, true, true, {
+            isVisible: [".gpiic-fd-prefsEditor-panel-contrast"],
+            notVisible: [".gpiic-fd-prefsEditor-panel-audio", ".gpiic-fd-prefsEditor-panel-size"]
+        });
+    };
+
     jqUnit.asyncTest("The first discovery tool editor", function () {
         gpii.tests.firstDiscovery("#gpiic-fd", {
             listeners: {
-                onReady: {
-                    listener: function (that) {
-                        jqUnit.expect(26);
-                        var backButton = that.navButtons.locate("back");
-                        var nextButton = that.navButtons.locate("next");
-
-                        // Test the initial panel
-                        jqUnit.assertNotUndefined("The subcomponent \"prefsEditor\" has been instantiated", that.prefsEditor);
-                        jqUnit.assertNotUndefined("The subcomponent \"navButtons\" has been instantiated", that.navButtons);
-                        gpii.tests.verifyStates(that, 1, false, true, {
-                            isVisible: [".gpiic-fd-prefsEditor-panel-audio"],
-                            notVisible: [".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
-                        });
-
-                        // Clicking the next button leads to the 2nd panel
-                        nextButton.click();
-                        gpii.tests.verifyStates(that, 2, true, true, {
-                            isVisible: [".gpiic-fd-prefsEditor-panel-size"],
-                            notVisible: [".gpiic-fd-prefsEditor-panel-audio", ".gpiic-fd-prefsEditor-panel-contrast"]
-                        });
-
-                        // Clicking the back button brings back the first panel
-                        backButton.click();
-                        gpii.tests.verifyStates(that, 1, false, true, {
-                            isVisible: [".gpiic-fd-prefsEditor-panel-audio"],
-                            notVisible: [".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
-                        });
-
-                        // Directs to the last panel by firing a change request directly
-                        that.applier.change("currentPanelNum", 3);
-                        gpii.tests.verifyStates(that, 3, true, true, {
-                            isVisible: [".gpiic-fd-prefsEditor-panel-contrast"],
-                            notVisible: [".gpiic-fd-prefsEditor-panel-audio", ".gpiic-fd-prefsEditor-panel-size"]
-                        });
-
-                        jqUnit.start();
-                    },
+                "onReady.addTestFunc": {
+                    listener: gpii.tests.testFirstDiscoveryEditor,
+                    priority: "10"
+                },
+                "onReady.startTest": {
+                    listener: "jqUnit.start",
                     priority: "last"
                 }
             }
