@@ -56,7 +56,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         finish: "{that}.msgLookup.finish"
                     },
                     styles: "{firstDiscoveryEditor}.options.styles",
-                    panelTotalNum: "{firstDiscoveryEditor}.panelTotal"
+                    panelTotalNum: "{firstDiscoveryEditor}.panels.length"
                 }
             }
         },
@@ -83,9 +83,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             onCreateNavButtons: null
         },
         listeners: {
-            "onPrefsEditorReady.getPanelTotal": {
-                listener: "gpii.firstDiscovery.getPanelTotal",
-                args: ["{that}"],
+            "onPrefsEditorReady.setPanels": {
+                listener: "fluid.set",
+                args: ["{that}", "panels", "{prefsEditor}.dom.panel"],
                 priority: "first"
             },
             "onPrefsEditorReady.showInitialPanel": "{that}.showPanel",
@@ -100,11 +100,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         }
     });
-
-    gpii.firstDiscovery.getPanelTotal = function (that) {
-        that.panels = that.prefsEditor.locate("panel");
-        that.panelTotal = that.panels.length;
-    };
 
     gpii.firstDiscovery.showPanel = function (panels, toShow, selectorForCurrent) {
         fluid.each(panels, function (panel, index) {
