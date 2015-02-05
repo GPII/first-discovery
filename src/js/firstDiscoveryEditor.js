@@ -21,15 +21,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      */
     fluid.defaults("gpii.firstDiscovery.firstDiscoveryEditor", {
         gradeNames: ["fluid.viewRelayComponent", "fluid.prefs.prefsEditorLoader", "autoInit"],
-        selectors: {
-            prefsEditor: ".gpiic-prefsEditor",
-            help: ".gpiic-help"
-        },
-        selectorsToIgnore: [],
         components: {
             prefsEditor: {
                 container: "{that}.dom.prefsEditor",
                 options: {
+                    selectors: {
+                        panel: "{firstDiscoveryEditor}.options.selectors.panel"
+                    },
                     listeners: {
                         onReady: {
                             listener: "{firstDiscoveryEditor}.events.onPrefsEditorReady",
@@ -37,11 +35,74 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         }
                     }
                 }
+            },
+            navButtons: {
+                type: "gpii.firstDiscovery.navButtons",
+                container: "{that}.dom.navButtons",
+                createOnEvent: "onCreateNavButtons",
+                options: {
+                    gradeNames: ["fluid.prefs.msgLookup"],
+                    members: {
+                        messageResolver: "{firstDiscoveryEditor}.msgResolver"
+                    },
+                    strings: {
+                        back: "{that}.msgLookup.back",
+                        next: "{that}.msgLookup.next",
+                        start: "{that}.msgLookup.start",
+                        finish: "{that}.msgLookup.finish"
+                    },
+                    styles: "{firstDiscoveryEditor}.options.styles",
+                    panelTotalNum: "{firstDiscoveryEditor}.panels.length",
+                    model: {
+                        currentPanelNum: "{firstDiscoveryEditor}.model.currentPanelNum"
+                    }
+                }
+            }
+        },
+        selectors: {
+            prefsEditor: ".gpiic-fd-prefsEditor",
+            panel: ".gpiic-fd-prefsEditor-panel",
+            navButtons: ".gpiic-fd-navButtons"
+        },
+        styles: {
+            show: "gpii-fd-show",
+            currentPanel: "gpii-fd-current"
+        },
+        model: {
+            currentPanelNum: 1
+        },
+        modelListeners: {
+            "currentPanelNum": {
+                listener: "{that}.showPanel",
+                excludeSource: "init"
             }
         },
         events: {
-            onPrefsEditorReady: null
+            onPrefsEditorReady: null,
+            onCreateNavButtons: null
+        },
+        listeners: {
+            "onPrefsEditorReady.setPanels": {
+                listener: "fluid.set",
+                args: ["{that}", "panels", "{prefsEditor}.dom.panel"],
+                priority: "first"
+            },
+            "onPrefsEditorReady.showInitialPanel": "{that}.showPanel",
+            "onPrefsEditorReady.createNavButtons": {
+                listener: "{that}.events.onCreateNavButtons"
+            }
+        },
+        invokers: {
+            showPanel: {
+                funcName: "gpii.firstDiscovery.showPanel",
+                args: ["{that}.panels", "{that}.model.currentPanelNum", "{that}.options.styles.currentPanel"]
+            }
         }
     });
 
+    gpii.firstDiscovery.showPanel = function (panels, toShow, selectorForCurrent) {
+        fluid.each(panels, function (panel, index) {
+            $(panel).toggleClass(selectorForCurrent, toShow === (index + 1));
+        });
+    };
 })(jQuery, fluid);

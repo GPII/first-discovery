@@ -16,6 +16,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     fluid.registerNamespace("gpii.firstDiscovery");
 
+    /*******************************************************************************
+     * Auxiliary Schema
+    *******************************************************************************/
+
     fluid.defaults("gpii.firstDiscovery.auxSchema", {
         gradeNames: ["fluid.prefs.auxSchema", "autoInit"],
         auxiliarySchema: {
@@ -24,17 +28,46 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "template": "../src/html/firstDiscovery.html",
             "messagePrefix": "../src/messages/",
             "message": "%prefix/firstDiscovery.json",
+            "audio": {
+                "type": "fluid.prefs.speak",
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.audio",
+                    "container": ".gpiic-fd-prefsEditor-panel-audio",
+                    "template": "%prefix/audio.html",
+                    "message": "%prefix/audio.json"
+                }
+            },
             "textSize": {
                 "type": "fluid.prefs.textSize",
-                "enactor": {
-                    "type": "fluid.prefs.enactor.textSize"
-                },
                 "panel": {
-                    "type": "fluid.prefs.panel.textSize",
-                    "container": ".gpiic-size",
+                    "type": "gpii.firstDiscovery.panel.textSize",
+                    "container": ".gpiic-fd-prefsEditor-panel-size",
                     "template": "%prefix/textSize.html",
                     "message": "%prefix/textSize.json"
                 }
+            },
+            "contrast": {
+                "type": "fluid.prefs.contrast",
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.contrast",
+                    "container": ".gpiic-fd-prefsEditor-panel-contrast",
+                    "template": "%prefix/contrast.html",
+                    "message": "%prefix/contrast.json"
+                }
+            }
+        }
+    });
+
+    /*******************************************************************************
+    * Primary Schema
+    *******************************************************************************/
+
+    fluid.defaults("fluid.prefs.schemas.speak", {
+        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        schema: {
+            "fluid.prefs.speak": {
+                "type": "boolean",
+                "default": false
             }
         }
     });
