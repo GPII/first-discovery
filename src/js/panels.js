@@ -16,7 +16,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     fluid.registerNamespace("gpii.firstDiscovery.panel");
 
-    fluid.defaults("gpii.firstDiscovery.panel.audio", {
+    fluid.defaults("gpii.firstDiscovery.panel.tts", {
         gradeNames: ["fluid.prefs.panel", "autoInit"],
         preferenceMap: {
             "fluid.prefs.speak": {
