@@ -13,7 +13,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     "use strict";
 
-    fluid.registerNamespace("gpii.firstDiscovery");
+    fluid.registerNamespace("gpii.firstDiscovery.panel");
 
     fluid.defaults("gpii.firstDiscovery.panel.ranged", {
         gradeNames: ["fluid.prefs.panel", "autoInit"],
@@ -87,7 +87,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         var step = reverse ? (that.options.step * -1) : that.options.step;
         var newValue = that.model.value + step;
         newValue = gpii.firstDiscovery.panel.ranged.clip(newValue, that.options.range.min, that.options.range.max);
-
         that.applier.change("value", newValue);
     };
 
@@ -114,8 +113,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         }
     });
-
-    fluid.registerNamespace("gpii.firstDiscovery.panel");
 
     fluid.defaults("gpii.firstDiscovery.panel.audio", {
         gradeNames: ["fluid.prefs.panel", "autoInit"],
