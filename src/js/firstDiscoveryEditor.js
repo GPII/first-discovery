@@ -84,12 +84,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         listeners: {
             "onPrefsEditorReady.setPanels": {
                 listener: "fluid.set",
-                args: ["{that}", "panels", {
-                    expander: {
-                        funcName: "{prefsEditor}.locate",
-                        args: ["panel"]
-                    }
-                }],
+                args: ["{that}", "panels", "{prefsEditor}.dom.panel"],
                 priority: "first"
             },
             "onPrefsEditorReady.showInitialPanel": "{that}.showPanel",
