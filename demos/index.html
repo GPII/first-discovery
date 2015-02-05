@@ -68,7 +68,16 @@
                         gradeNames: ["gpii.firstDiscovery.auxSchema"]
                     },
                     prefsEditor: {
-                        prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor"
+                        prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor",
+                        components: {
+                            prefsEditorLoader: {
+                                options: {
+                                    model: {
+                                        currentPanelNum: 2   // show the text size panel at the page load
+                                    }
+                                }
+                            }
+                        }
                     }
                 });
             });
