@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Panels Tests</title>
+
+        <link rel="stylesheet" media="screen" href="../lib/infusion/lib/qunit/css/qunit.css" />
+
+        <script src="../lib/infusion/lib/qunit/js/qunit.js"></script>
+        <script src="../../src/lib/infusion/infusion-custom.js"></script>
+        <script src="../lib/infusion/test-core/jqUnit/js/jqUnit.js"></script>
+        <script src="../lib/infusion/test-core/utils/js/IoCTestUtils.js"></script>
+
+        <script src="../../src/js/panels.js"></script>
+        <script src="../js/panelsTests.js"></script>
+    </head>
+
+    <body id="body">
+        <h1 id="qunit-header">Panels Tests</h1>
+        <h2 id="qunit-banner"></h2>
+        <div id="qunit-testrunner-toolbar"></div>
+        <h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests"></ol>
+
+        <!-- Test Text Size Panel -->
+        <section class="gpiic-fd-textSize gpii-adjusterContainer-size gpii-main gpii-current">
+            <p class="gpiic-fd-range-instructions gpii-instructions"></p>
+            <div class="row gpii-controlsContainer">
+                <div class="small-offset-1 small-1 medium-offset-4 columns gpii-fd-status">
+                    <div class="gpiic-fd-range-indicator gpii-fd-statusFill"></div>
+                </div>
+                <div class="small-7 medium-6 end columns">
+                    <div class="row">
+                        <input type="button" value="+" class="gpiic-fd-range-increase left gpii-increase" id="gpii-increase" tabindex="1" />
+                        <label class="gpiic-fd-range-increaseLabel gpii-control-label" for="gpii-increase">larger</label>
+                    </div>
+                    <div class="row">
+                        <input type="button" value="-" class="gpiic-fd-range-decrease left gpii-decrease" id="gpii-decrease" tabindex="2" />
+                        <label class="gpiic-fd-range-decreaseLabel gpii-control-label" for="gpii-decrease">smaller</label>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

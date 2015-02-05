@@ -42,7 +42,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.textSize",
                     "container": ".gpiic-fd-prefsEditor-panel-size",
-                    "template": "%prefix/textSize.html",
+                    "template": "%prefix/rangeTemplate.html",
                     "message": "%prefix/textSize.json"
                 }
             },

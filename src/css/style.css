@@ -173,28 +173,21 @@ body {
 
 /* vertical 'range status' indicator beside adjuster */
 .gpii-fd-status {
-    /* The status bar effect is created by adjusting the position of
-       two colour stops - blue (66,81,101), and white (255,255,255).
-
-       To change the blue bar level, change the percentage values. Note, if the
-       percentage values do not match, there will be a visible gradient which
-       may not be desirable.
-
-       linear-gradient: (0deg, rgb(66,81,101) XX%, rgb(255, 255, 255) XX%);
-            0deg : rotates the gradient so it starts with white on top, and blue on bottom.
-            rgb (66,81,101) : the blue colour of the bar.
-            XX% : the percentage of the container which the blue bar occupies.
-    */
-
-    background-color: #425165; /* blue-grey */
-    background-image: linear-gradient(0deg, rgb(66,81,101) 80%, rgb(255, 255, 255) 80%);
-
     padding-right: 0;
-    background-size: 50px 100%;
     height: 100%;
     width: 2rem;
     margin-right: 1rem;
     border: 0.2rem solid #425165; /* blue-grey */
+}
+.gpii-fd-statusFill {
+    position: relative;
+    background-color: #425165;
+    width: inherit;
+    -webkit-transform:rotate(180deg);
+    -webkit-transform-origin: 100% 0%;
+    left: -4.2rem;
+    top: 12.4rem;
+    height: 0;
 }
 
 /* Navigation section at bottom, containing back/next and icons */
