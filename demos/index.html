@@ -4,7 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="../src/lib/normalize/normalize.css" />
+        <link rel="stylesheet" href="../src/lib/infusion/src/lib/normalize/css/normalize.css" />
         <link rel="stylesheet" href="../src/lib/foundation/css/foundation.min.css" />
         <link rel="stylesheet" href="../src/css/style.css" />
 
@@ -31,7 +31,6 @@
                 <button class="right gpii-fd-help">help</button>
             </section>
 
-            <!-- 'gpii-fd-main' divs are hidden by default, only shown when 'gpii-fd-current' class is added -->
             <section class="gpiic-fd-prefsEditor"></section>
 
             <nav class="gpii-fd-nav">
@@ -69,7 +68,16 @@
                         gradeNames: ["gpii.firstDiscovery.auxSchema"]
                     },
                     prefsEditor: {
-                        prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor"
+                        prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor",
+                        components: {
+                            prefsEditorLoader: {
+                                options: {
+                                    model: {
+                                        currentPanelNum: 2   // show the text size panel at the page load
+                                    }
+                                }
+                            }
+                        }
                     }
                 });
             });

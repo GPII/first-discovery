@@ -28,13 +28,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "template": "../src/html/firstDiscovery.html",
             "messagePrefix": "../src/messages/",
             "message": "%prefix/firstDiscovery.json",
-            "audio": {
+            "tts": {
                 "type": "fluid.prefs.speak",
                 "panel": {
-                    "type": "gpii.firstDiscovery.panel.audio",
-                    "container": ".gpiic-fd-prefsEditor-panel-audio",
-                    "template": "%prefix/audio.html",
-                    "message": "%prefix/audio.json"
+                    "type": "gpii.firstDiscovery.panel.tts",
+                    "container": ".gpiic-fd-prefsEditor-panel-tts",
+                    "template": "%prefix/tts.html",
+                    "message": "%prefix/tts.json"
                 }
             },
             "textSize": {

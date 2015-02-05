@@ -114,13 +114,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    fluid.defaults("gpii.firstDiscovery.panel.audio", {
+    fluid.defaults("gpii.firstDiscovery.panel.tts", {
         gradeNames: ["fluid.prefs.panel", "autoInit"],
         preferenceMap: {
-            "gpii.firstDiscovery.audio": {
-                "model.audio": "default",
-                "range.min": "minimum",
-                "range.max": "maximum"
+            "fluid.prefs.speak": {
+                "model.speak": "default"
             }
         }
     });

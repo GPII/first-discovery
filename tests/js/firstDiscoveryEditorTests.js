@@ -78,7 +78,7 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertNotUndefined("The subcomponent \"prefsEditor\" has been instantiated", that.prefsEditor);
         jqUnit.assertNotUndefined("The subcomponent \"navButtons\" has been instantiated", that.navButtons);
         gpii.tests.verifyStates(that, 1, false, true, {
-            isVisible: [".gpiic-fd-prefsEditor-panel-audio"],
+            isVisible: [".gpiic-fd-prefsEditor-panel-tts"],
             notVisible: [".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
         });
 
@@ -86,13 +86,13 @@ https://github.com/gpii/universal/LICENSE.txt
         nextButton.click();
         gpii.tests.verifyStates(that, 2, true, true, {
             isVisible: [".gpiic-fd-prefsEditor-panel-size"],
-            notVisible: [".gpiic-fd-prefsEditor-panel-audio", ".gpiic-fd-prefsEditor-panel-contrast"]
+            notVisible: [".gpiic-fd-prefsEditor-panel-tts", ".gpiic-fd-prefsEditor-panel-contrast"]
         });
 
         // Clicking the back button brings back the first panel
         backButton.click();
         gpii.tests.verifyStates(that, 1, false, true, {
-            isVisible: [".gpiic-fd-prefsEditor-panel-audio"],
+            isVisible: [".gpiic-fd-prefsEditor-panel-tts"],
             notVisible: [".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
         });
 
@@ -100,7 +100,7 @@ https://github.com/gpii/universal/LICENSE.txt
         that.applier.change("currentPanelNum", 3);
         gpii.tests.verifyStates(that, 3, true, true, {
             isVisible: [".gpiic-fd-prefsEditor-panel-contrast"],
-            notVisible: [".gpiic-fd-prefsEditor-panel-audio", ".gpiic-fd-prefsEditor-panel-size"]
+            notVisible: [".gpiic-fd-prefsEditor-panel-tts", ".gpiic-fd-prefsEditor-panel-size"]
         });
     };
 
