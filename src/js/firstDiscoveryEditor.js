@@ -84,8 +84,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         listeners: {
             "onPrefsEditorReady.setPanels": {
-                listener: "gpii.firstDiscovery.setPanels",
-                args: ["{that}"],
+                listener: "fluid.set",
+                args: ["{that}", "panels", {
+                    expander: {
+                        funcName: "{prefsEditor}.locate",
+                        args: ["panel"]
+                    }
+                }],
                 priority: "first"
             },
             "onPrefsEditorReady.showInitialPanel": "{that}.showPanel",
@@ -100,10 +105,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         }
     });
-
-    gpii.firstDiscovery.setPanels = function (that) {
-        that.panels = that.prefsEditor.locate("panel");
-    };
 
     gpii.firstDiscovery.showPanel = function (panels, toShow, selectorForCurrent) {
         fluid.each(panels, function (panel, index) {
