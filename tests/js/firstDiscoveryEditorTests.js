@@ -14,7 +14,7 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.registerNamespace("gpii.tests");
 
     fluid.defaults("gpii.tests.firstDiscovery", {
-        gradeNames: ["fluid.viewRelayComponent", "{that}.assembledPrefsEditorGrade", "autoInit"],
+        gradeNames: ["fluid.viewComponent", "{that}.assembledPrefsEditorGrade", "autoInit"],
         prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor",
         components: {
             prefsEditorLoader: {
