@@ -32,8 +32,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         onReady: {
                             listener: "{firstDiscoveryEditor}.events.onPrefsEditorReady",
                             args: "{firstDiscoveryEditor}"
-                        }
-                    }
+                        },
+                        onAutoSave: "{that}.saveAndApply"
+                    },
+                    autoSave: true
                 }
             },
             navButtons: {
