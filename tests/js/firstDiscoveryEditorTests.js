@@ -146,7 +146,7 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertTrue("Clicking on larger button enlarges the text size", sizeAfterDecrease < sizeAfterIncrease);
     };
 
-    gpii.tests.firstDiscovery.runTest("Init and navigation buttons", "#gpiic-fd-navButtons", 1, gpii.tests.firstDiscovery.testNavButtons);
-    gpii.tests.firstDiscovery.runTest("Text Size", "#gpiic-fd-textSize", 3, gpii.tests.firstDiscovery.testTextSize);
+    gpii.tests.firstDiscovery.runTest("Init and navigation buttons", "#gpiic-fd-navButtonsTests", 1, gpii.tests.firstDiscovery.testNavButtons);
+    gpii.tests.firstDiscovery.runTest("Text Size", "#gpiic-fd-textSizeTests", 3, gpii.tests.firstDiscovery.testTextSize);
 
 })(jQuery, fluid);
