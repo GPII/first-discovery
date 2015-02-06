@@ -62,6 +62,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 }
             }
         },
+        tooltipOptions: {
+            delay: 0,
+            duration: 0,
+            position: {
+                my: "left+70 bottom-70"
+            },
+            styles: {
+                tooltip: "gpii-fd-tooltip"
+            }
+        },
         selectors: {
             prefsEditor: ".gpiic-fd-prefsEditor",
             panel: ".gpiic-fd-prefsEditor-panel",
@@ -100,6 +110,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 funcName: "gpii.firstDiscovery.showPanel",
                 args: ["{that}.panels", "{that}.model.currentPanelNum", "{that}.options.styles.currentPanel"]
             }
+        },
+        distributeOptions: {
+            source: "{that}.options.tooltipOptions",
+            target: "{that gpii.firstDiscovery.tooltip}.options.tooltipOptions"
         }
     });
 

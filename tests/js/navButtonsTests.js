@@ -26,17 +26,16 @@ https://github.com/gpii/universal/LICENSE.txt
 
     gpii.tests.verifyLabels = function (msg, that, states) {
         var backButton = that.locate("back"),
-            backButtonId = that.backButtonId,
+            backButtonId = backButton.attr("id"),
             nextButton = that.locate("next"),
-            nextButtonId = that.nextButtonId,
-            tooltip = that.tooltip;
+            nextButtonId = nextButton.attr("id");
 
         if (states.backLabel) {
             jqUnit.assertEquals(msg + " - The text on the back button is properly set", states.backLabel, backButton.html());
-            jqUnit.assertEquals(msg + " - The tooltip content for the back button is properly set", states.backLabel, tooltip.model.idToContent[backButtonId]);
+            jqUnit.assertEquals(msg + " - The tooltip content for the back button is properly set", states.backLabel, that.model.idToContent[backButtonId]);
         }
         jqUnit.assertEquals(msg + " - The text on the next button is properly set", states.nextLabel, nextButton.html());
-        jqUnit.assertEquals(msg + " - The tooltip content for the next button is properly set", states.nextLabel, tooltip.model.idToContent[nextButtonId]);
+        jqUnit.assertEquals(msg + " - The tooltip content for the next button is properly set", states.nextLabel, that.model.idToContent[nextButtonId]);
     };
 
     gpii.tests.verifyButtons = function (that, currentPanelNum) {
@@ -90,7 +89,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     jqUnit.test("Nav buttons", function () {
-        jqUnit.expect(35);
+        jqUnit.expect(33);
 
         var that = gpii.firstDiscovery.navButtons(".gpiic-nav", {
             panelTotalNum: 6
@@ -101,9 +100,7 @@ https://github.com/gpii/universal/LICENSE.txt
 
         // Test button states of being on the first panel
         that.applier.change("currentPanelNum", 1);
-        jqUnit.assertNotUndefined("The id for the back button has been detected", that.backButtonId);
-        jqUnit.assertNotUndefined("The id for the next button has been detected", that.nextButtonId);
-        jqUnit.assertNotUndefined("The tooltip has been created", that.tooltip);
+        jqUnit.assertNotUndefined("The model for tooltip has been populated", that.model.idToContent);
         gpii.tests.verifyButtons(that, 1);
 
         // Clicking the next button increases the current panel number and changes button states
