@@ -72,13 +72,15 @@ body {
     color: #425165; /* blue-grey */
     background-color: #ffffff;
     padding: 1.5rem;
-    min-height: 22rem;
+    min-height: 30rem;
 }
 
 .gpii-fd-main.gpii-fd-current {
     display: inherit;
 }
-
+.gpii-fd-instructions {
+    line-height: 1;
+}
 /* controls */
 /* to try to keep the +/- buttons centred in the page,
  * look at http://css-tricks.com/snippets/css/a-guide-to-flexbox/
@@ -113,10 +115,16 @@ body {
     color: #ffffff;
     background-color: #425165; /* blue-grey */
     border-radius: 7px;
+    margin-left: -0.6rem;
+    padding: 0.7rem;
 }
 .gpii-fd-indicator {
     width: 1rem;
     display: inline-block;
+}
+
+.gpii-fd-choice input:checked ~ .gpii-fd-yesNo {
+    color: #fed73a;
 }
 
 .gpii-fd-choice input:checked + .gpii-fd-indicator {
@@ -125,7 +133,7 @@ body {
     height: 0;
     border-top: 1.25rem solid transparent;
     border-bottom: 1.25rem solid transparent;
-    border-left: 1rem solid #fed73a;
+    border-left: 1.5rem solid #425165; /* blue-grey */
 }
 
 .gpii-fd-choice input:checked ~ .gpii-fd-indicator.gpii-fd-yesNo {
@@ -183,11 +191,26 @@ body {
     position: relative;
     background-color: #425165;
     width: inherit;
+    height: 0;
+}
+.gpii-fd-statusFillContainer {
+    position: relative;
+    width: inherit;
     -webkit-transform:rotate(180deg);
     -webkit-transform-origin: 100% 0%;
     left: -4.2rem;
+    top: 11.7rem;
+    height: 12rem;
+}
+.gpii-fd-statusFillMin {
+    position: relative;
+    background-color: #425165;
+    width: inherit;
+    -webkit-transform:rotate(180deg);
+    -webkit-transform-origin: 100% 0%;
+    left: -4.2rem;
+    height: 0.5rem;
     top: 12.4rem;
-    height: 0;
 }
 
 /* Navigation section at bottom, containing back/next and icons */
@@ -225,10 +248,10 @@ body {
 }
 .gpii-fd-navIcons {
     clear: both;
-    margin-top: 0.8rem; /* gap between main body and icons*/
+    margin-top: 1.5rem; /* gap between main body and icons*/
 }
 .gpii-fd-navIcon {
-    padding: 0.6rem 1rem 1rem 1rem;
+    padding: 1rem;
     color: #425165; /* blue-grey */
     background-color: #ffffff;
     display: inline-block;
@@ -265,8 +288,8 @@ body {
     height: 0;
     border-left: 1.25rem solid transparent;
     border-right: 1.25rem solid transparent;
-    border-top: 1rem solid #fff;
-    margin: -5.5rem auto 3rem auto;
+    border-top: 1.5rem solid #fff;
+    margin: -5.7rem auto 3rem auto;
 }
 
 .gpii-fd-show {
