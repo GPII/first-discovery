@@ -2,10 +2,10 @@ The version of Infusion included in this folder was created using a custom build
 
 https://github.com/fluid-project/infusion
 
-commit#: 4413d0020a62585e30a37331edd49c4d0e61b1ad
+commit#: 9d6d22b8cc7489d78b22b5cf7e1d58338e94c080
 
 ```
-    grunt custom --source=true --include="preferences, tooltip"
+grunt custom --source=true --include="preferences, tooltip"
 ```
 
 The following directories were stripped out of the build since they contain code that is included in the infusion-custom.js file or is not required:
