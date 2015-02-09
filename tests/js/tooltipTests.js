@@ -14,7 +14,7 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.registerNamespace("gpii.tests");
 
     fluid.defaults("gpii.tests.tooltipWithStrings", {
-        gradeNames: ["fluid.viewComponent", "gpii.firstDiscovery.tooltip", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.tooltip", "autoInit"],
         selectors: {
             button1: ".gpiic-button1",
             button2: ".gpiic-button2"
@@ -30,7 +30,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.tooltipWithMsgResolver", {
-        gradeNames: ["fluid.viewComponent", "gpii.firstDiscovery.tooltip", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.tooltip", "autoInit"],
         strings: {},
         testMessages: {
             button1Label: "button1 label from the message resolver",

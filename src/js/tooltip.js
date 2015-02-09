@@ -41,8 +41,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         invokers: {
             getTooltipModel: {
                 funcName: "gpii.firstDiscovery.tooltip.getTooltipModel",
-                args: ["{that}"],
-                dynamic: true
+                // Specifying each elements in argument list to force them to resolve.
+                args: ["{that}.dom", "{that}.options.strings", "{that}.options.parentBundle", "{that}.options.tooltipContentMap"]
             }
         },
         distributeOptions: {
@@ -51,17 +51,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    gpii.firstDiscovery.tooltip.getTooltipModel = function (that) {
-        var strings = that.options.strings,
-            parentBundle = that.options.parentBundle,
-            map = that.options.tooltipContentMap,
-            idToContent = {};
+    gpii.firstDiscovery.tooltip.getTooltipModel = function (domBinder, strings, parentBundle, map) {
+        var idToContent = {};
 
         fluid.each(map, function (string, selector) {
-            var id = fluid.allocateSimpleId(that.locate(selector));
+            var id = fluid.allocateSimpleId(domBinder.locate(selector));
             idToContent[id] = strings[string] || parentBundle.resolve(string);
         });
 
         return idToContent;
     };
+
 })(jQuery, fluid);
