@@ -27,31 +27,39 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * The left hand side is the name in the selectors block for the element to have the tooltip.
      * The right hand side is the name in the strings block for the content to be shown for that element.
      */
-    fluid.defaults("gpii.firstDiscovery.tooltip", {
-        gradeNames: ["fluid.tooltip", "autoInit"],
+    fluid.defaults("gpii.firstDiscovery.attachTooltip", {
+        gradeNames: ["fluid.viewComponent", "autoInit"],
         tooltipOptions: {},
         tooltipContentMap: {},  // Must be provided by integrators
-        model: {
-            idToContent: {
-                expander: {
-                    func: "{that}.getTooltipModel"
+        components: {
+            tooltip: {
+                type: "fluid.tooltip",
+                container: "{attachTooltip}.container",
+                options: {
+                    model: {
+                        idToContent: {
+                            expander: {
+                                func: "{that}.getTooltipModel"
+                            }
+                        }
+                    },
+                    invokers: {
+                        getTooltipModel: {
+                            funcName: "gpii.firstDiscovery.attachTooltip.getTooltipModel",
+                            // Specifying each elements in argument list to force them to resolve.
+                            args: ["{attachTooltip}.dom", "{attachTooltip}.options.strings", "{attachTooltip}.options.parentBundle", "{attachTooltip}.options.tooltipContentMap"]
+                        }
+                    }
                 }
-            }
-        },
-        invokers: {
-            getTooltipModel: {
-                funcName: "gpii.firstDiscovery.tooltip.getTooltipModel",
-                // Specifying each elements in argument list to force them to resolve.
-                args: ["{that}.dom", "{that}.options.strings", "{that}.options.parentBundle", "{that}.options.tooltipContentMap"]
             }
         },
         distributeOptions: {
             source: "{that}.options.tooltipOptions",
-            target: "{that}.options"
+            target: "{that > tooltip}.options"
         }
     });
 
-    gpii.firstDiscovery.tooltip.getTooltipModel = function (domBinder, strings, parentBundle, map) {
+    gpii.firstDiscovery.attachTooltip.getTooltipModel = function (domBinder, strings, parentBundle, map) {
         var idToContent = {};
 
         fluid.each(map, function (string, selector) {

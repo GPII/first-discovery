@@ -20,7 +20,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * The back and next navigation buttons
      */
     fluid.defaults("gpii.firstDiscovery.navButtons", {
-        gradeNames: ["fluid.viewComponent", "gpii.firstDiscovery.tooltip", "autoInit"],
+        gradeNames: ["fluid.viewComponent", "gpii.firstDiscovery.attachTooltip", "autoInit"],
         panelTotalNum: null,   // Must be supplied by integrators
         panelStartNum: 1,
         tooltipContentMap: {
@@ -104,12 +104,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         nextButton.html(nextLabel);
         nextButton.addClass(showSelector);
         if (isFirstPanel) {
-            that.close();  // Close the existing tooltip for the back button otherwise it will linger after the back button becomes hidden
-            that.applier.fireChangeRequest({path: "idToContent." + backButtonId, type: "DELETE"});
+            that.tooltip.close();  // Close the existing tooltip for the back button otherwise it will linger after the back button becomes hidden
+            that.tooltip.applier.fireChangeRequest({path: "idToContent." + backButtonId, type: "DELETE"});
         } else {
-            that.applier.change("idToContent." + backButtonId, strings.back);
+            that.tooltip.applier.change("idToContent." + backButtonId, strings.back);
         }
-        that.applier.change("idToContent." + nextButtonId, nextLabel);
+        that.tooltip.applier.change("idToContent." + nextButtonId, nextLabel);
     };
 
     gpii.firstDiscovery.navButtons.adjustCurrentPanelNum = function (that, toChange) {

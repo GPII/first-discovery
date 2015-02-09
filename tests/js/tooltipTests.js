@@ -14,7 +14,7 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.registerNamespace("gpii.tests");
 
     fluid.defaults("gpii.tests.tooltipWithStrings", {
-        gradeNames: ["gpii.firstDiscovery.tooltip", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.attachTooltip", "autoInit"],
         selectors: {
             button1: ".gpiic-button1",
             button2: ".gpiic-button2"
@@ -30,7 +30,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.tooltipWithMsgResolver", {
-        gradeNames: ["gpii.firstDiscovery.tooltip", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.attachTooltip", "autoInit"],
         strings: {},
         testMessages: {
             button1Label: "button1 label from the message resolver",
@@ -55,7 +55,7 @@ https://github.com/gpii/universal/LICENSE.txt
     gpii.tests.verifyTooltip = function (that, testType, expectedLabelBlock) {
         fluid.each(that.options.tooltipContentMap, function (labelName, domName) {
             var domId = that.locate(domName).attr("id");
-            jqUnit.assertEquals("The tooltip content for " + domName + " matches the text defined in the " + testType, expectedLabelBlock[labelName], that.model.idToContent[domId]);
+            jqUnit.assertEquals("The tooltip content for " + domName + " matches the text defined in the " + testType, expectedLabelBlock[labelName], that.tooltip.model.idToContent[domId]);
         });
     };
 

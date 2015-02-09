@@ -113,7 +113,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         distributeOptions: {
             source: "{that}.options.tooltipOptions",
-            target: "{that gpii.firstDiscovery.tooltip}.options.tooltipOptions"
+            target: "{that gpii.firstDiscovery.attachTooltip}.options.tooltipOptions"
         }
     });
 

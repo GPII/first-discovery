@@ -32,10 +32,10 @@ https://github.com/gpii/universal/LICENSE.txt
 
         if (states.backLabel) {
             jqUnit.assertEquals(msg + " - The text on the back button is properly set", states.backLabel, backButton.html());
-            jqUnit.assertEquals(msg + " - The tooltip content for the back button is properly set", states.backLabel, that.model.idToContent[backButtonId]);
+            jqUnit.assertEquals(msg + " - The tooltip content for the back button is properly set", states.backLabel, that.tooltip.model.idToContent[backButtonId]);
         }
         jqUnit.assertEquals(msg + " - The text on the next button is properly set", states.nextLabel, nextButton.html());
-        jqUnit.assertEquals(msg + " - The tooltip content for the next button is properly set", states.nextLabel, that.model.idToContent[nextButtonId]);
+        jqUnit.assertEquals(msg + " - The tooltip content for the next button is properly set", states.nextLabel, that.tooltip.model.idToContent[nextButtonId]);
     };
 
     gpii.tests.verifyButtons = function (that, currentPanelNum) {
@@ -100,7 +100,7 @@ https://github.com/gpii/universal/LICENSE.txt
 
         // Test button states of being on the first panel
         that.applier.change("currentPanelNum", 1);
-        jqUnit.assertNotUndefined("The model for tooltip has been populated", that.model.idToContent);
+        jqUnit.assertNotUndefined("The model for tooltip has been populated", that.tooltip.model.idToContent);
         gpii.tests.verifyButtons(that, 1);
 
         // Clicking the next button increases the current panel number and changes button states

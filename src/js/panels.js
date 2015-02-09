@@ -16,7 +16,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.registerNamespace("gpii.firstDiscovery.panel");
 
     fluid.defaults("gpii.firstDiscovery.panel.ranged", {
-        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.tooltip", "autoInit"],
+        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip", "autoInit"],
         model: {
             // Preferences Maps should direct the default model state
             // to this model property. The component is configured
@@ -73,12 +73,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             "afterRender.updateMeter": "{that}.updateMeter",
             "afterRender.updateTooltipModel": {
-                changePath: "idToContent",
-                value: {
+                listener: "{that}.tooltip.applier.change",
+                args: ["idToContent", {
                     expander: {
-                        func: "{that}.getTooltipModel"
+                        func: "{that}.tooltip.getTooltipModel"
                     }
-                }
+                }]
             }
         },
         modelListeners: {
@@ -96,7 +96,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     gpii.firstDiscovery.panel.ranged.step = function (that, reverse) {
-        that.close();   // close the existing tooltip before the panel is re-rendered
+        that.tooltip.close();   // close the existing tooltip before the panel is re-rendered
 
         var step = reverse ? (that.options.step * -1) : that.options.step;
         var newValue = that.model.value + step;
