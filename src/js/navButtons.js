@@ -92,8 +92,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             strings = that.options.strings,
             backButton = that.locate("back"),
             nextButton = that.locate("next"),
-            backButtonId = fluid.allocateSimpleId(that.locate("back")),
-            nextButtonId = fluid.allocateSimpleId(that.locate("next")),
+            backButtonId = fluid.allocateSimpleId(backButton),
+            nextButtonId = fluid.allocateSimpleId(nextButton),
             showSelector = that.options.styles.show,
             isFirstPanel = currentPanelNum === that.options.panelStartNum,
             nextLabel = isFirstPanel ? strings.start : (currentPanelNum === that.options.panelTotalNum ? strings.finish : strings.next);
