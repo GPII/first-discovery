@@ -1,4 +1,4 @@
-/*! infusion - v2.0.0-SNAPSHOT Tuesday, February 3rd, 2015, 3:30:27 PM*/
+/*! infusion - v2.0.0-SNAPSHOT Monday, February 9th, 2015, 12:37:54 PM*/
 /*!
  * jQuery JavaScript Library v1.11.0
  * http://jquery.com/
@@ -31642,7 +31642,7 @@ var fluid_2_0 = fluid_2_0 || {};
                 funcName: "fluid.textToSpeech.handleEnd",
                 args: ["{that}"]
             },
-            handleError: "{that}.events.error.fire",
+            handleError: "{that}.events.onError.fire",
             handlePause: {
                 changePath: "paused",
                 value: true
@@ -31680,12 +31680,15 @@ var fluid_2_0 = fluid_2_0 || {};
     };
 
     fluid.textToSpeech.handleEnd = function (that) {
+        var resetValues = {
+            speaking: false,
+            pending: false,
+            paused: false
+        };
+
         if (!that.queue.length) {
-            that.applier.change("", {
-                speaking: false,
-                pending: false,
-                paused: false
-            });
+            var newModel = $.extend({}, that.model, resetValues);
+            that.applier.change("", newModel);
         }
     };
 
@@ -31708,7 +31711,7 @@ var fluid_2_0 = fluid_2_0 || {};
         };
         $.extend(toSpeak, that.options.utteranceOpts, options, eventBinding);
 
-        that.queue.push(toSpeak);
+        that.queue.push(text);
         that.events.onSpeechQueued.fire(text);
         speechSynthesis.speak(toSpeak);
     };
@@ -34536,7 +34539,7 @@ var fluid_2_0 = fluid_2_0 || {};
      * the text to be spoken.
      *******************************************************************************/
 
-    fluid.defaults("fluid.prefs.enactor.speakEnactor", {
+    fluid.defaults("fluid.prefs.enactor.speak", {
         gradeNames: ["fluid.textToSpeech", "fluid.prefs.enactor", "autoInit"],
         preferenceMap: {
             "fluid.prefs.speak": {
@@ -34545,13 +34548,13 @@ var fluid_2_0 = fluid_2_0 || {};
         },
         invokers: {
             queueSpeech: {
-                funcName: "fluid.prefs.enactor.speakEnactor.queueSpeech"
+                funcName: "fluid.prefs.enactor.speak.queueSpeech"
             }
         }
     });
 
 
-    fluid.prefs.enactor.speakEnactor.queueSpeech = function (that, text, interrupt, options) {
+    fluid.prefs.enactor.speak.queueSpeech = function (that, text, interrupt, options) {
         // force a string value
         var str = text.toString();
 
@@ -34570,18 +34573,20 @@ var fluid_2_0 = fluid_2_0 || {};
      * The enactor that enables self voicing of an entire page
      *******************************************************************************/
 
-    fluid.defaults("fluid.prefs.enactor.selfVoicingEnactor", {
-        gradeNames: ["fluid.viewComponent", "fluid.prefs.enactor.speakEnactor", "autoInit"],
+    fluid.defaults("fluid.prefs.enactor.selfVoicing", {
+        gradeNames: ["fluid.viewComponent", "fluid.prefs.enactor.speak", "autoInit"],
         modelListeners: {
-            "enabled": "{that}.handleSelfVoicing"
+            "enabled": {
+                listener: "{that}.handleSelfVoicing",
+                args: ["{that}", "{change}.value", "{change}.oldValue"]
+            }
         },
         invokers: {
             handleSelfVoicing: {
-                funcName: "fluid.prefs.enactor.selfVoicingEnactor.handleSelfVoicing",
-                args: "{that}"
+                funcName: "fluid.prefs.enactor.selfVoicing.handleSelfVoicing"
             },
             readFromDOM: {
-                funcName: "fluid.prefs.enactor.selfVoicingEnactor.readFromDOM",
+                funcName: "fluid.prefs.enactor.selfVoicing.readFromDOM",
                 args: ["{that}", "{that}.container"]
             }
         },
@@ -34590,39 +34595,44 @@ var fluid_2_0 = fluid_2_0 || {};
         }
     });
 
-    fluid.prefs.enactor.selfVoicingEnactor.handleSelfVoicing = function (that) {
-        if (that.model.enabled) {
-            that.queueSpeech(that.options.strings.welcomeMsg, true);
-            that.readFromDOM();
-        } else {
-            that.cancel();
+    fluid.prefs.enactor.selfVoicing.handleSelfVoicing = function (that, newVal, oldVal) {
+        // The isChanged check is needed when the entire model is changed. When this is
+        // switched to a model relay component, it may be that this outer conditional is no longer needed.
+        var isChanged = typeof(newVal) === "object" ? newVal.enabled !== oldVal.enabled : true;
+        if (isChanged) {
+            if (that.model.enabled) {
+                that.queueSpeech(that.options.strings.welcomeMsg, true);
+                that.readFromDOM();
+            } else {
+                that.cancel();
+            }
         }
     };
 
     // Constants representing DOM node types.
-    fluid.prefs.enactor.selfVoicingEnactor.nodeType = {
+    fluid.prefs.enactor.selfVoicing.nodeType = {
         ELEMENT_NODE: 1,
         TEXT_NODE: 3
     };
 
     // TODO: Currently only reads text nodes and alt text.
     // This should be expanded to read other text descriptors as well.
-    fluid.prefs.enactor.selfVoicingEnactor.readFromDOM = function (that, elm) {
+    fluid.prefs.enactor.selfVoicing.readFromDOM = function (that, elm) {
         elm = $(elm);
         var nodes = elm.contents();
         fluid.each(nodes, function (node) {
-            if (node.nodeType === fluid.prefs.enactor.selfVoicingEnactor.nodeType.TEXT_NODE && node.nodeValue) {
+            if (node.nodeType === fluid.prefs.enactor.selfVoicing.nodeType.TEXT_NODE && node.nodeValue) {
                 that.queueSpeech(node.nodeValue);
             }
 
-            if (node.nodeType === fluid.prefs.enactor.selfVoicingEnactor.nodeType.ELEMENT_NODE && window.getComputedStyle(node).display !== "none") {
+            if (node.nodeType === fluid.prefs.enactor.selfVoicing.nodeType.ELEMENT_NODE && window.getComputedStyle(node).display !== "none") {
                 if (node.nodeName === "IMG") {
                     var altText = node.getAttribute("alt");
                     if (altText) {
                         that.queueSpeech(altText);
                     }
                 } else {
-                    fluid.prefs.enactor.selfVoicingEnactor.readFromDOM(that, node);
+                    fluid.prefs.enactor.selfVoicing.readFromDOM(that, node);
                 }
             }
         });
@@ -36348,7 +36358,7 @@ var fluid_2_0 = fluid_2_0 || {};
             speak: {
                 type: "fluid.prefs.speak",
                 enactor: {
-                    type: "fluid.prefs.enactor.selfVoicingEnactor",
+                    type: "fluid.prefs.enactor.selfVoicing",
                     container: "body"
                 },
                 panel: {
