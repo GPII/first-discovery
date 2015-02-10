@@ -26,7 +26,7 @@ body {
 .gpii-fd:focus {
     border: 3px solid red;
 }
-.gpii-fd button {
+button {
     color: inherit;
     background-color: inherit;
     font-size: inherit;
@@ -177,6 +177,19 @@ body {
     font-size: 4rem;
     margin-bottom: 1rem;
 }
+.gpii-fd-increase .gpii-fd-icon:before,
+.gpii-fd-decrease .gpii-fd-icon:before {
+    font-size: 4rem;
+    position: relative;
+    top: -0.4rem;
+    left: -1.1rem;
+}
+.gpii-fd-increase .gpii-fd-icon:before {
+    content: "\e603";
+}
+.gpii-fd-decrease .gpii-fd-icon:before {
+    content: "\e604";
+}
 
 /* vertical 'range status' indicator beside adjuster */
 .gpii-fd-status {
@@ -228,13 +241,12 @@ body {
     color: #ffffff;
     border-radius: 2rem;
     position: relative;
-    top: 0.3rem;
-    padding: 0.5rem;
+    top: 1rem;
     font-family: "PGA-FD";
-    font-size: 3rem;
+    font-size: 4rem;
 }
 .gpii-fd-navButtons-back:before {
-    content:  "\e605";
+    content:  "\e606";
     left: -0.3rem;
 }
 
@@ -266,16 +278,16 @@ body {
     line-height: initial;
 }
 .gpii-fd-lang:before {
-    content: "\e607";
-}
-.gpii-fd-volume:before {
     content: "\e608";
 }
+.gpii-fd-volume:before {
+    content: "\e609";
+}
 .gpii-fd-text:before {
-    content: "\e60a";
+    content: "\e60b";
 }
 .gpii-fd-contrast:before {
-    content: "\e60b";
+    content: "\e60c";
 }
 
 /* status/navigation styles */
@@ -297,10 +309,9 @@ body {
     visibility: visible;
 }
 .gpii-fd-doneIndicator:before {
-    content:  "\e606";
+    content:  "\e607";
     font-size: 2rem;
-    color: #ffffff;
-    background-color: #279841;
+    color: #279841;
     border-radius: 2rem;
     border: 1px solid #ffffff;
     margin-left: -2rem;
