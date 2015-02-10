@@ -69,7 +69,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     "onReady.startTest": {
                         listener: "jqUnit.start",
                         priority: "last"
-                    },
+                    }
                 }
             });
         });
