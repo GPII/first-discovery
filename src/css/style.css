@@ -312,6 +312,7 @@ button {
     content:  "\e607";
     font-size: 2rem;
     color: #279841;
+    background-color: #ffffff;
     border-radius: 2rem;
     border: 1px solid #ffffff;
     margin-left: -2rem;
