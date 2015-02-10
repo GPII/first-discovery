@@ -61,4 +61,20 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
+    /*******************************************************************************
+     * Primary Schema
+    *******************************************************************************/
+
+    fluid.defaults("gpii.firstDiscovery.schemas.textSize", {
+        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        schema: {
+            "fluid.prefs.textSize": {
+                "type": "number",
+                "default": 1,
+                "minimum": 0.2,
+                "maximum": 1.2,
+                "divisibleBy": 0.1
+            }
+        }
+    });
 })(jQuery, fluid);
