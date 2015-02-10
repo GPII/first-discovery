@@ -20,18 +20,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * The back and next navigation buttons
      */
     fluid.defaults("gpii.firstDiscovery.navButtons", {
-        gradeNames: ["fluid.viewComponent", "autoInit"],
+        gradeNames: ["fluid.viewComponent", "gpii.firstDiscovery.attachTooltip", "autoInit"],
         panelTotalNum: null,   // Must be supplied by integrators
         panelStartNum: 1,
-        tooltipOptions: {
-            delay: 0,
-            duration: 0,
-            position: {
-                my: "left+70 bottom-70"
-            },
-            styles: {
-                tooltip: "gpii-fd-tooltip"
-            }
+        tooltipContentMap: {
+            "back": "back",
+            "next": "next"
         },
         selectors: {
             back: "#gpiic-fd-navButtons-back",
@@ -76,8 +70,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         invokers: {
             setButtonStates: {
                 funcName: "gpii.firstDiscovery.navButtons.setButtonStates",
-                // Calls on "{that}.tooltip" to force the instantiate of this sub-components
-                args: ["{that}", "{that}.tooltip"]
+                args: ["{that}"]
             },
             adjustCurrentPanelNum: {
                 funcName: "gpii.firstDiscovery.navButtons.adjustCurrentPanelNum",
@@ -91,45 +84,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 funcName: "gpii.firstDiscovery.navButtons.adjustCurrentPanelNum",
                 args: ["{that}", 1]
             }
-        },
-        components: {
-            tooltip: {
-                type: "fluid.tooltip",
-                container: "{navButtons}.container",
-                options: {
-                    model: {
-                        expander: {
-                            funcName: "gpii.firstDiscovery.navButtons.getTooltipInitialModel",
-                            args: ["{navButtons}"]
-                        }
-                    }
-                }
-            }
-        },
-        distributeOptions: {
-            source: "{that}.options.tooltipOptions",
-            target: "{that > tooltip}.options"
         }
     });
 
-    gpii.firstDiscovery.navButtons.getTooltipInitialModel = function (that) {
-        that.backButtonId = fluid.allocateSimpleId(that.locate("back"));
-        that.nextButtonId = fluid.allocateSimpleId(that.locate("next"));
-
-        var idToContent = {};
-        idToContent[that.backButtonId] = that.options.strings.back;
-        idToContent[that.nextButtonId] = that.options.strings.next;
-
-        return {
-            idToContent: idToContent
-        };
-    };
-
-    gpii.firstDiscovery.navButtons.setButtonStates = function (that, tooltip) {
+    gpii.firstDiscovery.navButtons.setButtonStates = function (that) {
         var currentPanelNum = that.model.currentPanelNum,
             strings = that.options.strings,
             backButton = that.locate("back"),
             nextButton = that.locate("next"),
+            backButtonId = fluid.allocateSimpleId(backButton),
+            nextButtonId = fluid.allocateSimpleId(nextButton),
             showSelector = that.options.styles.show,
             isFirstPanel = currentPanelNum === that.options.panelStartNum,
             nextLabel = isFirstPanel ? strings.start : (currentPanelNum === that.options.panelTotalNum ? strings.finish : strings.next);
@@ -140,12 +104,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         nextButton.html(nextLabel);
         nextButton.addClass(showSelector);
         if (isFirstPanel) {
-            tooltip.close();  // Close the existing tooltip for the back button otherwise it will linger after the back button becomes hidden
-            tooltip.applier.fireChangeRequest({path: "idToContent." + that.backButtonId, type: "DELETE"});
+            that.tooltip.close();  // Close the existing tooltip for the back button otherwise it will linger after the back button becomes hidden
+            that.tooltip.applier.fireChangeRequest({path: "idToContent." + backButtonId, type: "DELETE"});
         } else {
-            tooltip.applier.change("idToContent." + that.backButtonId, strings.back);
+            that.tooltip.applier.change("idToContent." + backButtonId, strings.back);
         }
-        tooltip.applier.change("idToContent." + that.nextButtonId, nextLabel);
+        that.tooltip.applier.change("idToContent." + nextButtonId, nextLabel);
     };
 
     gpii.firstDiscovery.navButtons.adjustCurrentPanelNum = function (that, toChange) {

@@ -16,7 +16,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.registerNamespace("gpii.firstDiscovery.panel");
 
     fluid.defaults("gpii.firstDiscovery.panel.ranged", {
-        gradeNames: ["fluid.prefs.panel", "autoInit"],
+        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip", "autoInit"],
         model: {
             // Preferences Maps should direct the default model state
             // to this model property. The component is configured
@@ -37,6 +37,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             decreaseLabel: ".gpiic-fd-range-decreaseLabel"
         },
         selectorsToIgnore: ["meter", "increase", "decrease"],
+        tooltipContentMap: {
+            "increase": "increaseLabel",
+            "decrease": "decreaseLabel"
+        },
         protoTree: {
             instructions: {messagekey: "instructions"},
             increaseLabel: {messagekey: "increaseLabel"},
@@ -67,7 +71,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "method": "click",
                 "args": ["{that}.stepDown"]
             },
-            "afterRender.updateMeter": "{that}.updateMeter"
+            "afterRender.updateMeter": "{that}.updateMeter",
+            "afterRender.updateTooltipModel": {
+                listener: "{that}.tooltip.applier.change",
+                args: ["idToContent", {
+                    expander: {
+                        func: "{that}.tooltip.getTooltipModel"
+                    }
+                }]
+            }
         },
         modelListeners: {
             "value": {
@@ -84,6 +96,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     gpii.firstDiscovery.panel.ranged.step = function (that, reverse) {
+        that.tooltip.close();   // close the existing tooltip before the panel is re-rendered
+
         var step = reverse ? (that.options.step * -1) : that.options.step;
         var newValue = that.model.value + step;
         newValue = gpii.firstDiscovery.panel.ranged.clip(newValue, that.options.range.min, that.options.range.max);
