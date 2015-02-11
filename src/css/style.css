@@ -49,7 +49,7 @@ button {
 
 /* Top section, with mute and help buttons */
 .gpii-fd-topButtons {
-    padding: 1.5rem 1.5rem 0 1.5rem;
+    padding: 1rem 1rem 0 1rem;
 }
 
 .gpii-fd-help,
@@ -58,6 +58,7 @@ button {
     border-radius: 0.5rem;
     padding: 1rem;
     line-height: 2rem;
+    height: 4.5rem;
 }
 
 .gpii-fd-mute .gpii-fd-icon:before {
