@@ -22,8 +22,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             muteLabel: ".gpiic-fd-selfVoicing-muteLabel"
         },
         strings: {
-            muteEnabled: "turn voice OFF",
-            muteDisabled: "turn voice ON"
+            muted: "turn voice OFF",
+            unmuted: "turn voice ON"
+        },
+        styles: {
+            muted: "gpii-fd-selfVoicing-muted",
+            unmuted: "gpii-fd-selfVoicing-unmuted"
         },
         model: {
             enabled: false
@@ -40,6 +44,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             setLabel: {
                 funcName: "gpii.firstDiscovery.selfVoicing.setLabel",
                 args: ["{that}.dom.muteLabel", "{that}.options.strings", "{that}.model.enabled"]
+            },
+            setMuteStyle: {
+                funcName: "gpii.firstDiscovery.selfVoicing.setMuteStyle",
+                args: ["{that}.container", "{that}.options.styles.muted", "{that}.options.styles.unmuted", "{that}.model.enabled"]
             }
         },
         listeners: {
@@ -49,13 +57,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "args": ["{that}.toggleState"]
             },
             "onCreate.setLabel": "{that}.setLabel",
+            "onCreate.setMuteStyle": "{that}.setMuteStyle",
             "onCreate.clearQueue": {
                 listener: "gpii.firstDiscovery.selfVoicing.clearQueue",
                 args: ["{that}"]
             }
         },
         modelListeners: {
-            "enabled": ["{that}.setLabel", {
+            "enabled": ["{that}.setLabel", "{that}.setMuteStyle", {
                 listener: "gpii.firstDiscovery.selfVoicing.clearQueue",
                 args: ["{that}"]
             }]
@@ -73,8 +82,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     gpii.firstDiscovery.selfVoicing.setLabel = function (muteLabel, strings, isEnabled) {
-        var label = isEnabled ? strings.muteEnabled : strings.muteDisabled;
+        var label = isEnabled ? strings.muted : strings.unmuted;
         muteLabel.text(label);
+    };
+
+    gpii.firstDiscovery.selfVoicing.setMuteStyle = function (elm, mutedStyle, unMutedStyle, isEnabled) {
+        elm.toggleClass(mutedStyle, isEnabled);
+        elm.toggleClass(unMutedStyle, !isEnabled);
     };
 
     gpii.firstDiscovery.selfVoicing.clearQueue = function (that) {
