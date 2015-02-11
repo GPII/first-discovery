@@ -13,6 +13,7 @@
         <link rel="stylesheet" type="text/css" href="../src/lib/infusion/src/framework/preferences/css/PrefsEditor.css" />
 
         <script type="text/javascript" src="../src/lib/infusion/infusion-custom.js"></script>
+        <script type="text/javascript" src="../src/js/selfVoicing.js"></script>
         <script type="text/javascript" src="../src/js/tooltip.js"></script>
         <script type="text/javascript" src="../src/js/panels.js"></script>
         <script type="text/javascript" src="../src/schemas/schemas.js"></script>
@@ -25,8 +26,11 @@
     <body>
         <div id="gpiic-fd" class="small-12 gpii-fd">
             <section class="row gpii-fd-topButtons">
-                <div class="gpiic-muteContainer">
-                    <button class="left gpii-fd-mute"><span class="left gpii-fd-icon"></span>turn voice OFF</button>
+                <div class="gpiic-fd-selfVoicing">
+                    <button class="gpiic-fd-selfVoicing-mute left gpii-fd-mute">
+                        <span class="left gpii-fd-icon"></span>
+                        <span class="gpiic-fd-selfVoicing-muteLabel"></span>
+                    </button>
                 </div>
                 <button class="right gpii-fd-help">help</button>
             </section>

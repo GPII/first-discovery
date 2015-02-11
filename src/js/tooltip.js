@@ -36,6 +36,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 type: "fluid.tooltip",
                 container: "{attachTooltip}.container",
                 options: {
+                    gradeNames: ["gpii.firstDiscovery.selfVoicing.tooltipHookup"],
                     model: {
                         idToContent: {
                             expander: {

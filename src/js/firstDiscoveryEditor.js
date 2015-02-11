@@ -20,8 +20,26 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * The new prefs editor type for the first discovery tool
      */
     fluid.defaults("gpii.firstDiscovery.firstDiscoveryEditor", {
-        gradeNames: ["fluid.viewComponent", "fluid.prefs.prefsEditorLoader", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.selfVoicing.fdHookup", "fluid.prefs.prefsEditorLoader", "autoInit"],
         components: {
+            selfVoicing: {
+                container: "{that}.dom.selfVoicing",
+                createOnEvent: "onPrefsEditorReady",
+                type: "gpii.firstDiscovery.selfVoicing",
+                options: {
+                    gradeNames: ["fluid.prefs.msgLookup"],
+                    model: {
+                        enabled: true
+                    },
+                    members: {
+                        messageResolver: "{firstDiscoveryEditor}.msgResolver"
+                    },
+                    strings: {
+                        muteEnabled: "{that}.msgLookup.muteEnabled",
+                        muteDisabled: "{that}.msgLookup.muteDisabled"
+                    }
+                }
+            },
             prefsEditor: {
                 container: "{that}.dom.prefsEditor",
                 options: {
@@ -75,7 +93,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         selectors: {
             prefsEditor: ".gpiic-fd-prefsEditor",
             panel: ".gpiic-fd-prefsEditor-panel",
-            navButtons: ".gpiic-fd-navButtons"
+            navButtons: ".gpiic-fd-navButtons",
+            selfVoicing: ".gpiic-fd-selfVoicing"
         },
         styles: {
             show: "gpii-fd-show",
