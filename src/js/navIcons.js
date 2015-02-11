@@ -17,12 +17,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.registerNamespace("gpii.firstDiscovery");
 
     /*
-     * The navigation icons
+     * The nav icon
      */
-    fluid.defaults("gpii.firstDiscovery.navIcons", {
+    fluid.defaults("gpii.firstDiscovery.icon", {
         gradeNames: ["fluid.viewComponent", "autoInit"],
+        position: null,  // must be supplied by integrators
         selectors: {
-            icon: ".gpiic-fd-navIcon",
             activeIndicator: ".gpiic-fd-activeIndicator",
             doneIndicator: ".gpiic-fd-doneIndicator"
         },
@@ -36,38 +36,80 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 args: ["{change}.oldValue"]
             }
         },
-        listeners: {
-            // TODO: this listener can be removed when switching to use relay components.
-            "onCreate.setInitialIconStates": {
-                listener: "{that}.setIconStates",
-                args: [null]
-            }
-        },
         invokers: {
             setIconStates: {
-                funcName: "gpii.firstDiscovery.navIcons.setIconStates",
+                funcName: "gpii.firstDiscovery.icon.setIconStates",
                 args: ["{that}", "{arguments}.0"]
+            }
+        },
+        listeners: {
+            // TODO: this listener can be removed when switching to use relay components.
+            "onCreate.setIconStates": {
+                listener: "{that}.setIconStates",
+                args: [null]
             }
         }
     });
 
-    gpii.firstDiscovery.navIcons.setIconStates = function (that, prevPanelNum) {
+    gpii.firstDiscovery.icon.setIconStates = function (that, prevPanelNum) {
         var currentPanelNum = that.model.currentPanelNum,
-            icons = that.locate("icon"),
-            activeIcon = $(icons[currentPanelNum - 1]),
+            position = that.options.position,
             activeCss = that.options.styles.active,
             showCss = that.options.styles.show,
-            activeIndicator = that.options.selectors.activeIndicator,
-            doneIndicator = that.options.selectors.doneIndicator;
+            activeIndicator = that.locate("activeIndicator"),
+            doneIndicator = that.locate("doneIndicator");
 
-        icons.removeClass(activeCss);
-        activeIcon.addClass(activeCss);
-        icons.find(activeIndicator).removeClass(showCss);
-        activeIcon.find(activeIndicator).addClass(showCss);
-
-        if (prevPanelNum) {
-            $(icons[prevPanelNum - 1]).find(doneIndicator).addClass(showCss);
+        if (currentPanelNum === position) {
+            that.container.addClass(activeCss);
+            activeIndicator.addClass(showCss);
+        } else {
+            that.container.removeClass(activeCss);
+            activeIndicator.removeClass(showCss);
         }
+
+        if (position === prevPanelNum) {
+            doneIndicator.addClass(showCss);
+        }
+    };
+
+    /*
+     * The navigation icons: the wrapper component to help determine the position of each nav icon.
+     */
+    fluid.defaults("gpii.firstDiscovery.navIcons", {
+        gradeNames: ["fluid.viewComponent", "autoInit"],
+        dynamicComponents: {
+            icon: {
+                createOnEvent: "onCreateIcon",
+                type: "gpii.firstDiscovery.icon",
+                container: "{arguments}.0",
+                options: {
+                    // TODO: when switching to use relay components, the lines below to share applier can be removed
+                    members: {
+                        applier: "{navIcons}.applier"
+                    },
+                    // TODO: when switching to use relay components, rather than sharing the entire model, only the needed model paths need to be shared
+                    model: "{navIcons}.model",
+                    styles: "{navIcons}.options.styles",
+                    position: "{arguments}.1"
+                }
+            }
+        },
+        selectors: {
+            icon: ".gpiic-fd-navIcon"
+        },
+        events: {
+            onCreateIcon: null
+        },
+        listeners: {
+            "onCreate.createIcons": "gpii.firstDiscovery.navIcons.createIcons"
+        }
+    });
+
+    gpii.firstDiscovery.navIcons.createIcons = function (that) {
+        var icons = that.locate("icon");
+        fluid.each(icons, function (element, index) {
+            that.events.onCreateIcon.fire(element, index + 1);
+        });
     };
 
 })(jQuery, fluid);

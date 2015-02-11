@@ -76,7 +76,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.firstDiscovery.hasClass = function (elementName, element, selector, hasClass) {
-        jqUnit.assertEquals(elementName + " has the css class " + selector + " applied? " + (hasClass ? "yes" : "no"), hasClass, element.hasClass(selector));
+        jqUnit.assertEquals(elementName + (hasClass ? " has" : " does not have") + " the css class " + selector + " applied? ", hasClass, element.hasClass(selector));
     };
 
     gpii.tests.firstDiscovery.verifyStates = function (that, currentPanelNum, backVisible, nextVisible, panelsVisibility) {
@@ -86,8 +86,8 @@ https://github.com/gpii/universal/LICENSE.txt
             activeCss = that.options.styles.active,
             showCss = that.options.styles.show,
             icons = that.navIcons.locate("icon"),
-            activeIcon = $(icons[currentPanelNum - 1]),
-            activeIndicator = activeIcon.find(that.navIcons.options.selectors.activeIndicator);
+            activeIcon = icons.eq(currentPanelNum - 1),
+            activeIndicator = activeIcon.find(that.navIcons.icon.options.selectors.activeIndicator);
 
         jqUnit.assertEquals("The model value for \"currentPanelNum\" has been set to " + currentPanelNum, currentPanelNum, that.model.currentPanelNum);
         fluid.each(panelsVisibility, function (panelSelectors, visibility) {
