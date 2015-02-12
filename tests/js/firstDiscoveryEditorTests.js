@@ -82,8 +82,7 @@ https://github.com/gpii/universal/LICENSE.txt
             activeCss = that.options.styles.active,
             showCss = that.options.styles.show,
             icons = that.navIcons.locate("icon"),
-            activeIcon = icons.eq(currentPanelNum - 1),
-            activeIndicator = activeIcon.find(that.navIcons.icon.options.selectors.activeIndicator);
+            activeIcon = icons.eq(currentPanelNum - 1);
 
         jqUnit.assertEquals("The model value for \"currentPanelNum\" has been set to " + currentPanelNum, currentPanelNum, that.model.currentPanelNum);
         fluid.each(panelsVisibility, function (panelSelectors, visibility) {
@@ -96,11 +95,10 @@ https://github.com/gpii/universal/LICENSE.txt
         gpii.tests.utils.hasClass("The back button", backButton, showCss, backVisible);
         gpii.tests.utils.hasClass("The next button", nextButton, showCss, nextVisible);
         gpii.tests.utils.hasClass("The active icon", activeIcon, activeCss, true);
-        gpii.tests.utils.hasClass("The active indicator for the active icon", activeIndicator, showCss, true);
     };
 
     gpii.tests.firstDiscovery.testControlss = function (that) {
-        jqUnit.expect(39);
+        jqUnit.expect(35);
 
         var backButton = that.navButtons.locate("back");
         var nextButton = that.navButtons.locate("next");

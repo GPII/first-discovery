@@ -23,7 +23,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         gradeNames: ["fluid.viewComponent", "autoInit"],
         position: null,  // must be supplied by integrators
         selectors: {
-            activeIndicator: ".gpiic-fd-activeIndicator",
             doneIndicator: ".gpiic-fd-doneIndicator"
         },
         styles: {
@@ -40,11 +39,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     gpii.firstDiscovery.icon.setState = function (that, isActive, isActivePrev) {
         var activeCss = that.options.styles.active,
-            showCss = that.options.styles.show,
-            activeIndicator = that.locate("activeIndicator");
+            showCss = that.options.styles.show;
 
         that.container.toggleClass(activeCss, isActive);
-        activeIndicator.toggleClass(showCss, isActive);
 
         if (isActivePrev && !isActive) {
             that.locate("doneIndicator").addClass(that.options.styles.show);
@@ -100,7 +97,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     gpii.firstDiscovery.navIcons.updateIconModel = function (icon, currentPanelNum) {
         var position = icon.options.position;
-        icon.applier.change("isActive", currentPanelNum === position ? true : false);
+        icon.applier.change("isActive", currentPanelNum === position);
     };
 
 })(jQuery, fluid);

@@ -321,6 +321,9 @@ button {
 .gpii-fd-active {
     background-color: #fed73a;
 }
+.gpii-fd-active .gpii-fd-activeIndicator {
+    visibility: visible;
+}
 
 /* Tooltips */
 .gpii-fd-tooltip {

@@ -13,17 +13,15 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.registerNamespace("gpii.tests");
 
-    gpii.tests.verifyActiveState = function (that, iconState, activeIndicatorState) {
+    gpii.tests.verifyActiveState = function (that, iconState) {
         var activeCss = that.options.styles.active,
-            showCss = that.options.styles.show,
-            activeIndicator = that.locate("activeIndicator");
+            showCss = that.options.styles.show;
 
         gpii.tests.utils.hasClass("The active icon", that.container, activeCss, iconState);
-        gpii.tests.utils.hasClass("The active indicator", activeIndicator, showCss, activeIndicatorState);
     };
 
     jqUnit.test("Nav Icon", function () {
-        jqUnit.expect(6);
+        jqUnit.expect(4);
 
         var that = gpii.firstDiscovery.icon(".gpiic-icon", {
             position: 1
@@ -47,17 +45,14 @@ https://github.com/gpii/universal/LICENSE.txt
                 activeCss = iconComponent.options.styles.active,
                 showCss = iconComponent.options.styles.show,
                 position = iconComponent.options.position,
-                activeIndicator = iconComponent.locate("activeIndicator"),
                 doneIndicator = iconComponent.locate("doneIndicator");
 
             if (currentPanelNum === index + 1) {
                 jqUnit.assertTrue("The model value for isActive has been set to true", iconComponent.model.isActive);
                 gpii.tests.utils.hasClass("The active icon", iconComponent.container, activeCss, true);
-                gpii.tests.utils.hasClass("The active indicator for the active icon", activeIndicator, showCss, true);
             } else {
                 jqUnit.assertFalse("The model value for isActive has been set to false", iconComponent.model.isActive);
                 gpii.tests.utils.hasClass("The inactive icon", iconComponent.container, activeCss, false);
-                gpii.tests.utils.hasClass("The active indicator for the inactive icon", activeIndicator, showCss, false);
             }
 
             if (prevPanelNums.indexOf(position) === -1) {
@@ -69,7 +64,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     jqUnit.test("Nav Icons", function () {
-        jqUnit.expect(63);
+        jqUnit.expect(51);
 
         var that = gpii.firstDiscovery.navIcons(".gpiic-nav"),
             icons = that.locate("icon");
