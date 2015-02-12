@@ -31,13 +31,11 @@ https://github.com/gpii/universal/LICENSE.txt
 
         that.applier.change("isActive", true);
         gpii.tests.verifyActiveState(that, true, true);
+        gpii.tests.utils.hasClass("The done indicator is not shown", that.locate("doneIndicator"), that.options.styles.show, false);
+
         that.applier.change("isActive", false);
         gpii.tests.verifyActiveState(that, false, false);
-
-        that.applier.change("isVisited", true);
         gpii.tests.utils.hasClass("The done indicator is shown", that.locate("doneIndicator"), that.options.styles.show, true);
-        that.applier.change("isVisited", false);
-        gpii.tests.utils.hasClass("The shown state of the done indicator persists", that.locate("doneIndicator"), that.options.styles.show, true);
     });
 
     gpii.tests.verifyStates = function (that, currentPanelNum, prevPanelNums) {
@@ -63,7 +61,6 @@ https://github.com/gpii/universal/LICENSE.txt
             }
 
             if (prevPanelNums.indexOf(position) === -1) {
-                jqUnit.assertFalse("The model value for isVisited has been set to false", iconComponent.model.isVisited);
                 gpii.tests.utils.hasClass("The done indicator for a not-yet-visited panel", doneIndicator, showCss, false);
             } else {
                 gpii.tests.utils.hasClass("The done indicator for a visited panel", doneIndicator, showCss, true);
@@ -72,7 +69,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     jqUnit.test("Nav Icons", function () {
-        jqUnit.expect(72);
+        jqUnit.expect(63);
 
         var that = gpii.firstDiscovery.navIcons(".gpiic-nav"),
             icons = that.locate("icon");

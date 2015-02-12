@@ -31,43 +31,23 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             show: "gpii-fd-show"
         },
         modelListeners: {
-            "isActive.setActiveState": {
-                listener: "{that}.setActiveState",
-                args: ["{change}.value"]
-            },
-            "isVisited.setVisitedState": {
-                listener: "{that}.setVisitedState",
-                args: ["{change}.value"]
-            }
-        },
-        invokers: {
-            setActiveState: {
-                funcName: "gpii.firstDiscovery.icon.setActiveState",
-                args: ["{that}", "{arguments}.0"]
-            },
-            setVisitedState: {
-                funcName: "gpii.firstDiscovery.icon.setVisitedState",
-                args: ["{that}", "{arguments}.0"]
+            "isActive.setState": {
+                listener: "gpii.firstDiscovery.icon.setState",
+                args: ["{that}", "{change}.value", "{change}.oldValue"]
             }
         }
     });
 
-    gpii.firstDiscovery.icon.setActiveState = function (that, isActive) {
+    gpii.firstDiscovery.icon.setState = function (that, isActive, isActivePrev) {
         var activeCss = that.options.styles.active,
             showCss = that.options.styles.show,
-            activeIndicator = that.locate("activeIndicator"),
-            action = isActive ? "addClass" : "removeClass";
+            activeIndicator = that.locate("activeIndicator");
 
-        that.container[action](activeCss);
-        activeIndicator[action](showCss);
-    };
+        that.container.toggleClass(activeCss, isActive);
+        activeIndicator.toggleClass(showCss, isActive);
 
-    gpii.firstDiscovery.icon.setVisitedState = function (that, isVisited) {
-        var showCss = that.options.styles.show,
-            doneIndicator = that.locate("doneIndicator");
-
-        if (isVisited) {
-            doneIndicator.addClass(showCss);
+        if (isActivePrev && !isActive) {
+            that.locate("doneIndicator").addClass(that.options.styles.show);
         }
     };
 
@@ -87,14 +67,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     modelListeners: {
                         "{navIcons}.model.currentPanelNum": {
                             listener: "gpii.firstDiscovery.navIcons.updateIconModel",
-                            args: ["{that}", "{change}.value", "{change}.oldValue"]
+                            args: ["{that}", "{change}.value"]
                         }
                     },
-                    // This listeners block can be removed when switching to use model relay
+                    // TODO: This listeners block can be removed when switching to use model relay
                     listeners: {
                         "onCreate.updateIconModel": {
                             listener: "gpii.firstDiscovery.navIcons.updateIconModel",
-                            args: ["{that}", "{navIcons}.model.currentPanelNum", null]
+                            args: ["{that}", "{navIcons}.model.currentPanelNum"]
                         }
                     }
                 }
@@ -118,10 +98,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         });
     };
 
-    gpii.firstDiscovery.navIcons.updateIconModel = function (icon, currentPanelNum, prevPanelNum) {
+    gpii.firstDiscovery.navIcons.updateIconModel = function (icon, currentPanelNum) {
         var position = icon.options.position;
         icon.applier.change("isActive", currentPanelNum === position ? true : false);
-        icon.applier.change("isVisited", prevPanelNum === position ? true : false);
     };
 
 })(jQuery, fluid);
