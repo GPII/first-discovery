@@ -20,7 +20,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * The new prefs editor type for the first discovery tool
      */
     fluid.defaults("gpii.firstDiscovery.firstDiscoveryEditor", {
-        gradeNames: ["gpii.firstDiscovery.selfVoicing.fdHookup", "fluid.prefs.prefsEditorLoader", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.tts.fdHookup", "fluid.prefs.prefsEditorLoader", "autoInit"],
         components: {
             selfVoicing: {
                 container: "{that}.dom.selfVoicing",

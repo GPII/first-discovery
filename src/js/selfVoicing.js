@@ -16,7 +16,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.registerNamespace("gpii.firstDiscovery");
 
     fluid.defaults("gpii.firstDiscovery.selfVoicing", {
-        gradeNames: ["fluid.viewComponent", "fluid.textToSpeech", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.attachTooltip", "fluid.textToSpeech", "autoInit"],
         selectors: {
             mute: ".gpiic-fd-selfVoicing-mute",
             muteLabel: ".gpiic-fd-selfVoicing-muteLabel"
@@ -32,6 +32,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         model: {
             enabled: false
         },
+        tooltipContentMap: {
+            "mute": "muted"
+        },
         invokers: {
             queueSpeech: {
                 funcName: "gpii.firstDiscovery.selfVoicing.queueSpeech",
@@ -45,6 +48,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 funcName: "gpii.firstDiscovery.selfVoicing.setLabel",
                 args: ["{that}.dom.muteLabel", "{that}.options.strings", "{that}.model.enabled"]
             },
+            setTooltip: {
+                funcName: "gpii.firstDiscovery.selfVoicing.setTooltip",
+                args: ["{that}", "{that}.model.enabled"]
+            },
             setMuteStyle: {
                 funcName: "gpii.firstDiscovery.selfVoicing.setMuteStyle",
                 args: ["{that}.container", "{that}.options.styles", "{that}.model.enabled"]
@@ -57,6 +64,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "args": ["{that}.toggleState"]
             },
             "onCreate.setLabel": "{that}.setLabel",
+            "onCreate.setTooltip": "{that}.setTooltip",
             "onCreate.setMuteStyle": "{that}.setMuteStyle",
             "onCreate.clearQueue": {
                 listener: "gpii.firstDiscovery.selfVoicing.clearQueue",
@@ -64,10 +72,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         modelListeners: {
-            "enabled": ["{that}.setLabel", "{that}.setMuteStyle", {
-                listener: "gpii.firstDiscovery.selfVoicing.clearQueue",
-                args: ["{that}"]
-            }]
+            "enabled": [
+                "{that}.setLabel",
+                "{that}.setMuteStyle",
+                "{that}.setTooltip",
+                {
+                    listener: "gpii.firstDiscovery.selfVoicing.clearQueue",
+                    args: ["{that}"]
+                }
+            ]
         }
     });
 
@@ -86,6 +99,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         elm.text(label);
     };
 
+    gpii.firstDiscovery.selfVoicing.setTooltip = function (that, isEnabled) {
+        var str = that.options.strings[isEnabled ? "unmuted" : "muted"];
+        var modelPath = "idToContent." + that.locate("mute").attr("id");
+        that.tooltip.applier.change(modelPath, str);
+    };
+
     gpii.firstDiscovery.selfVoicing.setMuteStyle = function (elm, styles, isEnabled) {
         elm.toggleClass(styles.unmuted, isEnabled);
         elm.toggleClass(styles.muted, !isEnabled);
@@ -95,76 +114,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         if (!that.model.enabled) {
             that.cancel();
         }
-    };
-
-    fluid.defaults("gpii.firstDiscovery.selfVoicing.hookup", {
-        invokers: {
-            speak: {
-                func: "{gpii.firstDiscovery.selfVoicing}.queueSpeech"
-            }
-        }
-    });
-
-    fluid.registerNamespace("gpii.firstDiscovery.selfVoicing.tooltipHookup");
-
-    fluid.defaults("gpii.firstDiscovery.selfVoicing.tooltipHookup", {
-        gradeNames: ["gpii.firstDiscovery.selfVoicing.hookup"],
-        listeners: {
-            "afterOpen.selfVoicing": {
-                listener: "gpii.firstDiscovery.selfVoicing.tooltipHookup.speakTooltip",
-                args: ["{that}", "{arguments}.2"]
-            }
-        }
-    });
-
-    gpii.firstDiscovery.selfVoicing.tooltipHookup.speakTooltip = function (that, tooltip) {
-        that.speak(tooltip.text());
-    };
-
-    fluid.registerNamespace("gpii.firstDiscovery.selfVoicing.fdHookup");
-
-    // TODO: Currently this hookup is intended to be added to gpii.firstDiscovery.firstDiscoveryEditor
-    // directly. However, it should be reconfigured like the tooltip hookup and placed at the panel level.
-    // The issue at the moment is that a given panel doesn't know when this it is visible. All this information
-    // is contained at the editor level, which also doesn't really know which panel component is shown.
-    fluid.defaults("gpii.firstDiscovery.selfVoicing.fdHookup", {
-        components: {
-            selfVoicing: {
-                type: "gpii.firstDiscovery.selfVoicing",
-                options: {
-                    gradeNames: ["fluid.prefs.msgLookup"],
-                    members: {
-                        messageResolver: "{firstDiscoveryEditor}.msgResolver"
-                    },
-                    strings: {
-                        panelMsg: "{that}.msgLookup.panelMsg"
-                    },
-                    invokers: {
-                        speakPanelMessage: {
-                            funcName: "gpii.firstDiscovery.selfVoicing.fdHookup.speakPanelMessage",
-                            args: ["{firstDiscoveryEditor}", "{that}.msgLookup.panelMsg", "{that}.queueSpeech"]
-                        }
-                    },
-                    listeners: {
-                        "onCreate.readPanel": "{that}.speakPanelMessage"
-                    },
-                    modelListeners: {
-                        "{firstDiscoveryEditor}.model.currentPanelNum": "{that}.speakPanelMessage"
-                    }
-                }
-            }
-        },
-        panelInstructionsSelector: ".gpiic-fd-instructions"
-    });
-
-    gpii.firstDiscovery.selfVoicing.fdHookup.speakPanelMessage = function (that, template, speakFn) {
-        var currentPanelNum = that.model.currentPanelNum;
-        var msg = fluid.stringTemplate(template, {
-            currentPanel: currentPanelNum,
-            numPanels: that.panels.length,
-            instructions: that.panels.eq(currentPanelNum - 1).find(that.options.panelInstructionsSelector).text()
-        });
-        speakFn(msg);
     };
 
 })(jQuery, fluid);
