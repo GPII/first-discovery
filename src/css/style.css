@@ -125,6 +125,10 @@ button {
     border-radius: 7px;
     margin-left: -0.6rem;
     padding: 0.7rem;
+    border: 0.2rem solid #ffffff;
+}
+.gpii-fd-yesNo:hover {
+    box-shadow: 0 0 0.3rem #000;
 }
 .gpii-fd-indicator {
     width: 1rem;
@@ -199,7 +203,6 @@ button {
 .gpii-fd-increase:hover,
 .gpii-fd-decrease:hover {
     background-color: #425165; /* blue-grey, to override foundation's blue */
-    border: 0.2rem solid #ffffff;
     box-shadow: 0 0 0.3rem #000;
 }
 
