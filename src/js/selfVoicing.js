@@ -63,6 +63,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "method": "click",
                 "args": ["{that}.toggleState"]
             },
+            // TODO: The following listeners can be removed after switching to use model relay
             "onCreate.setLabel": "{that}.setLabel",
             "onCreate.setTooltip": "{that}.setTooltip",
             "onCreate.setMuteStyle": "{that}.setMuteStyle",
