@@ -13,20 +13,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     "use strict";
 
-    fluid.registerNamespace("gpii.firstDiscovery");
+    fluid.registerNamespace("gpii.firstDiscovery.tts.tooltipHookup");
 
-    fluid.defaults("gpii.firstDiscovery.tts.hookup", {
+    fluid.defaults("gpii.firstDiscovery.tts.tooltipHookup", {
         invokers: {
             speak: {
                 func: "{fluid.textToSpeech}.queueSpeech"
             }
-        }
-    });
-
-    fluid.registerNamespace("gpii.firstDiscovery.tts.tooltipHookup");
-
-    fluid.defaults("gpii.firstDiscovery.tts.tooltipHookup", {
-        gradeNames: ["gpii.firstDiscovery.tts.hookup"],
+        },
         listeners: {
             "afterOpen.tts": {
                 listener: "gpii.firstDiscovery.tts.tooltipHookup.speakTooltip",
