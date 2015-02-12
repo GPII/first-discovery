@@ -2,5 +2,8 @@
     "back": "back",
     "next": "next",
     "start": "start",
-    "finish": "finish"
+    "finish": "finish",
+    "muteEnabled": "turn voice OFF",
+    "muteDisabled": "turn voice ON",
+    "panelMsg": "This is step %currentPanel of %numPanels. %instructions Press 'h' for help."
 }

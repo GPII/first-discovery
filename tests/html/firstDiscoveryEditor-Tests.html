@@ -13,7 +13,9 @@
         <script src="../lib/infusion/test-core/utils/js/IoCTestUtils.js"></script>
 
         <script src="../../src/schemas/schemas.js"></script>
+        <script src="../../src/js/ttsHookup.js"></script>
         <script src="../../src/js/tooltip.js"></script>
+        <script src="../../src/js/selfVoicing.js"></script>
         <script src="../../src/js/panels.js"></script>
         <script src="../../src/js/navButtons.js"></script>
         <script src="../../src/js/navIcons.js"></script>
@@ -31,6 +33,12 @@
 
         <!-- Test HTML -->
         <div id="gpiic-fd-navControlsTests">
+            <div class="gpiic-fd-selfVoicing">
+                <button class="gpiic-fd-selfVoicing-mute left gpii-fd-mute">
+                    <span class="left gpii-fd-icon"></span>
+                    <span class="gpiic-fd-selfVoicing-muteLabel"></span>
+                </button>
+            </div>
             <section class="gpiic-fd-prefsEditor"></section>
 
             <div class="gpiic-fd-navButtons">
@@ -61,6 +69,13 @@
         </div>
 
         <div id="gpiic-fd-textSizeTests">
+            <div class="gpiic-fd-selfVoicing">
+                <button class="gpiic-fd-selfVoicing-mute left gpii-fd-mute">
+                    <span class="left gpii-fd-icon"></span>
+                    <span class="gpiic-fd-selfVoicing-muteLabel"></span>
+                </button>
+            </div>
+
             <section class="gpiic-fd-prefsEditor"></section>
 
             <div class="gpiic-fd-navButtons">

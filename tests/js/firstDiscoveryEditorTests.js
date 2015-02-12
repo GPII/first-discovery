@@ -21,6 +21,15 @@ https://github.com/gpii/universal/LICENSE.txt
                 options: {
                     listeners: {
                         onPrefsEditorReady: "{firstDiscovery}.events.onReady"
+                    },
+                    components: {
+                        selfVoicing: {
+                            options: {
+                                utteranceOpts: {
+                                    volume: 0
+                                }
+                            }
+                        }
                     }
                 }
             }

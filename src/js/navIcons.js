@@ -38,10 +38,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     gpii.firstDiscovery.icon.setState = function (that, isActive, isActivePrev) {
-        var activeCss = that.options.styles.active,
-            showCss = that.options.styles.show;
-
-        that.container.toggleClass(activeCss, isActive);
+        that.container.toggleClass(that.options.styles.active, isActive);
 
         if (isActivePrev && !isActive) {
             that.locate("doneIndicator").addClass(that.options.styles.show);
