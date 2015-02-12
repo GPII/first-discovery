@@ -21,6 +21,15 @@ https://github.com/gpii/universal/LICENSE.txt
                 options: {
                     listeners: {
                         onPrefsEditorReady: "{firstDiscovery}.events.onReady"
+                    },
+                    components: {
+                        selfVoicing: {
+                            options: {
+                                utteranceOpts: {
+                                    volume: 0
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -75,37 +84,38 @@ https://github.com/gpii/universal/LICENSE.txt
         });
     };
 
-    gpii.tests.firstDiscovery.hasClass = function (elementName, element, selector, hasClass) {
-        jqUnit.assertEquals("The visibility of " + elementName + " is " + (hasClass ? "visible" : "invisible"), hasClass, element.hasClass(selector));
-    };
-
     gpii.tests.firstDiscovery.verifyStates = function (that, currentPanelNum, backVisible, nextVisible, panelsVisibility) {
         var prefsEditorContainer = that.locate("prefsEditor"),
             backButton = that.navButtons.locate("back"),
             nextButton = that.navButtons.locate("next"),
-            showSelector = that.options.styles.show;
+            activeCss = that.options.styles.active,
+            showCss = that.options.styles.show,
+            icons = that.navIcons.locate("icon"),
+            activeIcon = icons.eq(currentPanelNum - 1);
 
         jqUnit.assertEquals("The model value for \"currentPanelNum\" has been set to " + currentPanelNum, currentPanelNum, that.model.currentPanelNum);
         fluid.each(panelsVisibility, function (panelSelectors, visibility) {
             fluid.each(panelSelectors, function (selector) {
                 var isVisible = visibility === "isVisible" ? true : false;
-                gpii.tests.firstDiscovery.hasClass(selector, prefsEditorContainer.find(selector), that.options.styles.currentPanel, isVisible);
+                gpii.tests.utils.hasClass(selector, prefsEditorContainer.find(selector), that.options.styles.currentPanel, isVisible);
             });
         });
 
-        gpii.tests.firstDiscovery.hasClass("the back button", backButton, showSelector, backVisible);
-        gpii.tests.firstDiscovery.hasClass("the next button", nextButton, showSelector, nextVisible);
+        gpii.tests.utils.hasClass("The back button", backButton, showCss, backVisible);
+        gpii.tests.utils.hasClass("The next button", nextButton, showCss, nextVisible);
+        gpii.tests.utils.hasClass("The active icon", activeIcon, activeCss, true);
     };
 
-    gpii.tests.firstDiscovery.testNavButtons = function (that) {
-        jqUnit.expect(30);
+    gpii.tests.firstDiscovery.testControlss = function (that) {
+        jqUnit.expect(35);
 
         var backButton = that.navButtons.locate("back");
         var nextButton = that.navButtons.locate("next");
 
-        // Test the initial panel
+        // Test the instantiated sub-components
         jqUnit.assertNotUndefined("The subcomponent \"prefsEditor\" has been instantiated", that.prefsEditor);
         jqUnit.assertNotUndefined("The subcomponent \"navButtons\" has been instantiated", that.navButtons);
+        jqUnit.assertNotUndefined("The subcomponent \"navIcons\" has been instantiated", that.navIcons);
         gpii.tests.firstDiscovery.verifyStates(that, 1, false, true, {
             isVisible: [".gpiic-fd-prefsEditor-panel-lang"],
             notVisible: [".gpiic-fd-prefsEditor-panel-tts", ".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
@@ -146,7 +156,7 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertTrue("Clicking on larger button enlarges the text size", sizeAfterDecrease < sizeAfterIncrease);
     };
 
-    gpii.tests.firstDiscovery.runTest("Init and navigation buttons", "#gpiic-fd-navButtonsTests", 1, gpii.tests.firstDiscovery.testNavButtons);
+    gpii.tests.firstDiscovery.runTest("Init and navigation controls", "#gpiic-fd-navControlsTests", 1, gpii.tests.firstDiscovery.testControlss);
     gpii.tests.firstDiscovery.runTest("Text Size", "#gpiic-fd-textSizeTests", 3, gpii.tests.firstDiscovery.testTextSize);
 
 })(jQuery, fluid);

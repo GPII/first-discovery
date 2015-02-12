@@ -13,10 +13,14 @@
         <script src="../lib/infusion/test-core/utils/js/IoCTestUtils.js"></script>
 
         <script src="../../src/schemas/schemas.js"></script>
+        <script src="../../src/js/ttsHookup.js"></script>
         <script src="../../src/js/tooltip.js"></script>
+        <script src="../../src/js/selfVoicing.js"></script>
         <script src="../../src/js/panels.js"></script>
         <script src="../../src/js/navButtons.js"></script>
+        <script src="../../src/js/navIcons.js"></script>
         <script src="../../src/js/firstDiscoveryEditor.js"></script>
+        <script src="../js/testUtils.js"></script>
         <script src="../js/firstDiscoveryEditorTests.js"></script>
     </head>
 
@@ -28,21 +32,76 @@
         <ol id="qunit-tests"></ol>
 
         <!-- Test HTML -->
-        <div id="gpiic-fd-navButtonsTests">
+        <div id="gpiic-fd-navControlsTests">
+            <div class="gpiic-fd-selfVoicing">
+                <button class="gpiic-fd-selfVoicing-mute left gpii-fd-mute">
+                    <span class="left gpii-fd-icon"></span>
+                    <span class="gpiic-fd-selfVoicing-muteLabel"></span>
+                </button>
+            </div>
             <section class="gpiic-fd-prefsEditor"></section>
 
             <div class="gpiic-fd-navButtons">
                 <button id="gpiic-fd-navButtons-back"></button>
                 <button id="gpiic-fd-navButtons-next"></button>
             </div>
+
+            <div class="gpiic-fd-navIcons text-center gpii-fd-navIcons">
+                <ul>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-lang">
+                        <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                        <div class="gpiic-fd-doneIndicator gpii-fd-doneIndicator"></div>
+                    </li>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-volume">
+                        <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                        <div class="gpiic-fd-doneIndicator gpii-fd-doneIndicator"></div>
+                    </li>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-text">
+                        <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                        <div class="gpiic-fd-doneIndicator gpii-fd-doneIndicator"></div>
+                    </li>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-contrast">
+                        <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                        <div class="gpiic-fd-doneIndicator gpii-fd-doneIndicator"></div>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <div id="gpiic-fd-textSizeTests">
+            <div class="gpiic-fd-selfVoicing">
+                <button class="gpiic-fd-selfVoicing-mute left gpii-fd-mute">
+                    <span class="left gpii-fd-icon"></span>
+                    <span class="gpiic-fd-selfVoicing-muteLabel"></span>
+                </button>
+            </div>
+
             <section class="gpiic-fd-prefsEditor"></section>
 
             <div class="gpiic-fd-navButtons">
                 <button id="gpiic-fd-navButtons-back"></button>
                 <button id="gpiic-fd-navButtons-next"></button>
+            </div>
+
+            <div class="gpiic-fd-navIcons text-center gpii-fd-navIcons">
+                <ul>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-lang">
+                        <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                        <div class="gpiic-fd-doneIndicator gpii-fd-doneIndicator"></div>
+                    </li>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-volume">
+                        <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                        <div class="gpiic-fd-doneIndicator gpii-fd-doneIndicator"></div>
+                    </li>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-text">
+                        <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                        <div class="gpiic-fd-doneIndicator gpii-fd-doneIndicator"></div>
+                    </li>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-contrast">
+                        <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                        <div class="gpiic-fd-doneIndicator gpii-fd-doneIndicator"></div>
+                    </li>
+                </ul>
             </div>
         </div>
     </body>

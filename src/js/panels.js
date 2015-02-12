@@ -29,7 +29,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         step: 0.1,
         selectors: {
-            instructions: ".gpiic-fd-range-instructions",
+            instructions: ".gpiic-fd-instructions",
             meter: ".gpiic-fd-range-indicator",
             increase: ".gpiic-fd-range-increase",
             increaseLabel: ".gpiic-fd-range-increaseLabel",

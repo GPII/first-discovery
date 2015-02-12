@@ -20,8 +20,26 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * The new prefs editor type for the first discovery tool
      */
     fluid.defaults("gpii.firstDiscovery.firstDiscoveryEditor", {
-        gradeNames: ["fluid.viewComponent", "fluid.prefs.prefsEditorLoader", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.tts.fdHookup", "fluid.prefs.prefsEditorLoader", "autoInit"],
         components: {
+            selfVoicing: {
+                container: "{that}.dom.selfVoicing",
+                createOnEvent: "onPrefsEditorReady",
+                type: "gpii.firstDiscovery.selfVoicing",
+                options: {
+                    gradeNames: ["fluid.prefs.msgLookup"],
+                    model: {
+                        enabled: true
+                    },
+                    members: {
+                        messageResolver: "{firstDiscoveryEditor}.msgResolver"
+                    },
+                    strings: {
+                        muteEnabled: "{that}.msgLookup.muteEnabled",
+                        muteDisabled: "{that}.msgLookup.muteDisabled"
+                    }
+                }
+            },
             prefsEditor: {
                 container: "{that}.dom.prefsEditor",
                 options: {
@@ -60,6 +78,19 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     styles: "{firstDiscoveryEditor}.options.styles",
                     panelTotalNum: "{firstDiscoveryEditor}.panels.length"
                 }
+            },
+            navIcons: {
+                type: "gpii.firstDiscovery.navIcons",
+                container: "{firstDiscoveryEditor}.dom.navIcons",
+                options: {
+                    members: {
+                        // TODO: when switching to use relay components, the line below to share applier can be removed
+                        applier: "{firstDiscoveryEditor}.applier"
+                    },
+                    // TODO: when switching to use relay components, rather than sharing the entire model, only the needed model paths need to be shared
+                    model: "{firstDiscoveryEditor}.model",
+                    styles: "{firstDiscoveryEditor}.options.styles"
+                }
             }
         },
         tooltipOptions: {
@@ -75,9 +106,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         selectors: {
             prefsEditor: ".gpiic-fd-prefsEditor",
             panel: ".gpiic-fd-prefsEditor-panel",
-            navButtons: ".gpiic-fd-navButtons"
+            navButtons: ".gpiic-fd-navButtons",
+            navIcons: ".gpiic-fd-navIcons",
+            selfVoicing: ".gpiic-fd-selfVoicing"
         },
         styles: {
+            active: "gpii-fd-active",
             show: "gpii-fd-show",
             currentPanel: "gpii-fd-current"
         },
