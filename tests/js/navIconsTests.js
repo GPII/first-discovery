@@ -14,10 +14,7 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.registerNamespace("gpii.tests");
 
     gpii.tests.verifyActiveState = function (that, iconState) {
-        var activeCss = that.options.styles.active,
-            showCss = that.options.styles.show;
-
-        gpii.tests.utils.hasClass("The active icon", that.container, activeCss, iconState);
+        gpii.tests.utils.hasClass("The active icon", that.container, that.options.styles.active, iconState);
     };
 
     jqUnit.test("Nav Icon", function () {
@@ -28,11 +25,11 @@ https://github.com/gpii/universal/LICENSE.txt
         });
 
         that.applier.change("isActive", true);
-        gpii.tests.verifyActiveState(that, true, true);
+        gpii.tests.verifyActiveState(that, true);
         gpii.tests.utils.hasClass("The done indicator is not shown", that.locate("doneIndicator"), that.options.styles.show, false);
 
         that.applier.change("isActive", false);
-        gpii.tests.verifyActiveState(that, false, false);
+        gpii.tests.verifyActiveState(that, false);
         gpii.tests.utils.hasClass("The done indicator is shown", that.locate("doneIndicator"), that.options.styles.show, true);
     });
 
