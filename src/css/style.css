@@ -60,11 +60,20 @@ button {
     line-height: 2rem;
     height: 4.5rem;
 }
-
+.gpii-fd-mute {
+    width: 23rem;
+}
 .gpii-fd-mute .gpii-fd-icon:before {
-    content: "\e601";
     font-size: 4rem;
     position: relative;
+    left: -0.8rem;
+}
+.gpii-fd-selfVoicing-unmuted .gpii-fd-mute .gpii-fd-icon:before {
+    content: "\e601";
+}
+.gpii-fd-selfVoicing-muted .gpii-fd-mute .gpii-fd-icon:before {
+    content: "\e60a";
+    font-size: 3.5rem;
     left: -0.5rem;
 }
 
