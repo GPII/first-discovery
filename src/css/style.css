@@ -78,10 +78,16 @@ button {
 .gpii-fd-help:focus,
 .gpii-fd-mute:focus {
     background-color: #425165; /* blue-grey */
-    border: 0.1rem solid #fff; /* Yellow */
+    border: 0.2rem solid #fff; /* Yellow */
     box-shadow: 0 0 0 0.4rem rgb(244, 215, 75), /* Yellow */
                 0 0 0 0.6rem rgb(0, 0, 0);
     outline: none;
+}
+
+.gpii-fd-help:active,
+.gpii-fd-mute:active {
+    background-color: #fff;
+    color: #425165;
 }
 
 /* Main section, containing adjuster and instructions */
