@@ -67,11 +67,21 @@ button {
     position: relative;
     left: -0.5rem;
 }
+
 .gpii-fd-help:hover,
 .gpii-fd-mute:hover {
     background-color: inherit;
     border-width: 0.4rem;
     padding: 0.8rem;
+}
+
+.gpii-fd-help:focus,
+.gpii-fd-mute:focus {
+    background-color: #425165; /* blue-grey */
+    border: 0.1rem solid #fff; /* Yellow */
+    box-shadow: 0 0 0 0.4rem rgb(244, 215, 75), /* Yellow */
+                0 0 0 0.6rem rgb(0, 0, 0);
+    outline: none;
 }
 
 /* Main section, containing adjuster and instructions */
@@ -256,8 +266,12 @@ button {
     background-color: #ffffff;
 }
 .gpii-fd-navButtons-back, .gpii-fd-navButtons-next {
-    border: none;
+    border: 0.2rem solid #fff;
+    border-radius: 0.4rem;
     visibility: hidden;
+    margin: 1rem;
+    padding: 0.5rem;
+    line-height: 4.2rem;
 }
 
 .gpii-fd-navButtons-back:before,
@@ -265,11 +279,11 @@ button {
     background-color: #425165; /* blue-grey */
     color: #ffffff;
     border: 0.2rem solid #ffffff;
-    border-radius: 2rem;
+    border-radius: 50rem;
     position: relative;
-    top: 1rem;
     font-family: "PGA-FD";
     font-size: 4rem;
+    top: 0.7rem;
 }
 .gpii-fd-navButtons-back:hover,
 .gpii-fd-navButtons-next:hover {
@@ -281,6 +295,20 @@ button {
     border: 0.2rem solid #ffffff;
     box-shadow: 0 0 0.3rem #000;
 }
+.gpii-fd-navButtons-back:focus,
+.gpii-fd-navButtons-next:focus {
+    color: #425165;
+    outline: none;
+    background-color: #fed73a; /* blue-grey */
+    border: 0.2rem solid #000;
+    border-radius: 0.4rem;
+    box-shadow: 0 0 0 0.2rem rgb(0, 0, 0);
+}
+
+.gpii-fd-navButtons-next:focus:before {
+
+}
+
 .gpii-fd-navButtons-back:before {
     content:  "\e606";
     left: -0.3rem;
