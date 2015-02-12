@@ -81,18 +81,22 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         });
     };
 
+    gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions = function (that) {
+        return that.panels.eq(that.model.currentPanelNum - 1).find(that.options.panelInstructionsSelector).text();
+    };
+
     gpii.firstDiscovery.tts.fdHookup.speakPanelMessage = function (that, template, speakFn) {
         var currentPanelNum = that.model.currentPanelNum;
         var msg = fluid.stringTemplate(template, {
             currentPanel: currentPanelNum,
             numPanels: that.panels.length,
-            instructions: that.panels.eq(currentPanelNum - 1).find(that.options.panelInstructionsSelector).text()
+            instructions: gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions(that)
         });
         speakFn(msg);
     };
 
     gpii.firstDiscovery.tts.fdHookup.speakPanelInstructions = function (that, speakFn) {
-        var msg = that.panels.eq(that.model.currentPanelNum - 1).find(that.options.panelInstructionsSelector).text();
+        var msg = gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions(that);
 
         speakFn(msg);
     };
