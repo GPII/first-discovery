@@ -22,8 +22,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             muteLabel: ".gpiic-fd-selfVoicing-muteLabel"
         },
         strings: {
-            muted: "turn voice OFF",
-            unmuted: "turn voice ON"
+            muted: "turn voice ON",
+            unmuted: "turn voice OFF"
         },
         styles: {
             muted: "gpii-fd-selfVoicing-muted",
@@ -47,7 +47,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             setMuteStyle: {
                 funcName: "gpii.firstDiscovery.selfVoicing.setMuteStyle",
-                args: ["{that}.container", "{that}.options.styles.muted", "{that}.options.styles.unmuted", "{that}.model.enabled"]
+                args: ["{that}.container", "{that}.options.styles", "{that}.model.enabled"]
             }
         },
         listeners: {
@@ -81,14 +81,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         that.applier.change("enabled", !that.model.enabled);
     };
 
-    gpii.firstDiscovery.selfVoicing.setLabel = function (muteLabel, strings, isEnabled) {
-        var label = isEnabled ? strings.muted : strings.unmuted;
-        muteLabel.text(label);
+    gpii.firstDiscovery.selfVoicing.setLabel = function (elm, strings, isEnabled) {
+        var label = isEnabled ? strings.unmuted : strings.muted;
+        elm.text(label);
     };
 
-    gpii.firstDiscovery.selfVoicing.setMuteStyle = function (elm, mutedStyle, unMutedStyle, isEnabled) {
-        elm.toggleClass(mutedStyle, isEnabled);
-        elm.toggleClass(unMutedStyle, !isEnabled);
+    gpii.firstDiscovery.selfVoicing.setMuteStyle = function (elm, styles, isEnabled) {
+        elm.toggleClass(styles.unmuted, isEnabled);
+        elm.toggleClass(styles.muted, !isEnabled);
     };
 
     gpii.firstDiscovery.selfVoicing.clearQueue = function (that) {
