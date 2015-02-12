@@ -23,7 +23,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         strings: {
             muted: "turn voice ON",
-            unmuted: "turn voice OFF"
+            unmuted: "turn voice OFF",
+            mutedMsg: "voice is off",
+            unmutedMsg: "voice is on"
         },
         styles: {
             muted: "gpii-fd-selfVoicing-muted",
@@ -80,6 +82,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 {
                     listener: "gpii.firstDiscovery.selfVoicing.clearQueue",
                     args: ["{that}"]
+                },
+                {
+                    listener: "gpii.firstDiscovery.selfVoicing.speakVoiceState",
+                    args: ["{that}", "{change}"]
                 }
             ]
         }
@@ -88,6 +94,26 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.selfVoicing.queueSpeech = function (that, text, options) {
         if (that.model.enabled) {
             fluid.textToSpeech.queueSpeech(that, text, true, options);
+        }
+    };
+
+    // TODO: The manual comparison of old and new model state can be removed after switching to a model relay component
+    gpii.firstDiscovery.selfVoicing.speakVoiceState = function (that, change, options) {
+        var newVal;
+        var oldVal;
+
+        if (typeof(change.value) === "object") {
+            newVal = change.value.enabled;
+            oldVal = change.oldValue.enabled;
+        } else {
+            newVal = change.value;
+            oldVal = change.oldValue;
+        }
+
+        if (newVal !== oldVal) {
+            var msg = that.model.enabled ? that.options.strings.unmutedMsg : that.options.strings.mutedMsg;
+            // called directly as it needs to be spoken regardless of enabled state.
+            fluid.textToSpeech.queueSpeech(that, msg, true, options);
         }
     };
 
