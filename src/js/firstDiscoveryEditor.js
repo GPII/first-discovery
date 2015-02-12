@@ -78,6 +78,19 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     styles: "{firstDiscoveryEditor}.options.styles",
                     panelTotalNum: "{firstDiscoveryEditor}.panels.length"
                 }
+            },
+            navIcons: {
+                type: "gpii.firstDiscovery.navIcons",
+                container: "{firstDiscoveryEditor}.dom.navIcons",
+                options: {
+                    members: {
+                        // TODO: when switching to use relay components, the line below to share applier can be removed
+                        applier: "{firstDiscoveryEditor}.applier"
+                    },
+                    // TODO: when switching to use relay components, rather than sharing the entire model, only the needed model paths need to be shared
+                    model: "{firstDiscoveryEditor}.model",
+                    styles: "{firstDiscoveryEditor}.options.styles"
+                }
             }
         },
         tooltipOptions: {
@@ -94,9 +107,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             prefsEditor: ".gpiic-fd-prefsEditor",
             panel: ".gpiic-fd-prefsEditor-panel",
             navButtons: ".gpiic-fd-navButtons",
+            navIcons: ".gpiic-fd-navIcons",
             selfVoicing: ".gpiic-fd-selfVoicing"
         },
         styles: {
+            active: "gpii-fd-active",
             show: "gpii-fd-show",
             currentPanel: "gpii-fd-current"
         },
