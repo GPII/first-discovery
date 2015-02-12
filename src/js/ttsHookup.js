@@ -49,10 +49,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         components: {
             selfVoicing: {
                 options: {
-                    gradeNames: ["fluid.prefs.msgLookup"],
-                    members: {
-                        messageResolver: "{firstDiscoveryEditor}.msgResolver"
-                    },
                     strings: {
                         panelMsg: "{that}.msgLookup.panelMsg"
                     },
