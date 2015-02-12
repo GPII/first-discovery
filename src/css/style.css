@@ -178,6 +178,16 @@ button {
     font-size: 4rem;
     margin-bottom: 1rem;
 }
+
+.gpii-fd .gpii-fd-increase:focus,
+.gpii-fd .gpii-fd-decrease:focus {
+    background-color: #425165; /* blue-grey */
+    border: 0.2rem solid #fed73a; /* Yellow */
+    box-shadow: 0 0 0 0.2rem rgb(244, 215, 75), /* Yellow */
+                0 0 0 0.6rem rgb(0, 0, 0);
+    outline: none;
+}
+
 .gpii-fd-increase .gpii-fd-icon:before,
 .gpii-fd-decrease .gpii-fd-icon:before {
     font-size: 4rem;
@@ -319,7 +329,7 @@ button {
     margin-left: -2rem;
 }
 .gpii-fd-active {
-    background-color: #fed73a;
+    background-color: #fed73a; /* Yellow */
 }
 
 /* Tooltips */
