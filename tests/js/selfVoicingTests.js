@@ -78,13 +78,13 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "Tests the selfVoicing component",
             tests: [{
-                expect: 2,
+                expect: 3,
                 name: "Test Init",
                 type: "test",
                 func: "{that}.testRendering",
                 args: ["{selfVoicing}.options.strings.muted", "{selfVoicing}.options.styles.muted"]
             }, {
-                expect: 3,
+                expect: 4,
                 name: "Test interaction",
                 sequence: [{
                     jQueryTrigger: "click",
@@ -107,7 +107,9 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     gpii.tests.selfVoicingTester.testRendering = function (that, muteLabel, muteClass) {
+        var muteId = that.locate("mute").attr("id");
         jqUnit.assertEquals("The label should be set correctly", muteLabel, that.locate("muteLabel").text());
+        jqUnit.assertEquals("The tooltip text should be set correctly", muteLabel, that.tooltip.model.idToContent[muteId]);
         jqUnit.assertTrue("The class should be applied to the container", that.container.hasClass(muteClass));
     };
 
