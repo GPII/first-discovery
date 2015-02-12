@@ -75,10 +75,6 @@ https://github.com/gpii/universal/LICENSE.txt
         });
     };
 
-    gpii.tests.firstDiscovery.hasClass = function (elementName, element, selector, hasClass) {
-        jqUnit.assertEquals(elementName + (hasClass ? " has" : " does not have") + " the css class " + selector + " applied? ", hasClass, element.hasClass(selector));
-    };
-
     gpii.tests.firstDiscovery.verifyStates = function (that, currentPanelNum, backVisible, nextVisible, panelsVisibility) {
         var prefsEditorContainer = that.locate("prefsEditor"),
             backButton = that.navButtons.locate("back"),
@@ -93,14 +89,14 @@ https://github.com/gpii/universal/LICENSE.txt
         fluid.each(panelsVisibility, function (panelSelectors, visibility) {
             fluid.each(panelSelectors, function (selector) {
                 var isVisible = visibility === "isVisible" ? true : false;
-                gpii.tests.firstDiscovery.hasClass(selector, prefsEditorContainer.find(selector), that.options.styles.currentPanel, isVisible);
+                gpii.tests.utils.hasClass(selector, prefsEditorContainer.find(selector), that.options.styles.currentPanel, isVisible);
             });
         });
 
-        gpii.tests.firstDiscovery.hasClass("The back button", backButton, showCss, backVisible);
-        gpii.tests.firstDiscovery.hasClass("The next button", nextButton, showCss, nextVisible);
-        gpii.tests.firstDiscovery.hasClass("The active icon", activeIcon, activeCss, true);
-        gpii.tests.firstDiscovery.hasClass("The active indicator for the active icon", activeIndicator, showCss, true);
+        gpii.tests.utils.hasClass("The back button", backButton, showCss, backVisible);
+        gpii.tests.utils.hasClass("The next button", nextButton, showCss, nextVisible);
+        gpii.tests.utils.hasClass("The active icon", activeIcon, activeCss, true);
+        gpii.tests.utils.hasClass("The active indicator for the active icon", activeIndicator, showCss, true);
     };
 
     gpii.tests.firstDiscovery.testControlss = function (that) {

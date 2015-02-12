@@ -13,19 +13,13 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.registerNamespace("gpii.tests");
 
-    gpii.tests.hasClass = function (elementName, element, selector, expected) {
-        jqUnit.assertEquals(elementName + (expected ? " has " : " does not have ") + selector + " applied", expected, element.hasClass(selector));
-    };
-
-    gpii.tests.verifyIconState = function (that, iconState, activeIndicatorState, doneIndicatorState) {
+    gpii.tests.verifyActiveState = function (that, iconState, activeIndicatorState) {
         var activeCss = that.options.styles.active,
             showCss = that.options.styles.show,
-            activeIndicator = that.locate("activeIndicator"),
-            doneIndicator = that.locate("doneIndicator");
+            activeIndicator = that.locate("activeIndicator");
 
-        gpii.tests.hasClass("The active icon", that.container, activeCss, iconState);
-        gpii.tests.hasClass("The active indicator", activeIndicator, showCss, activeIndicatorState);
-        gpii.tests.hasClass("The done indicator", doneIndicator, showCss, doneIndicatorState);
+        gpii.tests.utils.hasClass("The active icon", that.container, activeCss, iconState);
+        gpii.tests.utils.hasClass("The active indicator", activeIndicator, showCss, activeIndicatorState);
     };
 
     jqUnit.test("Nav Icon", function () {
@@ -35,11 +29,15 @@ https://github.com/gpii/universal/LICENSE.txt
             position: 1
         });
 
-        that.applier.change("currentPanelNum", 1);
-        gpii.tests.verifyIconState(that, true, true, false);
+        that.applier.change("isActive", true);
+        gpii.tests.verifyActiveState(that, true, true);
+        that.applier.change("isActive", false);
+        gpii.tests.verifyActiveState(that, false, false);
 
-        that.applier.change("currentPanelNum", 3);
-        gpii.tests.verifyIconState(that, false, false, true);
+        that.applier.change("isVisited", true);
+        gpii.tests.utils.hasClass("The done indicator is shown", that.locate("doneIndicator"), that.options.styles.show, true);
+        that.applier.change("isVisited", false);
+        gpii.tests.utils.hasClass("The shown state of the done indicator persists", that.locate("doneIndicator"), that.options.styles.show, true);
     });
 
     gpii.tests.verifyStates = function (that, currentPanelNum, prevPanelNums) {
@@ -55,23 +53,26 @@ https://github.com/gpii/universal/LICENSE.txt
                 doneIndicator = iconComponent.locate("doneIndicator");
 
             if (currentPanelNum === index + 1) {
-                gpii.tests.hasClass("The active icon", iconComponent.container, activeCss, true);
-                gpii.tests.hasClass("The active indicator for the active icon", activeIndicator, showCss, true);
+                jqUnit.assertTrue("The model value for isActive has been set to true", iconComponent.model.isActive);
+                gpii.tests.utils.hasClass("The active icon", iconComponent.container, activeCss, true);
+                gpii.tests.utils.hasClass("The active indicator for the active icon", activeIndicator, showCss, true);
             } else {
-                gpii.tests.hasClass("The inactive icon", iconComponent.container, activeCss, false);
-                gpii.tests.hasClass("The active indicator for the inactive icon", activeIndicator, showCss, false);
+                jqUnit.assertFalse("The model value for isActive has been set to false", iconComponent.model.isActive);
+                gpii.tests.utils.hasClass("The inactive icon", iconComponent.container, activeCss, false);
+                gpii.tests.utils.hasClass("The active indicator for the inactive icon", activeIndicator, showCss, false);
             }
 
             if (prevPanelNums.indexOf(position) === -1) {
-                gpii.tests.hasClass("The done indicator for a not-yet-visited panel", doneIndicator, showCss, false);
+                jqUnit.assertFalse("The model value for isVisited has been set to false", iconComponent.model.isVisited);
+                gpii.tests.utils.hasClass("The done indicator for a not-yet-visited panel", doneIndicator, showCss, false);
             } else {
-                gpii.tests.hasClass("The done indicator for a visited panel", doneIndicator, showCss, true);
+                gpii.tests.utils.hasClass("The done indicator for a visited panel", doneIndicator, showCss, true);
             }
         });
     };
 
     jqUnit.test("Nav Icons", function () {
-        jqUnit.expect(51);
+        jqUnit.expect(72);
 
         var that = gpii.firstDiscovery.navIcons(".gpiic-nav"),
             icons = that.locate("icon");

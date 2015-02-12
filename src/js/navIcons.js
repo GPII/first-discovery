@@ -31,43 +31,42 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             show: "gpii-fd-show"
         },
         modelListeners: {
-            currentPanelNum: {
-                listener: "{that}.setIconStates",
-                args: ["{change}.oldValue"]
+            "isActive.setActiveState": {
+                listener: "{that}.setActiveState",
+                args: ["{change}.value"]
+            },
+            "isVisited.setVisitedState": {
+                listener: "{that}.setVisitedState",
+                args: ["{change}.value"]
             }
         },
         invokers: {
-            setIconStates: {
-                funcName: "gpii.firstDiscovery.icon.setIconStates",
+            setActiveState: {
+                funcName: "gpii.firstDiscovery.icon.setActiveState",
                 args: ["{that}", "{arguments}.0"]
-            }
-        },
-        listeners: {
-            // TODO: this listener can be removed when switching to use relay components.
-            "onCreate.setIconStates": {
-                listener: "{that}.setIconStates",
-                args: [null]
+            },
+            setVisitedState: {
+                funcName: "gpii.firstDiscovery.icon.setVisitedState",
+                args: ["{that}", "{arguments}.0"]
             }
         }
     });
 
-    gpii.firstDiscovery.icon.setIconStates = function (that, prevPanelNum) {
-        var currentPanelNum = that.model.currentPanelNum,
-            position = that.options.position,
-            activeCss = that.options.styles.active,
+    gpii.firstDiscovery.icon.setActiveState = function (that, isActive) {
+        var activeCss = that.options.styles.active,
             showCss = that.options.styles.show,
             activeIndicator = that.locate("activeIndicator"),
+            action = isActive ? "addClass" : "removeClass";
+
+        that.container[action](activeCss);
+        activeIndicator[action](showCss);
+    };
+
+    gpii.firstDiscovery.icon.setVisitedState = function (that, isVisited) {
+        var showCss = that.options.styles.show,
             doneIndicator = that.locate("doneIndicator");
 
-        if (currentPanelNum === position) {
-            that.container.addClass(activeCss);
-            activeIndicator.addClass(showCss);
-        } else {
-            that.container.removeClass(activeCss);
-            activeIndicator.removeClass(showCss);
-        }
-
-        if (position === prevPanelNum) {
+        if (isVisited) {
             doneIndicator.addClass(showCss);
         }
     };
@@ -83,14 +82,21 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 type: "gpii.firstDiscovery.icon",
                 container: "{arguments}.0",
                 options: {
-                    // TODO: when switching to use relay components, the lines below to share applier can be removed
-                    members: {
-                        applier: "{navIcons}.applier"
-                    },
-                    // TODO: when switching to use relay components, rather than sharing the entire model, only the needed model paths need to be shared
-                    model: "{navIcons}.model",
+                    position: "{arguments}.1",
                     styles: "{navIcons}.options.styles",
-                    position: "{arguments}.1"
+                    modelListeners: {
+                        "{navIcons}.model.currentPanelNum": {
+                            listener: "gpii.firstDiscovery.navIcons.updateIconModel",
+                            args: ["{that}", "{change}.value", "{change}.oldValue"]
+                        }
+                    },
+                    // This listeners block can be removed when switching to use model relay
+                    listeners: {
+                        "onCreate.updateIconModel": {
+                            listener: "gpii.firstDiscovery.navIcons.updateIconModel",
+                            args: ["{that}", "{navIcons}.model.currentPanelNum", null]
+                        }
+                    }
                 }
             }
         },
@@ -110,6 +116,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         fluid.each(icons, function (element, index) {
             that.events.onCreateIcon.fire(element, index + 1);
         });
+    };
+
+    gpii.firstDiscovery.navIcons.updateIconModel = function (icon, currentPanelNum, prevPanelNum) {
+        var position = icon.options.position;
+        icon.applier.change("isActive", currentPanelNum === position ? true : false);
+        icon.applier.change("isVisited", prevPanelNum === position ? true : false);
     };
 
 })(jQuery, fluid);
