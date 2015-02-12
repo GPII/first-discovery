@@ -138,7 +138,7 @@ button {
 /* tts yes/no controls */
 /* currently not used - clean up once TTS panel is implemented */
 .gpii-fd-choice {
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.6rem;
 }
 .gpii-fd-yesNo {
     font-size: inherit;
@@ -147,24 +147,46 @@ button {
     text-align: center;
     color: #ffffff;
     background-color: #425165; /* blue-grey */
-    border-radius: 7px;
+    border-radius: 0.7rem;
     margin-left: -0.6rem;
     padding: 0.7rem;
     border: 0.2rem solid #ffffff;
 }
 .gpii-fd-yesNo:hover {
-    box-shadow: 0 0 0.3rem #000;
+    background-color: #425165; /* blue-grey, to override foundation's blue */
+    box-shadow: 0 0 0 0.04rem rgb(255,255,255), /* white */
+                0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
 }
+
+.gpii-fd-yesNo:focus {
+    background-color: #425165; /* blue-grey */
+    border: 0.2rem solid #fed73a; /* Yellow */
+    box-shadow: 0 0 0 0.2rem rgb(244, 215, 75), /* Yellow */
+                0 0 0 0.6rem rgb(0, 0, 0);
+    outline: none;
+}
+
+.gpii-fd-yesNo:active {
+    background-color: #fff;
+    color: #425165; /* blue-grey */
+    border: 0.2rem solid #fff;
+    box-shadow: 0 0 0 0.4rem rgb(72, 82, 100); /* blue-grey */
+}
+
 .gpii-fd-indicator {
     width: 1rem;
     display: inline-block;
     position: relative;
     top: 0.5rem;
-    left: -1.5rem;
+    left: -2.1rem;
 }
 
 .gpii-fd-choice input:checked ~ .gpii-fd-yesNo {
     color: #fed73a;
+}
+
+.gpii-fd-choice input:checked:active ~ .gpii-fd-yesNo {
+    color: #425165;
 }
 
 .gpii-fd-choice input:checked + .gpii-fd-indicator:before {
@@ -226,7 +248,7 @@ button {
 .gpii-fd .gpii-fd-decrease:active {
     background-color: #fff;
     color: #425165; /* blue-grey */
-    border: 0.1rem solid #fff; /* Yellow */
+    border: 0.1rem solid #fff;
     box-shadow: 0 0 0 0.4rem rgb(72, 82, 100); /* blue-grey */
 }
 
@@ -248,7 +270,6 @@ button {
     background-color: #425165; /* blue-grey, to override foundation's blue */
     box-shadow: 0 0 0 0.04rem rgb(255,255,255), /* white */
                 0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
-
 }
 
 /* vertical 'range status' indicator beside adjuster */
@@ -373,6 +394,24 @@ button {
 }
 .gpii-fd-contrast:before {
     content: "\e60c";
+}
+
+.gpii-fd-prefsEditor-panel-contrast label {
+    margin-bottom: 0.4rem;
+}
+
+.gpii-fd-prefsEditor-panel-contrast label:hover {
+    background-color: #425165; /* blue-grey, to override foundation's blue */
+    box-shadow: 0 0 0 0.04rem rgb(255,255,255), /* white */
+                0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
+}
+
+.gpii-fd-prefsEditor-panel-contrast label:focus {
+    background-color: #425165; /* blue-grey */
+    border: 0.2rem solid #fed73a; /* Yellow */
+    box-shadow: 0 0 0 0.2rem rgb(244, 215, 75), /* Yellow */
+                0 0 0 0.6rem rgb(0, 0, 0);
+    outline: none;
 }
 
 /* status/navigation styles */
