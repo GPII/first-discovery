@@ -69,14 +69,21 @@
         </div>
         <script type="text/javascript">
             $(document).ready(function () {
-                fluid.prefs.create("#gpiic-fd", {
-                    build: {
-                        gradeNames: ["gpii.firstDiscovery.auxSchema"]
-                    },
-                    prefsEditor: {
-                        prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor"
-                    }
-                });
+                var container = $("#gpiic-fd");
+                var unsupportedText = "This browser is currently not supported. Please try using the latest version of Chrome or Safari.";
+
+                if (fluid.textToSpeech.isSupported()) {
+                    fluid.prefs.create(container, {
+                        build: {
+                            gradeNames: ["gpii.firstDiscovery.auxSchema"]
+                        },
+                        prefsEditor: {
+                            prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor"
+                        }
+                    });
+                } else {
+                    container.text(unsupportedText);
+                }
             });
         </script>
     </body>
