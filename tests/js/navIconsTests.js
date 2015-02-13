@@ -30,14 +30,14 @@ https://github.com/gpii/universal/LICENSE.txt
         that.applier.change("isActive", false);
         gpii.tests.verifyActiveState(that, false);
 
-        var doneIndicator = that.locate("doneIndicator"),
+        var confirmedIndicator = that.locate("confirmedIndicator"),
             showCss = that.options.styles.show;
 
-        gpii.tests.utils.hasClass("The done indicator is not shown", doneIndicator, showCss, false);
+        gpii.tests.utils.hasClass("The confirmed indicator is not shown", confirmedIndicator, showCss, false);
         that.applier.change("isConfirmed", true);
-        gpii.tests.utils.hasClass("The done indicator is shown", doneIndicator, showCss, true);
+        gpii.tests.utils.hasClass("The confirmed indicator is shown", confirmedIndicator, showCss, true);
         that.applier.change("isConfirmed", false);
-        gpii.tests.utils.hasClass("The done indicator is still shown", doneIndicator, showCss, true);
+        gpii.tests.utils.hasClass("The confirmed indicator is still shown", confirmedIndicator, showCss, true);
     });
 
     gpii.tests.verifyStates = function (that, currentPanelNum, prevPanelNums) {
@@ -49,7 +49,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 activeCss = iconComponent.options.styles.active,
                 showCss = iconComponent.options.styles.show,
                 position = iconComponent.options.position,
-                doneIndicator = iconComponent.locate("doneIndicator");
+                confirmedIndicator = iconComponent.locate("confirmedIndicator");
 
             if (currentPanelNum === index + 1) {
                 jqUnit.assertTrue("The model value for isActive has been set to true", iconComponent.model.isActive);
@@ -60,9 +60,9 @@ https://github.com/gpii/universal/LICENSE.txt
             }
 
             if (prevPanelNums.indexOf(position) === -1) {
-                gpii.tests.utils.hasClass("The done indicator for a not-yet-visited panel", doneIndicator, showCss, false);
+                gpii.tests.utils.hasClass("The confirmed indicator for a not-yet-visited panel", confirmedIndicator, showCss, false);
             } else {
-                gpii.tests.utils.hasClass("The done indicator for a visited panel", doneIndicator, showCss, true);
+                gpii.tests.utils.hasClass("The confirmed indicator for a visited panel", confirmedIndicator, showCss, true);
             }
         });
     };
@@ -86,7 +86,7 @@ https://github.com/gpii/universal/LICENSE.txt
         that.applier.change("currentPanelNum", 3);
         gpii.tests.verifyStates(that, 3, [1]);
 
-        // going back doesn't trigger the done indicator to show for the previous panel
+        // going back doesn't trigger the confirmed indicator to show for the previous panel
         that.applier.change("currentPanelNum", 2);
         gpii.tests.verifyStates(that, 2, [1]);
 

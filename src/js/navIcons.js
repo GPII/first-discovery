@@ -23,7 +23,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         gradeNames: ["fluid.viewComponent", "autoInit"],
         position: null,  // must be supplied by integrators
         selectors: {
-            doneIndicator: ".gpiic-fd-doneIndicator"
+            confirmedIndicator: ".gpiic-fd-confirmedIndicator"
         },
         styles: {
             active: "gpii-fd-active",
@@ -35,16 +35,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 method: "toggleClass",
                 args: ["{that}.options.styles.active", "{change}.value"]
             },
-            "isConfirmed.setVisitedState": {
-                listener: "gpii.firstDiscovery.icon.setVisitedState",
+            "isConfirmed.setConfirmedState": {
+                listener: "gpii.firstDiscovery.icon.setConfirmedState",
                 args: ["{that}", "{change}.value"]
             }
         }
     });
 
-    gpii.firstDiscovery.icon.setVisitedState = function (that, isConfirmed) {
+    gpii.firstDiscovery.icon.setConfirmedState = function (that, isConfirmed) {
         if (isConfirmed) {
-            that.locate("doneIndicator").addClass(that.options.styles.show);
+            that.locate("confirmedIndicator").addClass(that.options.styles.show);
         }
     };
 
