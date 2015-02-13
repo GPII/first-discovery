@@ -34,9 +34,9 @@ https://github.com/gpii/universal/LICENSE.txt
             showCss = that.options.styles.show;
 
         gpii.tests.utils.hasClass("The done indicator is not shown", doneIndicator, showCss, false);
-        that.applier.change("isVisited", true);
+        that.applier.change("isConfirmed", true);
         gpii.tests.utils.hasClass("The done indicator is shown", doneIndicator, showCss, true);
-        that.applier.change("isVisited", false);
+        that.applier.change("isConfirmed", false);
         gpii.tests.utils.hasClass("The done indicator is still shown", doneIndicator, showCss, true);
     });
 

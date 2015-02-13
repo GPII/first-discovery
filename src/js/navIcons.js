@@ -35,15 +35,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 method: "toggleClass",
                 args: ["{that}.options.styles.active", "{change}.value"]
             },
-            "isVisited.setVisitedState": {
+            "isConfirmed.setVisitedState": {
                 listener: "gpii.firstDiscovery.icon.setVisitedState",
                 args: ["{that}", "{change}.value"]
             }
         }
     });
 
-    gpii.firstDiscovery.icon.setVisitedState = function (that, isVisited) {
-        if (isVisited) {
+    gpii.firstDiscovery.icon.setVisitedState = function (that, isConfirmed) {
+        if (isConfirmed) {
             that.locate("doneIndicator").addClass(that.options.styles.show);
         }
     };
@@ -98,7 +98,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.navIcons.updateIconModel = function (icon, currentPanelNum, prevPanelNum) {
         var position = icon.options.position;
         icon.applier.change("isActive", currentPanelNum === position);
-        icon.applier.change("isVisited", prevPanelNum === position && currentPanelNum > prevPanelNum);
+        icon.applier.change("isConfirmed", prevPanelNum === position && currentPanelNum > prevPanelNum);
     };
 
 })(jQuery, fluid);
