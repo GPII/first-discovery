@@ -120,10 +120,14 @@ button {
  * for ideas */
 
 .gpii-fd-controls {
-    height: 15rem;
+    height: 22rem;
     padding-top: 2rem;
 }
 
+.gpii-fd-controls .gpii-fd-label-max,
+.gpii-fd-controls .gpii-fd-label-min {
+    margin-bottom: 1rem;
+}
 .gpii-fd-control-label {
     color: inherit;
     background-color: inherit;
@@ -201,7 +205,7 @@ button {
 .gpii-fd-theme {
     font-size: inherit;
     display: inline-block;
-    width: 22rem;
+    width: 20rem;
     text-align: center;
     color: #ffffff;
     background-color: #425165; /* blue-grey */
@@ -324,7 +328,6 @@ button {
 .gpii-fd-navButtons-next:after {
     background-color: #425165; /* blue-grey */
     color: #ffffff;
-    border: 0.2rem solid #ffffff;
     border-radius: 50rem;
     position: relative;
     font-family: "PGA-FD";
