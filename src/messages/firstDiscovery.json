@@ -3,7 +3,9 @@
     "next": "next",
     "start": "start",
     "finish": "finish",
-    "muteEnabled": "turn voice OFF",
-    "muteDisabled": "turn voice ON",
+    "muted": "turn voice ON",
+    "unmuted": "turn voice OFF",
+    "mutedMsg": "voice is off",
+    "unmutedMsg": "voice is on",
     "panelMsg": "This is step %currentPanel of %numPanels. %instructions Press 'h' for help."
 }
