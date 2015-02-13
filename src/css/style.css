@@ -118,7 +118,7 @@ button {
     color: #425165; /* blue-grey */
     background-color: #ffffff;
     padding: 1.5rem;
-    min-height: 30rem;
+    height: 31rem;
 }
 
 .gpii-fd-main.gpii-fd-current {
