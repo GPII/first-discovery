@@ -140,6 +140,7 @@ button {
 .gpii-fd-choice {
     margin-bottom: 0.6rem;
 }
+
 .gpii-fd-yesNo {
     font-size: inherit;
     display: inline-block;
@@ -158,7 +159,7 @@ button {
                 0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
 }
 
-.gpii-fd-yesNo:focus {
+.gpii-fd-choice input:focus ~ .gpii-fd-yesNo {
     background-color: #425165; /* blue-grey */
     border: 0.2rem solid #fed73a; /* Yellow */
     box-shadow: 0 0 0 0.2rem rgb(244, 215, 75), /* Yellow */
@@ -406,7 +407,7 @@ button {
                 0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
 }
 
-.gpii-fd-prefsEditor-panel-contrast label:focus {
+.gpii-fd-prefsEditor-panel-contrast input:focus ~ label {
     background-color: #425165; /* blue-grey */
     border: 0.2rem solid #fed73a; /* Yellow */
     box-shadow: 0 0 0 0.2rem rgb(244, 215, 75), /* Yellow */
