@@ -431,7 +431,7 @@ button {
 }
 
 /* status/navigation styles */
-.gpii-fd-doneIndicator,
+.gpii-fd-confirmedIndicator,
 .gpii-fd-activeIndicator {
     visibility: hidden; /* use visibility instead of display to maintain positioning */
 }
@@ -448,7 +448,7 @@ button {
 .gpii-fd-show {
     visibility: visible;
 }
-.gpii-fd-doneIndicator:before {
+.gpii-fd-confirmedIndicator:before {
     content:  "\e607";
     font-size: 2rem;
     color: #279841;
