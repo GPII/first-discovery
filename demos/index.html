@@ -50,11 +50,11 @@
                             <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
                             <div class="gpiic-fd-doneIndicator gpii-fd-doneIndicator"></div>
                         </li>
-                        <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-volume">
+                        <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-text">
                             <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
                             <div class="gpiic-fd-doneIndicator gpii-fd-doneIndicator"></div>
                         </li>
-                        <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-text">
+                        <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-volume">
                             <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
                             <div class="gpiic-fd-doneIndicator gpii-fd-doneIndicator"></div>
                         </li>
@@ -69,23 +69,21 @@
         </div>
         <script type="text/javascript">
             $(document).ready(function () {
-                fluid.prefs.create("#gpiic-fd", {
-                    build: {
-                        gradeNames: ["gpii.firstDiscovery.auxSchema"]
-                    },
-                    prefsEditor: {
-                        prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor",
-                        components: {
-                            prefsEditorLoader: {
-                                options: {
-                                    model: {
-                                        currentPanelNum: 3   // show the text size panel at the page load
-                                    }
-                                }
-                            }
+                var container = $("#gpiic-fd");
+                var unsupportedText = "This browser is currently not supported. Please try using the latest version of Chrome or Safari.";
+
+                if (fluid.textToSpeech.isSupported()) {
+                    fluid.prefs.create(container, {
+                        build: {
+                            gradeNames: ["gpii.firstDiscovery.auxSchema"]
+                        },
+                        prefsEditor: {
+                            prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor"
                         }
-                    }
-                });
+                    });
+                } else {
+                    container.text(unsupportedText);
+                }
             });
         </script>
     </body>
