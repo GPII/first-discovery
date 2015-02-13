@@ -26,11 +26,23 @@ body {
 .gpii-fd:focus {
     border: 3px solid red;
 }
+
 button {
     color: inherit;
     background-color: inherit;
     font-size: inherit;
 }
+
+.gpii-fd *:disabled:hover,
+.gpii-fd *:disabled:focus,
+.gpii-fd *:disabled:active,
+.gpii-fd *:disabled {
+    background-color: #6C6D70;
+    border-color: #6C6D70;
+    color: #fff;
+    opacity: 1.0;
+}
+
 .gpii-fd-icon {
     font-family: "PGA-FD";
     font-size: 3rem;
@@ -68,6 +80,7 @@ button {
     position: relative;
     left: -0.8rem;
 }
+
 .gpii-fd-selfVoicing-unmuted .gpii-fd-mute .gpii-fd-icon:before {
     content: "\e601";
 }
@@ -105,7 +118,7 @@ button {
     color: #425165; /* blue-grey */
     background-color: #ffffff;
     padding: 1.5rem;
-    min-height: 30rem;
+    height: 31rem;
 }
 
 .gpii-fd-main.gpii-fd-current {
@@ -120,10 +133,14 @@ button {
  * for ideas */
 
 .gpii-fd-controls {
-    height: 15rem;
+    height: 22rem;
     padding-top: 2rem;
 }
 
+.gpii-fd-controls .gpii-fd-label-max,
+.gpii-fd-controls .gpii-fd-label-min {
+    margin-bottom: 1rem;
+}
 .gpii-fd-control-label {
     color: inherit;
     background-color: inherit;
@@ -201,7 +218,7 @@ button {
 .gpii-fd-theme {
     font-size: inherit;
     display: inline-block;
-    width: 22rem;
+    width: 20rem;
     text-align: center;
     color: #ffffff;
     background-color: #425165; /* blue-grey */
@@ -316,7 +333,7 @@ button {
     border-radius: 0.4rem;
     visibility: hidden;
     margin: 1rem;
-    padding: 0.5rem;
+    padding: 0.5rem 1.5rem;
     line-height: 4.2rem;
 }
 
@@ -324,7 +341,6 @@ button {
 .gpii-fd-navButtons-next:after {
     background-color: #425165; /* blue-grey */
     color: #ffffff;
-    border: 0.2rem solid #ffffff;
     border-radius: 50rem;
     position: relative;
     font-family: "PGA-FD";
@@ -338,8 +354,7 @@ button {
 }
 .gpii-fd-navButtons-back:hover:before,
 .gpii-fd-navButtons-next:hover:after {
-    border: 0.2rem solid #ffffff;
-    box-shadow: 0 0 0 0.4rem rgb(72, 82, 100); /*blue-grey */
+    box-shadow: 0 0 0 0.2rem rgb(255, 255, 255), 0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
 }
 .gpii-fd-navButtons-back:focus,
 .gpii-fd-navButtons-next:focus {
@@ -353,12 +368,12 @@ button {
 
 .gpii-fd-navButtons-back:before {
     content:  "\e606";
-    left: -0.3rem;
+    right: 0.7rem;
 }
 
 .gpii-fd-navButtons-next:after {
     content: "\e605";
-    left: 0.5rem;
+    left: 0.7rem;
 }
 .gpii-fd-navButtons:after {
   content:"";
