@@ -28,13 +28,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "template": "../src/html/firstDiscovery.html",
             "messagePrefix": "../src/messages/",
             "message": "%prefix/firstDiscovery.json",
-            "tts": {
-                "type": "fluid.prefs.speak",
+            "lang": {
+                "type": "gpii.firstDiscovery.language",
                 "panel": {
-                    "type": "gpii.firstDiscovery.panel.tts",
-                    "container": ".gpiic-fd-prefsEditor-panel-tts",
-                    "template": "%prefix/tts.html",
-                    "message": "%prefix/tts.json"
+                    "type": "gpii.firstDiscovery.panel.lang",
+                    "container": ".gpiic-fd-prefsEditor-panel-lang",
+                    "template": "%prefix/lang.html",
+                    "message": "%prefix/lang.json"
                 }
             },
             "textSize": {
@@ -47,6 +47,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "container": ".gpiic-fd-prefsEditor-panel-size",
                     "template": "%prefix/rangeTemplate.html",
                     "message": "%prefix/textSize.json"
+                }
+            },
+            "tts": {
+                "type": "fluid.prefs.speak",
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.tts",
+                    "container": ".gpiic-fd-prefsEditor-panel-tts",
+                    "template": "%prefix/tts.html",
+                    "message": "%prefix/tts.json"
                 }
             },
             "contrast": {
@@ -74,6 +83,17 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "minimum": 0.2,
                 "maximum": 1.2,
                 "divisibleBy": 0.1
+            }
+        }
+    });
+
+    fluid.defaults("gpii.firstDiscovery.schemas.language", {
+        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.language": {
+                "type": "string",
+                "default": "en",
+                "enum": ["en", "fr"]
             }
         }
     });

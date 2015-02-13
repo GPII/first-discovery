@@ -50,11 +50,11 @@
                             <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
                             <div class="gpiic-fd-doneIndicator gpii-fd-doneIndicator"></div>
                         </li>
-                        <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-volume">
+                        <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-text">
                             <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
                             <div class="gpiic-fd-doneIndicator gpii-fd-doneIndicator"></div>
                         </li>
-                        <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-text">
+                        <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-volume">
                             <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
                             <div class="gpiic-fd-doneIndicator gpii-fd-doneIndicator"></div>
                         </li>
@@ -78,16 +78,7 @@
                             gradeNames: ["gpii.firstDiscovery.auxSchema"]
                         },
                         prefsEditor: {
-                            prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor",
-                            components: {
-                                prefsEditorLoader: {
-                                    options: {
-                                        model: {
-                                            currentPanelNum: 3   // show the text size panel at the page load
-                                        }
-                                    }
-                                }
-                            }
+                            prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor"
                         }
                     });
                 } else {
