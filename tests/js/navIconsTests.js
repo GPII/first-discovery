@@ -18,7 +18,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     jqUnit.test("Nav Icon", function () {
-        jqUnit.expect(4);
+        jqUnit.expect(5);
 
         var that = gpii.firstDiscovery.icon(".gpiic-icon", {
             position: 1
@@ -26,11 +26,18 @@ https://github.com/gpii/universal/LICENSE.txt
 
         that.applier.change("isActive", true);
         gpii.tests.verifyActiveState(that, true);
-        gpii.tests.utils.hasClass("The done indicator is not shown", that.locate("doneIndicator"), that.options.styles.show, false);
 
         that.applier.change("isActive", false);
         gpii.tests.verifyActiveState(that, false);
-        gpii.tests.utils.hasClass("The done indicator is shown", that.locate("doneIndicator"), that.options.styles.show, true);
+
+        var doneIndicator = that.locate("doneIndicator"),
+            showCss = that.options.styles.show;
+
+        gpii.tests.utils.hasClass("The done indicator is not shown", doneIndicator, showCss, false);
+        that.applier.change("isVisited", true);
+        gpii.tests.utils.hasClass("The done indicator is shown", doneIndicator, showCss, true);
+        that.applier.change("isVisited", false);
+        gpii.tests.utils.hasClass("The done indicator is still shown", doneIndicator, showCss, true);
     });
 
     gpii.tests.verifyStates = function (that, currentPanelNum, prevPanelNums) {
@@ -61,7 +68,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     jqUnit.test("Nav Icons", function () {
-        jqUnit.expect(51);
+        jqUnit.expect(64);
 
         var that = gpii.firstDiscovery.navIcons(".gpiic-nav"),
             icons = that.locate("icon");
@@ -79,8 +86,12 @@ https://github.com/gpii/universal/LICENSE.txt
         that.applier.change("currentPanelNum", 3);
         gpii.tests.verifyStates(that, 3, [1]);
 
+        // going back doesn't trigger the done indicator to show for the previous panel
+        that.applier.change("currentPanelNum", 2);
+        gpii.tests.verifyStates(that, 2, [1]);
+
         that.applier.change("currentPanelNum", 4);
-        gpii.tests.verifyStates(that, 4, [1, 3]);
+        gpii.tests.verifyStates(that, 4, [1, 2]);
     });
 
 })(jQuery, fluid);
