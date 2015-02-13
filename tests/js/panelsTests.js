@@ -129,12 +129,13 @@ https://github.com/gpii/universal/LICENSE.txt
         gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
         testOptions: {
             increasedStep: 1.1,
-            decreasedStep: 1.0
+            decreasedStep: 1.0,
+            testValue: 1.5
         },
         modules: [{
             name: "Test the text sizer settings panel",
             tests: [{
-                expect: 9,
+                expect: 11,
                 name: "Test the rendering of the text size panel",
                 sequence: [{
                     func: "{textSize}.refreshView"
@@ -169,6 +170,14 @@ https://github.com/gpii/universal/LICENSE.txt
                 }, {
                     listener: "gpii.tests.textSizeTester.verifyButtonStates",
                     args: ["{textSize}", false, true],
+                    spec: {path: "value", priority: "last"},
+                    changeEvent: "{textSize}.applier.modelChanged"
+                }, {
+                    func: "{textSize}.applier.change",
+                    args: ["value", "{that}.options.testOptions.testValue"]
+                }, {
+                    listener: "gpii.tests.textSizeTester.verifyButtonStates",
+                    args: ["{textSize}", false, false],
                     spec: {path: "value", priority: "last"},
                     changeEvent: "{textSize}.applier.modelChanged"
                 }]
