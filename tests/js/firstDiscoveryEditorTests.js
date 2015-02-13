@@ -20,7 +20,10 @@ https://github.com/gpii/universal/LICENSE.txt
             prefsEditorLoader: {
                 options: {
                     listeners: {
-                        onPrefsEditorReady: "{firstDiscovery}.events.onReady"
+                        onPrefsEditorReady: {
+                            listener: "{firstDiscovery}.events.onReady",
+                            priority: "last"
+                        }
                     },
                     components: {
                         selfVoicing: {
@@ -156,7 +159,17 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertTrue("Clicking on larger button enlarges the text size", sizeAfterDecrease < sizeAfterIncrease);
     };
 
+    gpii.tests.firstDiscovery.testTTSHookup = function (that) {
+        jqUnit.expect(1);
+
+        var expected = that.prefsEditor.gpii_firstDiscovery_panel_textSize.messageResolver.lookup(["instructions"]).template;
+        var actual = gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions(that);
+
+        jqUnit.assertEquals("The instruction text should be sourced from the active panel", expected, actual);
+    };
+
     gpii.tests.firstDiscovery.runTest("Init and navigation controls", "#gpiic-fd-navControlsTests", 1, gpii.tests.firstDiscovery.testControlss);
     gpii.tests.firstDiscovery.runTest("Text Size", "#gpiic-fd-textSizeTests", 3, gpii.tests.firstDiscovery.testTextSize);
+    gpii.tests.firstDiscovery.runTest("TTS Hookup", "#gpiic-fd-ttsHookupTests", 3, gpii.tests.firstDiscovery.testTTSHookup);
 
 })(jQuery, fluid);
