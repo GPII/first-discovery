@@ -103,7 +103,7 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.defaults("gpii.tests.prefs.panel.textSize", {
         gradeNames: ["gpii.firstDiscovery.panel.textSize", "gpii.tests.panels.defaultTestPanel", "autoInit"],
         testMessages: {
-            instructions: "Text size instructions.",
+            rangeInstructions: "Text size instructions.",
             increaseLabel: "larger",
             decreaseLabel: "smaller"
         },
