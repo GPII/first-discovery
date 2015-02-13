@@ -69,23 +69,30 @@
         </div>
         <script type="text/javascript">
             $(document).ready(function () {
-                fluid.prefs.create("#gpiic-fd", {
-                    build: {
-                        gradeNames: ["gpii.firstDiscovery.auxSchema"]
-                    },
-                    prefsEditor: {
-                        prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor",
-                        components: {
-                            prefsEditorLoader: {
-                                options: {
-                                    model: {
-                                        currentPanelNum: 3   // show the text size panel at the page load
+                var container = $("#gpiic-fd");
+                var unsupportedText = "This web browser is not supported. Please try using the latest version of Chrome or Safari.";
+
+                if (fluid.textToSpeech.isSupported()) {
+                    fluid.prefs.create(container, {
+                        build: {
+                            gradeNames: ["gpii.firstDiscovery.auxSchema"]
+                        },
+                        prefsEditor: {
+                            prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor",
+                            components: {
+                                prefsEditorLoader: {
+                                    options: {
+                                        model: {
+                                            currentPanelNum: 3   // show the text size panel at the page load
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                });
+                    });
+                } else {
+                    container.text(unsupportedText);
+                }
             });
         </script>
     </body>
