@@ -50,10 +50,19 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         speakPanelMessage: {
                             funcName: "gpii.firstDiscovery.tts.fdHookup.speakPanelMessage",
                             args: ["{firstDiscoveryEditor}", "{that}.msgLookup.panelMsg", "{that}.queueSpeech"]
+                        },
+                        speakPanelInstructions: {
+                            funcName: "gpii.firstDiscovery.tts.fdHookup.speakPanelInstructions",
+                            args: ["{firstDiscoveryEditor}", "{that}.queueSpeech"]
                         }
                     },
                     listeners: {
-                        "onCreate.readPanel": "{that}.speakPanelMessage"
+                        "onCreate.readPanel": "{that}.speakPanelMessage",
+                        "onCreate.bindKeypress": {
+                            listener: "gpii.firstDiscovery.tts.fdHookup.bindKeypress",
+                            // 104 === 'h'
+                            args: ["body", 104, "{that}.speakPanelInstructions"]
+                        }
                     },
                     modelListeners: {
                         "{firstDiscoveryEditor}.model.currentPanelNum": "{that}.speakPanelMessage"
@@ -64,13 +73,31 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         panelInstructionsSelector: ".gpiic-fd-instructions"
     });
 
+    gpii.firstDiscovery.tts.fdHookup.bindKeypress = function (elm, keyCode, func) {
+        $(elm).keypress(function (e) {
+            if (e.keyCode === keyCode) {
+                func();
+            }
+        });
+    };
+
+    gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions = function (that) {
+        return that.panels.eq(that.model.currentPanelNum - 1).find(that.options.panelInstructionsSelector).text();
+    };
+
     gpii.firstDiscovery.tts.fdHookup.speakPanelMessage = function (that, template, speakFn) {
         var currentPanelNum = that.model.currentPanelNum;
         var msg = fluid.stringTemplate(template, {
             currentPanel: currentPanelNum,
             numPanels: that.panels.length,
-            instructions: that.panels.eq(currentPanelNum - 1).find(that.options.panelInstructionsSelector).text()
+            instructions: gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions(that)
         });
+        speakFn(msg);
+    };
+
+    gpii.firstDiscovery.tts.fdHookup.speakPanelInstructions = function (that, speakFn) {
+        var msg = gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions(that);
+
         speakFn(msg);
     };
 
