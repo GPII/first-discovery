@@ -29,7 +29,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         step: 0.1,
         selectors: {
-            instructions: ".gpiic-fd-instructions",
+            rangeInstructions: ".gpiic-fd-instructions",
             meter: ".gpiic-fd-range-indicator",
             increase: ".gpiic-fd-range-increase",
             increaseLabel: ".gpiic-fd-range-increaseLabel",
@@ -42,7 +42,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "decrease": "decreaseLabel"
         },
         protoTree: {
-            instructions: {messagekey: "instructions"},
+            rangeInstructions: {messagekey: "rangeInstructions"},
             increaseLabel: {messagekey: "increaseLabel"},
             decreaseLabel: {messagekey: "decreaseLabel"}
         },
@@ -125,6 +125,21 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "range.max": "maximum",
                 "step": "divisibleBy"
             }
+        }
+    });
+
+    fluid.defaults("gpii.firstDiscovery.panel.lang", {
+        gradeNames: ["fluid.prefs.panel", "autoInit"],
+        preferenceMap: {
+            "gpii.firstDiscovery.language": {
+                "model.lang": "default"
+            }
+        },
+        selectors: {
+            instructions: ".gpiic-fd-instructions"
+        },
+        protoTree: {
+            instructions: {markup: {messagekey: "langInstructions"}}
         }
     });
 
