@@ -29,7 +29,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         step: 0.1,
         selectors: {
-            instructions: ".gpiic-fd-instructions",
+            rangeInstructions: ".gpiic-fd-instructions",
             meter: ".gpiic-fd-range-indicator",
             increase: ".gpiic-fd-range-increase",
             increaseLabel: ".gpiic-fd-range-increaseLabel",
@@ -42,7 +42,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "decrease": "decreaseLabel"
         },
         protoTree: {
-            instructions: {messagekey: "instructions"},
+            rangeInstructions: {messagekey: "rangeInstructions"},
             increaseLabel: {messagekey: "increaseLabel"},
             decreaseLabel: {messagekey: "decreaseLabel"}
         },
@@ -71,6 +71,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "method": "click",
                 "args": ["{that}.stepDown"]
             },
+            "afterRender.updateButtonState": {
+                listener: "gpii.firstDiscovery.panel.ranged.updateButtonState",
+                args: ["{that}"]
+            },
             "afterRender.updateMeter": "{that}.updateMeter",
             "afterRender.updateTooltipModel": {
                 listener: "{that}.tooltip.applier.change",
@@ -82,10 +86,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         modelListeners: {
-            "value": {
+            "value": [{
                 listener: "{that}.updateMeter",
                 excludeSource: ["init"]
-            }
+            }, {
+                listener: "gpii.firstDiscovery.panel.ranged.updateButtonState",
+                args: ["{that}"]
+            }]
         }
     });
 
@@ -102,6 +109,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         var newValue = that.model.value + step;
         newValue = gpii.firstDiscovery.panel.ranged.clip(newValue, that.options.range.min, that.options.range.max);
         that.applier.change("value", newValue);
+    };
+
+    gpii.firstDiscovery.panel.ranged.updateButtonState = function (that) {
+        var isMax = that.model.value >= that.options.range.max;
+        var isMin = that.model.value <= that.options.range.min;
+
+        that.locate("increase").prop("disabled", isMax);
+        that.locate("decrease").prop("disabled", isMin);
     };
 
     gpii.firstDiscovery.panel.ranged.calculatePercentage = function (value, min, max) {
@@ -125,6 +140,21 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "range.max": "maximum",
                 "step": "divisibleBy"
             }
+        }
+    });
+
+    fluid.defaults("gpii.firstDiscovery.panel.lang", {
+        gradeNames: ["fluid.prefs.panel", "autoInit"],
+        preferenceMap: {
+            "gpii.firstDiscovery.language": {
+                "model.lang": "default"
+            }
+        },
+        selectors: {
+            instructions: ".gpiic-fd-instructions"
+        },
+        protoTree: {
+            instructions: {markup: {messagekey: "langInstructions"}}
         }
     });
 

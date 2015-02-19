@@ -23,25 +23,28 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         gradeNames: ["fluid.viewComponent", "autoInit"],
         position: null,  // must be supplied by integrators
         selectors: {
-            doneIndicator: ".gpiic-fd-doneIndicator"
+            confirmedIndicator: ".gpiic-fd-confirmedIndicator"
         },
         styles: {
             active: "gpii-fd-active",
             show: "gpii-fd-show"
         },
         modelListeners: {
-            "isActive.setState": {
-                listener: "gpii.firstDiscovery.icon.setState",
-                args: ["{that}", "{change}.value", "{change}.oldValue"]
+            "isActive.setActiveState": {
+                "this": "{that}.container",
+                method: "toggleClass",
+                args: ["{that}.options.styles.active", "{change}.value"]
+            },
+            "isConfirmed.setConfirmedState": {
+                listener: "gpii.firstDiscovery.icon.setConfirmedState",
+                args: ["{that}", "{change}.value"]
             }
         }
     });
 
-    gpii.firstDiscovery.icon.setState = function (that, isActive, isActivePrev) {
-        that.container.toggleClass(that.options.styles.active, isActive);
-
-        if (isActivePrev && !isActive) {
-            that.locate("doneIndicator").addClass(that.options.styles.show);
+    gpii.firstDiscovery.icon.setConfirmedState = function (that, isConfirmed) {
+        if (isConfirmed) {
+            that.locate("confirmedIndicator").addClass(that.options.styles.show);
         }
     };
 
@@ -61,14 +64,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     modelListeners: {
                         "{navIcons}.model.currentPanelNum": {
                             listener: "gpii.firstDiscovery.navIcons.updateIconModel",
-                            args: ["{that}", "{change}.value"]
+                            args: ["{that}", "{change}.value", "{change}.oldValue"]
                         }
                     },
                     // TODO: This listeners block can be removed when switching to use model relay
                     listeners: {
                         "onCreate.updateIconModel": {
                             listener: "gpii.firstDiscovery.navIcons.updateIconModel",
-                            args: ["{that}", "{navIcons}.model.currentPanelNum"]
+                            args: ["{that}", "{navIcons}.model.currentPanelNum", null]
                         }
                     }
                 }
@@ -92,9 +95,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         });
     };
 
-    gpii.firstDiscovery.navIcons.updateIconModel = function (icon, currentPanelNum) {
+    gpii.firstDiscovery.navIcons.updateIconModel = function (icon, currentPanelNum, prevPanelNum) {
         var position = icon.options.position;
         icon.applier.change("isActive", currentPanelNum === position);
+        icon.applier.change("isConfirmed", prevPanelNum === position && currentPanelNum > prevPanelNum);
     };
 
 })(jQuery, fluid);
