@@ -158,11 +158,39 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    fluid.defaults("gpii.firstDiscovery.panel.tts", {
+    fluid.defaults("gpii.firstDiscovery.panel.speakText", {
         gradeNames: ["fluid.prefs.panel", "autoInit"],
         preferenceMap: {
-            "fluid.prefs.speak": {
+            "gpii.firstDiscovery.speak": {
                 "model.speak": "default"
+            }
+        },
+        stringArrayIndex: {
+            choice: ["speakText-yes", "speakText-no"]
+        },
+        selectors: {
+            choiceRow: ".gpiic-fd-speakText-choiceRow",
+            choiceLabel: ".gpiic-fd-speakText-choice-label",
+            choiceInput: ".gpiic-fd-speakText-choiceInput",
+            instructions: ".gpiic-fd-instructions"
+        },
+        controlValues: {
+            choice: ["true", "false"]
+        },
+        repeatingSelectors: ["choiceRow"],
+        protoTree: {
+            instructions: {messagekey: "speakTextInstructions"},
+            expander: {
+                type: "fluid.renderer.selection.inputs",
+                rowID: "choiceRow",
+                labelID: "choiceLabel",
+                inputID: "choiceInput",
+                selectID: "choice-radio",
+                tree: {
+                    optionnames: "${{that}.msgLookup.choice}",
+                    optionlist: "${{that}.options.controlValues.choice}",
+                    selection: "${speak}"
+                }
             }
         }
     });

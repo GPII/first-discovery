@@ -100,6 +100,10 @@ https://github.com/gpii/universal/LICENSE.txt
         }
     });
 
+    /************
+     * textSize *
+     ************/
+
     fluid.defaults("gpii.tests.prefs.panel.textSize", {
         gradeNames: ["gpii.firstDiscovery.panel.textSize", "gpii.tests.panels.defaultTestPanel", "autoInit"],
         testMessages: {
@@ -200,9 +204,90 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("The decrease button should have the correct enabled/disabled state", decreaseDisabled, that.locate("decrease").prop("disabled"));
     };
 
+    /*************
+     * speakText *
+     *************/
+
+    fluid.defaults("gpii.tests.prefs.panel.speakText", {
+        gradeNames: ["gpii.firstDiscovery.panel.speakText", "gpii.tests.panels.defaultTestPanel", "autoInit"],
+        testMessages: {
+            "speakTextInstructions": "Speak text instructions",
+            "speakText-no": "no",
+            "speakText-yes": "yes"
+        },
+        choiceLabels: ["yes", "no"],
+        model: {
+            speak: "true"
+        }
+    });
+
+    fluid.defaults("gpii.tests.speakTextPanel", {
+        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        components: {
+            speakText: {
+                type: "gpii.tests.prefs.panel.speakText",
+                container: ".gpiic-fd-speakText"
+            },
+            speakTextTester: {
+                type: "gpii.tests.speakTextTester"
+            }
+        }
+    });
+
+    fluid.defaults("gpii.tests.speakTextTester", {
+        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        modules: [{
+            name: "Test the speak text settings panel",
+            tests: [{
+                expect: 6,
+                name: "Test the rendering of the speak text panel",
+                sequence: [{
+                    func: "{speakText}.refreshView"
+                }, {
+                    listener: "gpii.tests.speakTextTester.verifyRendering",
+                    event: "{speakText}.events.afterRender"
+                }, {
+                    func: "gpii.tests.speakTextTester.triggerRadioButton",
+                    args: ["{speakText}.dom.choiceLabel", 1]
+                }, {
+                    listener: "gpii.tests.speakTextTester.verifyModel",
+                    args: ["{speakText}", "false"],
+                    spec: {path: "speak", priority: "last"},
+                    changeEvent: "{speakText}.applier.modelChanged"
+                }, {
+                    func: "gpii.tests.speakTextTester.triggerRadioButton",
+                    args: ["{speakText}.dom.choiceLabel", 0]
+                }, {
+                    listener: "gpii.tests.speakTextTester.verifyModel",
+                    args: ["{speakText}", "true"],
+                    spec: {path: "speak", priority: "last"},
+                    changeEvent: "{speakText}.applier.modelChanged"
+                }]
+            }]
+        }]
+    });
+
+    gpii.tests.speakTextTester.triggerRadioButton = function (radioButtons, idx) {
+        radioButtons.eq(idx).click();
+    };
+
+    gpii.tests.speakTextTester.verifyRendering = function (that) {
+        jqUnit.assertEquals("The instructions should have been set correctly.", that.options.testMessages.speakTextInstructions, that.locate("instructions").text());
+        fluid.each(that.locate("choiceLabel"), function (elm, idx) {
+            elm = $(elm);
+            jqUnit.assertEquals("Choice #" + idx + " should have the correct label.", that.options.choiceLabels[idx], elm.text());
+        });
+        jqUnit.assertEquals("The correct choice should be checked", that.model.speak, that.locate("choiceInput").filter(":checked").val());
+    };
+
+    gpii.tests.speakTextTester.verifyModel = function (that, expectedValue) {
+        jqUnit.assertEquals("The model value should have been set correctly", expectedValue, that.model.speak);
+    };
+
     $(document).ready(function () {
         fluid.test.runTests([
-            "gpii.tests.textSizePanel"
+            "gpii.tests.textSizePanel",
+            "gpii.tests.speakTextPanel"
         ]);
     });
 
