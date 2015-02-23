@@ -1,15 +1,15 @@
 {
     "back": "back",
-    "backTooltip": "Press enter or spacebar to go back to last step",
+    "backTooltip": "Select to go back to last step",
     "next": "next",
-    "nextTooltip": "Press enter or spacebar to go to next step",
+    "nextTooltip": "Select to go to next step",
     "start": "start",
-    "startTooltip": "Press enter or spacebar to start",
+    "startTooltip": "Select to start",
     "finish": "finish",
-    "finishTooltip": "Press enter or spacebar to finish",
+    "finishTooltip": "Select to finish",
     "unmuted": "turn voice OFF",
-    "unmutedTooltip": "Press enter or spacebar to turn voice off",
+    "unmutedTooltip": "Select to turn voice off",
     "muted": "turn voice ON",
-    "mutedTooltip": "Press enter or spacebar to turn voice on",
+    "mutedTooltip": "Select to turn voice on",
     "panelMsg": "This is step %currentPanel of %numPanels. %instructions Press 'h' for help."
 }

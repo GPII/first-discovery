@@ -23,9 +23,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         strings: {
             muted: "turn voice ON",
-            mutedTooltip: "Press enter or spacebar to turn voice on",
+            mutedTooltip: "Select to turn voice on",
             unmuted: "turn voice OFF",
-            unmutedTooltip: "Press enter or spacebar to turn voice off"
+            unmutedTooltip: "Select to turn voice off"
         },
         styles: {
             muted: "gpii-fd-selfVoicing-muted",

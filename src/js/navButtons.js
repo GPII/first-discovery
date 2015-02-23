@@ -36,13 +36,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         strings: {
             back: "Back",
-            backTooltip: "Press enter or space bar to go back to last step",
+            backTooltip: "Select to go back to last step",
             next: "Next",
-            nextTooltip: "Press enter or space bar to go to next step",
+            nextTooltip: "Select to go to next step",
             start: "Let's start",
-            startTooltip: "Press enter or space bar to start",
+            startTooltip: "Select to start",
             finish: "Finish",
-            finishTooltip: "Press enter or space bar to finish"
+            finishTooltip: "Select to finish"
         },
         // TODO: Uncomment this block when switching to use relay components.
         // modelRelay: {
@@ -91,6 +91,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
+    gpii.firstDiscovery.navButtons.getLabel = function (isFirstPanel, strings, currentPanelNum, panelTotalNum, suffix) {
+        suffix = suffix || "";
+        return isFirstPanel ? strings["start" + suffix] : (currentPanelNum === panelTotalNum ? strings["finish" + suffix] : strings["next" + suffix]);
+    };
+
     gpii.firstDiscovery.navButtons.setButtonStates = function (that) {
         var currentPanelNum = that.model.currentPanelNum,
             strings = that.options.strings,
@@ -100,8 +105,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             nextButtonId = fluid.allocateSimpleId(nextButton),
             showSelector = that.options.styles.show,
             isFirstPanel = currentPanelNum === that.options.panelStartNum,
-            nextLabel = isFirstPanel ? strings.start : (currentPanelNum === that.options.panelTotalNum ? strings.finish : strings.next),
-            nextTooltipContent = isFirstPanel ? strings.startTooltip : (currentPanelNum === that.options.panelTotalNum ? strings.finishTooltip : strings.nextTooltip);
+            nextLabel = gpii.firstDiscovery.navButtons.getLabel(isFirstPanel, strings, currentPanelNum, that.options.panelTotalNum),
+            nextTooltipContent = gpii.firstDiscovery.navButtons.getLabel(isFirstPanel, strings, currentPanelNum, that.options.panelTotalNum, "Tooltip");
 
         backButton.prop("disabled", isFirstPanel);
         backButton.toggleClass(showSelector, !isFirstPanel);

@@ -469,9 +469,9 @@ button {
 /* Tooltips */
 .gpii-fd-tooltip {
     width: auto;
-    max-width: 8em;
+    max-width: 7em;
     font-size: 2rem;
     padding: 0.5rem;
     background-color: #fed73a;
-    top: -10rem;
+    bottom: -1rem;
 }

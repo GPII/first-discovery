@@ -1,5 +1,7 @@
 {
     "rangeInstructions": "Adjust the text to a size you like best.",
     "increaseLabel": "larger",
-    "decreaseLabel": "smaller"
+    "increaseTooltip": "Select to increase size",
+    "decreaseLabel": "smaller",
+    "decreaseTooltip": "Select to decrease size"
 }
