@@ -91,9 +91,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    gpii.firstDiscovery.navButtons.getLabel = function (isFirstPanel, strings, currentPanelNum, panelTotalNum, suffix) {
-        suffix = suffix || "";
-        return isFirstPanel ? strings["start" + suffix] : (currentPanelNum === panelTotalNum ? strings["finish" + suffix] : strings["next" + suffix]);
+    gpii.firstDiscovery.navButtons.indexToDisposition = function (currentPanelNum, panelStartNum, panelTotalNum) {
+        return currentPanelNum === panelStartNum ? 0 : (currentPanelNum === panelTotalNum ? 2 : 1);
     };
 
     gpii.firstDiscovery.navButtons.setButtonStates = function (that) {
@@ -105,8 +104,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             nextButtonId = fluid.allocateSimpleId(nextButton),
             showSelector = that.options.styles.show,
             isFirstPanel = currentPanelNum === that.options.panelStartNum,
-            nextLabel = gpii.firstDiscovery.navButtons.getLabel(isFirstPanel, strings, currentPanelNum, that.options.panelTotalNum),
-            nextTooltipContent = gpii.firstDiscovery.navButtons.getLabel(isFirstPanel, strings, currentPanelNum, that.options.panelTotalNum, "Tooltip");
+            disposition = gpii.firstDiscovery.navButtons.indexToDisposition(currentPanelNum, that.options.panelStartNum, that.options.panelTotalNum),
+            nextLabel = strings[["start", "next", "finish"][disposition]],
+            nextTooltipContent = strings[["startTooltip", "nextTooltip", "finishTooltip"][disposition]];
 
         backButton.prop("disabled", isFirstPanel);
         backButton.toggleClass(showSelector, !isFirstPanel);
