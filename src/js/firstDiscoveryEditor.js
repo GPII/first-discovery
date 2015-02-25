@@ -35,8 +35,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         messageResolver: "{firstDiscoveryEditor}.msgResolver"
                     },
                     strings: {
-                        muteEnabled: "{that}.msgLookup.muteEnabled",
-                        muteDisabled: "{that}.msgLookup.muteDisabled"
+                        unmuted: "{that}.msgLookup.unmuted",
+                        unmutedTooltip: "{that}.msgLookup.unmutedTooltip",
+                        muted: "{that}.msgLookup.muted",
+                        mutedTooltip: "{that}.msgLookup.mutedTooltip"
                     }
                 }
             },
@@ -71,9 +73,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     model: "{firstDiscoveryEditor}.model",
                     strings: {
                         back: "{that}.msgLookup.back",
+                        backTooltip: "{that}.msgLookup.backTooltip",
                         next: "{that}.msgLookup.next",
+                        nextTooltip: "{that}.msgLookup.nextTooltip",
                         start: "{that}.msgLookup.start",
-                        finish: "{that}.msgLookup.finish"
+                        startTooltip: "{that}.msgLookup.startTooltip",
+                        finish: "{that}.msgLookup.finish",
+                        finishTooltip: "{that}.msgLookup.finishTooltip"
                     },
                     styles: "{firstDiscoveryEditor}.options.styles",
                     panelTotalNum: "{firstDiscoveryEditor}.panels.length"

@@ -24,8 +24,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         panelTotalNum: null,   // Must be supplied by integrators
         panelStartNum: 1,
         tooltipContentMap: {
-            "back": "back",
-            "next": "next"
+            "back": "backTooltip",
+            "next": "nextTooltip"
         },
         selectors: {
             back: "#gpiic-fd-navButtons-back",
@@ -36,9 +36,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         strings: {
             back: "Back",
+            backTooltip: "Select to go back to last step",
             next: "Next",
+            nextTooltip: "Select to go to next step",
             start: "Let's start",
-            finish: "Finish"
+            startTooltip: "Select to start",
+            finish: "Finish",
+            finishTooltip: "Select to finish"
         },
         // TODO: Uncomment this block when switching to use relay components.
         // modelRelay: {
@@ -87,6 +91,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
+    gpii.firstDiscovery.navButtons.indexToDisposition = function (currentPanelNum, panelStartNum, panelTotalNum) {
+        return currentPanelNum === panelStartNum ? 0 : (currentPanelNum === panelTotalNum ? 2 : 1);
+    };
+
     gpii.firstDiscovery.navButtons.setButtonStates = function (that) {
         var currentPanelNum = that.model.currentPanelNum,
             strings = that.options.strings,
@@ -96,7 +104,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             nextButtonId = fluid.allocateSimpleId(nextButton),
             showSelector = that.options.styles.show,
             isFirstPanel = currentPanelNum === that.options.panelStartNum,
-            nextLabel = isFirstPanel ? strings.start : (currentPanelNum === that.options.panelTotalNum ? strings.finish : strings.next);
+            disposition = gpii.firstDiscovery.navButtons.indexToDisposition(currentPanelNum, that.options.panelStartNum, that.options.panelTotalNum),
+            nextLabel = strings[["start", "next", "finish"][disposition]],
+            nextTooltipContent = strings[["startTooltip", "nextTooltip", "finishTooltip"][disposition]];
 
         backButton.prop("disabled", isFirstPanel);
         backButton.toggleClass(showSelector, !isFirstPanel);
@@ -107,9 +117,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             that.tooltip.close();  // Close the existing tooltip for the back button otherwise it will linger after the back button becomes hidden
             that.tooltip.applier.fireChangeRequest({path: "idToContent." + backButtonId, type: "DELETE"});
         } else {
-            that.tooltip.applier.change("idToContent." + backButtonId, strings.back);
+            that.tooltip.applier.change("idToContent." + backButtonId, strings.backTooltip);
         }
-        that.tooltip.applier.change("idToContent." + nextButtonId, nextLabel);
+        that.tooltip.applier.change("idToContent." + nextButtonId, nextTooltipContent);
     };
 
     gpii.firstDiscovery.navButtons.adjustCurrentPanelNum = function (that, toChange) {
