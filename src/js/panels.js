@@ -38,8 +38,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         selectorsToIgnore: ["meter", "increase", "decrease"],
         tooltipContentMap: {
-            "increase": "increaseTooltip",
-            "decrease": "decreaseTooltip"
+            "increase": "increaseLabel",
+            "decrease": "decreaseLabel"
         },
         protoTree: {
             rangeInstructions: {messagekey: "rangeInstructions"},

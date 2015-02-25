@@ -105,9 +105,7 @@ https://github.com/gpii/universal/LICENSE.txt
         testMessages: {
             rangeInstructions: "Text size instructions.",
             increaseLabel: "larger",
-            increaseTooltip: "Select to increase size",
-            decreaseLabel: "smaller",
-            decreaseTooltip: "Select to decrease size"
+            decreaseLabel: "smaller"
         },
         model: {
             value: 1
@@ -196,8 +194,8 @@ https://github.com/gpii/universal/LICENSE.txt
 
         var increaseId = that.locate("increase").attr("id");
         var decreaseId = that.locate("decrease").attr("id");
-        jqUnit.assertEquals("The tooltip model for the increase button has been properly set", that.options.testMessages.increaseTooltip, that.tooltip.model.idToContent[increaseId]);
-        jqUnit.assertEquals("The tooltip model for the increase button has been properly set", that.options.testMessages.decreaseTooltip, that.tooltip.model.idToContent[decreaseId]);
+        jqUnit.assertEquals("The tooltip model for the increase button has been properly set", that.options.testMessages.increaseLabel, that.tooltip.model.idToContent[increaseId]);
+        jqUnit.assertEquals("The tooltip model for the decrease button has been properly set", that.options.testMessages.decreaseLabel, that.tooltip.model.idToContent[decreaseId]);
     };
 
     gpii.tests.textSizeTester.verifyModel = function (that, expectedModel) {
