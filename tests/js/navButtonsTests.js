@@ -98,7 +98,10 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.expect(33);
 
         var that = gpii.firstDiscovery.navButtons(".gpiic-nav", {
-            panelTotalNum: 6
+            panelTotalNum: 6,
+            model: {
+                currentPanelNum: null
+            }
         });
 
         var backButton = that.locate("back"),

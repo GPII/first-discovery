@@ -20,7 +20,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * The nav icon
      */
     fluid.defaults("gpii.firstDiscovery.icon", {
-        gradeNames: ["fluid.viewComponent", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
         position: null,  // must be supplied by integrators
         selectors: {
             confirmedIndicator: ".gpiic-fd-confirmedIndicator"
@@ -30,12 +30,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             show: "gpii-fd-show"
         },
         modelListeners: {
-            "isActive.setActiveState": {
+            "isActive": {
                 "this": "{that}.container",
                 method: "toggleClass",
                 args: ["{that}.options.styles.active", "{change}.value"]
             },
-            "isConfirmed.setConfirmedState": {
+            "isConfirmed": {
                 listener: "gpii.firstDiscovery.icon.setConfirmedState",
                 args: ["{that}", "{change}.value"]
             }
@@ -52,7 +52,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * The navigation icons: the wrapper component to help determine the position of each nav icon.
      */
     fluid.defaults("gpii.firstDiscovery.navIcons", {
-        gradeNames: ["fluid.viewComponent", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
         dynamicComponents: {
             icon: {
                 createOnEvent: "onCreateIcon",
