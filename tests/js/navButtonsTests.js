@@ -32,10 +32,10 @@ https://github.com/gpii/universal/LICENSE.txt
 
         if (states.backLabel) {
             jqUnit.assertEquals(msg + " - The text on the back button is properly set", states.backLabel, backButton.html());
-            jqUnit.assertEquals(msg + " - The tooltip content for the back button is properly set", states.backLabel, that.tooltip.model.idToContent[backButtonId]);
+            jqUnit.assertEquals(msg + " - The tooltip content for the back button is properly set", states.backTooltip, that.tooltip.model.idToContent[backButtonId]);
         }
         jqUnit.assertEquals(msg + " - The text on the next button is properly set", states.nextLabel, nextButton.html());
-        jqUnit.assertEquals(msg + " - The tooltip content for the next button is properly set", states.nextLabel, that.tooltip.model.idToContent[nextButtonId]);
+        jqUnit.assertEquals(msg + " - The tooltip content for the next button is properly set", states.nextTooltip, that.tooltip.model.idToContent[nextButtonId]);
     };
 
     gpii.tests.verifyButtons = function (that, currentPanelNum) {
@@ -55,7 +55,9 @@ https://github.com/gpii/universal/LICENSE.txt
             });
             gpii.tests.verifyLabels(msg, that, {
                 backLabel: undefined,
-                nextLabel: that.options.strings.start
+                backTooltip: undefined,
+                nextLabel: that.options.strings.start,
+                nextTooltip: that.options.strings.startTooltip
             });
         }
 
@@ -69,7 +71,9 @@ https://github.com/gpii/universal/LICENSE.txt
             });
             gpii.tests.verifyLabels(msg, that, {
                 backLabel: that.options.strings.back,
-                nextLabel: that.options.strings.next
+                backTooltip: that.options.strings.backTooltip,
+                nextLabel: that.options.strings.next,
+                nextTooltip: that.options.strings.nextTooltip
             });
         }
 
@@ -83,7 +87,9 @@ https://github.com/gpii/universal/LICENSE.txt
             });
             gpii.tests.verifyLabels(msg, that, {
                 backLabel: that.options.strings.back,
-                nextLabel: that.options.strings.finish
+                backTooltip: that.options.strings.backTooltip,
+                nextLabel: that.options.strings.finish,
+                nextTooltip: that.options.strings.finishTooltip
             });
         }
     };
@@ -92,7 +98,10 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.expect(33);
 
         var that = gpii.firstDiscovery.navButtons(".gpiic-nav", {
-            panelTotalNum: 6
+            panelTotalNum: 6,
+            model: {
+                currentPanelNum: null
+            }
         });
 
         var backButton = that.locate("back"),

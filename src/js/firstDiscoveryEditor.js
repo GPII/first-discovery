@@ -35,8 +35,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         messageResolver: "{firstDiscoveryEditor}.msgResolver"
                     },
                     strings: {
-                        muteEnabled: "{that}.msgLookup.muteEnabled",
-                        muteDisabled: "{that}.msgLookup.muteDisabled"
+                        unmuted: "{that}.msgLookup.unmuted",
+                        unmutedTooltip: "{that}.msgLookup.unmutedTooltip",
+                        muted: "{that}.msgLookup.muted",
+                        mutedTooltip: "{that}.msgLookup.mutedTooltip"
                     }
                 }
             },
@@ -64,16 +66,20 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     gradeNames: ["fluid.prefs.msgLookup"],
                     members: {
                         // TODO: when switching to use relay components, the line below to share applier can be removed
-                        applier: "{firstDiscoveryEditor}.applier",
+                        // applier: "{firstDiscoveryEditor}.applier",
                         messageResolver: "{firstDiscoveryEditor}.msgResolver"
                     },
                     // TODO: when switching to use relay components, rather than sharing the entire model, only the needed model paths need to be shared
                     model: "{firstDiscoveryEditor}.model",
                     strings: {
                         back: "{that}.msgLookup.back",
+                        backTooltip: "{that}.msgLookup.backTooltip",
                         next: "{that}.msgLookup.next",
+                        nextTooltip: "{that}.msgLookup.nextTooltip",
                         start: "{that}.msgLookup.start",
-                        finish: "{that}.msgLookup.finish"
+                        startTooltip: "{that}.msgLookup.startTooltip",
+                        finish: "{that}.msgLookup.finish",
+                        finishTooltip: "{that}.msgLookup.finishTooltip"
                     },
                     styles: "{firstDiscoveryEditor}.options.styles",
                     panelTotalNum: "{firstDiscoveryEditor}.panels.length"
@@ -85,7 +91,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 options: {
                     members: {
                         // TODO: when switching to use relay components, the line below to share applier can be removed
-                        applier: "{firstDiscoveryEditor}.applier"
+                        // applier: "{firstDiscoveryEditor}.applier"
                     },
                     // TODO: when switching to use relay components, rather than sharing the entire model, only the needed model paths need to be shared
                     model: "{firstDiscoveryEditor}.model",

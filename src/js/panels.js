@@ -17,17 +17,26 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     fluid.defaults("gpii.firstDiscovery.panel.ranged", {
         gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip", "autoInit"],
-        model: {
-            // Preferences Maps should direct the default model state
-            // to this model property. The component is configured
-            // with the expectation that this is the salient model value.
-            value: null
-        },
+        // Preferences Maps should direct the default model state
+        // to model.value. The component is configured
+        // with the expectation that "value" is the salient model property.
+        // model: {
+        //     value: number
+        // },
         range: {
             min: 1,
             max: 2
         },
         step: 0.1,
+        modelRelay: {
+            target: "value",
+            singleTransform: {
+                type: "fluid.transforms.limitRange",
+                input: "{that}.model.value",
+                min: "{that}.options.range.min",
+                max: "{that}.options.prange.max"
+            }
+        },
         selectors: {
             rangeInstructions: ".gpiic-fd-instructions",
             meter: ".gpiic-fd-range-indicator",
@@ -86,11 +95,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         modelListeners: {
-            "value": [{
+            value: [{
                 listener: "{that}.updateMeter",
-                excludeSource: ["init"]
+                excludeSource: "init"
             }, {
                 listener: "gpii.firstDiscovery.panel.ranged.updateButtonState",
+                excludeSource: "init",
                 args: ["{that}"]
             }]
         }
@@ -107,7 +117,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
         var step = reverse ? (that.options.step * -1) : that.options.step;
         var newValue = that.model.value + step;
-        newValue = gpii.firstDiscovery.panel.ranged.clip(newValue, that.options.range.min, that.options.range.max);
         that.applier.change("value", newValue);
     };
 
