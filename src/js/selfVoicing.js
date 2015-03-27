@@ -57,6 +57,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             setMuteStyle: {
                 funcName: "gpii.firstDiscovery.selfVoicing.setMuteStyle",
                 args: ["{that}.container", "{that}.options.styles", "{that}.model.enabled"]
+            },
+            clearQueue: {
+                funcName: "gpii.firstDiscovery.selfVoicing.clearQueue",
+                args: ["{that}"]
             }
         },
         listeners: {
@@ -68,10 +72,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             // Need to call the handlers onCreate and exclude "init" on the modelListeners
             // because the underlying tooltip widget isn't finished at initialization
             "onCreate.setTooltip": "{that}.setTooltip",
-            "onCreate.clearQueue": {
-                listener: "gpii.firstDiscovery.selfVoicing.clearQueue",
-                args: ["{that}"]
-            }
+            "onCreate.clearQueue": "{that}.clearQueue"
         },
         modelListeners: {
             "enabled": [
@@ -82,9 +83,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     excludeSource: "init"
                 },
                 {
-                    listener: "gpii.firstDiscovery.selfVoicing.clearQueue",
-                    excludeSource: "init",
-                    args: ["{that}"]
+                    listener: "{that}.clearQueue",
+                    excludeSource: "init"
                 }
             ]
         }
