@@ -14,7 +14,7 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.registerNamespace("gpii.tests");
 
     fluid.defaults("gpii.tests.firstDiscovery", {
-        gradeNames: ["fluid.viewComponent", "{that}.assembledPrefsEditorGrade", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "{that}.assembledPrefsEditorGrade", "autoInit"],
         prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor",
         components: {
             prefsEditorLoader: {
@@ -121,42 +121,46 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertNotUndefined("The subcomponent \"navIcons\" has been instantiated", that.navIcons);
         gpii.tests.firstDiscovery.verifyStates(that, 1, false, true, {
             isVisible: [".gpiic-fd-prefsEditor-panel-lang"],
-            notVisible: [".gpiic-fd-prefsEditor-panel-tts", ".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
+            notVisible: [".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
         });
 
         // Clicking the next button leads to the 2nd panel
         nextButton.click();
         gpii.tests.firstDiscovery.verifyStates(that, 2, true, true, {
             isVisible: [".gpiic-fd-prefsEditor-panel-size"],
-            notVisible: [".gpiic-fd-prefsEditor-panel-lang", ".gpiic-fd-prefsEditor-panel-tts", ".gpiic-fd-prefsEditor-panel-contrast"]
+            notVisible: [".gpiic-fd-prefsEditor-panel-lang", ".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-contrast"]
         });
 
         // Clicking the back button brings back the first panel
         backButton.click();
         gpii.tests.firstDiscovery.verifyStates(that, 1, false, true, {
             isVisible: [".gpiic-fd-prefsEditor-panel-lang"],
-            notVisible: [".gpiic-fd-prefsEditor-panel-tts", ".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
+            notVisible: [".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
         });
 
         // Directs to the last panel by firing a change request directly
         that.applier.change("currentPanelNum", 4);
         gpii.tests.firstDiscovery.verifyStates(that, 4, true, true, {
             isVisible: [".gpiic-fd-prefsEditor-panel-contrast"],
-            notVisible: [".gpiic-fd-prefsEditor-panel-lang", ".gpiic-fd-prefsEditor-panel-tts", ".gpiic-fd-prefsEditor-panel-size"]
+            notVisible: [".gpiic-fd-prefsEditor-panel-lang", ".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-size"]
         });
+    };
+
+    gpii.tests.firstDiscovery.getFontSize = function (elm) {
+        return parseFloat(elm.css("font-size"));
     };
 
     gpii.tests.firstDiscovery.testTextSize = function (that) {
         jqUnit.expect(3);
 
-        var initialTextSize = that.container.css("font-size");
+        var initialTextSize = gpii.tests.firstDiscovery.getFontSize(that.container);
         jqUnit.assertNotUndefined("The initial text size has been set", initialTextSize);
         that.prefsEditor.gpii_firstDiscovery_panel_textSize.locate("increase").click();
-        var sizeAfterIncrease = that.container.css("font-size");
+        var sizeAfterIncrease = gpii.tests.firstDiscovery.getFontSize(that.container);
         jqUnit.assertTrue("Clicking on larger button enlarges the text size", sizeAfterIncrease > initialTextSize);
         that.prefsEditor.gpii_firstDiscovery_panel_textSize.locate("decrease").click();
-        var sizeAfterDecrease = that.container.css("font-size");
-        jqUnit.assertTrue("Clicking on larger button enlarges the text size", sizeAfterDecrease < sizeAfterIncrease);
+        var sizeAfterDecrease = gpii.tests.firstDiscovery.getFontSize(that.container);
+        jqUnit.assertTrue("Clicking on smaller button shrinks the text size", sizeAfterDecrease < sizeAfterIncrease);
     };
 
     gpii.tests.firstDiscovery.testTTSHookup = function (that) {

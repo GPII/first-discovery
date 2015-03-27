@@ -20,17 +20,26 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      */
     fluid.defaults("gpii.firstDiscovery.panel.ranged", {
         gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip", "autoInit"],
-        model: {
-            // Preferences Maps should direct the default model state
-            // to this model property. The component is configured
-            // with the expectation that this is the salient model value.
-            value: null
-        },
+        // Preferences Maps should direct the default model state
+        // to model.value. The component is configured
+        // with the expectation that "value" is the salient model property.
+        // model: {
+        //     value: number
+        // },
         range: {
             min: 1,
             max: 2
         },
         step: 0.1,
+        modelRelay: {
+            target: "value",
+            singleTransform: {
+                type: "fluid.transforms.limitRange",
+                input: "{that}.model.value",
+                min: "{that}.options.range.min",
+                max: "{that}.options.prange.max"
+            }
+        },
         selectors: {
             rangeInstructions: ".gpiic-fd-instructions",
             meter: ".gpiic-fd-range-indicator",
@@ -89,28 +98,22 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         modelListeners: {
-            "value": [{
+            value: [{
                 listener: "{that}.updateMeter",
-                excludeSource: ["init"]
+                excludeSource: "init"
             }, {
                 listener: "gpii.firstDiscovery.panel.ranged.updateButtonState",
+                excludeSource: "init",
                 args: ["{that}"]
             }]
         }
     });
-
-    gpii.firstDiscovery.panel.ranged.clip = function (value, min, max) {
-        if (max > min) {
-            return Math.min(max, Math.max(min, value));
-        }
-    };
 
     gpii.firstDiscovery.panel.ranged.step = function (that, reverse) {
         that.tooltip.close();   // close the existing tooltip before the panel is re-rendered
 
         var step = reverse ? (that.options.step * -1) : that.options.step;
         var newValue = that.model.value + step;
-        newValue = gpii.firstDiscovery.panel.ranged.clip(newValue, that.options.range.min, that.options.range.max);
         that.applier.change("value", newValue);
     };
 
@@ -122,15 +125,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         that.locate("decrease").prop("disabled", isMin);
     };
 
-    gpii.firstDiscovery.panel.ranged.calculatePercentage = function (value, min, max) {
-        if (max > min) {
-            var clipped = gpii.firstDiscovery.panel.ranged.clip(value, min, max);
-            return ((clipped - min) / (max - min)) * 100;
-        }
-    };
-
     gpii.firstDiscovery.panel.ranged.updateMeter = function (that, value) {
-        var percentage = gpii.firstDiscovery.panel.ranged.calculatePercentage(value, that.options.range.min, that.options.range.max);
+        var range = that.options.range;
+        var percentage = ((value - range.min) / (range.max - range.min)) * 100;
         that.locate("meter").css("height", percentage + "%");
     };
 
@@ -146,6 +143,60 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "range.min": "minimum",
                 "range.max": "maximum",
                 "step": "divisibleBy"
+            }
+        }
+    });
+
+    /*
+     * Text to speech panel
+     */
+    fluid.defaults("gpii.firstDiscovery.panel.speakText", {
+        gradeNames: ["fluid.prefs.panel", "autoInit"],
+        preferenceMap: {
+            "gpii.firstDiscovery.speak": {
+                "model.speak": "default"
+            }
+        },
+        modelRelay: {
+            source: "{that}.model",
+            target: "{that}.model.speak",
+            singleTransform: {
+                type: "fluid.transforms.valueMapper",
+                inputPath: "speakChoice",
+                options: {
+                    "yes": true,
+                    "no": {
+                        outputValue: false
+                    }
+                }
+            }
+        },
+        stringArrayIndex: {
+            choice: ["speakText-yes", "speakText-no"]
+        },
+        selectors: {
+            choiceRow: ".gpiic-fd-speakText-choiceRow",
+            choiceLabel: ".gpiic-fd-speakText-choice-label",
+            choiceInput: ".gpiic-fd-speakText-choiceInput",
+            instructions: ".gpiic-fd-instructions"
+        },
+        controlValues: {
+            choice: ["yes", "no"]
+        },
+        repeatingSelectors: ["choiceRow"],
+        protoTree: {
+            instructions: {messagekey: "speakTextInstructions"},
+            expander: {
+                type: "fluid.renderer.selection.inputs",
+                rowID: "choiceRow",
+                labelID: "choiceLabel",
+                inputID: "choiceInput",
+                selectID: "choice-radio",
+                tree: {
+                    optionnames: "${{that}.msgLookup.choice}",
+                    optionlist: "${{that}.options.controlValues.choice}",
+                    selection: "${speakChoice}"
+                }
             }
         }
     });
@@ -258,18 +309,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         that.locate("prev").prop("disabled", startButtonNum === 0);
         that.locate("next").prop("disabled", endButtonNum > langButtonTotal - 2);
     };
-
-    /*
-     * Text to speech panel
-     */
-    fluid.defaults("gpii.firstDiscovery.panel.tts", {
-        gradeNames: ["fluid.prefs.panel", "autoInit"],
-        preferenceMap: {
-            "fluid.prefs.speak": {
-                "model.speak": "default"
-            }
-        }
-    });
 
     /*
      * Contrast panel

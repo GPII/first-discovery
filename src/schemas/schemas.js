@@ -49,13 +49,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "message": "%prefix/textSize.json"
                 }
             },
-            "tts": {
-                "type": "fluid.prefs.speak",
+            "speakText": {
+                "type": "gpii.firstDiscovery.speak",
                 "panel": {
-                    "type": "gpii.firstDiscovery.panel.tts",
-                    "container": ".gpiic-fd-prefsEditor-panel-tts",
-                    "template": "%prefix/tts.html",
-                    "message": "%prefix/tts.json"
+                    "type": "gpii.firstDiscovery.panel.speakText",
+                    "container": ".gpiic-fd-prefsEditor-panel-speakText",
+                    "template": "%prefix/speakText.html",
+                    "message": "%prefix/speakText.json"
                 }
             },
             "contrast": {
@@ -94,6 +94,19 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "type": "string",
                 "default": "en",
                 "enum": ["en", "fr", "es", "de", "ne", "sv"]
+            }
+        }
+    });
+
+    // TODO: currently to get around an issue where the
+    // boolean value needed to be specified as a string in the speak text
+    // adjuster, the default is set to "true" instead of true
+    fluid.defaults("gpii.firstDiscovery.schemas.speak", {
+        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.speak": {
+                "type": "boolean",
+                "default": "true"
             }
         }
     });

@@ -152,8 +152,7 @@ button {
     height: 6rem;
 }
 
-/* tts yes/no controls */
-/* currently not used - clean up once TTS panel is implemented */
+/* speakText yes/no controls */
 .gpii-fd-choice {
     margin-bottom: 0.6rem;
 }
@@ -516,9 +515,9 @@ button {
 /* Tooltips */
 .gpii-fd-tooltip {
     width: auto;
-    max-width: 5em;
+    max-width: 7em;
     font-size: 2rem;
     padding: 0.5rem;
     background-color: #fed73a;
-    top: -10rem;
+    bottom: -1rem;
 }
