@@ -121,28 +121,28 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertNotUndefined("The subcomponent \"navIcons\" has been instantiated", that.navIcons);
         gpii.tests.firstDiscovery.verifyStates(that, 1, false, true, {
             isVisible: [".gpiic-fd-prefsEditor-panel-lang"],
-            notVisible: [".gpiic-fd-prefsEditor-panel-tts", ".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
+            notVisible: [".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
         });
 
         // Clicking the next button leads to the 2nd panel
         nextButton.click();
         gpii.tests.firstDiscovery.verifyStates(that, 2, true, true, {
             isVisible: [".gpiic-fd-prefsEditor-panel-size"],
-            notVisible: [".gpiic-fd-prefsEditor-panel-lang", ".gpiic-fd-prefsEditor-panel-tts", ".gpiic-fd-prefsEditor-panel-contrast"]
+            notVisible: [".gpiic-fd-prefsEditor-panel-lang", ".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-contrast"]
         });
 
         // Clicking the back button brings back the first panel
         backButton.click();
         gpii.tests.firstDiscovery.verifyStates(that, 1, false, true, {
             isVisible: [".gpiic-fd-prefsEditor-panel-lang"],
-            notVisible: [".gpiic-fd-prefsEditor-panel-tts", ".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
+            notVisible: [".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
         });
 
         // Directs to the last panel by firing a change request directly
         that.applier.change("currentPanelNum", 4);
         gpii.tests.firstDiscovery.verifyStates(that, 4, true, true, {
             isVisible: [".gpiic-fd-prefsEditor-panel-contrast"],
-            notVisible: [".gpiic-fd-prefsEditor-panel-lang", ".gpiic-fd-prefsEditor-panel-tts", ".gpiic-fd-prefsEditor-panel-size"]
+            notVisible: [".gpiic-fd-prefsEditor-panel-lang", ".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-size"]
         });
     };
 

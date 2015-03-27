@@ -152,8 +152,7 @@ button {
     height: 6rem;
 }
 
-/* tts yes/no controls */
-/* currently not used - clean up once TTS panel is implemented */
+/* speakText yes/no controls */
 .gpii-fd-choice {
     margin-bottom: 0.6rem;
 }
