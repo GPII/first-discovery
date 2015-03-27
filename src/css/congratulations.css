@@ -1,0 +1,47 @@
+.gpii-congratulaions {
+    color: #425165; /* blue-grey */
+}
+
+.gpii-congratulations-buttons {
+    text-align: center;
+}
+
+.gpii-congratulations-closeLabel {
+    display: block;
+}
+
+.gpii-congratulations-closeButton {
+    border: 0.2rem solid transparent; /* allocate space used by focus styling */
+    border-radius: 0.4rem;
+}
+
+.gpii-congratulations-closeButton:before {
+    background-color: #425165;
+    color: #ffffff;
+    content:  "\e603";
+    border-radius: 50%;
+    font-family: "PGA-FD";
+    font-size: 4rem;
+}
+
+.gpii-congratulations-closeButton:hover {
+    color: inherit; /* to override foundation's blue */
+    background-color: inherit;
+}
+.gpii-congratulations-closeButton:hover:before {
+    box-shadow: 0 0 0 0.2rem rgb(255, 255, 255), 0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
+}
+
+.gpii-congratulations-closeButton:focus {
+    color: inherit; /* to override foundation's blue */
+    outline: none;
+    background-color: #fed73a; /* yellow */
+    border: 0.2rem solid #000;
+}
+
+/* styles.css overrides */
+
+.gpii-fd.gpii-congratulaions {
+    border: 10px solid #425165; /* blue-grey */
+    background-color: #FFFFFF;
+}
