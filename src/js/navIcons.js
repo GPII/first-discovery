@@ -66,13 +66,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                             listener: "gpii.firstDiscovery.navIcons.updateIconModel",
                             args: ["{that}", "{change}.value", "{change}.oldValue"]
                         }
-                    },
-                    // TODO: This listeners block can be removed when switching to use model relay
-                    listeners: {
-                        "onCreate.updateIconModel": {
-                            listener: "gpii.firstDiscovery.navIcons.updateIconModel",
-                            args: ["{that}", "{navIcons}.model.currentPanelNum", null]
-                        }
                     }
                 }
             }
