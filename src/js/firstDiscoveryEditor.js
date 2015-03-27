@@ -67,8 +67,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     members: {
                         messageResolver: "{firstDiscoveryEditor}.msgResolver"
                     },
-                    // TODO: when switching to use relay components, rather than sharing the entire model, only the needed model paths need to be shared
-                    model: "{firstDiscoveryEditor}.model",
+                    model: {
+                        currentPanelNum: "{firstDiscoveryEditor}.model.currentPanelNum"
+                    },
                     strings: {
                         back: "{that}.msgLookup.back",
                         backTooltip: "{that}.msgLookup.backTooltip",
@@ -87,8 +88,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 type: "gpii.firstDiscovery.navIcons",
                 container: "{firstDiscoveryEditor}.dom.navIcons",
                 options: {
-                    // TODO: when switching to use relay components, rather than sharing the entire model, only the needed model paths need to be shared
-                    model: "{firstDiscoveryEditor}.model",
+                    model: {
+                        currentPanelNum: "{firstDiscoveryEditor}.model.currentPanelNum"
+                    },
                     styles: "{firstDiscoveryEditor}.options.styles"
                 }
             }
