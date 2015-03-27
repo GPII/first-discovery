@@ -106,12 +106,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    gpii.firstDiscovery.panel.ranged.clip = function (value, min, max) {
-        if (max > min) {
-            return Math.min(max, Math.max(min, value));
-        }
-    };
-
     gpii.firstDiscovery.panel.ranged.step = function (that, reverse) {
         that.tooltip.close();   // close the existing tooltip before the panel is re-rendered
 
@@ -128,15 +122,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         that.locate("decrease").prop("disabled", isMin);
     };
 
-    gpii.firstDiscovery.panel.ranged.calculatePercentage = function (value, min, max) {
-        if (max > min) {
-            var clipped = gpii.firstDiscovery.panel.ranged.clip(value, min, max);
-            return ((clipped - min) / (max - min)) * 100;
-        }
-    };
-
     gpii.firstDiscovery.panel.ranged.updateMeter = function (that, value) {
-        var percentage = gpii.firstDiscovery.panel.ranged.calculatePercentage(value, that.options.range.min, that.options.range.max);
+        var range = that.options.range;
+        var percentage = ((value - range.min) / (range.max - range.min)) * 100;
         that.locate("meter").css("height", percentage + "%");
     };
 
