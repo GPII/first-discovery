@@ -174,6 +174,20 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "model.speak": "default"
             }
         },
+        modelRelay: {
+            source: "{that}.model",
+            target: "{that}.model.speak",
+            singleTransform: {
+                type: "fluid.transforms.valueMapper",
+                inputPath: "speakChoice",
+                options: {
+                    "yes": true,
+                    "no": {
+                        outputValue: false
+                    }
+                }
+            }
+        },
         stringArrayIndex: {
             choice: ["speakText-yes", "speakText-no"]
         },
@@ -184,7 +198,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             instructions: ".gpiic-fd-instructions"
         },
         controlValues: {
-            choice: ["true", "false"]
+            choice: ["yes", "no"]
         },
         repeatingSelectors: ["choiceRow"],
         protoTree: {
@@ -198,7 +212,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 tree: {
                     optionnames: "${{that}.msgLookup.choice}",
                     optionlist: "${{that}.options.controlValues.choice}",
-                    selection: "${speak}"
+                    selection: "${speakChoice}"
                 }
             }
         }

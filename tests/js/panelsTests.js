@@ -224,7 +224,7 @@ https://github.com/gpii/universal/LICENSE.txt
         },
         choiceLabels: ["yes", "no"],
         model: {
-            speak: "true"
+            speak: true
         }
     });
 
@@ -255,18 +255,18 @@ https://github.com/gpii/universal/LICENSE.txt
                     event: "{speakText}.events.afterRender"
                 }, {
                     func: "gpii.tests.speakTextTester.triggerRadioButton",
-                    args: ["{speakText}.dom.choiceLabel", 1]
+                    args: ["{speakText}.dom.choiceInput", 1]
                 }, {
                     listener: "gpii.tests.speakTextTester.verifyModel",
-                    args: ["{speakText}", "false"],
+                    args: ["{speakText}", false],
                     spec: {path: "speak", priority: "last"},
                     changeEvent: "{speakText}.applier.modelChanged"
                 }, {
                     func: "gpii.tests.speakTextTester.triggerRadioButton",
-                    args: ["{speakText}.dom.choiceLabel", 0]
+                    args: ["{speakText}.dom.choiceInput", 0]
                 }, {
                     listener: "gpii.tests.speakTextTester.verifyModel",
-                    args: ["{speakText}", "true"],
+                    args: ["{speakText}", true],
                     spec: {path: "speak", priority: "last"},
                     changeEvent: "{speakText}.applier.modelChanged"
                 }]
@@ -274,7 +274,7 @@ https://github.com/gpii/universal/LICENSE.txt
         }]
     });
 
-    gpii.tests.speakTextTester.triggerRadioButton = function (radioButtons, idx) {
+    gpii.tests.speakTextTester.triggerRadioButton = function (radioButtons, idx, that) {
         radioButtons.eq(idx).click();
     };
 
@@ -284,7 +284,7 @@ https://github.com/gpii/universal/LICENSE.txt
             elm = $(elm);
             jqUnit.assertEquals("Choice #" + idx + " should have the correct label.", that.options.choiceLabels[idx], elm.text());
         });
-        jqUnit.assertEquals("The correct choice should be checked", that.model.speak, that.locate("choiceInput").filter(":checked").val());
+        jqUnit.assertEquals("The correct choice should be checked", that.model.speakChoice, that.locate("choiceInput").filter(":checked").val());
     };
 
     gpii.tests.speakTextTester.verifyModel = function (that, expectedValue) {
