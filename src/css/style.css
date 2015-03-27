@@ -158,7 +158,7 @@ button {
     margin-bottom: 0.6rem;
 }
 
-.gpii-fd-yesNo {
+.gpii-fd-choice-label {
     font-size: inherit;
     display: inline-block;
     width: 14rem;
@@ -170,13 +170,13 @@ button {
     padding: 0.7rem;
     border: 0.2rem solid #ffffff;
 }
-.gpii-fd-yesNo:hover {
+.gpii-fd-choice-label:hover {
     background-color: #425165; /* blue-grey, to override foundation's blue */
     box-shadow: 0 0 0 0.04rem rgb(255,255,255), /* white */
                 0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
 }
 
-.gpii-fd-choice input:focus ~ .gpii-fd-yesNo {
+.gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
     background-color: #425165; /* blue-grey */
     border: 0.2rem solid #fed73a; /* Yellow */
     box-shadow: 0 0 0 0.2rem rgb(244, 215, 75), /* Yellow */
@@ -184,7 +184,7 @@ button {
     outline: none;
 }
 
-.gpii-fd-yesNo:active {
+.gpii-fd-choice-label:active {
     background-color: #fff;
     color: #425165; /* blue-grey */
     border: 0.2rem solid #fff;
@@ -199,11 +199,11 @@ button {
     left: -2.1rem;
 }
 
-.gpii-fd-choice input:checked ~ .gpii-fd-yesNo {
+.gpii-fd-choice input:checked ~ .gpii-fd-choice-label {
     color: #fed73a;
 }
 
-.gpii-fd-choice input:checked:active ~ .gpii-fd-yesNo {
+.gpii-fd-choice input:checked:active ~ .gpii-fd-choice-label {
     color: #425165;
 }
 
@@ -211,7 +211,7 @@ button {
     content: "\e600";
 }
 
-.gpii-fd-choice input:checked ~ .gpii-fd-indicator.gpii-fd-yesNo {
+.gpii-fd-choice input:checked ~ .gpii-fd-indicator.gpii-fd-choice-label {
     color: #fed73a; /* yellow */
 }
 
@@ -241,9 +241,8 @@ button {
     border-color: #000000 !important;
 }
 
-/* text size increase/decrease controls */
+/* text size increase/decrease controls; language panel more button */
 .gpii-fd-increase, .gpii-fd-decrease {
-    width: 6rem;
     height: 6rem;
     color: #ffffff;
     background-color: #425165; /* blue-grey */
@@ -253,8 +252,14 @@ button {
     margin-bottom: 1rem;
 }
 
+.gpii-fd-increase, .gpii-fd-decrease {
+    width: 6rem;
+}
+
 .gpii-fd .gpii-fd-increase:focus,
-.gpii-fd .gpii-fd-decrease:focus {
+.gpii-fd .gpii-fd-decrease:focus,
+.gpii-fd .gpii-fd-lang-prev:focus,
+.gpii-fd .gpii-fd-lang-next:focus {
     background-color: #425165; /* blue-grey */
     border: 0.1rem solid #fed73a; /* Yellow */
     box-shadow: 0 0 0 0.2rem rgb(244, 215, 75), /* Yellow */
@@ -263,15 +268,28 @@ button {
 }
 
 .gpii-fd .gpii-fd-increase:active,
-.gpii-fd .gpii-fd-decrease:active {
+.gpii-fd .gpii-fd-decrease:active,
+.gpii-fd .gpii-fd-lang-prev:active,
+.gpii-fd .gpii-fd-lang-next:active {
     background-color: #fff;
     color: #425165; /* blue-grey */
     border: 0.1rem solid #fff;
     box-shadow: 0 0 0 0.4rem rgb(72, 82, 100); /* blue-grey */
 }
 
+.gpii-fd-increase:hover,
+.gpii-fd-decrease:hover,
+.gpii-fd-lang-prev:hover,
+.gpii-fd-lang-next:hover {
+    background-color: #425165; /* blue-grey, to override foundation's blue */
+    box-shadow: 0 0 0 0.04rem rgb(255,255,255), /* white */
+                0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
+}
+
 .gpii-fd-increase .gpii-fd-icon:before,
-.gpii-fd-decrease .gpii-fd-icon:before {
+.gpii-fd-decrease .gpii-fd-icon:before,
+.gpii-fd-lang-prev .gpii-fd-icon:before,
+.gpii-fd-lang-next .gpii-fd-icon:before {
     font-size: 4rem;
     position: relative;
     top: -0.4rem;
@@ -283,11 +301,35 @@ button {
 .gpii-fd-decrease .gpii-fd-icon:before {
     content: "\e604";
 }
-.gpii-fd-increase:hover,
-.gpii-fd-decrease:hover {
-    background-color: #425165; /* blue-grey, to override foundation's blue */
-    box-shadow: 0 0 0 0.04rem rgb(255,255,255), /* white */
-                0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
+
+/* language controls */
+.gpii-fd-lang-row {
+    display: none;
+}
+
+.gpii-fd-lang-label {
+    width: 15rem;
+}
+
+.gpii-fd-lang-prev, .gpii-fd-lang-next {
+    left: 1.2rem;
+    height: 3rem;
+    width: 15rem;
+    font-size: 2rem;
+    padding-top: 0.1rem;
+    color: #ffffff;
+    background-color: #425165; /* blue-grey */
+    border: 0.1rem solid #fff;
+    border-radius: 0.7rem;
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.gpii-fd-lang-prev .gpii-fd-icon:before {
+    content: "\e604";
+}
+.gpii-fd-lang-next .gpii-fd-icon:before {
+    content: "\e603";
 }
 
 /* vertical 'range status' indicator beside adjuster */
@@ -448,6 +490,11 @@ button {
 .gpii-fd-show {
     visibility: visible;
 }
+
+.gpii-fd-display {
+    display: block;
+}
+
 .gpii-fd-confirmedIndicator:before {
     content:  "\e607";
     font-size: 2rem;

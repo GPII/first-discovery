@@ -1,3 +1,11 @@
 {
-    "langInstructions": "<p>Welcome!</p><p>If you need help at any time, press the H key. To continue, select the start button below.</p>"
+    "langInstructions": "Select your preferred language",
+    "lang-en": "English",
+    "lang-fr": "Français",
+    "lang-es": "Español",
+    "lang-de": "Deutsch",
+    "lang-ne": "Nederlands",
+    "lang-sv": "Svenska",
+    "prev": "previous page",
+    "next": "next page"
 }

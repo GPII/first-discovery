@@ -15,6 +15,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     fluid.registerNamespace("gpii.firstDiscovery.panel");
 
+    /*
+     * Ranged panel: used as a grade for text size panel and other panels to adjust their preferences in a range
+     */
     fluid.defaults("gpii.firstDiscovery.panel.ranged", {
         gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip", "autoInit"],
         model: {
@@ -131,6 +134,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         that.locate("meter").css("height", percentage + "%");
     };
 
+    /*
+     * Text size panel
+     */
+
     fluid.defaults("gpii.firstDiscovery.panel.textSize", {
         gradeNames: ["gpii.firstDiscovery.panel.ranged", "autoInit"],
         preferenceMap: {
@@ -143,21 +150,118 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
+    /*
+     * language panel
+     */
     fluid.defaults("gpii.firstDiscovery.panel.lang", {
         gradeNames: ["fluid.prefs.panel", "autoInit"],
         preferenceMap: {
             "gpii.firstDiscovery.language": {
-                "model.lang": "default"
+                "model.lang": "default",
+                "controlValues.lang": "enum"
             }
         },
-        selectors: {
-            instructions: ".gpiic-fd-instructions"
+        controlValues: {
+            lang: ["en", "fr", "es", "de", "ne", "sv"]
         },
+        stringArrayIndex: {
+            lang: ["lang-en", "lang-fr", "lang-es", "lang-de", "lang-ne", "lang-sv"]
+        },
+        styles: {
+            display: "gpii-fd-display"
+        },
+        model: {
+            startButtonNum: 0
+        },
+        modelRelay: {
+            target: "startButtonNum",
+            singleTransform: {
+                type: "fluid.transforms.limitRange",
+                input: "{that}.model.startButtonNum",
+                min: 0,
+                max: "{that}.options.controlValues.lang.length"
+            }
+        },
+        modelListeners: {
+            startButtonNum: "{that}.setButtonStates"
+        },
+        numOfLangPerPage: 3,
+        selectors: {
+            instructions: ".gpiic-fd-instructions",
+            langRow: ".gpiic-fd-lang-row",
+            langLabel: ".gpiic-fd-lang-label",
+            langInput: ".gpiic-fd-lang-input",
+            prev: ".gpiic-fd-lang-prev",
+            next: ".gpiic-fd-lang-next"
+        },
+        selectorsToIgnore: ["prev", "next"],
+        repeatingSelectors: ["langRow"],
         protoTree: {
-            instructions: {markup: {messagekey: "langInstructions"}}
+            instructions: {markup: {messagekey: "langInstructions"}},
+            expander: {
+                type: "fluid.renderer.selection.inputs",
+                rowID: "langRow",
+                labelID: "langLabel",
+                inputID: "langInput",
+                selectID: "lang-radio",
+                tree: {
+                    optionnames: "${{that}.msgLookup.lang}",
+                    optionlist: "${{that}.options.controlValues.lang}",
+                    selection: "${lang}"
+                }
+            }
+        },
+        invokers: {
+            setButtonStates: {
+                funcName: "gpii.firstDiscovery.panel.lang.setButtonStates",
+                args: ["{that}"]
+            },
+            bindPrev: {
+                funcName: "gpii.firstDiscovery.panel.lang.adjustStartButtonNumber",
+                args: ["{that}", -1]
+            },
+            bindNext: {
+                funcName: "gpii.firstDiscovery.panel.lang.adjustStartButtonNumber",
+                args: ["{that}", 1]
+            }
+        },
+        listeners: {
+            "afterRender.setInitialButtonStates": "{that}.setButtonStates",
+            "afterRender.bindPrev": {
+                "this": "{that}.dom.prev",
+                method: "click",
+                args: ["{that}.bindPrev"]
+            },
+            "afterRender.bindNext": {
+                "this": "{that}.dom.next",
+                method: "click",
+                args: ["{that}.bindNext"]
+            }
         }
     });
 
+    gpii.firstDiscovery.panel.lang.adjustStartButtonNumber = function (that, adjustValue) {
+        that.applier.change("startButtonNum", that.model.startButtonNum + adjustValue);
+    };
+
+    gpii.firstDiscovery.panel.lang.setButtonStates = function (that) {
+        var langButtons = that.locate("langRow"),
+            langButtonTotal = langButtons.length,
+            displayCss = that.options.styles.display,
+            startButtonNum = that.model.startButtonNum,
+            endButtonNum = startButtonNum + that.options.numOfLangPerPage - 1;
+
+        fluid.each(langButtons, function (button, index) {
+            $(button).toggleClass(displayCss, index >= startButtonNum && index <= endButtonNum);
+        });
+
+        that.locate("prev").prop("disabled", startButtonNum === 0);
+        that.locate("next").prop("disabled", endButtonNum > langButtonTotal - 2);
+    };
+
+    /*
+     * Text to speech panel
+     */
     fluid.defaults("gpii.firstDiscovery.panel.tts", {
         gradeNames: ["fluid.prefs.panel", "autoInit"],
         preferenceMap: {
@@ -167,12 +271,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
+    /*
+     * Contrast panel
+     */
     fluid.defaults("gpii.firstDiscovery.panel.contrast", {
         gradeNames: ["fluid.prefs.panel", "autoInit"],
         preferenceMap: {
             "fluid.prefs.contrast": {
                 "model.value": "default",
-                "controlValues.theme": "enum"
+                "controlValues.lang": "enum"
             }
         }
     });

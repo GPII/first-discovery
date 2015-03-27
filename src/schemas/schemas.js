@@ -93,7 +93,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "gpii.firstDiscovery.language": {
                 "type": "string",
                 "default": "en",
-                "enum": ["en", "fr"]
+                "enum": ["en", "fr", "es", "de", "ne", "sv"]
             }
         }
     });
