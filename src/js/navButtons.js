@@ -20,7 +20,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * The back and next navigation buttons
      */
     fluid.defaults("gpii.firstDiscovery.navButtons", {
-        gradeNames: ["fluid.viewComponent", "gpii.firstDiscovery.attachTooltip", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "gpii.firstDiscovery.attachTooltip", "autoInit"],
         panelTotalNum: null,   // Must be supplied by integrators
         panelStartNum: 1,
         tooltipContentMap: {
@@ -44,18 +44,20 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             finish: "Finish",
             finishTooltip: "Select to finish"
         },
-        // TODO: Uncomment this block when switching to use relay components.
-        // modelRelay: {
-        //     target: "currentPanelNum",
-        //     singleTransform: {
-        //         type: "fluid.transforms.limitRange",
-        //         input: "{that}.model.currentPanelNum",
-        //         min: "{that}.options.panelStartNum",
-        //         max: "{that}.options.panelTotalNum"
-        //     }
-        // },
+        modelRelay: {
+            target: "currentPanelNum",
+            singleTransform: {
+                type: "fluid.transforms.limitRange",
+                input: "{that}.model.currentPanelNum",
+                min: "{that}.options.panelStartNum",
+                max: "{that}.options.panelTotalNum"
+            }
+        },
         modelListeners: {
-            currentPanelNum: "{that}.setButtonStates"
+            currentPanelNum: {
+                listener: "{that}.setButtonStates",
+                excludeSource: "init"
+            }
         },
         listeners: {
             "onCreate.bindBack": {
@@ -68,8 +70,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "method": "click",
                 args: ["{that}.nextButtonClicked"]
             },
-            // TODO: this listener can be removed when switching to use relay components.
-            "onCreate.setInitialButtonStates": "{that}.setButtonStates"
+            "onCreate.setButtonStates": "{that}.setButtonStates"
         },
         invokers: {
             setButtonStates: {
@@ -124,11 +125,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     gpii.firstDiscovery.navButtons.adjustCurrentPanelNum = function (that, toChange) {
         var newValue = that.model.currentPanelNum + toChange;
-
-        // TODO: When switching to use relay components, the if condition can be replaced by the "limitRange" relay at line 50-58
-        if (newValue >= that.options.panelStartNum && newValue <= that.options.panelTotalNum) {
-            that.applier.change("currentPanelNum", newValue);
-        }
+        that.applier.change("currentPanelNum", newValue);
     };
 
 })(jQuery, fluid);

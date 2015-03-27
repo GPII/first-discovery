@@ -65,12 +65,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 options: {
                     gradeNames: ["fluid.prefs.msgLookup"],
                     members: {
-                        // TODO: when switching to use relay components, the line below to share applier can be removed
-                        applier: "{firstDiscoveryEditor}.applier",
                         messageResolver: "{firstDiscoveryEditor}.msgResolver"
                     },
-                    // TODO: when switching to use relay components, rather than sharing the entire model, only the needed model paths need to be shared
-                    model: "{firstDiscoveryEditor}.model",
+                    model: {
+                        currentPanelNum: "{firstDiscoveryEditor}.model.currentPanelNum"
+                    },
                     strings: {
                         back: "{that}.msgLookup.back",
                         backTooltip: "{that}.msgLookup.backTooltip",
@@ -89,12 +88,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 type: "gpii.firstDiscovery.navIcons",
                 container: "{firstDiscoveryEditor}.dom.navIcons",
                 options: {
-                    members: {
-                        // TODO: when switching to use relay components, the line below to share applier can be removed
-                        applier: "{firstDiscoveryEditor}.applier"
+                    model: {
+                        currentPanelNum: "{firstDiscoveryEditor}.model.currentPanelNum"
                     },
-                    // TODO: when switching to use relay components, rather than sharing the entire model, only the needed model paths need to be shared
-                    model: "{firstDiscoveryEditor}.model",
                     styles: "{firstDiscoveryEditor}.options.styles"
                 }
             }
