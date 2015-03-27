@@ -203,7 +203,7 @@ https://github.com/gpii/universal/LICENSE.txt
         }]
     });
 
-    gpii.tests.speakTextTester.triggerRadioButton = function (radioButtons, idx, that) {
+    gpii.tests.speakTextTester.triggerRadioButton = function (radioButtons, idx) {
         radioButtons.eq(idx).click();
     };
 
