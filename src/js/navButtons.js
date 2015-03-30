@@ -29,7 +29,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         selectors: {
             back: "#gpiic-fd-navButtons-back",
-            next: "#gpiic-fd-navButtons-next"
+            backLabel: ".gpiic-fd-navButtons-backLabel",
+            next: "#gpiic-fd-navButtons-next",
+            nextLabel: ".gpiic-fd-navButtons-nextLabel"
         },
         styles: {
             show: "gpii-fd-show"
@@ -111,8 +113,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
         backButton.prop("disabled", isFirstPanel);
         backButton.toggleClass(showSelector, !isFirstPanel);
-        backButton.html(strings.back);
-        nextButton.html(nextLabel);
+        that.locate("backLabel").html(strings.back);
+        that.locate("nextLabel").html(nextLabel);
         nextButton.addClass(showSelector);
         if (isFirstPanel) {
             that.tooltip.close();  // Close the existing tooltip for the back button otherwise it will linger after the back button becomes hidden

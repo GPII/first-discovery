@@ -330,31 +330,36 @@ button {
 }
 .gpii-fd-navButtons-back, .gpii-fd-navButtons-next {
     border: 0.2rem solid #fff;
-    border-radius: 0.4rem;
+    border-radius: 0.5rem;
     visibility: hidden;
-    margin: 1rem;
-    padding: 0.5rem 1.5rem;
-    line-height: 4.2rem;
-}
-
-.gpii-fd-navButtons-back:before,
-.gpii-fd-navButtons-next:after {
     background-color: #425165; /* blue-grey */
     color: #ffffff;
-    border-radius: 50rem;
+    padding: 1rem;
+    line-height: 2rem;
+    height: 4.5rem;
+}
+.gpii-fd-navButtons-back {
+    padding-left: 0;
+    margin: 0 0 1rem 1rem;
+}
+.gpii-fd-navButtons-next {
+    padding-right: 0;
+    margin: 0 1rem 1rem 0;
+}
+.gpii-fd-navButtons-back .gpii-fd-icon:before,
+.gpii-fd-navButtons-next .gpii-fd-icon:after {
     position: relative;
     font-family: "PGA-FD";
     font-size: 4rem;
-    top: 0.7rem;
 }
 .gpii-fd-navButtons-back:hover,
 .gpii-fd-navButtons-next:hover {
     color: inherit; /* to override foundation's blue */
     background-color: inherit;
 }
-.gpii-fd-navButtons-back:hover:before,
-.gpii-fd-navButtons-next:hover:after {
-    box-shadow: 0 0 0 0.2rem rgb(255, 255, 255), 0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
+.gpii-fd-navButtons-back:hover,
+.gpii-fd-navButtons-next:hover {
+    box-shadow: 0 0 0 0.3rem rgb(72, 82, 100); /*blue-grey */
 }
 .gpii-fd-navButtons-back:focus,
 .gpii-fd-navButtons-next:focus {
@@ -366,14 +371,12 @@ button {
     box-shadow: 0 0 0 0.2rem rgb(0, 0, 0);
 }
 
-.gpii-fd-navButtons-back:before {
+.gpii-fd-navButtons-back .gpii-fd-icon:before {
     content:  "\e606";
-    right: 0.7rem;
 }
 
-.gpii-fd-navButtons-next:after {
+.gpii-fd-navButtons-next .gpii-fd-icon:after {
     content: "\e605";
-    left: 0.7rem;
 }
 .gpii-fd-navButtons:after {
   content:"";
