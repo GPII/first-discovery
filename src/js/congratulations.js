@@ -16,6 +16,47 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     fluid.registerNamespace("gpii.firstDiscovery");
 
+    fluid.defaults("gpii.firstDiscovery.loader", {
+        gradeNames: ["fluid.standardRelayComponent", "autoInit"],
+        components: {
+            templateLoader: {
+                type: "fluid.prefs.resourceLoader",
+                options: {
+                    events: {
+                        onResourcesLoaded: "{loader}.events.onTemplatesLoaded"
+                    }
+                }
+            },
+            messageLoader: {
+                type: "fluid.prefs.resourceLoader",
+                options: {
+                    events: {
+                        onResourcesLoaded: "{loader}.events.onMessagesLoaded"
+                    }
+                }
+            }
+        },
+        events: {
+            onTemplatesLoaded: null,
+            onMessagesLoaded: null,
+            onResourcesLoaded: {
+                events: {
+                    onTemplatesLoaded: "onTemplatesLoaded",
+                    onMessagesLoaded: "onMessagesLoaded"
+                }
+            }
+        },
+        distributeOptions: [{
+            source: "{that}.options.templateLoader",
+            removeSource: true,
+            target: "{that > templateLoader}.options"
+        }, {
+            source: "{that}.options.messageLoader",
+            removeSource: true,
+            target: "{that > messageLoader}.options"
+        }]
+    });
+
     fluid.defaults("gpii.firstDiscovery.congratulations", {
         gradeNames: ["fluid.rendererRelayComponent", "autoInit"],
         selectors: {
@@ -33,19 +74,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "closeLabel": "close",
             "helpLabel": "help"
         },
-        protoTree: {
-            content: {
-                markup: {messagekey: "content"}
-            },
-            closeLabel: {messagekey: "closeLabel"},
-            help: {messagekey: "helpLabel"}
-        },
         invokers: {
             close: {
                 "this": "window",
                 "method": "close"
             }
         },
+        events: {},
         listeners: {
             "afterRender.bindClose": {
                 "this": "{that}.dom.close",
@@ -53,7 +88,82 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "args": "{that}.close"
             }
         },
-        renderOnInit: true
+        // components: {
+        //     msgResolver: {
+        //         type: "fluid.messageResolver"
+        //     }
+        // },
+        // rendererOptions: {
+        //     messageLocator: "{msgResolver}.resolve"
+        // },
+        renderOnInit: true,
+        protoTree: {
+            content: {
+                markup: {messagekey: "content"}
+            },
+            closeLabel: {messagekey: "closeLabel"},
+            help: {messagekey: "helpLabel"}
+        },
+        // distributeOptions: [{
+        //     source: "{that}.options.messageBase",
+        //     target: "{that > msgResolver}.options.messageBase"
+        // }],
+        // resources: {
+        //     template: {}
+        // },
+        messageLoader: {}
     });
+
+    fluid.defaults("gpii.firstDiscovery.congratulationsLoader", {
+        gradeNames: ["fluid.viewRelayComponent", "gpii.firstDiscovery.loader", "autoInit"],
+        components: {
+            congratulations: {
+                type: "gpii.firstDiscovery.congratulations",
+                container: "{that}.container",
+                createOnEvent: "onResourcesLoaded",
+                options: {
+                    // messageBase: "{messageLoader.}",
+                    resources: {
+                        template: "{templateLoader}.resources.congratulations"
+                    }
+                }
+            }
+        },
+        listeners: {
+            onTemplatesLoaded: {
+                listener: "gpii.firstDiscovery.congratulations.consoleLog",
+                priority: "first",
+                args: ["onTemplatesLoaded", "{that}"]
+            },
+            onMessagesLoaded: {
+                listener: "gpii.firstDiscovery.congratulations.consoleLog",
+                priority: "first",
+                args: ["onMessagesLoaded", "{that}"]
+            },
+            onResourcesLoaded: {
+                listener: "gpii.firstDiscovery.congratulations.consoleLog",
+                priority: "first",
+                args: ["onResourcesLoaded", "{that}"]
+            }
+        },
+        distributeOptions: [{
+            source: "{that}.options.congratulations",
+            removeSource: true,
+            target: "{that > congratulations}.options"
+        }, {
+            source: "{that}.options.templateLoader",
+            removeSource: true,
+            target: "{that > templateLoader}.options"
+        }, {
+            source: "{that}.options.messageLoader",
+            removeSource: true,
+            target: "{that > messageLoader}.options"
+        }]
+    });
+
+    //TODO remove this test console log function
+    gpii.firstDiscovery.congratulations.consoleLog = function (msg, obj) {
+        console.log(msg, obj);
+    };
 
 })(jQuery, fluid);

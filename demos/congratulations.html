@@ -16,21 +16,32 @@
     </head>
 
     <body>
-        <section class="gpiic-congratulations small-12 gpii-fd gpii-congratulaions">
-            <div class="row gpii-fd-topButtons">
-                <button class="right gpiic-congratulaions-help gpii-fd-help" disabled="disabled">help</button>
-            </div>
-
-            <div class="gpiic-congratulaions-content gpii-congratulaions-content"></div>
-
-            <div class="gpii-congratulations-buttons">
-                <button class="gpiic-congratulations-closeButton gpii-congratulations-closeButton">
-                    <span class="gpiic-congratulations-closeLabel gpii-congratulations-closeLabel">close</span>
-                </button>
-            </div>
-        </section>
+        <section class="gpiic-congratulations small-12 gpii-fd gpii-congratulaions"></section>
         <script type="text/javascript">
-            gpii.firstDiscovery.congratulations(".gpiic-congratulations");
+            // var that = gpii.firstDiscovery.congratulations(".gpiic-congratulations", {
+            //     resources: {
+            //         template: {
+            //             url: "../src/html/congratulationsTemplate.html"
+            //         }
+            //     },
+            //     // messageLoader: {
+            //     //     templates: {
+            //     //         message: "../src/messages/congratulations.json"
+            //     //     }
+            //     // }
+            // });
+            gpii.firstDiscovery.congratulationsLoader(".gpiic-congratulations", {
+                templateLoader: {
+                    templates: {
+                        congratulations: "../src/html/congratulationsTemplate.html"
+                    }
+                },
+                messageLoader: {
+                    templates: {
+                        msgs: "../src/messages/congratulations.json"
+                    }
+                }
+            });
         </script>
     </body>
 </html>
