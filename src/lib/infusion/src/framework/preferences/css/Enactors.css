@@ -34,10 +34,11 @@
 .fl-font-comic-sans * {
   font-family: "Comic Sans MS", sans-serif !important;
 }
-.fl-text-larger {
+.fl-text-larger input,
+.fl-text-larger button {
   font-size: 125% !important;
 }
-.fl-link-enhanced {
+.fl-link-enhanced a {
   font-size: 125% !important;
   text-decoration: underline !important;
   font-weight: bold !important;

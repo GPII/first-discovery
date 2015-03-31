@@ -28,7 +28,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * The right hand side is the name in the strings block for the content to be shown for that element.
      */
     fluid.defaults("gpii.firstDiscovery.attachTooltip", {
-        gradeNames: ["fluid.viewComponent", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
         tooltipOptions: {},
         tooltipContentMap: {},  // Must be provided by integrators
         components: {

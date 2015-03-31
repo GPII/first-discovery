@@ -23,9 +23,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         strings: {
             muted: "turn voice ON",
-            unmuted: "turn voice OFF",
             mutedMsg: "voice is off",
-            unmutedMsg: "voice is on"
+            unmutedMsg: "voice is on",
+            mutedTooltip: "Select to turn voice on",
+            unmuted: "turn voice OFF",
+            unmutedTooltip: "Select to turn voice off"
         },
         styles: {
             muted: "gpii-fd-selfVoicing-muted",
@@ -35,7 +37,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             enabled: false
         },
         tooltipContentMap: {
-            "mute": "muted"
+            "mute": "mutedTooltip"
         },
         invokers: {
             queueSpeech: {
@@ -57,6 +59,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             setMuteStyle: {
                 funcName: "gpii.firstDiscovery.selfVoicing.setMuteStyle",
                 args: ["{that}.container", "{that}.options.styles", "{that}.model.enabled"]
+            },
+            clearQueue: {
+                funcName: "gpii.firstDiscovery.selfVoicing.clearQueue",
+                args: ["{that}"]
+            },
+            speakVoiceState: {
+                funcName: "gpii.firstDiscovery.selfVoicing.speakVoiceState",
+                args: ["{that}"]
             }
         },
         listeners: {
@@ -65,27 +75,24 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "method": "click",
                 "args": ["{that}.toggleState"]
             },
-            // TODO: The following listeners can be removed after switching to use model relay
-            "onCreate.setLabel": "{that}.setLabel",
+            // Need to call the handlers onCreate and exclude "init" on the modelListeners
+            // because the underlying tooltip widget isn't finished at initialization
             "onCreate.setTooltip": "{that}.setTooltip",
-            "onCreate.setMuteStyle": "{that}.setMuteStyle",
-            "onCreate.clearQueue": {
-                listener: "gpii.firstDiscovery.selfVoicing.clearQueue",
-                args: ["{that}"]
-            }
+            "onCreate.clearQueue": "{that}.clearQueue"
         },
         modelListeners: {
             "enabled": [
                 "{that}.setLabel",
                 "{that}.setMuteStyle",
-                "{that}.setTooltip",
                 {
-                    listener: "gpii.firstDiscovery.selfVoicing.clearQueue",
-                    args: ["{that}"]
-                },
-                {
-                    listener: "gpii.firstDiscovery.selfVoicing.speakVoiceState",
-                    args: ["{that}", "{change}"]
+                    listener: "{that}.setTooltip",
+                    excludeSource: "init"
+                }, {
+                    listener: "{that}.clearQueue",
+                    excludeSource: "init"
+                }, {
+                    listener: "{that}.speakVoiceState",
+                    excludeSource: "init"
                 }
             ]
         }
@@ -97,24 +104,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     };
 
-    // TODO: The manual comparison of old and new model state can be removed after switching to a model relay component
-    gpii.firstDiscovery.selfVoicing.speakVoiceState = function (that, change, options) {
-        var newVal;
-        var oldVal;
-
-        if (typeof(change.value) === "object") {
-            newVal = change.value.enabled;
-            oldVal = change.oldValue.enabled;
-        } else {
-            newVal = change.value;
-            oldVal = change.oldValue;
-        }
-
-        if (newVal !== oldVal) {
-            var msg = that.model.enabled ? that.options.strings.unmutedMsg : that.options.strings.mutedMsg;
-            // called directly as it needs to be spoken regardless of enabled state.
-            fluid.textToSpeech.queueSpeech(that, msg, true, options);
-        }
+    gpii.firstDiscovery.selfVoicing.speakVoiceState = function (that, options) {
+        var msg = that.model.enabled ? that.options.strings.unmutedMsg : that.options.strings.mutedMsg;
+        // called directly as it needs to be spoken regardless of enabled state.
+        fluid.textToSpeech.queueSpeech(that, msg, true, options);
     };
 
     gpii.firstDiscovery.selfVoicing.toggleState = function (that) {
@@ -127,7 +120,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     gpii.firstDiscovery.selfVoicing.setTooltip = function (that, isEnabled) {
-        var str = that.options.strings[isEnabled ? "unmuted" : "muted"];
+        that.tooltip.close();
+        var str = that.options.strings[isEnabled ? "unmutedTooltip" : "mutedTooltip"];
         var modelPath = "idToContent." + that.locate("mute").attr("id");
         that.tooltip.applier.change(modelPath, str);
     };

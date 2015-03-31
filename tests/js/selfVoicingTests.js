@@ -72,7 +72,7 @@ https://github.com/gpii/universal/LICENSE.txt
         invokers: {
             testRendering: {
                 funcName: "gpii.tests.selfVoicingTester.testRendering",
-                args: ["{selfVoicing}", "{arguments}.0", "{arguments}.1"]
+                args: ["{selfVoicing}", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
             }
         },
         modules: [{
@@ -82,7 +82,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 name: "Test Init",
                 type: "test",
                 func: "{that}.testRendering",
-                args: ["{selfVoicing}.options.strings.muted", "{selfVoicing}.options.styles.muted"]
+                args: ["{selfVoicing}.options.strings.muted", "{selfVoicing}.options.strings.mutedTooltip", "{selfVoicing}.options.styles.muted"]
             }, {
                 expect: 4,
                 name: "Test interaction",
@@ -91,7 +91,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     element: "{selfVoicing}.dom.mute"
                 }, {
                     listener: "{that}.testRendering",
-                    args: ["{selfVoicing}.options.strings.unmuted", "{selfVoicing}.options.styles.unmuted"],
+                    args: ["{selfVoicing}.options.strings.unmuted", "{selfVoicing}.options.strings.unmutedTooltip", "{selfVoicing}.options.styles.unmuted"],
                     spec: {path: "enabled", priority: "last"},
                     changeEvent: "{selfVoicing}.applier.modelChanged"
                 }, {
@@ -106,11 +106,11 @@ https://github.com/gpii/universal/LICENSE.txt
         }]
     });
 
-    gpii.tests.selfVoicingTester.testRendering = function (that, muteLabel, muteClass) {
+    gpii.tests.selfVoicingTester.testRendering = function (that, label, tooltipContent, cssClass) {
         var muteId = that.locate("mute").attr("id");
-        jqUnit.assertEquals("The label should be set correctly", muteLabel, that.locate("muteLabel").text());
-        jqUnit.assertEquals("The tooltip text should be set correctly", muteLabel, that.tooltip.model.idToContent[muteId]);
-        jqUnit.assertTrue("The class should be applied to the container", that.container.hasClass(muteClass));
+        jqUnit.assertEquals("The label should be set correctly", label, that.locate("muteLabel").text());
+        jqUnit.assertEquals("The tooltip text should be set correctly", tooltipContent, that.tooltip.model.idToContent[muteId]);
+        jqUnit.assertTrue("The class should be applied to the container", that.container.hasClass(cssClass));
     };
 
     $(document).ready(function () {

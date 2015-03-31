@@ -1,4 +1,4 @@
-/*! infusion - v2.0.0-SNAPSHOT Monday, February 9th, 2015, 12:37:54 PM*/
+/*! infusion - v2.0.0-SNAPSHOT Thursday, March 26th, 2015, 9:52:37 AM*/
 /*!
  * jQuery JavaScript Library v1.11.0
  * http://jquery.com/
@@ -14388,7 +14388,7 @@ var fluid = fluid || fluid_2_0;
 ;/*!
  Copyright unscriptable.com / John Hann 2011
  Copyright Lucendo Development Ltd. 2014
- 
+
  License MIT
 */
 
@@ -14402,7 +14402,7 @@ var fluid_2_0 = fluid_2_0 || {};
 
 // This implementation provides what could be described as "flat promises" with
 // no support for structure programming idioms involving promise chaining or composition.
-// It provides what a proponent of mainstream promises would describe as 
+// It provides what a proponent of mainstream promises would describe as
 // a "glorified callback aggregator"
 
     fluid.promise = function () {
@@ -14454,14 +14454,14 @@ var fluid_2_0 = fluid_2_0 || {};
         };
         return that;
     };
-    
+
     /** Any object with a member <code>then</code> of type <code>function</code> passes this test.
      * This includes essentially every known variety, including jQuery promises.
      */
     fluid.isPromise = function (totest) {
         return totest && typeof(totest.then) === "function";
     };
-    
+
     /** Chains the resolution methods of one promise (target) so that they follow those of another (source).
       * That is, whenever source resolves, target will resolve, or when source rejects, target will reject, with the
       * same payloads in each case.
@@ -14469,7 +14469,7 @@ var fluid_2_0 = fluid_2_0 || {};
     fluid.promise.follow = function (source, target) {
         source.then(target.resolve, target.reject);
     };
-    
+
     /** Returns a promise whose resolved value is mapped from the source promise or value by the supplied function.
      * @param source {Object|Promise} An object or promise whose value is to be mapped
      * @param func {Function} A function which will map the resolved promise value
@@ -14489,11 +14489,11 @@ var fluid_2_0 = fluid_2_0 || {};
         }
         return togo;
     };
-    
+
     /* General skeleton for all sequential promise algorithms, e.g. transform, reduce, sequence, etc.
      * These accept a variable "strategy" pair to customise the interchange of values and final return
      */
-     
+
     fluid.promise.makeSequencer = function (sources, options, strategy) {
         if (!fluid.isArrayable(sources)) {
             fluid.fail("fluid.promise sequence algorithms must be supplied an array as source");
@@ -14507,14 +14507,14 @@ var fluid_2_0 = fluid_2_0 || {};
             promise: fluid.promise() // the final return value
         };
     };
-    
+
     fluid.promise.progressSequence = function (that, retValue) {
         that.returns.push(retValue);
         that.index++;
         // No we dun't have no tail recursion elimination
         fluid.promise.resumeSequence(that);
     };
-    
+
     fluid.promise.resumeSequence = function (that) {
         if (that.index === that.sources.length) {
             that.promise.resolve(that.strategy.resolveResult(that));
@@ -14531,9 +14531,9 @@ var fluid_2_0 = fluid_2_0 || {};
             }
         }
     };
-    
+
     // SEQUENCE ALGORITHM APPLYING PROMISES
-    
+
     fluid.promise.makeSequenceStrategy = function () {
         return {
             invokeNext: function (that) {
@@ -14548,15 +14548,15 @@ var fluid_2_0 = fluid_2_0 || {};
 
     // accepts an array of values, promises or functions returning promises - in the case of functions returning promises,
     // will assure that at most one of these is "in flight" at a time - that is, the succeeding function will not be invoked
-    // until the promise at the preceding position has resolved    
+    // until the promise at the preceding position has resolved
     fluid.promise.sequence = function (sources, options) {
         var sequencer = fluid.promise.makeSequencer(sources, options, fluid.promise.makeSequenceStrategy());
         fluid.promise.resumeSequence(sequencer);
         return sequencer.promise;
     };
-    
+
     // TRANSFORM ALGORITHM APPLYING PROMISES
-   
+
     fluid.promise.makeTransformerStrategy = function () {
         return {
             invokeNext: function (that) {
@@ -14572,7 +14572,7 @@ var fluid_2_0 = fluid_2_0 || {};
     };
 
     // Construct a "mini-object" managing the process of a sequence of transforms,
-    // each of which may be synchronous or return a promise    
+    // each of which may be synchronous or return a promise
     fluid.promise.makeTransformer = function (listeners, payload, options) {
         listeners.unshift({listener:
             function () {
@@ -14584,7 +14584,7 @@ var fluid_2_0 = fluid_2_0 || {};
         fluid.promise.resumeSequence(sequencer);
         return sequencer;
     };
-    
+
     fluid.promise.filterNamespaces = function (listeners, namespaces) {
         if (!namespaces) {
             return listeners;
@@ -14594,21 +14594,21 @@ var fluid_2_0 = fluid_2_0 || {};
         });
     };
 
-   /** Top-level API to operate a Fluid event which manages a sequence of 
+   /** Top-level API to operate a Fluid event which manages a sequence of
      * chained transforms. Rather than being a standard listener accepting the
      * same payload, each listener to the event accepts the payload returned by the
      * previous listener, and returns either a transformed payload or else a promise
      * yielding such a payload.
-     * @param event {fluid.eventFirer} A Fluid event to which the listeners are to be interpreted as 
+     * @param event {fluid.eventFirer} A Fluid event to which the listeners are to be interpreted as
      * elements cooperating in a chained transform. Each listener will receive arguments <code>(payload, options)</code> where <code>payload</code>
      * is the (successful, resolved) return value of the previous listener, and <code>options</code> is the final argument to this function
      * @param payload {Object|Promise} The initial payload input to the transform chain
      * @param options {Object} A free object containing options governing the transform. Fields interpreted at this top level are:
      *     reverse {Boolean}: <code>true</code> if the listeners are to be called in reverse order of priority (typically the case for an inverse transform)
-     *     filterTransforms {Array}: An array of listener namespaces. If this field is set, only the transform elements whose listener namespaces listed in this array will be applied. 
+     *     filterTransforms {Array}: An array of listener namespaces. If this field is set, only the transform elements whose listener namespaces listed in this array will be applied.
      * @return {fluid.promise} A promise which will yield either the final transformed value, or the response of the first transform which fails.
      */
-    
+
     fluid.promise.fireTransformEvent = function (event, payload, options) {
         options = options || {};
         var listeners = options.reverse ? fluid.makeArray(event.sortedListeners).reverse() :
@@ -14617,8 +14617,8 @@ var fluid_2_0 = fluid_2_0 || {};
         var transformer = fluid.promise.makeTransformer(listeners, payload, options);
         return transformer.promise;
     };
-    
-    
+
+
 })(jQuery, fluid_2_0);;/*
 Copyright 2007-2010 University of Cambridge
 Copyright 2007-2009 University of Toronto
@@ -15052,7 +15052,7 @@ var fluid = fluid || fluid_2_0;
 
     /** Render a timestamp from a Date object into a helpful fixed format for debug logs to millisecond accuracy
      * @param date {Date} The date to be rendered
-     * @return {String} A string format consisting of hours:minutes:seconds.millis for the datestamp padded to fixed with 
+     * @return {String} A string format consisting of hours:minutes:seconds.millis for the datestamp padded to fixed with
      */
 
     fluid.renderTimestamp = function (date) {
@@ -15166,7 +15166,7 @@ var fluid = fluid || fluid_2_0;
         });
     };
 
-    // Main entry point for callers. 
+    // Main entry point for callers.
     // TODO: This infrastructure is several years old and probably still only works on Firefox if there
     fluid.getCallerInfo = function (atDepth) {
         atDepth = (atDepth || 3) - stackStyle.offset;
@@ -15179,7 +15179,7 @@ var fluid = fluid || fluid_2_0;
      * @param count {Integer} The number of times to repeat the character
      * @return A string of length <code>count</code> consisting of repetitions of the supplied character
      */
-    // UNOPTIMISED 
+    // UNOPTIMISED
     fluid.generatePadding = function (c, count) {
         var togo = "";
         for (var i = 0; i < count; ++ i) {
@@ -15187,11 +15187,11 @@ var fluid = fluid || fluid_2_0;
         }
         return togo;
     };
-     
+
     // Marker so that we can render a custom string for properties which are not direct and concrete
     fluid.SYNTHETIC_PROPERTY = {};
 
-    // utility to avoid triggering custom getter code which could throw an exception - e.g. express 3.x's request object 
+    // utility to avoid triggering custom getter code which could throw an exception - e.g. express 3.x's request object
     fluid.getSafeProperty = function (obj, key) {
         var desc = Object.getOwnPropertyDescriptor(obj, key); // supported on all of our environments - is broken on IE8
         return desc && !desc.get ? obj[key] : fluid.SYNTHETIC_PROPERTY;
@@ -16331,7 +16331,7 @@ var fluid_2_0 = fluid_2_0 || {};
             instantiator.clearComponent(that, "", that, null, true);
         };
     };
-    
+
     // NON-API function
     fluid.fabricateDestroyMethod = function (that, name, instantiator, child) {
         return function () {
@@ -18058,7 +18058,7 @@ var fluid_2_0 = fluid_2_0 || {};
                 }
                 if (transducer && !options.targetApplier) {
                     // TODO: This is just for safety but is still unusual and now abused. The transducer doesn't need the "newValue" since all the transform information
-                    // has been baked into the transform document itself. However, we now rely on this special signalling value to make sure we regenerate transforms in 
+                    // has been baked into the transform document itself. However, we now rely on this special signalling value to make sure we regenerate transforms in
                     // the "forwardAdapter"
                     transducer(existing.transaction, options.sourceApplier ? undefined : newValue, sourceSegs, targetSegs);
                 } else if (newValue !== undefined) {
@@ -18676,7 +18676,7 @@ var fluid_2_0 = fluid_2_0 || {};
         }
         return options.deltas ? options.deltaMap : null;
     };
-    
+
     /** Compare two models for equality using a deep algorithm. It is assumed that both models are JSON-equivalent and do
      * not contain circular links.
      * @param modela The first model to be compared
@@ -18765,7 +18765,7 @@ var fluid_2_0 = fluid_2_0 || {};
         // These are unbottled in fluid.concludeTransaction
         transRec.externalChanges[keyString] = {listener: spec.listener, priority: spec.priority, args: args};
     };
-    
+
     fluid.isExcludedChangeSource = function (transaction, spec) {
         if (!spec.excludeSource) { // mergeModelListeners initModelEvent fabricates a fake spec that bypasses processing
             return false;
@@ -19773,8 +19773,8 @@ var fluid = fluid || fluid_2_0;
         var defaults = fluid.defaults(typeName);
         return { defaults: defaults, typeName: typeName};
     };
-    
-    // A utility which is helpful in computing inverses involving compound values. 
+
+    // A utility which is helpful in computing inverses involving compound values.
     // For example, with the valueMapper, compound input values are accepted as literals implicitly,
     // whereas as output values they must be escaped. This utility escapes a value if it is not primitive.
     fluid.model.transform.literaliseValue = function (value) {
@@ -20092,6 +20092,15 @@ var fluid = fluid || fluid_2_0;
     fluid.transforms.arrayValue = fluid.makeArray;
 
 
+    fluid.defaults("fluid.transforms.stringToNumber", {
+        gradeNames: ["fluid.standardTransformFunction"]
+    });
+
+    fluid.transforms.stringToNumber = function (value) {
+        var newValue = Number(value);
+        return isNaN(newValue) ? undefined : newValue;
+    };
+
     fluid.defaults("fluid.transforms.count", {
         gradeNames: "fluid.standardTransformFunction"
     });
@@ -20236,8 +20245,8 @@ var fluid = fluid || fluid_2_0;
         invertConfiguration: "fluid.transforms.valueMapper.invert",
         collectInputPaths: "fluid.transforms.valueMapper.collect"
     });
-    
-    
+
+
     // unsupported, NON-API function
     fluid.model.transform.compareMatches = function (speca, specb) {
         return specb.matchValue - speca.matchValue;
@@ -21743,7 +21752,7 @@ var fluid_2_0 = fluid_2_0 || {};
             }
         }
     });
-    
+
     fluid.ariaLabeller.update = function (that, newOptions) {
         newOptions = newOptions || that.options;
         that.container.attr(that.options.labelAttribute, newOptions.text);
@@ -30852,24 +30861,24 @@ $.widget( "ui.tooltip", {
 
     var touch = event.originalEvent.changedTouches[0],
         simulatedEvent = document.createEvent('MouseEvents');
-    
+
     // Initialize the simulated mouse event using the touch event's coordinates
     simulatedEvent.initMouseEvent(
       simulatedType,    // type
-      true,             // bubbles                    
-      true,             // cancelable                 
-      window,           // view                       
-      1,                // detail                     
-      touch.screenX,    // screenX                    
-      touch.screenY,    // screenY                    
-      touch.clientX,    // clientX                    
-      touch.clientY,    // clientY                    
-      false,            // ctrlKey                    
-      false,            // altKey                     
-      false,            // shiftKey                   
-      false,            // metaKey                    
-      0,                // button                     
-      null              // relatedTarget              
+      true,             // bubbles
+      true,             // cancelable
+      window,           // view
+      1,                // detail
+      touch.screenX,    // screenX
+      touch.screenY,    // screenY
+      touch.clientX,    // clientX
+      touch.clientY,    // clientY
+      false,            // ctrlKey
+      false,            // altKey
+      false,            // shiftKey
+      false,            // metaKey
+      0,                // button
+      null              // relatedTarget
     );
 
     // Dispatch the simulated event to the target element
@@ -30958,7 +30967,7 @@ $.widget( "ui.tooltip", {
    * original mouse event handling methods.
    */
   mouseProto._mouseInit = function () {
-    
+
     var self = this;
 
     // Delegate the touch handlers to the widget's element
@@ -30992,29 +31001,23 @@ var fluid_2_0 = fluid_2_0 || {};
      ********************/
 
     fluid.defaults("fluid.textfieldSlider", {
-        gradeNames: ["fluid.viewComponent", "fluid.prefs.modelRelay", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
         components: {
             textfield: {
                 type: "fluid.textfieldSlider.textfield",
                 container: "{textfieldSlider}.dom.textfield",
                 options: {
                     model: "{textfieldSlider}.model",
-                    range: "{textfieldSlider}.options.range",
-                    members: {
-                        applier: "{textfieldSlider}.applier"
-                    }
+                    range: "{textfieldSlider}.options.range"
                 }
             },
             slider: {
-                type: "fluid.textfieldSlider.slider",
+                type: "fluid.slider",
                 container: "{textfieldSlider}.dom.slider",
                 options: {
-                    model: "{textfieldSlider}.model",
-                    range: "{textfieldSlider}.options.range",
-                    members: {
-                        applier: "{textfieldSlider}.applier"
-                    },
-                    sliderOptions: "{textfieldSlider}.options.sliderOptions"
+                    model: "{fluid.textfieldSlider}.model",
+                    range: "{fluid.textfieldSlider}.options.range",
+                    sliderOptions: "{fluid.textfieldSlider}.options.sliderOptions"
                 }
             }
         },
@@ -31022,15 +31025,17 @@ var fluid_2_0 = fluid_2_0 || {};
             textfield: ".flc-textfieldSlider-field",
             slider: ".flc-textfieldSlider-slider"
         },
-        events: {
-            modelChanged: null,
-            afterRender: null
-        },
-        listeners: {
-            modelChanged: "{that}.refreshView"
-        },
         model: {
             value: null
+        },
+        modelRelay: {
+            target: "value",
+            singleTransform: {
+                type: "fluid.transforms.limitRange",
+                input: "{that}.model.value",
+                min: "{that}.options.range.min",
+                max: "{that}.options.range.max"
+            }
         },
         range: {
             min: 0,
@@ -31039,123 +31044,122 @@ var fluid_2_0 = fluid_2_0 || {};
         sliderOptions: {
             orientation: "horizontal",
             step: 1.0
-        },
-        invokers: {
-            refreshView: {
-                funcName: "fluid.textfieldSlider.refreshView",
-                args: ["{that}"]
-            }
-        },
-        finalInitFunction: "fluid.textfieldSlider.finalInit",
-        renderOnInit: true
-    });
-
-    fluid.textfieldSlider.finalInit = function (that) {
-
-        that.applier.modelChanged.addListener("value", function (newModel) {
-            that.events.modelChanged.fire(newModel.value);
-        });
-
-        if (that.options.renderOnInit) {
-            that.refreshView();
         }
-    };
-
-    fluid.textfieldSlider.refreshView = function (that) {
-        that.textfield.container.val(that.model.value);
-        that.events.afterRender.fire(that);
-    };
+    });
 
     fluid.defaults("fluid.textfieldSlider.textfield", {
-        gradeNames: ["fluid.viewComponent", "autoInit"],
-        listeners: {
-            onCreate: {
-                listener: "fluid.textfieldSlider.textfield.init",
-                args: "{that}"
+        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
+        range: {}, // should be used to specify the min, max range e.g. {min: 0, max: 100}
+        modelRelay: {
+            target: "value",
+            singleTransform: {
+                type: "fluid.transforms.stringToNumber",
+                input: "{that}.model.stringValue"
             }
         },
-        range: {} // should be used to specify the min, max range e.g. {min: 0, max: 100}
+        modelListeners: {
+            value: {
+                "this": "{that}.container",
+                "method": "val",
+                args: ["{change}.value"]
+            },
+            // TODO: This listener is to deal with the issue that, when the input field receives a invalid input such as a string value,
+            // ignore it and populate the field with the previous value.
+            // This is an area in which UX has spilled over into our model configuration, which to some extent we should try to prevent.
+            // Whenever we receive a "change" event or some other similar checkpoint, if these updates occurred any faster, the user would
+            // be infuriated by being unable to type into the field. This situation doesn't occur at the moment because the change event is
+            // only fired when users leave the input feild. At the very least, we need to give a namespace to this listener - unfortunately
+            // the current dataBinding implementation will ignore it. Having this listener here represents an interaction decision rather
+            // than an implementation decision. This issue needs to be revisited.
+            stringValue: {
+                "this": "{that}.container",
+                "method": "val",
+                args: ["{that}.model.value"]
+            }
+        },
+        listeners: {
+            "onCreate.bindChangeEvt": {
+                "this": "{that}.container",
+                "method": "change",
+                "args": ["{that}.setModel"]
+            }
+        },
+        invokers: {
+            setModel: {
+                changePath: "stringValue",
+                value: "{arguments}.0.target.value"
+            }
+        }
     });
 
-    fluid.textfieldSlider.validateValue = function (model, range, changeRequest) {
-        var oldValue = model.value;
-        var newValue = changeRequest.value;
-
-        if (!isNaN(parseInt(newValue, 10))) {
-            if (newValue < range.min) {
-                newValue = range.min;
-            } else if (newValue > range.max) {
-                newValue = range.max;
-            }
-            changeRequest.value = Number(newValue);
-        } else {
-            changeRequest.value = oldValue;
-        }
-    };
-
-    fluid.textfieldSlider.textfield.init = function (that) {
-        that.applier.guards.addListener({path: "value", transactional: true}, function (model, changeRequest) {
-            fluid.textfieldSlider.validateValue(model, that.options.range, changeRequest);
-        });
-
-        that.container.change(function (source) {
-            that.applier.requestChange("value", source.target.value);
-        });
-    };
-
-    fluid.defaults("fluid.textfieldSlider.slider", {
-        gradeNames: ["fluid.viewComponent", "autoInit"],
+    fluid.defaults("fluid.slider", {
+        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
+        range: {}, // should be used to specify the min, max range e.g. {min: 0, max: 100}
         selectors: {
             thumb: ".ui-slider-handle"
         },
-        events: {
-            modelChanged: null
-        },
-        listeners: {
-            onCreate: {
-                listener: "fluid.textfieldSlider.slider.init",
-                args: "{that}"
+        members: {
+            combinedSliderOptions: {
+                expander: {
+                    funcName: "fluid.slider.combineSliderOptions",
+                    args: ["{that}"]
+                }
+            },
+            slider: {
+                expander: {
+                    "this": "{that}.container",
+                    method: "slider",
+                    args: ["{that}.combinedSliderOptions"]
+                }
             }
         },
-        range: {} // should be used to specify the min, max range e.g. {min: 0, max: 100}
+        invokers: {
+            setSliderValue: {
+                "this": "{that}.slider",
+                "method": "slider",
+                args: ["value", "{arguments}.0"]
+            },
+            setSliderAria: {
+                "this": "{that}.dom.thumb",
+                "method": "attr",
+                args: ["aria-valuenow", "{arguments}.0"]
+            },
+            setModel: {
+                changePath: "value",
+                value: "{arguments}.1.value"
+            }
+        },
+        listeners: {
+            // This can be removed once the jQuery UI slider has built in ARIA
+            "onCreate.initSliderAria": {
+                "this": "{that}.dom.thumb",
+                method: "attr",
+                args: [{
+                    role: "slider",
+                    "aria-valuenow": "{that}.combinedSliderOptions.value",
+                    "aria-valuemin": "{that}.combinedSliderOptions.min",
+                    "aria-valuemax": "{that}.combinedSliderOptions.max"
+                }]
+            },
+            "onCreate.bindSlideEvt": {
+                "this": "{that}.slider",
+                "method": "bind",
+                "args": ["slide", "{that}.setModel"]
+            }
+        },
+        modelListeners: {
+            "value": [{
+                listener: "{that}.setSliderValue",
+                args: ["{change}.value"]
+            }, {
+                listener: "{that}.setSliderAria",
+                args: ["{change}.value"]
+            }]
+        }
     });
 
-    // This will be removed once the jQuery UI slider has built in ARIA
-    var initSliderAria = function (thumb, opts) {
-        var ariaDefaults = {
-            role: "slider",
-            "aria-valuenow": opts.value,
-            "aria-valuemin": opts.min,
-            "aria-valuemax": opts.max
-        };
-        thumb.attr(ariaDefaults);
-    };
-
-    fluid.textfieldSlider.slider.init = function (that) {
-        // To support backwards compatability, the range data can still be store in the model.
-        var sliderOptions = $.extend(true, {}, that.options.sliderOptions, that.model, that.options.range);
-
-        that.slider = that.container.slider(sliderOptions);
-        initSliderAria(that.locate("thumb"), sliderOptions);
-
-        that.setSliderValue = function (value) {
-            that.slider.slider("value", value);
-        };
-
-        that.setSliderAria = function (value) {
-            that.locate("thumb").attr("aria-valuenow", value);
-        };
-
-        that.slider.bind("slide", function (e, ui) {
-            that.applier.requestChange("value", ui.value);
-        });
-
-        that.applier.modelChanged.addListener("value", function (newModel) {
-            that.setSliderValue(newModel.value);
-            that.setSliderAria(newModel.value);
-            that.events.modelChanged.fire(newModel.value);
-        });
-
+    fluid.slider.combineSliderOptions = function (that) {
+        return $.extend(true, {}, that.options.sliderOptions, that.model, that.options.range);
     };
 
 })(jQuery, fluid_2_0);
@@ -31572,7 +31576,7 @@ var fluid_2_0 = fluid_2_0 || {};
     };
 
     fluid.defaults("fluid.textToSpeech", {
-        gradeNames: ["fluid.standardComponent", "autoInit"],
+        gradeNames: ["fluid.standardRelayComponent", "autoInit"],
         events: {
             onStart: null,
             onStop: null,
@@ -31584,11 +31588,8 @@ var fluid_2_0 = fluid_2_0 || {};
         members: {
             queue: []
         },
-        model: {
-            speaking: false,
-            pending: false,
-            paused: false
-        },
+        // Model paths: speaking, pending, paused
+        model: {},
         utteranceOpts: {
             // text: "", // text to synthesize. avoid as it will override any other text passed in
             // lang: "", // the language of the synthesized text
@@ -31597,20 +31598,14 @@ var fluid_2_0 = fluid_2_0 || {};
             // rate: 1, // a value from 0.1 to 10 although different synthesizers may have a smaller range
             // pitch: 1, // a value from 0 to 2
         },
-        // TODO: When this is updated to be a model relay component,
-        // remove this manual relaying of modelListeners to listeners
-        // in favour of having integrators use the modelListeners directly.
-        // This system is currently setup because when the entire model
-        // is changed in a single operation, the change value is the entire
-        // model instead of just the value of the registered path.
         modelListeners: {
             "speaking": {
-                listener: "fluid.textToSpeech.relaySpeaking",
-                args: ["{that}"]
+                listener: "fluid.textToSpeech.speak",
+                args: ["{that}", "{change}.value"]
             },
             "paused": {
-                listener: "fluid.textToSpeech.relayPaused",
-                args: ["{that}"]
+                listener: "fluid.textToSpeech.pause",
+                args: ["{that}", "{change}.value"]
             }
         },
         invokers: {
@@ -31654,16 +31649,12 @@ var fluid_2_0 = fluid_2_0 || {};
         }
     });
 
-    fluid.textToSpeech.relaySpeaking = function (that) {
-        if (that.model.speaking) {
-            that.events.onStart.fire();
-        } else {
-            that.events.onStop.fire();
-        }
+    fluid.textToSpeech.speak = function (that, speaking) {
+        that.events[speaking ? "onStart" : "onStop"].fire();
     };
 
-    fluid.textToSpeech.relayPaused = function (that) {
-        if (that.model.paused) {
+    fluid.textToSpeech.pause = function (that, paused) {
+        if (paused) {
             that.events.onPause.fire();
         } else if (that.model.speaking) {
             that.events.onResume.fire();
@@ -32264,7 +32255,7 @@ var fluid_2_0 = fluid_2_0 || {};
      * @param {Object} options
      */
     fluid.defaults("fluid.tempStore", {
-        gradeNames: ["fluid.prefs.dataSource", "fluid.modelComponent", "autoInit"]
+        gradeNames: ["fluid.prefs.dataSource", "fluid.modelRelayComponent", "autoInit"]
     });
 
     fluid.demands("fluid.prefs.dataSource.get", "fluid.tempStore", {
@@ -32278,7 +32269,8 @@ var fluid_2_0 = fluid_2_0 || {};
     });
 
     fluid.tempStore.set = function (settings, applier) {
-        applier.requestChange("", settings);
+        applier.fireChangeRequest({path: "", type: "DELETE"});
+        applier.change("", settings);
     };
 
     fluid.defaults("fluid.globalSettingsStore", {
@@ -32323,13 +32315,13 @@ var fluid_2_0 = fluid_2_0 || {};
      * Holds the default values for enactors and panel model values                *
      *******************************************************************************/
 
-    fluid.defaults("fluid.prefs.rootModel", {
+    fluid.defaults("fluid.prefs.initialModel", {
         gradeNames: ["fluid.littleComponent", "autoInit"],
         members: {
             // TODO: This information is supposed to be generated from the JSON
             // schema describing various preferences. For now it's kept in top
             // level prefsEditor to avoid further duplication.
-            rootModel: {}
+            initialModel: {}
         }
     });
 
@@ -32340,18 +32332,14 @@ var fluid_2_0 = fluid_2_0 || {};
      ***********************************************/
 
     fluid.defaults("fluid.uiEnhancer", {
-        gradeNames: ["fluid.viewComponent", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
         invokers: {
             updateModel: {
-                funcName: "fluid.uiEnhancer.updateModel",
-                args: ["{arguments}.0", "{uiEnhancer}.applier"]
+                func: "{that}.applier.change",
+                args: ["", "{arguments}.0"]
             }
         }
     });
-
-    fluid.uiEnhancer.updateModel = function (newModel, applier) {
-        applier.requestChange("", newModel);
-    };
 
     /********************************************************************************
      * PageEnhancer                                                                 *
@@ -32362,7 +32350,7 @@ var fluid_2_0 = fluid_2_0 || {};
      * uiEnhancer user options                                                      *
      ********************************************************************************/
     fluid.defaults("fluid.pageEnhancer", {
-        gradeNames: ["fluid.eventedComponent", "fluid.originalEnhancerOptions", "fluid.prefs.rootModel", "fluid.prefs.settingsGetter", "autoInit"],
+        gradeNames: ["fluid.eventedComponent", "fluid.originalEnhancerOptions", "fluid.prefs.initialModel", "fluid.prefs.settingsGetter", "autoInit"],
         components: {
             uiEnhancer: {
                 type: "fluid.uiEnhancer",
@@ -32423,7 +32411,7 @@ var fluid_2_0 = fluid_2_0 || {};
      * @param {Object} options
      */
     fluid.defaults("fluid.prefs.prefsEditorLoader", {
-        gradeNames: ["fluid.viewComponent", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
         components: {
             prefsEditor: {
                 priority: "last",
@@ -32502,7 +32490,7 @@ var fluid_2_0 = fluid_2_0 || {};
     fluid.defaults("fluid.prefs.transformDefaultPanelsOptions", {
         // Do not supply "fluid.prefs.inline" here, since when this is used as a mixin for separatedPanel, it ends up displacing the
         // more refined type of the prefsEditorLoader
-        gradeNames: ["fluid.viewComponent", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
         distributeOptions: [{
             source: "{that}.options.textSize",
             removeSource: true,
@@ -32631,7 +32619,7 @@ var fluid_2_0 = fluid_2_0 || {};
     };
 
     fluid.defaults("fluid.prefs.uiEnhancerRelay", {
-        gradeNames: ["autoInit", "fluid.eventedComponent"],
+        gradeNames: ["autoInit", "fluid.modelRelayComponent"],
         listeners: {
             onCreate: "{that}.addListener",
             onDestroy: "{that}.removeListener"
@@ -32677,7 +32665,7 @@ var fluid_2_0 = fluid_2_0 || {};
      * @param {Object} options
      */
     fluid.defaults("fluid.prefs.prefsEditor", {
-        gradeNames: ["fluid.viewComponent", "fluid.prefs.settingsGetter", "fluid.prefs.settingsSetter", "fluid.prefs.rootModel", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "fluid.prefs.settingsGetter", "fluid.prefs.settingsSetter", "fluid.prefs.initialModel", "autoInit"],
         invokers: {
             /**
              * Updates the change applier and fires modelChanged on subcomponent fluid.prefs.controls
@@ -32685,10 +32673,6 @@ var fluid_2_0 = fluid_2_0 || {};
              * @param {Object} newModel
              * @param {Object} source
              */
-            updateModel: {
-                funcName: "fluid.fireSourcedChange",
-                args: ["{that}.applier", "", "{arguments}.0", "{arguments}.1"]
-            },
             fetch: {
                 funcName: "fluid.prefs.prefsEditor.fetch",
                 args: ["{that}"]
@@ -32735,6 +32719,15 @@ var fluid_2_0 = fluid_2_0 || {};
             onCreate: "fluid.prefs.prefsEditor.init",
             onAutoSave: "{that}.save"
         },
+        modelListeners: {
+            "": [{
+                listener: "fluid.prefs.prefsEditor.handleAutoSave",
+                args: ["{that}"]
+            }, {
+                listener: "{that}.events.modelChanged.fire",
+                args: ["{change}.value"]
+            }]
+        },
         resources: {
             template: "{templateLoader}.resources.prefsEditor"
         },
@@ -32750,8 +32743,17 @@ var fluid_2_0 = fluid_2_0 || {};
 
     fluid.prefs.prefsEditor.fetch = function (that) {
         var completeModel = that.getSettings();
-        completeModel = $.extend(true, {}, that.rootModel, completeModel);
-        that.updateModel(completeModel, "settingsStore");
+        completeModel = $.extend(true, {}, that.initialModel, completeModel);
+        // TODO: This may not be completely effective if the root model is smaller than
+        // the current one. Given our previous discoveries re "model shrinkage"
+        // (http://issues.fluidproject.org/browse/FLUID-5585 ), the proper thing to do here
+        // is to apply a DELETE to the root before putting in the new model. And this should
+        // be done within a transaction in order to avoid notifying the tree more than necessary.
+        // However, the transactional model of the changeApplier is going to change radically
+        // soon (http://wiki.fluidproject.org/display/fluid/New+New+Notes+on+the+ChangeApplier)
+        // and this implementation doesn't seem to be causing a problem at present so we had
+        // just better leave it the way it is for now.
+        that.applier.change("", completeModel);
         that.events.onPrefsEditorRefresh.fire();
         that.applyChanges();
     };
@@ -32763,7 +32765,7 @@ var fluid_2_0 = fluid_2_0 || {};
         var savedSelections = fluid.copy(that.model);
 
         fluid.each(savedSelections, function (value, key) {
-            if (fluid.get(that.rootModel, key) === value) {
+            if (fluid.get(that.initialModel, key) === value) {
                 delete savedSelections[key];
             }
         });
@@ -32781,7 +32783,7 @@ var fluid_2_0 = fluid_2_0 || {};
      * Resets the selections to the integrator's defaults and fires onReset
      */
     fluid.prefs.prefsEditor.reset = function (that) {
-        that.updateModel(fluid.copy(that.rootModel));
+        that.applier.change("", fluid.copy(that.initialModel));
         that.events.onPrefsEditorRefresh.fire();
         that.events.onReset.fire(that);
     };
@@ -32818,14 +32820,13 @@ var fluid_2_0 = fluid_2_0 || {};
         that.events.onReady.fire(that);
     };
 
-    fluid.prefs.prefsEditor.init = function (that) {
-        that.applier.modelChanged.addListener("", function (newModel, oldModel, changeRequest) {
-            that.events.modelChanged.fire(newModel, oldModel, changeRequest[0].source);
-            if (that.options.autoSave) {
-                that.events.onAutoSave.fire();
-            }
-        });
+    fluid.prefs.prefsEditor.handleAutoSave = function (that) {
+        if (that.options.autoSave) {
+            that.events.onAutoSave.fire();
+        }
+    };
 
+    fluid.prefs.prefsEditor.init = function (that) {
         // This setTimeout is to ensure that fetching of resources is asynchronous,
         // and so that component construction does not run ahead of subcomponents for SeparatedPanel
         // (FLUID-4453 - this may be a replacement for a branch removed for a FLUID-2248 fix)
@@ -32841,7 +32842,7 @@ var fluid_2_0 = fluid_2_0 || {};
      ******************************/
 
     fluid.defaults("fluid.prefs.preview", {
-        gradeNames: ["fluid.viewComponent", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
         components: {
             enhancer: {
                 type: "fluid.uiEnhancer",
@@ -32952,7 +32953,7 @@ var fluid_2_0 = fluid_2_0 || {};
      ***********************************************/
 
     fluid.defaults("fluid.prefs.panel", {
-        gradeNames: ["fluid.rendererComponent", "fluid.prefs.msgLookup", "fluid.prefs.modelRelay", "autoInit"],
+        gradeNames: ["fluid.rendererRelayComponent", "fluid.prefs.msgLookup", "autoInit"],
         events: {
             onDomBind: null
         },
@@ -32970,10 +32971,6 @@ var fluid_2_0 = fluid_2_0 || {};
 
     fluid.defaults("fluid.prefs.subPanel", {
         gradeNames: ["fluid.prefs.panel", "{that}.getDomBindGrade", "autoInit"],
-        mergePolicy: {
-            sourceApplier: "nomerge"
-        },
-        sourceApplier: "{compositePanel}.applier",
         listeners: {
             "{compositePanel}.events.afterRender": {
                 listener: "{that}.events.afterRender",
@@ -32989,12 +32986,6 @@ var fluid_2_0 = fluid_2_0 || {};
             expander: {
                 func: "fluid.prefs.subPanel.generateRules",
                 args: ["{that}.options.preferenceMap"]
-            }
-        },
-        model: {
-            expander: {
-                func: "fluid.prefs.subPanel.getInitialModel",
-                args: ["{compositePanel}.model", "{that}.options.preferenceMap"]
             }
         },
         invokers: {
@@ -33038,7 +33029,12 @@ var fluid_2_0 = fluid_2_0 || {};
      * this is all done, the onDomBind event is fired.
      */
     fluid.prefs.subPanel.resetDomBinder = function (that) {
-        that.container = $(that.container.selector);
+        // TODO: The line below to find the container jQuery instance was copied from the framework code -
+        // https://github.com/fluid-project/infusion/blob/master/src/framework/core/js/FluidView.js#L145
+        // in order to reset the dom binder when panels are in an iframe.
+        // It can be be eliminated once we have the new renderer.
+        var userJQuery = that.container.constructor;
+        that.container = userJQuery(that.container.selector);
         fluid.initDomBinder(that, that.options.selectors);
         that.events.onDomBind.fire(that);
     };
@@ -33056,25 +33052,13 @@ var fluid_2_0 = fluid_2_0 || {};
     fluid.prefs.subPanel.generateRules = function (preferenceMap) {
         var rules = {};
         fluid.each(preferenceMap, function (prefObj, prefKey) {
-            $.each(prefObj, function (prefRule) {
+            fluid.each(prefObj, function (value, prefRule) {
                 if (prefRule.indexOf("model.") === 0) {
-                    rules[fluid.prefs.subPanel.safePrefKey(prefKey)] = prefRule.slice(6);
+                    rules[fluid.prefs.subPanel.safePrefKey(prefKey)] = prefRule.slice("model.".length);
                 }
             });
         });
         return rules;
-    };
-
-    fluid.prefs.subPanel.getInitialModel = function (parentModel, preferenceMap) {
-        var initialModel = {};
-        fluid.each(preferenceMap, function (prefObj, prefKey) {
-            $.each(prefObj, function (prefRule) {
-                if (prefRule.indexOf("model.") === 0) {
-                    fluid.set(initialModel, prefRule.slice(6), fluid.get(parentModel, fluid.prefs.subPanel.safePrefKey(prefKey)));
-                }
-            });
-        });
-        return initialModel;
     };
 
     /**********************************
@@ -33104,7 +33088,6 @@ var fluid_2_0 = fluid_2_0 || {};
         selectorsToIgnore: [], // should match the selectors that are used to identify the containers for the subpanels
         repeatingSelectors: [],
         events: {
-            onRefreshView: null,
             initSubPanels: null
         },
         listeners: {
@@ -33154,7 +33137,7 @@ var fluid_2_0 = fluid_2_0 || {};
             },
             handleRenderOnPreference: {
                 funcName: "fluid.prefs.compositePanel.handleRenderOnPreference",
-                args: ["{that}", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
+                args: ["{that}", "{that}.refreshView", "{that}.conditionalCreateEvent", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
             },
             conditionalCreateEvent: {
                 funcName: "fluid.prefs.compositePanel.conditionalCreateEvent"
@@ -33204,21 +33187,38 @@ var fluid_2_0 = fluid_2_0 || {};
      */
     fluid.prefs.compositePanel.assembleDistributeOptions = function (components) {
         var gradeName = "fluid.prefs.compositePanel.distributeOptions_" + fluid.allocateGuid();
-        var distributeRules = [];
-        $.each(components, function (componentName, componentOptions) {
+        var distributeOptions = [];
+        var relayOption = {};
+        fluid.each(components, function (componentOptions, componentName) {
             if (fluid.prefs.compositePanel.isPanel(componentOptions.type, componentOptions.options)) {
-                distributeRules.push({
+                distributeOptions.push({
                     source: "{that}.options.subPanelOverrides",
                     target: "{that > " + componentName + "}.options"
                 });
             }
-        });
 
+            // Construct the model relay btw the composite panel and its subpanels
+            var componentRelayRules = {};
+            var definedOptions = fluid.prefs.compositePanel.prefetchComponentOptions(componentOptions.type, componentOptions.options);
+            var preferenceMap = fluid.get(definedOptions, ["preferenceMap"]);
+            fluid.each(preferenceMap, function (prefObj, prefKey) {
+                fluid.each(prefObj, function (value, prefRule) {
+                    if (prefRule.indexOf("model.") === 0) {
+                        fluid.set(componentRelayRules, prefRule.slice("model.".length), "{compositePanel}.model." + fluid.prefs.subPanel.safePrefKey(prefKey));
+                    }
+                });
+            });
+            relayOption[componentName] = componentRelayRules;
+            distributeOptions.push({
+                source: "{that}.options.relayOption." + componentName,
+                target: "{that > " + componentName + "}.options.model"
+            });
+        });
         fluid.defaults(gradeName, {
             gradeNames: ["fluid.littleComponent", "autoInit"],
-            distributeOptions: distributeRules
+            relayOption: relayOption,
+            distributeOptions: distributeOptions
         });
-
         return gradeName;
     };
 
@@ -33229,16 +33229,16 @@ var fluid_2_0 = fluid_2_0 || {};
     };
 
 
-    fluid.prefs.compositePanel.handleRenderOnPreference = function (that, value, createEvent, componentNames) {
+    fluid.prefs.compositePanel.handleRenderOnPreference = function (that, refreshViewFunc, conditionalCreateEventFunc, value, createEvent, componentNames) {
         componentNames = fluid.makeArray(componentNames);
-        that.conditionalCreateEvent(value, createEvent);
+        conditionalCreateEventFunc(value, createEvent);
         fluid.each(componentNames, function (componentName) {
             var comp = that[componentName];
             if (!value && comp) {
                 comp.destroy();
             }
         });
-        that.refreshView();
+        refreshViewFunc();
     };
 
     fluid.prefs.compositePanel.creationEventName = function (pref) {
@@ -33272,7 +33272,7 @@ var fluid_2_0 = fluid_2_0 || {};
         var conditionals = {};
         var listeners = {};
         var events = {};
-        $.each(components, function (componentName, componentOptions) {
+        fluid.each(components, function (componentOptions, componentName) {
             if (fluid.prefs.compositePanel.isPanel(componentOptions.type, componentOptions.options)) {
                 var creationEventOpt = "default";
                 // would have had renderOnPreference directly sourced from the componentOptions
@@ -33490,10 +33490,6 @@ var fluid_2_0 = fluid_2_0 || {};
 
     fluid.defaults("fluid.prefs.prefsEditorConnections", {
         gradeNames: ["fluid.eventedComponent", "autoInit"],
-        mergePolicy: {
-            sourceApplier: "nomerge"
-        },
-        sourceApplier: "{fluid.prefs.prefsEditor}.applier",
         listeners: {
             "{fluid.prefs.prefsEditor}.events.onPrefsEditorRefresh": "{fluid.prefs.panel}.refreshView"
         },
@@ -33531,28 +33527,26 @@ var fluid_2_0 = fluid_2_0 || {};
             largeIcon: ".flc-prefsEditor-min-text-size-largeIcon",
             multiplier: ".flc-prefsEditor-multiplier"
         },
+        selectorsToIgnore: ["textSize"],
+        components: {
+            textSize: {
+                type: "fluid.textfieldSlider",
+                container: "{that}.dom.textSize",
+                createOnEvent: "afterRender",
+                options: {
+                    model: {
+                        value: "{fluid.prefs.panel.textSize}.model.textSize"
+                    },
+                    range: "{fluid.prefs.panel.textSize}.options.range",
+                    sliderOptions: "{fluid.prefs.panel.textSize}.options.sliderOptions"
+                }
+            }
+        },
         protoTree: {
             label: {messagekey: "textSizeLabel"},
             smallIcon: {messagekey: "textSizeSmallIcon"},
             largeIcon: {messagekey: "textSizeLargeIcon"},
-            multiplier: {messagekey: "multiplier"},
-            textSize: {
-                decorators: {
-                    type: "fluid",
-                    func: "fluid.textfieldSlider",
-                    options: {
-                        rules: {
-                            "textSize": "value"
-                        },
-                        model: {
-                            value: "{that}.model.textSize"
-                        },
-                        sourceApplier: "{that}.applier",
-                        range: "{that}.options.range",
-                        sliderOptions: "{that}.options.sliderOptions"
-                    }
-                }
-            }
+            multiplier: {messagekey: "multiplier"}
         },
         sliderOptions: {
             orientation: "horizontal",
@@ -33634,28 +33628,26 @@ var fluid_2_0 = fluid_2_0 || {};
             wideIcon: ".flc-prefsEditor-line-space-wideIcon",
             multiplier: ".flc-prefsEditor-multiplier"
         },
+        selectorsToIgnore: ["lineSpace"],
+        components: {
+            lineSpace: {
+                type: "fluid.textfieldSlider",
+                container: "{that}.dom.lineSpace",
+                createOnEvent: "afterRender",
+                options: {
+                    model: {
+                        value: "{fluid.prefs.panel.lineSpace}.model.lineSpace"
+                    },
+                    range: "{fluid.prefs.panel.lineSpace}.options.range",
+                    sliderOptions: "{fluid.prefs.panel.lineSpace}.options.sliderOptions"
+                }
+            }
+        },
         protoTree: {
             label: {messagekey: "lineSpaceLabel"},
             narrowIcon: {messagekey: "lineSpaceNarrowIcon"},
             wideIcon: {messagekey: "lineSpaceWideIcon"},
-            multiplier: {messagekey: "multiplier"},
-            lineSpace: {
-                decorators: {
-                    type: "fluid",
-                    func: "fluid.textfieldSlider",
-                    options: {
-                        rules: {
-                            "lineSpace": "value"
-                        },
-                        model: {
-                            value: "{that}.model.lineSpace"
-                        },
-                        sourceApplier: "{that}.applier",
-                        range: "{that}.options.range",
-                        sliderOptions: "{that}.options.sliderOptions"
-                    }
-                }
-            }
+            multiplier: {messagekey: "multiplier"}
         },
         sliderOptions: {
             orientation: "horizontal",
@@ -33844,7 +33836,7 @@ var fluid_2_0 = fluid_2_0 || {};
      * A sub-component that decorates the options on the select dropdown list box with the css style
      */
     fluid.defaults("fluid.prefs.selectDecorator", {
-        gradeNames: ["fluid.viewComponent", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
         listeners: {
             onCreate: "fluid.prefs.selectDecorator.decorateOptions"
         },
@@ -33916,90 +33908,8 @@ var fluid_2_0 = fluid_2_0 || {};
 (function ($, fluid) {
     "use strict";
 
-    /***************************************************************************************
-     * modelRelay
-     *
-     * The "model relay" system - a framework sketch for a junction between an applier
-     * bound to one model and another. It accepts (currently) one type of handler:
-     * a simple string representing a direct relay between changes to one path and another
-     ***************************************************************************************/
-
-    fluid.defaults("fluid.prefs.modelRelay", {
-        gradeNames: ["fluid.modelComponent", "fluid.eventedComponent", "autoInit"],
-        listenerNamespaces: [], // keep track of all the added listeners for removal at the destroy of this component
-        mergePolicy: {
-            sourceApplier: "nomerge"
-        },
-        listeners: {
-            onCreate: "{that}.addListeners",
-            onDestroy: "{that}.removeListeners"
-        },
-        invokers: {
-            addListeners: {
-                funcName: "fluid.prefs.modelRelay.addListeners",
-                args: ["{that}.options.rules", "{that}.applier", "{that}.options.sourceApplier", "{that}.options.listenerNamespaces"]
-            },
-            removeListeners: {
-                funcName: "fluid.prefs.modelRelay.removeListeners",
-                args: ["{that}.options.sourceApplier.modelChanged", "{that}.options.listenerNamespaces"]
-            }
-        },
-        // sourceApplier: {external}.applier must be supplied by implementors
-        rules: {}  // must be supplied by implementors, in format: "externalModelKey": "internalModelKey"
-    });
-
-    fluid.prefs.modelRelay.removeListeners = function (modelChanged, namespaces) {
-        fluid.each(namespaces, function (namespace) {
-            modelChanged.removeListener(namespace);
-        });
-    };
-
-    fluid.prefs.modelRelay.addListeners = function (rules, applier, sourceApplier, listenerNamespaces) {
-        fluid.each(rules, function (internalKey, sourceKey) {
-            var uniqueNamespace = fluid.allocateGuid();
-
-            listenerNamespaces.push(uniqueNamespace);
-
-            fluid.addSourceGuardedListener(applier, internalKey, sourceKey, function (newModel) {
-                fluid.fireSourcedChange(sourceApplier, sourceKey, fluid.get(newModel, internalKey), internalKey);
-            });
-            fluid.addSourceGuardedListener(sourceApplier, sourceKey, internalKey, function (newModel) {
-                fluid.fireSourcedChange(applier, internalKey, fluid.get(newModel, sourceKey), sourceKey);
-            }, null, uniqueNamespace);
-        });
-    };
-
-})(jQuery, fluid_2_0);
-;/*
-Copyright 2013 OCAD University
-
-Licensed under the Educational Community License (ECL), Version 2.0 or the New
-BSD license. You may not use this file except in compliance with one these
-Licenses.
-
-You may obtain a copy of the ECL 2.0 License and BSD License at
-https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
-*/
-
-var fluid_2_0 = fluid_2_0 || {};
-
-(function ($, fluid) {
-    "use strict";
-
     fluid.defaults("fluid.prefs.enactor", {
-        gradeNames: ["fluid.modelComponent", "fluid.eventedComponent", "fluid.prefs.modelRelay", "autoInit"]
-    });
-
-    /********************************************************************************
-     * The grade that contains the connections between an enactor and uiEnhancer
-     ********************************************************************************/
-
-    fluid.defaults("fluid.prefs.uiEnhancerConnections", {
-        gradeNames: ["fluid.eventedComponent", "autoInit"],
-        mergePolicy: {
-            sourceApplier: "nomerge"
-        },
-        sourceApplier: "{uiEnhancer}.applier"
+        gradeNames: ["fluid.standardRelayComponent", "autoInit"]
     });
 
     /**********************************************************************************
@@ -34011,6 +33921,7 @@ var fluid_2_0 = fluid_2_0 || {};
     fluid.defaults("fluid.prefs.enactor.styleElements", {
         gradeNames: ["fluid.prefs.enactor", "autoInit"],
         cssClass: null,  // Must be supplied by implementors
+        elementsToStyle: null,  // Must be supplied by implementors
         invokers: {
             applyStyle: {
                 funcName: "fluid.prefs.enactor.styleElements.applyStyle",
@@ -34022,17 +33933,14 @@ var fluid_2_0 = fluid_2_0 || {};
             },
             handleStyle: {
                 funcName: "fluid.prefs.enactor.styleElements.handleStyle",
-                args: ["{arguments}.0", {expander: {func: "{that}.getElements"}}, "{that}"],
+                args: ["{arguments}.0", "{that}.options.elementsToStyle", "{that}.options.cssClass", "{that}.applyStyle", "{that}.resetStyle"],
                 dynamic: true
-            },
-
-            // Must be supplied by implementors
-            getElements: "fluid.prefs.enactor.getElements"
+            }
         },
-        listeners: {
-            onCreate: {
+        modelListeners: {
+            value: {
                 listener: "{that}.handleStyle",
-                args: ["{that}.model.value"]
+                args: ["{change}.value"]
             }
         }
     });
@@ -34045,18 +33953,9 @@ var fluid_2_0 = fluid_2_0 || {};
         $(elements, "." + cssClass).andSelf().removeClass(cssClass);
     };
 
-    fluid.prefs.enactor.styleElements.handleStyle = function (value, elements, that) {
-        if (value) {
-            that.applyStyle(elements, that.options.cssClass);
-        } else {
-            that.resetStyle(elements, that.options.cssClass);
-        }
-    };
-
-    fluid.prefs.enactor.styleElements.finalInit = function (that) {
-        that.applier.modelChanged.addListener("value", function (newModel) {
-            that.handleStyle(newModel.value);
-        });
+    fluid.prefs.enactor.styleElements.handleStyle = function (value, elements, cssClass, applyStyleFunc, resetStyleFunc) {
+        var func = value ? applyStyleFunc : resetStyleFunc;
+        func(elements, cssClass);
     };
 
     /*******************************************************************************
@@ -34068,7 +33967,7 @@ var fluid_2_0 = fluid_2_0 || {};
      *******************************************************************************/
 
     fluid.defaults("fluid.prefs.enactor.classSwapper", {
-        gradeNames: ["fluid.viewComponent", "fluid.prefs.enactor", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "fluid.prefs.enactor", "autoInit"],
         classes: {},  // Must be supplied by implementors
         invokers: {
             clearClasses: {
@@ -34077,13 +33976,13 @@ var fluid_2_0 = fluid_2_0 || {};
             },
             swap: {
                 funcName: "fluid.prefs.enactor.classSwapper.swap",
-                args: ["{arguments}.0", "{that}"]
+                args: ["{arguments}.0", "{that}", "{that}.clearClasses"]
             }
         },
-        listeners: {
-            onCreate: {
+        modelListeners: {
+            value: {
                 listener: "{that}.swap",
-                args: ["{that}.model.value"]
+                args: ["{change}.value"]
             }
         },
         members: {
@@ -34100,8 +33999,8 @@ var fluid_2_0 = fluid_2_0 || {};
         container.removeClass(classStr);
     };
 
-    fluid.prefs.enactor.classSwapper.swap = function (value, that) {
-        that.clearClasses();
+    fluid.prefs.enactor.classSwapper.swap = function (value, that, clearClassesFunc) {
+        clearClassesFunc();
         that.container.addClass(that.options.classes[value]);
     };
 
@@ -34116,12 +34015,6 @@ var fluid_2_0 = fluid_2_0 || {};
         return classStr;
     };
 
-    fluid.prefs.enactor.classSwapper.finalInit = function (that) {
-        that.applier.modelChanged.addListener("value", function (newModel) {
-            that.swap(newModel.value);
-        });
-    };
-
     /*******************************************************************************
      * emphasizeLinks
      *
@@ -34130,24 +34023,15 @@ var fluid_2_0 = fluid_2_0 || {};
 
     // Note that the implementors need to provide the container for this view component
     fluid.defaults("fluid.prefs.enactor.emphasizeLinks", {
-        gradeNames: ["fluid.viewComponent", "fluid.prefs.enactor.styleElements", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "fluid.prefs.enactor.styleElements", "autoInit"],
         preferenceMap: {
             "fluid.prefs.emphasizeLinks": {
                 "model.value": "default"
             }
         },
         cssClass: null,  // Must be supplied by implementors
-        invokers: {
-            getElements: {
-                funcName: "fluid.prefs.enactor.emphasizeLinks.getLinks",
-                args: "{that}.container"
-            }
-        }
+        elementsToStyle: "{that}.container"
     });
-
-    fluid.prefs.enactor.emphasizeLinks.getLinks = function (container) {
-        return $("a", container);
-    };
 
     /*******************************************************************************
      * inputsLarger
@@ -34157,24 +34041,15 @@ var fluid_2_0 = fluid_2_0 || {};
 
     // Note that the implementors need to provide the container for this view component
     fluid.defaults("fluid.prefs.enactor.inputsLarger", {
-        gradeNames: ["fluid.viewComponent", "fluid.prefs.enactor.styleElements", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "fluid.prefs.enactor.styleElements", "autoInit"],
         preferenceMap: {
             "fluid.prefs.inputsLarger": {
                 "model.value": "default"
             }
         },
         cssClass: null,  // Must be supplied by implementors
-        invokers: {
-            getElements: {
-                funcName: "fluid.prefs.enactor.inputsLarger.getInputs",
-                args: "{that}.container"
-            }
-        }
+        elementsToStyle: "{that}.container"
     });
-
-    fluid.prefs.enactor.inputsLarger.getInputs = function (container) {
-        return $("input, button", container);
-    };
 
     /*******************************************************************************
      * textFont
@@ -34236,7 +34111,7 @@ var fluid_2_0 = fluid_2_0 || {};
 
     // Note that the implementors need to provide the container for this view component
     fluid.defaults("fluid.prefs.enactor.textSize", {
-        gradeNames: ["fluid.viewComponent", "fluid.prefs.enactor", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "fluid.prefs.enactor", "autoInit"],
         preferenceMap: {
             "fluid.prefs.textSize": {
                 "model.value": "default"
@@ -34255,39 +34130,33 @@ var fluid_2_0 = fluid_2_0 || {};
         invokers: {
             set: {
                 funcName: "fluid.prefs.enactor.textSize.set",
-                args: ["{arguments}.0", "{that}"]
+                args: ["{arguments}.0", "{that}", "{that}.getTextSizeInPx"]
             },
             getTextSizeInPx: {
                 funcName: "fluid.prefs.enactor.getTextSizeInPx",
                 args: ["{that}.root", "{that}.options.fontSizeMap"]
             }
         },
-        listeners: {
-            onCreate: {
+        modelListeners: {
+            value: {
                 listener: "{that}.set",
-                args: "{that}.model.value"
+                args: ["{change}.value"]
             }
         }
     });
 
-    fluid.prefs.enactor.textSize.set = function (times, that) {
+    fluid.prefs.enactor.textSize.set = function (times, that, getTextSizeInPxFunc) {
         times = times || 1;
         // Calculating the initial size here rather than using a members expand because the "font-size"
         // cannot be detected on hidden containers such as separated paenl iframe.
         if (!that.initialSize) {
-            that.initialSize = that.getTextSizeInPx();
+            that.initialSize = getTextSizeInPxFunc();
         }
 
         if (that.initialSize) {
             var targetSize = times * that.initialSize;
             that.root.css("font-size", targetSize + "px");
         }
-    };
-
-    fluid.prefs.enactor.textSize.finalInit = function (that) {
-        that.applier.modelChanged.addListener("value", function (newModel) {
-            that.set(newModel.value);
-        });
     };
 
     /*******************************************************************************
@@ -34298,7 +34167,7 @@ var fluid_2_0 = fluid_2_0 || {};
 
     // Note that the implementors need to provide the container for this view component
     fluid.defaults("fluid.prefs.enactor.lineSpace", {
-        gradeNames: ["fluid.viewComponent", "fluid.prefs.enactor", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "fluid.prefs.enactor", "autoInit"],
         preferenceMap: {
             "fluid.prefs.lineSpace": {
                 "model.value": "default"
@@ -34308,7 +34177,7 @@ var fluid_2_0 = fluid_2_0 || {};
         invokers: {
             set: {
                 funcName: "fluid.prefs.enactor.lineSpace.set",
-                args: ["{arguments}.0", "{that}"]
+                args: ["{arguments}.0", "{that}", "{that}.getLineHeightMultiplier"]
             },
             getTextSizeInPx: {
                 funcName: "fluid.prefs.enactor.getTextSizeInPx",
@@ -34324,10 +34193,10 @@ var fluid_2_0 = fluid_2_0 || {};
                 dynamic: true
             }
         },
-        listeners: {
-            onCreate: {
+        modelListeners: {
+            value: {
                 listener: "{that}.set",
-                args: "{that}.model.value"
+                args: ["{change}.value"]
             }
         }
     });
@@ -34363,11 +34232,11 @@ var fluid_2_0 = fluid_2_0 || {};
         return Math.round(parseFloat(lineHeight) / fontSize * 100) / 100;
     };
 
-    fluid.prefs.enactor.lineSpace.set = function (times, that) {
+    fluid.prefs.enactor.lineSpace.set = function (times, that, getLineHeightMultiplierFunc) {
         // Calculating the initial size here rather than using a members expand because the "line-height"
         // cannot be detected on hidden containers such as separated paenl iframe.
         if (!that.initialSize) {
-            that.initialSize = that.getLineHeightMultiplier();
+            that.initialSize = getLineHeightMultiplierFunc();
         }
 
         // that.initialSize === 0 when the browser returned "lineHeight" css value is undefined,
@@ -34379,12 +34248,6 @@ var fluid_2_0 = fluid_2_0 || {};
         }
     };
 
-    fluid.prefs.enactor.lineSpace.finalInit = function (that) {
-        that.applier.modelChanged.addListener("value", function (newModel) {
-            that.set(newModel.value);
-        });
-    };
-
     /*******************************************************************************
      * tableOfContents
      *
@@ -34393,10 +34256,10 @@ var fluid_2_0 = fluid_2_0 || {};
 
     // Note that the implementors need to provide the container for this view component
     fluid.defaults("fluid.prefs.enactor.tableOfContents", {
-        gradeNames: ["fluid.viewComponent", "fluid.prefs.enactor", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "fluid.prefs.enactor", "autoInit"],
         preferenceMap: {
             "fluid.prefs.tableOfContents": {
-                "model.value": "default"
+                "model.toc": "default"
             }
         },
         tocTemplate: null,  // must be supplied by implementors
@@ -34436,83 +34299,25 @@ var fluid_2_0 = fluid_2_0 || {};
             afterTocRender: null,
             onLateRefreshRelay: null
         },
-        listeners: {
-            onCreate: {
+        modelListeners: {
+            toc: {
                 listener: "{that}.applyToc",
-                args: "{that}.model.value"
+                args: ["{change}.value"]
             }
         }
     });
 
     fluid.prefs.enactor.tableOfContents.applyToc = function (value, that) {
-        var async = false;
         if (value) {
             if (that.tableOfContents) {
                 that.tableOfContents.show();
             } else {
                 that.events.onCreateTOCReady.fire();
-                async = true;
             }
-        } else {
-            if (that.tableOfContents) {
-                that.tableOfContents.hide();
-            }
-        }
-        if (!async) {
-            that.events.onLateRefreshRelay.fire(that);
+        } else if (that.tableOfContents) {
+            that.tableOfContents.hide();
         }
     };
-
-    fluid.prefs.enactor.tableOfContents.finalInit = function (that) {
-        that.applier.modelChanged.addListener("value", function (newModel) {
-            that.applyToc(newModel.value);
-        });
-    };
-
-    /*******************************************************************************
-     * The demands blocks that hook up tableOfContents enactor with other enactors
-     * which need to re-apply their actions on the links inside table of contents
-     *******************************************************************************/
-
-    fluid.defaults("fluid.prefs.tocWithEmphasizeLinks", {
-        gradeNames: ["fluid.eventedComponent", "autoInit"],
-        listeners: {
-            afterTocRender: {
-                listener: "{uiEnhancer}.emphasizeLinks.handleStyle",
-                args: "{uiEnhancer}.model.links"
-            },
-            onLateRefreshRelay: {
-                listener: "{uiEnhancer}.emphasizeLinks.handleStyle",
-                args: "{uiEnhancer}.model.links"
-            }
-        }
-    });
-
-    fluid.defaults("fluid.prefs.tocWithInputsLarger", {
-        gradeNames: ["fluid.eventedComponent", "autoInit"],
-        listeners: {
-            afterTocRender: {
-                listener: "{uiEnhancer}.inputsLarger.handleStyle",
-                args: "{uiEnhancer}.model.inputsLarger"
-            },
-            onLateRefreshRelay: {
-                listener: "{uiEnhancer}.inputsLarger.handleStyle",
-                args: "{uiEnhancer}.model.inputsLarger"
-            }
-        }
-    });
-
-    fluid.demands("fluid.prefs.enactor.tableOfContents", "fluid.prefs.enactor.emphasizeLinks", {
-        options: {
-            gradeNames: "fluid.prefs.tocWithEmphasizeLinks"
-        }
-    });
-
-    fluid.demands("fluid.prefs.enactor.tableOfContents", "fluid.prefs.enactor.inputsLarger", {
-        options: {
-            gradeNames: "fluid.prefs.tocWithInputsLarger"
-        }
-    });
 
 })(jQuery, fluid_2_0);
 ;/*
@@ -34574,16 +34379,18 @@ var fluid_2_0 = fluid_2_0 || {};
      *******************************************************************************/
 
     fluid.defaults("fluid.prefs.enactor.selfVoicing", {
-        gradeNames: ["fluid.viewComponent", "fluid.prefs.enactor.speak", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "fluid.prefs.enactor.speak", "autoInit"],
         modelListeners: {
             "enabled": {
                 listener: "{that}.handleSelfVoicing",
-                args: ["{that}", "{change}.value", "{change}.oldValue"]
+                args: ["{change}.value"]
             }
         },
         invokers: {
             handleSelfVoicing: {
-                funcName: "fluid.prefs.enactor.selfVoicing.handleSelfVoicing"
+                funcName: "fluid.prefs.enactor.selfVoicing.handleSelfVoicing",
+                // Pass in invokers to force them to be resolved
+                args: ["{that}.options.strings.welcomeMsg", "{that}.queueSpeech", "{that}.readFromDOM", "{that}.cancel", "{arguments}.0"]
             },
             readFromDOM: {
                 funcName: "fluid.prefs.enactor.selfVoicing.readFromDOM",
@@ -34595,17 +34402,12 @@ var fluid_2_0 = fluid_2_0 || {};
         }
     });
 
-    fluid.prefs.enactor.selfVoicing.handleSelfVoicing = function (that, newVal, oldVal) {
-        // The isChanged check is needed when the entire model is changed. When this is
-        // switched to a model relay component, it may be that this outer conditional is no longer needed.
-        var isChanged = typeof(newVal) === "object" ? newVal.enabled !== oldVal.enabled : true;
-        if (isChanged) {
-            if (that.model.enabled) {
-                that.queueSpeech(that.options.strings.welcomeMsg, true);
-                that.readFromDOM();
-            } else {
-                that.cancel();
-            }
+    fluid.prefs.enactor.selfVoicing.handleSelfVoicing = function (welcomeMsg, queueSpeech, readFromDOM, cancel, enabled) {
+        if (enabled) {
+            queueSpeech(welcomeMsg, true);
+            readFromDOM();
+        } else {
+            cancel();
         }
     };
 
@@ -34661,13 +34463,13 @@ var fluid_2_0 = fluid_2_0 || {};
      * Provides the default values for the starter enhancer/panels models
      *******************************************************************************/
 
-    fluid.defaults("fluid.prefs.rootModel.starter", {
-        gradeNames: ["fluid.prefs.rootModel", "autoInit"],
+    fluid.defaults("fluid.prefs.initialModel.starter", {
+        gradeNames: ["fluid.prefs.initialModel", "autoInit"],
         members: {
             // TODO: This information is supposed to be generated from the JSON
             // schema describing various preferences. For now it's kept in top
             // level prefsEditor to avoid further duplication.
-            rootModel: {
+            initialModel: {
                 textFont: "default",          // key from classname map
                 theme: "default",             // key from classname map
                 textSize: 1,                  // in points
@@ -34738,23 +34540,15 @@ var fluid_2_0 = fluid_2_0 || {};
 
     fluid.defaults("fluid.uiEnhancer.starterEnactors", {
         gradeNames: ["fluid.uiEnhancer", "fluid.uiEnhancer.cssClassEnhancerBase", "fluid.uiEnhancer.browserTextEnhancerBase", "autoInit"],
-        connectionsGrade: "fluid.prefs.uiEnhancerConnections",
-        distributeOptions: {
-            source: "{that}.options.connectionsGrade",
-            removeSource: true,
-            target: "{that > fluid.prefs.enactor}.options.gradeNames"
-        },
+        model: "{fluid.prefs.initialModel}.initialModel",
         components: {
             textSize: {
                 type: "fluid.prefs.enactor.textSize",
                 container: "{uiEnhancer}.container",
                 options: {
                     fontSizeMap: "{uiEnhancer}.options.fontSizeMap",
-                    rules: {
-                        "textSize": "value"
-                    },
                     model: {
-                        value: "{fluid.prefs.rootModel}.rootModel.textSize"
+                        value: "{uiEnhancer}.model.textSize"
                     }
                 }
             },
@@ -34763,11 +34557,8 @@ var fluid_2_0 = fluid_2_0 || {};
                 container: "{uiEnhancer}.container",
                 options: {
                     classes: "{uiEnhancer}.options.classnameMap.textFont",
-                    rules: {
-                        "textFont": "value"
-                    },
                     model: {
-                        value: "{fluid.prefs.rootModel}.rootModel.textFont"
+                        value: "{uiEnhancer}.model.textFont"
                     }
                 }
             },
@@ -34776,11 +34567,8 @@ var fluid_2_0 = fluid_2_0 || {};
                 container: "{uiEnhancer}.container",
                 options: {
                     fontSizeMap: "{uiEnhancer}.options.fontSizeMap",
-                    rules: {
-                        "lineSpace": "value"
-                    },
                     model: {
-                        value: "{fluid.prefs.rootModel}.rootModel.lineSpace"
+                        value: "{uiEnhancer}.model.lineSpace"
                     }
                 }
             },
@@ -34789,11 +34577,8 @@ var fluid_2_0 = fluid_2_0 || {};
                 container: "{uiEnhancer}.container",
                 options: {
                     classes: "{uiEnhancer}.options.classnameMap.theme",
-                    rules: {
-                        "theme": "value"
-                    },
                     model: {
-                        value: "{fluid.prefs.rootModel}.rootModel.theme"
+                        value: "{uiEnhancer}.model.theme"
                     }
                 }
             },
@@ -34802,11 +34587,8 @@ var fluid_2_0 = fluid_2_0 || {};
                 container: "{uiEnhancer}.container",
                 options: {
                     cssClass: "{uiEnhancer}.options.classnameMap.links",
-                    rules: {
-                        "links": "value"
-                    },
                     model: {
-                        links: "{fluid.prefs.rootModel}.rootModel.links"
+                        value: "{uiEnhancer}.model.links"
                     }
                 }
             },
@@ -34815,11 +34597,8 @@ var fluid_2_0 = fluid_2_0 || {};
                 container: "{uiEnhancer}.container",
                 options: {
                     cssClass: "{uiEnhancer}.options.classnameMap.inputsLarger",
-                    rules: {
-                        "inputsLarger": "value"
-                    },
                     model: {
-                        inputsLarger: "{fluid.prefs.rootModel}.rootModel.inputsLarger"
+                        value: "{uiEnhancer}.model.inputsLarger"
                     }
                 }
             },
@@ -34828,11 +34607,8 @@ var fluid_2_0 = fluid_2_0 || {};
                 container: "{uiEnhancer}.container",
                 options: {
                     tocTemplate: "{uiEnhancer}.options.tocTemplate",
-                    rules: {
-                        "toc": "value"
-                    },
                     model: {
-                        toc: "{fluid.prefs.rootModel}.rootModel.toc"
+                        toc: "{uiEnhancer}.model.toc"
                     }
                 }
             }
@@ -34862,11 +34638,8 @@ var fluid_2_0 = fluid_2_0 || {};
                 createOnEvent: "onPrefsEditorMarkupReady",
                 options: {
                     gradeNames: "fluid.prefs.prefsEditorConnections",
-                    rules: {
-                        "textSize": "textSize"
-                    },
                     model: {
-                        value: "{fluid.prefs.rootModel}.rootModel.textSize"
+                        textSize: "{prefsEditor}.model.textSize"
                     },
                     resources: {
                         template: "{templateLoader}.resources.textSize"
@@ -34879,11 +34652,8 @@ var fluid_2_0 = fluid_2_0 || {};
                 createOnEvent: "onPrefsEditorMarkupReady",
                 options: {
                     gradeNames: "fluid.prefs.prefsEditorConnections",
-                    rules: {
-                        "lineSpace": "lineSpace"
-                    },
                     model: {
-                        value: "{fluid.prefs.rootModel}.rootModel.lineSpace"
+                        lineSpace: "{prefsEditor}.model.lineSpace"
                     },
                     resources: {
                         template: "{templateLoader}.resources.lineSpace"
@@ -34897,11 +34667,8 @@ var fluid_2_0 = fluid_2_0 || {};
                 options: {
                     gradeNames: "fluid.prefs.prefsEditorConnections",
                     classnameMap: "{uiEnhancer}.options.classnameMap",
-                    rules: {
-                        "textFont": "value"
-                    },
                     model: {
-                        value: "{fluid.prefs.rootModel}.rootModel.textFont"
+                        value: "{prefsEditor}.model.textFont"
                     },
                     resources: {
                         template: "{templateLoader}.resources.textFont"
@@ -34915,11 +34682,8 @@ var fluid_2_0 = fluid_2_0 || {};
                 options: {
                     gradeNames: "fluid.prefs.prefsEditorConnections",
                     classnameMap: "{uiEnhancer}.options.classnameMap",
-                    rules: {
-                        "theme": "value"
-                    },
                     model: {
-                        value: "{fluid.prefs.rootModel}.rootModel.theme"
+                        value: "{prefsEditor}.model.theme"
                     },
                     resources: {
                         template: "{templateLoader}.resources.contrast"
@@ -34932,11 +34696,8 @@ var fluid_2_0 = fluid_2_0 || {};
                 createOnEvent: "onPrefsEditorMarkupReady",
                 options: {
                     gradeNames: "fluid.prefs.prefsEditorConnections",
-                    rules: {
-                        "toc": "toc"
-                    },
                     model: {
-                        toc: "{fluid.prefs.rootModel}.rootModel.toc"
+                        toc: "{prefsEditor}.model.toc"
                     },
                     resources: {
                         template: "{templateLoader}.resources.layoutControls"
@@ -34949,18 +34710,14 @@ var fluid_2_0 = fluid_2_0 || {};
                 createOnEvent: "onPrefsEditorMarkupReady",
                 options: {
                     gradeNames: "fluid.prefs.prefsEditorConnections",
-                    rules: {
-                        "links": "fluid_prefs_emphasizeLinks",
-                        "inputsLarger": "fluid_prefs_inputsLarger"
-                    },
                     selectors: {
                         emphasizeLinks: ".flc-prefsEditor-emphasizeLinks",
                         inputsLarger: ".flc-prefsEditor-inputsLarger"
                     },
                     selectorsToIgnore: ["emphasizeLinks", "inputsLarger"],
                     model: {
-                        fluid_prefs_emphasizeLinks: "{fluid.prefs.rootModel}.rootModel.links",
-                        fluid_prefs_inputsLarger: "{fluid.prefs.rootModel}.rootModel.inputsLarger"
+                        fluid_prefs_emphasizeLinks: "{prefsEditor}.model.links",
+                        fluid_prefs_inputsLarger: "{prefsEditor}.model.inputsLarger"
                     },
                     components: {
                         emphasizeLinks: {
@@ -35186,7 +34943,6 @@ var fluid_2_0 = fluid_2_0 || {};
                     gradeNames: ["fluid.prefs.uiEnhancerRelay"],
                     // ensure that model and applier are available to users at top level
                     model: "{separatedPanel}.model",
-                    applier: "{separatedPanel}.applier",
                     events: {
                         onSignificantDOMChange: null,
                         updateEnhancerModel: "{that}.events.modelChanged"
@@ -35237,7 +34993,7 @@ var fluid_2_0 = fluid_2_0 || {};
      *****************************************/
 
     fluid.defaults("fluid.prefs.separatedPanel.renderIframe", {
-        gradeNames: ["fluid.viewComponent", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
         events: {
             afterRender: null
         },
@@ -35710,7 +35466,7 @@ var fluid_2_0 = fluid_2_0 || {};
     fluid.prefs.containerNeeded = function (root, path) {
         var componentType = fluid.get(root, [path, "type"]);
         var componentOptions = fluid.defaults(componentType);
-        return (fluid.hasGrade(componentOptions, "fluid.viewComponent") || fluid.hasGrade(componentOptions, "fluid.rendererComponent"));
+        return (fluid.hasGrade(componentOptions, "fluid.viewRelayComponent") || fluid.hasGrade(componentOptions, "fluid.rendererRelayComponent"));
     };
 
     fluid.prefs.checkPrimarySchema = function (primarySchema, prefKey) {
@@ -35720,10 +35476,10 @@ var fluid_2_0 = fluid_2_0 || {};
         return !!primarySchema;
     };
 
-    fluid.prefs.expandSchemaComponents = function (auxSchema, type, prefKey, componentConfig, index, commonOptions, mappedDefaults) {
+    fluid.prefs.expandSchemaComponents = function (auxSchema, type, prefKey, componentConfig, index, commonOptions, modelCommonOptions, mappedDefaults) {
         var componentOptions = fluid.copy(componentConfig) || {};
         var components = {};
-        var rootModel = {};
+        var initialModel = {};
 
         var componentName = fluid.prefs.removeKey(componentOptions, "type");
         var regexp = new RegExp("\\.", "g");
@@ -35752,9 +35508,12 @@ var fluid_2_0 = fluid_2_0 || {};
                     if (internalPath.indexOf("model.") === 0) {
                         var internalModelName = internalPath.slice(6);
                         // Set up the binding in "rules" accepted by the modelRelay base grade of every panel
-                        fluid.set(opts, ["rules", flattenedPrefKey], internalModelName);
-                        fluid.set(opts, ["model", internalModelName], prefSchema[primaryPath]);
-                        fluid.set(rootModel, ["members", "rootModel", flattenedPrefKey], prefSchema[primaryPath]);
+                        fluid.set(opts, "model", fluid.get(opts, "model") || {});
+                        fluid.prefs.addCommonOptions(opts, "model", modelCommonOptions, {
+                            internalModelName: internalModelName,
+                            externalModelName: flattenedPrefKey
+                        });
+                        fluid.set(initialModel, ["members", "initialModel", flattenedPrefKey], prefSchema[primaryPath]);
                     } else {
                         fluid.set(opts, internalPath, prefSchema[primaryPath]);
                     }
@@ -35770,7 +35529,7 @@ var fluid_2_0 = fluid_2_0 || {};
             fluid.prefs.addAtPath(auxSchema, [type, "selectors"], selectors);
             fluid.prefs.addAtPath(auxSchema, ["templateLoader", "templates"], templates);
             fluid.prefs.addAtPath(auxSchema, ["messageLoader", "templates"], messages);
-            fluid.prefs.addAtPath(auxSchema, "rootModel", rootModel);
+            fluid.prefs.addAtPath(auxSchema, "initialModel", initialModel);
         }
 
         return auxSchema;
@@ -35812,13 +35571,13 @@ var fluid_2_0 = fluid_2_0 || {};
     };
 
     fluid.prefs.expandCompositePanels = function (auxSchema, compositePanelList, panelIndex, panelCommonOptions, subPanelCommonOptions,
-        compositePanelBasedOnSubCommonOptions, mappedDefaults) {
+        compositePanelBasedOnSubCommonOptions, panelModelCommonOptions, mappedDefaults) {
         var panelsToIgnore = [];
 
         fluid.each(compositePanelList, function (compositeDetail, compositeKey) {
             var compositePanelOptions = {};
             var components = {};
-            var rootModel = {};
+            var initialModel = {};
             var selectors = {};
             var templates = {};
             var messages = {};
@@ -35875,9 +35634,12 @@ var fluid_2_0 = fluid_2_0 || {};
                         var opts;
                         if (internalPath.indexOf("model.") === 0) {
                             // Set up the binding in "rules" accepted by the modelRelay base grade of every panel
-                            fluid.set(compositePanelOptions, ["options", "rules", safeSubPanelPrefsKey], safeSubPanelPrefsKey);
-                            fluid.set(compositePanelOptions, ["options", "model", safeSubPanelPrefsKey], prefSchema[primaryPath]);
-                            fluid.set(rootModel, ["members", "rootModel", safeSubPanelPrefsKey], prefSchema[primaryPath]);
+                            fluid.set(compositePanelOptions, ["options", "model"], fluid.get(compositePanelOptions, ["options", "model"]) || {});
+                            fluid.prefs.addCommonOptions(compositePanelOptions, ["options", "model"], panelModelCommonOptions, {
+                                internalModelName: safeSubPanelPrefsKey,
+                                externalModelName: safeSubPanelPrefsKey
+                            });
+                            fluid.set(initialModel, ["members", "initialModel", safeSubPanelPrefsKey], prefSchema[primaryPath]);
                         } else {
                             opts = opts || {options: {}};
                             fluid.set(opts, "options." + internalPath, prefSchema[primaryPath]);
@@ -35926,7 +35688,7 @@ var fluid_2_0 = fluid_2_0 || {};
             fluid.prefs.addAtPath(auxSchema, ["panels", "selectors"], selectors);
             fluid.prefs.addAtPath(auxSchema, ["templateLoader", "templates"], templates);
             fluid.prefs.addAtPath(auxSchema, ["messageLoader", "templates"], messages);
-            fluid.prefs.addAtPath(auxSchema, "rootModel", rootModel);
+            fluid.prefs.addAtPath(auxSchema, "initialModel", initialModel);
             $.extend(true, auxSchema, {panelsToIgnore: panelsToIgnore});
         });
 
@@ -35941,7 +35703,8 @@ var fluid_2_0 = fluid_2_0 || {};
         if (compositePanelList) {
             fluid.prefs.expandCompositePanels(auxSchema, compositePanelList, fluid.get(indexes, "panel"),
                 fluid.get(elementCommonOptions, "panel"), fluid.get(elementCommonOptions, "subPanel"),
-                fluid.get(elementCommonOptions, "compositePanelBasedOnSub"), mappedDefaults);
+                fluid.get(elementCommonOptions, "compositePanelBasedOnSub"), fluid.get(elementCommonOptions, "panelModel"),
+                mappedDefaults);
         }
 
         fluid.each(auxSchema, function (category, prefName) {
@@ -35949,11 +35712,13 @@ var fluid_2_0 = fluid_2_0 || {};
             var type = "panel";
             // Ignore the subpanels that are only for composing composite panels
             if (category[type] && $.inArray(prefName, auxSchema.panelsToIgnore) === -1) {
-                fluid.prefs.expandSchemaComponents(auxSchema, "panels", category.type, category[type], fluid.get(indexes, type), fluid.get(elementCommonOptions, type), mappedDefaults);
+                fluid.prefs.expandSchemaComponents(auxSchema, "panels", category.type, category[type], fluid.get(indexes, type),
+                    fluid.get(elementCommonOptions, type), fluid.get(elementCommonOptions, type + "Model"), mappedDefaults);
             }
             type = "enactor";
             if (category[type]) {
-                fluid.prefs.expandSchemaComponents(auxSchema, "enactors", category.type, category[type], fluid.get(indexes, type), fluid.get(elementCommonOptions, type), mappedDefaults);
+                fluid.prefs.expandSchemaComponents(auxSchema, "enactors", category.type, category[type], fluid.get(indexes, type),
+                    fluid.get(elementCommonOptions, type), fluid.get(elementCommonOptions, type + "Model"), mappedDefaults);
             }
 
             type = "template";
@@ -36010,8 +35775,8 @@ var fluid_2_0 = fluid_2_0 || {};
             messageLoader: {
                 gradeNames: ["fluid.prefs.resourceLoader", "autoInit"]
             },
-            rootModel: {
-                gradeNames: ["fluid.prefs.rootModel", "autoInit"]
+            initialModel: {
+                gradeNames: ["fluid.prefs.initialModel", "autoInit"]
             },
             templatePrefix: {
                 gradeNames: ["fluid.littleComponent", "autoInit"]
@@ -36027,6 +35792,9 @@ var fluid_2_0 = fluid_2_0 || {};
                 "options.gradeNames": "fluid.prefs.prefsEditorConnections",
                 "options.resources.template": "{templateLoader}.resources.%prefKey"
             },
+            panelModel: {
+                "%internalModelName": "{prefsEditor}.model.%externalModelName"
+            },
             compositePanelBasedOnSub: {
                 "%subPrefKey": "{templateLoader}.resources.%subPrefKey"
             },
@@ -36034,8 +35802,10 @@ var fluid_2_0 = fluid_2_0 || {};
                 "container": "{%compositePanel}.dom.%prefKey"
             },
             enactor: {
-                "options.gradeNames": "fluid.prefs.uiEnhancerConnections",
                 "container": "{uiEnhancer}.container"
+            },
+            enactorModel: {
+                "%internalModelName": "{uiEnhancer}.model.%externalModelName"
             }
         },
         indexes: {
@@ -36417,7 +36187,7 @@ var fluid_2_0 = fluid_2_0 || {};
             expander: {
                 func: "fluid.prefs.builder.generateGrade",
                 args: ["prefsEditor", "{that}.options.auxSchema.namespace", {
-                    gradeNames: ["fluid.viewComponent", "autoInit", "fluid.prefs.assembler.prefsEd"],
+                    gradeNames: ["fluid.viewRelayComponent", "autoInit", "fluid.prefs.assembler.prefsEd"],
                     componentGrades: "{that}.options.constructedGrades"
                 }]
             }
@@ -36426,7 +36196,7 @@ var fluid_2_0 = fluid_2_0 || {};
             expander: {
                 func: "fluid.prefs.builder.generateGrade",
                 args: ["uie", "{that}.options.auxSchema.namespace", {
-                    gradeNames: ["fluid.viewComponent", "autoInit", "fluid.prefs.assembler.uie"],
+                    gradeNames: ["fluid.viewRelayComponent", "autoInit", "fluid.prefs.assembler.uie"],
                     componentGrades: "{that}.options.constructedGrades"
                 }]
             }
@@ -36434,7 +36204,7 @@ var fluid_2_0 = fluid_2_0 || {};
         constructedGrades: {
             expander: {
                 func: "fluid.prefs.builder.constructGrades",
-                args: ["{that}.options.auxSchema", ["enactors", "messages", "panels", "rootModel", "templateLoader", "messageLoader", "templatePrefix", "messagePrefix"]]
+                args: ["{that}.options.auxSchema", ["enactors", "messages", "panels", "initialModel", "templateLoader", "messageLoader", "templatePrefix", "messagePrefix"]]
             }
         },
         mappedDefaults: "{primaryBuilder}.options.schema.properties",
@@ -36459,7 +36229,7 @@ var fluid_2_0 = fluid_2_0 || {};
     });
 
     fluid.defaults("fluid.prefs.assembler.uie", {
-        gradeNames: ["autoInit", "fluid.viewComponent"],
+        gradeNames: ["autoInit", "fluid.viewRelayComponent"],
         components: {
             store: {
                 type: "fluid.littleComponent",
@@ -36503,10 +36273,10 @@ var fluid_2_0 = fluid_2_0 || {};
     });
 
     fluid.defaults("fluid.prefs.assembler.prefsEd", {
-        gradeNames: ["autoInit", "fluid.viewComponent", "fluid.prefs.assembler.uie"],
+        gradeNames: ["autoInit", "fluid.viewRelayComponent", "fluid.prefs.assembler.uie"],
         components: {
             prefsEditorLoader: {
-                type: "fluid.viewComponent",
+                type: "fluid.viewRelayComponent",
                 container: "{fluid.prefs.assembler.prefsEd}.container",
                 priority: "last",
                 options: {
@@ -36519,7 +36289,7 @@ var fluid_2_0 = fluid_2_0 || {};
                         gradeNames: ["{fluid.prefs.assembler.prefsEd}.options.componentGrades.messageLoader"]
                     },
                     prefsEditor: {
-                        gradeNames: ["{fluid.prefs.assembler.prefsEd}.options.componentGrades.panels", "{fluid.prefs.assembler.prefsEd}.options.componentGrades.rootModel", "fluid.prefs.uiEnhancerRelay"]
+                        gradeNames: ["{fluid.prefs.assembler.prefsEd}.options.componentGrades.panels", "{fluid.prefs.assembler.prefsEd}.options.componentGrades.initialModel", "fluid.prefs.uiEnhancerRelay"]
                     },
                     events: {
                         onReady: "{fluid.prefs.assembler.prefsEd}.events.onPrefsEditorReady"
@@ -36596,7 +36366,7 @@ var fluid_2_0 = fluid_2_0 || {};
 
 })(jQuery, fluid_2_0);
 ;/*
-Copyright 2010 OCAD University
+Copyright 2010-2015 OCAD University
 
 Licensed under the Educational Community License (ECL), Version 2.0 or the New
 BSD license. You may not use this file except in compliance with one these
@@ -36621,12 +36391,6 @@ var fluid_2_0 = fluid_2_0 || {};
         that.computeContentFunc();
         if (that.initialised) {
             that.container.tooltip("option", "content", that.contentFunc);
-        }
-    };
-
-    fluid.tooltip.updateContent = function (that, content) {
-        if (that.model.content !== content) { // TODO: Remove with FLUID-3674 branch
-            that.applier.requestChange("content", content);
         }
     };
 
@@ -36727,7 +36491,7 @@ var fluid_2_0 = fluid_2_0 || {};
     };
 
     fluid.defaults("fluid.tooltip", {
-        gradeNames: ["fluid.viewComponent", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
         widgetOptions: {
             tooltipClass: "{that}.options.styles.tooltip",
             position: "{that}.options.position",
@@ -36757,14 +36521,9 @@ var fluid_2_0 = fluid_2_0 || {};
                 funcName: "fluid.tooltip.closeAll",
                 args: "{that}"
             },
-          /**
-           * Updates the contents displayed in the tooltip. Deprecated - use the
-           * ChangeApplier API for this component instead.
-           * @param {Object} content, the content to be displayed in the tooltip
-           */
             updateContent: {
-                funcName: "fluid.tooltip.updateContent",
-                args: ["{that}", "{arguments}.0"]
+                changePath: "content",
+                value: "{arguments}.0"
             },
             computeContentFunc: {
                 funcName: "fluid.tooltip.computeContentFunc",
@@ -36792,12 +36551,15 @@ var fluid_2_0 = fluid_2_0 || {};
             afterClose: null  // arguments: that, event.target, tooltip, event
         },
         listeners: {
-            onCreate: "fluid.tooltip.setup",
-            onDestroy: "fluid.tooltip.doDestroy"
+            "onCreate.setup": "fluid.tooltip.setup",
+            "onDestroy.doDestroy": "fluid.tooltip.doDestroy"
         },
         modelListeners: {
+            // TODO: We could consider a more fine-grained scheme for this,
+            // listening to content and idToContent separately
             "": {
-                funcName: "fluid.tooltip.updateContentImpl", // TODO: better scheme when FLUID-3674 is merged
+                funcName: "fluid.tooltip.updateContentImpl",
+                excludeSource: "init",
                 args: "{that}"
             }
         },
