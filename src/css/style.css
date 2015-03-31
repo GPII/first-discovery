@@ -99,7 +99,6 @@ button {
 
 .gpii-fd-help:focus,
 .gpii-fd-mute:focus {
-    background-color: #425165; /* blue-grey */
     border: 0.2rem solid #fff; /* Yellow */
     box-shadow: 0 0 0 0.4rem rgb(244, 215, 75), /* Yellow */
                 0 0 0 0.6rem rgb(0, 0, 0);
@@ -329,14 +328,13 @@ button {
     background-color: #ffffff;
 }
 .gpii-fd-navButtons-back, .gpii-fd-navButtons-next {
-    border: 0.2rem solid #fff;
     border-radius: 0.5rem;
     visibility: hidden;
     background-color: #425165; /* blue-grey */
     color: #ffffff;
     padding: 1rem;
     line-height: 2rem;
-    height: 4.5rem;
+    height: 4.2rem;
 }
 .gpii-fd-navButtons-back {
     padding-left: 0;
@@ -346,31 +344,25 @@ button {
     padding-right: 0;
     margin: 0 1rem 1rem 0;
 }
+.gpii-fd-navButtons-back:hover,
+.gpii-fd-navButtons-next:hover {
+    background-color: #425165; /* blue-grey, to override foundation's blue */
+    box-shadow: 0 0 0 0.1rem rgb(255,255,255), /* white */
+                0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
+}
+.gpii-fd-navButtons-back:focus,
+.gpii-fd-navButtons-next:focus {
+    background-color: #425165; /* blue-grey */
+    box-shadow: 0 0 0 0.4rem rgb(244, 215, 75), /* Yellow */
+                0 0 0 0.6rem rgb(0, 0, 0);
+    outline: none;
+}
 .gpii-fd-navButtons-back .gpii-fd-icon:before,
 .gpii-fd-navButtons-next .gpii-fd-icon:after {
     position: relative;
     font-family: "PGA-FD";
     font-size: 4rem;
 }
-.gpii-fd-navButtons-back:hover,
-.gpii-fd-navButtons-next:hover {
-    color: inherit; /* to override foundation's blue */
-    background-color: inherit;
-}
-.gpii-fd-navButtons-back:hover,
-.gpii-fd-navButtons-next:hover {
-    box-shadow: 0 0 0 0.3rem rgb(72, 82, 100); /*blue-grey */
-}
-.gpii-fd-navButtons-back:focus,
-.gpii-fd-navButtons-next:focus {
-    color: #425165;
-    outline: none;
-    background-color: #fed73a; /* blue-grey */
-    border: 0.2rem solid #000;
-    border-radius: 0.4rem;
-    box-shadow: 0 0 0 0.2rem rgb(0, 0, 0);
-}
-
 .gpii-fd-navButtons-back .gpii-fd-icon:before {
     content:  "\e606";
 }
