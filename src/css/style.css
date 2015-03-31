@@ -360,7 +360,6 @@ button {
 .gpii-fd-navButtons-back .gpii-fd-icon:before,
 .gpii-fd-navButtons-next .gpii-fd-icon:after {
     position: relative;
-    font-family: "PGA-FD";
     font-size: 4rem;
 }
 .gpii-fd-navButtons-back .gpii-fd-icon:before {

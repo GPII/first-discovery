@@ -26,15 +26,17 @@ https://github.com/gpii/universal/LICENSE.txt
 
     gpii.tests.verifyLabels = function (msg, that, states) {
         var backButton = that.locate("back"),
+            backButtonLabel = that.locate("backLabel"),
             backButtonId = backButton.attr("id"),
             nextButton = that.locate("next"),
+            nextButtonLabel = that.locate("nextLabel"),
             nextButtonId = nextButton.attr("id");
 
         if (states.backLabel) {
-            jqUnit.assertEquals(msg + " - The text on the back button is properly set", states.backLabel, backButton.html());
+            jqUnit.assertEquals(msg + " - The text on the back button is properly set", states.backLabel, backButtonLabel.html());
             jqUnit.assertEquals(msg + " - The tooltip content for the back button is properly set", states.backTooltip, that.tooltip.model.idToContent[backButtonId]);
         }
-        jqUnit.assertEquals(msg + " - The text on the next button is properly set", states.nextLabel, nextButton.html());
+        jqUnit.assertEquals(msg + " - The text on the next button is properly set", states.nextLabel, nextButtonLabel.html());
         jqUnit.assertEquals(msg + " - The tooltip content for the next button is properly set", states.nextTooltip, that.tooltip.model.idToContent[nextButtonId]);
     };
 
