@@ -6,6 +6,8 @@
     "start": "start",
     "startTooltip": "Select to start",
     "finish": "finish",
+    "mutedMsg": "voice is off",
+    "unmutedMsg": "voice is on",
     "finishTooltip": "Select to finish",
     "unmuted": "turn voice OFF",
     "unmutedTooltip": "Select to turn voice off",
