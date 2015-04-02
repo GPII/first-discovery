@@ -6,37 +6,35 @@
     text-align: center;
 }
 
-.gpii-congratulations-closeLabel {
-    display: block;
-}
-
 .gpii-congratulations-closeButton {
-    border: 0.2rem solid transparent; /* allocate space used by focus styling */
-    border-radius: 0.4rem;
+    border-radius: 0.5rem;
+    background-color: #425165; /* blue-grey */
+    color: #ffffff;
+    padding: 1rem;
+    line-height: 2rem;
+    height: 4.2rem;
+}
+.gpii-congratulations-closeButton {
+    padding-left: 0;
+    margin: 0 0 1rem 1rem;
 }
 
 .gpii-congratulations-closeButton:before {
-    background-color: #425165;
-    color: #ffffff;
-    content:  "\e603";
-    border-radius: 50%;
-    font-family: "PGA-FD";
-    font-size: 4rem;
+    content: "⨂";
+    padding-left: 1rem;
 }
 
 .gpii-congratulations-closeButton:hover {
-    color: inherit; /* to override foundation's blue */
-    background-color: inherit;
-}
-.gpii-congratulations-closeButton:hover:before {
-    box-shadow: 0 0 0 0.2rem rgb(255, 255, 255), 0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
+    background-color: #425165; /* blue-grey, to override foundation's blue */
+    box-shadow: 0 0 0 0.1rem rgb(255,255,255), /* white */
+                0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
 }
 
 .gpii-congratulations-closeButton:focus {
-    color: inherit; /* to override foundation's blue */
+    background-color: #425165; /* blue-grey */
+    box-shadow: 0 0 0 0.4rem rgb(244, 215, 75), /* Yellow */
+                0 0 0 0.6rem rgb(0, 0, 0);
     outline: none;
-    background-color: #fed73a; /* yellow */
-    border: 0.2rem solid #000;
 }
 
 /* styles.css overrides */
