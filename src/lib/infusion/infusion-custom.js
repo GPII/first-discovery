@@ -1,4 +1,4 @@
-/*! infusion - v2.0.0-SNAPSHOT Thursday, March 26th, 2015, 9:52:37 AM*/
+/*! infusion - v2.0.0-SNAPSHOT Thursday, April 2nd, 2015, 12:29:58 PM*/
 /*!
  * jQuery JavaScript Library v1.11.0
  * http://jquery.com/
@@ -14388,7 +14388,7 @@ var fluid = fluid || fluid_2_0;
 ;/*!
  Copyright unscriptable.com / John Hann 2011
  Copyright Lucendo Development Ltd. 2014
-
+ 
  License MIT
 */
 
@@ -14402,7 +14402,7 @@ var fluid_2_0 = fluid_2_0 || {};
 
 // This implementation provides what could be described as "flat promises" with
 // no support for structure programming idioms involving promise chaining or composition.
-// It provides what a proponent of mainstream promises would describe as
+// It provides what a proponent of mainstream promises would describe as 
 // a "glorified callback aggregator"
 
     fluid.promise = function () {
@@ -14454,14 +14454,14 @@ var fluid_2_0 = fluid_2_0 || {};
         };
         return that;
     };
-
+    
     /** Any object with a member <code>then</code> of type <code>function</code> passes this test.
      * This includes essentially every known variety, including jQuery promises.
      */
     fluid.isPromise = function (totest) {
         return totest && typeof(totest.then) === "function";
     };
-
+    
     /** Chains the resolution methods of one promise (target) so that they follow those of another (source).
       * That is, whenever source resolves, target will resolve, or when source rejects, target will reject, with the
       * same payloads in each case.
@@ -14469,7 +14469,7 @@ var fluid_2_0 = fluid_2_0 || {};
     fluid.promise.follow = function (source, target) {
         source.then(target.resolve, target.reject);
     };
-
+    
     /** Returns a promise whose resolved value is mapped from the source promise or value by the supplied function.
      * @param source {Object|Promise} An object or promise whose value is to be mapped
      * @param func {Function} A function which will map the resolved promise value
@@ -14489,11 +14489,11 @@ var fluid_2_0 = fluid_2_0 || {};
         }
         return togo;
     };
-
+    
     /* General skeleton for all sequential promise algorithms, e.g. transform, reduce, sequence, etc.
      * These accept a variable "strategy" pair to customise the interchange of values and final return
      */
-
+     
     fluid.promise.makeSequencer = function (sources, options, strategy) {
         if (!fluid.isArrayable(sources)) {
             fluid.fail("fluid.promise sequence algorithms must be supplied an array as source");
@@ -14507,14 +14507,14 @@ var fluid_2_0 = fluid_2_0 || {};
             promise: fluid.promise() // the final return value
         };
     };
-
+    
     fluid.promise.progressSequence = function (that, retValue) {
         that.returns.push(retValue);
         that.index++;
         // No we dun't have no tail recursion elimination
         fluid.promise.resumeSequence(that);
     };
-
+    
     fluid.promise.resumeSequence = function (that) {
         if (that.index === that.sources.length) {
             that.promise.resolve(that.strategy.resolveResult(that));
@@ -14531,9 +14531,9 @@ var fluid_2_0 = fluid_2_0 || {};
             }
         }
     };
-
+    
     // SEQUENCE ALGORITHM APPLYING PROMISES
-
+    
     fluid.promise.makeSequenceStrategy = function () {
         return {
             invokeNext: function (that) {
@@ -14548,15 +14548,15 @@ var fluid_2_0 = fluid_2_0 || {};
 
     // accepts an array of values, promises or functions returning promises - in the case of functions returning promises,
     // will assure that at most one of these is "in flight" at a time - that is, the succeeding function will not be invoked
-    // until the promise at the preceding position has resolved
+    // until the promise at the preceding position has resolved    
     fluid.promise.sequence = function (sources, options) {
         var sequencer = fluid.promise.makeSequencer(sources, options, fluid.promise.makeSequenceStrategy());
         fluid.promise.resumeSequence(sequencer);
         return sequencer.promise;
     };
-
+    
     // TRANSFORM ALGORITHM APPLYING PROMISES
-
+   
     fluid.promise.makeTransformerStrategy = function () {
         return {
             invokeNext: function (that) {
@@ -14572,7 +14572,7 @@ var fluid_2_0 = fluid_2_0 || {};
     };
 
     // Construct a "mini-object" managing the process of a sequence of transforms,
-    // each of which may be synchronous or return a promise
+    // each of which may be synchronous or return a promise    
     fluid.promise.makeTransformer = function (listeners, payload, options) {
         listeners.unshift({listener:
             function () {
@@ -14584,7 +14584,7 @@ var fluid_2_0 = fluid_2_0 || {};
         fluid.promise.resumeSequence(sequencer);
         return sequencer;
     };
-
+    
     fluid.promise.filterNamespaces = function (listeners, namespaces) {
         if (!namespaces) {
             return listeners;
@@ -14594,21 +14594,21 @@ var fluid_2_0 = fluid_2_0 || {};
         });
     };
 
-   /** Top-level API to operate a Fluid event which manages a sequence of
+   /** Top-level API to operate a Fluid event which manages a sequence of 
      * chained transforms. Rather than being a standard listener accepting the
      * same payload, each listener to the event accepts the payload returned by the
      * previous listener, and returns either a transformed payload or else a promise
      * yielding such a payload.
-     * @param event {fluid.eventFirer} A Fluid event to which the listeners are to be interpreted as
+     * @param event {fluid.eventFirer} A Fluid event to which the listeners are to be interpreted as 
      * elements cooperating in a chained transform. Each listener will receive arguments <code>(payload, options)</code> where <code>payload</code>
      * is the (successful, resolved) return value of the previous listener, and <code>options</code> is the final argument to this function
      * @param payload {Object|Promise} The initial payload input to the transform chain
      * @param options {Object} A free object containing options governing the transform. Fields interpreted at this top level are:
      *     reverse {Boolean}: <code>true</code> if the listeners are to be called in reverse order of priority (typically the case for an inverse transform)
-     *     filterTransforms {Array}: An array of listener namespaces. If this field is set, only the transform elements whose listener namespaces listed in this array will be applied.
+     *     filterTransforms {Array}: An array of listener namespaces. If this field is set, only the transform elements whose listener namespaces listed in this array will be applied. 
      * @return {fluid.promise} A promise which will yield either the final transformed value, or the response of the first transform which fails.
      */
-
+    
     fluid.promise.fireTransformEvent = function (event, payload, options) {
         options = options || {};
         var listeners = options.reverse ? fluid.makeArray(event.sortedListeners).reverse() :
@@ -14617,8 +14617,8 @@ var fluid_2_0 = fluid_2_0 || {};
         var transformer = fluid.promise.makeTransformer(listeners, payload, options);
         return transformer.promise;
     };
-
-
+    
+    
 })(jQuery, fluid_2_0);;/*
 Copyright 2007-2010 University of Cambridge
 Copyright 2007-2009 University of Toronto
@@ -15052,7 +15052,7 @@ var fluid = fluid || fluid_2_0;
 
     /** Render a timestamp from a Date object into a helpful fixed format for debug logs to millisecond accuracy
      * @param date {Date} The date to be rendered
-     * @return {String} A string format consisting of hours:minutes:seconds.millis for the datestamp padded to fixed with
+     * @return {String} A string format consisting of hours:minutes:seconds.millis for the datestamp padded to fixed with 
      */
 
     fluid.renderTimestamp = function (date) {
@@ -15166,7 +15166,7 @@ var fluid = fluid || fluid_2_0;
         });
     };
 
-    // Main entry point for callers.
+    // Main entry point for callers. 
     // TODO: This infrastructure is several years old and probably still only works on Firefox if there
     fluid.getCallerInfo = function (atDepth) {
         atDepth = (atDepth || 3) - stackStyle.offset;
@@ -15179,7 +15179,7 @@ var fluid = fluid || fluid_2_0;
      * @param count {Integer} The number of times to repeat the character
      * @return A string of length <code>count</code> consisting of repetitions of the supplied character
      */
-    // UNOPTIMISED
+    // UNOPTIMISED 
     fluid.generatePadding = function (c, count) {
         var togo = "";
         for (var i = 0; i < count; ++ i) {
@@ -15187,11 +15187,11 @@ var fluid = fluid || fluid_2_0;
         }
         return togo;
     };
-
+     
     // Marker so that we can render a custom string for properties which are not direct and concrete
     fluid.SYNTHETIC_PROPERTY = {};
 
-    // utility to avoid triggering custom getter code which could throw an exception - e.g. express 3.x's request object
+    // utility to avoid triggering custom getter code which could throw an exception - e.g. express 3.x's request object 
     fluid.getSafeProperty = function (obj, key) {
         var desc = Object.getOwnPropertyDescriptor(obj, key); // supported on all of our environments - is broken on IE8
         return desc && !desc.get ? obj[key] : fluid.SYNTHETIC_PROPERTY;
@@ -16331,7 +16331,7 @@ var fluid_2_0 = fluid_2_0 || {};
             instantiator.clearComponent(that, "", that, null, true);
         };
     };
-
+    
     // NON-API function
     fluid.fabricateDestroyMethod = function (that, name, instantiator, child) {
         return function () {
@@ -18058,7 +18058,7 @@ var fluid_2_0 = fluid_2_0 || {};
                 }
                 if (transducer && !options.targetApplier) {
                     // TODO: This is just for safety but is still unusual and now abused. The transducer doesn't need the "newValue" since all the transform information
-                    // has been baked into the transform document itself. However, we now rely on this special signalling value to make sure we regenerate transforms in
+                    // has been baked into the transform document itself. However, we now rely on this special signalling value to make sure we regenerate transforms in 
                     // the "forwardAdapter"
                     transducer(existing.transaction, options.sourceApplier ? undefined : newValue, sourceSegs, targetSegs);
                 } else if (newValue !== undefined) {
@@ -18676,7 +18676,7 @@ var fluid_2_0 = fluid_2_0 || {};
         }
         return options.deltas ? options.deltaMap : null;
     };
-
+    
     /** Compare two models for equality using a deep algorithm. It is assumed that both models are JSON-equivalent and do
      * not contain circular links.
      * @param modela The first model to be compared
@@ -18765,7 +18765,7 @@ var fluid_2_0 = fluid_2_0 || {};
         // These are unbottled in fluid.concludeTransaction
         transRec.externalChanges[keyString] = {listener: spec.listener, priority: spec.priority, args: args};
     };
-
+    
     fluid.isExcludedChangeSource = function (transaction, spec) {
         if (!spec.excludeSource) { // mergeModelListeners initModelEvent fabricates a fake spec that bypasses processing
             return false;
@@ -19773,8 +19773,8 @@ var fluid = fluid || fluid_2_0;
         var defaults = fluid.defaults(typeName);
         return { defaults: defaults, typeName: typeName};
     };
-
-    // A utility which is helpful in computing inverses involving compound values.
+    
+    // A utility which is helpful in computing inverses involving compound values. 
     // For example, with the valueMapper, compound input values are accepted as literals implicitly,
     // whereas as output values they must be escaped. This utility escapes a value if it is not primitive.
     fluid.model.transform.literaliseValue = function (value) {
@@ -20245,8 +20245,8 @@ var fluid = fluid || fluid_2_0;
         invertConfiguration: "fluid.transforms.valueMapper.invert",
         collectInputPaths: "fluid.transforms.valueMapper.collect"
     });
-
-
+    
+    
     // unsupported, NON-API function
     fluid.model.transform.compareMatches = function (speca, specb) {
         return specb.matchValue - speca.matchValue;
@@ -21752,7 +21752,7 @@ var fluid_2_0 = fluid_2_0 || {};
             }
         }
     });
-
+    
     fluid.ariaLabeller.update = function (that, newOptions) {
         newOptions = newOptions || that.options;
         that.container.attr(that.options.labelAttribute, newOptions.text);
@@ -30861,24 +30861,24 @@ $.widget( "ui.tooltip", {
 
     var touch = event.originalEvent.changedTouches[0],
         simulatedEvent = document.createEvent('MouseEvents');
-
+    
     // Initialize the simulated mouse event using the touch event's coordinates
     simulatedEvent.initMouseEvent(
       simulatedType,    // type
-      true,             // bubbles
-      true,             // cancelable
-      window,           // view
-      1,                // detail
-      touch.screenX,    // screenX
-      touch.screenY,    // screenY
-      touch.clientX,    // clientX
-      touch.clientY,    // clientY
-      false,            // ctrlKey
-      false,            // altKey
-      false,            // shiftKey
-      false,            // metaKey
-      0,                // button
-      null              // relatedTarget
+      true,             // bubbles                    
+      true,             // cancelable                 
+      window,           // view                       
+      1,                // detail                     
+      touch.screenX,    // screenX                    
+      touch.screenY,    // screenY                    
+      touch.clientX,    // clientX                    
+      touch.clientY,    // clientY                    
+      false,            // ctrlKey                    
+      false,            // altKey                     
+      false,            // shiftKey                   
+      false,            // metaKey                    
+      0,                // button                     
+      null              // relatedTarget              
     );
 
     // Dispatch the simulated event to the target element
@@ -30967,7 +30967,7 @@ $.widget( "ui.tooltip", {
    * original mouse event handling methods.
    */
   mouseProto._mouseInit = function () {
-
+    
     var self = this;
 
     // Delegate the touch handlers to the widget's element
@@ -32384,7 +32384,7 @@ var fluid_2_0 = fluid_2_0 || {};
 })(jQuery, fluid_2_0);
 ;/*
 Copyright 2009 University of Toronto
-Copyright 2010-2011 OCAD University
+Copyright 2010-2015 OCAD University
 Copyright 2011 Lucendo Development Ltd.
 
 Licensed under the Educational Community License (ECL), Version 2.0 or the New
@@ -32429,6 +32429,9 @@ var fluid_2_0 = fluid_2_0 || {};
             messageLoader: {
                 type: "fluid.prefs.resourceLoader",
                 options: {
+                    resourceOptions: {
+                        dataType: "json"
+                    },
                     events: {
                         onResourcesLoaded: "{prefsEditorLoader}.events.onPrefsEditorMessagesLoaded"
                     }
@@ -32438,18 +32441,11 @@ var fluid_2_0 = fluid_2_0 || {};
         events: {
             onPrefsEditorTemplatesLoaded: null,
             onPrefsEditorMessagesLoaded: null,
-            onMsgResolverReady: null,
             onCreatePrefsEditorReady: {
                 events: {
                     templateLoaded: "onPrefsEditorTemplatesLoaded",
-                    msgResolverReady: "onMsgResolverReady"
+                    prefsEditorMessagesLoaded: "onPrefsEditorMessagesLoaded"
                 }
-            }
-        },
-        listeners: {
-            onPrefsEditorMessagesLoaded: {
-                funcName: "fluid.prefs.prefsEditorLoader.createMsgResolver",
-                args: ["{arguments}.0", "{that}"]
             }
         },
         distributeOptions: [{
@@ -32472,17 +32468,6 @@ var fluid_2_0 = fluid_2_0 || {};
             target: "{that > prefsEditor}.options"
         }]
     });
-
-    fluid.prefs.prefsEditorLoader.createMsgResolver = function (messageResources, that) {
-        var completeMessage;
-        fluid.each(messageResources, function (oneResource) {
-            var message = JSON.parse(oneResource.resourceText);
-            completeMessage = $.extend({}, completeMessage, message);
-        });
-        var parentResolver = fluid.messageResolver({messageBase: completeMessage});
-        that.msgResolver = fluid.messageResolver({messageBase: {}, parents: [parentResolver]});
-        that.events.onMsgResolverReady.fire();
-    };
 
     // TODO: This mixin grade appears to be supplied manually by various test cases but no longer appears in
     // the main configuration. We should remove the need for users to supply this - also the use of "defaultPanels" in fact
@@ -32519,27 +32504,19 @@ var fluid_2_0 = fluid_2_0 || {};
     });
 
     /**************************************
-     * Preferences Editor Template Loader *
+     * Preferences Editor Resource Loader *
      **************************************/
-
-    /**
-     * A configurable component that works in conjunction with or without the Preferences Editor template
-     * path component (fluid.prefsResourcePath) to allow users to set either the location of their own
-     * templates or the templates that are relative to the path defined in the Preferences Editor template
-     * path component.
-     *
-     * @param {Object} options
-     */
 
     fluid.defaults("fluid.prefs.resourceLoader", {
         gradeNames: ["fluid.eventedComponent", "autoInit"],
         listeners: {
-            "onCreate": {
-                listener: "fluid.prefs.resourceLoader.loadTemplates",
-                args: ["{that}", {expander: {func: "{that}.resolveTemplates"}}]
+            "onCreate.loadResources": {
+                listener: "fluid.prefs.resourceLoader.loadResources",
+                args: ["{that}", {expander: {func: "{that}.resolveResources"}}]
             }
         },
-        templates: {},
+        resources: {},
+        resourceOptions: {},
         // Unsupported, non-API option
         components: {
             resourcePath: {
@@ -32551,8 +32528,8 @@ var fluid_2_0 = fluid_2_0 || {};
                 funcName: "fluid.stringTemplate",
                 args: [ "{arguments}.0", {"prefix/" : "{that}.resourcePath.options.value"} ]
             },
-            resolveTemplates: {
-                funcName: "fluid.prefs.resourceLoader.resolveTemplates",
+            resolveResources: {
+                funcName: "fluid.prefs.resourceLoader.resolveResources",
                 args: "{that}"
             }
         },
@@ -32561,16 +32538,15 @@ var fluid_2_0 = fluid_2_0 || {};
         }
     });
 
-    fluid.prefs.resourceLoader.resolveTemplates = function (that) {
-        var mapped = fluid.transform(that.options.templates, that.transformURL);
+    fluid.prefs.resourceLoader.resolveResources = function (that) {
+        var mapped = fluid.transform(that.options.resources, that.transformURL);
 
         return fluid.transform(mapped, function (url) {
-            return {url: url, forceCache: true};
+            return {url: url, forceCache: true, options: that.options.resourceOptions};
         });
     };
 
-    fluid.prefs.resourceLoader.loadTemplates = function (that, resources) {
-        delete resources.expander;   // A work-around for FLUID-5117
+    fluid.prefs.resourceLoader.loadResources = function (that, resources) {
         fluid.fetchResources(resources, function () {
             that.resources = resources;
             that.events.onResourcesLoaded.fire(resources);
@@ -32895,7 +32871,7 @@ var fluid_2_0 = fluid_2_0 || {};
 
 })(jQuery, fluid_2_0);
 ;/*
-Copyright 2013 OCAD University
+Copyright 2013-2015 OCAD University
 
 Licensed under the Educational Community License (ECL), Version 2.0 or the New
 BSD license. You may not use this file except in compliance with one these
@@ -32921,7 +32897,7 @@ var fluid_2_0 = fluid_2_0 || {};
             msgLookup: {
                 expander: {
                     funcName: "fluid.prefs.stringLookup",
-                    args: ["{that}.messageResolver", "{that}.options.stringArrayIndex"]
+                    args: ["{msgResolver}", "{that}.options.stringArrayIndex"]
                 }
             }
         },
@@ -32962,6 +32938,18 @@ var fluid_2_0 = fluid_2_0 || {};
         // when used as a subpanel, it will be triggered by the resetDomBinder invoker.
         listeners: {
             "onCreate.onDomBind": "{that}.events.onDomBind"
+        },
+        components: {
+            msgResolver: {
+                type: "fluid.messageResolver"
+            }
+        },
+        rendererOptions: {
+            messageLocator: "{msgResolver}.resolve"
+        },
+        distributeOptions: {
+            source: "{that}.options.messageBase",
+            target: "{that > msgResolver}.options.messageBase"
         }
     });
 
@@ -33424,28 +33412,47 @@ var fluid_2_0 = fluid_2_0 || {};
         }) || value;
     };
 
-    fluid.prefs.compositePanel.rebaseTree = function (model, tree, memberName, modelRelayRules) {
-        var rebased = fluid.transform(tree, function (val, key) {
-            if (key === "children") {
-                return fluid.transform(val, function (v) {
-                    return fluid.prefs.compositePanel.rebaseTree(model, v, memberName, modelRelayRules);
-                });
-            } else if (key === "selection") {
-                return fluid.prefs.compositePanel.rebaseTree(model, val, memberName, modelRelayRules);
-            } else if (key === "ID") {
-                return fluid.prefs.compositePanel.rebaseID(val, memberName);
-            } else if (key === "parentRelativeID") {
-                return fluid.prefs.compositePanel.rebaseParentRelativeID(val, memberName);
-            } else if (key === "valuebinding") {
-                return fluid.prefs.compositePanel.rebaseValueBinding(val, modelRelayRules);
-            } else if (key === "value" && tree.valuebinding) {
-                var valuebinding = tree.valuebinding;
-                var modelValue = fluid.get(model, fluid.prefs.compositePanel.rebaseValueBinding(valuebinding, modelRelayRules));
-                return modelValue !== undefined ? modelValue : val;
-            } else {
-                return val;
+    fluid.prefs.compositePanel.rebaseTreeComp = function (msgResolver, model, treeComp, memberName, modelRelayRules) {
+        var rebased = fluid.copy(treeComp);
+
+        if (rebased.ID) {
+            rebased.ID = fluid.prefs.compositePanel.rebaseID(rebased.ID, memberName);
+        }
+
+        if (rebased.children) {
+            rebased.children = fluid.prefs.compositePanel.rebaseTree(msgResolver, model, rebased.children, memberName, modelRelayRules);
+        } else if (rebased.selection) {
+            rebased.selection = fluid.prefs.compositePanel.rebaseTreeComp(msgResolver, model, rebased.selection, memberName, modelRelayRules);
+        } else if (rebased.messagekey) {
+            // converts the "UIMessage" renderer component into a "UIBound"
+            // and passes in the resolved message as the value.
+            rebased.componentType = "UIBound";
+            rebased.value = msgResolver.resolve(rebased.messagekey.value, rebased.messagekey.args);
+            delete rebased.messagekey;
+        } else if (rebased.parentRelativeID) {
+            rebased.parentRelativeID = fluid.prefs.compositePanel.rebaseParentRelativeID(rebased.parentRelativeID, memberName);
+        } else if (rebased.valuebinding) {
+            rebased.valuebinding = fluid.prefs.compositePanel.rebaseValueBinding(rebased.valuebinding, modelRelayRules);
+
+            if (rebased.value) {
+                var modelValue = fluid.get(model, rebased.valuebinding);
+                rebased.value = modelValue !== undefined ? modelValue : rebased.value;
             }
-        });
+        }
+
+        return rebased;
+    };
+
+    fluid.prefs.compositePanel.rebaseTree = function (msgResolver, model, tree, memberName, modelRelayRules) {
+        var rebased;
+
+        if (fluid.isArrayable(tree)) {
+            rebased = fluid.transform(tree, function (treeComp) {
+                return fluid.prefs.compositePanel.rebaseTreeComp(msgResolver, model, treeComp, memberName, modelRelayRules);
+            });
+        } else {
+            rebased = fluid.prefs.compositePanel.rebaseTreeComp(msgResolver, model, tree, memberName, modelRelayRules);
+        }
 
         return rebased;
     };
@@ -33477,7 +33484,7 @@ var fluid_2_0 = fluid_2_0 || {};
                 var expander = fluid.renderer.makeProtoExpander(expanderOptions, subPanel);
                 var subTree = subPanel.produceTree();
                 subTree = fluid.get(subPanel.options, "rendererFnOptions.noexpand") ? subTree : expander(subTree);
-                var rebasedTree = fluid.prefs.compositePanel.rebaseTree(that.model, subTree, componentName, subPanel.options.rules);
+                var rebasedTree = fluid.prefs.compositePanel.rebaseTree(subPanel.msgResolver, that.model, subTree, componentName, subPanel.options.rules);
                 tree.children = tree.children.concat(rebasedTree.children);
             }
         });
@@ -34442,7 +34449,7 @@ var fluid_2_0 = fluid_2_0 || {};
 
 })(jQuery, fluid_2_0);
 ;/*
-Copyright 2013 OCAD University
+Copyright 2013-2015 OCAD University
 
 Licensed under the Educational Community License (ECL), Version 2.0 or the New
 BSD license. You may not use this file except in compliance with one these
@@ -34641,6 +34648,7 @@ var fluid_2_0 = fluid_2_0 || {};
                     model: {
                         textSize: "{prefsEditor}.model.textSize"
                     },
+                    messageBase: "{messageLoader}.resources.textSize.resourceText",
                     resources: {
                         template: "{templateLoader}.resources.textSize"
                     }
@@ -34655,6 +34663,7 @@ var fluid_2_0 = fluid_2_0 || {};
                     model: {
                         lineSpace: "{prefsEditor}.model.lineSpace"
                     },
+                    messageBase: "{messageLoader}.resources.lineSpace.resourceText",
                     resources: {
                         template: "{templateLoader}.resources.lineSpace"
                     }
@@ -34670,6 +34679,7 @@ var fluid_2_0 = fluid_2_0 || {};
                     model: {
                         value: "{prefsEditor}.model.textFont"
                     },
+                    messageBase: "{messageLoader}.resources.textFont.resourceText",
                     resources: {
                         template: "{templateLoader}.resources.textFont"
                     }
@@ -34685,6 +34695,7 @@ var fluid_2_0 = fluid_2_0 || {};
                     model: {
                         value: "{prefsEditor}.model.theme"
                     },
+                    messageBase: "{messageLoader}.resources.contrast.resourceText",
                     resources: {
                         template: "{templateLoader}.resources.contrast"
                     }
@@ -34699,6 +34710,7 @@ var fluid_2_0 = fluid_2_0 || {};
                     model: {
                         toc: "{prefsEditor}.model.toc"
                     },
+                    messageBase: "{messageLoader}.resources.layoutControls.resourceText",
                     resources: {
                         template: "{templateLoader}.resources.layoutControls"
                     }
@@ -34723,14 +34735,21 @@ var fluid_2_0 = fluid_2_0 || {};
                         emphasizeLinks: {
                             type: "fluid.prefs.panel.emphasizeLinks",
                             container: "{that}.dom.emphasizeLinks",
-                            createOnEvent: "initSubPanels"
+                            createOnEvent: "initSubPanels",
+                            options: {
+                                messageBase: "{messageLoader}.resources.emphasizeLinks.resourceText"
+                            }
                         },
                         inputsLarger: {
                             type: "fluid.prefs.panel.inputsLarger",
                             container: "{that}.dom.inputsLarger",
-                            createOnEvent: "initSubPanels"
+                            createOnEvent: "initSubPanels",
+                            options: {
+                                messageBase: "{messageLoader}.resources.inputsLarger.resourceText"
+                            }
                         }
                     },
+                    messageBase: "{messageLoader}.resources.linksControls.resourceText",
                     resources: {
                         template: "{templateLoader}.resources.linksControls",
                         emphasizeLinks: "{templateLoader}.resources.emphasizeLinks",
@@ -34746,14 +34765,14 @@ var fluid_2_0 = fluid_2_0 || {};
      ******************************/
 
     /**
-     * A template loader component that expands the resources blocks for loading templates used by starterPanels
+     * A template loader component that expands the resources blocks for loading resources used by starterPanels
      *
      * @param {Object} options
      */
 
     fluid.defaults("fluid.prefs.starterTemplateLoader", {
         gradeNames: ["fluid.prefs.resourceLoader", "autoInit"],
-        templates: {
+        resources: {
             textSize: "%prefix/PrefsEditorTemplate-textSize.html",
             textFont: "%prefix/PrefsEditorTemplate-textFont.html",
             lineSpace: "%prefix/PrefsEditorTemplate-lineSpace.html",
@@ -34767,21 +34786,21 @@ var fluid_2_0 = fluid_2_0 || {};
 
     fluid.defaults("fluid.prefs.starterSeparatedPanelTemplateLoader", {
         gradeNames: ["fluid.prefs.starterTemplateLoader", "autoInit"],
-        templates: {
+        resources: {
             prefsEditor: "%prefix/SeparatedPanelPrefsEditor.html"
         }
     });
 
     fluid.defaults("fluid.prefs.starterFullPreviewTemplateLoader", {
         gradeNames: ["fluid.prefs.starterTemplateLoader", "autoInit"],
-        templates: {
+        resources: {
             prefsEditor: "%prefix/FullPreviewPrefsEditor.html"
         }
     });
 
     fluid.defaults("fluid.prefs.starterFullNoPreviewTemplateLoader", {
         gradeNames: ["fluid.prefs.starterTemplateLoader", "autoInit"],
-        templates: {
+        resources: {
             prefsEditor: "%prefix/FullNoPreviewPrefsEditor.html"
         }
     });
@@ -34798,7 +34817,7 @@ var fluid_2_0 = fluid_2_0 || {};
 
     fluid.defaults("fluid.prefs.starterMessageLoader", {
         gradeNames: ["fluid.prefs.resourceLoader", "autoInit"],
-        templates: {
+        resources: {
             prefsEditor: "%prefix/prefsEditor.json",
             textSize: "%prefix/textSize.json",
             textFont: "%prefix/textFont.json",
@@ -34813,7 +34832,7 @@ var fluid_2_0 = fluid_2_0 || {};
 
 })(jQuery, fluid_2_0);
 ;/*
-Copyright 2011 OCAD University
+Copyright 2011-2015 OCAD University
 Copyright 2011 Lucendo Development Ltd.
 
 Licensed under the Educational Community License (ECL), Version 2.0 or the New
@@ -34848,7 +34867,7 @@ var fluid_2_0 = fluid_2_0 || {};
             onCreateSlidingPanelReady: {
                 events: {
                     iframeRendered: "afterRender",
-                    onMsgResolverReady: "onMsgResolverReady"
+                    onPrefsEditorMessagesLoaded: "onPrefsEditorMessagesLoaded"
                 }
             },
             templatesAndIframeReady: {
@@ -34887,9 +34906,6 @@ var fluid_2_0 = fluid_2_0 || {};
                 createOnEvent: "onCreateSlidingPanelReady",
                 options: {
                     gradeNames: ["fluid.prefs.msgLookup"],
-                    members: {
-                        messageResolver: "{separatedPanel}.msgResolver"
-                    },
                     strings: {
                         showText: "{that}.msgLookup.slidingPanelShowText",
                         hideText: "{that}.msgLookup.slidingPanelHideText"
@@ -34908,6 +34924,14 @@ var fluid_2_0 = fluid_2_0 || {};
                             // override default implementation
                             "this": null,
                             "method": null
+                        }
+                    },
+                    components: {
+                        msgResolver: {
+                            type: "fluid.messageResolver",
+                            options: {
+                                messageBase: "{messageLoader}.resources.prefsEditor.resourceText"
+                            }
                         }
                     }
                 }
@@ -35527,8 +35551,8 @@ var fluid_2_0 = fluid_2_0 || {};
 
             fluid.prefs.addAtPath(auxSchema, [type, "components"], components);
             fluid.prefs.addAtPath(auxSchema, [type, "selectors"], selectors);
-            fluid.prefs.addAtPath(auxSchema, ["templateLoader", "templates"], templates);
-            fluid.prefs.addAtPath(auxSchema, ["messageLoader", "templates"], messages);
+            fluid.prefs.addAtPath(auxSchema, ["templateLoader", "resources"], templates);
+            fluid.prefs.addAtPath(auxSchema, ["messageLoader", "resources"], messages);
             fluid.prefs.addAtPath(auxSchema, "initialModel", initialModel);
         }
 
@@ -35686,8 +35710,8 @@ var fluid_2_0 = fluid_2_0 || {};
             // Add onto auxSchema
             fluid.prefs.addAtPath(auxSchema, ["panels", "components"], components);
             fluid.prefs.addAtPath(auxSchema, ["panels", "selectors"], selectors);
-            fluid.prefs.addAtPath(auxSchema, ["templateLoader", "templates"], templates);
-            fluid.prefs.addAtPath(auxSchema, ["messageLoader", "templates"], messages);
+            fluid.prefs.addAtPath(auxSchema, ["templateLoader", "resources"], templates);
+            fluid.prefs.addAtPath(auxSchema, ["messageLoader", "resources"], messages);
             fluid.prefs.addAtPath(auxSchema, "initialModel", initialModel);
             $.extend(true, auxSchema, {panelsToIgnore: panelsToIgnore});
         });
@@ -35723,7 +35747,7 @@ var fluid_2_0 = fluid_2_0 || {};
 
             type = "template";
             if (prefName === type) {
-                fluid.set(auxSchema, ["templateLoader", "templates", "prefsEditor"], auxSchema[type]);
+                fluid.set(auxSchema, ["templateLoader", "resources", "prefsEditor"], auxSchema[type]);
                 delete auxSchema[type];
             }
 
@@ -35734,7 +35758,7 @@ var fluid_2_0 = fluid_2_0 || {};
 
             type = "message";
             if (prefName === type) {
-                fluid.set(auxSchema, ["messageLoader", "templates", "prefsEditor"], auxSchema[type]);
+                fluid.set(auxSchema, ["messageLoader", "resources", "prefsEditor"], auxSchema[type]);
                 delete auxSchema[type];
             }
 
@@ -35790,7 +35814,8 @@ var fluid_2_0 = fluid_2_0 || {};
                 "createOnEvent": "onPrefsEditorMarkupReady",
                 "container": "{prefsEditor}.dom.%prefKey",
                 "options.gradeNames": "fluid.prefs.prefsEditorConnections",
-                "options.resources.template": "{templateLoader}.resources.%prefKey"
+                "options.resources.template": "{templateLoader}.resources.%prefKey",
+                "options.messageBase": "{messageLoader}.resources.%prefKey.resourceText"
             },
             panelModel: {
                 "%internalModelName": "{prefsEditor}.model.%externalModelName"
@@ -35799,7 +35824,8 @@ var fluid_2_0 = fluid_2_0 || {};
                 "%subPrefKey": "{templateLoader}.resources.%subPrefKey"
             },
             subPanel: {
-                "container": "{%compositePanel}.dom.%prefKey"
+                "container": "{%compositePanel}.dom.%prefKey",
+                "options.messageBase": "{messageLoader}.resources.%prefKey.resourceText"
             },
             enactor: {
                 "container": "{uiEnhancer}.container"
