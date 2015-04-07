@@ -36,16 +36,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         styles: {
             show: "gpii-fd-show"
         },
-        strings: {
-            back: "Back",
-            backTooltip: "Select to go back to last step",
-            next: "Next",
-            nextTooltip: "Select to go to next step",
-            start: "Let's start",
-            startTooltip: "Select to start",
-            finish: "Finish",
-            finishTooltip: "Select to finish"
-        },
         modelRelay: {
             target: "currentPanelNum",
             singleTransform: {
@@ -74,6 +64,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             "onCreate.setButtonStates": "{that}.setButtonStates"
         },
+        components: {
+            msgResolver: {
+                type: "fluid.messageResolver"
+            }
+        },
         invokers: {
             setButtonStates: {
                 funcName: "gpii.firstDiscovery.navButtons.setButtonStates",
@@ -91,6 +86,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 funcName: "gpii.firstDiscovery.navButtons.adjustCurrentPanelNum",
                 args: ["{that}", 1]
             }
+        },
+        distributeOptions: {
+            source: "{that}.options.messageBase",
+            target: "{that > msgResolver}.options.messageBase"
         }
     });
 
@@ -100,7 +99,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     gpii.firstDiscovery.navButtons.setButtonStates = function (that) {
         var currentPanelNum = that.model.currentPanelNum,
-            strings = that.options.strings,
             backButton = that.locate("back"),
             nextButton = that.locate("next"),
             backButtonId = fluid.allocateSimpleId(backButton),
@@ -108,19 +106,19 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             showSelector = that.options.styles.show,
             isFirstPanel = currentPanelNum === that.options.panelStartNum,
             disposition = gpii.firstDiscovery.navButtons.indexToDisposition(currentPanelNum, that.options.panelStartNum, that.options.panelTotalNum),
-            nextLabel = strings[["start", "next", "finish"][disposition]],
-            nextTooltipContent = strings[["startTooltip", "nextTooltip", "finishTooltip"][disposition]];
+            nextLabel = that.msgResolver.resolve(["start", "next", "finish"][disposition]),
+            nextTooltipContent = that.msgResolver.resolve(["startTooltip", "nextTooltip", "finishTooltip"][disposition]);
 
         backButton.prop("disabled", isFirstPanel);
         backButton.toggleClass(showSelector, !isFirstPanel);
-        that.locate("backLabel").html(strings.back);
+        that.locate("backLabel").html(that.msgResolver.resolve("back"));
         that.locate("nextLabel").html(nextLabel);
         nextButton.addClass(showSelector);
         if (isFirstPanel) {
             that.tooltip.close();  // Close the existing tooltip for the back button otherwise it will linger after the back button becomes hidden
             that.tooltip.applier.fireChangeRequest({path: "idToContent." + backButtonId, type: "DELETE"});
         } else {
-            that.tooltip.applier.change("idToContent." + backButtonId, strings.backTooltip);
+            that.tooltip.applier.change("idToContent." + backButtonId, that.msgResolver.resolve("backTooltip"));
         }
         that.tooltip.applier.change("idToContent." + nextButtonId, nextTooltipContent);
     };

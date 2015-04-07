@@ -20,10 +20,10 @@ https://github.com/gpii/universal/LICENSE.txt
             unmuted: "unmuted"
         };
 
-        gpii.firstDiscovery.selfVoicing.setLabel(elm, testStrings, true);
+        gpii.firstDiscovery.selfVoicing.setLabel(elm, testStrings.unmuted, testStrings.muted, true);
         jqUnit.assertEquals("The mute label should be applied", testStrings.unmuted, elm.text());
 
-        gpii.firstDiscovery.selfVoicing.setLabel(elm, testStrings, false);
+        gpii.firstDiscovery.selfVoicing.setLabel(elm, testStrings.unmuted, testStrings.muted, false);
         jqUnit.assertEquals("The mute label should be applied", testStrings.muted, elm.text());
     });
 
@@ -55,7 +55,20 @@ https://github.com/gpii/universal/LICENSE.txt
         components: {
             selfVoicing: {
                 type: "gpii.tests.firstDiscovery.selfVoicing",
-                container: ".gpiic-fd-selfVoicing"
+                container: ".gpiic-fd-selfVoicing",
+                options: {
+                    model: {
+                        enabled: true
+                    },
+                    messageBase: {
+                        "unmuted": "turn voice OFF",
+                        "unmutedTooltip": "Select to turn voice off",
+                        "unmutedMsg": "voice is on",
+                        "muted": "turn voice ON",
+                        "mutedTooltip": "Select to turn voice on",
+                        "mutedMsg": "voice is off"
+                    }
+                }
             },
             selfVoicingTester: {
                 type: "gpii.tests.selfVoicingTester"
@@ -82,7 +95,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 name: "Test Init",
                 type: "test",
                 func: "{that}.testRendering",
-                args: ["{selfVoicing}.options.strings.muted", "{selfVoicing}.options.strings.mutedTooltip", "{selfVoicing}.options.styles.muted"]
+                args: ["{selfVoicing}.options.messageBase.unmuted", "{selfVoicing}.options.messageBase.unmutedTooltip", "{selfVoicing}.options.styles.unmuted"]
             }, {
                 expect: 4,
                 name: "Test interaction",
@@ -91,7 +104,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     element: "{selfVoicing}.dom.mute"
                 }, {
                     listener: "{that}.testRendering",
-                    args: ["{selfVoicing}.options.strings.unmuted", "{selfVoicing}.options.strings.unmutedTooltip", "{selfVoicing}.options.styles.unmuted"],
+                    args: ["{selfVoicing}.options.messageBase.muted", "{selfVoicing}.options.messageBase.mutedTooltip", "{selfVoicing}.options.styles.muted"],
                     spec: {path: "enabled", priority: "last"},
                     changeEvent: "{selfVoicing}.applier.modelChanged"
                 }, {

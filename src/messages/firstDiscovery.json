@@ -6,12 +6,14 @@
     "start": "start",
     "startTooltip": "Select to start",
     "finish": "finish",
-    "mutedMsg": "voice is off",
-    "unmutedMsg": "voice is on",
     "finishTooltip": "Select to finish",
+
     "unmuted": "turn voice OFF",
     "unmutedTooltip": "Select to turn voice off",
+    "unmutedMsg": "voice is on",
     "muted": "turn voice ON",
     "mutedTooltip": "Select to turn voice on",
+    "mutedMsg": "voice is off",
+
     "panelMsg": "This is step %currentPanel of %numPanels. %instructions Press 'h' for help."
 }

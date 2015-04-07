@@ -27,21 +27,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 createOnEvent: "onPrefsEditorReady",
                 type: "gpii.firstDiscovery.selfVoicing",
                 options: {
-                    gradeNames: ["fluid.prefs.msgLookup"],
                     model: {
                         enabled: true
                     },
-                    members: {
-                        messageResolver: "{firstDiscoveryEditor}.msgResolver"
-                    },
-                    strings: {
-                        mutedMsg: "{that}.msgLookup.mutedMsg",
-                        unmutedMsg: "{that}.msgLookup.unmutedMsg",
-                        unmuted: "{that}.msgLookup.unmuted",
-                        unmutedTooltip: "{that}.msgLookup.unmutedTooltip",
-                        muted: "{that}.msgLookup.muted",
-                        mutedTooltip: "{that}.msgLookup.mutedTooltip"
-                    }
+                    messageBase: "{messageLoader}.resources.prefsEditor.resourceText"
                 }
             },
             prefsEditor: {
@@ -65,23 +54,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 container: "{that}.dom.navButtons",
                 createOnEvent: "onCreateNavButtons",
                 options: {
-                    gradeNames: ["fluid.prefs.msgLookup"],
-                    members: {
-                        messageResolver: "{firstDiscoveryEditor}.msgResolver"
-                    },
                     model: {
                         currentPanelNum: "{firstDiscoveryEditor}.model.currentPanelNum"
                     },
-                    strings: {
-                        back: "{that}.msgLookup.back",
-                        backTooltip: "{that}.msgLookup.backTooltip",
-                        next: "{that}.msgLookup.next",
-                        nextTooltip: "{that}.msgLookup.nextTooltip",
-                        start: "{that}.msgLookup.start",
-                        startTooltip: "{that}.msgLookup.startTooltip",
-                        finish: "{that}.msgLookup.finish",
-                        finishTooltip: "{that}.msgLookup.finishTooltip"
-                    },
+                    messageBase: "{messageLoader}.resources.prefsEditor.resourceText",
                     styles: "{firstDiscoveryEditor}.options.styles",
                     panelTotalNum: "{firstDiscoveryEditor}.panels.length"
                 }
