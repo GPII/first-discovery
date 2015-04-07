@@ -6,6 +6,10 @@
     "lang-de": "Deutsch",
     "lang-ne": "Nederlands",
     "lang-sv": "Svenska",
-    "prev": "previous page",
-    "next": "next page"
+    "lang-en-label": "Select for English",
+    "lang-fr-label": "Sélectionnez pour le Français",
+    "lang-es-label": "Seleccionar para Español",
+    "lang-de-label": "Wählen Sie für die Deutsche",
+    "lang-ne-label": "Select for Nederlands",
+    "lang-sv-label": "Select for Svenska"
 }

@@ -205,7 +205,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * language panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.lang", {
-        gradeNames: ["fluid.prefs.panel", "autoInit"],
+        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip", "autoInit"],
         preferenceMap: {
             "gpii.firstDiscovery.language": {
                 "model.lang": "default",
@@ -221,31 +221,17 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         styles: {
             display: "gpii-fd-display"
         },
-        model: {
-            startButtonNum: 0
-        },
-        modelRelay: {
-            target: "startButtonNum",
-            singleTransform: {
-                type: "fluid.transforms.limitRange",
-                input: "{that}.model.startButtonNum",
-                min: 0,
-                max: "{that}.options.controlValues.lang.length"
-            }
-        },
-        modelListeners: {
-            startButtonNum: "{that}.setButtonStates"
-        },
         numOfLangPerPage: 3,
         selectors: {
             instructions: ".gpiic-fd-instructions",
             langRow: ".gpiic-fd-lang-row",
             langLabel: ".gpiic-fd-lang-label",
             langInput: ".gpiic-fd-lang-input",
+            controlsDiv: ".gpiic-fd-lang-controls",
             prev: ".gpiic-fd-lang-prev",
             next: ".gpiic-fd-lang-next"
         },
-        selectorsToIgnore: ["prev", "next"],
+        selectorsToIgnore: ["controlsDiv", "prev", "next"],
         repeatingSelectors: ["langRow"],
         protoTree: {
             instructions: {markup: {messagekey: "langInstructions"}},
@@ -263,21 +249,35 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         invokers: {
-            setButtonStates: {
-                funcName: "gpii.firstDiscovery.panel.lang.setButtonStates",
+            setNavKeyStatus: {
+                funcName: "gpii.firstDiscovery.panel.lang.setNavKeyStatus",
                 args: ["{that}"]
             },
             bindPrev: {
-                funcName: "gpii.firstDiscovery.panel.lang.adjustStartButtonNumber",
+                funcName: "gpii.firstDiscovery.panel.lang.moveLangFocus",
                 args: ["{that}", -1]
             },
             bindNext: {
-                funcName: "gpii.firstDiscovery.panel.lang.adjustStartButtonNumber",
+                funcName: "gpii.firstDiscovery.panel.lang.moveLangFocus",
                 args: ["{that}", 1]
+            },
+            scrollLangIntoView: {
+                funcName: "gpii.firstDiscovery.panel.lang.scrollLangIntoView",
+                args: ["{that}"]
+            }
+        },
+        modelListeners: {
+            lang: {
+                funcName: "gpii.firstDiscovery.panel.lang.onLanguageChange",
+                args: ["{that}"]
             }
         },
         listeners: {
-            "afterRender.setInitialButtonStates": "{that}.setButtonStates",
+            "afterRender.populateTooltipContentMap": {
+                funcName: "gpii.firstDiscovery.panel.lang.populateTooltipContentMap",
+                args: ["{that}"]
+            },
+            "afterRender.setInitialButtonStates": "{that}.setNavKeyStatus",
             "afterRender.bindPrev": {
                 "this": "{that}.dom.prev",
                 method: "click",
@@ -287,27 +287,85 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "this": "{that}.dom.next",
                 method: "click",
                 args: ["{that}.bindNext"]
+            },
+            "afterRender.scrollLangIntoView": "{that}.scrollLangIntoView",
+            "afterRender.preventWrapWithArrowKeys": {
+                funcName: "gpii.firstDiscovery.panel.lang.preventWrapWithArrowKeys",
+                args: ["{that}"]
             }
-        }
+        },
+        renderOnInit: true
     });
 
-    gpii.firstDiscovery.panel.lang.adjustStartButtonNumber = function (that, adjustValue) {
-        that.applier.change("startButtonNum", that.model.startButtonNum + adjustValue);
+    gpii.firstDiscovery.panel.lang.setNavKeyStatus = function (that) {
+        var langArray = that.options.controlValues.lang,
+            selectedLang = that.model.lang;
+
+        that.locate("prev").prop("disabled", selectedLang === langArray[0]);
+        that.locate("next").prop("disabled", selectedLang === langArray[langArray.length - 1]);
     };
 
-    gpii.firstDiscovery.panel.lang.setButtonStates = function (that) {
-        var langButtons = that.locate("langRow"),
-            langButtonTotal = langButtons.length,
-            displayCss = that.options.styles.display,
-            startButtonNum = that.model.startButtonNum,
-            endButtonNum = startButtonNum + that.options.numOfLangPerPage - 1;
+    gpii.firstDiscovery.panel.lang.onLanguageChange = function (that) {
+        that.setNavKeyStatus();
+        that.scrollLangIntoView();
+    };
 
-        fluid.each(langButtons, function (button, index) {
-            $(button).toggleClass(displayCss, index >= startButtonNum && index <= endButtonNum);
+    gpii.firstDiscovery.panel.lang.moveLangFocus = function (that, adjustBy) {
+        var langButtons = that.locate("langRow"),
+            langArray = that.options.controlValues.lang,
+            nextIndex = langArray.indexOf(that.model.lang) + adjustBy;
+
+        if (nextIndex >= 0 && nextIndex <= langArray.length) {
+            that.applier.change("lang", langArray[nextIndex]);
+        }
+    };
+
+    gpii.firstDiscovery.panel.lang.scrollLangIntoView = function (that) {
+        var currentLangIndex = that.options.controlValues.lang.indexOf(that.model.lang),
+            numOfLangPerPage = that.options.numOfLangPerPage;
+
+        // Scroll the selected language button into the view
+        if (currentLangIndex + 1 >= numOfLangPerPage) {
+            var currentButton = $(that.locate("langRow")[currentLangIndex]),
+                buttonHeight = currentButton.height(),
+                currentButtonPosition = currentButton.position(),
+                prevButton = currentButton.prev(),
+                distanceToPrevButton = prevButton ? (currentButtonPosition.top - prevButton.position().top - buttonHeight) : 0,
+                heightToMove = (buttonHeight + distanceToPrevButton) * (currentLangIndex - numOfLangPerPage + 1),
+                controlsDiv = $(that.options.selectors.controlsDiv);
+
+            controlsDiv.animate({scrollTop: heightToMove + "px"}, 0);
+        }
+    };
+
+    gpii.firstDiscovery.panel.lang.stopArrowBrowseOnEdgeButtons = function (button, keyCodes) {
+        $(button).keydown(function (e) {
+            if (keyCodes.indexOf(e.which) !== -1) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    };
+
+    // When the focus is on the first language button, prevent that the press of up or left arrow keys to move to the last language button;
+    // when the focus is on the last language button, prevent that the press of down or right arrow keys to move to the first language button.
+    gpii.firstDiscovery.panel.lang.preventWrapWithArrowKeys = function (that) {
+        var langButtons = that.locate("langInput");
+
+        gpii.firstDiscovery.panel.lang.stopArrowBrowseOnEdgeButtons(langButtons[0], [$.ui.keyCode.UP, $.ui.keyCode.LEFT]);
+        gpii.firstDiscovery.panel.lang.stopArrowBrowseOnEdgeButtons(langButtons[langButtons.length - 1], [$.ui.keyCode.DOWN, $.ui.keyCode.RIGHT]);
+    };
+
+    gpii.firstDiscovery.panel.lang.populateTooltipContentMap = function (that) {
+        var langButtons = that.locate("langRow"),
+            idToContent = {};
+
+        fluid.each(that.options.stringArrayIndex.lang, function (msgKey, index) {
+            var buttonId = fluid.allocateSimpleId(langButtons[index]);
+            idToContent[buttonId] = that.msgLookup.lookup(msgKey + "-label");
         });
 
-        that.locate("prev").prop("disabled", startButtonNum === 0);
-        that.locate("next").prop("disabled", endButtonNum > langButtonTotal - 2);
+        that.tooltip.applier.change("idToContent", idToContent);
     };
 
     /*
