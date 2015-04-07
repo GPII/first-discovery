@@ -58,8 +58,8 @@ https://github.com/gpii/universal/LICENSE.txt
             gpii.tests.verifyLabels(msg, that, {
                 backLabel: undefined,
                 backTooltip: undefined,
-                nextLabel: that.options.strings.start,
-                nextTooltip: that.options.strings.startTooltip
+                nextLabel: that.options.messageBase.start,
+                nextTooltip: that.options.messageBase.startTooltip
             });
         }
 
@@ -72,10 +72,10 @@ https://github.com/gpii/universal/LICENSE.txt
                 nextVisible: true
             });
             gpii.tests.verifyLabels(msg, that, {
-                backLabel: that.options.strings.back,
-                backTooltip: that.options.strings.backTooltip,
-                nextLabel: that.options.strings.next,
-                nextTooltip: that.options.strings.nextTooltip
+                backLabel: that.options.messageBase.back,
+                backTooltip: that.options.messageBase.backTooltip,
+                nextLabel: that.options.messageBase.next,
+                nextTooltip: that.options.messageBase.nextTooltip
             });
         }
 
@@ -88,10 +88,10 @@ https://github.com/gpii/universal/LICENSE.txt
                 nextVisible: true
             });
             gpii.tests.verifyLabels(msg, that, {
-                backLabel: that.options.strings.back,
-                backTooltip: that.options.strings.backTooltip,
-                nextLabel: that.options.strings.finish,
-                nextTooltip: that.options.strings.finishTooltip
+                backLabel: that.options.messageBase.back,
+                backTooltip: that.options.messageBase.backTooltip,
+                nextLabel: that.options.messageBase.finish,
+                nextTooltip: that.options.messageBase.finishTooltip
             });
         }
     };
@@ -103,6 +103,16 @@ https://github.com/gpii/universal/LICENSE.txt
             panelTotalNum: 6,
             model: {
                 currentPanelNum: null
+            },
+            messageBase: {
+                "back": "back",
+                "backTooltip": "Select to go back to last step",
+                "next": "next",
+                "nextTooltip": "Select to go to next step",
+                "start": "start",
+                "startTooltip": "Select to start",
+                "finish": "finish",
+                "finishTooltip": "Select to finish"
             }
         });
 

@@ -13,29 +13,13 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.registerNamespace("gpii.tests");
 
-    /***************
-     * Panel Tests *
-     ***************/
-
-    fluid.defaults("gpii.tests.panels.defaultTestPanel", {
-        gradeNames: ["fluid.eventedComponent", "autoInit"],
-        strings: {},
-        testMessages: {},
-        parentBundle: {
-            expander: {
-                funcName: "fluid.messageResolver",
-                args: [{messageBase: "{that}.options.testMessages"}]
-            }
-        }
-    });
-
     /************
      * textSize *
      ************/
 
     fluid.defaults("gpii.tests.prefs.panel.textSize", {
-        gradeNames: ["gpii.firstDiscovery.panel.textSize", "gpii.tests.panels.defaultTestPanel", "autoInit"],
-        testMessages: {
+        gradeNames: ["gpii.firstDiscovery.panel.textSize", "autoInit"],
+        messageBase: {
             rangeInstructions: "Text size instructions.",
             increaseLabel: "larger",
             decreaseLabel: "smaller"
@@ -120,15 +104,15 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     gpii.tests.textSizeTester.verifyRendering = function (that) {
-        var messages = that.options.testMessages;
+        var messages = that.options.messageBase;
         jqUnit.assertEquals("The text for instructions should be rendered.", messages.rangeInstructions, that.locate("rangeInstructions").text());
         jqUnit.assertEquals("The text for increase button should be rendered.", messages.increaseLabel, that.locate("increaseLabel").text());
         jqUnit.assertEquals("The text for decrease button should be rendered.", messages.decreaseLabel, that.locate("decreaseLabel").text());
 
         var increaseId = that.locate("increase").attr("id");
         var decreaseId = that.locate("decrease").attr("id");
-        jqUnit.assertEquals("The tooltip model for the increase button has been properly set", that.options.testMessages.increaseLabel, that.tooltip.model.idToContent[increaseId]);
-        jqUnit.assertEquals("The tooltip model for the decrease button has been properly set", that.options.testMessages.decreaseLabel, that.tooltip.model.idToContent[decreaseId]);
+        jqUnit.assertEquals("The tooltip model for the increase button has been properly set", that.options.messageBase.increaseLabel, that.tooltip.model.idToContent[increaseId]);
+        jqUnit.assertEquals("The tooltip model for the decrease button has been properly set", that.options.messageBase.decreaseLabel, that.tooltip.model.idToContent[decreaseId]);
     };
 
     gpii.tests.textSizeTester.verifyModel = function (that, expectedModel) {
@@ -145,8 +129,8 @@ https://github.com/gpii/universal/LICENSE.txt
      *************/
 
     fluid.defaults("gpii.tests.prefs.panel.speakText", {
-        gradeNames: ["gpii.firstDiscovery.panel.speakText", "gpii.tests.panels.defaultTestPanel", "autoInit"],
-        testMessages: {
+        gradeNames: ["gpii.firstDiscovery.panel.speakText", "autoInit"],
+        messageBase: {
             "speakTextInstructions": "Speak text instructions",
             "speakText-no": "no",
             "speakText-yes": "yes"
@@ -208,7 +192,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.speakTextTester.verifyRendering = function (that) {
-        jqUnit.assertEquals("The instructions should have been set correctly.", that.options.testMessages.speakTextInstructions, that.locate("instructions").text());
+        jqUnit.assertEquals("The instructions should have been set correctly.", that.options.messageBase.speakTextInstructions, that.locate("instructions").text());
         fluid.each(that.locate("choiceLabel"), function (elm, idx) {
             elm = $(elm);
             jqUnit.assertEquals("Choice #" + idx + " should have the correct label.", that.options.choiceLabels[idx], elm.text());

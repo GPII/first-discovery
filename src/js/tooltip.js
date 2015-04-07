@@ -20,12 +20,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * A grade component that is to be attached on components where tooltips are needed
      *
      * To use it: provide the option "tooltipContentMap" that defines the mapping between
-     * the names in the selectors block and strings block for dom elements to have tooltips:
+     * the names in the selectors block and message bundle for dom elements to have tooltips:
      * {
      *     "back": "backLabel"
      * }
      * The left hand side is the name in the selectors block for the element to have the tooltip.
-     * The right hand side is the name in the strings block for the content to be shown for that element.
+     * The right hand side is the name in the message bundle for the content to be shown for that element.
      */
     fluid.defaults("gpii.firstDiscovery.attachTooltip", {
         gradeNames: ["fluid.viewRelayComponent", "autoInit"],
@@ -48,7 +48,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         getTooltipModel: {
                             funcName: "gpii.firstDiscovery.attachTooltip.getTooltipModel",
                             // Specifying each elements in argument list to force them to resolve.
-                            args: ["{attachTooltip}.dom", "{attachTooltip}.options.strings", "{attachTooltip}.options.parentBundle", "{attachTooltip}.options.tooltipContentMap"]
+                            args: ["{attachTooltip}.dom", "{fluid.messageResolver}", "{attachTooltip}.options.tooltipContentMap"]
                         }
                     }
                 }
@@ -60,12 +60,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    gpii.firstDiscovery.attachTooltip.getTooltipModel = function (domBinder, strings, parentBundle, map) {
+    gpii.firstDiscovery.attachTooltip.getTooltipModel = function (domBinder, msgResolver, map) {
         var idToContent = {};
 
         fluid.each(map, function (string, selector) {
             var id = fluid.allocateSimpleId(domBinder.locate(selector));
-            idToContent[id] = strings[string] || parentBundle.resolve(string);
+            idToContent[id] = msgResolver.resolve(string);
         });
 
         return idToContent;
