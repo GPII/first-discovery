@@ -35,6 +35,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         messageResolver: "{firstDiscoveryEditor}.msgResolver"
                     },
                     strings: {
+                        mutedMsg: "{that}.msgLookup.mutedMsg",
+                        unmutedMsg: "{that}.msgLookup.unmutedMsg",
                         unmuted: "{that}.msgLookup.unmuted",
                         unmutedTooltip: "{that}.msgLookup.unmutedTooltip",
                         muted: "{that}.msgLookup.muted",

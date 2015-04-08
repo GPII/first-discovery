@@ -23,6 +23,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         strings: {
             muted: "turn voice ON",
+            mutedMsg: "voice is off",
+            unmutedMsg: "voice is on",
             mutedTooltip: "Select to turn voice on",
             unmuted: "turn voice OFF",
             unmutedTooltip: "Select to turn voice off"
@@ -61,6 +63,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             clearQueue: {
                 funcName: "gpii.firstDiscovery.selfVoicing.clearQueue",
                 args: ["{that}"]
+            },
+            speakVoiceState: {
+                funcName: "gpii.firstDiscovery.selfVoicing.speakVoiceState",
+                args: ["{that}"]
             }
         },
         listeners: {
@@ -81,9 +87,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 {
                     listener: "{that}.setTooltip",
                     excludeSource: "init"
-                },
-                {
+                }, {
                     listener: "{that}.clearQueue",
+                    excludeSource: "init"
+                }, {
+                    listener: "{that}.speakVoiceState",
                     excludeSource: "init"
                 }
             ]
@@ -94,6 +102,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         if (that.model.enabled) {
             fluid.textToSpeech.queueSpeech(that, text, true, options);
         }
+    };
+
+    gpii.firstDiscovery.selfVoicing.speakVoiceState = function (that, options) {
+        var msg = that.model.enabled ? that.options.strings.unmutedMsg : that.options.strings.mutedMsg;
+        // called directly as it needs to be spoken regardless of enabled state.
+        fluid.textToSpeech.queueSpeech(that, msg, true, options);
     };
 
     gpii.firstDiscovery.selfVoicing.toggleState = function (that) {
