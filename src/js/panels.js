@@ -231,6 +231,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             prev: ".gpiic-fd-lang-prev",
             next: ".gpiic-fd-lang-next"
         },
+        strings: {
+            "navButtonLabel": "Select to view more languages"
+        },
+        tooltipContentMap: {
+            "prev": "navButtonLabel",
+            "next": "navButtonLabel"
+        },
         selectorsToIgnore: ["controlsDiv", "prev", "next"],
         repeatingSelectors: ["langRow"],
         protoTree: {
@@ -297,8 +304,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     gpii.firstDiscovery.panel.lang.moveLangFocus = function (that, adjustBy) {
-        var langButtons = that.locate("langRow"),
-            langArray = that.options.controlValues.lang,
+        var langArray = that.options.controlValues.lang,
             nextIndex = langArray.indexOf(that.model.lang) + adjustBy;
 
         if (nextIndex >= 0 && nextIndex <= langArray.length) {
@@ -307,7 +313,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     gpii.firstDiscovery.panel.lang.scrollLangIntoView = function (that) {
-        var currentLangIndex = that.options.controlValues.lang.indexOf(that.model.lang),
+        var currentLang = that.model.lang;
+
+        if (!currentLang) {
+            return;
+        }
+
+        var currentLangIndex = that.options.controlValues.lang.indexOf(currentLang),
             numOfLangPerPage = that.options.numOfLangPerPage;
 
         // Scroll the selected language button into the view
@@ -348,7 +360,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.panel.lang.populateTooltipContentMap = function (that) {
         var langButtons = that.locate("langRow"),
             langInputs = that.locate("langInput"),
-            idToContent = {};
+            idToContent = that.tooltip.getTooltipModel();
 
         fluid.each(that.options.stringArrayIndex.lang, function (msgKey, index) {
             var buttonId = fluid.allocateSimpleId(langButtons[index]),
