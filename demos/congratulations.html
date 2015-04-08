@@ -18,27 +18,15 @@
     <body>
         <section class="gpiic-congratulations small-12 gpii-fd gpii-congratulaions"></section>
         <script type="text/javascript">
-            // var that = gpii.firstDiscovery.congratulations(".gpiic-congratulations", {
-            //     resources: {
-            //         template: {
-            //             url: "../src/html/congratulationsTemplate.html"
-            //         }
-            //     },
-            //     // messageLoader: {
-            //     //     templates: {
-            //     //         message: "../src/messages/congratulations.json"
-            //     //     }
-            //     // }
-            // });
             gpii.firstDiscovery.congratulationsLoader(".gpiic-congratulations", {
                 templateLoader: {
-                    templates: {
+                    resources: {
                         congratulations: "../src/html/congratulationsTemplate.html"
                     }
                 },
                 messageLoader: {
-                    templates: {
-                        msgs: "../src/messages/congratulations.json"
+                    resources: {
+                        congratulations: "../src/messages/congratulations.json"
                     }
                 }
             });

@@ -30,6 +30,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             messageLoader: {
                 type: "fluid.prefs.resourceLoader",
                 options: {
+                    resourceOptions: {
+                        dataType: "json"
+                    },
                     events: {
                         onResourcesLoaded: "{loader}.events.onMessagesLoaded"
                     }
@@ -69,11 +72,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         styles: {
             show: "gpii-fd-show"
         },
-        strings: {
-            "content": "<p>Congratulations!</p><p>Your preferences have been saved to your account.</p>",
-            "closeLabel": "close",
-            "helpLabel": "help"
-        },
         invokers: {
             close: {
                 "this": "window",
@@ -88,14 +86,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "args": "{that}.close"
             }
         },
-        // components: {
-        //     msgResolver: {
-        //         type: "fluid.messageResolver"
-        //     }
-        // },
-        // rendererOptions: {
-        //     messageLocator: "{msgResolver}.resolve"
-        // },
+        components: {
+            msgResolver: {
+                type: "fluid.messageResolver"
+            }
+        },
+        rendererOptions: {
+            messageLocator: "{msgResolver}.resolve"
+        },
         renderOnInit: true,
         protoTree: {
             content: {
@@ -104,13 +102,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             closeLabel: {messagekey: "closeLabel"},
             help: {messagekey: "helpLabel"}
         },
-        // distributeOptions: [{
-        //     source: "{that}.options.messageBase",
-        //     target: "{that > msgResolver}.options.messageBase"
-        // }],
-        // resources: {
-        //     template: {}
-        // },
+        distributeOptions: [{
+            source: "{that}.options.messageBase",
+            target: "{that > msgResolver}.options.messageBase"
+        }],
         messageLoader: {}
     });
 
@@ -122,30 +117,24 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 container: "{that}.container",
                 createOnEvent: "onResourcesLoaded",
                 options: {
-                    // messageBase: "{messageLoader.}",
                     resources: {
                         template: "{templateLoader}.resources.congratulations"
-                    }
+                    },
+                    messageBase: "{messageLoader}.resources.congratulations.resourceText"
                 }
             }
         },
-        listeners: {
-            onTemplatesLoaded: {
-                listener: "gpii.firstDiscovery.congratulations.consoleLog",
-                priority: "first",
-                args: ["onTemplatesLoaded", "{that}"]
-            },
-            onMessagesLoaded: {
-                listener: "gpii.firstDiscovery.congratulations.consoleLog",
-                priority: "first",
-                args: ["onMessagesLoaded", "{that}"]
-            },
-            onResourcesLoaded: {
-                listener: "gpii.firstDiscovery.congratulations.consoleLog",
-                priority: "first",
-                args: ["onResourcesLoaded", "{that}"]
-            }
-        },
+        // The integrator must provide paths to the template and message bundle
+        // templateLoader: {
+        //     resources: {
+        //         congratulations: "../src/html/congratulationsTemplate.html"
+        //     }
+        // },
+        // messageLoader: {
+        //     resources: {
+        //         congratulations: "../src/messages/congratulations.json"
+        //     }
+        // },
         distributeOptions: [{
             source: "{that}.options.congratulations",
             removeSource: true,
@@ -160,10 +149,5 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             target: "{that > messageLoader}.options"
         }]
     });
-
-    //TODO remove this test console log function
-    gpii.firstDiscovery.congratulations.consoleLog = function (msg, obj) {
-        console.log(msg, obj);
-    };
 
 })(jQuery, fluid);
