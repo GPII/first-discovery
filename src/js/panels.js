@@ -249,10 +249,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         invokers: {
-            setNavKeyStatus: {
-                funcName: "gpii.firstDiscovery.panel.lang.setNavKeyStatus",
-                args: ["{that}"]
-            },
             bindPrev: {
                 funcName: "gpii.firstDiscovery.panel.lang.moveLangFocus",
                 args: ["{that}", -1]
@@ -260,24 +256,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             bindNext: {
                 funcName: "gpii.firstDiscovery.panel.lang.moveLangFocus",
                 args: ["{that}", 1]
-            },
-            scrollLangIntoView: {
-                funcName: "gpii.firstDiscovery.panel.lang.scrollLangIntoView",
-                args: ["{that}"]
-            }
-        },
-        modelListeners: {
-            lang: {
-                funcName: "gpii.firstDiscovery.panel.lang.onLanguageChange",
-                args: ["{that}"]
             }
         },
         listeners: {
-            "afterRender.populateTooltipContentMap": {
-                funcName: "gpii.firstDiscovery.panel.lang.populateTooltipContentMap",
-                args: ["{that}"]
-            },
-            "afterRender.setInitialButtonStates": "{that}.setNavKeyStatus",
             "afterRender.bindPrev": {
                 "this": "{that}.dom.prev",
                 method: "click",
@@ -288,13 +269,23 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 method: "click",
                 args: ["{that}.bindNext"]
             },
-            "afterRender.scrollLangIntoView": "{that}.scrollLangIntoView",
+            "afterRender.populateTooltipContentMap": {
+                funcName: "gpii.firstDiscovery.panel.lang.populateTooltipContentMap",
+                args: ["{that}"]
+            },
+            "afterRender.setButtonStates": {
+                funcName: "gpii.firstDiscovery.panel.lang.setNavKeyStatus",
+                args: ["{that}"]
+            },
+            "afterRender.scrollLangIntoView": {
+                funcName: "gpii.firstDiscovery.panel.lang.scrollLangIntoView",
+                args: ["{that}"]
+            },
             "afterRender.preventWrapWithArrowKeys": {
                 funcName: "gpii.firstDiscovery.panel.lang.preventWrapWithArrowKeys",
                 args: ["{that}"]
             }
-        },
-        renderOnInit: true
+        }
     });
 
     gpii.firstDiscovery.panel.lang.setNavKeyStatus = function (that) {
@@ -303,11 +294,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
         that.locate("prev").prop("disabled", selectedLang === langArray[0]);
         that.locate("next").prop("disabled", selectedLang === langArray[langArray.length - 1]);
-    };
-
-    gpii.firstDiscovery.panel.lang.onLanguageChange = function (that) {
-        that.setNavKeyStatus();
-        that.scrollLangIntoView();
     };
 
     gpii.firstDiscovery.panel.lang.moveLangFocus = function (that, adjustBy) {
@@ -332,9 +318,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 prevButton = currentButton.prev(),
                 distanceToPrevButton = prevButton ? (currentButtonPosition.top - prevButton.position().top - buttonHeight) : 0,
                 heightToMove = (buttonHeight + distanceToPrevButton) * (currentLangIndex - numOfLangPerPage + 1),
-                controlsDiv = $(that.options.selectors.controlsDiv);
+                controlsDiv = $(that.options.selectors.controlsDiv),
+                controlsDivBottom = controlsDiv.position().top + controlsDiv.height();
 
-            controlsDiv.animate({scrollTop: heightToMove + "px"}, 0);
+            if (currentButtonPosition.top === 0 || currentButtonPosition.top > controlsDivBottom) {
+                controlsDiv.animate({scrollTop: heightToMove + "px"}, 0);
+            }
         }
     };
 
@@ -358,11 +347,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     gpii.firstDiscovery.panel.lang.populateTooltipContentMap = function (that) {
         var langButtons = that.locate("langRow"),
+            langInputs = that.locate("langInput"),
             idToContent = {};
 
         fluid.each(that.options.stringArrayIndex.lang, function (msgKey, index) {
-            var buttonId = fluid.allocateSimpleId(langButtons[index]);
-            idToContent[buttonId] = that.msgLookup.lookup(msgKey + "-label");
+            var buttonId = fluid.allocateSimpleId(langButtons[index]),
+                inputId = fluid.allocateSimpleId(langInputs[index]),
+                msg = that.msgLookup.lookup(msgKey + "-label");
+
+            idToContent[buttonId] = msg;
+            idToContent[inputId] = msg;
         });
 
         that.tooltip.applier.change("idToContent", idToContent);
