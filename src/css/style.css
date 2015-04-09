@@ -373,7 +373,7 @@ button {
 }
 .gpii-fd-navIcons {
     clear: both;
-    margin: 0 3rem;
+    margin: 0 2rem;
     margin-top: 1.5rem; /* gap between main body and icons*/
 }
 .gpii-fd-navIcon {
@@ -484,4 +484,8 @@ input[type="text"].gpii-fd-keyboard-input:focus {
     box-shadow: 0 0 0 0.4rem rgb(244, 215, 75), /* Yellow */
                 0 0 0 0.6rem rgb(0, 0, 0);
     outline: none;
+}
+.gpii-fd-keyboard:before {
+    /* This is the wrong icon, but we don't have the key icon yet */
+    content: "\e60d";
 }
