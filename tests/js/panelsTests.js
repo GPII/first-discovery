@@ -204,10 +204,82 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("The model value should have been set correctly", expectedValue, that.model.speak);
     };
 
+    /*******************
+     * congratulations *
+     *******************/
+
+    fluid.defaults("gpii.tests.firstDiscovery.panel.congratulations", {
+        gradeNames: ["gpii.firstDiscovery.panel.congratulations", "autoInit"],
+        messageBase: {
+            "message": "<p>Congratulations!</p><p>Your preferences have been saved to your account.</p>",
+            "closeLabel": "close"
+        },
+        events: {
+            onClose: null
+        },
+        invokers: {
+            close: {
+                "this": null,
+                "method": null,
+                func: "{that}.events.onClose.fire"
+            }
+        }
+    });
+
+    fluid.defaults("gpii.tests.congratulationsPanel", {
+        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        components: {
+            congratulations: {
+                type: "gpii.tests.firstDiscovery.panel.congratulations",
+                container: ".gpiic-fd-congratulations"
+            },
+            congratulationsTester: {
+                type: "gpii.tests.congratulationsTester"
+            }
+        }
+    });
+
+    fluid.defaults("gpii.tests.congratulationsTester", {
+        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        modules: [{
+            name: "Tests the congratulations component",
+            tests: [{
+                expect: 2,
+                name: "Initialization",
+                sequence: [{
+                    func: "{congratulations}.refreshView"
+                }, {
+                    listener: "gpii.tests.congratulationsTester.testRendering",
+                    args: ["{congratulations}"],
+                    event: "{congratulations}.events.afterRender"
+                }]
+            }, {
+                expect: 1,
+                name: "Interaction",
+                sequence: [{
+                    jQueryTrigger: "click",
+                    element: "{congratulations}.dom.close"
+                }, {
+                    listener: "jqUnit.assert",
+                    args: ["The close button is wired up to the close invoker"],
+                    event: "{congratulations}.events.onClose"
+                }]
+            }]
+        }]
+    });
+
+    gpii.tests.congratulationsTester.testRendering = function (that) {
+        var expectedContent = $(that.options.messageBase.message).text();
+        jqUnit.assertEquals("The description should be rendered correctly", expectedContent, that.locate("message").text());
+        jqUnit.assertEquals("The close button should be labeled correctly", that.options.messageBase.closeLabel, that.locate("closeLabel").text());
+    };
+
+
     $(document).ready(function () {
         fluid.test.runTests([
             "gpii.tests.textSizePanel",
-            "gpii.tests.speakTextPanel"
+            "gpii.tests.speakTextPanel",
+            "gpii.tests.congratulationsPanel"
         ]);
     });
 

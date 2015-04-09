@@ -208,4 +208,39 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
+    fluid.defaults("gpii.firstDiscovery.panel.congratulations", {
+        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip.renderer", "autoInit"],
+        preferenceMap: {
+            "gpii.firstDiscovery.congratulations": {}
+        },
+        selectors: {
+            message: ".gpiic-fd-congratulations-message",
+            close: ".gpiic-fd-congratulations-closeButton",
+            closeLabel: ".gpiic-fd-congratulations-closeLabel"
+        },
+        selectorsToIgnore: ["close"],
+        invokers: {
+            close: {
+                "this": "window",
+                "method": "close"
+            }
+        },
+        listeners: {
+            "afterRender.bindClose": {
+                "this": "{that}.dom.close",
+                "method": "click",
+                "args": "{that}.close"
+            }
+        },
+        tooltipContentMap: {
+            "close": "closeLabel"
+        },
+        protoTree: {
+            message: {
+                markup: {messagekey: "message"}
+            },
+            closeLabel: {messagekey: "closeLabel"}
+        }
+    });
+
 })(jQuery, fluid);
