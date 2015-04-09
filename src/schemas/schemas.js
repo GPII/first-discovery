@@ -37,6 +37,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "message": "%prefix/lang.json"
                 }
             },
+            "keyboard": {
+                "type": "fluid.prefs.textSize",
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.keyboard",
+                    "container": ".gpiic-fd-prefsEditor-panel-keyboard",
+                    "template": "%prefix/keyboard.html",
+                    "message": "%prefix/keyboard.json"
+                }
+            },
             "textSize": {
                 "type": "fluid.prefs.textSize",
                 "enactor": {

@@ -23,9 +23,6 @@ body {
     width: 36rem;
     margin: 0 auto;
 }
-.gpii-fd:focus {
-    border: 3px solid red;
-}
 
 button {
     color: inherit;
@@ -467,4 +464,24 @@ button {
     padding: 0.5rem;
     background-color: #fed73a;
     bottom: -1rem;
+}
+
+/* Keyboard screens */
+input[type="text"].gpii-fd-keyboard-input {
+    font-size: 2rem;
+    padding: 2rem 1rem;
+    width: 28rem;
+    margin: 0 auto;
+    border: 3px solid #425165;
+    border-radius: 7px;
+    background-color: #eeeeee;
+}
+input[type="text"].gpii-fd-keyboard-input::-webkit-input-placeholder {
+    color: #425165;
+}
+input[type="text"].gpii-fd-keyboard-input:focus {
+    border: 0.2rem solid #fff; /* Yellow */
+    box-shadow: 0 0 0 0.4rem rgb(244, 215, 75), /* Yellow */
+                0 0 0 0.6rem rgb(0, 0, 0);
+    outline: none;
 }
