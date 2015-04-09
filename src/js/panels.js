@@ -16,7 +16,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.registerNamespace("gpii.firstDiscovery.panel");
 
     fluid.defaults("gpii.firstDiscovery.panel.ranged", {
-        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip", "autoInit"],
+        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip.renderer", "autoInit"],
         // Preferences Maps should direct the default model state
         // to model.value. The component is configured
         // with the expectation that "value" is the salient model property.
@@ -84,15 +84,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 listener: "gpii.firstDiscovery.panel.ranged.updateButtonState",
                 args: ["{that}"]
             },
-            "afterRender.updateMeter": "{that}.updateMeter",
-            "afterRender.updateTooltipModel": {
-                listener: "{that}.tooltip.applier.change",
-                args: ["idToContent", {
-                    expander: {
-                        func: "{that}.tooltip.getTooltipModel"
-                    }
-                }]
-            }
+            "afterRender.updateMeter": "{that}.updateMeter"
         },
         modelListeners: {
             value: [{

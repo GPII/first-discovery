@@ -94,7 +94,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     gpii.firstDiscovery.navButtons.indexToDisposition = function (currentPanelNum, panelStartNum, panelTotalNum) {
-        return currentPanelNum === panelStartNum ? 0 : (currentPanelNum === panelTotalNum ? 2 : 1);
+        return currentPanelNum === panelStartNum ? 0 : (currentPanelNum < panelTotalNum - 1 ? 1 : 2);
     };
 
     gpii.firstDiscovery.navButtons.setButtonStates = function (that) {
@@ -105,15 +105,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             nextButtonId = fluid.allocateSimpleId(nextButton),
             showSelector = that.options.styles.show,
             isFirstPanel = currentPanelNum === that.options.panelStartNum,
+            isLastPanel = currentPanelNum === that.options.panelTotalNum,
             disposition = gpii.firstDiscovery.navButtons.indexToDisposition(currentPanelNum, that.options.panelStartNum, that.options.panelTotalNum),
             nextLabel = that.msgResolver.resolve(["start", "next", "finish"][disposition]),
             nextTooltipContent = that.msgResolver.resolve(["startTooltip", "nextTooltip", "finishTooltip"][disposition]);
 
         backButton.prop("disabled", isFirstPanel);
-        backButton.toggleClass(showSelector, !isFirstPanel);
+        backButton.toggleClass(showSelector, !isFirstPanel && !isLastPanel);
         that.locate("backLabel").html(that.msgResolver.resolve("back"));
         that.locate("nextLabel").html(nextLabel);
-        nextButton.addClass(showSelector);
+        nextButton.toggleClass(showSelector, !isLastPanel);
         if (isFirstPanel) {
             that.tooltip.close();  // Close the existing tooltip for the back button otherwise it will linger after the back button becomes hidden
             that.tooltip.applier.fireChangeRequest({path: "idToContent." + backButtonId, type: "DELETE"});

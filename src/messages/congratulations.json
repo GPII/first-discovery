@@ -1,5 +1,4 @@
 {
-    "content": "<p>Congratulations!</p><p>Your preferences have been saved to your account.</p>",
-    "closeLabel": "close",
-    "helpLabel": "help"
+    "message": "<p>Congratulations!</p><p>Your preferences have been saved to your account.</p>",
+    "closeLabel": "close"
 }

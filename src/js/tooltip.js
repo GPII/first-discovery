@@ -71,4 +71,20 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         return idToContent;
     };
 
+    // Updates the tooltip model after rendering to ensure that the mapping
+    // between DOM elements and tooltip messages are correct.
+    fluid.defaults("gpii.firstDiscovery.attachTooltip.renderer", {
+        gradeNames: ["fluid.rendererRelayComponent", "gpii.firstDiscovery.attachTooltip", "autoInit"],
+        listeners: {
+            "afterRender.updateTooltipModel": {
+                listener: "{that}.tooltip.applier.change",
+                args: ["idToContent", {
+                    expander: {
+                        func: "{that}.tooltip.getTooltipModel"
+                    }
+                }]
+            }
+        }
+    });
+
 })(jQuery, fluid);

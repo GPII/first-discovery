@@ -93,16 +93,20 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         styles: {
             active: "gpii-fd-active",
             show: "gpii-fd-show",
-            currentPanel: "gpii-fd-current"
+            currentPanel: "gpii-fd-current",
+            lastPanel: "gpii-fd-lastPanel"
         },
         model: {
             currentPanelNum: 1
         },
         modelListeners: {
-            "currentPanelNum": {
+            "currentPanelNum": [{
                 listener: "{that}.showPanel",
                 excludeSource: "init"
-            }
+            }, {
+                listener: "gpii.firstDiscovery.setLastPanelStyle",
+                args: ["{that}.container", "{that}.options.styles.lastPanel", "{change}.value", "{firstDiscoveryEditor}.panels.length"]
+            }]
         },
         events: {
             onPrefsEditorReady: null,
@@ -135,5 +139,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         fluid.each(panels, function (panel, index) {
             $(panel).toggleClass(selectorForCurrent, toShow === (index + 1));
         });
+    };
+
+    gpii.firstDiscovery.setLastPanelStyle = function (elm, style, currentPanel, panelTotalNum) {
+        var isLastPanel = currentPanel === panelTotalNum;
+        elm.toggleClass(style, isLastPanel);
     };
 })(jQuery, fluid);

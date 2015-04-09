@@ -1,12 +1,8 @@
-.gpii-congratulaions {
-    color: #425165; /* blue-grey */
-}
-
-.gpii-congratulations-buttons {
+.gpii-fd-congratulations-buttons {
     text-align: center;
 }
 
-.gpii-congratulations-closeButton {
+.gpii-fd-congratulations-closeButton {
     border-radius: 0.5rem;
     background-color: #425165; /* blue-grey */
     color: #ffffff;
@@ -14,32 +10,30 @@
     line-height: 2rem;
     height: 4.2rem;
 }
-.gpii-congratulations-closeButton {
+.gpii-fd-congratulations-closeButton {
     padding-left: 0;
     margin: 0 0 1rem 1rem;
 }
 
-.gpii-congratulations-closeButton:before {
+.gpii-fd-congratulations-closeButton:before {
     content: "⨂";
     padding-left: 1rem;
 }
 
-.gpii-congratulations-closeButton:hover {
+.gpii-fd-congratulations-closeButton:hover {
     background-color: #425165; /* blue-grey, to override foundation's blue */
     box-shadow: 0 0 0 0.1rem rgb(255,255,255), /* white */
                 0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
 }
 
-.gpii-congratulations-closeButton:focus {
+.gpii-fd-congratulations-closeButton:focus {
     background-color: #425165; /* blue-grey */
     box-shadow: 0 0 0 0.4rem rgb(244, 215, 75), /* Yellow */
                 0 0 0 0.6rem rgb(0, 0, 0);
     outline: none;
 }
 
-/* styles.css overrides */
-
-.gpii-fd.gpii-congratulaions {
-    border: 10px solid #425165; /* blue-grey */
-    background-color: #FFFFFF;
+/* overrides */
+.gpii-fd-lastPanel .gpii-fd-selfVoicing {
+    display: none;
 }
