@@ -110,17 +110,23 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             nextLabel = that.msgResolver.resolve(["start", "next", "finish"][disposition]),
             nextTooltipContent = that.msgResolver.resolve(["startTooltip", "nextTooltip", "finishTooltip"][disposition]);
 
-        backButton.prop("disabled", isFirstPanel);
+        backButton.prop("disabled", isFirstPanel || isLastPanel);
         backButton.toggleClass(showSelector, !isFirstPanel && !isLastPanel);
         that.locate("backLabel").html(that.msgResolver.resolve("back"));
         that.locate("nextLabel").html(nextLabel);
         nextButton.toggleClass(showSelector, !isLastPanel);
+        nextButton.prop("disabled", isLastPanel);
+
         if (isFirstPanel) {
             that.tooltip.close();  // Close the existing tooltip for the back button otherwise it will linger after the back button becomes hidden
             that.tooltip.applier.fireChangeRequest({path: "idToContent." + backButtonId, type: "DELETE"});
+        } else if (isLastPanel) {
+            that.tooltip.close();  // Close the existing tooltip for the next button otherwise it will linger after the next button becomes hidden
+            that.tooltip.applier.fireChangeRequest({path: "idToContent." + nextButtonId, type: "DELETE"});
         } else {
             that.tooltip.applier.change("idToContent." + backButtonId, that.msgResolver.resolve("backTooltip"));
         }
+
         that.tooltip.applier.change("idToContent." + nextButtonId, nextTooltipContent);
     };
 
