@@ -266,6 +266,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         listeners: {
+            // To show the panel container so that button positions can be retrieved in the first afterRender envent
+            "onCreate.showPanel": {
+                funcName: "gpii.firstDiscovery.panel.lang.showPanel",
+                args: ["{that}"]
+            },
             "afterRender.bindPrev": {
                 "this": "{that}.dom.prev",
                 method: "click",
@@ -295,6 +300,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
+    gpii.firstDiscovery.panel.lang.showPanel = function (that) {
+        that.container.show();
+    };
+
     gpii.firstDiscovery.panel.lang.setNavKeyStatus = function (that) {
         var langArray = that.options.controlValues.lang,
             selectedLang = that.model.lang;
@@ -312,31 +321,64 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     };
 
-    gpii.firstDiscovery.panel.lang.scrollLangIntoView = function (that) {
-        var currentLang = that.model.lang;
+    // find the index of the number in the "numbers" array that's closest to the given "currentNumber"
+    gpii.firstDiscovery.panel.lang.findClosestButtonTop = function (currentNumber, numbers) {
+        var distance = Math.abs(numbers[0] - currentNumber),
+            idx = 0;
 
-        if (!currentLang) {
+        for (var c = 1; c < numbers.length; c++) {
+            var cdistance = Math.abs(numbers[c] - currentNumber);
+            if (cdistance < distance) {
+                idx = c;
+                distance = cdistance;
+            }
+        }
+        return numbers[idx];
+    };
+
+    // When arrow keys are used to navigate thru language buttons, this function scrolls the select button
+    // to the appropriate position to ensure, 1. the selected button is in the view; 2. the top and bottom
+    // buttons are not partially shown. To do it, when the page is rendered, the function saves the initial
+    // positions of displayed buttons. When another language button is selected, finds the closest saved
+    // position for the selected button and moves it to that position.
+    gpii.firstDiscovery.panel.lang.scrollLangIntoView = function (that) {
+        that.lastMovedHeight = that.lastMovedHeight || 0;
+
+        var buttons = that.locate("langRow"),
+            currentLang = that.model.lang,
+            currentLangIndex = that.options.controlValues.lang.indexOf(currentLang);
+
+        // Stop proceeding if the model is not set properly. Or, the language panel hasn't been inserted into the actual markup
+        // when the first afterRender event is fired. In the latter, the top position of the first button returns a negative value.
+        if (!currentLang || !that.buttonTops && $(buttons[0]).position().top <= 0) {
             return;
         }
 
-        var currentLangIndex = that.options.controlValues.lang.indexOf(currentLang),
-            numOfLangPerPage = that.options.numOfLangPerPage;
+        var numOfLangPerPage = that.options.numOfLangPerPage;
 
-        // Scroll the selected language button into the view
-        if (currentLangIndex + 1 >= numOfLangPerPage) {
-            var currentButton = $(that.locate("langRow")[currentLangIndex]),
-                buttonHeight = currentButton.height(),
-                currentButtonPosition = currentButton.position(),
-                prevButton = currentButton.prev(),
-                distanceToPrevButton = prevButton ? (currentButtonPosition.top - prevButton.position().top - buttonHeight) : 0,
-                heightToMove = (buttonHeight + distanceToPrevButton) * (currentLangIndex - numOfLangPerPage + 1),
-                controlsDiv = $(that.options.selectors.controlsDiv),
-                controlsDivBottom = controlsDiv.position().top + controlsDiv.height();
-
-            if (currentButtonPosition.top === 0 || currentButtonPosition.top > controlsDivBottom) {
-                controlsDiv.animate({scrollTop: heightToMove + "px"}, 0);
+        // Keep track of the original positions of buttons on display
+        if (!that.buttonTops) {
+            that.buttonTops = [];
+            for (var i = 0; i < numOfLangPerPage; i++) {
+                if (buttons[i]) {
+                    that.buttonTops[i] = $(buttons[i]).position().top;
+                }
             }
         }
+
+        var currentButton = $(buttons[currentLangIndex]),
+            controlsDiv = $(that.options.selectors.controlsDiv),
+            controlsDivScrollTop = controlsDiv[0].scrollTop,
+            // A workaround to an issue in Chrome and Safari that element.offset().top returns inconsistent value. This sometimes
+            // has the parentContainer.scrollTop added, sometimes not. The line below is to make sure the button top position always
+            // include the scrollTop of the parent container.
+            currentButtonTop = currentButton.offset().top + controlsDivScrollTop,
+            closestPosition = gpii.firstDiscovery.panel.lang.findClosestButtonTop(currentButtonTop - that.lastMovedHeight, that.buttonTops),
+            heightToMove = currentButtonTop - closestPosition;
+
+        $(that.options.selectors.controlsDiv).animate({scrollTop: heightToMove + "px"}, 0);
+
+        that.lastMovedHeight = heightToMove;
     };
 
     gpii.firstDiscovery.panel.lang.stopArrowBrowseOnEdgeButtons = function (button, keyCodes) {
