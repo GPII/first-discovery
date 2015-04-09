@@ -16,7 +16,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.registerNamespace("gpii.firstDiscovery");
 
     fluid.defaults("gpii.firstDiscovery.selfVoicing", {
-        gradeNames: ["gpii.firstDiscovery.attachTooltip", "fluid.prefs.msgLookup", "fluid.textToSpeech", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.messageResolver", "fluid.textToSpeech", "autoInit"],
         selectors: {
             mute: ".gpiic-fd-selfVoicing-mute",
             muteLabel: ".gpiic-fd-selfVoicing-muteLabel"
@@ -30,11 +30,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         tooltipContentMap: {
             "mute": "mutedTooltip"
-        },
-        components: {
-            msgResolver: {
-                type: "fluid.messageResolver"
-            }
         },
         invokers: {
             queueSpeech: {
@@ -92,10 +87,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     excludeSource: "init"
                 }
             ]
-        },
-        distributeOptions: {
-            source: "{that}.options.messageBase",
-            target: "{that > msgResolver}.options.messageBase"
         }
     });
 

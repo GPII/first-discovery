@@ -20,7 +20,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * The back and next navigation buttons
      */
     fluid.defaults("gpii.firstDiscovery.navButtons", {
-        gradeNames: ["fluid.viewRelayComponent", "gpii.firstDiscovery.attachTooltip", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.messageResolver", "autoInit"],
         panelTotalNum: null,   // Must be supplied by integrators
         panelStartNum: 1,
         tooltipContentMap: {
@@ -64,11 +64,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             "onCreate.setButtonStates": "{that}.setButtonStates"
         },
-        components: {
-            msgResolver: {
-                type: "fluid.messageResolver"
-            }
-        },
         invokers: {
             setButtonStates: {
                 funcName: "gpii.firstDiscovery.navButtons.setButtonStates",
@@ -86,10 +81,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 funcName: "gpii.firstDiscovery.navButtons.adjustCurrentPanelNum",
                 args: ["{that}", 1]
             }
-        },
-        distributeOptions: {
-            source: "{that}.options.messageBase",
-            target: "{that > msgResolver}.options.messageBase"
         }
     });
 
