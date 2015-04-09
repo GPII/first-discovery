@@ -244,7 +244,7 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "Tests the congratulations component",
             tests: [{
-                expect: 2,
+                expect: 1,
                 name: "Initialization",
                 sequence: [{
                     func: "{congratulations}.refreshView"
@@ -253,17 +253,6 @@ https://github.com/gpii/universal/LICENSE.txt
                     args: ["{congratulations}"],
                     event: "{congratulations}.events.afterRender"
                 }]
-            }, {
-                expect: 1,
-                name: "Interaction",
-                sequence: [{
-                    jQueryTrigger: "click",
-                    element: "{congratulations}.dom.close"
-                }, {
-                    listener: "jqUnit.assert",
-                    args: ["The close button is wired up to the close invoker"],
-                    event: "{congratulations}.events.onClose"
-                }]
             }]
         }]
     });
@@ -271,7 +260,6 @@ https://github.com/gpii/universal/LICENSE.txt
     gpii.tests.congratulationsTester.testRendering = function (that) {
         var expectedContent = $(that.options.messageBase.message).text();
         jqUnit.assertEquals("The description should be rendered correctly", expectedContent, that.locate("message").text());
-        jqUnit.assertEquals("The close button should be labeled correctly", that.options.messageBase.closeLabel, that.locate("closeLabel").text());
     };
 
 
