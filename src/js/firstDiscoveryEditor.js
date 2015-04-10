@@ -27,21 +27,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 createOnEvent: "onPrefsEditorReady",
                 type: "gpii.firstDiscovery.selfVoicing",
                 options: {
-                    gradeNames: ["fluid.prefs.msgLookup"],
                     model: {
                         enabled: true
                     },
-                    members: {
-                        messageResolver: "{firstDiscoveryEditor}.msgResolver"
-                    },
-                    strings: {
-                        mutedMsg: "{that}.msgLookup.mutedMsg",
-                        unmutedMsg: "{that}.msgLookup.unmutedMsg",
-                        unmuted: "{that}.msgLookup.unmuted",
-                        unmutedTooltip: "{that}.msgLookup.unmutedTooltip",
-                        muted: "{that}.msgLookup.muted",
-                        mutedTooltip: "{that}.msgLookup.mutedTooltip"
-                    }
+                    messageBase: "{messageLoader}.resources.prefsEditor.resourceText"
                 }
             },
             prefsEditor: {
@@ -65,23 +54,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 container: "{that}.dom.navButtons",
                 createOnEvent: "onCreateNavButtons",
                 options: {
-                    gradeNames: ["fluid.prefs.msgLookup"],
-                    members: {
-                        messageResolver: "{firstDiscoveryEditor}.msgResolver"
-                    },
                     model: {
                         currentPanelNum: "{firstDiscoveryEditor}.model.currentPanelNum"
                     },
-                    strings: {
-                        back: "{that}.msgLookup.back",
-                        backTooltip: "{that}.msgLookup.backTooltip",
-                        next: "{that}.msgLookup.next",
-                        nextTooltip: "{that}.msgLookup.nextTooltip",
-                        start: "{that}.msgLookup.start",
-                        startTooltip: "{that}.msgLookup.startTooltip",
-                        finish: "{that}.msgLookup.finish",
-                        finishTooltip: "{that}.msgLookup.finishTooltip"
-                    },
+                    messageBase: "{messageLoader}.resources.prefsEditor.resourceText",
                     styles: "{firstDiscoveryEditor}.options.styles",
                     panelTotalNum: "{firstDiscoveryEditor}.panels.length"
                 }
@@ -117,16 +93,20 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         styles: {
             active: "gpii-fd-active",
             show: "gpii-fd-show",
-            currentPanel: "gpii-fd-current"
+            currentPanel: "gpii-fd-current",
+            lastPanel: "gpii-fd-lastPanel"
         },
         model: {
             currentPanelNum: 1
         },
         modelListeners: {
-            "currentPanelNum": {
+            "currentPanelNum": [{
                 listener: "{that}.showPanel",
                 excludeSource: "init"
-            }
+            }, {
+                listener: "gpii.firstDiscovery.setLastPanelStyle",
+                args: ["{that}.container", "{that}.options.styles.lastPanel", "{change}.value", "{firstDiscoveryEditor}.panels.length"]
+            }]
         },
         events: {
             onPrefsEditorReady: null,
@@ -159,5 +139,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         fluid.each(panels, function (panel, index) {
             $(panel).toggleClass(selectorForCurrent, toShow === (index + 1));
         });
+    };
+
+    gpii.firstDiscovery.setLastPanelStyle = function (elm, style, currentPanel, panelTotalNum) {
+        var isLastPanel = currentPanel === panelTotalNum;
+        elm.toggleClass(style, isLastPanel);
     };
 })(jQuery, fluid);

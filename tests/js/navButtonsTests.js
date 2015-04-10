@@ -11,20 +11,23 @@ https://github.com/gpii/universal/LICENSE.txt
 (function ($, fluid) {
     "use strict";
 
-    fluid.registerNamespace("gpii.tests");
+    fluid.registerNamespace("gpii.tests.firstDiscovery.navButtons");
 
-    gpii.tests.verifyStates = function (msg, that, states) {
-        var backButton = that.locate("back"),
-            nextButton = that.locate("next"),
-            showSelector = that.options.styles.show;
-
-        jqUnit.assertEquals(msg + " - The back button is disabled", states.backDisabled, backButton.is(":disabled"));
-        jqUnit.assertEquals(msg + " - The back button is hidden", states.backVisible, backButton.hasClass(showSelector));
-        jqUnit.assertEquals(msg + " - The next button is enabled", states.nextDisabled, nextButton.is(":disabled"));
-        jqUnit.assertEquals(msg + " - The next button is shown", states.nextVisible, nextButton.hasClass(showSelector));
+    gpii.tests.firstDiscovery.navButtons.verifyStates = function (msgPrefix, that, states) {
+        fluid.each(states, function (state, selector) {
+            gpii.tests.firstDiscovery.navButtons.verifyState(msgPrefix, that, selector, state);
+        });
     };
 
-    gpii.tests.verifyLabels = function (msg, that, states) {
+    gpii.tests.firstDiscovery.navButtons.verifyState = function (msgPrefix, that, selector, state) {
+        var button = that.locate(selector);
+        var stateMsg = state ? "should be" : "should not be";
+
+        jqUnit.assertEquals(msgPrefix + " - The " + selector + " button " + stateMsg + " enabled", state, !button.is(":disabled"));
+        jqUnit.assertEquals(msgPrefix + " - The " + selector + " button " + stateMsg + " visible", state, button.hasClass(that.options.styles.show));
+    };
+
+    gpii.tests.firstDiscovery.navButtons.verifyLabels = function (msg, that, states) {
         var backButton = that.locate("back"),
             backButtonLabel = that.locate("backLabel"),
             backButtonId = backButton.attr("id"),
@@ -36,73 +39,94 @@ https://github.com/gpii/universal/LICENSE.txt
             jqUnit.assertEquals(msg + " - The text on the back button is properly set", states.backLabel, backButtonLabel.html());
             jqUnit.assertEquals(msg + " - The tooltip content for the back button is properly set", states.backTooltip, that.tooltip.model.idToContent[backButtonId]);
         }
-        jqUnit.assertEquals(msg + " - The text on the next button is properly set", states.nextLabel, nextButtonLabel.html());
-        jqUnit.assertEquals(msg + " - The tooltip content for the next button is properly set", states.nextTooltip, that.tooltip.model.idToContent[nextButtonId]);
+
+        if (states.nextLabel) {
+            jqUnit.assertEquals(msg + " - The text on the next button is properly set", states.nextLabel, nextButtonLabel.html());
+            jqUnit.assertEquals(msg + " - The tooltip content for the next button is properly set", states.nextTooltip, that.tooltip.model.idToContent[nextButtonId]);
+        }
     };
 
-    gpii.tests.verifyButtons = function (that, currentPanelNum) {
+    gpii.tests.firstDiscovery.navButtons.verifyButtons = function (that, currentPanelNum) {
         jqUnit.assertEquals("The model value has been updated", currentPanelNum, that.model.currentPanelNum);
 
         var msg,
             start = that.options.panelStartNum,
-            end = that.options.panelTotalNum;
+            last = that.options.panelTotalNum;
 
         if (currentPanelNum === start) {
             msg = "On the start panel";
-            gpii.tests.verifyStates(msg, that, {
-                backDisabled: true,
-                backVisible: false,
-                nextDisabled: false,
-                nextVisible: true
+            gpii.tests.firstDiscovery.navButtons.verifyStates(msg, that, {
+                back: false,
+                next: true
             });
-            gpii.tests.verifyLabels(msg, that, {
+            gpii.tests.firstDiscovery.navButtons.verifyLabels(msg, that, {
                 backLabel: undefined,
                 backTooltip: undefined,
-                nextLabel: that.options.strings.start,
-                nextTooltip: that.options.strings.startTooltip
+                nextLabel: that.options.messageBase.start,
+                nextTooltip: that.options.messageBase.startTooltip
             });
-        }
-
-        if (currentPanelNum > start && currentPanelNum < end) {
-            msg = "On a panel in btw the start and the last panels";
-            gpii.tests.verifyStates(msg, that, {
-                backDisabled: false,
-                backVisible: true,
-                nextDisabled: false,
-                nextVisible: true
-            });
-            gpii.tests.verifyLabels(msg, that, {
-                backLabel: that.options.strings.back,
-                backTooltip: that.options.strings.backTooltip,
-                nextLabel: that.options.strings.next,
-                nextTooltip: that.options.strings.nextTooltip
-            });
-        }
-
-        if (currentPanelNum === end) {
+        } else if (currentPanelNum === last) {
             msg = "On the last panel";
-            gpii.tests.verifyStates(msg, that, {
-                backDisabled: false,
-                backVisible: true,
-                nextDisabled: false,
-                nextVisible: true
+            gpii.tests.firstDiscovery.navButtons.verifyStates(msg, that, {
+                back: false,
+                next: false
             });
-            gpii.tests.verifyLabels(msg, that, {
-                backLabel: that.options.strings.back,
-                backTooltip: that.options.strings.backTooltip,
-                nextLabel: that.options.strings.finish,
-                nextTooltip: that.options.strings.finishTooltip
+            gpii.tests.firstDiscovery.navButtons.verifyLabels(msg, that, {
+                backLabel: undefined,
+                backTooltip: undefined,
+                nextLabel: undefined,
+                nextTooltip: undefined
+            });
+        } else if (currentPanelNum === last - 1) {
+            msg = "On the second last panel";
+            gpii.tests.firstDiscovery.navButtons.verifyStates(msg, that, {
+                back: true,
+                next: true
+            });
+            gpii.tests.firstDiscovery.navButtons.verifyLabels(msg, that, {
+                backLabel: that.options.messageBase.back,
+                backTooltip: that.options.messageBase.backTooltip,
+                nextLabel: that.options.messageBase.finish,
+                nextTooltip: that.options.messageBase.finishTooltip
+            });
+        } else {
+            msg = "On a panel in btw the start and the last panels";
+            gpii.tests.firstDiscovery.navButtons.verifyStates(msg, that, {
+                back: true,
+                next: true
+            });
+            gpii.tests.firstDiscovery.navButtons.verifyLabels(msg, that, {
+                backLabel: that.options.messageBase.back,
+                backTooltip: that.options.messageBase.backTooltip,
+                nextLabel: that.options.messageBase.next,
+                nextTooltip: that.options.messageBase.nextTooltip
             });
         }
+
+
     };
 
     jqUnit.test("Nav buttons", function () {
-        jqUnit.expect(33);
+        jqUnit.expect(38);
+        var firstPanelNum = 1;
+        var secondPanelNum = firstPanelNum + 1;
+        var panelTotalNum = 6;
+        var secondLastPanelNum = panelTotalNum - 1;
 
         var that = gpii.firstDiscovery.navButtons(".gpiic-nav", {
-            panelTotalNum: 6,
+            panelTotalNum: panelTotalNum,
             model: {
                 currentPanelNum: null
+            },
+            messageBase: {
+                "back": "back",
+                "backTooltip": "Select to go back to last step",
+                "next": "next",
+                "nextTooltip": "Select to go to next step",
+                "start": "start",
+                "startTooltip": "Select to start",
+                "finish": "finish",
+                "finishTooltip": "Select to finish"
             }
         });
 
@@ -110,21 +134,25 @@ https://github.com/gpii/universal/LICENSE.txt
             nextButton = that.locate("next");
 
         // Test button states of being on the first panel
-        that.applier.change("currentPanelNum", 1);
+        that.applier.change("currentPanelNum", firstPanelNum);
         jqUnit.assertNotUndefined("The model for tooltip has been populated", that.tooltip.model.idToContent);
-        gpii.tests.verifyButtons(that, 1);
+        gpii.tests.firstDiscovery.navButtons.verifyButtons(that, firstPanelNum);
 
         // Clicking the next button increases the current panel number and changes button states
         nextButton.click();
-        gpii.tests.verifyButtons(that, 2);
+        gpii.tests.firstDiscovery.navButtons.verifyButtons(that, secondPanelNum);
 
         // Clicking the back button decreases the current panel number and brings back the states of being on the first panel
         backButton.click();
-        gpii.tests.verifyButtons(that, 1);
+        gpii.tests.firstDiscovery.navButtons.verifyButtons(that, firstPanelNum);
+
+        // Test the button states of being on the second last panel
+        that.applier.change("currentPanelNum", secondLastPanelNum);
+        gpii.tests.firstDiscovery.navButtons.verifyButtons(that, secondLastPanelNum);
 
         // Test the button states of being on the last panel
-        that.applier.change("currentPanelNum", 6);
-        gpii.tests.verifyButtons(that, 6);
+        that.applier.change("currentPanelNum", panelTotalNum);
+        gpii.tests.firstDiscovery.navButtons.verifyButtons(that, panelTotalNum);
     });
 
 })(jQuery, fluid);

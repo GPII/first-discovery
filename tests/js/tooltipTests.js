@@ -11,36 +11,11 @@ https://github.com/gpii/universal/LICENSE.txt
 (function ($, fluid) {
     "use strict";
 
-    fluid.registerNamespace("gpii.tests");
-
-    fluid.defaults("gpii.tests.tooltipWithStrings", {
-        gradeNames: ["gpii.firstDiscovery.attachTooltip", "autoInit"],
-        selectors: {
-            button1: ".gpiic-button1",
-            button2: ".gpiic-button2"
-        },
-        strings: {
-            button1Label: "button1 label in strings block",
-            button2Label: "button2 label in strings block"
-        },
-        tooltipContentMap: {
-            "button1": "button1Label",
-            "button2": "button2Label"
-        }
-    });
-
-    fluid.defaults("gpii.tests.tooltipWithMsgResolver", {
-        gradeNames: ["gpii.firstDiscovery.attachTooltip", "autoInit"],
-        strings: {},
-        testMessages: {
+    fluid.defaults("gpii.tests.firstDiscovery.attachTooltip", {
+        gradeNames: ["gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.msgLookup", "autoInit"],
+        messageBase: {
             button1Label: "button1 label from the message resolver",
             button2Label: "button2 label from the message resolver"
-        },
-        parentBundle: {
-            expander: {
-                funcName: "fluid.messageResolver",
-                args: [{messageBase: "{that}.options.testMessages"}]
-            }
         },
         selectors: {
             button1: ".gpiic-button1",
@@ -59,14 +34,9 @@ https://github.com/gpii/universal/LICENSE.txt
         });
     };
 
-    jqUnit.test("Tooltip with contents from the strings block", function () {
-        var that = gpii.tests.tooltipWithStrings(".gpiic-tooltip");
-        gpii.tests.verifyTooltip(that, "strings block", that.options.strings);
-    });
-
     jqUnit.test("Tooltip with contents from the message resolver", function () {
-        var that = gpii.tests.tooltipWithMsgResolver(".gpiic-tooltip");
-        gpii.tests.verifyTooltip(that, "message resolver", that.options.testMessages);
+        var that = gpii.tests.firstDiscovery.attachTooltip(".gpiic-tooltip");
+        gpii.tests.verifyTooltip(that, "message resolver", that.options.messageBase);
     });
 
 })(jQuery, fluid);
