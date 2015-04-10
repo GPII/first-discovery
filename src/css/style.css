@@ -306,16 +306,21 @@ button {
 }
 
 /* language controls */
+.gpii-fd-prefsEditor-panel-lang .gpii-fd-controls {
+    padding-top: 0;
+}
+
 .gpii-fd-lang-controls {
-    height: 19rem;
+    height: 15rem;
     overflow: hidden;
     margin: 0 0 0.5rem 0;
-    width: 20rem;
+    width: 100%;
     padding: 0.5rem 0 1rem 0;
 }
 
 .gpii-fd-lang-label {
-    width: 15rem;
+    width: 24rem;
+    line-height: 1;
 }
 
 .gpii-fd-lang-prev, .gpii-fd-lang-next {
@@ -323,13 +328,13 @@ button {
     background-color: #425165; /* blue-grey */
     left: 0.6rem;
     height: 2.5rem;
-    width: 15rem;
+    width: 24rem;
     padding-top: 0.1rem;
     border: 0.1rem solid #fff;
     border-radius: 0.7rem;
     font-size: 2rem;
     line-height: 2.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.4rem;
 }
 
 .gpii-fd-lang-prev .gpii-fd-icon:before {
