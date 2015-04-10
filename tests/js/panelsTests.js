@@ -211,18 +211,7 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.defaults("gpii.tests.firstDiscovery.panel.congratulations", {
         gradeNames: ["gpii.firstDiscovery.panel.congratulations", "autoInit"],
         messageBase: {
-            "message": "<p>Congratulations!</p><p>Your preferences have been saved to your account.</p>",
-            "closeLabel": "close"
-        },
-        events: {
-            onClose: null
-        },
-        invokers: {
-            close: {
-                "this": null,
-                "method": null,
-                func: "{that}.events.onClose.fire"
-            }
+            "message": "<p>Congratulations!</p><p>Your preferences have been saved to your account.</p>"
         }
     });
 

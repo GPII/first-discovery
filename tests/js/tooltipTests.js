@@ -24,10 +24,6 @@ https://github.com/gpii/universal/LICENSE.txt
         tooltipContentMap: {
             "button1": "button1Label",
             "button2": "button2Label"
-        },
-        distributeOptions: {
-            source: "{that}.options.messageBase",
-            target: "{that > msgResolver}.options.messageBase"
         }
     });
 
