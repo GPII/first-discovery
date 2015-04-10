@@ -15,7 +15,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     fluid.registerNamespace("gpii.firstDiscovery");
 
-    fluid.defaults("gpii.firstDiscovery.messageResolver", {
+    fluid.defaults("gpii.firstDiscovery.msgLookup", {
         gradeNames: ["fluid.prefs.msgLookup", "autoInit"],
         components: {
             msgResolver: {

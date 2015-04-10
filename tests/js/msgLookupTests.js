@@ -11,12 +11,12 @@ https://github.com/gpii/universal/LICENSE.txt
 (function ($, fluid) {
     "use strict";
 
-    fluid.registerNamespace("gpii.tests.firstDiscovery.messageResolver");
+    fluid.registerNamespace("gpii.tests.firstDiscovery.msgLookup");
 
-    fluid.defaults("gpii.tests.firstDiscovery.messageResolver", {
-        gradeNames: ["fluid.rendererRelayComponent", "gpii.firstDiscovery.messageResolver", "autoInit"],
+    fluid.defaults("gpii.tests.firstDiscovery.msgLookup", {
+        gradeNames: ["fluid.rendererRelayComponent", "gpii.firstDiscovery.msgLookup", "autoInit"],
         selectors: {
-            text: ".gpiic-messageResolver-text"
+            text: ".gpiic-msgLookup-text"
         },
         messageBase: {
             renderedText: "Rendered Text",
@@ -29,8 +29,8 @@ https://github.com/gpii/universal/LICENSE.txt
         lookedupText: "{that}.msgLookup.unRenderedText"
     });
 
-    jqUnit.test("messageResolver", function () {
-        var that = gpii.tests.firstDiscovery.messageResolver(".gpiic-messageResolver");
+    jqUnit.test("msgLookup", function () {
+        var that = gpii.tests.firstDiscovery.msgLookup(".gpiic-msgLookup");
 
         jqUnit.assertEquals("The msgLookup should be working", that.options.messageBase.unRenderedText, that.options.lookedupText);
         jqUnit.assertEquals("The messagekey should be working", that.options.messageBase.renderedText, that.locate("text").text());

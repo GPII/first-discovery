@@ -12,7 +12,7 @@ https://github.com/gpii/universal/LICENSE.txt
     "use strict";
 
     fluid.defaults("gpii.tests.firstDiscovery.attachTooltip", {
-        gradeNames: ["gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.messageResolver", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.msgLookup", "autoInit"],
         messageBase: {
             button1Label: "button1 label from the message resolver",
             button2Label: "button2 label from the message resolver"
