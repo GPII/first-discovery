@@ -66,6 +66,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "template": "%prefix/contrast.html",
                     "message": "%prefix/contrast.json"
                 }
+            },
+            "congratulations": {
+                "type": "gpii.firstDiscovery.congratulations",
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.congratulations",
+                    "container": ".gpiic-fd-prefsEditor-panel-congratulations",
+                    "template": "%prefix/congratulationsTemplate.html",
+                    "message": "%prefix/congratulations.json"
+                }
             }
         }
     });

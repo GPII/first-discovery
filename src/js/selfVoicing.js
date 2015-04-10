@@ -16,18 +16,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.registerNamespace("gpii.firstDiscovery");
 
     fluid.defaults("gpii.firstDiscovery.selfVoicing", {
-        gradeNames: ["gpii.firstDiscovery.attachTooltip", "fluid.textToSpeech", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.msgLookup", "fluid.textToSpeech", "autoInit"],
         selectors: {
             mute: ".gpiic-fd-selfVoicing-mute",
             muteLabel: ".gpiic-fd-selfVoicing-muteLabel"
-        },
-        strings: {
-            muted: "turn voice ON",
-            mutedMsg: "voice is off",
-            unmutedMsg: "voice is on",
-            mutedTooltip: "Select to turn voice on",
-            unmuted: "turn voice OFF",
-            unmutedTooltip: "Select to turn voice off"
         },
         styles: {
             muted: "gpii-fd-selfVoicing-muted",
@@ -50,7 +42,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             setLabel: {
                 funcName: "gpii.firstDiscovery.selfVoicing.setLabel",
-                args: ["{that}.dom.muteLabel", "{that}.options.strings", "{that}.model.enabled"]
+                args: ["{that}.dom.muteLabel", "{that}.msgLookup.unmuted", "{that}.msgLookup.muted", "{that}.model.enabled"]
             },
             setTooltip: {
                 funcName: "gpii.firstDiscovery.selfVoicing.setTooltip",
@@ -66,7 +58,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             speakVoiceState: {
                 funcName: "gpii.firstDiscovery.selfVoicing.speakVoiceState",
-                args: ["{that}"]
+                args: ["{that}", "{arguments}.0"]
             }
         },
         listeners: {
@@ -105,7 +97,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     gpii.firstDiscovery.selfVoicing.speakVoiceState = function (that, options) {
-        var msg = that.model.enabled ? that.options.strings.unmutedMsg : that.options.strings.mutedMsg;
+        var msg = that.msgResolver.resolve(that.model.enabled ? "unmutedMsg" : "mutedMsg");
         // called directly as it needs to be spoken regardless of enabled state.
         fluid.textToSpeech.queueSpeech(that, msg, true, options);
     };
@@ -114,14 +106,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         that.applier.change("enabled", !that.model.enabled);
     };
 
-    gpii.firstDiscovery.selfVoicing.setLabel = function (elm, strings, isEnabled) {
-        var label = isEnabled ? strings.unmuted : strings.muted;
+    gpii.firstDiscovery.selfVoicing.setLabel = function (elm, unmutedLabel, mutedLabel, isEnabled) {
+        var label = isEnabled ? unmutedLabel : mutedLabel;
         elm.text(label);
     };
 
     gpii.firstDiscovery.selfVoicing.setTooltip = function (that, isEnabled) {
         that.tooltip.close();
-        var str = that.options.strings[isEnabled ? "unmutedTooltip" : "mutedTooltip"];
+        var str = that.msgResolver.resolve(isEnabled ? "unmutedTooltip" : "mutedTooltip");
         var modelPath = "idToContent." + that.locate("mute").attr("id");
         that.tooltip.applier.change(modelPath, str);
     };

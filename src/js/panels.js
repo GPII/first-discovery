@@ -19,7 +19,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * Ranged panel: used as a grade for text size panel and other panels to adjust their preferences in a range
      */
     fluid.defaults("gpii.firstDiscovery.panel.ranged", {
-        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip", "autoInit"],
+        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip.renderer", "autoInit"],
         // Preferences Maps should direct the default model state
         // to model.value. The component is configured
         // with the expectation that "value" is the salient model property.
@@ -87,15 +87,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 listener: "gpii.firstDiscovery.panel.ranged.updateButtonState",
                 args: ["{that}"]
             },
-            "afterRender.updateMeter": "{that}.updateMeter",
-            "afterRender.updateTooltipModel": {
-                listener: "{that}.tooltip.applier.change",
-                args: ["idToContent", {
-                    expander: {
-                        func: "{that}.tooltip.getTooltipModel"
-                    }
-                }]
-            }
+            "afterRender.updateMeter": "{that}.updateMeter"
         },
         modelListeners: {
             value: [{
@@ -413,6 +405,21 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "fluid.prefs.contrast": {
                 "model.value": "default",
                 "controlValues.lang": "enum"
+            }
+        }
+    });
+
+    fluid.defaults("gpii.firstDiscovery.panel.congratulations", {
+        gradeNames: ["fluid.prefs.panel", "autoInit"],
+        preferenceMap: {
+            "gpii.firstDiscovery.congratulations": {}
+        },
+        selectors: {
+            message: ".gpiic-fd-congratulations-message"
+        },
+        protoTree: {
+            message: {
+                markup: {messagekey: "message"}
             }
         }
     });
