@@ -58,7 +58,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             speakVoiceState: {
                 funcName: "gpii.firstDiscovery.selfVoicing.speakVoiceState",
-                args: ["{that}"]
+                args: ["{that}", "{arguments}.0"]
             }
         },
         listeners: {
