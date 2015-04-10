@@ -218,10 +218,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         stringArrayIndex: {
             lang: ["lang-en", "lang-fr", "lang-es", "lang-de", "lang-ne", "lang-sv"]
         },
-        styles: {
-            display: "gpii-fd-display"
-        },
         numOfLangPerPage: 3,
+        strings: {
+            "navButtonLabel": "Select to view more languages"
+        },
+        tooltipContentMap: {
+            "prev": "navButtonLabel",
+            "next": "navButtonLabel"
+        },
         selectors: {
             instructions: ".gpiic-fd-instructions",
             langRow: ".gpiic-fd-lang-row",
@@ -230,13 +234,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             controlsDiv: ".gpiic-fd-lang-controls",
             prev: ".gpiic-fd-lang-prev",
             next: ".gpiic-fd-lang-next"
-        },
-        strings: {
-            "navButtonLabel": "Select to view more languages"
-        },
-        tooltipContentMap: {
-            "prev": "navButtonLabel",
-            "next": "navButtonLabel"
         },
         selectorsToIgnore: ["controlsDiv", "prev", "next"],
         repeatingSelectors: ["langRow"],
@@ -266,11 +263,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         listeners: {
-            // To show the panel container so that button positions can be retrieved in the first afterRender envent
-            "onCreate.showPanel": {
-                funcName: "gpii.firstDiscovery.panel.lang.showPanel",
-                args: ["{that}"]
-            },
             "afterRender.bindPrev": {
                 "this": "{that}.dom.prev",
                 method: "click",
@@ -299,10 +291,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         }
     });
-
-    gpii.firstDiscovery.panel.lang.showPanel = function (that) {
-        that.container.show();
-    };
 
     gpii.firstDiscovery.panel.lang.setNavKeyStatus = function (that) {
         var langArray = that.options.controlValues.lang,
@@ -369,9 +357,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         var currentButton = $(buttons[currentLangIndex]),
             controlsDiv = $(that.options.selectors.controlsDiv),
             controlsDivScrollTop = controlsDiv[0].scrollTop,
-            // A workaround to an issue in Chrome and Safari that element.offset().top returns inconsistent value. This sometimes
-            // has the parentContainer.scrollTop added, sometimes not. The line below is to make sure the button top position always
-            // include the scrollTop of the parent container.
+            // The line below to add "controlsDivScrollTop" rather than using button.offset().top directly is to fix an issue in
+            // Chrome and Safari that button.offset().top returns inconsistent value. The returned value sometimes has
+            // "controlsDivScrollTop" added, sometimes not. This line ensures consistent top values for the calculation to base upon.
             currentButtonTop = currentButton.offset().top + controlsDivScrollTop,
             closestPosition = gpii.firstDiscovery.panel.lang.findClosestButtonTop(currentButtonTop - that.lastMovedHeight, that.buttonTops),
             heightToMove = currentButtonTop - closestPosition;
