@@ -37,6 +37,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "message": "%prefix/lang.json"
                 }
             },
+            "welcome": {
+                "type": "gpii.firstDiscovery.welcome",
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.welcome",
+                    "container": ".gpiic-fd-prefsEditor-panel-welcome",
+                    "template": "%prefix/welcomeTemplate.html",
+                    "message": "%prefix/welcome.json"
+                }
+            },
             "textSize": {
                 "type": "fluid.prefs.textSize",
                 "enactor": {

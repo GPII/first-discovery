@@ -410,6 +410,24 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     /*
+     * Welcome panel
+     */
+    fluid.defaults("gpii.firstDiscovery.panel.welcome", {
+        gradeNames: ["fluid.prefs.panel", "autoInit"],
+        preferenceMap: {
+            "gpii.firstDiscovery.welcome": {}
+        },
+        selectors: {
+            message: ".gpiic-fd-instructions"
+        },
+        protoTree: {
+            message: {
+                markup: {messagekey: "welcome"}
+            }
+        }
+    });
+
+    /*
      * Congratulations panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.congratulations", {
