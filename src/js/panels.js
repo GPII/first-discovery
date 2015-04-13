@@ -128,11 +128,17 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         selectors: {
-            // placeholder: ".gpiic-fd-keyboard-placeholder", // Question: How to user renderer for this?
+            placeholder: ".gpiic-fd-keyboard-input",
             instructions: ".gpiic-fd-instructions"
         },
         protoTree: {
-            // placeholder: {markup: {messagekey: "placeholder"}},
+            placeholder: {
+                decorators: {
+                    attrs: {
+                        placeholder: "{that}.msgLookup.placeholder"
+                    }
+                }
+            },
             instructions: {markup: {messagekey: "keyboardInstructions"}}
         }
 
