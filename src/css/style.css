@@ -496,6 +496,5 @@ input[type="text"].gpii-fd-keyboard-input:focus {
     outline: none;
 }
 .gpii-fd-keyboard:before {
-    /* This is the wrong icon, but we don't have the key icon yet */
-    content: "\e60d";
+    content: "\e60e";
 }
