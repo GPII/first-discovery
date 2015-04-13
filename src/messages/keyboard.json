@@ -1,4 +1,13 @@
 {
-    "keyboardInstructions": "<h1>Keyboard Assistance</h1>Adjustments can be made to help you with using the keyboard.",
-    "placeholder": "Type the word 'orange' now"
+    "keyboardHeader": "Keyboard Assistance",
+    "keyboardInstructions": "Adjustments can be made to help you with using the keyboard.",
+
+    "try": "try it",
+    "on": "ON",
+    "off": "OFF",
+    "turnOn": "turn ON",
+    "turnOff": "turn OFF",
+
+    "stickyKeysInstructions": "<strong>Sticky Keys</strong> can help with pressing modifier keys, like <strong>shift</strong>.",
+    "stickyKeys": "Sticky Keys is"
 }
