@@ -120,6 +120,24 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         that.locate("meter").css("height", percentage + "%");
     };
 
+    fluid.defaults("gpii.firstDiscovery.panel.keyboard", {
+        gradeNames: ["fluid.prefs.panel", "autoInit"],
+        preferenceMap: {
+            "gpii.firstDiscovery.stickyKeys": {
+                "model.stickyKeys": "default"
+            }
+        },
+        selectors: {
+            // placeholder: ".gpiic-fd-keyboard-placeholder", // Question: How to user renderer for this?
+            instructions: ".gpiic-fd-instructions"
+        },
+        protoTree: {
+            // placeholder: {markup: {messagekey: "placeholder"}},
+            instructions: {markup: {messagekey: "keyboardInstructions"}}
+        }
+
+    });
+
     fluid.defaults("gpii.firstDiscovery.panel.textSize", {
         gradeNames: ["gpii.firstDiscovery.panel.ranged", "autoInit"],
         preferenceMap: {
