@@ -396,6 +396,24 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         that.tooltip.applier.change("idToContent", idToContent);
     };
 
+    fluid.demands("gpii.firstDiscovery.tooltip", ["gpii.firstDiscovery.panel.lang"], {
+        options: {
+            styles: {
+                tooltip: "gpii-fd-tooltip-lang"
+            }
+        }
+    });
+
+    // fluid.demands("gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.panel.lang", {
+    //     options: {
+    //         tooltipOptions: {
+    //             styles: {
+    //                 tooltip: "gpii-fd-tooltip-lang"
+    //             }
+    //         }
+    //     }
+    // });
+
     /*
      * Contrast panel
      */

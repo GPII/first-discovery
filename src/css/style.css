@@ -534,3 +534,7 @@ button {
     background-color: #fed73a;
     bottom: -1rem;
 }
+
+.gpii-fd-tooltip-lang {
+    background-color: red;
+}
