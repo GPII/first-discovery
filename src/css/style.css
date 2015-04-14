@@ -11,7 +11,7 @@ body {
 }
 .gpii-fd,
 .gpii-fd p {
-    font-size: 2.5rem; /*base font size */
+    font-size: 2.25rem; /*base font size */
     padding: 0 2rem;
 }
 
@@ -299,7 +299,7 @@ button {
 .gpii-fd-status {
     padding-right: 0;
     height: 100%;
-    width: 2rem;
+    width: 1.75rem;
     margin-right: 1rem;
     border: 0.2rem solid #425165; /* blue-grey */
 }
@@ -314,7 +314,7 @@ button {
     width: inherit;
     -webkit-transform:rotate(180deg);
     -webkit-transform-origin: 100% 0%;
-    left: -4.2rem;
+    left: -3.7rem;
     top: 11.7rem;
     height: 12rem;
 }
@@ -324,7 +324,7 @@ button {
     width: inherit;
     -webkit-transform:rotate(180deg);
     -webkit-transform-origin: 100% 0%;
-    left: -4.2rem;
+    left: -3.7rem;
     height: 0.5rem;
     top: 12.4rem;
 }
@@ -491,6 +491,32 @@ input[type="text"].gpii-fd-keyboard-input::-webkit-input-placeholder {
 }
 input[type="text"].gpii-fd-keyboard-input:focus {
     border: 0.2rem solid #fff; /* Yellow */
+    box-shadow: 0 0 0 0.4rem rgb(244, 215, 75), /* Yellow */
+                0 0 0 0.6rem rgb(0, 0, 0);
+    outline: none;
+}
+.gpii-fd-keyboard-try,
+.gpii-fd-keyboard-accomodationToggle {
+    border-radius: 0.5rem;
+    background-color: #425165; /* blue-grey */
+    color: #ffffff;
+    padding: 1rem;
+    line-height: 2rem;
+    height: 4.2rem;
+}
+.gpii-fd-keyboard-try,
+.gpii-fd-keyboard-accomodationToggle {
+    margin: 0 1rem 1rem 0;
+}
+.gpii-fd-keyboard-try:hover,
+.gpii-fd-keyboard-accomodationToggle:hover {
+    background-color: #425165; /* blue-grey, to override foundation's blue */
+    box-shadow: 0 0 0 0.1rem rgb(255,255,255), /* white */
+                0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
+}
+.gpii-fd-keyboard-try:focus,
+.gpii-fd-keyboard-accomodationToggle:focus {
+    background-color: #425165; /* blue-grey */
     box-shadow: 0 0 0 0.4rem rgb(244, 215, 75), /* Yellow */
                 0 0 0 0.6rem rgb(0, 0, 0);
     outline: none;
