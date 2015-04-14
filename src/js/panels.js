@@ -129,8 +129,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         selectors: {
             placeholder: ".gpiic-fd-keyboard-input",
-            header: ".gpiic-fd-keyboard-header",
-            instructions: ".gpiic-fd-keyboard-instructions"
+            instructions: ".gpiic-fd-instructions"
         },
         protoTree: {
             placeholder: {

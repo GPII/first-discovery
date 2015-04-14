@@ -1,6 +1,6 @@
 {
-    "keyboardHeader": "Keyboard Assistance",
     "keyboardInstructions": "Adjustments can be made to help you with using the keyboard.",
+    "placeholder": "Type the @ symbol now",
 
     "try": "try it",
     "on": "ON",
@@ -8,6 +8,11 @@
     "turnOn": "turn ON",
     "turnOff": "turn OFF",
 
-    "stickyKeysInstructions": "<strong>Sticky Keys</strong> can help with pressing modifier keys, like <strong>shift</strong>.",
-    "stickyKeys": "Sticky Keys is"
+    "stickyKeysInstructions": "<strong>Sticky Keys</strong> can help with holding two keys down at once.",
+    "stickyKeys": "Sticky Keys is",
+
+    "inputTooltip": "Select to begin typing",
+    "tryTooltip": "Select to turn Sticky Keys on",
+    "turnOnTooltip": "Select to turn Sticky Keys on",
+    "turnOffTooltip": "Select to turn Sticky Keys off"
 }
