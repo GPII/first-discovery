@@ -271,6 +271,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 args: ["{that}", 1]
             }
         },
+        events: {
+            onButtonTopsReady: null
+        },
         listeners: {
             "afterRender.bindPrev": {
                 "this": "{that}.dom.prev",
@@ -286,7 +289,21 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 funcName: "gpii.firstDiscovery.panel.lang.setNavKeyStatus",
                 args: ["{that}"]
             },
+            "afterRender.getInitialButtonTops": {
+                funcName: "gpii.firstDiscovery.panel.lang.getInitialButtonTops",
+                args: ["{that}"]
+            },
+            // To override the default scrolling of the overflow div that causes the issue when using
+            // keyboard to focus on the button that's displayed at the bottom
+            "afterRender.overrideDefaultScroll": {
+                funcName: "gpii.firstDiscovery.panel.lang.overrideDefaultScroll",
+                args: ["{that}"]
+            },
             "afterRender.scrollLangIntoView": {
+                funcName: "gpii.firstDiscovery.panel.lang.scrollLangIntoView",
+                args: ["{that}"]
+            },
+            "onButtonTopsReady.scrollLangIntoView": {
                 funcName: "gpii.firstDiscovery.panel.lang.scrollLangIntoView",
                 args: ["{that}"]
             },
@@ -356,36 +373,23 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     // When arrow keys are used to navigate thru language buttons, this function scrolls the select button
-    // to the appropriate position to ensure, 1. the selected button is in the view; 2. the top and bottom
-    // buttons are not partially shown. To do it, when the page is rendered, the function saves the initial
-    // positions of displayed buttons. When another language button is selected, finds the closest saved
-    // position for the selected button and moves it to that position.
+    // to the appropriate position to ensure,
+    // 1. the selected button is in the view;
+    // 2. the top and bottom buttons are not partially shown.
+    // To do it, when the page is rendered, the function saves the initial positions of displayed buttons,
+    // and scroll the selected language button to the closest initial position. When arrow keys are used
+    // to move to another language button that is out of the view, finds the closest saved position to
+    // move the button to.
     gpii.firstDiscovery.panel.lang.scrollLangIntoView = function (that) {
+        if (!that.buttonTops) {
+            return;
+        }
         that.lastMovedHeight = that.lastMovedHeight || 0;
 
         var buttons = that.locate("langRow"),
             currentLang = that.model.lang,
-            currentLangIndex = that.options.controlValues.lang.indexOf(currentLang);
-
-        // Stop proceeding if the model is not set properly. Or, the language panel hasn't been inserted into the actual markup
-        // when the first afterRender event is fired. In the latter, the top position of the first button returns a negative value.
-        if (!currentLang || !that.buttonTops && $(buttons[0]).position().top <= 0) {
-            return;
-        }
-
-        var numOfLangPerPage = that.options.numOfLangPerPage;
-
-        // Keep track of the original positions of buttons on display
-        if (!that.buttonTops) {
-            that.buttonTops = [];
-            for (var i = 0; i < numOfLangPerPage; i++) {
-                if (buttons[i]) {
-                    that.buttonTops[i] = $(buttons[i]).position().top;
-                }
-            }
-        }
-
-        var currentButton = $(buttons[currentLangIndex]),
+            currentLangIndex = that.options.controlValues.lang.indexOf(currentLang),
+            currentButton = $(buttons[currentLangIndex]),
             controlsDiv = $(that.options.selectors.controlsDiv),
             controlsDivScrollTop = controlsDiv[0].scrollTop,
             // The line below to add "controlsDivScrollTop" rather than using button.offset().top directly is to fix an issue in
@@ -398,6 +402,31 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         $(that.options.selectors.controlsDiv).animate({scrollTop: heightToMove + "px"}, 0);
 
         that.lastMovedHeight = heightToMove;
+    };
+
+    gpii.firstDiscovery.panel.lang.getInitialButtonTops = function (that) {
+        // setTimeout() is to work around the issue that position() in synchronous calls receives 0 for initial button positions.
+        setTimeout(function () {
+            var buttons = that.locate("langRow"),
+                numOfLangPerPage = that.options.numOfLangPerPage;
+
+            // Keep track of the original positions of buttons on display
+            if (!that.buttonTops) {
+                that.buttonTops = [];
+                for (var i = 0; i < numOfLangPerPage; i++) {
+                    if (buttons[i]) {
+                        that.buttonTops[i] = $(buttons[i]).position().top;
+                    }
+                }
+                that.events.onButtonTopsReady.fire();
+            }
+        });
+    };
+
+    gpii.firstDiscovery.panel.lang.overrideDefaultScroll = function (that) {
+        that.locate("controlsDiv").scroll(function () {
+            gpii.firstDiscovery.panel.lang.scrollLangIntoView(that);
+        });
     };
 
     gpii.firstDiscovery.panel.lang.stopArrowBrowseOnEdgeButtons = function (button, keyCodes) {
