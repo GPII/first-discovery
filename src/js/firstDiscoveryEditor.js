@@ -39,6 +39,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     selectors: {
                         panel: "{firstDiscoveryEditor}.options.selectors.panel"
                     },
+                    events: {
+                        // Whenever control sizes changed, the language panel needs to re-collect
+                        // initial button positions for arrow key scrolling calculation
+                        onControlsResized: null
+                    },
                     listeners: {
                         onReady: {
                             listener: "{firstDiscoveryEditor}.events.onPrefsEditorReady",

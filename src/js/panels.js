@@ -136,6 +136,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "range.max": "maximum",
                 "step": "divisibleBy"
             }
+        },
+        events: {
+            onControlsResized: null
+        },
+        listeners: {
+            onControlsResized: "{prefsEditor}.events.onControlsResized"
+        },
+        modelListeners: {
+            "value": "{that}.events.onControlsResized.fire"
         }
     });
 
@@ -197,11 +206,26 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * language panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.lang", {
-        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip", "autoInit"],
+        gradeNames: ["fluid.prefs.panel", "autoInit"],
         preferenceMap: {
             "gpii.firstDiscovery.language": {
                 "model.lang": "default",
                 "controlValues.lang": "enum"
+            }
+        },
+        components: {
+            attachTooltipOnLang: {
+                type: "gpii.firstDiscovery.panel.lang.attachTooltipOnLang",
+                container: "{lang}.container",
+                options: {
+                    selectors: "{lang}.options.selectors",
+                    listeners: {
+                        "{lang}.events.afterRender": {
+                            funcName: "gpii.firstDiscovery.panel.lang.populateTooltipContentMap",
+                            args: ["{that}", "{lang}"]
+                        }
+                    }
+                }
             }
         },
         controlValues: {
@@ -211,13 +235,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             lang: ["lang-en", "lang-fr", "lang-es", "lang-de", "lang-ne", "lang-sv"]
         },
         numOfLangPerPage: 3,
-        strings: {
-            "navButtonLabel": "Select to view more languages"
-        },
-        tooltipContentMap: {
-            "prev": "navButtonLabel",
-            "next": "navButtonLabel"
-        },
         selectors: {
             instructions: ".gpiic-fd-instructions",
             langRow: ".gpiic-fd-lang-row",
@@ -265,10 +282,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 method: "click",
                 args: ["{that}.bindNext"]
             },
-            "afterRender.populateTooltipContentMap": {
-                funcName: "gpii.firstDiscovery.panel.lang.populateTooltipContentMap",
-                args: ["{that}"]
-            },
             "afterRender.setButtonStates": {
                 funcName: "gpii.firstDiscovery.panel.lang.setNavKeyStatus",
                 args: ["{that}"]
@@ -280,6 +293,32 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "afterRender.preventWrapWithArrowKeys": {
                 funcName: "gpii.firstDiscovery.panel.lang.preventWrapWithArrowKeys",
                 args: ["{that}"]
+            },
+            "{prefsEditor}.events.onControlsResized": {
+                funcName: "fluid.set",
+                args: ["{that}", "buttonTops", undefined]
+            }
+        }
+    });
+
+    // This component is needed for the demands block to be only applied to the language panel (gpii.firstDiscovery.panel.lang).
+    // According to http://wiki.fluidproject.org/display/docs/Contexts, if the context component of the demands block was the
+    // language panel itself, the demands block would be applied to siblings of the language panel as well. Needs to add another
+    // layer of containment to work around this issue.
+    // This component and the demands block should be removed when the new framework (http://issues.fluidproject.org/browse/FLUID-5249)
+    // is in use.
+    fluid.defaults("gpii.firstDiscovery.panel.lang.attachTooltipOnLang", {
+        gradeNames: ["gpii.firstDiscovery.attachTooltip", "autoInit"],
+        tooltipContentMap: {
+            "prev": "navButtonLabel",
+            "next": "navButtonLabel"
+        }
+    });
+
+    fluid.demands("fluid.tooltip", ["gpii.firstDiscovery.panel.lang.attachTooltipOnLang"], {
+        options: {
+            styles: {
+                tooltip: "gpii-fd-tooltip-lang"
             }
         }
     });
@@ -379,15 +418,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         gpii.firstDiscovery.panel.lang.stopArrowBrowseOnEdgeButtons(langButtons[langButtons.length - 1], [$.ui.keyCode.DOWN, $.ui.keyCode.RIGHT]);
     };
 
-    gpii.firstDiscovery.panel.lang.populateTooltipContentMap = function (that) {
+    gpii.firstDiscovery.panel.lang.populateTooltipContentMap = function (that, langPanel) {
         var langButtons = that.locate("langRow"),
             langInputs = that.locate("langInput"),
             idToContent = that.tooltip.getTooltipModel();
 
-        fluid.each(that.options.stringArrayIndex.lang, function (msgKey, index) {
+        fluid.each(langPanel.options.stringArrayIndex.lang, function (msgKey, index) {
             var buttonId = fluid.allocateSimpleId(langButtons[index]),
                 inputId = fluid.allocateSimpleId(langInputs[index]),
-                msg = that.msgLookup.lookup(msgKey + "-label");
+                msg = langPanel.msgLookup.lookup(msgKey + "-label");
 
             idToContent[buttonId] = msg;
             idToContent[inputId] = msg;
@@ -395,24 +434,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
         that.tooltip.applier.change("idToContent", idToContent);
     };
-
-    fluid.demands("gpii.firstDiscovery.tooltip", ["gpii.firstDiscovery.panel.lang"], {
-        options: {
-            styles: {
-                tooltip: "gpii-fd-tooltip-lang"
-            }
-        }
-    });
-
-    // fluid.demands("gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.panel.lang", {
-    //     options: {
-    //         tooltipOptions: {
-    //             styles: {
-    //                 tooltip: "gpii-fd-tooltip-lang"
-    //             }
-    //         }
-    //     }
-    // });
 
     /*
      * Contrast panel

@@ -536,5 +536,10 @@ button {
 }
 
 .gpii-fd-tooltip-lang {
-    background-color: red;
+    width: auto;
+    max-width: 8.5em;
+    font-size: 2rem;
+    padding: 0.5rem;
+    background-color: #fed73a;
+    right: 16rem;
 }
