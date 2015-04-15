@@ -129,16 +129,24 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         selectors: {
             placeholder: ".gpiic-fd-keyboard-input",
-            instructions: ".gpiic-fd-instructions",
-            tryButton: ".gpiic-fd-keyboard-try",
-            assistance: ".gpiic-fd-keyboard-assistance",
-            accomodation: ".gpiic-fd-keyboard-accomodation",
-            accomodationName: ".gpiic-fd-keyboard-accomodationName",
-            accomodationState: ".gpiic-fd-keyboard-accomodationState",
-            accomodationToggle: ".gpiic-fd-keyboard-accomodationToggle"
+            instructions: ".gpiic-fd-keyboard-instructions",
+            assistance: ".gpiic-fd-keyboard-assistance"
+        },
+        events: {
+            onOfferAssistance: null
         },
         model: {
             offerAssistance: false
+        },
+        components: {
+            assistance: {
+                type: "gpii.firstDiscovery.keyboard.stickyKeys",
+                createOnEvent: "onOfferAssistance",
+                container: "{that}.container",
+                options: {
+                    messageBase: "{keyboard}.options.messageBase"
+                }
+            }
         },
         protoTree: {
             placeholder: {
@@ -154,17 +162,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     func: "hide"
                 }
             },
-            accomodation: {
-                decorators: {
-                    type: "jQuery",
-                    func: "hide"
-                }
-            },
-            instructions: {markup: {messagekey: "keyboardInstructions"}},
-            tryButton: {messagekey: "try"},
-            accomodationName: {messagekey: "stickyKeys"},
-            accomodationState: {messagekey: "off"},
-            accomodationToggle: {messagekey: "turnOn"}
+            instructions: {markup: {messagekey: "keyboardInstructions"}}
         },
         modelListeners: {
             offerAssistance: {
@@ -178,33 +176,19 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "this": "{that}.dom.placeholder",
                 "method": "keydown",
                 "args": "{that}.offerAssistance"
-            },
-            "afterRender.bindTry": {
-                "this": "{that}.dom.tryButton",
-                "method": "click",
-                "args": "{that}.accomodation"
             }
         },
         invokers: {
             offerAssistance: {
                 changePath: "offerAssistance",
                 value: true
-            },
-            accomodation: {
-                funcName: "gpii.firstDiscovery.panel.keyboard.accomodation",
-                args: ["{that}"]
             }
         }
     });
 
     gpii.firstDiscovery.panel.keyboard.offerAssistance = function (that) {
-        that.locate("instructions").html(that.msgResolver.resolve("stickyKeysInstructions"));
         that.locate("assistance").show();
-    };
-
-    gpii.firstDiscovery.panel.keyboard.accomodation = function (that) {
-        that.locate("tryButton").hide();
-        that.locate("accomodation").show();
+        that.events.onOfferAssistance.fire();
     };
 
     fluid.defaults("gpii.firstDiscovery.panel.textSize", {
