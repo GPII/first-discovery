@@ -40,9 +40,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         panel: "{firstDiscoveryEditor}.options.selectors.panel"
                     },
                     events: {
-                        // Whenever control sizes changed, the language panel needs to re-collect
-                        // initial button positions for arrow key scrolling calculation
-                        onControlsResized: null
+                        onPanelShown: "{firstDiscoveryEditor}.events.onPanelShown"
                     },
                     listeners: {
                         onReady: {
@@ -51,7 +49,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         },
                         onAutoSave: "{that}.saveAndApply"
                     },
-                    autoSave: true
+                    autoSave: true,
+                    connectionGradeForLang: "gpii.firstDiscovery.panel.lang.prefEditorConnection",
+                    distributeOptions: {
+                        source: "{that}.options.connectionGradeForLang",
+                        target: "{that > gpii.firstDiscovery.panel.lang}.options.prefsEditorConnection"
+                    }
                 }
             },
             navButtons: {
@@ -115,7 +118,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         events: {
             onPrefsEditorReady: null,
-            onCreateNavButtons: null
+            onCreateNavButtons: null,
+            onPanelShown: null
         },
         listeners: {
             "onPrefsEditorReady.setPanels": {
@@ -131,7 +135,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         invokers: {
             showPanel: {
                 funcName: "gpii.firstDiscovery.showPanel",
-                args: ["{that}.panels", "{that}.model.currentPanelNum", "{that}.options.styles.currentPanel"]
+                args: ["{that}"]
             }
         },
         distributeOptions: {
@@ -140,9 +144,18 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    gpii.firstDiscovery.showPanel = function (panels, toShow, selectorForCurrent) {
+    gpii.firstDiscovery.showPanel = function (that) {
+        var panels = that.panels,
+            currentPanelNum = that.model.currentPanelNum,
+            selectorForCurrent = that.options.styles.currentPanel;
+
         fluid.each(panels, function (panel, index) {
-            $(panel).toggleClass(selectorForCurrent, toShow === (index + 1));
+            var toShow = currentPanelNum === (index + 1);
+            $(panel).toggleClass(selectorForCurrent, toShow);
+            if (toShow) {
+                var panelId = fluid.allocateSimpleId(panel);
+                that.events.onPanelShown.fire(panelId);
+            }
         });
     };
 

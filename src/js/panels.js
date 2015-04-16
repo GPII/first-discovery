@@ -136,15 +136,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "range.max": "maximum",
                 "step": "divisibleBy"
             }
-        },
-        events: {
-            onControlsResized: null
-        },
-        listeners: {
-            onControlsResized: "{prefsEditor}.events.onControlsResized"
-        },
-        modelListeners: {
-            "value": "{that}.events.onControlsResized.fire"
         }
     });
 
@@ -206,7 +197,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * language panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.lang", {
-        gradeNames: ["fluid.prefs.panel", "autoInit"],
+        gradeNames: ["fluid.prefs.panel", "{that}.options.prefsEditorConnection", "autoInit"],
         preferenceMap: {
             "gpii.firstDiscovery.language": {
                 "model.lang": "default",
@@ -289,8 +280,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 funcName: "gpii.firstDiscovery.panel.lang.setNavKeyStatus",
                 args: ["{that}"]
             },
-            "afterRender.getInitialButtonTops": {
-                funcName: "gpii.firstDiscovery.panel.lang.getInitialButtonTops",
+            "afterRender.getButtonTops": {
+                funcName: "gpii.firstDiscovery.panel.lang.getButtonTops",
                 args: ["{that}"]
             },
             // To override the default scrolling of the overflow div that causes the issue when using
@@ -310,10 +301,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "afterRender.preventWrapWithArrowKeys": {
                 funcName: "gpii.firstDiscovery.panel.lang.preventWrapWithArrowKeys",
                 args: ["{that}"]
-            },
-            "{prefsEditor}.events.onControlsResized": {
-                funcName: "fluid.set",
-                args: ["{that}", "buttonTops", undefined]
             }
         }
     });
@@ -404,7 +391,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         that.lastMovedHeight = heightToMove;
     };
 
-    gpii.firstDiscovery.panel.lang.getInitialButtonTops = function (that) {
+    gpii.firstDiscovery.panel.lang.getButtonTops = function (that) {
         // setTimeout() is to work around the issue that position() in synchronous calls receives 0 for initial button positions.
         setTimeout(function () {
             var buttons = that.locate("langRow"),
@@ -421,6 +408,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 that.events.onButtonTopsReady.fire();
             }
         });
+    };
+
+    gpii.firstDiscovery.panel.lang.resetButtonTops = function (that, shownPanelId) {
+        var langPanelId = that.container.attr("id");
+        if (langPanelId === shownPanelId) {
+            that.buttonTops = undefined;
+            gpii.firstDiscovery.panel.lang.getButtonTops(that);
+        }
     };
 
     gpii.firstDiscovery.panel.lang.overrideDefaultScroll = function (that) {
@@ -463,6 +458,19 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
         that.tooltip.applier.change("idToContent", idToContent);
     };
+
+    // To accommodate the possiblity of text/control size change that causes the shift of button positions,
+    // re-collect button tops every time when users come back to the language panel. The button positions
+    // are only accurate when they are not hidden.
+    fluid.defaults("gpii.firstDiscovery.panel.lang.prefEditorConnection", {
+        gradeNames: ["fluid.eventedComponent", "autoInit"],
+        listeners: {
+            "{prefsEditor}.events.onPanelShown": {
+                funcName: "gpii.firstDiscovery.panel.lang.resetButtonTops",
+                args: ["{that}", "{arguments}.0"]
+            }
+        }
+    });
 
     /*
      * Contrast panel
