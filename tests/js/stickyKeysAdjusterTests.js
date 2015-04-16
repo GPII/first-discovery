@@ -67,14 +67,6 @@ https://github.com/gpii/universal/LICENSE.txt
                 }, {
                     listener: "gpii.tests.keyboard.stickyKeysAdjusterTester.verifyTry",
                     args: ["{stickyKeysAdjuster}"],
-                    spec: {path: "tryAccomodation", priority: "last"},
-                    changeEvent: "{stickyKeysAdjuster}.applier.modelChanged"
-                }, {
-                    jQueryTrigger: "click",
-                    element: "{stickyKeysAdjuster}.dom.accomodationToggle"
-                }, {
-                    listener: "gpii.tests.keyboard.stickyKeysAdjusterTester.verifyAccomodationToggle",
-                    args: ["{stickyKeysAdjuster}", true],
                     spec: {path: "stickyKeysEnabled", priority: "last"},
                     changeEvent: "{stickyKeysAdjuster}.applier.modelChanged"
                 }, {
@@ -83,6 +75,14 @@ https://github.com/gpii/universal/LICENSE.txt
                 }, {
                     listener: "gpii.tests.keyboard.stickyKeysAdjusterTester.verifyAccomodationToggle",
                     args: ["{stickyKeysAdjuster}", false],
+                    spec: {path: "stickyKeysEnabled", priority: "last"},
+                    changeEvent: "{stickyKeysAdjuster}.applier.modelChanged"
+                }, {
+                    jQueryTrigger: "click",
+                    element: "{stickyKeysAdjuster}.dom.accomodationToggle"
+                }, {
+                    listener: "gpii.tests.keyboard.stickyKeysAdjusterTester.verifyAccomodationToggle",
+                    args: ["{stickyKeysAdjuster}", true],
                     spec: {path: "stickyKeysEnabled", priority: "last"},
                     changeEvent: "{stickyKeysAdjuster}.applier.modelChanged"
                 }]
@@ -100,10 +100,10 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.notVisible("The sticky keys adjuster should not be visible", that.locate("accomodation"));
     };
 
-    gpii.tests.keyboard.stickyKeysAdjusterTester.verifyAdjusterRendering = function (that) {
+    gpii.tests.keyboard.stickyKeysAdjusterTester.verifyAdjusterRendering = function (that, isEnabled) {
         var accomodationToggle = that.locate("accomodationToggle");
         var accomodationToggleID = accomodationToggle.attr("id");
-        var isEnabled = that.model.stickyKeysEnabled;
+
         jqUnit.assertEquals("The description should be rendered correctly.", that.options.messageBase.stickyKeysInstructions, that.locate("description").html());
         jqUnit.assertEquals("The accomodation name should be rendered correctly", that.options.messageBase.stickyKeys, that.locate("accomodationName").text());
         jqUnit.notVisible("The try button should not be visible", that.locate("tryButton"));
@@ -117,12 +117,12 @@ https://github.com/gpii/universal/LICENSE.txt
 
     gpii.tests.keyboard.stickyKeysAdjusterTester.verifyTry = function (that) {
         jqUnit.assertTrue("The tryAccomodation model value should be true", that.model.tryAccomodation);
-        gpii.tests.keyboard.stickyKeysAdjusterTester.verifyAccomodationToggle(that, false);
+        gpii.tests.keyboard.stickyKeysAdjusterTester.verifyAccomodationToggle(that, true);
     };
 
     gpii.tests.keyboard.stickyKeysAdjusterTester.verifyAccomodationToggle = function (that, expectedState) {
         jqUnit.assertEquals("The stickyKeysEnabled model value should be set correctly", expectedState, that.model.stickyKeysEnabled);
-        gpii.tests.keyboard.stickyKeysAdjusterTester.verifyAdjusterRendering(that);
+        gpii.tests.keyboard.stickyKeysAdjusterTester.verifyAdjusterRendering(that, expectedState);
     };
 
     gpii.tests.keyboard.runTest = function () {
