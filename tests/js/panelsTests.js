@@ -204,6 +204,86 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("The model value should have been set correctly", expectedValue, that.model.speak);
     };
 
+    /************
+     * keyboard *
+     ************/
+
+    fluid.defaults("gpii.tests.firstDiscovery.panel.keyboard", {
+        gradeNames: ["gpii.firstDiscovery.panel.keyboard", "autoInit"],
+        messageBase: {
+            "keyboardInstructions": "Adjustments can be made to help you with using the keyboard.",
+            "placeholder": "Type the @ symbol now",
+
+            "try": "try it",
+            "on": "ON",
+            "off": "OFF",
+            "turnOn": "turn ON",
+            "turnOff": "turn OFF",
+
+            "stickyKeysInstructions": "<strong>Sticky Keys</strong> can help with holding two keys down at once.",
+            "stickyKeys": "Sticky Keys is",
+
+            "inputTooltip": "Select to begin typing",
+            "tryTooltip": "Select to turn Sticky Keys on",
+            "turnOnTooltip": "Select to turn Sticky Keys on",
+            "turnOffTooltip": "Select to turn Sticky Keys off"
+        }
+    });
+
+    fluid.defaults("gpii.tests.keyboardPanel", {
+        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        components: {
+            keyboard: {
+                type: "gpii.tests.firstDiscovery.panel.keyboard",
+                container: ".gpiic-fd-keyboard"
+            },
+            keyboardTester: {
+                type: "gpii.tests.keyboardTester"
+            }
+        }
+    });
+
+    fluid.defaults("gpii.tests.keyboardTester", {
+        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        modules: [{
+            name: "Tests the keyboard panel",
+            tests: [{
+                expect: 3,
+                name: "Initialization",
+                sequence: [{
+                    func: "{keyboard}.refreshView"
+                }, {
+                    listener: "gpii.tests.keyboardTester.verifyRendering",
+                    args: ["{keyboard}"],
+                    event: "{keyboard}.events.afterRender"
+                }]
+            }, {
+                expect: 6,
+                name: "Offer Assistance",
+                sequence: [{
+                    func: "{keyboard}.applier.change",
+                    args: ["offerAssistance", true]
+                }, {
+                    listener: "gpii.tests.keyboardTester.verifyOfferAssistance",
+                    args: ["{keyboard}"],
+                    spec: {priority: "last"},
+                    event: "{keyboard}.events.onOfferAssistance"
+                }]
+            }]
+        }]
+    });
+
+    gpii.tests.keyboardTester.verifyRendering = function (that) {
+        jqUnit.assertEquals("The instructions should be rendered correctly", that.options.messageBase.keyboardInstructions, that.locate("instructions").text());
+        jqUnit.assertEquals("The placeholder text should be set correctly", that.options.messageBase.placeholder, that.locate("placeholder").attr("placeholder"));
+        jqUnit.notVisible("The assistance should be hidden", that.locate("assistance"));
+    };
+
+    gpii.tests.keyboardTester.verifyOfferAssistance = function (that) {
+        jqUnit.isVisible("The assistance should be visible", that.locate("assistance"));
+        gpii.tests.keyboard.stickyKeysAdjusterTester.verifyInitialRendering(that.assistance);
+    };
+
     /*******************
      * congratulations *
      *******************/
@@ -256,6 +336,7 @@ https://github.com/gpii/universal/LICENSE.txt
         fluid.test.runTests([
             "gpii.tests.textSizePanel",
             "gpii.tests.speakTextPanel",
+            "gpii.tests.keyboardPanel",
             "gpii.tests.congratulationsPanel"
         ]);
     });

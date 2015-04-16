@@ -125,11 +125,10 @@ https://github.com/gpii/universal/LICENSE.txt
         gpii.tests.keyboard.stickyKeysAdjusterTester.verifyAdjusterRendering(that);
     };
 
-
-    $(document).ready(function () {
+    gpii.tests.keyboard.runTest = function () {
         fluid.test.runTests([
             "gpii.tests.keyboard.stickyKeysAdjusterTest"
         ]);
-    });
+    };
 
 })(jQuery, fluid);

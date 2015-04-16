@@ -9,10 +9,15 @@
         <script src="../lib/infusion/lib/qunit/js/qunit.js"></script>
         <script src="../../src/lib/infusion/infusion-custom.js"></script>
         <script src="../lib/infusion/test-core/jqUnit/js/jqUnit.js"></script>
+        <script src="../lib/infusion/test-core/jqUnit/js/jqUnit-browser.js"></script>
         <script src="../lib/infusion/test-core/utils/js/IoCTestUtils.js"></script>
 
         <script src="../../src/js/tooltip.js"></script>
+        <script src="../../src/js/msgLookup.js"></script>
+        <script src="../../src/js/stickyKeysAdjuster.js"></script>
         <script src="../../src/js/panels.js"></script>
+        <!-- The sticky keys tests are added to reuse the gpii.tests.keyboard.stickyKeysAdjusterTester.verifyInitialRendering function -->
+        <script src="../js/stickyKeysAdjusterTests.js"></script>
         <script src="../js/panelsTests.js"></script>
     </head>
 
@@ -52,6 +57,22 @@
                     <span class="gpii-fd-indicator gpii-fd-icon"></span>
                     <label for="speakText-choice" class="gpiic-fd-speakText-choice-label gpii-fd-yesNo"></label>
                 </div>
+            </div>
+        </section>
+
+        <!-- Test Keyboard Panel -->
+        <section class="gpiic-fd-keyboard small-12 gpii-fd">
+            <p class="gpiic-fd-keyboard-instructions gpiic-fd-keyboard-stickyKeysAdjuster-desc gpiic-fd-instructions gpii-fd-instructions"></p>
+            <div class="gpii-fd-controls text-center">
+                <div class="gpiic-fd-keyboard-assistance">
+                    <button class="gpiic-fd-keyboard-stickyKeysAdjuster-try gpii-fd-keyboard-try">try it</button>
+                    <span class="gpiic-fd-keyboard-stickyKeysAdjuster-accomodation">
+                        <span class="gpiic-fd-keyboard-stickyKeysAdjuster-accomodationName"></span>
+                        <strong class="gpiic-fd-keyboard-stickyKeysAdjuster-accomodationState"></strong>
+                        <button class="gpiic-fd-keyboard-stickyKeysAdjuster-accomodationToggle gpii-fd-keyboard-accomodationToggle"></button>
+                    </span>
+                </div>
+                <input type="text" class="gpiic-fd-keyboard-input gpii-fd-keyboard-input" />
             </div>
         </section>
 
