@@ -110,7 +110,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.firstDiscovery.testControlss = function (that) {
-        jqUnit.expect(35);
+        jqUnit.expect(39);
 
         var backButton = that.navButtons.locate("back");
         var nextButton = that.navButtons.locate("next");
@@ -121,28 +121,28 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertNotUndefined("The subcomponent \"navIcons\" has been instantiated", that.navIcons);
         gpii.tests.firstDiscovery.verifyStates(that, 1, false, true, {
             isVisible: [".gpiic-fd-prefsEditor-panel-lang"],
-            notVisible: [".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
+            notVisible: [".gpiic-fd-prefsEditor-panel-welcome", ".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
         });
 
         // Clicking the next button leads to the 2nd panel
         nextButton.click();
         gpii.tests.firstDiscovery.verifyStates(that, 2, true, true, {
-            isVisible: [".gpiic-fd-prefsEditor-panel-size"],
-            notVisible: [".gpiic-fd-prefsEditor-panel-lang", ".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-contrast"]
+            isVisible: [".gpiic-fd-prefsEditor-panel-welcome"],
+            notVisible: [".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-lang", ".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-contrast"]
         });
 
         // Clicking the back button brings back the first panel
         backButton.click();
         gpii.tests.firstDiscovery.verifyStates(that, 1, false, true, {
             isVisible: [".gpiic-fd-prefsEditor-panel-lang"],
-            notVisible: [".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
+            notVisible: [".gpiic-fd-prefsEditor-panel-welcome", ".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
         });
 
         // Directs to the last panel by firing a change request directly
-        that.applier.change("currentPanelNum", 4);
-        gpii.tests.firstDiscovery.verifyStates(that, 4, true, true, {
+        that.applier.change("currentPanelNum", 5);
+        gpii.tests.firstDiscovery.verifyStates(that, 5, true, true, {
             isVisible: [".gpiic-fd-prefsEditor-panel-contrast"],
-            notVisible: [".gpiic-fd-prefsEditor-panel-lang", ".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-size"]
+            notVisible: [".gpiic-fd-prefsEditor-panel-lang", ".gpiic-fd-prefsEditor-panel-welcome", ".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-size"]
         });
     };
 
@@ -173,7 +173,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.firstDiscovery.runTest("Init and navigation controls", "#gpiic-fd-navControlsTests", 1, gpii.tests.firstDiscovery.testControlss);
-    gpii.tests.firstDiscovery.runTest("Text Size", "#gpiic-fd-textSizeTests", 2, gpii.tests.firstDiscovery.testTextSize);
-    gpii.tests.firstDiscovery.runTest("TTS Hookup", "#gpiic-fd-ttsHookupTests", 2, gpii.tests.firstDiscovery.testTTSHookup);
+    gpii.tests.firstDiscovery.runTest("Text Size", "#gpiic-fd-textSizeTests", 3, gpii.tests.firstDiscovery.testTextSize);
+    gpii.tests.firstDiscovery.runTest("TTS Hookup", "#gpiic-fd-ttsHookupTests", 3, gpii.tests.firstDiscovery.testTTSHookup);
 
 })(jQuery, fluid);

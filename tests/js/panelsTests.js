@@ -336,6 +336,48 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("The model value should have been set correctly", expectedValue, that.model.speak);
     };
 
+    /***********************
+     * Welcome Panel Tests *
+     ***********************/
+
+    fluid.defaults("gpii.tests.firstDiscovery.panel.welcome", {
+        gradeNames: ["gpii.firstDiscovery.panel.welcome", "autoInit"],
+        messageBase: {
+            "message": "<p>Welcome!</p> <p>If you need help at any time, press the H key. To continue, select the start button below.</p>"
+        }
+    });
+
+    fluid.defaults("gpii.tests.welcomePanel", {
+        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        components: {
+            welcome: {
+                type: "gpii.tests.firstDiscovery.panel.welcome",
+                container: ".gpiic-fd-welcome"
+            },
+            welcomeTester: {
+                type: "gpii.tests.welcomeTester"
+            }
+        }
+    });
+
+    fluid.defaults("gpii.tests.welcomeTester", {
+        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        modules: [{
+            name: "Tests the welcome component",
+            tests: [{
+                expect: 1,
+                name: "Initialization",
+                sequence: [{
+                    func: "{welcome}.refreshView"
+                }, {
+                    listener: "gpii.tests.testRendering",
+                    args: ["{welcome}"],
+                    event: "{welcome}.events.afterRender"
+                }]
+            }]
+        }]
+    });
+
     /*******************
      * congratulations *
      *******************/
@@ -370,7 +412,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 sequence: [{
                     func: "{congratulations}.refreshView"
                 }, {
-                    listener: "gpii.tests.congratulationsTester.testRendering",
+                    listener: "gpii.tests.testRendering",
                     args: ["{congratulations}"],
                     event: "{congratulations}.events.afterRender"
                 }]
@@ -378,7 +420,7 @@ https://github.com/gpii/universal/LICENSE.txt
         }]
     });
 
-    gpii.tests.congratulationsTester.testRendering = function (that) {
+    gpii.tests.testRendering = function (that) {
         var expectedContent = $(that.options.messageBase.message).text();
         jqUnit.assertEquals("The description should be rendered correctly", expectedContent, that.locate("message").text());
     };
@@ -387,6 +429,7 @@ https://github.com/gpii/universal/LICENSE.txt
         fluid.test.runTests([
             "gpii.tests.textSizePanel",
             "gpii.tests.speakTextPanel",
+            "gpii.tests.welcomePanel",
             "gpii.tests.congratulationsPanel"
         ]);
     });

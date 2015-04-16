@@ -498,7 +498,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         protoTree: {
             message: {
-                markup: {messagekey: "welcome"}
+                markup: {messagekey: "message"}
             }
         }
     });
