@@ -140,7 +140,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         components: {
             assistance: {
-                type: "gpii.firstDiscovery.keyboard.stickyKeys",
+                type: "gpii.firstDiscovery.keyboard.stickyKeysAdjuster",
                 createOnEvent: "onOfferAssistance",
                 container: "{that}.container",
                 options: {
