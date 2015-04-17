@@ -314,8 +314,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.defaults("gpii.firstDiscovery.panel.lang.attachTooltipOnLang", {
         gradeNames: ["gpii.firstDiscovery.attachTooltip", "autoInit"],
         tooltipContentMap: {
-            "prev": "navButtonLabel",
-            "next": "navButtonLabel"
+            "prev": "navButtonTooltip",
+            "next": "navButtonTooltip"
         }
     });
 
@@ -345,7 +345,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     // find the index of the number in the "numbers" array that's closest to the given "currentNumber"
-    gpii.firstDiscovery.panel.lang.findClosestButtonTop = function (currentNumber, numbers) {
+    gpii.firstDiscovery.panel.lang.findClosestNumber = function (currentNumber, numbers) {
         var distance = Math.abs(numbers[0] - currentNumber),
             idx = 0;
 
@@ -383,7 +383,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             // Chrome and Safari that button.offset().top returns inconsistent value. The returned value sometimes has
             // "controlsDivScrollTop" added, sometimes not. This line ensures consistent top values for the calculation to base upon.
             currentButtonTop = currentButton.offset().top + controlsDivScrollTop,
-            closestPosition = gpii.firstDiscovery.panel.lang.findClosestButtonTop(currentButtonTop - that.lastMovedHeight, that.buttonTops),
+            closestPosition = gpii.firstDiscovery.panel.lang.findClosestNumber(currentButtonTop - that.lastMovedHeight, that.buttonTops),
             heightToMove = currentButtonTop - closestPosition;
 
         $(that.options.selectors.controlsDiv).animate({scrollTop: heightToMove + "px"}, 0);
@@ -392,7 +392,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     gpii.firstDiscovery.panel.lang.getButtonTops = function (that) {
-        // setTimeout() is to work around the issue that position() in synchronous calls receives 0 for initial button positions.
+        // setTimeout() is to work around the issue that position() in synchronous calls receives 0 for initial button positions
+        // when the panel is in the middle of rendering.
         setTimeout(function () {
             var buttons = that.locate("langRow"),
                 numOfLangPerPage = that.options.numOfLangPerPage;
@@ -405,6 +406,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         that.buttonTops[i] = $(buttons[i]).position().top;
                     }
                 }
+                console.log("fire onButtonTopsReady");
                 that.events.onButtonTopsReady.fire();
             }
         });
@@ -450,7 +452,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         fluid.each(langPanel.options.stringArrayIndex.lang, function (msgKey, index) {
             var buttonId = fluid.allocateSimpleId(langButtons[index]),
                 inputId = fluid.allocateSimpleId(langInputs[index]),
-                msg = langPanel.msgLookup.lookup(msgKey + "-label");
+                tooltipLabelSuffix = langPanel.options.controlValues.lang[index] === langPanel.model.lang ? "-selected-tooltip" : "-tooltip",
+                msg = langPanel.msgLookup.lookup(msgKey + tooltipLabelSuffix);
 
             idToContent[buttonId] = msg;
             idToContent[inputId] = msg;

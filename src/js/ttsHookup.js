@@ -57,7 +57,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         }
                     },
                     listeners: {
-                        "onCreate.readPanel": "{that}.speakPanelMessage",
                         "onCreate.bindKeypress": {
                             listener: "gpii.firstDiscovery.tts.fdHookup.bindKeypress",
                             // 104 === 'h'
