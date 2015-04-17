@@ -177,7 +177,8 @@ https://github.com/gpii/universal/LICENSE.txt
     // gpii.tests.firstDiscovery.runTest("TTS Hookup", "#gpiic-fd-ttsHookupTests", 3, gpii.tests.firstDiscovery.testTTSHookup);
 
     // Test the connection between the top level first discovery editor and the language panel: the language panel reset button positions
-    // every time when the panel itself becomes visible.
+    // every time when the panel itself becomes visible to accommodate the possible text or control size changes that cause the button
+    // position change.
     fluid.defaults("gpii.tests.firstDiscoveryLang", {
         gradeNames: ["gpii.tests.firstDiscovery", "autoInit"],
         components: {
@@ -214,7 +215,7 @@ https://github.com/gpii/universal/LICENSE.txt
         }
     });
 
-    fluid.defaults("gpii.tests.firstDiscovery.lang", {
+    fluid.defaults("gpii.tests.firstDiscovery.langTests", {
         gradeNames: ["fluid.test.testEnvironment", "autoInit"],
         components: {
             firstDiscovery: {
@@ -228,27 +229,29 @@ https://github.com/gpii/universal/LICENSE.txt
         }
     });
 
-    var buttonTops;
-    gpii.tests.firstDiscovery.testInitButtonTops = function (that) {
-        buttonTops = that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.buttonTops;
-        jqUnit.assertNotUndefined("The initial button positions have been collected", buttonTops);
-        console.log("init buttonTops", buttonTops);
+    gpii.tests.firstDiscovery.testInitButtonTops = function (that, tester) {
+        tester.buttonTops = that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.buttonTops;
+        jqUnit.assertNotUndefined("The initial button positions have been collected", tester.buttonTops);
+        console.log("init buttonTops", tester.buttonTops);
     };
 
-    gpii.tests.firstDiscovery.testUnchangedButtonTops = function (that) {
-        jqUnit.assertDeepEq("The button positions stay unchanged", buttonTops, that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.buttonTops);
+    gpii.tests.firstDiscovery.testUnchangedButtonTops = function (that, initialButtonTops) {
+        jqUnit.assertDeepEq("The button positions stay unchanged", initialButtonTops, that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.buttonTops);
     };
 
-    gpii.tests.firstDiscovery.testChangedButtonTops = function (that) {
+    gpii.tests.firstDiscovery.testChangedButtonTops = function (that, initialButtonTops) {
         var newButtonTops = that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.buttonTops;
-        console.log("newButtonTops", newButtonTops, "old", buttonTops);
+        console.log("newButtonTops", newButtonTops, "old", initialButtonTops);
         fluid.each(newButtonTops, function (newPosition, index){
-            jqUnit.assertNotEquals("The position for button #" + index + " has been re-collected", buttonTops[index], newPosition);
+            jqUnit.assertNotEquals("The position for button #" + index + " has been re-collected", initialButtonTops[index], newPosition);
         });
     };
 
     fluid.defaults("gpii.tests.firstDiscovery.langTester", {
         gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        testData: {
+            buttonTops: null
+        },
         modules: [{
             name: "Tests the connection between the first discovery editor and the language panel",
             tests: [{
@@ -256,15 +259,15 @@ https://github.com/gpii/universal/LICENSE.txt
                 name: "Initialization",
                 sequence: [{
                     listener: "gpii.tests.firstDiscovery.testInitButtonTops",
-                    args: ["{firstDiscovery}"],
+                    args: ["{firstDiscovery}", "{that}"],
                     priority: "last",
-                    event: "{lang firstDiscovery}.events.onButtonTopsReady"
+                    event: "{gpii.tests.firstDiscovery.langTests firstDiscovery}.events.onButtonTopsReady"
                 }, {
                     func: "{firstDiscovery}.prefsEditorLoader.applier.change",
                     args: ["currentPanelNum", 3]
                 }, {
                     listener: "gpii.tests.firstDiscovery.testUnchangedButtonTops",
-                    args: ["{firstDiscovery}"],
+                    args: ["{firstDiscovery}", "{that}.buttonTops"],
                     event: "{firstDiscovery}.events.onPanelShown"
                 }, {
                     jQueryTrigger: "click",
@@ -274,7 +277,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     args: ["currentPanelNum", 1]
                 }, {
                     listener: "gpii.tests.firstDiscovery.testChangedButtonTops",
-                    args: ["{firstDiscovery}"],
+                    args: ["{firstDiscovery}", "{that}.buttonTops"],
                     event: "{firstDiscovery}.events.onButtonTopsReady"
                 }]
             }]
@@ -283,7 +286,7 @@ https://github.com/gpii/universal/LICENSE.txt
 
     $(document).ready(function () {
         fluid.test.runTests([
-            "gpii.tests.firstDiscovery.lang"
+            "gpii.tests.firstDiscovery.langTests"
         ]);
     });
 
