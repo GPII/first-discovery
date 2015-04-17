@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>keyboardInput</title>
+        <script src="../../../src/lib/infusion/infusion-custom.js"></script>
+        <script src="../../../src/js/keyboardInput.js"></script>
+    </head>
+    <body>
+        <input id="gpiic-keyboardInput" type="text">
+        <br>
+        <a id="gpiic-enable-sticky-keys" href="#">Enable Sticky Keys</a>
+        <br>
+        <a id="gpiic-disable-sticky-keys" href="#">Disable Sticky Keys</a>
+        <script>
+            var keyboardInput = gpii.firstDiscovery.keyboardInput("#gpiic-keyboardInput");
+            jQuery("#gpiic-enable-sticky-keys").click(function () {
+                keyboardInput.applier.change("stickyKeysEnabled", true);
+            });
+            jQuery("#gpiic-disable-sticky-keys").click(function () {
+                keyboardInput.applier.change("stickyKeysEnabled", false);
+            });
+        </script>
+    </body>
+</html>
