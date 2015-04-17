@@ -154,9 +154,10 @@ https://github.com/gpii/universal/LICENSE.txt
 
         jqUnit.assertEquals("The instruction has been set correctly.", messages.langInstructions, that.locate("instructions").text());
         fluid.each(that.locate("langRow"), function (langButton, idx) {
+            var tooltipLabelSuffix = that.options.controlValues.lang[idx] === that.model.lang ? "-selected-tooltip" : "-tooltip",
             langButton = $(langButton);
             jqUnit.assertEquals("The language button #" + idx + " has the correct label.", messages[stringArray[idx]], langButton.find(that.options.selectors.langLabel).text());
-            jqUnit.assertEquals("The tooltip definition for the language button #" + idx + " has been populated", messages[stringArray[idx] + "-label"], idToContent[langButton.attr("id")]);
+            jqUnit.assertEquals("The tooltip definition for the language button #" + idx + " has been populated", messages[stringArray[idx] + tooltipLabelSuffix], idToContent[langButton.attr("id")]);
         });
         jqUnit.assertEquals("The correct language button has been checked", that.model.lang, that.locate("langInput").filter(":checked").val());
         jqUnit.assertEquals("The previous button is enabled", false, that.locate("prev").is(":disabled"));
