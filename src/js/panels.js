@@ -406,7 +406,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         that.buttonTops[i] = $(buttons[i]).position().top;
                     }
                 }
-                console.log("fire onButtonTopsReady");
                 that.events.onButtonTopsReady.fire();
             }
         });

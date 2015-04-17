@@ -146,23 +146,6 @@ https://github.com/gpii/universal/LICENSE.txt
         });
     };
 
-    gpii.tests.firstDiscovery.getFontSize = function (elm) {
-        return parseFloat(elm.css("font-size"));
-    };
-
-    gpii.tests.firstDiscovery.testTextSize = function (that) {
-        jqUnit.expect(3);
-
-        var initialTextSize = gpii.tests.firstDiscovery.getFontSize(that.container);
-        jqUnit.assertNotUndefined("The initial text size has been set", initialTextSize);
-        that.prefsEditor.gpii_firstDiscovery_panel_textSize.locate("increase").click();
-        var sizeAfterIncrease = gpii.tests.firstDiscovery.getFontSize(that.container);
-        jqUnit.assertTrue("Clicking on larger button enlarges the text size", sizeAfterIncrease > initialTextSize);
-        that.prefsEditor.gpii_firstDiscovery_panel_textSize.locate("decrease").click();
-        var sizeAfterDecrease = gpii.tests.firstDiscovery.getFontSize(that.container);
-        jqUnit.assertTrue("Clicking on smaller button shrinks the text size", sizeAfterDecrease < sizeAfterIncrease);
-    };
-
     gpii.tests.firstDiscovery.testTTSHookup = function (that) {
         jqUnit.expect(1);
 
@@ -172,13 +155,11 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("The instruction text should be sourced from the active panel", expected, actual);
     };
 
-    // gpii.tests.firstDiscovery.runTest("Init and navigation controls", "#gpiic-fd-navControlsTests", 1, gpii.tests.firstDiscovery.testControls);
-    // gpii.tests.firstDiscovery.runTest("Text Size", "#gpiic-fd-textSizeTests", 3, gpii.tests.firstDiscovery.testTextSize);
-    // gpii.tests.firstDiscovery.runTest("TTS Hookup", "#gpiic-fd-ttsHookupTests", 3, gpii.tests.firstDiscovery.testTTSHookup);
+    gpii.tests.firstDiscovery.runTest("Init and navigation controls", "#gpiic-fd-navControlsTests", 1, gpii.tests.firstDiscovery.testControls);
+    gpii.tests.firstDiscovery.runTest("TTS Hookup", "#gpiic-fd-ttsHookupTests", 3, gpii.tests.firstDiscovery.testTTSHookup);
 
-    // Test the connection between the top level first discovery editor and the language panel: the language panel reset button positions
-    // every time when the panel itself becomes visible to accommodate the possible text or control size changes that cause the button
-    // position change.
+    // Test the connection between the top level first discovery editor and the language panel: the language panel resets button positions every
+    // time when the panel itself becomes visible to accommodate the possible text or control size changes that cause the shift of button positions.
     fluid.defaults("gpii.tests.firstDiscoveryLang", {
         gradeNames: ["gpii.tests.firstDiscovery", "autoInit"],
         components: {
@@ -190,7 +171,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     components: {
                         selfVoicing: {
                             options: {
-                                // Overriding queueSpeech() to prevent "selfVoicing" component to continue processing to read out queued
+                                // Override queueSpeech() to prevent "selfVoicing" component to continue processing to read out queued
                                 // speeches after tests complete, which causes an error of referencing to an destroyed component.
                                 invokers: {
                                     queueSpeech: "fluid.identity"
@@ -204,7 +185,7 @@ https://github.com/gpii/universal/LICENSE.txt
         },
         events: {
             onPanelShown: null,
-            onButtonTopsReady: null
+            onButtonTopsReady: "{langTests}.events.onButtonTopsReady"
         },
         langListeners: {
             "onButtonTopsReady.escalate": "{firstDiscoveryLang}.events.onButtonTopsReady"
@@ -226,13 +207,15 @@ https://github.com/gpii/universal/LICENSE.txt
             langTester: {
                 type: "gpii.tests.firstDiscovery.langTester"
             }
+        },
+        events: {
+            onButtonTopsReady: null
         }
     });
 
     gpii.tests.firstDiscovery.testInitButtonTops = function (that, tester) {
         tester.buttonTops = that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.buttonTops;
         jqUnit.assertNotUndefined("The initial button positions have been collected", tester.buttonTops);
-        console.log("init buttonTops", tester.buttonTops);
     };
 
     gpii.tests.firstDiscovery.testUnchangedButtonTops = function (that, initialButtonTops) {
@@ -241,7 +224,6 @@ https://github.com/gpii/universal/LICENSE.txt
 
     gpii.tests.firstDiscovery.testChangedButtonTops = function (that, initialButtonTops) {
         var newButtonTops = that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.buttonTops;
-        console.log("newButtonTops", newButtonTops, "old", initialButtonTops);
         fluid.each(newButtonTops, function (newPosition, index){
             jqUnit.assertNotEquals("The position for button #" + index + " has been re-collected", initialButtonTops[index], newPosition);
         });
@@ -260,8 +242,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 sequence: [{
                     listener: "gpii.tests.firstDiscovery.testInitButtonTops",
                     args: ["{firstDiscovery}", "{that}"],
-                    priority: "last",
-                    event: "{gpii.tests.firstDiscovery.langTests firstDiscovery}.events.onButtonTopsReady"
+                    event: "{langTests}.events.onButtonTopsReady"
                 }, {
                     func: "{firstDiscovery}.prefsEditorLoader.applier.change",
                     args: ["currentPanelNum", 3]
@@ -278,7 +259,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 }, {
                     listener: "gpii.tests.firstDiscovery.testChangedButtonTops",
                     args: ["{firstDiscovery}", "{that}.buttonTops"],
-                    event: "{firstDiscovery}.events.onButtonTopsReady"
+                    event: "{langTests}.events.onButtonTopsReady"
                 }]
             }]
         }]
