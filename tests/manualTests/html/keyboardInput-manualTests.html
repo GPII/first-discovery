@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>keyboardInput</title>
+        <script src="../../../src/lib/infusion/infusion-custom.js"></script>
+        <script src="../../../src/js/keyboardInput.js"></script>
+    </head>
+    <body>
+        <p><input id="gpiic-keyboardInput" type="text"></p>
+        <p><a id="gpiic-enable-sticky-keys" href="#">Enable Sticky Keys</a></p>
+        <p><a id="gpiic-disable-sticky-keys" href="#">Disable Sticky Keys</a></p>
+        <script>
+            fluid.defaults("gpii.tests.firstDiscovery.keyboardInput", {
+                gradeNames: ["gpii.firstDiscovery.keyboardInput", "autoInit"],
+                modelListeners: {
+                    "userInput": {
+                        listener: "gpii.tests.firstDiscovery.keyboardInput.logInputChange",
+                        args: ["{that}.model.userInput"]
+                    }
+                }
+            });
+            gpii.tests.firstDiscovery.keyboardInput.logInputChange = function (userInput) {
+                console.log(userInput);
+            };
+            var keyboardInput = gpii.tests.firstDiscovery.keyboardInput("#gpiic-keyboardInput");
+            jQuery("#gpiic-enable-sticky-keys").click(function () {
+                keyboardInput.applier.change("stickyKeysEnabled", true);
+            });
+            jQuery("#gpiic-disable-sticky-keys").click(function () {
+                keyboardInput.applier.change("stickyKeysEnabled", false);
+            });
+        </script>
+    </body>
+</html>
