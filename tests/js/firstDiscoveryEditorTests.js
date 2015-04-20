@@ -185,7 +185,7 @@ https://github.com/gpii/universal/LICENSE.txt
         },
         events: {
             onPanelShown: null,
-            onButtonTopsReady: "{langTests}.events.onButtonTopsReady"
+            onButtonTopsReady: null
         },
         langListeners: {
             "onButtonTopsReady.escalate": "{firstDiscoveryLang}.events.onButtonTopsReady"
@@ -202,7 +202,15 @@ https://github.com/gpii/universal/LICENSE.txt
             firstDiscovery: {
                 type: "gpii.tests.firstDiscoveryLang",
                 container: "#gpiic-fd-langTests",
-                createOnEvent: "{langTester}.events.onTestCaseStart"
+                createOnEvent: "{langTester}.events.onTestCaseStart",
+                options: {
+                    // The work around for an issue in the IoC testing framework (http://issues.fluidproject.org/browse/FLUID-5633)
+                    // that IoCSS-broadcast listeners are not un-bound so that in test sequences, the event reference can use
+                    // "{langTests}.events.onButtonTopsReady" instead of the IoCSS reference "{langTests firstDiscoveryLang}.events.onButtonTopsReady"
+                    events: {
+                        onButtonTopsReady: "{langTests}.events.onButtonTopsReady"
+                    }
+                }
             },
             langTester: {
                 type: "gpii.tests.firstDiscovery.langTester"
