@@ -147,7 +147,34 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 createOnEvent: "onOfferAssistance",
                 container: "{that}.container",
                 options: {
-                    messageBase: "{keyboard}.options.messageBase"
+                    messageBase: "{keyboard}.options.messageBase",
+                    modelRelay: {
+                        source: "stickyKeysEnabled",
+                        target: "{keyboardInput}.model.stickyKeysEnabled",
+                        backward: "liveOnly",
+                        singleTransform: {
+                            type: "fluid.transforms.identity"
+                        }
+                    }
+                }
+            },
+            stickyKeysAssessor: {
+                type: "gpii.firstDiscovery.keyboard.stickyKeysAssessment",
+                options: {
+                    requiredInput: "@",
+                    model: {
+                        offerAssistance: "{keyboard}.model.offerAssistance"
+                    }
+                }
+            },
+            keyboardInput: {
+                type: "gpii.firstDiscovery.keyboardInput",
+                createOnEvent: "afterRender",
+                container: "{that}.dom.placeholder",
+                options: {
+                    model: {
+                        userInput: "{stickyKeysAssessor}.model.input"
+                    }
                 }
             }
         },
@@ -172,19 +199,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 listener: "gpii.firstDiscovery.panel.keyboard.offerAssistance",
                 args: ["{that}"],
                 excludeSource: "init"
-            }
-        },
-        listeners: {
-            "afterRender.bindTempAssessment": {
-                "this": "{that}.dom.placeholder",
-                "method": "keydown",
-                "args": "{that}.offerAssistance"
-            }
-        },
-        invokers: {
-            offerAssistance: {
-                changePath: "offerAssistance",
-                value: true
             }
         }
     });
