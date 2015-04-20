@@ -17,9 +17,9 @@ https://github.com/gpii/universal/LICENSE.txt
      * Language Panel Tests *
      ************************/
 
-     fluid.defaults("gpii.tests.prefs.panel.lang", {
-         gradeNames: ["gpii.firstDiscovery.panel.lang", "autoInit"],
-         messageBase: {
+    fluid.defaults("gpii.tests.prefs.panel.lang", {
+        gradeNames: ["gpii.firstDiscovery.panel.lang", "autoInit"],
+        messageBase: {
             "langInstructions": "Select your preferred language",
             "lang-en": "English",
             "lang-fr": "Français",
@@ -42,25 +42,25 @@ https://github.com/gpii/universal/LICENSE.txt
             "lang-de-selected-tooltip": "Deutsch gegenwärtig ausgewählt ist",
             "lang-ne-selected-tooltip": "Nederlands is currently selected",
             "lang-sv-selected-tooltip": "Svenska is currently selected"
-         },
-         model: {
+        },
+        model: {
             lang: "ne"
-         },
-         numOfLangPerPage: 3,
-         controlValues: {
-             lang: ["en", "fr", "es", "de", "ne", "sv"]
-         },
-         stringArrayIndex: {
-             lang: ["lang-en", "lang-fr", "lang-es", "lang-de", "lang-ne", "lang-sv"]
-         }
-     });
+        },
+        numOfLangPerPage: 3,
+        controlValues: {
+            lang: ["en", "fr", "es", "de", "ne", "sv"]
+        },
+        stringArrayIndex: {
+            lang: ["lang-en", "lang-fr", "lang-es", "lang-de", "lang-ne", "lang-sv"]
+        }
+    });
 
     fluid.defaults("gpii.tests.langPanel", {
         gradeNames: ["fluid.test.testEnvironment", "autoInit"],
         components: {
             lang: {
                 type: "gpii.tests.prefs.panel.lang",
-                container: ".gpiic-fd-lang",
+                container: ".gpiic-fd-lang"
             },
             langTester: {
                 type: "gpii.tests.langTester"
@@ -154,7 +154,7 @@ https://github.com/gpii/universal/LICENSE.txt
 
         jqUnit.assertEquals("The instruction has been set correctly.", messages.langInstructions, that.locate("instructions").text());
         fluid.each(that.locate("langRow"), function (langButton, idx) {
-            var tooltipLabelSuffix = that.options.controlValues.lang[idx] === that.model.lang ? "-selected-tooltip" : "-tooltip",
+            var tooltipLabelSuffix = that.options.controlValues.lang[idx] === that.model.lang ? "-selected-tooltip" : "-tooltip";
             langButton = $(langButton);
             jqUnit.assertEquals("The language button #" + idx + " has the correct label.", messages[stringArray[idx]], langButton.find(that.options.selectors.langLabel).text());
             jqUnit.assertEquals("The tooltip definition for the language button #" + idx + " has been populated", messages[stringArray[idx] + tooltipLabelSuffix], idToContent[langButton.attr("id")]);
