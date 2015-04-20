@@ -495,6 +495,9 @@ input[type="text"].gpii-fd-keyboard-input:focus {
                 0 0 0 0.6rem rgb(0, 0, 0);
     outline: none;
 }
+.gpii-fd-keyboard-assistanceHide {
+    visibility: hidden;
+}
 .gpii-fd-keyboard-try,
 .gpii-fd-keyboard-accomodationToggle {
     border-radius: 0.5rem;

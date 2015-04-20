@@ -132,6 +132,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             instructions: ".gpiic-fd-keyboard-instructions",
             assistance: ".gpiic-fd-keyboard-assistance"
         },
+        styles: {
+            hide: "gpii-fd-keyboard-assistanceHide"
+        },
         events: {
             onOfferAssistance: null
         },
@@ -158,8 +161,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             assistance: {
                 decorators: {
-                    type: "jQuery",
-                    func: "hide"
+                    type: "addClass",
+                    classes: "{that}.options.styles.hide"
                 }
             },
             instructions: {markup: {messagekey: "keyboardInstructions"}}
@@ -187,7 +190,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     gpii.firstDiscovery.panel.keyboard.offerAssistance = function (that) {
-        that.locate("assistance").show();
+        that.locate("assistance").removeClass(that.options.styles.hide);
         that.events.onOfferAssistance.fire();
     };
 
