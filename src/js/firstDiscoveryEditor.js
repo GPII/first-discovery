@@ -119,6 +119,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         events: {
             onPrefsEditorReady: null,
             onCreateNavButtons: null,
+            // onPanelShown is fired with one argument that is the id of the panel being shown
             onPanelShown: null
         },
         listeners: {

@@ -201,7 +201,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         preferenceMap: {
             "gpii.firstDiscovery.language": {
                 "model.lang": "default",
-                "controlValues.lang": "enum"
+                "controlValues.lang": "enum",
+                "stringArrayIndex.lang": "label"
             }
         },
         components: {
@@ -218,12 +219,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     }
                 }
             }
-        },
-        controlValues: {
-            lang: ["en", "fr", "es", "de", "ne", "sv"]
-        },
-        stringArrayIndex: {
-            lang: ["lang-en", "lang-fr", "lang-es", "lang-de", "lang-ne", "lang-sv"]
         },
         numOfLangPerPage: 3,
         selectors: {
@@ -284,8 +279,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 funcName: "gpii.firstDiscovery.panel.lang.getButtonTops",
                 args: ["{that}"]
             },
-            // To override the default scrolling of the overflow div that causes the issue when using
-            // keyboard to focus on the button that's displayed at the bottom
+            // To override the default scrolling behavior from buttons' parent overflow div to make sure when using keyboard to focus
+            // on the button, the overflow div scrolls to the calculated position.
             "afterRender.overrideDefaultScroll": {
                 funcName: "gpii.firstDiscovery.panel.lang.overrideDefaultScroll",
                 args: ["{that}"]
@@ -305,10 +300,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    // This component is needed for the demands block to be only applied to the language panel (gpii.firstDiscovery.panel.lang).
-    // According to http://wiki.fluidproject.org/display/docs/Contexts, if the context component of the demands block was the
-    // language panel itself, the demands block would be applied to siblings of the language panel as well. Needs to add another
-    // layer of containment to work around this issue.
+    // This component is needed for the following demands block to be only applied to the language panel "gpii.firstDiscovery.panel.lang".
+    // Without this component being the sub-component of the language panel, according to http://wiki.fluidproject.org/display/docs/Contexts,
+    // when the context component of the demands block was the language panel itself, the demands block would also be applied to siblings of
+    // the language panel. To work around this issue, another layer of containment needs to be added.
     // This component and the demands block should be removed when the new framework (http://issues.fluidproject.org/browse/FLUID-5249)
     // is in use.
     fluid.defaults("gpii.firstDiscovery.panel.lang.attachTooltipOnLang", {
@@ -363,9 +358,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     // to the appropriate position to ensure,
     // 1. the selected button is in the view;
     // 2. the top and bottom buttons are not partially shown.
-    // To do it, when the page is rendered, the function saves the initial positions of displayed buttons,
-    // and scroll the selected language button to the closest initial position. When arrow keys are used
-    // to move to another language button that is out of the view, finds the closest saved position to
+    // To achieve this, when the page is rendered, the function saves the initial positions of in-view buttons,
+    // and scroll the selected language button to the closest position. When arrow keys are used
+    // to move to an out-of-view language button into the view, also finds the closest saved position to
     // move the button to.
     gpii.firstDiscovery.panel.lang.scrollLangIntoView = function (that) {
         if (!that.buttonTops) {
@@ -379,9 +374,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             currentButton = $(buttons[currentLangIndex]),
             controlsDiv = $(that.options.selectors.controlsDiv),
             controlsDivScrollTop = controlsDiv[0].scrollTop,
-            // The line below to add "controlsDivScrollTop" rather than using button.offset().top directly is to fix an issue in
-            // Chrome and Safari that button.offset().top returns inconsistent value. The returned value sometimes has
-            // "controlsDivScrollTop" added, sometimes not. This line ensures consistent top values for the calculation to base upon.
+            // The line below to add the scrolled distance of the parent container, which is "controlsDivScrollTop",
+            // rather than using button.offset().top only, is to fix an issue in Chrome and Safari that button.offset().top
+            // returns inconsistent value. The returned value sometimes has "controlsDivScrollTop" added, sometimes not.
+            // This line ensures consistent top values for the calculation to base upon.
             currentButtonTop = currentButton.offset().top + controlsDivScrollTop,
             closestPosition = gpii.firstDiscovery.panel.lang.findClosestNumber(currentButtonTop - that.lastMovedHeight, that.buttonTops),
             heightToMove = currentButtonTop - closestPosition;

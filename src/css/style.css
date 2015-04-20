@@ -246,6 +246,7 @@ button {
 
 /* text size increase/decrease controls */
 .gpii-fd-increase, .gpii-fd-decrease {
+    width: 6rem;
     height: 6rem;
     color: #ffffff;
     background-color: #425165; /* blue-grey */
@@ -253,10 +254,6 @@ button {
     border-radius: 0.7rem;
     font-size: 4rem;
     margin-bottom: 1rem;
-}
-
-.gpii-fd-increase, .gpii-fd-decrease {
-    width: 6rem;
 }
 
 .gpii-fd .gpii-fd-increase:focus,
@@ -290,9 +287,7 @@ button {
 }
 
 .gpii-fd-increase .gpii-fd-icon:before,
-.gpii-fd-decrease .gpii-fd-icon:before,
-.gpii-fd-lang-prev .gpii-fd-icon:before,
-.gpii-fd-lang-next .gpii-fd-icon:before {
+.gpii-fd-decrease .gpii-fd-icon:before {
     font-size: 4rem;
     position: relative;
     top: -0.4rem;
@@ -335,13 +330,6 @@ button {
     font-size: 2rem;
     line-height: 2.5rem;
     margin-bottom: 0.4rem;
-}
-
-.gpii-fd-lang-prev .gpii-fd-icon:before {
-    content: "\e604";
-}
-.gpii-fd-lang-next .gpii-fd-icon:before {
-    content: "\e603";
 }
 
 /* vertical 'range status' indicator beside adjuster */
@@ -501,10 +489,6 @@ button {
 
 .gpii-fd-show {
     visibility: visible;
-}
-
-.gpii-fd-display {
-    display: block;
 }
 
 .gpii-fd-confirmedIndicator:before {
