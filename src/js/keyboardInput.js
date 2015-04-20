@@ -93,7 +93,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         gradeNames: ["fluid.viewComponent", "autoInit"],
         model: {
             stickyKeysEnabled: false,
-            shiftLatched: false
+            shiftLatched: false,
+            userInput: ""
         },
         modelListeners: {
             "stickyKeysEnabled.unlatchShift": "{that}.unlatchShift"
@@ -112,6 +113,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "onCreate.registerKeypressListener": {
                 funcName: "gpii.firstDiscovery.keyboardInput.registerKeypressListener",
                 args: ["{that}.container", "{that}.model", "{keymap}"]
+            },
+            "onCreate.registerChangeListener": {
+                funcName: "gpii.firstDiscovery.keyboardInput.registerChangeListener",
+                args: ["{that}.container", "{that}"]
             }
         },
         components: {
@@ -135,7 +140,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     gpii.firstDiscovery.keyboardInput.registerKeypressListener = function (input, model, keymap) {
-        input.keypress (function (e) {
+        input.keypress(function (e) {
             e.preventDefault();
             var char = gpii.firstDiscovery.charFromKeypress(e);
             if (model.stickyKeysEnabled && model.shiftLatched) {
@@ -146,7 +151,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
             if (char !== "") {
                 input.val(char);
+                // programmatic change of the input value does not
+                // fire a change event, so we trigger it explicitly
+                input.triggerHandler("change");
             }
+        });
+    };
+
+    gpii.firstDiscovery.keyboardInput.registerChangeListener = function (input, that) {
+        input.change(function () {
+            that.applier.change("userInput", input.val());
         });
     };
 
