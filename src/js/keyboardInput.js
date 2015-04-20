@@ -26,8 +26,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 funcName: "gpii.firstDiscovery.usKeymap.isShiftEvent",
                 args: ["{that}", "{arguments}.0"]
             },
-            isLetterChar: {
-                funcName: "gpii.firstDiscovery.usKeymap.isLetterChar",
+            isLowerCaseLetter: {
+                funcName: "gpii.firstDiscovery.usKeymap.isLowerCaseLetter",
                 args: ["{arguments}.0"]
             },
             canShiftChar: {
@@ -71,18 +71,18 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         return e.which === keymap.shiftKeyCode;
     };
 
-    gpii.firstDiscovery.usKeymap.isLetterChar = function (char) {
+    gpii.firstDiscovery.usKeymap.isLowerCaseLetter = function (char) {
         var charCode = char.charCodeAt(0);
         return charCode >= 97 && charCode <= 122;
     };
 
     gpii.firstDiscovery.usKeymap.canShiftChar = function (shiftTable, char) {
-        return gpii.firstDiscovery.usKeymap.isLetterChar(char) ||
+        return gpii.firstDiscovery.usKeymap.isLowerCaseLetter(char) ||
             (shiftTable[char] !== undefined);
     };
 
     gpii.firstDiscovery.usKeymap.getShiftedChar = function (shiftTable, char) {
-        if (gpii.firstDiscovery.usKeymap.isLetterChar(char)) {
+        if (gpii.firstDiscovery.usKeymap.isLowerCaseLetter(char)) {
             return char.toUpperCase();
         } else {
             return shiftTable[char];
@@ -102,21 +102,21 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         invokers: {
             "unlatchShift": {
                 funcName: "gpii.firstDiscovery.keyboardInput.unlatchShift",
-                args: ["{that}.model"]
+                args: ["{that}"]
             }
         },
         listeners: {
             "onCreate.registerShiftListener": {
                 funcName: "gpii.firstDiscovery.keyboardInput.registerShiftListener",
-                args: ["{that}.container", "{that}.model", "{keymap}"]
+                args: ["{that}", "{that}.container", "{keymap}"]
             },
             "onCreate.registerKeypressListener": {
                 funcName: "gpii.firstDiscovery.keyboardInput.registerKeypressListener",
-                args: ["{that}.container", "{that}.model", "{keymap}"]
+                args: ["{that}", "{that}.container", "{keymap}"]
             },
             "onCreate.registerChangeListener": {
                 funcName: "gpii.firstDiscovery.keyboardInput.registerChangeListener",
-                args: ["{that}.container", "{that}"]
+                args: ["{that}", "{that}.container"]
             }
         },
         components: {
@@ -126,25 +126,25 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    gpii.firstDiscovery.keyboardInput.unlatchShift = function (model) {
-        model.shiftLatched = false;
+    gpii.firstDiscovery.keyboardInput.unlatchShift = function (that) {
+        that.applier.change("shiftLatched", false);
     };
 
-    gpii.firstDiscovery.keyboardInput.registerShiftListener = function (input, model, keymap) {
+    gpii.firstDiscovery.keyboardInput.registerShiftListener = function (that, input, keymap) {
         input.keydown(function (e) {
-            if (model.stickyKeysEnabled && keymap.isShiftEvent(e)) {
+            if (that.model.stickyKeysEnabled && keymap.isShiftEvent(e)) {
                 // toggle the shiftLatched state
-                model.shiftLatched = !(model.shiftLatched);
+                that.applier.change("shiftLatched", !(that.model.shiftLatched));
             }
         });
     };
 
-    gpii.firstDiscovery.keyboardInput.registerKeypressListener = function (input, model, keymap) {
+    gpii.firstDiscovery.keyboardInput.registerKeypressListener = function (that, input, keymap) {
         input.keypress(function (e) {
             e.preventDefault();
             var char = gpii.firstDiscovery.charFromKeypress(e);
-            if (model.stickyKeysEnabled && model.shiftLatched) {
-                model.shiftLatched = false;
+            if (that.model.stickyKeysEnabled && that.model.shiftLatched) {
+                that.unlatchShift();
                 if (keymap.canShiftChar(char)) {
                     char = keymap.getShiftedChar(char);
                 }
@@ -158,7 +158,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         });
     };
 
-    gpii.firstDiscovery.keyboardInput.registerChangeListener = function (input, that) {
+    gpii.firstDiscovery.keyboardInput.registerChangeListener = function (that, input) {
         input.change(function () {
             that.applier.change("userInput", input.val());
         });
