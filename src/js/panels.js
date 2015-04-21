@@ -220,6 +220,37 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 }
             }
         },
+        model: {
+            firstLangSelected: false,
+            lastLangSelected: false
+        },
+        modelRelay: [{
+            target: "firstLangSelected",
+            singleTransform: {
+                type: "fluid.transforms.binaryOp",
+                left: "{that}.model.lang",
+                operator: "===",
+                right: {
+                    expander: {
+                        funcName: "fluid.get",
+                        args: ["{that}.options.controlValues.lang", 0]
+                    }
+                }
+            }
+        }, {
+            target: "lastLangSelected",
+            singleTransform: {
+                type: "fluid.transforms.binaryOp",
+                left: "{that}.model.lang",
+                operator: "===",
+                right: {
+                    expander: {
+                        funcName: "gpii.firstDiscovery.panel.lang.getLastArrayElement",
+                        args: ["{that}.options.controlValues.lang"]
+                    }
+                }
+            }
+        }],
         numOfLangPerPage: 3,
         selectors: {
             instructions: ".gpiic-fd-instructions",
@@ -271,9 +302,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 method: "click",
                 args: ["{that}.bindNext"]
             },
-            "afterRender.setButtonStates": {
-                funcName: "gpii.firstDiscovery.panel.lang.setNavKeyStatus",
-                args: ["{that}"]
+            "afterRender.setPrevButtonStatus": {
+                "this": "{that}.dom.prev",
+                method: "prop",
+                args: ["disabled", "{that}.model.firstLangSelected"]
+            },
+            "afterRender.setNextButtonStatus": {
+                "this": "{that}.dom.next",
+                method: "prop",
+                args: ["disabled", "{that}.model.lastLangSelected"]
             },
             "afterRender.getButtonTops": {
                 funcName: "gpii.firstDiscovery.panel.lang.getButtonTops",
@@ -300,51 +337,34 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    // This component is needed for the following demands block to be only applied to the language panel "gpii.firstDiscovery.panel.lang".
-    // Without this component being the sub-component of the language panel, according to http://wiki.fluidproject.org/display/docs/Contexts,
-    // when the context component of the demands block was the language panel itself, the demands block would also be applied to siblings of
-    // the language panel. To work around this issue, another layer of containment needs to be added.
-    // This component and the demands block should be removed when the new framework (http://issues.fluidproject.org/browse/FLUID-5249)
-    // is in use.
-    fluid.defaults("gpii.firstDiscovery.panel.lang.attachTooltipOnLang", {
-        gradeNames: ["gpii.firstDiscovery.attachTooltip", "autoInit"],
-        tooltipContentMap: {
-            "prev": "navButtonTooltip",
-            "next": "navButtonTooltip"
-        }
-    });
-
-    fluid.demands("fluid.tooltip", ["gpii.firstDiscovery.panel.lang.attachTooltipOnLang"], {
-        options: {
-            styles: {
-                tooltip: "gpii-fd-tooltip-lang"
-            }
-        }
-    });
-
-    gpii.firstDiscovery.panel.lang.setNavKeyStatus = function (that) {
-        var langArray = that.options.controlValues.lang,
-            selectedLang = that.model.lang;
-
-        that.locate("prev").prop("disabled", selectedLang === langArray[0]);
-        that.locate("next").prop("disabled", selectedLang === langArray[langArray.length - 1]);
+    gpii.firstDiscovery.panel.lang.getLastArrayElement = function (array) {
+        array = fluid.makeArray(array);
+        return array[array.length - 1];
     };
 
     gpii.firstDiscovery.panel.lang.moveLangFocus = function (that, adjustBy) {
         var langArray = that.options.controlValues.lang,
-            nextIndex = langArray.indexOf(that.model.lang) + adjustBy;
+            guardNext = fluid.model.transform({}, {
+                nextIndex: {
+                    transform: {
+                        type: "fluid.transforms.limitRange",
+                        value: langArray.indexOf(that.model.lang) + adjustBy,
+                        min: 0,
+                        max: langArray.length
+                    }
+                }
+            }),
+            nextIndex = guardNext.nextIndex;
 
-        if (nextIndex >= 0 && nextIndex <= langArray.length) {
-            that.applier.change("lang", langArray[nextIndex]);
-        }
+        that.applier.change("lang", langArray[nextIndex]);
     };
 
-    // find the index of the number in the "numbers" array that's closest to the given "currentNumber"
+    // find the number in the "numbers" array that's closest to the given "currentNumber"
     gpii.firstDiscovery.panel.lang.findClosestNumber = function (currentNumber, numbers) {
-        var distance = Math.abs(numbers[0] - currentNumber),
-            idx = 0;
+        var distance = Infinity,
+            idx = -1;
 
-        for (var c = 1; c < numbers.length; c++) {
+        for (var c = 0; c <= numbers.length - 1; c++) {
             var cdistance = Math.abs(numbers[c] - currentNumber);
             if (cdistance < distance) {
                 idx = c;
@@ -358,14 +378,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     // to the appropriate position to ensure,
     // 1. the selected button is in the view;
     // 2. the top and bottom buttons are not partially shown.
-    // To achieve this, when the page is rendered, the function saves the initial positions of in-view buttons,
+    // To achieve this, when the page is rendered, this function saves the initial positions of in-view buttons,
     // and scroll the selected language button to the closest position. When arrow keys are used
-    // to move to an out-of-view language button into the view, also finds the closest saved position to
+    // to move an out-of-view language button into the view, also finds the closest saved position to
     // move the button to.
     gpii.firstDiscovery.panel.lang.scrollLangIntoView = function (that) {
         if (!that.buttonTops) {
             return;
         }
+
+        // TODO: Replace this private variable to some measurement from the DOM (http://issues.fluidproject.org/browse/FLOE-305)
         that.lastMovedHeight = that.lastMovedHeight || 0;
 
         var buttons = that.locate("langRow"),
@@ -430,13 +452,17 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         });
     };
 
-    // When the focus is on the first language button, prevent that the press of up or left arrow keys to move to the last language button;
-    // when the focus is on the last language button, prevent that the press of down or right arrow keys to move to the first language button.
+    // When the focus is on the first language button, prevent the press of up or left arrow keys moving to the last language button;
+    // when the focus is on the last language button, prevent the press of down or right arrow keys moving to the first language button.
+    // TODO: Replace this funciton with fluid.selectable() plugin with noWrap: true when FLUID-5642 (http://issues.fluidproject.org/browse/FLUID-5642)
+    // is fixed.
     gpii.firstDiscovery.panel.lang.preventWrapWithArrowKeys = function (that) {
-        var langButtons = that.locate("langInput");
+        var langButtons = that.locate("langInput"),
+            firstLangButton = langButtons[0],
+            lastLangButton = gpii.firstDiscovery.panel.lang.getLastArrayElement(langButtons);
 
-        gpii.firstDiscovery.panel.lang.stopArrowBrowseOnEdgeButtons(langButtons[0], [$.ui.keyCode.UP, $.ui.keyCode.LEFT]);
-        gpii.firstDiscovery.panel.lang.stopArrowBrowseOnEdgeButtons(langButtons[langButtons.length - 1], [$.ui.keyCode.DOWN, $.ui.keyCode.RIGHT]);
+        gpii.firstDiscovery.panel.lang.stopArrowBrowseOnEdgeButtons(firstLangButton, [$.ui.keyCode.UP, $.ui.keyCode.LEFT]);
+        gpii.firstDiscovery.panel.lang.stopArrowBrowseOnEdgeButtons(lastLangButton, [$.ui.keyCode.DOWN, $.ui.keyCode.RIGHT]);
     };
 
     gpii.firstDiscovery.panel.lang.populateTooltipContentMap = function (that, langPanel) {
@@ -456,6 +482,28 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
         that.tooltip.applier.change("idToContent", idToContent);
     };
+
+    // This component is needed for the following demands block to be only applied to the language panel "gpii.firstDiscovery.panel.lang".
+    // Without this component being the sub-component of the language panel, according to http://wiki.fluidproject.org/display/docs/Contexts,
+    // when the context component of the demands block was the language panel itself, the demands block would also be applied to siblings of
+    // the language panel. To work around this issue, another layer of containment needs to be added.
+    // This component and the demands block should be removed when the new framework (http://issues.fluidproject.org/browse/FLUID-5249)
+    // is in use.
+    fluid.defaults("gpii.firstDiscovery.panel.lang.attachTooltipOnLang", {
+        gradeNames: ["gpii.firstDiscovery.attachTooltip", "autoInit"],
+        tooltipContentMap: {
+            "prev": "navButtonTooltip",
+            "next": "navButtonTooltip"
+        }
+    });
+
+    fluid.demands("fluid.tooltip", ["gpii.firstDiscovery.panel.lang.attachTooltipOnLang"], {
+        options: {
+            styles: {
+                tooltip: "gpii-fd-tooltip-lang"
+            }
+        }
+    });
 
     // To accommodate the possiblity of text/control size change that causes the shift of button positions,
     // re-collect button tops every time when users come back to the language panel. The button positions

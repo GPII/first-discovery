@@ -171,8 +171,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     components: {
                         selfVoicing: {
                             options: {
-                                // Override queueSpeech() to prevent "selfVoicing" component to continue processing to read out queued
-                                // speeches after tests complete, which causes an error of referencing to an destroyed component.
+                                // Override queueSpeech() to work around this issue: http://issues.fluidproject.org/browse/FLOE-304
                                 invokers: {
                                     queueSpeech: "fluid.identity"
                                 }
