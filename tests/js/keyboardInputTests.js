@@ -9,6 +9,7 @@ https://github.com/gpii/universal/LICENSE.txt
 */
 
 (function ($, fluid) {
+
     "use strict";
 
     fluid.registerNamespace("gpii.tests.firstDiscovery.usKeymap");
@@ -47,39 +48,39 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.expect(26 + 3);
         var keymap = gpii.firstDiscovery.usKeymap();
         for (var code = 97; code <= 122; code++) {
-            var char = String.fromCharCode(code);
-            jqUnit.assertTrue(char, keymap.isLowerCaseLetter(char));
+            var ch = String.fromCharCode(code);
+            jqUnit.assertTrue(ch, keymap.isLowerCaseLetter(ch));
         }
-        fluid.each(gpii.tests.firstDiscovery.usKeymap.nonLowerCase, function (char) {
-            jqUnit.assertFalse(char, keymap.isLowerCaseLetter(char));
+        fluid.each(gpii.tests.firstDiscovery.usKeymap.nonLowerCase, function (ch) {
+            jqUnit.assertFalse(ch, keymap.isLowerCaseLetter(ch));
         });
     });
 
     gpii.tests.firstDiscovery.usKeymap.shiftTestCases = [
-        { char: "0", canShift: true, shifted: ")" },
-        { char: "/", canShift: true, shifted: "?" },
-        { char: "A", canShift: false },
-        { char: "?", canShift: false}
+        { ch: "0", canShift: true, shifted: ")" },
+        { ch: "/", canShift: true, shifted: "?" },
+        { ch: "A", canShift: false },
+        { ch: "?", canShift: false}
     ];
 
     jqUnit.test("usKeymap canShiftChar and getShiftedChar", function () {
         jqUnit.expect((26 * 2) + 4 + 2);
         var keymap = gpii.firstDiscovery.usKeymap();
         for (var code = 97; code <= 122; code++) {
-            var char = String.fromCharCode(code);
-            jqUnit.assertTrue(char, keymap.canShiftChar(char));
-            jqUnit.assertEquals(char, char.toUpperCase(), keymap.getShiftedChar(char));
+            var ch = String.fromCharCode(code);
+            jqUnit.assertTrue(ch, keymap.canShiftChar(ch));
+            jqUnit.assertEquals(ch, ch.toUpperCase(), keymap.getShiftedChar(ch));
         }
         fluid.each(gpii.tests.firstDiscovery.usKeymap.shiftTestCases, function (testcase) {
-            jqUnit.assertEquals(testcase.char, testcase.canShift, keymap.canShiftChar(testcase.char));
+            jqUnit.assertEquals(testcase.ch, testcase.canShift, keymap.canShiftChar(testcase.ch));
             if (testcase.canShift) {
-                jqUnit.assertEquals(testcase.char, testcase.shifted, keymap.getShiftedChar(testcase.char));
+                jqUnit.assertEquals(testcase.ch, testcase.shifted, keymap.getShiftedChar(testcase.ch));
             }
         });
     });
 
-    gpii.tests.firstDiscovery.triggerKeypress = function (elem, char) {
-        elem.triggerHandler(jQuery.Event("keypress", { which: char.charCodeAt(0) }));
+    gpii.tests.firstDiscovery.triggerKeypress = function (elem, ch) {
+        elem.triggerHandler(jQuery.Event("keypress", { which: ch.charCodeAt(0) }));
     };
 
     gpii.tests.firstDiscovery.triggerKeydown = function (elem, keyCode) {

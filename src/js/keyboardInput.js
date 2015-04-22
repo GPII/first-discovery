@@ -9,7 +9,7 @@ You may obtain a copy of the ECL 2.0 License and BSD License at
 https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 */
 
-(function ($) {
+(function () {
 
     "use strict";
 
@@ -71,21 +71,21 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         return e.which === keymap.shiftKeyCode;
     };
 
-    gpii.firstDiscovery.usKeymap.isLowerCaseLetter = function (char) {
-        var charCode = char.charCodeAt(0);
+    gpii.firstDiscovery.usKeymap.isLowerCaseLetter = function (ch) {
+        var charCode = ch.charCodeAt(0);
         return charCode >= 97 && charCode <= 122;
     };
 
-    gpii.firstDiscovery.usKeymap.canShiftChar = function (shiftTable, char) {
-        return gpii.firstDiscovery.usKeymap.isLowerCaseLetter(char) ||
-            (shiftTable[char] !== undefined);
+    gpii.firstDiscovery.usKeymap.canShiftChar = function (shiftTable, ch) {
+        return gpii.firstDiscovery.usKeymap.isLowerCaseLetter(ch) ||
+            (shiftTable[ch] !== undefined);
     };
 
-    gpii.firstDiscovery.usKeymap.getShiftedChar = function (shiftTable, char) {
-        if (gpii.firstDiscovery.usKeymap.isLowerCaseLetter(char)) {
-            return char.toUpperCase();
+    gpii.firstDiscovery.usKeymap.getShiftedChar = function (shiftTable, ch) {
+        if (gpii.firstDiscovery.usKeymap.isLowerCaseLetter(ch)) {
+            return ch.toUpperCase();
         } else {
-            return shiftTable[char];
+            return shiftTable[ch];
         }
     };
 
@@ -157,15 +157,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.keyboardInput.registerKeypressListener = function (that, input, keymap) {
         input.keypress(function (e) {
             e.preventDefault();
-            var char = gpii.firstDiscovery.charFromKeypress(e);
+            var ch = gpii.firstDiscovery.charFromKeypress(e);
             if (that.model.stickyKeysEnabled && that.model.shiftLatched) {
                 that.unlatchShift();
-                if (keymap.canShiftChar(char)) {
-                    char = keymap.getShiftedChar(char);
+                if (keymap.canShiftChar(ch)) {
+                    ch = keymap.getShiftedChar(ch);
                 }
             }
-            if (char !== "") {
-                input.val(char);
+            if (ch !== "") {
+                input.val(ch);
                 // programmatic change of the input value does not
                 // fire a change event, so we trigger it explicitly
                 input.triggerHandler("change");
@@ -179,4 +179,4 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         });
     };
 
-})(jQuery);
+})();
