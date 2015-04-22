@@ -23,6 +23,11 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     gpii.tests.firstDiscovery.keyboard.stickyKeysAssessment.checkTestModels = [
+        {offerAssistance: false, input: "", requiredInput: "b", expected: false},
+        {offerAssistance: false, input: undefined, requiredInput: "b", expected: false},
+        {offerAssistance: false, input: "a", requiredInput: undefined, expected: true},
+        {offerAssistance: undefined, input: "a", requiredInput: "b", expected: true},
+        {offerAssistance: undefined, input: "a", requiredInput: "a", expected: false},
         {offerAssistance: false, input: "a", requiredInput: "b", expected: true},
         {offerAssistance: true, input: "a", requiredInput: "b", expected: true},
         {offerAssistance: false, input: "a", requiredInput: "a", expected: false},

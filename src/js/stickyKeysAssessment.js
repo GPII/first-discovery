@@ -38,7 +38,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     gpii.firstDiscovery.keyboard.stickyKeysAssessment.check = function (model) {
-        return model.offerAssistance || model.input && model.input !== model.requiredInput;
+        return model.offerAssistance || !!model.input && model.input !== model.requiredInput;
     };
 
 })(jQuery, fluid);
