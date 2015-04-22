@@ -99,6 +99,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         modelListeners: {
             "stickyKeysEnabled.unlatchShift": "{that}.unlatchShift"
         },
+        events: {
+            shiftKeydown: null
+        },
         invokers: {
             "unlatchShift": {
                 funcName: "gpii.firstDiscovery.keyboardInput.unlatchShift",
@@ -132,9 +135,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     gpii.firstDiscovery.keyboardInput.registerShiftListener = function (that, input, keymap) {
         input.keydown(function (e) {
-            if (that.model.stickyKeysEnabled && keymap.isShiftEvent(e)) {
-                // toggle the shiftLatched state
-                that.applier.change("shiftLatched", !(that.model.shiftLatched));
+            if (keymap.isShiftEvent(e)) {
+                that.events.shiftKeydown.fire();
+                if (that.model.stickyKeysEnabled) {
+                    // toggle the shiftLatched state
+                    that.applier.change("shiftLatched", !(that.model.shiftLatched));
+                }
             }
         });
     };
