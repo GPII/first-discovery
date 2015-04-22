@@ -86,12 +86,19 @@ https://github.com/gpii/universal/LICENSE.txt
         elem.triggerHandler(jQuery.Event("keydown", { which: keyCode }));
     };
 
+    gpii.tests.firstDiscovery.checkShiftLatchedClass = function (keyboardInput) {
+        var className = keyboardInput.options.styles.shiftLatched;
+        var expected = keyboardInput.model.shiftLatched;
+        var msg = "Check class " + className + " " + expected;
+        jqUnit.assertEquals(msg, expected, keyboardInput.container.hasClass(className));
+    };
+
     fluid.defaults("gpii.tests.firstDiscovery.keyboardInputTestTree", {
         gradeNames: ["fluid.test.testEnvironment", "autoInit"],
         components: {
             keyboardInput: {
                 type: "gpii.firstDiscovery.keyboardInput",
-                container: ".gpiic-tests-keyboardInput"
+                container: "#gpiic-tests-keyboardInput"
             },
             keyboardInputTester: {
                 type: "gpii.tests.firstDiscovery.keyboardInputTester"
@@ -106,11 +113,15 @@ https://github.com/gpii/universal/LICENSE.txt
             tests: [
                 {
                     name: "Check user input when sticky keys is off",
-                    expect: 4,
+                    expect: 6,
                     sequence: [
                         {
                             func: "jqUnit.assertFalse",
                             args: ["Sticky Keys is off", "{keyboardInput}.model.stickyKeysEnabled"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.checkShiftLatchedClass",
+                            args: ["{keyboardInput}"]
                         },
                         {
                             func: "gpii.tests.firstDiscovery.triggerKeypress",
@@ -132,6 +143,10 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["shiftKeydown fired"]
                         },
                         {
+                            func: "gpii.tests.firstDiscovery.checkShiftLatchedClass",
+                            args: ["{keyboardInput}"]
+                        },
+                        {
                             func: "gpii.tests.firstDiscovery.triggerKeypress",
                             args: ["{keyboardInput}.container", "b"]
                         },
@@ -145,7 +160,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 },
                 {
                     name: "Check user input when sticky keys is on",
-                    expect: 5,
+                    expect: 8,
                     sequence: [
                         {
                             func: "{keyboardInput}.applier.change",
@@ -156,6 +171,10 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["Sticky Keys is enabled", "{keyboardInput}.model.stickyKeysEnabled"],
                             spec: {path: "stickyKeysEnabled", priority: "last"},
                             changeEvent: "{keyboardInput}.applier.modelChanged"
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.checkShiftLatchedClass",
+                            args: ["{keyboardInput}"]
                         },
                         {
                             func: "gpii.tests.firstDiscovery.triggerKeypress",
@@ -178,6 +197,10 @@ https://github.com/gpii/universal/LICENSE.txt
                             changeEvent: "{keyboardInput}.applier.modelChanged"
                         },
                         {
+                            func: "gpii.tests.firstDiscovery.checkShiftLatchedClass",
+                            args: ["{keyboardInput}"]
+                        },
+                        {
                             func: "gpii.tests.firstDiscovery.triggerKeypress",
                             args: ["{keyboardInput}.container", "b"]
                         },
@@ -186,6 +209,10 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["B (shifted)", "B", "{keyboardInput}.model.userInput"],
                             spec: {path: "userInput", priority: "last"},
                             changeEvent: "{keyboardInput}.applier.modelChanged"
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.checkShiftLatchedClass",
+                            args: ["{keyboardInput}"]
                         },
                         {
                             func: "gpii.tests.firstDiscovery.triggerKeypress",

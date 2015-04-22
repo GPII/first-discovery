@@ -97,15 +97,24 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             userInput: ""
         },
         modelListeners: {
-            "stickyKeysEnabled.unlatchShift": "{that}.unlatchShift"
+            "stickyKeysEnabled.unlatchShift": "{that}.unlatchShift",
+            "shiftLatched.updateShiftLatchedClass": "{that}.updateShiftLatchedClass"
         },
         events: {
             shiftKeydown: null
+        },
+        styles: {
+            shiftLatched: "gpii-keyboardInput-shiftLatched"
         },
         invokers: {
             "unlatchShift": {
                 funcName: "gpii.firstDiscovery.keyboardInput.unlatchShift",
                 args: ["{that}"]
+            },
+            "updateShiftLatchedClass": {
+                "this": "{that}.container",
+                method: "toggleClass",
+                args: ["{that}.options.styles.shiftLatched", "{that}.model.shiftLatched"]
             }
         },
         listeners: {
