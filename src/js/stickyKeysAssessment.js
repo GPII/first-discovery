@@ -22,7 +22,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             offerAssistance: false
         },
         modelRelay: {
-            source: "input",
             target: "offerAssistance",
             barckward: "never",
             forward: "liveOnly",
