@@ -36,12 +36,12 @@ https://github.com/gpii/universal/LICENSE.txt
             "lang-ne-tooltip": "Select for Nederlands",
             "lang-sv-tooltip": "Select for Svenska",
 
-            "lang-en-selected-tooltip": "English is currently selected",
-            "lang-fr-selected-tooltip": "Français est actuellement sélectionné",
-            "lang-es-selected-tooltip": "Español está seleccionado actualmente",
-            "lang-de-selected-tooltip": "Deutsch gegenwärtig ausgewählt ist",
-            "lang-ne-selected-tooltip": "Nederlands is currently selected",
-            "lang-sv-selected-tooltip": "Svenska is currently selected"
+            "lang-en-tooltipAtSelect": "English is currently selected",
+            "lang-fr-tooltipAtSelect": "Français est actuellement sélectionné",
+            "lang-es-tooltipAtSelect": "Español está seleccionado actualmente",
+            "lang-de-tooltipAtSelect": "Deutsch gegenwärtig ausgewählt ist",
+            "lang-ne-tooltipAtSelect": "Nederlands is currently selected",
+            "lang-sv-tooltipAtSelect": "Svenska is currently selected"
         },
         model: {
             lang: "ne"
@@ -51,7 +51,9 @@ https://github.com/gpii/universal/LICENSE.txt
             lang: ["en", "fr", "es", "de", "ne", "sv"]
         },
         stringArrayIndex: {
-            lang: ["lang-en", "lang-fr", "lang-es", "lang-de", "lang-ne", "lang-sv"]
+            lang: ["lang-en", "lang-fr", "lang-es", "lang-de", "lang-ne", "lang-sv"],
+            tooltip: ["lang-en-tooltip", "lang-fr-tooltip", "lang-es-tooltip", "lang-de-tooltip", "lang-ne-tooltip", "lang-sv-tooltip"],
+            tooltipAtSelect: ["lang-en-tooltipAtSelect", "lang-fr-tooltipAtSelect", "lang-es-tooltipAtSelect", "lang-de-tooltipAtSelect", "lang-ne-tooltipAtSelect", "lang-sv-tooltipAtSelect"]
         }
     });
 
@@ -73,7 +75,7 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "Test the language settings panel",
             tests: [{
-                expect: 47,
+                expect: 53,
                 name: "Test the language panel",
                 sequence: [{
                     func: "{lang}.refreshView"
@@ -154,17 +156,21 @@ https://github.com/gpii/universal/LICENSE.txt
 
         jqUnit.assertEquals("The instruction has been set correctly.", messages.langInstructions, that.locate("instructions").text());
         fluid.each(that.locate("langRow"), function (langButton, idx) {
-            var tooltipLabelSuffix = that.options.controlValues.lang[idx] === that.model.lang ? "-selected-tooltip" : "-tooltip";
+            var tooltipLabelSuffix = that.options.controlValues.lang[idx] === that.model.lang ? "-tooltipAtSelect" : "-tooltip";
             langButton = $(langButton);
-            jqUnit.assertEquals("The language button #" + idx + " has the correct label.", messages[stringArray[idx]], langButton.find(that.options.selectors.langLabel).text());
-            jqUnit.assertEquals("The tooltip definition for the language button #" + idx + " has been populated", messages[stringArray[idx] + tooltipLabelSuffix], idToContent[langButton.attr("id")]);
+            var langLabel = langButton.find(that.options.selectors.langLabel),
+                langInput = langButton.find(that.options.selectors.langInput);
+            jqUnit.assertEquals("The language button #" + idx + " has the correct label.", messages[stringArray[idx]], langLabel.text());
+            jqUnit.assertEquals("The tooltip definition for the language button #" + idx + " has been populated correctly", messages[stringArray[idx] + tooltipLabelSuffix], idToContent[langButton.attr("id")]);
+            jqUnit.assertEquals("The tooltip definition for the language input #" + idx + " has been populated correctly", messages[stringArray[idx] + tooltipLabelSuffix], idToContent[langInput.attr("id")]);
         });
+
         jqUnit.assertEquals("The correct language button has been checked", that.model.lang, that.locate("langInput").filter(":checked").val());
         jqUnit.assertEquals("The previous button is enabled", false, that.locate("prev").is(":disabled"));
         jqUnit.assertEquals("The next button is enabled", false, that.locate("next").is(":disabled"));
 
-        fluid.each(that.attachTooltipOnLang.options.tooltipContentMap, function (label, selector) {
-            jqUnit.assertEquals("The tooltip definition for element " + selector + " has been populated", messages[label], idToContent[that.locate(selector).attr("id")]);
+        fluid.each(["prev", "next"], function (selector) {
+            jqUnit.assertEquals("The tooltip definition for element " + selector + " has been populated", messages["navButtonTooltip"], idToContent[that.locate(selector).attr("id")]);
         });
     };
 
