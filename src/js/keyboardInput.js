@@ -15,10 +15,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     fluid.registerNamespace("gpii.firstDiscovery");
 
-    gpii.firstDiscovery.charFromKeypress = function (e) {
-        return e.which ? String.fromCharCode(e.which) : "";
-    };
-
     fluid.defaults("gpii.firstDiscovery.usKeymap", {
         gradeNames: ["fluid.littleComponent", "autoInit"],
         invokers: {
@@ -28,18 +24,20 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             isLowerCaseLetter: {
                 funcName: "gpii.firstDiscovery.usKeymap.isLowerCaseLetter",
-                args: ["{arguments}.0"]
+                args: ["{that}", "{arguments}.0"]
             },
             canShiftChar: {
                 funcName: "gpii.firstDiscovery.usKeymap.canShiftChar",
-                args: ["{that}.shiftTable", "{arguments}.0"]
+                args: ["{that}", "{arguments}.0"]
             },
             getShiftedChar: {
                 funcName: "gpii.firstDiscovery.usKeymap.getShiftedChar",
-                args: ["{that}.shiftTable", "{arguments}.0"]
+                args: ["{that}", "{arguments}.0"]
             }
         },
         members: {
+            charCodeLowerCaseA: 97,
+            charCodeLowerCaseZ: 122,
             shiftKeyCode: 16,
             shiftTable: {
                 "`": "~",
@@ -71,21 +69,22 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         return e.which === keymap.shiftKeyCode;
     };
 
-    gpii.firstDiscovery.usKeymap.isLowerCaseLetter = function (ch) {
+    gpii.firstDiscovery.usKeymap.isLowerCaseLetter = function (keymap, ch) {
         var charCode = ch.charCodeAt(0);
-        return charCode >= 97 && charCode <= 122;
+        return (charCode >= keymap.charCodeLowerCaseA) &&
+            (charCode <= keymap.charCodeLowerCaseZ);
     };
 
-    gpii.firstDiscovery.usKeymap.canShiftChar = function (shiftTable, ch) {
-        return gpii.firstDiscovery.usKeymap.isLowerCaseLetter(ch) ||
-            (shiftTable[ch] !== undefined);
+    gpii.firstDiscovery.usKeymap.canShiftChar = function (keymap, ch) {
+        return gpii.firstDiscovery.usKeymap.isLowerCaseLetter(keymap, ch) ||
+            (keymap.shiftTable[ch] !== undefined);
     };
 
-    gpii.firstDiscovery.usKeymap.getShiftedChar = function (shiftTable, ch) {
-        if (gpii.firstDiscovery.usKeymap.isLowerCaseLetter(ch)) {
+    gpii.firstDiscovery.usKeymap.getShiftedChar = function (keymap, ch) {
+        if (gpii.firstDiscovery.usKeymap.isLowerCaseLetter(keymap, ch)) {
             return ch.toUpperCase();
         } else {
-            return shiftTable[ch];
+            return keymap.shiftTable[ch];
         }
     };
 
@@ -138,6 +137,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
+    gpii.firstDiscovery.keyboardInput.charFromKeypress = function (e) {
+        return e.which ? String.fromCharCode(e.which) : "";
+    };
+
     gpii.firstDiscovery.keyboardInput.unlatchShift = function (that) {
         that.applier.change("shiftLatched", false);
     };
@@ -157,7 +160,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.keyboardInput.registerKeypressListener = function (that, input, keymap) {
         input.keypress(function (e) {
             e.preventDefault();
-            var ch = gpii.firstDiscovery.charFromKeypress(e);
+            var ch = gpii.firstDiscovery.keyboardInput.charFromKeypress(e);
             if (that.model.stickyKeysEnabled && that.model.shiftLatched) {
                 that.unlatchShift();
                 if (keymap.canShiftChar(ch)) {

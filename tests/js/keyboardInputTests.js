@@ -15,44 +15,51 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.registerNamespace("gpii.tests.firstDiscovery.usKeymap");
     fluid.registerNamespace("gpii.tests.firstDiscovery.keyboardInput");
 
-    gpii.tests.firstDiscovery.charFromKeypressTestCases = [
-        { keyCode: undefined, expected: ""},
-        { keyCode: null, expected: "" },
-        { keyCode: 33, expected: "!" },
-        { keyCode: 48, expected: "0" },
-        { keyCode: 65, expected: "A" },
-        { keyCode: 97, expected: "a" }
-    ];
+    gpii.tests.firstDiscovery.charCodeLowerCaseA = 97;
+    gpii.tests.firstDiscovery.charCodeLowerCaseZ = 122;
 
-    jqUnit.test("charFromKeypress", function () {
-        fluid.each(gpii.tests.firstDiscovery.charFromKeypressTestCases, function (testcase) {
-            var msg = "keyCode " + testcase.keyCode + " expect \"" + testcase.expected + "\"";
-            var actual = gpii.firstDiscovery.charFromKeypress({ which: testcase.keyCode });
-            jqUnit.assertEquals(msg, testcase.expected, actual);
-        });
-    });
+    gpii.tests.firstDiscovery.usKeymap.checkIsLowerCaseLetter = function (keymap, expected, ch) {
+        var msg = "isLowerCaseLetter(\"" + ch + "\") should return " + expected;
+        jqUnit.assertEquals(msg, expected, keymap.isLowerCaseLetter(ch));
+    };
+
+    gpii.tests.firstDiscovery.usKeymap.checkCanShiftChar = function (keymap, expected, ch) {
+        var msg = "canShift(\"" + ch + "\") should return " + expected;
+        jqUnit.assertEquals(msg, expected, keymap.canShiftChar(ch));
+    };
+
+    gpii.tests.firstDiscovery.usKeymap.checkGetShiftedChar = function (keymap, expected, ch) {
+        var msg = "getShiftedChar(\"" + ch + "\") should return \"" + expected + "\"";
+        jqUnit.assertEquals(msg, expected, keymap.getShiftedChar(ch));
+    };
 
     jqUnit.test("usKeymap.isShiftEvent", function () {
         var keymap = gpii.firstDiscovery.usKeymap();
-        jqUnit.assertTrue("true for shift", keymap.isShiftEvent({ which: keymap.shiftKeyCode }));
-        jqUnit.assertFalse("false for non-shift", keymap.isShiftEvent({ which: 0 }));
+        jqUnit.assertTrue("isShiftEvent() should return true for shift",
+                          keymap.isShiftEvent({ which: keymap.shiftKeyCode }));
+        jqUnit.assertFalse("isShiftEvent() shoud return false for non-shift",
+                           keymap.isShiftEvent({ which: 0 }));
     });
 
     gpii.tests.firstDiscovery.usKeymap.nonLowerCase = [
-        String.fromCharCode(96),
-        String.fromCharCode(123),
+        String.fromCharCode(96),    // edge case: character before "a" (97)
+        String.fromCharCode(123),   // edge case: character after "z" (122)
         "A"
     ];
 
     jqUnit.test("usKeymap.isLowerCaseLetter", function () {
         jqUnit.expect(26 + 3);
         var keymap = gpii.firstDiscovery.usKeymap();
-        for (var code = 97; code <= 122; code++) {
+        // start by checking all the lower-case letters
+        for (var code = gpii.tests.firstDiscovery.charCodeLowerCaseA;
+             code <= gpii.tests.firstDiscovery.charCodeLowerCaseZ;
+             code++) {
             var ch = String.fromCharCode(code);
-            jqUnit.assertTrue(ch, keymap.isLowerCaseLetter(ch));
+            gpii.tests.firstDiscovery.usKeymap.checkIsLowerCaseLetter(keymap, true, ch);
         }
+        // next, check some non-lower-case letter characters
         fluid.each(gpii.tests.firstDiscovery.usKeymap.nonLowerCase, function (ch) {
-            jqUnit.assertFalse(ch, keymap.isLowerCaseLetter(ch));
+            gpii.tests.firstDiscovery.usKeymap.checkIsLowerCaseLetter(keymap, false, ch);
         });
     });
 
@@ -66,15 +73,21 @@ https://github.com/gpii/universal/LICENSE.txt
     jqUnit.test("usKeymap canShiftChar and getShiftedChar", function () {
         jqUnit.expect((26 * 2) + 4 + 2);
         var keymap = gpii.firstDiscovery.usKeymap();
-        for (var code = 97; code <= 122; code++) {
+        // start by checking all the lower-case letters
+        for (var code = gpii.tests.firstDiscovery.charCodeLowerCaseA;
+             code <= gpii.tests.firstDiscovery.charCodeLowerCaseZ;
+             code++) {
             var ch = String.fromCharCode(code);
-            jqUnit.assertTrue(ch, keymap.canShiftChar(ch));
-            jqUnit.assertEquals(ch, ch.toUpperCase(), keymap.getShiftedChar(ch));
+            gpii.tests.firstDiscovery.usKeymap.checkCanShiftChar(keymap, true, ch);
+            gpii.tests.firstDiscovery.usKeymap.checkGetShiftedChar(keymap, ch.toUpperCase(), ch);
         }
+        // next, check other test cases
         fluid.each(gpii.tests.firstDiscovery.usKeymap.shiftTestCases, function (testcase) {
-            jqUnit.assertEquals(testcase.ch, testcase.canShift, keymap.canShiftChar(testcase.ch));
+            gpii.tests.firstDiscovery.usKeymap.checkCanShiftChar(keymap, testcase.canShift,
+                                                                 testcase.ch);
             if (testcase.canShift) {
-                jqUnit.assertEquals(testcase.ch, testcase.shifted, keymap.getShiftedChar(testcase.ch));
+                gpii.tests.firstDiscovery.usKeymap.checkGetShiftedChar(keymap, testcase.shifted,
+                                                                       testcase.ch);
             }
         });
     });
@@ -90,9 +103,26 @@ https://github.com/gpii/universal/LICENSE.txt
     gpii.tests.firstDiscovery.checkShiftLatchedClass = function (keyboardInput) {
         var className = keyboardInput.options.styles.shiftLatched;
         var expected = keyboardInput.model.shiftLatched;
-        var msg = "Check class " + className + " " + expected;
+        var msg = "hasClass(\"" + className + "\") should be " + expected;
         jqUnit.assertEquals(msg, expected, keyboardInput.container.hasClass(className));
     };
+
+    gpii.tests.firstDiscovery.keyboardInput.charFromKeypressTestCases = [
+        { keyCode: undefined, expected: ""},
+        { keyCode: null, expected: "" },
+        { keyCode: 33, expected: "!" },
+        { keyCode: 48, expected: "0" },
+        { keyCode: 65, expected: "A" },
+        { keyCode: 97, expected: "a" }
+    ];
+
+    jqUnit.test("charFromKeypress", function () {
+        fluid.each(gpii.tests.firstDiscovery.keyboardInput.charFromKeypressTestCases, function (testcase) {
+            var msg = "keyCode " + testcase.keyCode + " should return \"" + testcase.expected + "\"";
+            var actual = gpii.firstDiscovery.keyboardInput.charFromKeypress({ which: testcase.keyCode });
+            jqUnit.assertEquals(msg, testcase.expected, actual);
+        });
+    });
 
     fluid.defaults("gpii.tests.firstDiscovery.keyboardInputTestTree", {
         gradeNames: ["fluid.test.testEnvironment", "autoInit"],
@@ -118,7 +148,8 @@ https://github.com/gpii/universal/LICENSE.txt
                     sequence: [
                         {
                             func: "jqUnit.assertFalse",
-                            args: ["Sticky Keys is off", "{keyboardInput}.model.stickyKeysEnabled"]
+                            args: ["Sticky Keys should be off",
+                                   "{keyboardInput}.model.stickyKeysEnabled"]
                         },
                         {
                             func: "gpii.tests.firstDiscovery.checkShiftLatchedClass",
@@ -130,18 +161,20 @@ https://github.com/gpii/universal/LICENSE.txt
                         },
                         {
                             listener: "jqUnit.assertEquals",
-                            args: ["a", "a", "{keyboardInput}.model.userInput"],
+                            args: ["Pressed \"a\", userInput should be \"a\"",
+                                   "a", "{keyboardInput}.model.userInput"],
                             spec: {path: "userInput", priority: "last"},
                             changeEvent: "{keyboardInput}.applier.modelChanged"
                         },
                         {
                             func: "gpii.tests.firstDiscovery.triggerKeydown",
-                            args: ["{keyboardInput}.container", "{keyboardInput}.keymap.shiftKeyCode"]
+                            args: ["{keyboardInput}.container",
+                                   "{keyboardInput}.keymap.shiftKeyCode"]
                         },
                         {
                             event: "{keyboardInput}.events.shiftKeydown",
                             listener: "jqUnit.assert",
-                            args: ["shiftKeydown fired"]
+                            args: ["Pressed shift, shiftKeydown should have fired"]
                         },
                         {
                             func: "gpii.tests.firstDiscovery.checkShiftLatchedClass",
@@ -153,7 +186,8 @@ https://github.com/gpii/universal/LICENSE.txt
                         },
                         {
                             listener: "jqUnit.assertEquals",
-                            args: ["b (not shifted)", "b", "{keyboardInput}.model.userInput"],
+                            args: ["Pressed \"b\", userInput should be \"b\" (not shifted)",
+                                   "b", "{keyboardInput}.model.userInput"],
                             spec: {path: "userInput", priority: "last"},
                             changeEvent: "{keyboardInput}.applier.modelChanged"
                         }
@@ -169,7 +203,8 @@ https://github.com/gpii/universal/LICENSE.txt
                         },
                         {
                             listener: "jqUnit.assertTrue",
-                            args: ["Sticky Keys is enabled", "{keyboardInput}.model.stickyKeysEnabled"],
+                            args: ["Sticky Keys should be enabled",
+                                   "{keyboardInput}.model.stickyKeysEnabled"],
                             spec: {path: "stickyKeysEnabled", priority: "last"},
                             changeEvent: "{keyboardInput}.applier.modelChanged"
                         },
@@ -183,17 +218,20 @@ https://github.com/gpii/universal/LICENSE.txt
                         },
                         {
                             listener: "jqUnit.assertEquals",
-                            args: ["a", "a", "{keyboardInput}.model.userInput"],
+                            args: ["Pressed \"a\", userInput should be \"a\"",
+                                   "a", "{keyboardInput}.model.userInput"],
                             spec: {path: "userInput", priority: "last"},
                             changeEvent: "{keyboardInput}.applier.modelChanged"
                         },
                         {
                             func: "gpii.tests.firstDiscovery.triggerKeydown",
-                            args: ["{keyboardInput}.container", "{keyboardInput}.keymap.shiftKeyCode"]
+                            args: ["{keyboardInput}.container",
+                                   "{keyboardInput}.keymap.shiftKeyCode"]
                         },
                         {
                             listener: "jqUnit.assertTrue",
-                            args: ["shiftLatched is true", "{keyboardInput}.model.shiftLatched"],
+                            args: ["Pressed shift, shiftLatched should be true",
+                                   "{keyboardInput}.model.shiftLatched"],
                             spec: {path: "shiftLatched", priority: "last"},
                             changeEvent: "{keyboardInput}.applier.modelChanged"
                         },
@@ -207,7 +245,8 @@ https://github.com/gpii/universal/LICENSE.txt
                         },
                         {
                             listener: "jqUnit.assertEquals",
-                            args: ["B (shifted)", "B", "{keyboardInput}.model.userInput"],
+                            args: ["Pressed \"b\", userInput should be \"B\" (shifted)",
+                                   "B", "{keyboardInput}.model.userInput"],
                             spec: {path: "userInput", priority: "last"},
                             changeEvent: "{keyboardInput}.applier.modelChanged"
                         },
@@ -221,7 +260,8 @@ https://github.com/gpii/universal/LICENSE.txt
                         },
                         {
                             listener: "jqUnit.assertEquals",
-                            args: ["c (not shifted)", "c", "{keyboardInput}.model.userInput"],
+                            args: ["Pressed \"c\", userInput should be \"c\" (not shifted)",
+                                   "c", "{keyboardInput}.model.userInput"],
                             spec: {path: "userInput", priority: "last"},
                             changeEvent: "{keyboardInput}.applier.modelChanged"
                         }
@@ -233,25 +273,30 @@ https://github.com/gpii/universal/LICENSE.txt
                     sequence: [
                         {
                             func: "jqUnit.assertTrue",
-                            args: ["Sticky Keys is enabled", "{keyboardInput}.model.stickyKeysEnabled"]
+                            args: ["Sticky Keys should be enabled",
+                                   "{keyboardInput}.model.stickyKeysEnabled"]
                         },
                         {
                             func: "gpii.tests.firstDiscovery.triggerKeydown",
-                            args: ["{keyboardInput}.container", "{keyboardInput}.keymap.shiftKeyCode"]
+                            args: ["{keyboardInput}.container",
+                                   "{keyboardInput}.keymap.shiftKeyCode"]
                         },
                         {
                             listener: "jqUnit.assertTrue",
-                            args: ["shiftLatched is true", "{keyboardInput}.model.shiftLatched"],
+                            args: ["Pressed shift, shiftLatched should be true",
+                                   "{keyboardInput}.model.shiftLatched"],
                             spec: {path: "shiftLatched", priority: "last"},
                             changeEvent: "{keyboardInput}.applier.modelChanged"
                         },
                         {
                             func: "gpii.tests.firstDiscovery.triggerKeydown",
-                            args: ["{keyboardInput}.container", "{keyboardInput}.keymap.shiftKeyCode"]
+                            args: ["{keyboardInput}.container",
+                                   "{keyboardInput}.keymap.shiftKeyCode"]
                         },
                         {
                             listener: "jqUnit.assertFalse",
-                            args: ["shiftLatched is false", "{keyboardInput}.model.shiftLatched"],
+                            args: ["Pressed shift, shiftLatched should be false",
+                                   "{keyboardInput}.model.shiftLatched"],
                             spec: {path: "shiftLatched", priority: "last"},
                             changeEvent: "{keyboardInput}.applier.modelChanged"
                         }
