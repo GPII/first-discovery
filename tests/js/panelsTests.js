@@ -223,6 +223,8 @@ https://github.com/gpii/universal/LICENSE.txt
             "stickyKeysInstructions": "<strong>Sticky Keys</strong> can help with holding two keys down at once.",
             "stickyKeys": "Sticky Keys is",
 
+            "successInstructions": "You don’t appear to need any keyboard adjustments. Please proceed to the next screen.",
+
             "inputTooltip": "Select to begin typing",
             "tryTooltip": "Select to turn Sticky Keys on",
             "turnOnTooltip": "Select to turn Sticky Keys on",
@@ -254,11 +256,23 @@ https://github.com/gpii/universal/LICENSE.txt
                     func: "{keyboard}.refreshView"
                 }, {
                     listener: "gpii.tests.keyboardTester.verifyRendering",
-                    args: ["{keyboard}"],
+                    args: ["{keyboard}", "keyboardInstructions"],
                     event: "{keyboard}.events.afterRender"
                 }]
             }, {
-                expect: 6,
+                expect: 4,
+                name: "Don't Offer Assistance",
+                sequence: [{
+                    func: "{keyboard}.applier.change",
+                    args: ["offerAssistance", false]
+                }, {
+                    listener: "gpii.tests.keyboardTester.verifyNoAssistance",
+                    args: ["{keyboard}"],
+                    spec: {path: "offerAssistance", priority: "last"},
+                    changeEvent: "{keyboard}.applier.modelChanged"
+                }]
+            }, {
+                expect: 7,
                 name: "Offer Assistance",
                 sequence: [{
                     func: "{keyboard}.applier.change",
@@ -266,21 +280,29 @@ https://github.com/gpii/universal/LICENSE.txt
                 }, {
                     listener: "gpii.tests.keyboardTester.verifyOfferAssistance",
                     args: ["{keyboard}"],
-                    spec: {priority: "last"},
-                    event: "{keyboard}.events.onOfferAssistance"
+                    spec: {path: "offerAssistance", priority: "last"},
+                    changeEvent: "{keyboard}.applier.modelChanged"
                 }]
             }]
         }]
     });
 
-    gpii.tests.keyboardTester.verifyRendering = function (that) {
-        jqUnit.assertEquals("The instructions should be rendered correctly", that.options.messageBase.keyboardInstructions, that.locate("instructions").text());
+    gpii.tests.keyboardTester.verifyRendering = function (that, instructions) {
+        var hideAssistance = !that.model.offerAssistance;
+        jqUnit.assertEquals("The instructions should be rendered correctly", that.options.messageBase[instructions], that.locate("instructions").text());
         jqUnit.assertEquals("The placeholder text should be set correctly", that.options.messageBase.placeholder, that.locate("placeholder").attr("placeholder"));
-        jqUnit.notVisible("The assistance should be hidden", that.locate("assistance"));
+
+        jqUnit.assertTrue("The hide class on the assistance element should be added", that.locate("assistance").hasClass(that.options.styles.hide));
+    };
+
+    gpii.tests.keyboardTester.verifyNoAssistance = function (that) {
+        jqUnit.assertFalse("The offerAssistance model value should be false", that.model.offerAssistance);
+        gpii.tests.keyboardTester.verifyRendering(that, "successInstructions");
     };
 
     gpii.tests.keyboardTester.verifyOfferAssistance = function (that) {
-        jqUnit.isVisible("The assistance should be visible", that.locate("assistance"));
+        jqUnit.assertTrue("The offerAssistance model value should be true", that.model.offerAssistance);
+        jqUnit.assertFalse("The hide class on the assistance element should be removed", that.locate("assistance").hasClass(that.options.styles.hide));
         gpii.tests.keyboard.stickyKeysAdjusterTester.verifyInitialRendering(that.assistance);
     };
 

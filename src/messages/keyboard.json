@@ -11,6 +11,8 @@
     "stickyKeysInstructions": "<strong>Sticky Keys</strong> can help with holding two keys down at once.",
     "stickyKeys": "Sticky Keys is",
 
+    "successInstructions": "You don’t appear to need any keyboard adjustments. Please proceed to the next screen.",
+
     "inputTooltip": "Select to begin typing",
     "tryTooltip": "Select to turn Sticky Keys on",
     "turnOnTooltip": "Select to turn Sticky Keys on",

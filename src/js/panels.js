@@ -139,7 +139,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             onOfferAssistance: null
         },
         model: {
-            offerAssistance: false
+            // offerAssistance: boolean
         },
         components: {
             assistance: {
@@ -162,8 +162,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 type: "gpii.firstDiscovery.keyboard.stickyKeysAssessment",
                 options: {
                     requiredInput: "@",
-                    model: {
-                        offerAssistance: "{keyboard}.model.offerAssistance"
+                    modelRelay: {
+                        source: "offerAssistance",
+                        target: "{keyboard}.model.offerAssistance",
+                        forward: "liveOnly",
+                        singleTransform: {
+                            type: "fluid.transforms.identity"
+                        }
                     }
                 }
             },
@@ -195,17 +200,24 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             instructions: {markup: {messagekey: "keyboardInstructions"}}
         },
         modelListeners: {
-            offerAssistance: {
+            offerAssistance: [{
                 listener: "gpii.firstDiscovery.panel.keyboard.offerAssistance",
-                args: ["{that}"],
+                excludeSource: "init",
+                args: ["{that}"]
+            }, {
+                listener: "{stickyKeysAssessor}.destroy",
                 excludeSource: "init"
-            }
+            }]
         }
     });
 
     gpii.firstDiscovery.panel.keyboard.offerAssistance = function (that) {
-        that.locate("assistance").removeClass(that.options.styles.hide);
-        that.events.onOfferAssistance.fire();
+        if (that.model.offerAssistance) {
+            that.locate("assistance").removeClass(that.options.styles.hide);
+            that.events.onOfferAssistance.fire();
+        } else {
+            that.locate("instructions").text(that.msgResolver.resolve("successInstructions"));
+        }
     };
 
     fluid.defaults("gpii.firstDiscovery.panel.textSize", {
