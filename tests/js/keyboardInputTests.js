@@ -41,26 +41,41 @@ https://github.com/gpii/universal/LICENSE.txt
                            keymap.isShiftEvent({ which: 0 }));
     });
 
-    gpii.tests.firstDiscovery.usKeymap.nonLowerCase = [
-        String.fromCharCode(96),    // edge case: character before "a" (97)
-        String.fromCharCode(123),   // edge case: character after "z" (122)
-        "A"
-    ];
-
-    jqUnit.test("usKeymap.isLowerCaseLetter", function () {
-        jqUnit.expect(26 + 3);
+    jqUnit.test("usKeymap.isLowerCaseLetter should return true for lower-case", function () {
+        jqUnit.expect(26);
         var keymap = gpii.firstDiscovery.usKeymap();
-        // start by checking all the lower-case letters
         for (var code = gpii.tests.firstDiscovery.charCodeLowerCaseA;
              code <= gpii.tests.firstDiscovery.charCodeLowerCaseZ;
              code++) {
             var ch = String.fromCharCode(code);
             gpii.tests.firstDiscovery.usKeymap.checkIsLowerCaseLetter(keymap, true, ch);
         }
-        // next, check some non-lower-case letter characters
+    });
+
+    gpii.tests.firstDiscovery.usKeymap.nonLowerCase = [
+        String.fromCharCode(96),    // edge case: character before "a" (97)
+        String.fromCharCode(123),   // edge case: character after "z" (122)
+        "A"
+    ];
+
+    jqUnit.test("usKeymap.isLowerCaseLetter should return false for non-lower-case", function () {
+        jqUnit.expect(3);
+        var keymap = gpii.firstDiscovery.usKeymap();
         fluid.each(gpii.tests.firstDiscovery.usKeymap.nonLowerCase, function (ch) {
             gpii.tests.firstDiscovery.usKeymap.checkIsLowerCaseLetter(keymap, false, ch);
         });
+    });
+
+    jqUnit.test("usKeymap canShiftChar and getShiftedChar on lower-case", function () {
+        jqUnit.expect(26 * 2);
+        var keymap = gpii.firstDiscovery.usKeymap();
+        for (var code = gpii.tests.firstDiscovery.charCodeLowerCaseA;
+             code <= gpii.tests.firstDiscovery.charCodeLowerCaseZ;
+             code++) {
+            var ch = String.fromCharCode(code);
+            gpii.tests.firstDiscovery.usKeymap.checkCanShiftChar(keymap, true, ch);
+            gpii.tests.firstDiscovery.usKeymap.checkGetShiftedChar(keymap, ch.toUpperCase(), ch);
+        }
     });
 
     gpii.tests.firstDiscovery.usKeymap.shiftTestCases = [
@@ -70,18 +85,9 @@ https://github.com/gpii/universal/LICENSE.txt
         { ch: "?", canShift: false}
     ];
 
-    jqUnit.test("usKeymap canShiftChar and getShiftedChar", function () {
-        jqUnit.expect((26 * 2) + 4 + 2);
+    jqUnit.test("usKeymap canShiftChar and getShiftedChar on non-lower-case", function () {
+        jqUnit.expect(6);
         var keymap = gpii.firstDiscovery.usKeymap();
-        // start by checking all the lower-case letters
-        for (var code = gpii.tests.firstDiscovery.charCodeLowerCaseA;
-             code <= gpii.tests.firstDiscovery.charCodeLowerCaseZ;
-             code++) {
-            var ch = String.fromCharCode(code);
-            gpii.tests.firstDiscovery.usKeymap.checkCanShiftChar(keymap, true, ch);
-            gpii.tests.firstDiscovery.usKeymap.checkGetShiftedChar(keymap, ch.toUpperCase(), ch);
-        }
-        // next, check other test cases
         fluid.each(gpii.tests.firstDiscovery.usKeymap.shiftTestCases, function (testcase) {
             gpii.tests.firstDiscovery.usKeymap.checkCanShiftChar(keymap, testcase.canShift,
                                                                  testcase.ch);
