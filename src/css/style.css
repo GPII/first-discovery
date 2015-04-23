@@ -316,7 +316,7 @@ button {
     width: inherit;
     -webkit-transform:rotate(180deg);
     -webkit-transform-origin: 100% 0%;
-    left: -4.2rem;
+    left: -4.05rem;
     top: 11.7rem;
     height: 12rem;
 }
@@ -326,7 +326,7 @@ button {
     width: inherit;
     -webkit-transform:rotate(180deg);
     -webkit-transform-origin: 100% 0%;
-    left: -4.2rem;
+    left: -4.05rem;
     height: 0.5rem;
     top: 12.4rem;
 }
