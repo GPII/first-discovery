@@ -23,15 +23,21 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     gpii.tests.firstDiscovery.keyboard.stickyKeysAssessment.checkTestModels = [
-        {offerAssistance: false, input: "", requiredInput: "b", expected: false},
         {offerAssistance: false, input: undefined, requiredInput: "b", expected: false},
+        {offerAssistance: false, input: "", requiredInput: "b", expected: false},
         {offerAssistance: false, input: "a", requiredInput: undefined, expected: true},
-        {offerAssistance: undefined, input: "a", requiredInput: "b", expected: true},
-        {offerAssistance: undefined, input: "a", requiredInput: "a", expected: false},
-        {offerAssistance: false, input: "a", requiredInput: "b", expected: true},
-        {offerAssistance: true, input: "a", requiredInput: "b", expected: true},
         {offerAssistance: false, input: "a", requiredInput: "a", expected: false},
-        {offerAssistance: true, input: "a", requiredInput: "a", expected: true}
+        {offerAssistance: false, input: "a", requiredInput: "b", expected: true},
+        {offerAssistance: true, input: undefined, requiredInput: "b", expected: true},
+        {offerAssistance: true, input: "", requiredInput: "b", expected: true},
+        {offerAssistance: true, input: "a", requiredInput: undefined, expected: true},
+        {offerAssistance: true, input: "a", requiredInput: "a", expected: false},
+        {offerAssistance: true, input: "a", requiredInput: "b", expected: true},
+        {offerAssistance: undefined, input: undefined, requiredInput: "b", expected: undefined},
+        {offerAssistance: undefined, input: "", requiredInput: "b", expected: undefined},
+        {offerAssistance: undefined, input: "a", requiredInput: undefined, expected: true},
+        {offerAssistance: undefined, input: "a", requiredInput: "a", expected: false},
+        {offerAssistance: undefined, input: "a", requiredInput: "b", expected: true}
     ];
 
     jqUnit.test("gpii.firstDiscovery.keyboard.stickyKeysAssessment.check", function () {
@@ -45,7 +51,7 @@ https://github.com/gpii/universal/LICENSE.txt
     jqUnit.test("gpii.firstDiscovery.keyboard.stickyKeysAssessment", function () {
         var that = gpii.tests.firstDiscovery.keyboard.stickyKeysAssessment();
 
-        jqUnit.assertFalse("Initially offerAssistance should be false", that.model.offerAssistance);
+        jqUnit.assertUndefined("Initially offerAssistance should be undefined", that.model.offerAssistance);
 
         that.applier.change("input", "@");
         jqUnit.assertFalse("After entering the expected input, offerAssistance should still be false", that.model.offerAssistance);
@@ -54,7 +60,7 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertTrue("After entering an unexpected input, offerAssistance should be true", that.model.offerAssistance);
 
         that.applier.change("input", "@");
-        jqUnit.assertTrue("After entering the expected input, offerAssistance should still be true", that.model.offerAssistance);
+        jqUnit.assertFalse("After entering the expected input, offerAssistance should be false", that.model.offerAssistance);
     });
 
 })(jQuery, fluid);
