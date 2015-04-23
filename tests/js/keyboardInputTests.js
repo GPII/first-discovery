@@ -53,8 +53,8 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     gpii.tests.firstDiscovery.usKeymap.nonLowerCase = [
-        String.fromCharCode(96),    // edge case: character before "a" (97)
-        String.fromCharCode(123),   // edge case: character after "z" (122)
+        String.fromCharCode(96),    // boundary case: character before "a" (97)
+        String.fromCharCode(123),   // boundary case: character after "z" (122)
         "A"
     ];
 

@@ -129,10 +129,10 @@ button {
     line-height: 1;
 }
 
-.gpii-fd-instructions .gpii-fd-instructions-header {
-    padding: 0 2rem;
+.gpii-fd-instructions p {
+    line-height: 1.4;
+    padding: 0;
 }
-
 /* controls */
 /* to try to keep the +/- buttons centred in the page,
  * look at http://css-tricks.com/snippets/css/a-guide-to-flexbox/
