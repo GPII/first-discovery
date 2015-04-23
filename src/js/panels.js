@@ -202,7 +202,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "gpii.firstDiscovery.language": {
                 "model.lang": "default",
                 "controlValues.lang": "enum",
-                "stringArrayIndex.lang": "label"
+                "stringArrayIndex.lang": "label",
+                "stringArrayIndex.tooltip": "tooltip",
+                "stringArrayIndex.tooltipAtSelect": "tooltipAtSelect"
             }
         },
         components: {
@@ -211,10 +213,38 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 container: "{lang}.container",
                 options: {
                     selectors: "{lang}.options.selectors",
+                    modelRelay: {
+                        source: "{lang}.model.lang",
+                        target: "currentSelectedIndex",
+                        singleTransform: {
+                            type: "fluid.transforms.free",
+                            args: {
+                                "langs": "{lang}.options.controlValues.lang",
+                                "currentLang": "{lang}.model.lang"
+                            },
+                            func: "gpii.firstDiscovery.panel.lang.getCurrentSelectedIndex"
+                        }
+                    },
+                    tooltipContentMap: {
+                        "prev": "navButtonTooltip",
+                        "next": "navButtonTooltip",
+                        "langRow": {
+                            tooltip: "{lang}.options.stringArrayIndex.tooltip",
+                            tooltipAtSelect: "{lang}.options.stringArrayIndex.tooltipAtSelect"
+                        },
+                        "langInput": {
+                            tooltip: "{lang}.options.stringArrayIndex.tooltip",
+                            tooltipAtSelect: "{lang}.options.stringArrayIndex.tooltipAtSelect"
+                        }
+                    },
                     listeners: {
                         "{lang}.events.afterRender": {
-                            funcName: "gpii.firstDiscovery.panel.lang.populateTooltipContentMap",
-                            args: ["{that}", "{lang}"]
+                            funcName: "{that}.tooltip.applier.change",
+                            args: ["idToContent", {
+                                expander: {
+                                    func: "{that}.tooltip.getTooltipModel"
+                                }
+                            }]
                         }
                     }
                 }
@@ -336,6 +366,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         }
     });
+
+    gpii.firstDiscovery.panel.lang.getCurrentSelectedIndex = function (model) {
+        return model.langs.indexOf(model.currentLang);
+    };
 
     gpii.firstDiscovery.panel.lang.getLastArrayElement = function (array) {
         array = fluid.makeArray(array);
@@ -465,24 +499,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         gpii.firstDiscovery.panel.lang.stopArrowBrowseOnEdgeButtons(lastLangButton, [$.ui.keyCode.DOWN, $.ui.keyCode.RIGHT]);
     };
 
-    gpii.firstDiscovery.panel.lang.populateTooltipContentMap = function (that, langPanel) {
-        var langButtons = that.locate("langRow"),
-            langInputs = that.locate("langInput"),
-            idToContent = that.tooltip.getTooltipModel();
-
-        fluid.each(langPanel.options.stringArrayIndex.lang, function (msgKey, index) {
-            var buttonId = fluid.allocateSimpleId(langButtons[index]),
-                inputId = fluid.allocateSimpleId(langInputs[index]),
-                tooltipLabelSuffix = langPanel.options.controlValues.lang[index] === langPanel.model.lang ? "-selected-tooltip" : "-tooltip",
-                msg = langPanel.msgLookup.lookup(msgKey + tooltipLabelSuffix);
-
-            idToContent[buttonId] = msg;
-            idToContent[inputId] = msg;
-        });
-
-        that.tooltip.applier.change("idToContent", idToContent);
-    };
-
     // This component is needed for the following demands block to be only applied to the language panel "gpii.firstDiscovery.panel.lang".
     // Without this component being the sub-component of the language panel, according to http://wiki.fluidproject.org/display/docs/Contexts,
     // when the context component of the demands block was the language panel itself, the demands block would also be applied to siblings of
@@ -490,11 +506,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     // This component and the demands block should be removed when the new framework (http://issues.fluidproject.org/browse/FLUID-5249)
     // is in use.
     fluid.defaults("gpii.firstDiscovery.panel.lang.attachTooltipOnLang", {
-        gradeNames: ["gpii.firstDiscovery.attachTooltip", "autoInit"],
-        tooltipContentMap: {
-            "prev": "navButtonTooltip",
-            "next": "navButtonTooltip"
-        }
+        gradeNames: ["gpii.firstDiscovery.attachTooltip", "autoInit"]
     });
 
     fluid.demands("fluid.tooltip", ["gpii.firstDiscovery.panel.lang.attachTooltipOnLang"], {

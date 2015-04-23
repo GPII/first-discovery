@@ -15,10 +15,10 @@
     "lang-ne-tooltip": "Select for Nederlands",
     "lang-sv-tooltip": "Select for Svenska",
 
-    "lang-en-selected-tooltip": "English is currently selected",
-    "lang-fr-selected-tooltip": "Français est actuellement sélectionné",
-    "lang-es-selected-tooltip": "Español está seleccionado actualmente",
-    "lang-de-selected-tooltip": "Deutsch gegenwärtig ausgewählt ist",
-    "lang-ne-selected-tooltip": "Nederlands is currently selected",
-    "lang-sv-selected-tooltip": "Svenska is currently selected"
+    "lang-en-tooltipAtSelect": "English is currently selected",
+    "lang-fr-tooltipAtSelect": "Français est actuellement sélectionné",
+    "lang-es-tooltipAtSelect": "Español está seleccionado actualmente",
+    "lang-de-tooltipAtSelect": "Deutsch gegenwärtig ausgewählt ist",
+    "lang-ne-tooltipAtSelect": "Nederlands is currently selected",
+    "lang-sv-tooltipAtSelect": "Svenska is currently selected"
 }
