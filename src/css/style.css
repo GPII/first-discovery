@@ -527,3 +527,16 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 .gpii-fd-keyboard:before {
     content: "\e60e";
 }
+.gpii-fd-keyboard-shift-indicator .gpii-fd-keyboard-shift-indicatorLabel {
+    padding: 1rem;
+    background-color: #767675;
+    color: #FFFFFF;
+    margin-left: -21.75rem;
+}
+.gpii-fd-keyboard-shift-indicator {
+    visibility: hidden;
+    padding-top: 2rem;
+}
+.gpii-keyboardInput-shiftLatched ~ .gpii-fd-keyboard-shift-indicator {
+    visibility: visible;
+}
