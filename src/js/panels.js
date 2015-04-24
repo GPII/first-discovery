@@ -260,12 +260,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 type: "fluid.transforms.binaryOp",
                 left: "{that}.model.lang",
                 operator: "===",
-                right: {
-                    expander: {
-                        funcName: "fluid.get",
-                        args: ["{that}.options.controlValues.lang", 0]
-                    }
-                }
+                right: "{that}.options.controlValues.lang.0"
             }
         }, {
             target: "lastLangSelected",
