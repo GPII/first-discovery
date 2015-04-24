@@ -170,7 +170,7 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("The next button is enabled", false, that.locate("next").is(":disabled"));
 
         fluid.each(["prev", "next"], function (selector) {
-            jqUnit.assertEquals("The tooltip definition for element " + selector + " has been populated", messages["navButtonTooltip"], idToContent[that.locate(selector).attr("id")]);
+            jqUnit.assertEquals("The tooltip definition for element " + selector + " has been populated", messages.navButtonTooltip, idToContent[that.locate(selector).attr("id")]);
         });
     };
 

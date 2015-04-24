@@ -25,7 +25,7 @@ https://github.com/gpii/universal/LICENSE.txt
             "item1-tooltipAtSelect": "item1 being selected",
             "item2-tooltipAtSelect": "item2 being selected",
             "item3-tooltipAtSelect": "item3 being selected",
-            "item4-tooltipAtSelect": "item4 being selected",
+            "item4-tooltipAtSelect": "item4 being selected"
         },
         selectors: {
             button1: ".gpiic-button1",
