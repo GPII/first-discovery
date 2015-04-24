@@ -14,6 +14,7 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.defaults("gpii.tests.firstDiscovery.attachTooltip", {
         gradeNames: ["gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.msgLookup", "autoInit"],
         messageBase: {
+            "containerLabel": "container label from the message resolver",
             "button1Label": "button1 label from the message resolver",
             "button2Label": "button2 label from the message resolver",
 
@@ -33,6 +34,7 @@ https://github.com/gpii/universal/LICENSE.txt
             item: ".gpiic-item"
         },
         tooltipContentMap: {
+            "": "containerLabel",
             "button1": "button1Label",
             "button2": "button2Label",
             "item": {
@@ -45,6 +47,7 @@ https://github.com/gpii/universal/LICENSE.txt
     jqUnit.test("Tooltip with contents from the message resolver", function () {
         var that = gpii.tests.firstDiscovery.attachTooltip(".gpiic-tooltip");
         var expected = {
+            tooltipTestsContainer: "container label from the message resolver",
             button1: "button1 label from the message resolver",
             button2: "button2 label from the message resolver",
             item1: "item1 label",

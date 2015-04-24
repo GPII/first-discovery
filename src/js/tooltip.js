@@ -25,9 +25,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      *
      * 1. The direct mapping between one element and one label
      * {
+     *     "": "containerLabel",
      *     "back": "backLabel"
      * }
      * The left hand side is the name in the selectors block for the element to have the tooltip.
+     * Note: the empty string "" at the left hand is to reference the component container itself.
      * The right hand side is the name in the message bundle for the content to be shown for that element.
      *
      * 2. The mapping btw one common selector used by multiple DOM elements and their correspondig tooltips.
