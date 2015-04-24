@@ -467,7 +467,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         var langPanelId = that.container.attr("id");
         if (langPanelId === shownPanelId) {
             that.buttonTops = undefined;
-            gpii.firstDiscovery.panel.lang.getButtonTops(that);
+            that.refreshView();
         }
     };
 
