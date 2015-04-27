@@ -130,12 +130,23 @@ https://github.com/gpii/universal/LICENSE.txt
         });
     });
 
+    gpii.tests.firstDiscovery.keyboardInput.checkTooltip = function (keyboardInput) {
+        var expected = keyboardInput.options.messageBase.keyboardInputTooltip;
+        var actual = keyboardInput.tooltip.model.idToContent[keyboardInput.container.attr("id")];
+        jqUnit.assertEquals("The tooltip message should be \"" + expected + "\"", expected, actual);
+    };
+
     fluid.defaults("gpii.tests.firstDiscovery.keyboardInputTestTree", {
         gradeNames: ["fluid.test.testEnvironment", "autoInit"],
         components: {
             keyboardInput: {
                 type: "gpii.firstDiscovery.keyboardInput",
-                container: "#gpiic-tests-keyboardInput"
+                container: "#gpiic-tests-keyboardInput",
+                options: {
+                    messageBase: {
+                        "keyboardInputTooltip": "keyboardInputTooltip message"
+                    }
+                }
             },
             keyboardInputTester: {
                 type: "gpii.tests.firstDiscovery.keyboardInputTester"
@@ -148,6 +159,16 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "keyboardInput tests",
             tests: [
+                {
+                    name: "Check tooltip",
+                    expect: 1,
+                    sequence: [
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInput.checkTooltip",
+                            args: "{keyboardInput}"
+                        }
+                    ]
+                },
                 {
                     name: "Check user input when sticky keys is off",
                     expect: 6,
