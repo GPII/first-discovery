@@ -140,7 +140,7 @@ button {
 
 .gpii-fd-controls {
     height: 22rem;
-    padding-top: 2rem;
+    padding-top: 1rem;
 }
 
 .gpii-fd-controls .gpii-fd-label-max,
@@ -528,14 +528,15 @@ input[type="text"].gpii-fd-keyboard-input:focus {
     content: "\e60e";
 }
 .gpii-fd-keyboard-shift-indicator .gpii-fd-keyboard-shift-indicatorLabel {
-    padding: 1rem;
+    padding: 0.4rem;
     background-color: #767675;
+    border-radius: 7px;
     color: #FFFFFF;
-    margin-left: -21.75rem;
+    margin-left: 21.75rem;
 }
 .gpii-fd-keyboard-shift-indicator {
     visibility: hidden;
-    padding-top: 2rem;
+    margin-top: -3.3rem;
 }
 .gpii-keyboardInput-shiftLatched ~ .gpii-fd-keyboard-shift-indicator {
     visibility: visible;
