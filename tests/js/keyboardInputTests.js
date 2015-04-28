@@ -130,23 +130,50 @@ https://github.com/gpii/universal/LICENSE.txt
         });
     });
 
-    gpii.tests.firstDiscovery.keyboardInput.checkTooltip = function (keyboardInput) {
+    gpii.tests.firstDiscovery.keyboardInput.setUpTooltipTest = function (keyboardInput) {
+        // Set the focus and mouse event state to a known starting point
+        $("#gpiic-tests-other-input").focus();
+        keyboardInput.container.triggerHandler("mouseleave");
+    };
+
+    gpii.tests.firstDiscovery.keyboardInput.checkTooltipMessage = function (keyboardInput) {
         var expected = keyboardInput.options.messageBase.keyboardInputTooltip;
         var actual = keyboardInput.tooltip.model.idToContent[keyboardInput.container.attr("id")];
         jqUnit.assertEquals("The tooltip message should be \"" + expected + "\"", expected, actual);
     };
 
+    fluid.defaults("gpii.tests.firstDiscovery.keyboardInput", {
+        gradeNames: ["gpii.firstDiscovery.keyboardInput", "autoInit"],
+        messageBase: {
+            "keyboardInputTooltip": "keyboardInputTooltip message"
+        },
+        events: {
+            tooltipOpen: null,
+            tooltipClose: null
+        },
+        components: {
+            tooltip: {
+                options: {
+                    widgetOptions: {
+                        // show and hide without animation
+                        show: false,
+                        hide: false
+                    },
+                    events: {
+                        afterOpen: "{keyboardInput}.events.tooltipOpen",
+                        afterClose: "{keyboardInput}.events.tooltipClose"
+                    }
+                }
+            }
+        }
+    });
+
     fluid.defaults("gpii.tests.firstDiscovery.keyboardInputTestTree", {
         gradeNames: ["fluid.test.testEnvironment", "autoInit"],
         components: {
             keyboardInput: {
-                type: "gpii.firstDiscovery.keyboardInput",
-                container: "#gpiic-tests-keyboardInput",
-                options: {
-                    messageBase: {
-                        "keyboardInputTooltip": "keyboardInputTooltip message"
-                    }
-                }
+                type: "gpii.tests.firstDiscovery.keyboardInput",
+                container: "#gpiic-tests-keyboardInput"
             },
             keyboardInputTester: {
                 type: "gpii.tests.firstDiscovery.keyboardInputTester"
@@ -159,16 +186,6 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "keyboardInput tests",
             tests: [
-                {
-                    name: "Check tooltip",
-                    expect: 1,
-                    sequence: [
-                        {
-                            func: "gpii.tests.firstDiscovery.keyboardInput.checkTooltip",
-                            args: "{keyboardInput}"
-                        }
-                    ]
-                },
                 {
                     name: "Check user input when sticky keys is off",
                     expect: 6,
@@ -326,6 +343,38 @@ https://github.com/gpii/universal/LICENSE.txt
                                    "{keyboardInput}.model.shiftLatched"],
                             spec: {path: "shiftLatched", priority: "last"},
                             changeEvent: "{keyboardInput}.applier.modelChanged"
+                        }
+                    ]
+                },
+                {
+                    name: "Check tooltip",
+                    expect: 3,
+                    sequence: [
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInput.setUpTooltipTest",
+                            args: ["{keyboardInput}"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInput.checkTooltipMessage",
+                            args: ["{keyboardInput}"]
+                        },
+                        {
+                            element: "{keyboardInput}.container",
+                            jQueryTrigger: "mouseover"
+                        },
+                        {
+                            event: "{keyboardInput}.events.tooltipOpen",
+                            listener: "jqUnit.assert",
+                            args: ["Triggered mouseover, tooltipOpen should have fired"]
+                        },
+                        {
+                            element: "{keyboardInput}.container",
+                            jQueryTrigger: "focus"
+                        },
+                        {
+                            event: "{keyboardInput}.events.tooltipClose",
+                            listener: "jqUnit.assert",
+                            args: ["Focused the keyboardInput, tooltipClose should have fired"]
                         }
                     ]
                 }
