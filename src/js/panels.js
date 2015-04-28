@@ -217,12 +217,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         source: "{lang}.model.lang",
                         target: "currentSelectedIndex",
                         singleTransform: {
-                            type: "fluid.transforms.free",
-                            args: {
-                                "langs": "{lang}.options.controlValues.lang",
-                                "currentLang": "{lang}.model.lang"
-                            },
-                            func: "gpii.firstDiscovery.panel.lang.getCurrentSelectedIndex"
+                            type: "fluid.transforms.indexOf",
+                            array: "{lang}.options.controlValues.lang",
+                            value: "{lang}.model.lang"
                         }
                     },
                     tooltipContentMap: {
@@ -239,12 +236,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     },
                     listeners: {
                         "{lang}.events.afterRender": {
-                            funcName: "{that}.tooltip.applier.change",
-                            args: ["idToContent", {
-                                expander: {
-                                    func: "{that}.tooltip.getTooltipModel"
-                                }
-                            }]
+                            funcName: "{that}.tooltip.updateIdToContent"
                         }
                     }
                 }
@@ -255,25 +247,28 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             lastLangSelected: false
         },
         modelRelay: [{
+            target: "langIndex",
+            singleTransform: {
+                type: "fluid.transforms.indexOf",
+                array: "{that}.options.controlValues.lang",
+                value: "{that}.model.lang",
+                offset: 1
+            }
+        }, {
             target: "firstLangSelected",
             singleTransform: {
                 type: "fluid.transforms.binaryOp",
-                left: "{that}.model.lang",
+                left: "{that}.model.langIndex",
                 operator: "===",
-                right: "{that}.options.controlValues.lang.0"
+                right: 1
             }
         }, {
             target: "lastLangSelected",
             singleTransform: {
                 type: "fluid.transforms.binaryOp",
-                left: "{that}.model.lang",
+                left: "{that}.model.langIndex",
                 operator: "===",
-                right: {
-                    expander: {
-                        funcName: "gpii.firstDiscovery.panel.lang.getLastArrayElement",
-                        args: ["{that}.options.controlValues.lang"]
-                    }
-                }
+                right: "{that}.options.controlValues.lang.length"
             }
         }],
         numOfLangPerPage: 3,
@@ -361,15 +356,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         }
     });
-
-    gpii.firstDiscovery.panel.lang.getCurrentSelectedIndex = function (model) {
-        return model.langs.indexOf(model.currentLang);
-    };
-
-    gpii.firstDiscovery.panel.lang.getLastArrayElement = function (array) {
-        array = fluid.makeArray(array);
-        return array[array.length - 1];
-    };
 
     gpii.firstDiscovery.panel.lang.moveLangFocus = function (that, adjustBy) {
         var langArray = that.options.controlValues.lang,
@@ -488,7 +474,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.panel.lang.preventWrapWithArrowKeys = function (that) {
         var langButtons = that.locate("langInput"),
             firstLangButton = langButtons[0],
-            lastLangButton = gpii.firstDiscovery.panel.lang.getLastArrayElement(langButtons);
+            lastLangButton = langButtons[langButtons.length];
 
         gpii.firstDiscovery.panel.lang.stopArrowBrowseOnEdgeButtons(firstLangButton, [$.ui.keyCode.UP, $.ui.keyCode.LEFT]);
         gpii.firstDiscovery.panel.lang.stopArrowBrowseOnEdgeButtons(lastLangButton, [$.ui.keyCode.DOWN, $.ui.keyCode.RIGHT]);

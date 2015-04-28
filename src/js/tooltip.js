@@ -49,19 +49,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         tooltipOptions: {},
         tooltipContentMap: {},  // Must be provided by integrators
         model: {
-            // The index of the currently selected element
-            currentSelectedIndex: 0  // Must be updated by integrators.
-        },
-        modelListeners: {
-            currentSelectedIndex: {
-                listener: "{that}.tooltip.applier.change",
-                args: ["idToContent", {
-                    expander: {
-                        func: "{that}.tooltip.getTooltipModel"
-                    }
-                }],
-                excludeSource: "init"
-            }
+            // currentSelectedIndex: 0  // Must be updated by integrators. The index of the currently selected element
         },
         components: {
             tooltip: {
@@ -77,6 +65,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         }
                     },
                     invokers: {
+                        updateIdToContent: {
+                            changePath: "idToContent",
+                            value: {
+                                expander: {
+                                    funcName: "{that}.getTooltipModel"
+                                }
+                            }
+                        },
                         getElementInfo: {
                             funcName: "gpii.firstDiscovery.attachTooltip.getElementInfo",
                             args: ["{fluid.messageResolver}", "{arguments}.0", "{arguments}.1"]
@@ -98,10 +94,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     // Return an object the element id and text for the given label
     gpii.firstDiscovery.attachTooltip.getElementInfo = function (msgResolver, element, label) {
-        var info = {};
-        info.id = fluid.allocateSimpleId(element);
-        info.msg = msgResolver.resolve(label);
-        return info;
+        return {
+            id: fluid.allocateSimpleId(element),
+            msg: msgResolver.resolve(label)
+        };
     };
 
     gpii.firstDiscovery.attachTooltip.getTooltipModel = function (domBinder, map, getElementInfo, currentSelectedIndex) {
@@ -109,14 +105,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
         fluid.each(map, function (labelInfo, selector) {
             var element = domBinder.locate(selector);
-            if (typeof (labelInfo) === "object") {
+            if (fluid.isPrimitive(labelInfo)) {
+                var info = getElementInfo(element, labelInfo);
+                idToContent[info.id] = info.msg;
+            } else {
                 fluid.each(element, function (oneElem, index) {
                     var info = getElementInfo(oneElem, (index === currentSelectedIndex && !!labelInfo.tooltipAtSelect) ? labelInfo.tooltipAtSelect[index] : labelInfo.tooltip[index]);
                     idToContent[info.id] = info.msg;
                 });
-            } else {
-                var info = getElementInfo(element, labelInfo);
-                idToContent[info.id] = info.msg;
             }
         });
 
@@ -128,14 +124,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.defaults("gpii.firstDiscovery.attachTooltip.renderer", {
         gradeNames: ["fluid.rendererRelayComponent", "gpii.firstDiscovery.attachTooltip", "autoInit"],
         listeners: {
-            "afterRender.updateTooltipModel": {
-                listener: "{that}.tooltip.applier.change",
-                args: ["idToContent", {
-                    expander: {
-                        func: "{that}.tooltip.getTooltipModel"
-                    }
-                }]
-            }
+            "afterRender.updateTooltipModel": "{that}.tooltip.updateIdToContent"
         }
     });
 

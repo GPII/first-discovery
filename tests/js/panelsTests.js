@@ -133,14 +133,6 @@ https://github.com/gpii/universal/LICENSE.txt
                     args: ["{lang}", "en", true, false],
                     priority: "last",
                     event: "{lang}.events.afterRender"
-                }, {
-                    func: "gpii.tests.langTester.clickLangButton",
-                    args: ["{lang}", "fr"]
-                }, {
-                    listener: "gpii.tests.langTester.verifyLangModel",
-                    args: ["{lang}", "fr"],
-                    spec: {path: "lang", priority: "last"},
-                    changeEvent: "{lang}.applier.modelChanged"
                 }]
             }]
         }]
@@ -183,11 +175,11 @@ https://github.com/gpii/universal/LICENSE.txt
     gpii.tests.langTester.verifyButtonInView = function (that) {
         jqUnit.assertNotUndefined("The button positions have been collected", that.buttonTops);
         var currentButtonInput = that.locate("langInput").filter(":checked");
-        jqUnit.assertEquals("The correct language button has been checked", that.model.lang, currentButtonInput.val());
+        jqUnit.assertEquals("The correct language button has been selected", that.model.lang, currentButtonInput.val());
         var currentButtonTop = currentButtonInput.closest(that.options.selectors.langRow).position().top,
             controlsDivScrollTop = $(that.options.selectors.controlsDiv)[0].scrollTop,
             movedToTop = currentButtonTop + controlsDivScrollTop - that.lastMovedHeight;
-        jqUnit.assertNotEquals("The checked button has been moved to the correct button position", that.buttonTops.indexOf(movedToTop), -1);
+        jqUnit.assertNotEquals("The selected button has been moved to the correct button position", that.buttonTops.indexOf(movedToTop), -1);
     };
 
     gpii.tests.langTester.clickLangButton = function (that, langCode) {

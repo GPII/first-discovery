@@ -41,6 +41,9 @@ https://github.com/gpii/universal/LICENSE.txt
                 tooltip: ["item1-tooltip", "item2-tooltip", "item3-tooltip", "item4-tooltip"],
                 tooltipAtSelect: ["item1-tooltipAtSelect", "item2-tooltipAtSelect", "item3-tooltipAtSelect", "item4-tooltipAtSelect"]
             }
+        },
+        modelListeners: {
+            "currentSelectedIndex": "{that}.tooltip.updateIdToContent"
         }
     });
 
