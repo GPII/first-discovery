@@ -75,7 +75,7 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "Test the language settings panel",
             tests: [{
-                expect: 53,
+                expect: 52,
                 name: "Test the language panel",
                 sequence: [{
                     func: "{lang}.refreshView"

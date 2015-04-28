@@ -247,28 +247,25 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             lastLangSelected: false
         },
         modelRelay: [{
-            target: "langIndex",
-            singleTransform: {
-                type: "fluid.transforms.indexOf",
-                array: "{that}.options.controlValues.lang",
-                value: "{that}.model.lang",
-                offset: 1
-            }
-        }, {
             target: "firstLangSelected",
             singleTransform: {
                 type: "fluid.transforms.binaryOp",
-                left: "{that}.model.langIndex",
+                left: "{that}.model.lang",
                 operator: "===",
-                right: 1
+                right: "{that}.options.controlValues.lang.0"
             }
         }, {
             target: "lastLangSelected",
             singleTransform: {
                 type: "fluid.transforms.binaryOp",
-                left: "{that}.model.langIndex",
+                left: "{that}.model.lang",
                 operator: "===",
-                right: "{that}.options.controlValues.lang.length"
+                right: {
+                    expander: {
+                        funcName: "gpii.firstDiscovery.panel.lang.getLastArrayElement",
+                        args: ["{that}.options.controlValues.lang"]
+                    }
+                }
             }
         }],
         numOfLangPerPage: 3,
@@ -356,6 +353,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         }
     });
+
+    gpii.firstDiscovery.panel.lang.getLastArrayElement = function (array) {
+        array = fluid.makeArray(array);
+        return array[array.length - 1];
+    };
 
     gpii.firstDiscovery.panel.lang.moveLangFocus = function (that, adjustBy) {
         var langArray = that.options.controlValues.lang,
