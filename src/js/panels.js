@@ -246,6 +246,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             firstLangSelected: false,
             lastLangSelected: false
         },
+        // TODO: When FLUID-5659 (http://issues.fluidproject.org/browse/FLUID-5659) is fixed, change
+        // the model relay to use fluid.transforms.indexOf to get the index of the current selected
+        // language and calculate firstLangSelected and lastLangSelected based on it.
         modelRelay: [{
             target: "firstLangSelected",
             singleTransform: {
