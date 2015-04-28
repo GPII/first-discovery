@@ -289,7 +289,7 @@ https://github.com/gpii/universal/LICENSE.txt
 
     gpii.tests.keyboardTester.verifyRendering = function (that, instructions) {
         jqUnit.assertEquals("The instructions should be rendered correctly", that.options.messageBase[instructions], that.locate("instructions").text());
-        jqUnit.assertEquals("The placeholder text should be set correctly", that.options.messageBase.placeholder, that.locate("placeholder").attr("placeholder"));
+        jqUnit.assertEquals("The placeholder text should be set correctly", that.options.messageBase.placeholder, that.locate("input").attr("placeholder"));
 
         jqUnit.assertTrue("The hide class on the assistance element should be added", that.locate("assistance").hasClass(that.options.styles.hide));
     };

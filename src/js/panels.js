@@ -128,7 +128,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         selectors: {
-            placeholder: ".gpiic-fd-keyboard-input",
+            input: ".gpiic-fd-keyboard-input",
             instructions: ".gpiic-fd-keyboard-instructions",
             assistance: ".gpiic-fd-keyboard-assistance"
         },
@@ -175,7 +175,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             keyboardInput: {
                 type: "gpii.firstDiscovery.keyboardInput",
                 createOnEvent: "afterRender",
-                container: "{that}.dom.placeholder",
+                container: "{that}.dom.input",
                 options: {
                     model: {
                         userInput: "{stickyKeysAssessor}.model.input"
@@ -184,7 +184,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         protoTree: {
-            placeholder: {
+            input: {
                 decorators: {
                     attrs: {
                         placeholder: "{that}.msgLookup.placeholder"
