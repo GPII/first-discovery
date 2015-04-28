@@ -131,9 +131,9 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     gpii.tests.firstDiscovery.keyboardInput.setUpTooltipTest = function (keyboardInput) {
-        // Set the focus and mouse event state to a known starting point
+        // Set the focus and tooltip state to a known starting point
         $("#gpiic-tests-other-input").focus();
-        keyboardInput.container.triggerHandler("mouseleave");
+        keyboardInput.tooltip.close();
     };
 
     gpii.tests.firstDiscovery.keyboardInput.checkTooltipMessage = function (keyboardInput) {
