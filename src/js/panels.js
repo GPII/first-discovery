@@ -179,7 +179,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 options: {
                     model: {
                         userInput: "{stickyKeysAssessor}.model.input"
-                    }
+                    },
+                    messageBase: "{keyboard}.options.messageBase"
                 }
             }
         },
