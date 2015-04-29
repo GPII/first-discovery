@@ -30,7 +30,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     gpii.firstDiscovery.tts.tooltipHookup.speakTooltip = function (that, tooltip) {
-        that.speak(tooltip.text());
+        // setTimeout() is to work around the issue that when tooltip model.idToContent is updated with the
+        // content for elements being selected (there are cases of having different tooltip content for unselected
+        // and selected states), the updated model info is not accessible in "afterClose".
+        setTimeout(function () {
+            that.speak(tooltip.text());
+        });
     };
 
     fluid.registerNamespace("gpii.firstDiscovery.tts.fdHookup");
@@ -57,7 +62,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         }
                     },
                     listeners: {
-                        "onCreate.readPanel": "{that}.speakPanelMessage",
                         "onCreate.bindKeypress": {
                             listener: "gpii.firstDiscovery.tts.fdHookup.bindKeypress",
                             // 104 === 'h'

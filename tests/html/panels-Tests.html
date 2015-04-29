@@ -5,6 +5,7 @@
         <title>Panels Tests</title>
 
         <link rel="stylesheet" media="screen" href="../lib/infusion/lib/qunit/css/qunit.css" />
+        <link rel="stylesheet" media="screen" href="../../src/css/style.css" />
 
         <script src="../lib/infusion/lib/qunit/js/qunit.js"></script>
         <script src="../../src/lib/infusion/infusion-custom.js"></script>
@@ -29,6 +30,22 @@
         <div id="qunit-testrunner-toolbar"></div>
         <h2 id="qunit-userAgent"></h2>
         <ol id="qunit-tests"></ol>
+
+        <!-- Test Language Panel -->
+        <section class="gpiic-fd-lang gpii-fd">
+            <p class="gpiic-fd-instructions gpii-fd-instructions"></p>
+            <div class="row gpii-fd-controls small-offset-1 medium-offset-1 small-10 medium-10 end text-center">
+                <button class="gpiic-fd-lang-prev gpii-fd-lang-prev" id="gpiic-fd-lang-prev" name="previous" tabindex="-1">&bigtriangleup;</button>
+                <div class="gpiic-fd-lang-controls gpii-fd-lang-controls">
+                    <div class="gpiic-fd-lang-row gpii-fd-lang-row gpii-fd-choice">
+                        <input class="gpiic-fd-lang-input gpii-fd-hidden-accessible" name="lang" id="lang-en" value="en" type="radio" checked tabindex="1">
+                        <span class="gpii-fd-indicator gpii-fd-icon"></span>
+                        <label for="lang-en" class="gpiic-fd-lang-label gpii-fd-lang-label gpii-fd-choice-label" id="lang-en-label">English</label>
+                    </div>
+                </div>
+                <button class="gpiic-fd-lang-next gpii-fd-lang-next" id="gpiic-fd-lang-next" name="next" tabindex="-1">&bigtriangledown;</button>
+            </div>
+        </section>
 
         <!-- Test Text Size Panel -->
         <section class="gpiic-fd-textSize gpii-adjusterContainer-size gpii-main gpii-current">
@@ -57,7 +74,7 @@
                 <div class="gpiic-fd-speakText-choiceRow gpii-fd-choice">
                     <input type="radio" class="gpiic-fd-speakText-choiceInput gpii-fd-hidden-accessible" name="speakText" id="speakText-choice" tabindex="1">
                     <span class="gpii-fd-indicator gpii-fd-icon"></span>
-                    <label for="speakText-choice" class="gpiic-fd-speakText-choice-label gpii-fd-yesNo"></label>
+                    <label for="speakText-choice" class="gpiic-fd-speakText-choice-label gpii-fd-choice-label"></label>
                 </div>
             </div>
         </section>
@@ -76,6 +93,11 @@
                 </div>
                 <input type="text" class="gpiic-fd-keyboard-input gpii-fd-keyboard-input" />
             </div>
+        </section>
+
+        <!-- Test Welcome Panel -->
+        <section class="gpiic-fd-welcome">
+            <div class="gpiic-fd-instructions"></div>
         </section>
 
         <!-- Test Congratulations Panel -->

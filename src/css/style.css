@@ -163,7 +163,7 @@ button {
     margin-bottom: 0.6rem;
 }
 
-.gpii-fd-yesNo {
+.gpii-fd-choice-label {
     font-size: inherit;
     display: inline-block;
     width: 14rem;
@@ -175,13 +175,13 @@ button {
     padding: 0.7rem;
     border: 0.2rem solid #ffffff;
 }
-.gpii-fd-yesNo:hover {
+.gpii-fd-choice-label:hover {
     background-color: #425165; /* blue-grey, to override foundation's blue */
     box-shadow: 0 0 0 0.04rem rgb(255,255,255), /* white */
                 0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
 }
 
-.gpii-fd-choice input:focus ~ .gpii-fd-yesNo {
+.gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
     background-color: #425165; /* blue-grey */
     border: 0.2rem solid #fed73a; /* Yellow */
     box-shadow: 0 0 0 0.2rem rgb(244, 215, 75), /* Yellow */
@@ -189,7 +189,7 @@ button {
     outline: none;
 }
 
-.gpii-fd-yesNo:active {
+.gpii-fd-choice-label:active {
     background-color: #fff;
     color: #425165; /* blue-grey */
     border: 0.2rem solid #fff;
@@ -204,11 +204,11 @@ button {
     left: -2.1rem;
 }
 
-.gpii-fd-choice input:checked ~ .gpii-fd-yesNo {
+.gpii-fd-choice input:checked ~ .gpii-fd-choice-label {
     color: #fed73a;
 }
 
-.gpii-fd-choice input:checked:active ~ .gpii-fd-yesNo {
+.gpii-fd-choice input:checked:active ~ .gpii-fd-choice-label {
     color: #425165;
 }
 
@@ -216,7 +216,7 @@ button {
     content: "\e600";
 }
 
-.gpii-fd-choice input:checked ~ .gpii-fd-indicator.gpii-fd-yesNo {
+.gpii-fd-choice input:checked ~ .gpii-fd-indicator.gpii-fd-choice-label {
     color: #fed73a; /* yellow */
 }
 
@@ -259,7 +259,9 @@ button {
 }
 
 .gpii-fd .gpii-fd-increase:focus,
-.gpii-fd .gpii-fd-decrease:focus {
+.gpii-fd .gpii-fd-decrease:focus,
+.gpii-fd .gpii-fd-lang-prev:focus,
+.gpii-fd .gpii-fd-lang-next:focus {
     background-color: #425165; /* blue-grey */
     border: 0.1rem solid #fed73a; /* Yellow */
     box-shadow: 0 0 0 0.2rem rgb(244, 215, 75), /* Yellow */
@@ -268,11 +270,22 @@ button {
 }
 
 .gpii-fd .gpii-fd-increase:active,
-.gpii-fd .gpii-fd-decrease:active {
+.gpii-fd .gpii-fd-decrease:active,
+.gpii-fd .gpii-fd-lang-prev:active,
+.gpii-fd .gpii-fd-lang-next:active {
     background-color: #fff;
     color: #425165; /* blue-grey */
     border: 0.1rem solid #fff;
     box-shadow: 0 0 0 0.4rem rgb(72, 82, 100); /* blue-grey */
+}
+
+.gpii-fd-increase:hover,
+.gpii-fd-decrease:hover,
+.gpii-fd-lang-prev:hover,
+.gpii-fd-lang-next:hover {
+    background-color: #425165; /* blue-grey, to override foundation's blue */
+    box-shadow: 0 0 0 0.04rem rgb(255,255,255), /* white */
+                0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
 }
 
 .gpii-fd-increase .gpii-fd-icon:before,
@@ -288,11 +301,37 @@ button {
 .gpii-fd-decrease .gpii-fd-icon:before {
     content: "\e604";
 }
-.gpii-fd-increase:hover,
-.gpii-fd-decrease:hover {
-    background-color: #425165; /* blue-grey, to override foundation's blue */
-    box-shadow: 0 0 0 0.04rem rgb(255,255,255), /* white */
-                0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
+
+/* language controls */
+.gpii-fd-prefsEditor-panel-lang .gpii-fd-controls {
+    padding-top: 0;
+}
+
+.gpii-fd-lang-controls {
+    height: 14.3rem;
+    overflow: hidden;
+    margin: 0 0 0.5rem 0;
+    width: 100%;
+    padding: 0.5rem 0 1rem 0;
+}
+
+.gpii-fd-lang-label {
+    width: 24rem;
+    line-height: 1;
+}
+
+.gpii-fd-lang-prev, .gpii-fd-lang-next {
+    color: #ffffff;
+    background-color: #425165; /* blue-grey */
+    left: 0.6rem;
+    height: 2.5rem;
+    width: 24rem;
+    padding-top: 0.1rem;
+    border: 0.1rem solid #fff;
+    border-radius: 0.7rem;
+    font-size: 2rem;
+    line-height: 2.5rem;
+    margin-bottom: 0.4rem;
 }
 
 /* vertical 'range status' indicator beside adjuster */
@@ -399,6 +438,11 @@ button {
     text-transform: none;
     line-height: initial;
 }
+/* Special handling for the welcome icon that does not have an icon */
+.gpii-fd-navIcon-welcome {
+    display: inline-block;
+    margin: 0.2rem -0.3rem 0 0;
+}
 .gpii-fd-lang:before {
     content: "\e608";
 }
@@ -448,6 +492,7 @@ button {
 .gpii-fd-show {
     visibility: visible;
 }
+
 .gpii-fd-confirmedIndicator:before {
     content:  "\e607";
     font-size: 2rem;
@@ -474,6 +519,14 @@ button {
     padding: 0.5rem;
     background-color: #fed73a;
     bottom: -1rem;
+}
+.gpii-fd-tooltip-lang {
+    width: auto;
+    max-width: 8.5em;
+    font-size: 2rem;
+    padding: 0.5rem;
+    background-color: #fed73a;
+    right: 16rem;
 }
 
 /* Keyboard screens */
