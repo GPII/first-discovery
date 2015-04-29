@@ -15,7 +15,5 @@
     "mutedTooltip": "Select to turn voice on",
     "mutedMsg": "voice is off",
 
-    "panelMsg": "This is step %currentPanel of %numPanels. %instructions Press 'h' for help.",
-
-    "keyboardInputTooltip": "Select to begin typing"
+    "panelMsg": "This is step %currentPanel of %numPanels. %instructions Press 'h' for help."
 }
