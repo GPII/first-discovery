@@ -38,7 +38,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 }
             },
             "keyboard": {
-                "type": "fluid.prefs.textSize",
+                "type": "gpii.firstDiscovery.stickyKeys",
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.keyboard",
                     "container": ".gpiic-fd-prefsEditor-panel-keyboard",
@@ -137,6 +137,17 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "gpii.firstDiscovery.speak": {
                 "type": "boolean",
                 "default": "true"
+            }
+        }
+    });
+
+
+    fluid.defaults("gpii.firstDiscovery.schemas.stickyKeys", {
+        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.stickyKeys": {
+                "type": "boolean",
+                "default": "false"
             }
         }
     });
