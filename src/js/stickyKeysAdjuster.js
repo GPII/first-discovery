@@ -21,6 +21,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             description: ".gpiic-fd-keyboard-stickyKeysAdjuster-desc",
             tryButton: ".gpiic-fd-keyboard-stickyKeysAdjuster-try",
             accomodation: ".gpiic-fd-keyboard-stickyKeysAdjuster-accomodation",
+            accomodationInstr: ".gpiic-fd-keyboard-stickyKeysAdjuster-accomodationInstr",
             accomodationName: ".gpiic-fd-keyboard-stickyKeysAdjuster-accomodationName",
             accomodationState: ".gpiic-fd-keyboard-stickyKeysAdjuster-accomodationState",
             accomodationToggle: ".gpiic-fd-keyboard-stickyKeysAdjuster-accomodationToggle"
@@ -74,6 +75,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.keyboard.stickyKeysAdjuster.renderText = function (that) {
         var resolveFn = that.msgResolver.resolve;
 
+        that.locate("accomodationInstr").html(resolveFn("stickyKeysAccomInstr"));
         that.locate("description").html(resolveFn("stickyKeysInstructions"));
         that.locate("tryButton").text(resolveFn("try"));
         that.locate("accomodationName").text(resolveFn("stickyKeys"));
