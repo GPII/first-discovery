@@ -60,7 +60,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     // The mapping between the model value of "currentPanelNum" and actual panels
-    // 1. language, 2. audio, 3. text size, 4. contrast
+    // 1. language, 2. welcome, 3. audio, 4. text size, 5. contrast
     gpii.tests.firstDiscovery.runTest = function (msg, container, panelNum, testFunc) {
         jqUnit.asyncTest(msg, function () {
             gpii.tests.firstDiscovery(container, {
@@ -68,7 +68,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     prefsEditorLoader: {
                         options: {
                             model: {
-                                currentPanelNum: panelNum   // show the text size panel at the page load
+                                currentPanelNum: panelNum
                             }
                         }
                     }
@@ -109,8 +109,8 @@ https://github.com/gpii/universal/LICENSE.txt
         gpii.tests.utils.hasClass("The active icon", activeIcon, activeCss, true);
     };
 
-    gpii.tests.firstDiscovery.testControlss = function (that) {
-        jqUnit.expect(35);
+    gpii.tests.firstDiscovery.testControls = function (that) {
+        jqUnit.expect(39);
 
         var backButton = that.navButtons.locate("back");
         var nextButton = that.navButtons.locate("next");
@@ -121,46 +121,29 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertNotUndefined("The subcomponent \"navIcons\" has been instantiated", that.navIcons);
         gpii.tests.firstDiscovery.verifyStates(that, 1, false, true, {
             isVisible: [".gpiic-fd-prefsEditor-panel-lang"],
-            notVisible: [".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
+            notVisible: [".gpiic-fd-prefsEditor-panel-welcome", ".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
         });
 
         // Clicking the next button leads to the 2nd panel
         nextButton.click();
         gpii.tests.firstDiscovery.verifyStates(that, 2, true, true, {
-            isVisible: [".gpiic-fd-prefsEditor-panel-size"],
-            notVisible: [".gpiic-fd-prefsEditor-panel-lang", ".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-contrast"]
+            isVisible: [".gpiic-fd-prefsEditor-panel-welcome"],
+            notVisible: [".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-lang", ".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-contrast"]
         });
 
         // Clicking the back button brings back the first panel
         backButton.click();
         gpii.tests.firstDiscovery.verifyStates(that, 1, false, true, {
             isVisible: [".gpiic-fd-prefsEditor-panel-lang"],
-            notVisible: [".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
+            notVisible: [".gpiic-fd-prefsEditor-panel-welcome", ".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
         });
 
         // Directs to the last panel by firing a change request directly
-        that.applier.change("currentPanelNum", 4);
-        gpii.tests.firstDiscovery.verifyStates(that, 4, true, true, {
+        that.applier.change("currentPanelNum", 5);
+        gpii.tests.firstDiscovery.verifyStates(that, 5, true, true, {
             isVisible: [".gpiic-fd-prefsEditor-panel-contrast"],
-            notVisible: [".gpiic-fd-prefsEditor-panel-lang", ".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-size"]
+            notVisible: [".gpiic-fd-prefsEditor-panel-lang", ".gpiic-fd-prefsEditor-panel-welcome", ".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-size"]
         });
-    };
-
-    gpii.tests.firstDiscovery.getFontSize = function (elm) {
-        return parseFloat(elm.css("font-size"));
-    };
-
-    gpii.tests.firstDiscovery.testTextSize = function (that) {
-        jqUnit.expect(3);
-
-        var initialTextSize = gpii.tests.firstDiscovery.getFontSize(that.container);
-        jqUnit.assertNotUndefined("The initial text size has been set", initialTextSize);
-        that.prefsEditor.gpii_firstDiscovery_panel_textSize.locate("increase").click();
-        var sizeAfterIncrease = gpii.tests.firstDiscovery.getFontSize(that.container);
-        jqUnit.assertTrue("Clicking on larger button enlarges the text size", sizeAfterIncrease > initialTextSize);
-        that.prefsEditor.gpii_firstDiscovery_panel_textSize.locate("decrease").click();
-        var sizeAfterDecrease = gpii.tests.firstDiscovery.getFontSize(that.container);
-        jqUnit.assertTrue("Clicking on smaller button shrinks the text size", sizeAfterDecrease < sizeAfterIncrease);
     };
 
     gpii.tests.firstDiscovery.testTTSHookup = function (that) {
@@ -172,8 +155,127 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("The instruction text should be sourced from the active panel", expected, actual);
     };
 
-    gpii.tests.firstDiscovery.runTest("Init and navigation controls", "#gpiic-fd-navControlsTests", 1, gpii.tests.firstDiscovery.testControlss);
-    gpii.tests.firstDiscovery.runTest("Text Size", "#gpiic-fd-textSizeTests", 2, gpii.tests.firstDiscovery.testTextSize);
-    gpii.tests.firstDiscovery.runTest("TTS Hookup", "#gpiic-fd-ttsHookupTests", 2, gpii.tests.firstDiscovery.testTTSHookup);
+    gpii.tests.firstDiscovery.runTest("Init and navigation controls", "#gpiic-fd-navControlsTests", 1, gpii.tests.firstDiscovery.testControls);
+    gpii.tests.firstDiscovery.runTest("TTS Hookup", "#gpiic-fd-ttsHookupTests", 3, gpii.tests.firstDiscovery.testTTSHookup);
+
+    // Test the connection between the top level first discovery editor and the language panel: the language panel resets button positions every
+    // time when the panel itself becomes visible to accommodate the possible text or control size changes that cause the shift of button positions.
+    fluid.defaults("gpii.tests.firstDiscoveryLang", {
+        gradeNames: ["gpii.tests.firstDiscovery", "autoInit"],
+        components: {
+            prefsEditorLoader: {
+                options: {
+                    listeners: {
+                        "onPanelShown.escalate": "{firstDiscoveryLang}.events.onPanelShown"
+                    },
+                    components: {
+                        selfVoicing: {
+                            options: {
+                                // Override queueSpeech() to work around this issue: http://issues.fluidproject.org/browse/FLOE-304
+                                invokers: {
+                                    queueSpeech: "fluid.identity"
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        },
+        events: {
+            onPanelShown: null,
+            onButtonTopsReady: null
+        },
+        langListeners: {
+            "onButtonTopsReady.escalate": "{firstDiscoveryLang}.events.onButtonTopsReady"
+        },
+        distributeOptions: {
+            source: "{that}.options.langListeners",
+            target: "{that gpii.firstDiscovery.panel.lang}.options.listeners"
+        }
+    });
+
+    fluid.defaults("gpii.tests.firstDiscovery.langTests", {
+        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        components: {
+            firstDiscovery: {
+                type: "gpii.tests.firstDiscoveryLang",
+                container: "#gpiic-fd-langTests",
+                createOnEvent: "{langTester}.events.onTestCaseStart",
+                options: {
+                    // The work around for an issue in the IoC testing framework (http://issues.fluidproject.org/browse/FLUID-5633)
+                    // that IoCSS-broadcast listeners are not un-bound so that in test sequences, the event reference can use
+                    // "{langTests}.events.onButtonTopsReady" instead of the IoCSS reference "{langTests firstDiscoveryLang}.events.onButtonTopsReady"
+                    events: {
+                        onButtonTopsReady: "{langTests}.events.onButtonTopsReady"
+                    }
+                }
+            },
+            langTester: {
+                type: "gpii.tests.firstDiscovery.langTester"
+            }
+        },
+        events: {
+            onButtonTopsReady: null
+        }
+    });
+
+    gpii.tests.firstDiscovery.testInitButtonTops = function (that, tester) {
+        tester.buttonTops = that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.buttonTops;
+        jqUnit.assertNotUndefined("The initial button positions have been collected", tester.buttonTops);
+    };
+
+    gpii.tests.firstDiscovery.testUnchangedButtonTops = function (that, initialButtonTops) {
+        jqUnit.assertDeepEq("The button positions stay unchanged", initialButtonTops, that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.buttonTops);
+    };
+
+    gpii.tests.firstDiscovery.testChangedButtonTops = function (that, initialButtonTops) {
+        var newButtonTops = that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.buttonTops;
+        fluid.each(newButtonTops, function (newPosition, index){
+            jqUnit.assertNotEquals("The position for button #" + index + " has been re-collected", initialButtonTops[index], newPosition);
+        });
+    };
+
+    fluid.defaults("gpii.tests.firstDiscovery.langTester", {
+        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        testData: {
+            buttonTops: null
+        },
+        modules: [{
+            name: "Tests the connection between the first discovery editor and the language panel",
+            tests: [{
+                expect: 5,
+                name: "Initialization",
+                sequence: [{
+                    listener: "gpii.tests.firstDiscovery.testInitButtonTops",
+                    args: ["{firstDiscovery}", "{that}"],
+                    event: "{langTests}.events.onButtonTopsReady"
+                }, {
+                    func: "{firstDiscovery}.prefsEditorLoader.applier.change",
+                    args: ["currentPanelNum", 3]
+                }, {
+                    listener: "gpii.tests.firstDiscovery.testUnchangedButtonTops",
+                    args: ["{firstDiscovery}", "{that}.buttonTops"],
+                    event: "{firstDiscovery}.events.onPanelShown"
+                }, {
+                    jQueryTrigger: "click",
+                    element: "{firstDiscovery}.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_textSize.dom.increase"
+                }, {
+                    func: "{firstDiscovery}.prefsEditorLoader.applier.change",
+                    args: ["currentPanelNum", 1]
+                }, {
+                    listener: "gpii.tests.firstDiscovery.testChangedButtonTops",
+                    args: ["{firstDiscovery}", "{that}.buttonTops"],
+                    event: "{langTests}.events.onButtonTopsReady"
+                }]
+            }]
+        }]
+    });
+
+    $(document).ready(function () {
+        fluid.test.runTests([
+            "gpii.tests.firstDiscovery.langTests"
+        ]);
+    });
 
 })(jQuery, fluid);

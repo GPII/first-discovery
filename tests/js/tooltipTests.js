@@ -14,29 +14,56 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.defaults("gpii.tests.firstDiscovery.attachTooltip", {
         gradeNames: ["gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.msgLookup", "autoInit"],
         messageBase: {
-            button1Label: "button1 label from the message resolver",
-            button2Label: "button2 label from the message resolver"
+            "containerLabel": "container label from the message resolver",
+            "button1Label": "button1 label from the message resolver",
+            "button2Label": "button2 label from the message resolver",
+
+            "item1-tooltip": "item1 label",
+            "item2-tooltip": "item2 label",
+            "item3-tooltip": "item3 label",
+            "item4-tooltip": "item4 label",
+
+            "item1-tooltipAtSelect": "item1 being selected",
+            "item2-tooltipAtSelect": "item2 being selected",
+            "item3-tooltipAtSelect": "item3 being selected",
+            "item4-tooltipAtSelect": "item4 being selected"
         },
         selectors: {
             button1: ".gpiic-button1",
-            button2: ".gpiic-button2"
+            button2: ".gpiic-button2",
+            item: ".gpiic-item"
         },
         tooltipContentMap: {
+            "": "containerLabel",
             "button1": "button1Label",
-            "button2": "button2Label"
+            "button2": "button2Label",
+            "item": {
+                tooltip: ["item1-tooltip", "item2-tooltip", "item3-tooltip", "item4-tooltip"],
+                tooltipAtSelect: ["item1-tooltipAtSelect", "item2-tooltipAtSelect", "item3-tooltipAtSelect", "item4-tooltipAtSelect"]
+            }
+        },
+        modelListeners: {
+            "currentSelectedIndex": "{that}.tooltip.updateIdToContent"
         }
     });
 
-    gpii.tests.verifyTooltip = function (that, testType, expectedLabelBlock) {
-        fluid.each(that.options.tooltipContentMap, function (labelName, domName) {
-            var domId = that.locate(domName).attr("id");
-            jqUnit.assertEquals("The tooltip content for " + domName + " matches the text defined in the " + testType, expectedLabelBlock[labelName], that.tooltip.model.idToContent[domId]);
-        });
-    };
-
     jqUnit.test("Tooltip with contents from the message resolver", function () {
         var that = gpii.tests.firstDiscovery.attachTooltip(".gpiic-tooltip");
-        gpii.tests.verifyTooltip(that, "message resolver", that.options.messageBase);
+        var expected = {
+            tooltipTestsContainer: "container label from the message resolver",
+            button1: "button1 label from the message resolver",
+            button2: "button2 label from the message resolver",
+            item1: "item1 label",
+            item2: "item2 label",
+            item3: "item3 label",
+            item4: "item4 label"
+        };
+
+        jqUnit.assertDeepEq("The tooltip model value for idToContent is expected", expected, that.tooltip.model.idToContent);
+
+        var newExpected = $.extend(expected, {item3: "item3 being selected"});
+        that.applier.change("currentSelectedIndex", 2);
+        jqUnit.assertDeepEq("The tooltip model value for idToContent is expected", newExpected, that.tooltip.model.idToContent);
     });
 
 })(jQuery, fluid);
