@@ -447,12 +447,12 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "Tests the keyboard panel",
             tests: [{
-                expect: 3,
+                expect: 4,
                 name: "Initialization",
                 sequence: [{
                     func: "{keyboard}.refreshView"
                 }, {
-                    listener: "gpii.tests.keyboardTester.verifyRendering",
+                    listener: "gpii.tests.keyboardTester.verifyInitRendering",
                     args: ["{keyboard}", "keyboardInstructions"],
                     event: "{keyboard}.events.afterRender"
                 }]
@@ -484,16 +484,21 @@ https://github.com/gpii/universal/LICENSE.txt
         }]
     });
 
-    gpii.tests.keyboardTester.verifyRendering = function (that, instructions) {
+    gpii.tests.keyboardTester.verifyInitRendering = function (that, instructions) {
         jqUnit.assertEquals("The instructions should be rendered correctly", that.options.messageBase[instructions], that.locate("instructions").text());
+        jqUnit.assertTrue("The hide class on the assistance element should be added", that.locate("assistance").hasClass(that.options.styles.hide));
+
+        jqUnit.exists("The input should be present", that.locate("input"));
         jqUnit.assertEquals("The placeholder text should be set correctly", that.options.messageBase.placeholder, that.locate("input").attr("placeholder"));
 
-        jqUnit.assertTrue("The hide class on the assistance element should be added", that.locate("assistance").hasClass(that.options.styles.hide));
     };
 
     gpii.tests.keyboardTester.verifyNoAssistance = function (that) {
         jqUnit.assertFalse("The offerAssistance model value should be false", that.model.offerAssistance);
-        gpii.tests.keyboardTester.verifyRendering(that, "successInstructions");
+        jqUnit.assertEquals("The instructions should be rendered correctly", that.options.messageBase.successInstructions, that.locate("instructions").text());
+
+        jqUnit.notExists("The assistnace should be removed", that.locate("assistance"));
+        jqUnit.notExists("The input should be removed", that.locate("input"));
     };
 
     gpii.tests.keyboardTester.verifyOfferAssistance = function (that) {
