@@ -119,35 +119,35 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertNotUndefined("The subcomponent \"prefsEditor\" has been instantiated", that.prefsEditor);
         jqUnit.assertNotUndefined("The subcomponent \"navButtons\" has been instantiated", that.navButtons);
         jqUnit.assertNotUndefined("The subcomponent \"navIcons\" has been instantiated", that.navIcons);
-        gpii.tests.firstDiscovery.verifyStates(that, 1, false, true, true, {
+        gpii.tests.firstDiscovery.verifyStates(that, gpii.tests.firstDiscovery.panelNums.lang, false, true, true, {
             isVisible: [".gpiic-fd-prefsEditor-panel-lang"],
             notVisible: [".gpiic-fd-prefsEditor-panel-welcome", ".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
         });
 
         // Clicking the next button leads to the 2nd panel
         nextButton.click();
-        gpii.tests.firstDiscovery.verifyStates(that, 2, true, true, true, {
+        gpii.tests.firstDiscovery.verifyStates(that, gpii.tests.firstDiscovery.panelNums.welcome, true, true, true, {
             isVisible: [".gpiic-fd-prefsEditor-panel-welcome"],
             notVisible: [".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-lang", ".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-contrast"]
         });
 
         // Clicking the back button brings back the first panel
         backButton.click();
-        gpii.tests.firstDiscovery.verifyStates(that, 1, false, true, true, {
+        gpii.tests.firstDiscovery.verifyStates(that, gpii.tests.firstDiscovery.panelNums.lang, false, true, true, {
             isVisible: [".gpiic-fd-prefsEditor-panel-lang"],
             notVisible: [".gpiic-fd-prefsEditor-panel-welcome", ".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-size", ".gpiic-fd-prefsEditor-panel-contrast"]
         });
 
         // Directs to the last panel by firing a change request directly
-        that.applier.change("currentPanelNum", 5);
-        gpii.tests.firstDiscovery.verifyStates(that, 5, true, true, true, {
+        that.applier.change("currentPanelNum", gpii.tests.firstDiscovery.panelNums.contrast);
+        gpii.tests.firstDiscovery.verifyStates(that, gpii.tests.firstDiscovery.panelNums.contrast, true, true, true, {
             isVisible: [".gpiic-fd-prefsEditor-panel-contrast"],
             notVisible: [".gpiic-fd-prefsEditor-panel-lang", ".gpiic-fd-prefsEditor-panel-welcome", ".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-size"]
         });
 
         // Directs to the congrats page by firing a change request directly
-        that.applier.change("currentPanelNum", 6);
-        gpii.tests.firstDiscovery.verifyStates(that, 6, true, false, false, {
+        that.applier.change("currentPanelNum", gpii.tests.firstDiscovery.panelNums.congrats);
+        gpii.tests.firstDiscovery.verifyStates(that, gpii.tests.firstDiscovery.panelNums.congrats, true, false, false, {
             isVisible: [".gpiic-fd-prefsEditor-panel-congratulations"],
             notVisible: [".gpiic-fd-prefsEditor-panel-contrast", ".gpiic-fd-prefsEditor-panel-lang", ".gpiic-fd-prefsEditor-panel-welcome", ".gpiic-fd-prefsEditor-panel-speakText", ".gpiic-fd-prefsEditor-panel-size"]
         });
