@@ -139,10 +139,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             hide: "gpii-fd-keyboard-assistanceHide"
         },
         events: {
-            onOfferAssistance: null
+            onOfferAssistance: null,
+            onInitInput: null
         },
         model: {
             // offerAssistance: boolean
+            // tryAccomodation: boolean
         },
         components: {
             assistance: {
@@ -151,14 +153,27 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 container: "{that}.container",
                 options: {
                     messageBase: "{keyboard}.options.messageBase",
-                    modelRelay: {
+                    modelRelay: [{
+                        source: "{keyboard}.model.tryAccomodation",
+                        target: "tryAccomodation",
+                        singleTransform: {
+                            type: "fluid.transforms.identity"
+                        }
+                    }, {
+                        source: "stickyKeysEnabled",
+                        target: "{keyboard}.model.stickyKeys",
+                        forward: "liveOnly",
+                        singleTransform: {
+                            type: "fluid.transforms.identity"
+                        }
+                    }, {
                         source: "stickyKeysEnabled",
                         target: "{keyboardInput}.model.stickyKeysEnabled",
                         backward: "liveOnly",
                         singleTransform: {
                             type: "fluid.transforms.identity"
                         }
-                    }
+                    }]
                 }
             },
             stickyKeysAssessor: {
@@ -177,7 +192,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             keyboardInput: {
                 type: "gpii.firstDiscovery.keyboardInput",
-                createOnEvent: "afterRender",
+                createOnEvent: "onInitInput",
                 container: "{that}.dom.input",
                 options: {
                     model: {
@@ -188,32 +203,93 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         protoTree: {
-            input: {
-                decorators: {
-                    attrs: {
-                        placeholder: "{that}.msgLookup.placeholder"
+            expander: {
+                type: "fluid.renderer.condition",
+                condition: "{that}.model.offerAssistance",
+                trueTree: {
+                    input: {
+                        decorators: {
+                            attrs: {
+                                placeholder: "{that}.msgLookup.placeholder"
+                            }
+                        }
+                    },
+                    assistance: {
+                        decorators: {
+                            type: "removeClass",
+                            classes: "{that}.options.styles.hide"
+                        }
+                    },
+                    instructions: {markup: {messagekey: "stickyKeysInstructions"}}
+                },
+                falseTree: {
+                    expander: {
+                        type: "fluid.renderer.condition",
+                        condition: {
+                            funcName: "gpii.firstDiscovery.panel.keyboard.isSet",
+                            args: ["{that}.model", "offerAssistance"]
+                        },
+                        trueTree: {
+                            instructions: {markup: {messagekey: "successInstructions"}}
+                        },
+                        falseTree: {
+                            input: {
+                                decorators: {
+                                    attrs: {
+                                        placeholder: "{that}.msgLookup.placeholder"
+                                    }
+                                }
+                            },
+                            assistance: {
+                                decorators: {
+                                    type: "addClass",
+                                    classes: "{that}.options.styles.hide"
+                                }
+                            },
+                            instructions: {markup: {messagekey: "keyboardInstructions"}}
+                        }
                     }
                 }
+            }
+        },
+        listeners: {
+            "afterRender.relayEvents": {
+                funcName: "gpii.firstDiscovery.panel.keyboard.relayEvents",
+                args: ["{that}"]
             },
-            assistance: {
-                decorators: {
-                    type: "addClass",
-                    classes: "{that}.options.styles.hide"
-                }
-            },
-            instructions: {markup: {messagekey: "keyboardInstructions"}}
+            "onOfferAssistance.destroyAssessor": {
+                funcName: "gpii.firstDiscovery.panel.keyboard.destroy",
+                args: ["{stickyKeysAssessor}"]
+            }
         },
         modelListeners: {
             offerAssistance: [{
-                listener: "gpii.firstDiscovery.panel.keyboard.offerAssistance",
-                excludeSource: "init",
-                args: ["{that}"]
-            }, {
-                listener: "{stickyKeysAssessor}.destroy",
+                listener: "{that}.refreshView",
                 excludeSource: "init"
             }]
         }
     });
+
+    gpii.firstDiscovery.panel.keyboard.isSet = function (model, path) {
+        var value = fluid.get(model, path);
+        return value !== undefined;
+    };
+
+    gpii.firstDiscovery.panel.keyboard.relayEvents = function (that) {
+        var offerAssistance = that.model.offerAssistance;
+        if (offerAssistance !== false) {
+            that.events.onInitInput.fire();
+            if (offerAssistance) {
+                that.events.onOfferAssistance.fire();
+            }
+        }
+    };
+
+    gpii.firstDiscovery.panel.keyboard.destroy = function (that) {
+        if (that) {
+            that.destroy();
+        }
+    };
 
     gpii.firstDiscovery.panel.keyboard.offerAssistance = function (that) {
         if (that.model.offerAssistance) {

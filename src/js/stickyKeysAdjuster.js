@@ -30,8 +30,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             accomodationToggle: "turnOnTooltip"
         },
         model: {
-            tryAccomodation: false,
-            stickyKeysEnabled: false
+            tryAccomodation: false
+            // stickyKeysEnabled: boolean
+        },
+        modelRelay: {
+            source: "tryAccomodation",
+            target: "stickyKeysEnabled",
+            backward: "never",
+            singleTransform: {
+                type: "fluid.transforms.identity"
+            }
         },
         modelListeners: {
             tryAccomodation: {
@@ -66,7 +74,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             toggleTry: {
                 funcName: "gpii.firstDiscovery.keyboard.stickyKeysAdjuster.toggleState",
-                args: ["{that}", ["tryAccomodation", "stickyKeysEnabled"]]
+                args: ["{that}", "tryAccomodation"]
             }
         }
     });
@@ -97,11 +105,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     };
 
-    gpii.firstDiscovery.keyboard.stickyKeysAdjuster.toggleState = function (that, paths) {
-        paths = fluid.makeArray(paths);
-        fluid.each(paths, function (path) {
-            that.applier.change(path, !fluid.get(that.model, path));
-        });
+    gpii.firstDiscovery.keyboard.stickyKeysAdjuster.toggleState = function (that, path) {
+        that.applier.change(path, !fluid.get(that.model, path));
     };
 
 })(jQuery, fluid);

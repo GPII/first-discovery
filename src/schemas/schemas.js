@@ -136,7 +136,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         schema: {
             "gpii.firstDiscovery.speak": {
                 "type": "boolean",
-                "default": "true"
+                "default": true
             }
         }
     });
@@ -147,7 +147,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         schema: {
             "gpii.firstDiscovery.stickyKeys": {
                 "type": "boolean",
-                "default": "false"
+                "default": false
             }
         }
     });
