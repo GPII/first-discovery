@@ -248,7 +248,7 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "Test the text sizer settings panel",
             tests: [{
-                expect: 13,
+                expect: 11,
                 name: "Test the rendering of the text size panel",
                 sequence: [{
                     func: "{textSize}.refreshView"
@@ -302,8 +302,6 @@ https://github.com/gpii/universal/LICENSE.txt
     gpii.tests.textSizeTester.verifyRendering = function (that) {
         var messages = that.options.messageBase;
         jqUnit.assertEquals("The text for instructions should be rendered.", messages.rangeInstructions, that.locate("rangeInstructions").text());
-        jqUnit.assertEquals("The text for increase button should be rendered.", messages.increaseLabel, that.locate("increaseLabel").text());
-        jqUnit.assertEquals("The text for decrease button should be rendered.", messages.decreaseLabel, that.locate("decreaseLabel").text());
 
         var increaseId = that.locate("increase").attr("id");
         var decreaseId = that.locate("decrease").attr("id");

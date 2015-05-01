@@ -3,8 +3,8 @@
     "backTooltip": "Select to go back to last step",
     "next": "next",
     "nextTooltip": "Select to go to next step",
-    "start": "start",
-    "startTooltip": "Select to start",
+    "start": "continue",
+    "startTooltip": "Select to continue",
     "finish": "finish",
     "finishTooltip": "Select to finish",
 
