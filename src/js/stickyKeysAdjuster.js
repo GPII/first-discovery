@@ -83,7 +83,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.keyboard.stickyKeysAdjuster.renderText = function (that) {
         var resolveFn = that.msgResolver.resolve;
 
-        that.locate("accomodationInstr").html(resolveFn("stickyKeysAccomInstr"));
+        that.locate("accomodationInstr").text(resolveFn("stickyKeysAccomInstr"));
         that.locate("description").html(resolveFn("stickyKeysInstructions"));
         that.locate("tryButton").text(resolveFn("try"));
         that.locate("accomodationName").text(resolveFn("stickyKeys"));
