@@ -548,8 +548,16 @@ input[type="text"].gpii-fd-keyboard-input:focus {
                 0 0 0 0.6rem rgb(0, 0, 0);
     outline: none;
 }
+.gpii-fd-keyboard-assistance {
+    height: 14rem;
+}
 .gpii-fd-keyboard-assistanceHide {
     visibility: hidden;
+}
+.gpii-fd-keyboard-stickyKeysAdjuster-accomodationInstr {
+    display: block;
+    text-align: left;
+    padding: 0 2rem 1rem 2rem;
 }
 .gpii-fd-keyboard-try,
 .gpii-fd-keyboard-accomodationToggle {
