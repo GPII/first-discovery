@@ -113,6 +113,29 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals(msg, expected, keyboardInput.container.hasClass(className));
     };
 
+    gpii.tests.firstDiscovery.keyboardInput.setUpTooltipTest = function (keyboardInput) {
+        // Set the focus and tooltip state to a known starting point
+        $("#gpiic-tests-other-input").focus();
+        keyboardInput.tooltip.close();
+    };
+
+    gpii.tests.firstDiscovery.keyboardInput.checkTooltipMessage = function (keyboardInput) {
+        var expected = keyboardInput.options.messageBase.keyboardInputTooltip;
+        var actual = keyboardInput.tooltip.model.idToContent[keyboardInput.container.attr("id")];
+        jqUnit.assertEquals("The tooltip message should be \"" + expected + "\"", expected, actual);
+    };
+
+    gpii.tests.firstDiscovery.keyboardInput.wait = function (keyboardInput, ms) {
+        setTimeout(function () {
+            keyboardInput.events.waitTimeElapsed.fire();
+        }, ms);
+    };
+
+    gpii.tests.firstDiscovery.keyboardInput.checkTooltipIsOpen = function (keyboardInput, expected) {
+        jqUnit.assertEquals("tooltipIsOpen should be " + expected, expected,
+                            keyboardInput.model.tooltipIsOpen);
+    };
+
     gpii.tests.firstDiscovery.keyboardInput.charFromKeypressTestCases = [
         { keyCode: undefined, expected: ""},
         { keyCode: null, expected: "" },
@@ -130,11 +153,51 @@ https://github.com/gpii/universal/LICENSE.txt
         });
     });
 
+    fluid.defaults("gpii.tests.firstDiscovery.keyboardInput", {
+        gradeNames: ["gpii.firstDiscovery.keyboardInput", "autoInit"],
+        messageBase: {
+            "keyboardInputTooltip": "keyboardInputTooltip message"
+        },
+        model: {
+            tooltipIsOpen: false
+        },
+        events: {
+            tooltipOpen: null,
+            tooltipClose: null,
+            waitTimeElapsed: null
+        },
+        listeners: {
+            "tooltipOpen": {
+                changePath: "tooltipIsOpen",
+                value: true
+            },
+            tooltipClose: {
+                changePath: "tooltipIsOpen",
+                value: false
+            }
+        },
+        components: {
+            tooltip: {
+                options: {
+                    widgetOptions: {
+                        // show and hide without animation
+                        show: false,
+                        hide: false
+                    },
+                    events: {
+                        afterOpen: "{keyboardInput}.events.tooltipOpen",
+                        afterClose: "{keyboardInput}.events.tooltipClose"
+                    }
+                }
+            }
+        }
+    });
+
     fluid.defaults("gpii.tests.firstDiscovery.keyboardInputTestTree", {
         gradeNames: ["fluid.test.testEnvironment", "autoInit"],
         components: {
             keyboardInput: {
-                type: "gpii.firstDiscovery.keyboardInput",
+                type: "gpii.tests.firstDiscovery.keyboardInput",
                 container: "#gpiic-tests-keyboardInput"
             },
             keyboardInputTester: {
@@ -305,6 +368,97 @@ https://github.com/gpii/universal/LICENSE.txt
                                    "{keyboardInput}.model.shiftLatched"],
                             spec: {path: "shiftLatched", priority: "last"},
                             changeEvent: "{keyboardInput}.applier.modelChanged"
+                        }
+                    ]
+                },
+                {
+                    name: "Check tooltip message",
+                    expect: 1,
+                    sequence: [
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInput.checkTooltipMessage",
+                            args: ["{keyboardInput}"]
+                        }
+                    ]
+                },
+                {
+                    name: "Check that the tooltip opens on mouseover and closes on focus",
+                    expect: 4,
+                    sequence: [
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInput.setUpTooltipTest",
+                            args: ["{keyboardInput}"]
+                        },
+                        {
+                            element: "{keyboardInput}.container",
+                            jQueryTrigger: "mouseover"
+                        },
+                        {
+                            event: "{keyboardInput}.events.tooltipOpen",
+                            listener: "jqUnit.assert",
+                            args: ["Triggered mouseover, tooltipOpen should have fired"]
+                        },
+                        // Wait for a little time and then check that
+                        // tooltipIsOpen has been updated. We verify
+                        // that our tooltipIsOpen model updating is
+                        // working here so that when we test it to
+                        // assert that the tooltip did not open, we
+                        // have some assurance that it can be relied
+                        // on.
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInput.wait",
+                            args: ["{keyboardInput}", 200]
+                        },
+                        {
+                            event: "{keyboardInput}.events.waitTimeElapsed",
+                            listener: "jqUnit.assert",
+                            args: ["waitTimeElasped should have fired"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInput.checkTooltipIsOpen",
+                            args: ["{keyboardInput}", true]
+                        },
+                        {
+                            element: "{keyboardInput}.container",
+                            jQueryTrigger: "focus"
+                        },
+                        {
+                            event: "{keyboardInput}.events.tooltipClose",
+                            listener: "jqUnit.assert",
+                            args: ["Focused the keyboardInput, tooltipClose should have fired"]
+                        }
+                    ]
+                },
+                {
+                    name: "Check that the tooltip does not open on mouseover if the input has focus",
+                    expect: 2,
+                    sequence: [
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInput.setUpTooltipTest",
+                            args: ["{keyboardInput}"]
+                        },
+                        {
+                            element: "{keyboardInput}.container",
+                            jQueryTrigger: "focus"
+                        },
+                        {
+                            element: "{keyboardInput}.container",
+                            jQueryTrigger: "mouseover"
+                        },
+                        // Wait for a little time and then verify that
+                        // the tooltip did not open.
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInput.wait",
+                            args: ["{keyboardInput}", 200]
+                        },
+                        {
+                            event: "{keyboardInput}.events.waitTimeElapsed",
+                            listener: "jqUnit.assert",
+                            args: ["waitTimeElasped should have fired"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInput.checkTooltipIsOpen",
+                            args: ["{keyboardInput}", false]
                         }
                     ]
                 }

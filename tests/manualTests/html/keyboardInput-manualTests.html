@@ -3,6 +3,8 @@
     <head>
         <title>keyboardInput</title>
         <script src="../../../src/lib/infusion/infusion-custom.js"></script>
+        <script src="../../../src/js/tooltip.js"></script>
+        <script src="../../../src/js/msgLookup.js"></script>
         <script src="../../../src/js/keyboardInput.js"></script>
         <style type="text/css">
             .gpii-shift-indicator {
@@ -21,8 +23,15 @@
         <p><a id="gpiic-enable-sticky-keys" href="#">Enable Sticky Keys</a></p>
         <p><a id="gpiic-disable-sticky-keys" href="#">Disable Sticky Keys</a></p>
         <script>
-            fluid.defaults("gpii.tests.firstDiscovery.keyboardInput", {
-                gradeNames: ["gpii.firstDiscovery.keyboardInput", "autoInit"],
+            fluid.setLogging(true);
+            fluid.registerNamespace("gpii.tests.firstDiscovery.keyboardInput");
+            gpii.tests.firstDiscovery.keyboardInput.logInputChange = function (userInput) {
+                fluid.log(userInput);
+            };
+            var keyboardInput = gpii.firstDiscovery.keyboardInput("#gpiic-keyboardInput", {
+                messageBase: {
+                    "keyboardInputTooltip": "Select to begin typing"
+                },
                 modelListeners: {
                     "userInput": {
                         listener: "gpii.tests.firstDiscovery.keyboardInput.logInputChange",
@@ -30,10 +39,6 @@
                     }
                 }
             });
-            gpii.tests.firstDiscovery.keyboardInput.logInputChange = function (userInput) {
-                console.log(userInput);
-            };
-            var keyboardInput = gpii.tests.firstDiscovery.keyboardInput("#gpiic-keyboardInput");
             jQuery("#gpiic-enable-sticky-keys").click(function () {
                 keyboardInput.applier.change("stickyKeysEnabled", true);
             });

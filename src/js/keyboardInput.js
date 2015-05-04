@@ -89,7 +89,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     fluid.defaults("gpii.firstDiscovery.keyboardInput", {
-        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.msgLookup", "autoInit"],
+        tooltipContentMap: {
+            "": "keyboardInputTooltip"  // use "" to select the container
+        },
         model: {
             stickyKeysEnabled: false,
             shiftLatched: false,
@@ -107,13 +110,17 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         invokers: {
             "unlatchShift": {
-                funcName: "gpii.firstDiscovery.keyboardInput.unlatchShift",
-                args: ["{that}"]
+                changePath: "shiftLatched",
+                value: false
             },
             "updateShiftLatchedClass": {
                 "this": "{that}.container",
                 method: "toggleClass",
                 args: ["{that}.options.styles.shiftLatched", "{that}.model.shiftLatched"]
+            },
+            "openTooltipIfNotFocused": {
+                funcName: "gpii.firstDiscovery.keyboardInput.openTooltipIfNotFocused",
+                args: ["{that}", "{that}.container"]
             }
         },
         listeners: {
@@ -128,7 +135,42 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "onCreate.registerChangeListener": {
                 funcName: "gpii.firstDiscovery.keyboardInput.registerChangeListener",
                 args: ["{that}", "{that}.container"]
+            },
+            // begin TOOLTIP HANDLER CONFIGURATION
+            //
+            // We want to control the tooltip opening ourselves so we
+            // remove the existing mouseover and focusin handlers and
+            // add our own instead.  We leave the mouseleave and
+            // focusout handlers alone as the jQuery Tooltip widget
+            // rebinds these each time the tooltip is opened.
+            //
+            // TODO: once FLUID-5506 has been merged in, use a
+            // constraint-based priority rather than fixed numbered
+            "onCreate.removeMouseover": {
+                "this": "{that}.container",
+                method: "off",
+                args: ["mouseover"],
+                priority: 2
+            },
+            "onCreate.removeFocusin": {
+                "this": "{that}.container",
+                method: "off",
+                args: ["focusin"],
+                priority: 2
+            },
+            "onCreate.mouseoverHandler": {
+                "this": "{that}.container",
+                method: "on",
+                args: ["mouseover.openTooltipIfNotFocused", "{that}.openTooltipIfNotFocused"],
+                priority: 1
+            },
+            "onCreate.focusinHandler": {
+                "this": "{that}.container",
+                method: "on",
+                args: ["focusin.closeTooltip", "{that}.tooltip.close"],
+                priority: 1
             }
+            // END TOOLTIP HANDLER CONFIGURATION
         },
         components: {
             keymap: {
@@ -139,10 +181,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     gpii.firstDiscovery.keyboardInput.charFromKeypress = function (e) {
         return e.which ? String.fromCharCode(e.which) : "";
-    };
-
-    gpii.firstDiscovery.keyboardInput.unlatchShift = function (that) {
-        that.applier.change("shiftLatched", false);
     };
 
     gpii.firstDiscovery.keyboardInput.registerShiftListener = function (that, input, keymap) {
@@ -180,6 +218,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         input.change(function () {
             that.applier.change("userInput", input.val());
         });
+    };
+
+    gpii.firstDiscovery.keyboardInput.openTooltipIfNotFocused = function (that, input) {
+        if (!input.is(":focus")) {
+            that.tooltip.open();
+        }
     };
 
 })();
