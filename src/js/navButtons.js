@@ -100,8 +100,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             nextLabel = that.msgResolver.resolve(["start", "next", "finish"][disposition]),
             nextTooltipContent = that.msgResolver.resolve(["startTooltip", "nextTooltip", "finishTooltip"][disposition]);
 
-        backButton.prop("disabled", isFirstPanel || isLastPanel);
-        backButton.toggleClass(showSelector, !isFirstPanel && !isLastPanel);
+        backButton.prop("disabled", isFirstPanel);
+        backButton.toggleClass(showSelector, !isFirstPanel);
         that.locate("backLabel").html(that.msgResolver.resolve("back"));
         that.locate("nextLabel").html(nextLabel);
         nextButton.toggleClass(showSelector, !isLastPanel);
