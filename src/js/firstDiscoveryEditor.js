@@ -79,6 +79,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     },
                     styles: "{firstDiscoveryEditor}.options.styles"
                 }
+            },
+            helpButton: {
+                type: "gpii.firstDiscovery.helpButton",
+                container: "{that}.dom.helpButton",
+                createOnEvent: "onPrefsEditorReady",
+                options: {
+                    messageBase: "{messageLoader}.resources.prefsEditor.resourceText"
+                }
             }
         },
         tooltipOptions: {
@@ -96,7 +104,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             panel: ".gpiic-fd-prefsEditor-panel",
             navButtons: ".gpiic-fd-navButtons",
             navIcons: ".gpiic-fd-navIcons",
-            selfVoicing: ".gpiic-fd-selfVoicing"
+            selfVoicing: ".gpiic-fd-selfVoicing",
+            helpButton: ".gpiic-fd-help"
         },
         styles: {
             active: "gpii-fd-active",
