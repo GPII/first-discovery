@@ -12,6 +12,21 @@ https://github.com/gpii/universal/LICENSE.txt
     "use strict";
 
     fluid.registerNamespace("gpii.tests.utils");
+    fluid.registerNamespace("gpii.tests.firstDiscovery");
+
+    gpii.tests.firstDiscovery.panelNums = {
+        first: 1,
+        second: 2,
+        lang: 1,
+        welcome: 2,
+        textSize: 3,
+        tts: 4,
+        contrast: 5,
+        keyboard: 6,
+        secondLast: 6,
+        congrats: 7,
+        last: 7
+    };
 
     gpii.tests.utils.hasClass = function (elementName, element, selector, expected) {
         var stateMsg = expected ? " has " : " does not have ";
