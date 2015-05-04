@@ -44,9 +44,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             rangeInstructions: ".gpiic-fd-instructions",
             meter: ".gpiic-fd-range-indicator",
             increase: ".gpiic-fd-range-increase",
-            increaseLabel: ".gpiic-fd-range-increaseLabel",
-            decrease: ".gpiic-fd-range-decrease",
-            decreaseLabel: ".gpiic-fd-range-decreaseLabel"
+            decrease: ".gpiic-fd-range-decrease"
         },
         selectorsToIgnore: ["meter", "increase", "decrease"],
         tooltipContentMap: {
@@ -54,9 +52,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "decrease": "decreaseLabel"
         },
         protoTree: {
-            rangeInstructions: {messagekey: "rangeInstructions"},
-            increaseLabel: {messagekey: "increaseLabel"},
-            decreaseLabel: {messagekey: "decreaseLabel"}
+            rangeInstructions: {messagekey: "rangeInstructions"}
         },
         invokers: {
             stepUp: {
