@@ -484,7 +484,7 @@ https://github.com/gpii/universal/LICENSE.txt
 
     gpii.tests.keyboardTester.verifyInitRendering = function (that, instructions) {
         jqUnit.assertEquals("The instructions should be rendered correctly", that.options.messageBase[instructions], that.locate("instructions").text());
-        jqUnit.assertTrue("The hide class on the assistance element should be added", that.locate("assistance").hasClass(that.options.styles.hide));
+        jqUnit.notVisible("The assistance element should be hidden", that.locate("assistance"));
 
         jqUnit.exists("The input should be present", that.locate("input"));
         jqUnit.assertEquals("The placeholder text should be set correctly", that.options.messageBase.placeholder, that.locate("input").attr("placeholder"));
@@ -495,13 +495,13 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertFalse("The offerAssistance model value should be false", that.model.offerAssistance);
         jqUnit.assertEquals("The instructions should be rendered correctly", that.options.messageBase.successInstructions, that.locate("instructions").text());
 
-        jqUnit.notExists("The assistnace should be removed", that.locate("assistance"));
+        jqUnit.notVisible("The assistnace should be hidden", that.locate("assistance"));
         jqUnit.notExists("The input should be removed", that.locate("input"));
     };
 
     gpii.tests.keyboardTester.verifyOfferAssistance = function (that) {
         jqUnit.assertTrue("The offerAssistance model value should be true", that.model.offerAssistance);
-        jqUnit.assertFalse("The hide class on the assistance element should be removed", that.locate("assistance").hasClass(that.options.styles.hide));
+        jqUnit.isVisible("The assistance element should be visible", that.locate("assistance"));
         gpii.tests.keyboard.stickyKeysAdjusterTester.verifyInitialRendering(that.assistance);
     };
 

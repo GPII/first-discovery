@@ -131,9 +131,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             instructions: ".gpiic-fd-keyboard-instructions",
             assistance: ".gpiic-fd-keyboard-assistance"
         },
-        styles: {
-            hide: "gpii-fd-keyboard-assistanceHide"
-        },
+        selectorsToIgnore: ["assistance"],
         events: {
             onOfferAssistance: null,
             onInitInput: null
@@ -210,12 +208,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                             }
                         }
                     },
-                    assistance: {
-                        decorators: {
-                            type: "removeClass",
-                            classes: "{that}.options.styles.hide"
-                        }
-                    },
                     instructions: {markup: {messagekey: "stickyKeysInstructions"}}
                 },
                 falseTree: {
@@ -236,19 +228,24 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                                     }
                                 }
                             },
-                            assistance: {
-                                decorators: {
-                                    type: "addClass",
-                                    classes: "{that}.options.styles.hide"
-                                }
-                            },
                             instructions: {markup: {messagekey: "keyboardInstructions"}}
                         }
                     }
                 }
             }
         },
+        invokers: {
+            toggleAssistance: {
+                "this": "{that}.dom.assistance",
+                "method": "toggle",
+                "args": ["{arguments}.0"]
+            }
+        },
         listeners: {
+            "afterRender.toggleAssistance": {
+                func: "{that}.toggleAssistance",
+                args: ["{that}.model.offerAssistance"]
+            },
             "afterRender.relayEvents": {
                 funcName: "gpii.firstDiscovery.panel.keyboard.relayEvents",
                 args: ["{that}"]
@@ -259,10 +256,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         modelListeners: {
-            offerAssistance: [{
+            offerAssistance: {
                 listener: "{that}.refreshView",
                 excludeSource: "init"
-            }]
+            }
         }
     });
 
@@ -289,7 +286,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     gpii.firstDiscovery.panel.keyboard.offerAssistance = function (that) {
         if (that.model.offerAssistance) {
-            that.locate("assistance").removeClass(that.options.styles.hide);
             that.events.onOfferAssistance.fire();
         } else {
             that.locate("instructions").text(that.msgResolver.resolve("successInstructions"));

@@ -551,9 +551,6 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 .gpii-fd-keyboard-assistance {
     height: 14rem;
 }
-.gpii-fd-keyboard-assistanceHide {
-    visibility: hidden;
-}
 .gpii-fd-keyboard-stickyKeysAdjuster-accomodationInstr {
     display: block;
     text-align: left;
