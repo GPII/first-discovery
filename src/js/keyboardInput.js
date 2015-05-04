@@ -143,28 +143,31 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             // add our own instead.  We leave the mouseleave and
             // focusout handlers alone as the jQuery Tooltip widget
             // rebinds these each time the tooltip is opened.
+            //
+            // TODO: once FLUID-5506 has been merged in, use a
+            // constraint-based priority rather than fixed numbered
             "onCreate.removeMouseover": {
                 "this": "{that}.container",
                 method: "off",
                 args: ["mouseover"],
-                priority: 4
+                priority: 2
             },
             "onCreate.removeFocusin": {
                 "this": "{that}.container",
                 method: "off",
                 args: ["focusin"],
-                priority: 3
-            },
-            "onCreate.mouseoveHandler": {
-                "this": "{that}.container",
-                method: "mouseover",
-                args: ["{that}.openTooltipIfNotFocused"],
                 priority: 2
+            },
+            "onCreate.mouseoverHandler": {
+                "this": "{that}.container",
+                method: "on",
+                args: ["mouseover.openTooltipIfNotFocused", "{that}.openTooltipIfNotFocused"],
+                priority: 1
             },
             "onCreate.focusinHandler": {
                 "this": "{that}.container",
-                method: "focusin",
-                args: ["{that}.tooltip.close"],
+                method: "on",
+                args: ["focusin.closeTooltip", "{that}.tooltip.close"],
                 priority: 1
             }
             // END TOOLTIP HANDLER CONFIGURATION
