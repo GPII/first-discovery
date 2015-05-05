@@ -148,13 +148,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 container: "{that}.container",
                 options: {
                     messageBase: "{keyboard}.options.messageBase",
+                    model: {
+                        tryAccomodation: "{keyboard}.model.tryAccomodation"
+                    },
                     modelRelay: [{
-                        source: "{keyboard}.model.tryAccomodation",
-                        target: "tryAccomodation",
-                        singleTransform: {
-                            type: "fluid.transforms.identity"
-                        }
-                    }, {
                         source: "stickyKeysEnabled",
                         target: "{keyboard}.model.stickyKeys",
                         forward: "liveOnly",
@@ -286,14 +283,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.panel.keyboard.destroy = function (that) {
         if (that) {
             that.destroy();
-        }
-    };
-
-    gpii.firstDiscovery.panel.keyboard.offerAssistance = function (that) {
-        if (that.model.offerAssistance) {
-            that.events.onOfferAssistance.fire();
-        } else {
-            that.locate("instructions").text(that.msgResolver.resolve("successInstructions"));
         }
     };
 
