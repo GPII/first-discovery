@@ -495,7 +495,7 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertFalse("The offerAssistance model value should be false", that.model.offerAssistance);
         jqUnit.assertEquals("The instructions should be rendered correctly", that.options.messageBase.successInstructions, that.locate("instructions").text());
 
-        jqUnit.notVisible("The assistnace should be hidden", that.locate("assistance"));
+        jqUnit.notVisible("The assistance should be hidden", that.locate("assistance"));
         jqUnit.notExists("The input should be removed", that.locate("input"));
     };
 
