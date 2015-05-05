@@ -69,9 +69,19 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             "contrast": {
                 "type": "fluid.prefs.contrast",
+                "classes": {
+                    "default": "fl-theme-prefsEditor-default",
+                    "bw": "fl-theme-prefsEditor-bw fl-theme-bw",
+                    "wb": "fl-theme-prefsEditor-wb fl-theme-wb"
+                },
+                "enactor": {
+                    "type": "fluid.prefs.enactor.contrast",
+                    "classes": "@contrast.classes"
+                },
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.contrast",
                     "container": ".gpiic-fd-prefsEditor-panel-contrast",
+                    "classnameMap": {"theme": "@contrast.classes"},
                     "template": "%prefix/contrast.html",
                     "message": "%prefix/contrast.json"
                 }
@@ -131,4 +141,5 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         }
     });
+
 })(jQuery, fluid);

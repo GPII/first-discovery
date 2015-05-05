@@ -519,11 +519,70 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         gradeNames: ["fluid.prefs.panel", "autoInit"],
         preferenceMap: {
             "fluid.prefs.contrast": {
-                "model.value": "default",
-                "controlValues.lang": "enum"
+                "model.value": "default"
+            }
+        },
+        styles: {
+            defaultThemeLabel: "fl-prefsEditor-contrast-defaultThemeLabel"
+        },
+        selectors: {
+            instructions: ".gpiic-fd-instructions",
+            themeRow: ".flc-prefsEditor-themeRow",
+            themeLabel: ".flc-prefsEditor-theme-label",
+            themeInput: ".flc-prefsEditor-themeInput"
+        },
+        repeatingSelectors: ["themeRow"],
+        listeners: {
+            afterRender: "{that}.style"
+        },
+        stringArrayIndex: {
+            theme: ["contrast-default", "contrast-bw", "contrast-wb"]
+        },
+        controlValues: {
+            theme: ["default", "bw", "wb"]
+        },
+        protoTree: {
+            instructions: {messagekey: "instructions"},
+            expander: {
+                type: "fluid.renderer.selection.inputs",
+                rowID: "themeRow",
+                labelID: "themeLabel",
+                inputID: "themeInput",
+                selectID: "theme-radio",
+                tree: {
+                    optionnames: "${{that}.msgLookup.theme}",
+                    optionlist: "${{that}.options.controlValues.theme}",
+                    selection: "${value}"
+                }
+            }
+        },
+        invokers: {
+            style: {
+                funcName: "gpii.firstDiscovery.panel.contrast.style",
+                args: [
+                    "{that}.dom.themeLabel",
+                    "{that}.options.controlValues.theme",
+                    "default",
+                    "{that}.options.classnameMap.theme",
+                    "{that}.options.styles.defaultThemeLabel",
+                    "{that}"
+                ],
+                dynamic: true
             }
         }
     });
+
+    gpii.firstDiscovery.panel.contrast.style = function (labels, theme, defaultThemeName, style, defaultLabelStyle, that) {
+        fluid.each(labels, function (label, index) {
+            label = $(label);
+
+            var labelTheme = theme[index];
+            if (labelTheme === defaultThemeName) {
+                label.addClass(defaultLabelStyle);
+            }
+            label.addClass(style[labelTheme]);
+        });
+    };
 
     /*
      * Welcome panel
