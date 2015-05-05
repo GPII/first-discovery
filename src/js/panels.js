@@ -139,6 +139,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         model: {
             // offerAssistance: boolean
             // tryAccomodation: boolean
+            input: ""
         },
         components: {
             assistance: {
@@ -174,6 +175,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 type: "gpii.firstDiscovery.keyboard.stickyKeysAssessment",
                 options: {
                     requiredInput: "@",
+                    model: {
+                        input: "{keyboard}.model.input"
+                    },
                     modelRelay: {
                         source: "offerAssistance",
                         target: "{keyboard}.model.offerAssistance",
@@ -190,7 +194,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 container: "{that}.dom.input",
                 options: {
                     model: {
-                        userInput: "{stickyKeysAssessor}.model.input"
+                        userInput: "{keyboard}.model.input"
                     },
                     messageBase: "{keyboard}.options.messageBase"
                 }
@@ -202,6 +206,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 condition: "{that}.model.offerAssistance",
                 trueTree: {
                     input: {
+                        value: "${input}",
                         decorators: {
                             attrs: {
                                 placeholder: "{that}.msgLookup.placeholder"
