@@ -122,8 +122,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.defaults("gpii.firstDiscovery.panel.keyboard", {
         gradeNames: ["fluid.prefs.panel", "autoInit"],
         preferenceMap: {
-            "gpii.firstDiscovery.stickyKeys": {
-                "model.stickyKeys": "default"
+            "gpii.firstDiscovery.stickyKeysEnabled": {
+                "model.stickyKeysEnabled": "default"
             }
         },
         selectors: {
@@ -139,7 +139,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         model: {
             // offerAssistance: boolean
             // tryAccomodation: boolean
-            input: ""
+            userInput: ""
         },
         components: {
             assistance: {
@@ -150,7 +150,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     messageBase: "{keyboard}.options.messageBase",
                     model: {
                         tryAccomodation: "{keyboard}.model.tryAccomodation",
-                        stickyKeysEnabled: "{keyboard}.model.stickyKeys"
+                        stickyKeysEnabled: "{keyboard}.model.stickyKeysEnabled"
                     }
                 }
             },
@@ -159,7 +159,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 options: {
                     requiredInput: "@",
                     model: {
-                        input: "{keyboard}.model.input"
+                        userInput: "{keyboard}.model.userInput"
                     },
                     modelRelay: {
                         source: "offerAssistance",
@@ -177,10 +177,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 container: "{that}.dom.input",
                 options: {
                     model: {
-                        userInput: "{keyboard}.model.input"
+                        userInput: "{keyboard}.model.userInput"
                     },
                     modelRelay: [{
-                        source: "{keyboard}.model.stickyKeys",
+                        source: "{keyboard}.model.stickyKeysEnabled",
                         target: "stickyKeysEnabled",
                         backward: "liveOnly",
                         singleTransform: {
@@ -197,7 +197,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 condition: "{that}.model.offerAssistance",
                 trueTree: {
                     input: {
-                        value: "${input}",
+                        value: "${userInput}",
                         decorators: {
                             attrs: {
                                 placeholder: "{that}.msgLookup.placeholder"
