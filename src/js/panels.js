@@ -193,6 +193,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 createOnEvent: "onInitInput",
                 container: "{that}.dom.input",
                 options: {
+                    gradeNames: ["gpii.firstDiscovery.keyboardInputTts"],
                     model: {
                         userInput: "{keyboard}.model.input"
                     },

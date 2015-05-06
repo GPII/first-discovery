@@ -113,6 +113,10 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals(msg, expected, keyboardInput.container.hasClass(className));
     };
 
+    gpii.tests.firstDiscovery.keyboardInput.checkKeypress = function (expected, actual) {
+        jqUnit.assertEquals("keypress character should be \"" + expected + "\"", expected, actual);
+    };
+
     gpii.tests.firstDiscovery.keyboardInput.setUpTooltipTest = function (keyboardInput) {
         // Set the focus and tooltip state to a known starting point
         $("#gpiic-tests-other-input").focus();
@@ -213,7 +217,7 @@ https://github.com/gpii/universal/LICENSE.txt
             tests: [
                 {
                     name: "Check user input when sticky keys is off",
-                    expect: 6,
+                    expect: 8,
                     sequence: [
                         {
                             func: "jqUnit.assertFalse",
@@ -227,6 +231,11 @@ https://github.com/gpii/universal/LICENSE.txt
                         {
                             func: "gpii.tests.firstDiscovery.triggerKeypress",
                             args: ["{keyboardInput}.container", "a"]
+                        },
+                        {
+                            event: "{keyboardInput}.events.keypress",
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
+                            args: ["a", "{arguments}.0"]
                         },
                         {
                             listener: "jqUnit.assertEquals",
@@ -254,6 +263,11 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["{keyboardInput}.container", "b"]
                         },
                         {
+                            event: "{keyboardInput}.events.keypress",
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
+                            args: ["b", "{arguments}.0"]
+                        },
+                        {
                             listener: "jqUnit.assertEquals",
                             args: ["Pressed \"b\", userInput should be \"b\" (not shifted)",
                                    "b", "{keyboardInput}.model.userInput"],
@@ -264,7 +278,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 },
                 {
                     name: "Check user input when sticky keys is on",
-                    expect: 8,
+                    expect: 11,
                     sequence: [
                         {
                             func: "{keyboardInput}.applier.change",
@@ -284,6 +298,11 @@ https://github.com/gpii/universal/LICENSE.txt
                         {
                             func: "gpii.tests.firstDiscovery.triggerKeypress",
                             args: ["{keyboardInput}.container", "a"]
+                        },
+                        {
+                            event: "{keyboardInput}.events.keypress",
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
+                            args: ["a", "{arguments}.0"]
                         },
                         {
                             listener: "jqUnit.assertEquals",
@@ -313,6 +332,11 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["{keyboardInput}.container", "b"]
                         },
                         {
+                            event: "{keyboardInput}.events.keypress",
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
+                            args: ["B", "{arguments}.0"]
+                        },
+                        {
                             listener: "jqUnit.assertEquals",
                             args: ["Pressed \"b\", userInput should be \"B\" (shifted)",
                                    "B", "{keyboardInput}.model.userInput"],
@@ -326,6 +350,11 @@ https://github.com/gpii/universal/LICENSE.txt
                         {
                             func: "gpii.tests.firstDiscovery.triggerKeypress",
                             args: ["{keyboardInput}.container", "c"]
+                        },
+                        {
+                            event: "{keyboardInput}.events.keypress",
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
+                            args: ["c", "{arguments}.0"]
                         },
                         {
                             listener: "jqUnit.assertEquals",

@@ -13,8 +13,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     "use strict";
 
-    fluid.registerNamespace("gpii.firstDiscovery");
-
     fluid.defaults("gpii.firstDiscovery.usKeymap", {
         gradeNames: ["fluid.littleComponent", "autoInit"],
         invokers: {
@@ -103,7 +101,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "shiftLatched.updateShiftLatchedClass": "{that}.updateShiftLatchedClass"
         },
         events: {
-            shiftKeydown: null
+            shiftKeydown: null,
+            keypress: null
         },
         styles: {
             shiftLatched: "gpii-keyboardInput-shiftLatched"
@@ -135,6 +134,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "onCreate.registerChangeListener": {
                 funcName: "gpii.firstDiscovery.keyboardInput.registerChangeListener",
                 args: ["{that}", "{that}.container"]
+            },
+            "keypress.setInputValueAndTriggerChange": {
+                funcName: "gpii.firstDiscovery.keyboardInput.setElementValueAndTriggerChange",
+                args: ["{that}.container", "{arguments}.0"],
+                priority: "last"
             },
             // begin TOOLTIP HANDLER CONFIGURATION
             //
@@ -198,6 +202,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.keyboardInput.registerKeypressListener = function (that, input, keymap) {
         input.keypress(function (e) {
             e.preventDefault();
+            e.stopPropagation();
             var ch = gpii.firstDiscovery.keyboardInput.charFromKeypress(e);
             if (that.model.stickyKeysEnabled && that.model.shiftLatched) {
                 that.unlatchShift();
@@ -206,12 +211,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 }
             }
             if (ch !== "") {
-                input.val(ch);
-                // programmatic change of the input value does not
-                // fire a change event, so we trigger it explicitly
-                input.triggerHandler("change");
+                that.events.keypress.fire(ch);
             }
         });
+    };
+
+    gpii.firstDiscovery.keyboardInput.setElementValueAndTriggerChange = function (elem, value) {
+        elem.val(value);
+        // programmatic change of the value does not fire a change
+        // event, so we trigger it explicitly
+        elem.triggerHandler("change");
     };
 
     gpii.firstDiscovery.keyboardInput.registerChangeListener = function (that, input) {
@@ -225,5 +234,21 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             that.tooltip.open();
         }
     };
+
+    fluid.defaults("gpii.firstDiscovery.keyboardInputTts", {
+        gradeNames: ["fluid.modelRelayComponent", "autoInit"],
+        invokers: {
+            speak: {
+                func: "{fluid.textToSpeech}.queueSpeech"
+            }
+        },
+        listeners: {
+            "keypress.speak": {
+                listener: "{that}.speak",
+                args: ["{arguments}.0"],
+                priority: "first"
+            }
+        }
+    });
 
 })();
