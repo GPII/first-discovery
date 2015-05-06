@@ -47,10 +47,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 listener: "gpii.firstDiscovery.keyboard.stickyKeysAdjuster.tryAccomodationToggle",
                 args: ["{that}", "{change}.value"]
             },
-            stickyKeysEnabled: {
+            stickyKeysEnabled: [{
                 listener: "gpii.firstDiscovery.keyboard.stickyKeysAdjuster.displayState",
-                args: ["{that}"]
-            }
+                args: ["{that}", "{change}.value"]
+            }, {
+                listener: "gpii.firstDiscovery.keyboard.stickyKeysAdjuster.updateTooltipText",
+                args: ["{that}", "{tooltip}", "{change}.value"]
+            }]
         },
         listeners: {
             "onCreate.setText": {
@@ -95,16 +98,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         that.locate("accomodation").toggle(state);
     };
 
-    gpii.firstDiscovery.keyboard.stickyKeysAdjuster.displayState = function (that) {
-        var state = that.model.stickyKeysEnabled;
+    gpii.firstDiscovery.keyboard.stickyKeysAdjuster.displayState = function (that, state) {
         var stateText = that.msgResolver.resolve(state ? "on" : "off");
         var buttonText = that.msgResolver.resolve(state ? "turnOff" : "turnOn");
-        var tooltipText = that.msgResolver.resolve(state ? "turnOffTooltip" : "turnOnTooltip");
         that.locate("accomodationState").text(stateText);
         that.locate("accomodationToggle").text(buttonText);
-        if (that.tooltip) {
-            that.tooltip.applier.change("idToContent." + fluid.allocateSimpleId(that.locate("accomodationToggle")), tooltipText);
-        }
+    };
+
+    gpii.firstDiscovery.keyboard.stickyKeysAdjuster.updateTooltipText = function (that, tooltip, state) {
+        var tooltipText = that.msgResolver.resolve(state ? "turnOffTooltip" : "turnOnTooltip");
+        tooltip.applier.change("idToContent." + fluid.allocateSimpleId(that.locate("accomodationToggle")), tooltipText);
     };
 
     gpii.firstDiscovery.keyboard.stickyKeysAdjuster.toggleState = function (that, path) {

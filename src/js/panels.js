@@ -154,14 +154,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     modelRelay: [{
                         source: "stickyKeysEnabled",
                         target: "{keyboard}.model.stickyKeys",
-                        forward: "liveOnly",
+                        forward: "initOnly",
                         singleTransform: {
                             type: "fluid.transforms.identity"
                         }
                     }, {
                         source: "stickyKeysEnabled",
                         target: "{keyboardInput}.model.stickyKeysEnabled",
-                        backward: "liveOnly",
                         singleTransform: {
                             type: "fluid.transforms.identity"
                         }
