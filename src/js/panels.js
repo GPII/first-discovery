@@ -572,7 +572,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    gpii.firstDiscovery.panel.contrast.style = function (labels, theme, defaultThemeName, style, defaultLabelStyle, that) {
+    gpii.firstDiscovery.panel.contrast.style = function (labels, theme, defaultThemeName, style, defaultLabelStyle) {
         fluid.each(labels, function (label, index) {
             label = $(label);
 
