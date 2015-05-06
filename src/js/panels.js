@@ -122,8 +122,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.defaults("gpii.firstDiscovery.panel.keyboard", {
         gradeNames: ["fluid.prefs.panel", "autoInit"],
         preferenceMap: {
-            "gpii.firstDiscovery.stickyKeys": {
-                "model.stickyKeys": "default"
+            "gpii.firstDiscovery.stickyKeysEnabled": {
+                "model.stickyKeysEnabled": "default"
             }
         },
         selectors: {
@@ -138,8 +138,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         model: {
             // offerAssistance: boolean
-            // tryAccomodation: boolean
-            input: ""
+            // tryAccommodation: boolean
+            userInput: ""
         },
         components: {
             assistance: {
@@ -148,27 +148,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 container: "{that}.container",
                 options: {
                     messageBase: "{keyboard}.options.messageBase",
-                    modelRelay: [{
-                        source: "{keyboard}.model.tryAccomodation",
-                        target: "tryAccomodation",
-                        singleTransform: {
-                            type: "fluid.transforms.identity"
-                        }
-                    }, {
-                        source: "stickyKeysEnabled",
-                        target: "{keyboard}.model.stickyKeys",
-                        forward: "liveOnly",
-                        singleTransform: {
-                            type: "fluid.transforms.identity"
-                        }
-                    }, {
-                        source: "stickyKeysEnabled",
-                        target: "{keyboardInput}.model.stickyKeysEnabled",
-                        backward: "liveOnly",
-                        singleTransform: {
-                            type: "fluid.transforms.identity"
-                        }
-                    }]
+                    model: {
+                        tryAccommodation: "{keyboard}.model.tryAccommodation",
+                        stickyKeysEnabled: "{keyboard}.model.stickyKeysEnabled"
+                    }
                 }
             },
             stickyKeysAssessor: {
@@ -176,7 +159,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 options: {
                     requiredInput: "@",
                     model: {
-                        input: "{keyboard}.model.input"
+                        userInput: "{keyboard}.model.userInput"
                     },
                     modelRelay: {
                         source: "offerAssistance",
@@ -195,7 +178,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 options: {
                     gradeNames: ["gpii.firstDiscovery.keyboardInputTts"],
                     model: {
-                        userInput: "{keyboard}.model.input"
+                        userInput: "{keyboard}.model.userInput",
+                        stickyKeysEnabled: "{keyboard}.model.stickyKeysEnabled"
                     },
                     messageBase: "{keyboard}.options.messageBase"
                 }
@@ -207,7 +191,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 condition: "{that}.model.offerAssistance",
                 trueTree: {
                     input: {
-                        value: "${input}",
+                        value: "${userInput}",
                         decorators: {
                             attrs: {
                                 placeholder: "{that}.msgLookup.placeholder"
@@ -255,17 +239,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "afterRender.relayEvents": {
                 funcName: "gpii.firstDiscovery.panel.keyboard.relayEvents",
                 args: ["{that}"]
-            },
-            "onOfferAssistance.destroyAssessor": {
-                funcName: "gpii.firstDiscovery.panel.keyboard.destroy",
-                args: ["{stickyKeysAssessor}"]
             }
         },
         modelListeners: {
-            offerAssistance: {
+            offerAssistance: [{
                 listener: "{that}.refreshView",
                 excludeSource: "init"
-            }
+            }, {
+                listener: "gpii.firstDiscovery.panel.keyboard.destroy",
+                args: ["{stickyKeysAssessor}"]
+            }]
         }
     });
 
@@ -287,14 +270,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.panel.keyboard.destroy = function (that) {
         if (that) {
             that.destroy();
-        }
-    };
-
-    gpii.firstDiscovery.panel.keyboard.offerAssistance = function (that) {
-        if (that.model.offerAssistance) {
-            that.events.onOfferAssistance.fire();
-        } else {
-            that.locate("instructions").text(that.msgResolver.resolve("successInstructions"));
         }
     };
 

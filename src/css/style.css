@@ -548,13 +548,13 @@ input[type="text"].gpii-fd-keyboard-input:focus {
                 0 0 0 0.6rem rgb(0, 0, 0);
     outline: none;
 }
-.gpii-fd-keyboard-stickyKeysAdjuster-accomodationInstr {
+.gpii-fd-keyboard-stickyKeysAdjuster-accommodationInstr {
     display: block;
     text-align: left;
     padding: 0 2rem 1rem 2rem;
 }
 .gpii-fd-keyboard-try,
-.gpii-fd-keyboard-accomodationToggle {
+.gpii-fd-keyboard-accommodationToggle {
     border-radius: 0.5rem;
     background-color: #425165; /* blue-grey */
     color: #ffffff;
@@ -563,17 +563,17 @@ input[type="text"].gpii-fd-keyboard-input:focus {
     height: 4.2rem;
 }
 .gpii-fd-keyboard-try,
-.gpii-fd-keyboard-accomodationToggle {
+.gpii-fd-keyboard-accommodationToggle {
     margin: 0 1rem 1rem 0;
 }
 .gpii-fd-keyboard-try:hover,
-.gpii-fd-keyboard-accomodationToggle:hover {
+.gpii-fd-keyboard-accommodationToggle:hover {
     background-color: #425165; /* blue-grey, to override foundation's blue */
     box-shadow: 0 0 0 0.1rem rgb(255,255,255), /* white */
                 0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
 }
 .gpii-fd-keyboard-try:focus,
-.gpii-fd-keyboard-accomodationToggle:focus {
+.gpii-fd-keyboard-accommodationToggle:focus {
     background-color: #425165; /* blue-grey */
     box-shadow: 0 0 0 0.4rem rgb(244, 215, 75), /* Yellow */
                 0 0 0 0.6rem rgb(0, 0, 0);

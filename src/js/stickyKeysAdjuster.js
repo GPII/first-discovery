@@ -20,22 +20,22 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         selectors: {
             description: ".gpiic-fd-keyboard-stickyKeysAdjuster-desc",
             tryButton: ".gpiic-fd-keyboard-stickyKeysAdjuster-try",
-            accomodation: ".gpiic-fd-keyboard-stickyKeysAdjuster-accomodation",
-            accomodationInstr: ".gpiic-fd-keyboard-stickyKeysAdjuster-accomodationInstr",
-            accomodationName: ".gpiic-fd-keyboard-stickyKeysAdjuster-accomodationName",
-            accomodationState: ".gpiic-fd-keyboard-stickyKeysAdjuster-accomodationState",
-            accomodationToggle: ".gpiic-fd-keyboard-stickyKeysAdjuster-accomodationToggle"
+            accommodation: ".gpiic-fd-keyboard-stickyKeysAdjuster-accommodation",
+            accommodationInstr: ".gpiic-fd-keyboard-stickyKeysAdjuster-accommodationInstr",
+            accommodationName: ".gpiic-fd-keyboard-stickyKeysAdjuster-accommodationName",
+            accommodationState: ".gpiic-fd-keyboard-stickyKeysAdjuster-accommodationState",
+            accommodationToggle: ".gpiic-fd-keyboard-stickyKeysAdjuster-accommodationToggle"
         },
         tooltipContentMap: {
             tryButton: "tryTooltip",
-            accomodationToggle: "turnOnTooltip"
+            accommodationToggle: "turnOnTooltip"
         },
         model: {
-            tryAccomodation: false
+            tryAccommodation: false
             // stickyKeysEnabled: boolean
         },
         modelRelay: {
-            source: "tryAccomodation",
+            source: "tryAccommodation",
             target: "stickyKeysEnabled",
             backward: "never",
             singleTransform: {
@@ -43,14 +43,17 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         modelListeners: {
-            tryAccomodation: {
-                listener: "gpii.firstDiscovery.keyboard.stickyKeysAdjuster.tryAccomodationToggle",
+            tryAccommodation: {
+                listener: "gpii.firstDiscovery.keyboard.stickyKeysAdjuster.tryAccommodationToggle",
                 args: ["{that}", "{change}.value"]
             },
-            stickyKeysEnabled: {
+            stickyKeysEnabled: [{
                 listener: "gpii.firstDiscovery.keyboard.stickyKeysAdjuster.displayState",
-                args: ["{that}"]
-            }
+                args: ["{that}", "{change}.value"]
+            }, {
+                listener: "gpii.firstDiscovery.keyboard.stickyKeysAdjuster.updateTooltipText",
+                args: ["{that}", "{tooltip}", "{change}.value"]
+            }]
         },
         listeners: {
             "onCreate.setText": {
@@ -63,7 +66,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "args": ["{that}.toggleTry"]
             },
             "onCreate.bindToggle": {
-                "this": "{that}.dom.accomodationToggle",
+                "this": "{that}.dom.accommodationToggle",
                 "method": "click",
                 "args": ["{that}.toggleStickyKeys"]
             }
@@ -75,7 +78,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             toggleTry: {
                 funcName: "gpii.firstDiscovery.keyboard.stickyKeysAdjuster.toggleState",
-                args: ["{that}", "tryAccomodation"]
+                args: ["{that}", "tryAccommodation"]
             }
         }
     });
@@ -83,28 +86,27 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.keyboard.stickyKeysAdjuster.renderText = function (that) {
         var resolveFn = that.msgResolver.resolve;
 
-        that.locate("accomodationInstr").text(resolveFn("stickyKeysAccomInstr"));
+        that.locate("accommodationInstr").text(resolveFn("stickyKeysAccomInstr"));
         that.locate("description").html(resolveFn("stickyKeysInstructions"));
         that.locate("tryButton").text(resolveFn("try"));
-        that.locate("accomodationName").text(resolveFn("stickyKeys"));
-        gpii.firstDiscovery.keyboard.stickyKeysAdjuster.displayState(that);
+        that.locate("accommodationName").text(resolveFn("stickyKeys"));
     };
 
-    gpii.firstDiscovery.keyboard.stickyKeysAdjuster.tryAccomodationToggle = function (that, state) {
+    gpii.firstDiscovery.keyboard.stickyKeysAdjuster.tryAccommodationToggle = function (that, state) {
         that.locate("tryButton").toggle(!state);
-        that.locate("accomodation").toggle(state);
+        that.locate("accommodation").toggle(state);
     };
 
-    gpii.firstDiscovery.keyboard.stickyKeysAdjuster.displayState = function (that) {
-        var state = that.model.stickyKeysEnabled;
+    gpii.firstDiscovery.keyboard.stickyKeysAdjuster.displayState = function (that, state) {
         var stateText = that.msgResolver.resolve(state ? "on" : "off");
         var buttonText = that.msgResolver.resolve(state ? "turnOff" : "turnOn");
+        that.locate("accommodationState").text(stateText);
+        that.locate("accommodationToggle").text(buttonText);
+    };
+
+    gpii.firstDiscovery.keyboard.stickyKeysAdjuster.updateTooltipText = function (that, tooltip, state) {
         var tooltipText = that.msgResolver.resolve(state ? "turnOffTooltip" : "turnOnTooltip");
-        that.locate("accomodationState").text(stateText);
-        that.locate("accomodationToggle").text(buttonText);
-        if (that.tooltip) {
-            that.tooltip.applier.change("idToContent." + fluid.allocateSimpleId(that.locate("accomodationToggle")), tooltipText);
-        }
+        tooltip.applier.change("idToContent." + fluid.allocateSimpleId(that.locate("accommodationToggle")), tooltipText);
     };
 
     gpii.firstDiscovery.keyboard.stickyKeysAdjuster.toggleState = function (that, path) {
