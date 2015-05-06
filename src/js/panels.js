@@ -149,22 +149,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 options: {
                     messageBase: "{keyboard}.options.messageBase",
                     model: {
-                        tryAccomodation: "{keyboard}.model.tryAccomodation"
-                    },
-                    modelRelay: [{
-                        source: "stickyKeysEnabled",
-                        target: "{keyboard}.model.stickyKeys",
-                        forward: "initOnly",
-                        singleTransform: {
-                            type: "fluid.transforms.identity"
-                        }
-                    }, {
-                        source: "stickyKeysEnabled",
-                        target: "{keyboardInput}.model.stickyKeysEnabled",
-                        singleTransform: {
-                            type: "fluid.transforms.identity"
-                        }
-                    }]
+                        tryAccomodation: "{keyboard}.model.tryAccomodation",
+                        stickyKeysEnabled: "{keyboard}.model.stickyKeys"
+                    }
                 }
             },
             stickyKeysAssessor: {
@@ -192,6 +179,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     model: {
                         userInput: "{keyboard}.model.input"
                     },
+                    modelRelay: [{
+                        source: "{keyboard}.model.stickyKeys",
+                        target: "stickyKeysEnabled",
+                        backward: "liveOnly",
+                        singleTransform: {
+                            type: "fluid.transforms.identity"
+                        }
+                    }],
                     messageBase: "{keyboard}.options.messageBase"
                 }
             }

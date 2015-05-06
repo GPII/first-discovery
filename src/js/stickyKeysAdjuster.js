@@ -90,7 +90,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         that.locate("description").html(resolveFn("stickyKeysInstructions"));
         that.locate("tryButton").text(resolveFn("try"));
         that.locate("accomodationName").text(resolveFn("stickyKeys"));
-        gpii.firstDiscovery.keyboard.stickyKeysAdjuster.displayState(that);
     };
 
     gpii.firstDiscovery.keyboard.stickyKeysAdjuster.tryAccomodationToggle = function (that, state) {
