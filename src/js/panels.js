@@ -138,7 +138,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         model: {
             // offerAssistance: boolean
-            // tryAccomodation: boolean
+            // tryAccommodation: boolean
             userInput: ""
         },
         components: {
@@ -149,7 +149,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 options: {
                     messageBase: "{keyboard}.options.messageBase",
                     model: {
-                        tryAccomodation: "{keyboard}.model.tryAccomodation",
+                        tryAccommodation: "{keyboard}.model.tryAccommodation",
                         stickyKeysEnabled: "{keyboard}.model.stickyKeysEnabled"
                     }
                 }
