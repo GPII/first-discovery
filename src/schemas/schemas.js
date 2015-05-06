@@ -23,13 +23,17 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.defaults("gpii.firstDiscovery.auxSchema", {
         gradeNames: ["fluid.prefs.auxSchema", "autoInit"],
         auxiliarySchema: {
+            "loaderGrades": ["gpii.firstDiscovery.firstDiscoveryEditor"],
             "namespace": "gpii.firstDiscovery",
             "templatePrefix": "../src/html/",
             "template": "../src/html/firstDiscovery.html",
             "messagePrefix": "../src/messages/",
             "message": "%prefix/firstDiscovery.json",
             "lang": {
-                "type": "gpii.firstDiscovery.language",
+                "type": "locale",
+                "enactor": {
+                    "type": "gpii.firstDiscovery.enactor.lang"
+                },
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.lang",
                     "container": ".gpiic-fd-prefsEditor-panel-lang",
@@ -108,7 +112,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.defaults("gpii.firstDiscovery.schemas.language", {
         gradeNames: ["autoInit", "fluid.prefs.schemas"],
         schema: {
-            "gpii.firstDiscovery.language": {
+            "locale": {
                 "type": "string",
                 "default": "en",
                 "enum": ["en", "fr", "es", "de", "ne", "sv"],

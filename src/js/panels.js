@@ -148,6 +148,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         modelRelay: {
             source: "{that}.model",
             target: "{that}.model.speak",
+            // Setup the backward restriction to prevent the component instantiation writes back to
+            // the central model that ends up wiping out the saved prefs at the page reload.
+            backward: "liveOnly",
             singleTransform: {
                 type: "fluid.transforms.valueMapper",
                 inputPath: "speakChoice",
@@ -195,7 +198,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.defaults("gpii.firstDiscovery.panel.lang", {
         gradeNames: ["fluid.prefs.panel", "{that}.options.prefsEditorConnection", "autoInit"],
         preferenceMap: {
-            "gpii.firstDiscovery.language": {
+            "locale": {
                 "model.lang": "default",
                 "controlValues.lang": "enum",
                 "stringArrayIndex.lang": "label",
