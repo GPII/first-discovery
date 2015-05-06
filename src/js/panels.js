@@ -177,16 +177,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 container: "{that}.dom.input",
                 options: {
                     model: {
-                        userInput: "{keyboard}.model.userInput"
+                        userInput: "{keyboard}.model.userInput",
+                        stickyKeysEnabled: "{keyboard}.model.stickyKeysEnabled"
                     },
-                    modelRelay: [{
-                        source: "{keyboard}.model.stickyKeysEnabled",
-                        target: "stickyKeysEnabled",
-                        backward: "liveOnly",
-                        singleTransform: {
-                            type: "fluid.transforms.identity"
-                        }
-                    }],
                     messageBase: "{keyboard}.options.messageBase"
                 }
             }
