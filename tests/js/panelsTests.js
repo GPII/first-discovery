@@ -445,17 +445,17 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "Tests the keyboard panel",
             tests: [{
-                expect: 4,
+                expect: 7,
                 name: "Initialization",
                 sequence: [{
                     func: "{keyboard}.refreshView"
                 }, {
-                    listener: "gpii.tests.keyboardTester.verifyInitRendering",
+                    listener: "gpii.tests.keyboardTester.verifyInit",
                     args: ["{keyboard}", "keyboardInstructions"],
                     event: "{keyboard}.events.afterRender"
                 }]
             }, {
-                expect: 4,
+                expect: 7,
                 name: "Don't Offer Assistance",
                 sequence: [{
                     func: "{keyboard}.applier.change",
@@ -467,7 +467,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     changeEvent: "{keyboard}.applier.modelChanged"
                 }]
             }, {
-                expect: 7,
+                expect: 10,
                 name: "Offer Assistance",
                 sequence: [{
                     func: "{keyboard}.applier.change",
@@ -482,13 +482,16 @@ https://github.com/gpii/universal/LICENSE.txt
         }]
     });
 
-    gpii.tests.keyboardTester.verifyInitRendering = function (that, instructions) {
+    gpii.tests.keyboardTester.verifyInit = function (that, instructions) {
         jqUnit.assertEquals("The instructions should be rendered correctly", that.options.messageBase[instructions], that.locate("instructions").text());
         jqUnit.notVisible("The assistance element should be hidden", that.locate("assistance"));
 
         jqUnit.exists("The input should be present", that.locate("input"));
         jqUnit.assertEquals("The placeholder text should be set correctly", that.options.messageBase.placeholder, that.locate("input").attr("placeholder"));
 
+        jqUnit.assertUndefined("The assistance subcomponent should not have been created yet", that.assistance);
+        jqUnit.assertValue("The stickyKeysAssessor subcomponent should have been created", that.stickyKeysAssessor);
+        jqUnit.assertValue("The keyboardInput subcomponent should have been created", that.keyboardInput);
     };
 
     gpii.tests.keyboardTester.verifyNoAssistance = function (that) {
@@ -497,12 +500,20 @@ https://github.com/gpii/universal/LICENSE.txt
 
         jqUnit.notVisible("The assistance should be hidden", that.locate("assistance"));
         jqUnit.notExists("The input should be removed", that.locate("input"));
+
+        jqUnit.assertUndefined("The assistance subcomponent should not have been created yet", that.assistance);
+        jqUnit.assertUndefined("The stickyKeysAssessor subcomponent should have been destroyed", that.stickyKeysAssessor);
+        jqUnit.assertValue("The keyboardInput subcomponent should have been created", that.keyboardInput);
     };
 
     gpii.tests.keyboardTester.verifyOfferAssistance = function (that) {
         jqUnit.assertTrue("The offerAssistance model value should be true", that.model.offerAssistance);
         jqUnit.isVisible("The assistance element should be visible", that.locate("assistance"));
         gpii.tests.keyboard.stickyKeysAdjusterTester.verifyInitialRendering(that.assistance);
+
+        jqUnit.assertValue("The assistance subcomponent should have been created yet", that.assistance);
+        jqUnit.assertUndefined("The stickyKeysAssessor subcomponent should have been destroyed", that.stickyKeysAssessor);
+        jqUnit.assertValue("The keyboardInput subcomponent should have been created", that.keyboardInput);
     };
 
     /***********************

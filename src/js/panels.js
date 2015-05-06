@@ -245,17 +245,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "afterRender.relayEvents": {
                 funcName: "gpii.firstDiscovery.panel.keyboard.relayEvents",
                 args: ["{that}"]
-            },
-            "onOfferAssistance.destroyAssessor": {
-                funcName: "gpii.firstDiscovery.panel.keyboard.destroy",
-                args: ["{stickyKeysAssessor}"]
             }
         },
         modelListeners: {
-            offerAssistance: {
+            offerAssistance: [{
                 listener: "{that}.refreshView",
                 excludeSource: "init"
-            }
+            }, {
+                listener: "gpii.firstDiscovery.panel.keyboard.destroy",
+                args: ["{stickyKeysAssessor}"]
+            }]
         }
     });
 
