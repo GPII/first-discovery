@@ -12,6 +12,19 @@ https://github.com/gpii/universal/LICENSE.txt
     "use strict";
 
     fluid.registerNamespace("gpii.tests");
+    fluid.registerNamespace("gpii.tests.prefs.panel.utils");
+
+    gpii.tests.prefs.panel.utils.triggerRadioButton = function (radioButtons, idx) {
+        radioButtons.eq(idx).click();
+    };
+
+    gpii.tests.prefs.panel.utils.verifyRadioButtonRendering = function (inputs, inputLabels, labelText, selection) {
+        fluid.each(inputLabels, function (elm, idx) {
+            elm = $(elm);
+            jqUnit.assertEquals("Choice #" + idx + " should have the correct label.", labelText[idx], elm.text());
+        });
+        jqUnit.assertEquals("The correct choice should be checked", selection, inputs.filter(":checked").val());
+    };
 
     /************************
      * Language Panel Tests *
@@ -318,7 +331,6 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("The decrease button should have the correct enabled/disabled state", decreaseDisabled, that.locate("decrease").prop("disabled"));
     };
 
-
     /**************************
      * Speak Text Panel Tests *
      **************************/
@@ -362,7 +374,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     listener: "gpii.tests.speakTextTester.verifyRendering",
                     event: "{speakText}.events.afterRender"
                 }, {
-                    func: "gpii.tests.speakTextTester.triggerRadioButton",
+                    func: "gpii.tests.prefs.panel.utils.triggerRadioButton",
                     args: ["{speakText}.dom.choiceInput", 1]
                 }, {
                     listener: "gpii.tests.speakTextTester.verifyModel",
@@ -370,7 +382,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     spec: {path: "speak", priority: "last"},
                     changeEvent: "{speakText}.applier.modelChanged"
                 }, {
-                    func: "gpii.tests.speakTextTester.triggerRadioButton",
+                    func: "gpii.tests.prefs.panel.utils.triggerRadioButton",
                     args: ["{speakText}.dom.choiceInput", 0]
                 }, {
                     listener: "gpii.tests.speakTextTester.verifyModel",
@@ -382,21 +394,106 @@ https://github.com/gpii/universal/LICENSE.txt
         }]
     });
 
-    gpii.tests.speakTextTester.triggerRadioButton = function (radioButtons, idx) {
-        radioButtons.eq(idx).click();
-    };
-
     gpii.tests.speakTextTester.verifyRendering = function (that) {
         jqUnit.assertEquals("The instructions should have been set correctly.", that.options.messageBase.speakTextInstructions, that.locate("instructions").text());
-        fluid.each(that.locate("choiceLabel"), function (elm, idx) {
-            elm = $(elm);
-            jqUnit.assertEquals("Choice #" + idx + " should have the correct label.", that.options.choiceLabels[idx], elm.text());
-        });
-        jqUnit.assertEquals("The correct choice should be checked", that.model.speakChoice, that.locate("choiceInput").filter(":checked").val());
+        gpii.tests.prefs.panel.utils.verifyRadioButtonRendering(that.locate("choiceInput"), that.locate("choiceLabel"), that.options.choiceLabels, that.model.speakChoice);
     };
 
     gpii.tests.speakTextTester.verifyModel = function (that, expectedValue) {
         jqUnit.assertEquals("The model value should have been set correctly", expectedValue, that.model.speak);
+    };
+
+    /************************
+     * Contrast Panel Tests *
+     ************************/
+
+    fluid.defaults("gpii.tests.prefs.panel.contrast", {
+        gradeNames: ["gpii.firstDiscovery.panel.contrast", "autoInit"],
+        classnameMap: {
+            theme: {
+                "default": "fl-theme-prefsEditor-default",
+                "bw": "fl-theme-prefsEditor-bw fl-theme-bw",
+                "wb": "fl-theme-prefsEditor-wb fl-theme-wb"
+            }
+        },
+        model: {
+            value: "default"
+        },
+        messageBase: {
+            "instructions": "You can choose a screen colour to make things easier to see.",
+            "contrastLabel": "Contrast",
+            "contrast-default": "no change",
+            "contrast-bw": "black on white",
+            "contrast-wb": "white on black"
+        },
+        themeLabels: ["no change", "black on white", "white on black"]
+    });
+
+    fluid.defaults("gpii.tests.contrastPanel", {
+        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        components: {
+            contrast: {
+                type: "gpii.tests.prefs.panel.contrast",
+                container: ".gpiic-fd-contrast"
+            },
+            contrastTester: {
+                type: "gpii.tests.contrastTester"
+            }
+        }
+    });
+
+    fluid.defaults("gpii.tests.contrastTester", {
+        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        modules: [{
+            name: "Test the contrast settings panel",
+            tests: [{
+                expect: 5,
+                name: "Rendering",
+                sequence: [{
+                    func: "{contrast}.refreshView"
+                }, {
+                    listener: "gpii.tests.contrastTester.verifyRendering",
+                    event: "{contrast}.events.afterRender"
+                }]
+            }, {
+                expect: 3,
+                name: "Selection",
+                sequence: [{
+                    func: "gpii.tests.prefs.panel.utils.triggerRadioButton",
+                    args: ["{contrast}.dom.themeInput", 1]
+                }, {
+                    listener: "gpii.tests.contrastTester.verifyModel",
+                    args: ["{contrast}", "bw"],
+                    spec: {path: "value", priority: "last"},
+                    changeEvent: "{contrast}.applier.modelChanged"
+                }, {
+                    func: "gpii.tests.prefs.panel.utils.triggerRadioButton",
+                    args: ["{contrast}.dom.themeInput", 2]
+                }, {
+                    listener: "gpii.tests.contrastTester.verifyModel",
+                    args: ["{contrast}", "wb"],
+                    spec: {path: "value", priority: "last"},
+                    changeEvent: "{contrast}.applier.modelChanged"
+                }, {
+                    func: "gpii.tests.prefs.panel.utils.triggerRadioButton",
+                    args: ["{contrast}.dom.themeInput", 0]
+                }, {
+                    listener: "gpii.tests.contrastTester.verifyModel",
+                    args: ["{contrast}", "default"],
+                    spec: {path: "value", priority: "last"},
+                    changeEvent: "{contrast}.applier.modelChanged"
+                }]
+            }]
+        }]
+    });
+
+    gpii.tests.contrastTester.verifyRendering = function (that) {
+        jqUnit.assertEquals("The instructions should have been set correctly.", that.options.messageBase.instructions, that.locate("instructions").text());
+        gpii.tests.prefs.panel.utils.verifyRadioButtonRendering(that.locate("themeInput"), that.locate("themeLabel"), that.options.themeLabels, that.model.value);
+    };
+
+    gpii.tests.contrastTester.verifyModel = function (that, expectedValue) {
+        jqUnit.assertEquals("The model value should have been set correctly", expectedValue, that.model.value);
     };
 
     /***********************
@@ -493,6 +590,7 @@ https://github.com/gpii/universal/LICENSE.txt
             "gpii.tests.langPanel",
             "gpii.tests.textSizePanel",
             "gpii.tests.speakTextPanel",
+            "gpii.tests.contrastPanel",
             "gpii.tests.welcomePanel",
             "gpii.tests.congratulationsPanel"
         ]);

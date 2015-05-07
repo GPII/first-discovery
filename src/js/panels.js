@@ -564,8 +564,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "{that}.options.controlValues.theme",
                     "default",
                     "{that}.options.classnameMap.theme",
-                    "{that}.options.styles.defaultThemeLabel",
-                    "{that}"
+                    "{that}.options.styles.defaultThemeLabel"
                 ],
                 dynamic: true
             }
