@@ -26,22 +26,29 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         members: {
-            firstExecution: true
+            doneFirstExecution: false
         },
         modelListeners: {
             lang: {
-                funcName: "gpii.firstDiscovery.enactor.lang.reloadPage",
+                funcName: "gpii.firstDiscovery.enactor.lang.switchLang",
                 args: ["{that}", "{change}.value"]
             }
+        },
+        invokers: {
+            reloadPage: "gpii.firstDiscovery.enactor.lang.reloadPage"
         }
     });
 
     gpii.firstDiscovery.enactor.lang.reloadPage = function (that, lang) {
+        location.reload(true);
+    };
+
+    gpii.firstDiscovery.enactor.lang.switchLang = function (that, lang) {
         // Do NOT reload the page at the component instantiation
-        if (!that.firstExecution) {
-            location.reload(true);
+        if (that.doneFirstExecution) {
+            that.reloadPage();
         }
-        that.firstExecution = false;
+        that.doneFirstExecution = true;
     };
 
 })(jQuery, fluid);
