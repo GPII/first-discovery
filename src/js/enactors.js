@@ -31,7 +31,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         modelListeners: {
             lang: {
                 funcName: "gpii.firstDiscovery.enactor.lang.switchLang",
-                args: ["{that}", "{change}.value"]
+                args: ["{that}"]
             }
         },
         invokers: {
@@ -39,11 +39,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    gpii.firstDiscovery.enactor.lang.reloadPage = function (that, lang) {
+    gpii.firstDiscovery.enactor.lang.reloadPage = function () {
         location.reload(true);
     };
 
-    gpii.firstDiscovery.enactor.lang.switchLang = function (that, lang) {
+    gpii.firstDiscovery.enactor.lang.switchLang = function (that) {
         // Do NOT reload the page at the component instantiation
         if (that.doneFirstExecution) {
             that.reloadPage();
