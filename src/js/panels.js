@@ -533,7 +533,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         repeatingSelectors: ["themeRow"],
         listeners: {
-            afterRender: "{that}.style"
+            "afterRender.style": "{that}.style"
         },
         stringArrayIndex: {
             theme: ["contrast-default", "contrast-bw", "contrast-wb"]
