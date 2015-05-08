@@ -26,7 +26,7 @@ https://github.com/gpii/universal/LICENSE.txt
             reloadPage: {
                 funcName: "jqUnit.assert",
                 args: ["The reloadPage invoker should have fired"],
-                // As the configuration for invokers are merged rather than replace. The lines below is to override
+                // As the configuration for invokers are merged rather than replaced, the lines below are to override
                 // the component configuration in the defaults block for gpii.firstDiscovery.enactor.lang
                 "this": null,
                 method: null
