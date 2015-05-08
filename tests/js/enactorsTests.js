@@ -23,12 +23,16 @@ https://github.com/gpii/universal/LICENSE.txt
             lang: "en"
         },
         invokers: {
-            reloadPage: "fluid.identity"
+            reloadPage: "gpii.tests.enactor.lang.reloadPage"
         }
     });
 
+    gpii.tests.enactor.lang.reloadPage = function () {
+        jqUnit.assert("The reloadPage invoker should have fired");
+    };
+
     jqUnit.test("Test Language Enactor", function () {
-        jqUnit.expect(2);
+        jqUnit.expect(3);
 
         var that = gpii.tests.enactor.lang();
         jqUnit.assertTrue("The first model listener execution has been detected", that.doneFirstExecution);

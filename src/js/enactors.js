@@ -35,13 +35,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         invokers: {
-            reloadPage: "gpii.firstDiscovery.enactor.lang.reloadPage"
+            reloadPage: {
+                "this": "location",
+                method: "reload",
+                args: true
+            }
         }
     });
-
-    gpii.firstDiscovery.enactor.lang.reloadPage = function () {
-        location.reload(true);
-    };
 
     gpii.firstDiscovery.enactor.lang.switchLang = function (that) {
         // Do NOT reload the page at the component instantiation
