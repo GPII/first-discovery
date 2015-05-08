@@ -21,12 +21,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.defaults("gpii.firstDiscovery.enactor.lang", {
         gradeNames: ["fluid.prefs.enactor", "autoInit"],
         preferenceMap: {
-            "locale": {
+            "gpii.firstDiscovery.language": {
                 "model.lang": "default"
             }
         },
         members: {
-            doneFirstExecution: false
+            reloadEnabled: false
         },
         modelListeners: {
             lang: {
@@ -45,10 +45,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     gpii.firstDiscovery.enactor.lang.switchLang = function (that) {
         // Do NOT reload the page at the component instantiation
-        if (that.doneFirstExecution) {
+        if (that.reloadEnabled) {
             that.reloadPage();
         }
-        that.doneFirstExecution = true;
+        that.reloadEnabled = true;
     };
 
 })(jQuery, fluid);

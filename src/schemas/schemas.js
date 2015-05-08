@@ -30,7 +30,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "messagePrefix": "../src/messages/",
             "message": "%prefix/firstDiscovery.json",
             "lang": {
-                "type": "locale",
+                "type": "gpii.firstDiscovery.language",
                 "enactor": {
                     "type": "gpii.firstDiscovery.enactor.lang"
                 },
@@ -112,7 +112,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.defaults("gpii.firstDiscovery.schemas.language", {
         gradeNames: ["autoInit", "fluid.prefs.schemas"],
         schema: {
-            "locale": {
+            "gpii.firstDiscovery.language": {
                 "type": "string",
                 "default": "en",
                 "enum": ["en", "fr", "es", "de", "ne", "sv"],

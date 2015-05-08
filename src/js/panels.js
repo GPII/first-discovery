@@ -198,7 +198,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.defaults("gpii.firstDiscovery.panel.lang", {
         gradeNames: ["fluid.prefs.panel", "{that}.options.prefsEditorConnection", "autoInit"],
         preferenceMap: {
-            "locale": {
+            "gpii.firstDiscovery.language": {
                 "model.lang": "default",
                 "controlValues.lang": "enum",
                 "stringArrayIndex.lang": "label",

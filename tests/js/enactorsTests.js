@@ -35,9 +35,9 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.expect(3);
 
         var that = gpii.tests.enactor.lang();
-        jqUnit.assertTrue("The first model listener execution has been detected", that.doneFirstExecution);
+        jqUnit.assertTrue("The first model listener execution has been detected", that.reloadEnabled);
         that.applier.change("lang", "fr");
-        jqUnit.assertTrue("The member option doneFirstExecution stays as true", that.doneFirstExecution);
+        jqUnit.assertTrue("The member option reloadEnabled stays as true", that.reloadEnabled);
     });
 
 })(jQuery, fluid);
