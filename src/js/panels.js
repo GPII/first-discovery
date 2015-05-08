@@ -576,10 +576,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             label = $(label);
 
             var labelTheme = theme[index];
-            if (labelTheme === defaultThemeName) {
-                label.addClass(defaultLabelStyle);
-            }
-            label.addClass(style[labelTheme]);
+            label.addClass(labelTheme === defaultThemeName ? defaultLabelStyle : style[labelTheme]);
         });
     };
 
