@@ -446,7 +446,7 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "Test the contrast settings panel",
             tests: [{
-                expect: 5,
+                expect: 8,
                 name: "Rendering",
                 sequence: [{
                     func: "{contrast}.refreshView"
@@ -487,8 +487,15 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     gpii.tests.contrastTester.verifyRendering = function (that) {
+        var themeInput = that.locate("themeInput");
+        var themeLabel = that.locate("themeLabel");
+
         jqUnit.assertEquals("The instructions should have been set correctly.", that.options.messageBase.instructions, that.locate("instructions").text());
-        gpii.tests.firstDiscovery.panel.utils.verifyRadioButtonRendering(that.locate("themeInput"), that.locate("themeLabel"), that.options.themeLabels, that.model.value);
+        gpii.tests.firstDiscovery.panel.utils.verifyRadioButtonRendering(themeInput, themeLabel, that.options.themeLabels, that.model.value);
+        themeLabel.each(function (idx, elm) {
+            var className = that.options.classnameMap.theme[themeInput.eq(idx).val()];
+            jqUnit.assertTrue("The #" + idx + " label should have the '" + className + "' applied.", $(elm).hasClass(className));
+        });
     };
 
     gpii.tests.contrastTester.verifyModel = function (that, expectedValue) {
