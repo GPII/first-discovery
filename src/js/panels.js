@@ -41,7 +41,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         selectors: {
-            rangeInstructions: ".gpiic-fd-instructions",
+            rangeInstructions: ".gpiic-fd-range-instructions",
             meter: ".gpiic-fd-range-indicator",
             increase: ".gpiic-fd-range-increase",
             decrease: ".gpiic-fd-range-decrease"
@@ -319,7 +319,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             choiceRow: ".gpiic-fd-speakText-choiceRow",
             choiceLabel: ".gpiic-fd-speakText-choice-label",
             choiceInput: ".gpiic-fd-speakText-choiceInput",
-            instructions: ".gpiic-fd-instructions"
+            instructions: ".gpiic-fd-speakText-instructions"
         },
         controlValues: {
             choice: ["yes", "no"]
@@ -422,7 +422,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }],
         numOfLangPerPage: 3,
         selectors: {
-            instructions: ".gpiic-fd-instructions",
+            instructions: ".gpiic-fd-lang-instructions",
             langRow: ".gpiic-fd-lang-row",
             langLabel: ".gpiic-fd-lang-label",
             langInput: ".gpiic-fd-lang-input",
@@ -687,7 +687,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "gpii.firstDiscovery.welcome": {}
         },
         selectors: {
-            message: ".gpiic-fd-instructions"
+            message: ".gpiic-fd-welcome-instructions"
         },
         protoTree: {
             message: {
