@@ -23,21 +23,24 @@ https://github.com/gpii/universal/LICENSE.txt
             lang: "en"
         },
         invokers: {
-            reloadPage: "gpii.tests.enactor.lang.reloadPage"
+            reloadPage: {
+                funcName: "jqUnit.assert",
+                args: ["The reloadPage invoker should have fired"],
+                // As the configuration for invokers are merged rather than replace. The lines below is to override
+                // the component configuration in the defaults block for gpii.firstDiscovery.enactor.lang
+                "this": null,
+                method: null
+            }
         }
     });
-
-    gpii.tests.enactor.lang.reloadPage = function () {
-        jqUnit.assert("The reloadPage invoker should have fired");
-    };
 
     jqUnit.test("Test Language Enactor", function () {
         jqUnit.expect(3);
 
         var that = gpii.tests.enactor.lang();
-        jqUnit.assertTrue("The first model listener execution has been detected", that.reloadEnabled);
+        jqUnit.assertTrue("The first model listener execution has been detected", that.initialLangSet);
         that.applier.change("lang", "fr");
-        jqUnit.assertTrue("The member option reloadEnabled stays as true", that.reloadEnabled);
+        jqUnit.assertTrue("The member option initialLangSet stays as true", that.initialLangSet);
     });
 
 })(jQuery, fluid);

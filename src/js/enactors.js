@@ -26,7 +26,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         members: {
-            reloadEnabled: false
+            initialLangSet: false
         },
         modelListeners: {
             lang: {
@@ -45,10 +45,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     gpii.firstDiscovery.enactor.lang.switchLang = function (that) {
         // Do NOT reload the page at the component instantiation
-        if (that.reloadEnabled) {
+        if (that.initialLangSet) {
             that.reloadPage();
         }
-        that.reloadEnabled = true;
+        that.initialLangSet = true;
     };
 
 })(jQuery, fluid);

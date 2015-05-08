@@ -90,7 +90,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             messageLoader: {
                 options: {
-                    locale: "{prefsEditorLoader}.settings.gpii_firstDiscovery_language",
+                    locale: "{prefsEditorLoader}.settings.gpii_firstDiscovery_language"
                 }
             }
         },
