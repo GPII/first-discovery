@@ -11,14 +11,13 @@ https://github.com/gpii/universal/LICENSE.txt
 (function ($, fluid) {
     "use strict";
 
-    fluid.registerNamespace("gpii.tests");
-    fluid.registerNamespace("gpii.tests.prefs.panel.utils");
+    fluid.registerNamespace("gpii.tests.firstDiscovery.panel.utils");
 
-    gpii.tests.prefs.panel.utils.triggerRadioButton = function (radioButtons, idx) {
+    gpii.tests.firstDiscovery.panel.utils.triggerRadioButton = function (radioButtons, idx) {
         radioButtons.eq(idx).click();
     };
 
-    gpii.tests.prefs.panel.utils.verifyRadioButtonRendering = function (inputs, inputLabels, labelText, selection) {
+    gpii.tests.firstDiscovery.panel.utils.verifyRadioButtonRendering = function (inputs, inputLabels, labelText, selection) {
         fluid.each(inputLabels, function (elm, idx) {
             elm = $(elm);
             jqUnit.assertEquals("Choice #" + idx + " should have the correct label.", labelText[idx], elm.text());
@@ -30,7 +29,7 @@ https://github.com/gpii/universal/LICENSE.txt
      * Language Panel Tests *
      ************************/
 
-    fluid.defaults("gpii.tests.prefs.panel.lang", {
+    fluid.defaults("gpii.tests.firstDiscovery.panel.lang", {
         gradeNames: ["gpii.firstDiscovery.panel.lang", "autoInit"],
         messageBase: {
             "langInstructions": "Select your preferred language",
@@ -74,7 +73,7 @@ https://github.com/gpii/universal/LICENSE.txt
         gradeNames: ["fluid.test.testEnvironment", "autoInit"],
         components: {
             lang: {
-                type: "gpii.tests.prefs.panel.lang",
+                type: "gpii.tests.firstDiscovery.panel.lang",
                 container: ".gpiic-fd-lang"
             },
             langTester: {
@@ -226,7 +225,7 @@ https://github.com/gpii/universal/LICENSE.txt
      * Text Size Panel Tests *
      *************************/
 
-    fluid.defaults("gpii.tests.prefs.panel.textSize", {
+    fluid.defaults("gpii.tests.firstDiscovery.panel.textSize", {
         gradeNames: ["gpii.firstDiscovery.panel.textSize", "autoInit"],
         messageBase: {
             rangeInstructions: "Text size instructions.",
@@ -242,7 +241,7 @@ https://github.com/gpii/universal/LICENSE.txt
         gradeNames: ["fluid.test.testEnvironment", "autoInit"],
         components: {
             textSize: {
-                type: "gpii.tests.prefs.panel.textSize",
+                type: "gpii.tests.firstDiscovery.panel.textSize",
                 container: ".gpiic-fd-textSize"
             },
             textSizeTester: {
@@ -335,7 +334,7 @@ https://github.com/gpii/universal/LICENSE.txt
      * Speak Text Panel Tests *
      **************************/
 
-    fluid.defaults("gpii.tests.prefs.panel.speakText", {
+    fluid.defaults("gpii.tests.firstDiscovery.panel.speakText", {
         gradeNames: ["gpii.firstDiscovery.panel.speakText", "autoInit"],
         messageBase: {
             "speakTextInstructions": "Speak text instructions",
@@ -352,7 +351,7 @@ https://github.com/gpii/universal/LICENSE.txt
         gradeNames: ["fluid.test.testEnvironment", "autoInit"],
         components: {
             speakText: {
-                type: "gpii.tests.prefs.panel.speakText",
+                type: "gpii.tests.firstDiscovery.panel.speakText",
                 container: ".gpiic-fd-speakText"
             },
             speakTextTester: {
@@ -374,7 +373,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     listener: "gpii.tests.speakTextTester.verifyRendering",
                     event: "{speakText}.events.afterRender"
                 }, {
-                    func: "gpii.tests.prefs.panel.utils.triggerRadioButton",
+                    func: "gpii.tests.firstDiscovery.panel.utils.triggerRadioButton",
                     args: ["{speakText}.dom.choiceInput", 1]
                 }, {
                     listener: "gpii.tests.speakTextTester.verifyModel",
@@ -382,7 +381,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     spec: {path: "speak", priority: "last"},
                     changeEvent: "{speakText}.applier.modelChanged"
                 }, {
-                    func: "gpii.tests.prefs.panel.utils.triggerRadioButton",
+                    func: "gpii.tests.firstDiscovery.panel.utils.triggerRadioButton",
                     args: ["{speakText}.dom.choiceInput", 0]
                 }, {
                     listener: "gpii.tests.speakTextTester.verifyModel",
@@ -396,7 +395,7 @@ https://github.com/gpii/universal/LICENSE.txt
 
     gpii.tests.speakTextTester.verifyRendering = function (that) {
         jqUnit.assertEquals("The instructions should have been set correctly.", that.options.messageBase.speakTextInstructions, that.locate("instructions").text());
-        gpii.tests.prefs.panel.utils.verifyRadioButtonRendering(that.locate("choiceInput"), that.locate("choiceLabel"), that.options.choiceLabels, that.model.speakChoice);
+        gpii.tests.firstDiscovery.panel.utils.verifyRadioButtonRendering(that.locate("choiceInput"), that.locate("choiceLabel"), that.options.choiceLabels, that.model.speakChoice);
     };
 
     gpii.tests.speakTextTester.verifyModel = function (that, expectedValue) {
@@ -407,7 +406,7 @@ https://github.com/gpii/universal/LICENSE.txt
      * Contrast Panel Tests *
      ************************/
 
-    fluid.defaults("gpii.tests.prefs.panel.contrast", {
+    fluid.defaults("gpii.tests.firstDiscovery.panel.contrast", {
         gradeNames: ["gpii.firstDiscovery.panel.contrast", "autoInit"],
         classnameMap: {
             theme: {
@@ -433,7 +432,7 @@ https://github.com/gpii/universal/LICENSE.txt
         gradeNames: ["fluid.test.testEnvironment", "autoInit"],
         components: {
             contrast: {
-                type: "gpii.tests.prefs.panel.contrast",
+                type: "gpii.tests.firstDiscovery.panel.contrast",
                 container: ".gpiic-fd-contrast"
             },
             contrastTester: {
@@ -459,7 +458,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 expect: 3,
                 name: "Selection",
                 sequence: [{
-                    func: "gpii.tests.prefs.panel.utils.triggerRadioButton",
+                    func: "gpii.tests.firstDiscovery.panel.utils.triggerRadioButton",
                     args: ["{contrast}.dom.themeInput", 1]
                 }, {
                     listener: "gpii.tests.contrastTester.verifyModel",
@@ -467,7 +466,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     spec: {path: "value", priority: "last"},
                     changeEvent: "{contrast}.applier.modelChanged"
                 }, {
-                    func: "gpii.tests.prefs.panel.utils.triggerRadioButton",
+                    func: "gpii.tests.firstDiscovery.panel.utils.triggerRadioButton",
                     args: ["{contrast}.dom.themeInput", 2]
                 }, {
                     listener: "gpii.tests.contrastTester.verifyModel",
@@ -475,7 +474,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     spec: {path: "value", priority: "last"},
                     changeEvent: "{contrast}.applier.modelChanged"
                 }, {
-                    func: "gpii.tests.prefs.panel.utils.triggerRadioButton",
+                    func: "gpii.tests.firstDiscovery.panel.utils.triggerRadioButton",
                     args: ["{contrast}.dom.themeInput", 0]
                 }, {
                     listener: "gpii.tests.contrastTester.verifyModel",
@@ -489,7 +488,7 @@ https://github.com/gpii/universal/LICENSE.txt
 
     gpii.tests.contrastTester.verifyRendering = function (that) {
         jqUnit.assertEquals("The instructions should have been set correctly.", that.options.messageBase.instructions, that.locate("instructions").text());
-        gpii.tests.prefs.panel.utils.verifyRadioButtonRendering(that.locate("themeInput"), that.locate("themeLabel"), that.options.themeLabels, that.model.value);
+        gpii.tests.firstDiscovery.panel.utils.verifyRadioButtonRendering(that.locate("themeInput"), that.locate("themeLabel"), that.options.themeLabels, that.model.value);
     };
 
     gpii.tests.contrastTester.verifyModel = function (that, expectedValue) {
