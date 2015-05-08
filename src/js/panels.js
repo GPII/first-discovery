@@ -562,7 +562,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 args: [
                     "{that}.dom.themeLabel",
                     "{that}.options.controlValues.theme",
-                    "default",
+                    "{that}.options.controlValues.theme.0",
                     "{that}.options.classnameMap.theme",
                     "{that}.options.styles.defaultThemeLabel"
                 ],
