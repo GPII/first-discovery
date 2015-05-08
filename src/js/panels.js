@@ -159,15 +159,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 options: {
                     requiredInput: "@",
                     model: {
-                        userInput: "{keyboard}.model.userInput"
-                    },
-                    modelRelay: {
-                        source: "offerAssistance",
-                        target: "{keyboard}.model.offerAssistance",
-                        forward: "liveOnly",
-                        singleTransform: {
-                            type: "fluid.transforms.identity"
-                        }
+                        userInput: "{keyboard}.model.userInput",
+                        offerAssistance: "{keyboard}.model.offerAssistance"
                     }
                 }
             },
