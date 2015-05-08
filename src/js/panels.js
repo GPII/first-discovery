@@ -516,10 +516,20 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * Contrast panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.contrast", {
-        gradeNames: ["fluid.prefs.panel", "autoInit"],
+        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip.renderer", "autoInit"],
         preferenceMap: {
             "fluid.prefs.contrast": {
                 "model.value": "default"
+            }
+        },
+        tooltipContentMap: {
+            themeLabel: {
+                tooltip: "{that}.options.stringArrayIndex.tooltip",
+                tooltipAtSelect: "{that}.options.stringArrayIndex.tooltipAtSelect"
+            },
+            themeInput: {
+                tooltip: "{that}.options.stringArrayIndex.tooltip",
+                tooltipAtSelect: "{that}.options.stringArrayIndex.tooltipAtSelect"
             }
         },
         styles: {
@@ -536,7 +546,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             afterRender: "{that}.style"
         },
         stringArrayIndex: {
-            theme: ["contrast-default", "contrast-bw", "contrast-wb"]
+            theme: ["contrast-default", "contrast-bw", "contrast-wb"],
+            tooltip: ["contrast-default-tooltip", "contrast-bw-tooltip", "contrast-wb-tooltip"],
+            tooltipAtSelect: ["contrast-default-tooltipAtSelect", "contrast-bw-tooltipAtSelect", "contrast-wb-tooltipAtSelect"]
         },
         controlValues: {
             theme: ["default", "bw", "wb"]
