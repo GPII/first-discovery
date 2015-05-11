@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Sticky Keys Adjuster Tests</title>
+
+        <link rel="stylesheet" media="screen" href="../lib/infusion/lib/qunit/css/qunit.css" />
+
+        <script src="../lib/infusion/lib/qunit/js/qunit.js"></script>
+        <script src="../../src/lib/infusion/infusion-custom.js"></script>
+        <script src="../lib/infusion/test-core/jqUnit/js/jqUnit.js"></script>
+        <script src="../lib/infusion/test-core/jqUnit/js/jqUnit-browser.js"></script>
+        <script src="../lib/infusion/test-core/utils/js/IoCTestUtils.js"></script>
+
+        <script src="../../src/js/msgLookup.js"></script>
+        <script src="../../src/js/tooltip.js"></script>
+        <script src="../../src/js/stickyKeysAdjuster.js"></script>
+        <script src="../js/stickyKeysAdjusterTests.js"></script>
+    </head>
+
+    <body id="body">
+        <h1 id="qunit-header">Sticky Keys Adjuster Tests</h1>
+        <h2 id="qunit-banner"></h2>
+        <div id="qunit-testrunner-toolbar"></div>
+        <h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests"></ol>
+
+        <!-- Test StickyKeys Adjuster -->
+        <div class="gpiic-fd-keyboard-stickyKeysAdjuster">
+            <p class="gpiic-fd-keyboard-stickyKeysAdjuster-desc gpiic-fd-instructions gpii-fd-instructions"></p>
+            <div class="gpii-fd-controls text-center">
+                <div class="gpiic-fd-keyboard-assistance">
+                    <button class="gpiic-fd-keyboard-stickyKeysAdjuster-try gpii-fd-keyboard-try">try it</button>
+                    <span class="gpiic-fd-keyboard-stickyKeysAdjuster-accommodation">
+                        <span class="gpiic-fd-keyboard-stickyKeysAdjuster-accommodationName"></span>
+                        <strong class="gpiic-fd-keyboard-stickyKeysAdjuster-accommodationState"></strong>
+                        <button class="gpiic-fd-keyboard-stickyKeysAdjuster-accommodationToggle gpii-fd-keyboard-accommodationToggle"></button>
+                    </span>
+                </div>
+                <input type="text" class="gpiic-fd-keyboard-input gpii-fd-keyboard-input" />
+            </div>
+        </div>
+        <script>
+            gpii.tests.keyboard.runTest();
+        </script>
+    </body>
+</html>

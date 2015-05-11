@@ -18,15 +18,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.defaults("gpii.firstDiscovery.keyboard.stickyKeysAssessment", {
         gradeNames: ["fluid.modelRelayComponent", "autoInit"],
         model: {
-            // input: "", the input value to compare against the expected input.
-            offerAssistance: false
+            // userInput: string, the user input value to compare against the requiredInput value.
+            // offerAssistance: boolean
         },
         modelRelay: {
             target: "offerAssistance",
             singleTransform: {
                 type: "fluid.transforms.free",
                 args: {
-                    "input": "{that}.model.input",
+                    "userInput": "{that}.model.userInput",
                     "offerAssistance": "{that}.model.offerAssistance",
                     "requiredInput": "{that}.options.requiredInput"
                 },
@@ -38,7 +38,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     gpii.firstDiscovery.keyboard.stickyKeysAssessment.check = function (model) {
-        return model.offerAssistance || model.input && model.input !== model.requiredInput;
+        return model.userInput ? model.userInput !== model.requiredInput : model.offerAssistance;
     };
 
 })(jQuery, fluid);
