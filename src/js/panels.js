@@ -662,11 +662,66 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         gradeNames: ["fluid.prefs.panel", "autoInit"],
         preferenceMap: {
             "fluid.prefs.contrast": {
-                "model.value": "default",
-                "controlValues.lang": "enum"
+                "model.value": "default"
+            }
+        },
+        selectors: {
+            instructions: ".gpiic-fd-instructions",
+            themeRow: ".flc-prefsEditor-themeRow",
+            themeLabel: ".flc-prefsEditor-theme-label",
+            themeInput: ".flc-prefsEditor-themeInput"
+        },
+        repeatingSelectors: ["themeRow"],
+        listeners: {
+            "afterRender.style": "{that}.style"
+        },
+        stringArrayIndex: {
+            theme: ["contrast-default", "contrast-bw", "contrast-wb"]
+        },
+        controlValues: {
+            theme: ["default", "bw", "wb"]
+        },
+        protoTree: {
+            instructions: {messagekey: "instructions"},
+            expander: {
+                type: "fluid.renderer.selection.inputs",
+                rowID: "themeRow",
+                labelID: "themeLabel",
+                inputID: "themeInput",
+                selectID: "theme-radio",
+                tree: {
+                    optionnames: "${{that}.msgLookup.theme}",
+                    optionlist: "${{that}.options.controlValues.theme}",
+                    selection: "${value}"
+                }
+            }
+        },
+        invokers: {
+            style: {
+                funcName: "gpii.firstDiscovery.panel.contrast.style",
+                args: [
+                    "{that}.dom.themeLabel",
+                    "{that}.options.controlValues.theme",
+                    "{that}.options.controlValues.theme.0",
+                    "{that}.options.classnameMap.theme",
+                    "{that}.options.styles.defaultThemeLabel"
+                ],
+                dynamic: true
             }
         }
     });
+
+    gpii.firstDiscovery.panel.contrast.style = function (labels, theme, defaultThemeName, style, defaultLabelStyle) {
+        // TODO: A potential further improvement would be to use a utility such as the one in the video player to
+        // make this automatically model bound.
+        // see: https://github.com/fluid-project/videoPlayer/blob/master/js/VideoPlayer_showHide.js
+        fluid.each(labels, function (label, index) {
+            label = $(label);
+
+            var labelTheme = theme[index];
+            label.addClass(style[labelTheme]);
+        });
+    };
 
     /*
      * Welcome panel
