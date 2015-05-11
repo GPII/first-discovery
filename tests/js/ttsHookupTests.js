@@ -11,7 +11,7 @@ https://github.com/gpii/universal/LICENSE.txt
 (function ($, fluid) {
     "use strict";
 
-    fluid.registerNamespace("gpii.tests");
+    fluid.registerNamespace("gpii.tests.firstDiscovery.tts.fdHookup");
 
     jqUnit.test("gpii.firstDiscovery.tts.fdHookup.bindKeypress", function () {
         jqUnit.expect(1);
@@ -24,6 +24,30 @@ https://github.com/gpii/universal/LICENSE.txt
 
         // simulate the keypress
         elm.simulate("keypress", {keyCode: keyCode});
+    });
+
+    gpii.tests.firstDiscovery.tts.fdHookup.instructionsTestCases = [
+        {
+            selector: "#gpiic-tests-no-instructions",
+            expected: ""
+        },
+        {
+            selector: "#gpiic-tests-one-instruction",
+            expected: "single instruction text"
+        },
+        {
+            selector: "#gpiic-tests-multiple-instructions",
+            expected: "instruction element one. instruction element two"
+        }
+    ];
+
+    jqUnit.test("gpii.firstDiscovery.tts.fdHookup.getVisibleInstructions", function () {
+        fluid.each(gpii.tests.firstDiscovery.tts.fdHookup.instructionsTestCases, function (test) {
+            var panel = $(test.selector);
+            var msg = "should get \"" + test.expected + "\" for panel " + test.selector ;
+            var actual = gpii.firstDiscovery.tts.fdHookup.getVisibleInstructions(panel, ".gpiic-fd-instructions");
+            jqUnit.assertEquals(msg, test.expected, actual);
+        });
     });
 
 })(jQuery, fluid);
