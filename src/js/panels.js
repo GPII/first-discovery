@@ -119,10 +119,155 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         that.locate("meter").css("height", percentage + "%");
     };
 
+    fluid.defaults("gpii.firstDiscovery.panel.keyboard", {
+        gradeNames: ["fluid.prefs.panel", "autoInit"],
+        preferenceMap: {
+            "gpii.firstDiscovery.stickyKeysEnabled": {
+                "model.stickyKeysEnabled": "default"
+            }
+        },
+        selectors: {
+            input: ".gpiic-fd-keyboard-input",
+            instructions: ".gpiic-fd-keyboard-instructions",
+            assistance: ".gpiic-fd-keyboard-assistance"
+        },
+        selectorsToIgnore: ["assistance"],
+        events: {
+            onOfferAssistance: null,
+            onInitInput: null
+        },
+        model: {
+            // offerAssistance: boolean
+            // tryAccommodation: boolean
+            userInput: ""
+        },
+        components: {
+            assistance: {
+                type: "gpii.firstDiscovery.keyboard.stickyKeysAdjuster",
+                createOnEvent: "onOfferAssistance",
+                container: "{that}.container",
+                options: {
+                    messageBase: "{keyboard}.options.messageBase",
+                    model: {
+                        tryAccommodation: "{keyboard}.model.tryAccommodation",
+                        stickyKeysEnabled: "{keyboard}.model.stickyKeysEnabled"
+                    }
+                }
+            },
+            stickyKeysAssessor: {
+                type: "gpii.firstDiscovery.keyboard.stickyKeysAssessment",
+                options: {
+                    requiredInput: "@",
+                    model: {
+                        userInput: "{keyboard}.model.userInput",
+                        offerAssistance: "{keyboard}.model.offerAssistance"
+                    }
+                }
+            },
+            keyboardInput: {
+                type: "gpii.firstDiscovery.keyboardInput",
+                createOnEvent: "onInitInput",
+                container: "{that}.dom.input",
+                options: {
+                    model: {
+                        userInput: "{keyboard}.model.userInput",
+                        stickyKeysEnabled: "{keyboard}.model.stickyKeysEnabled"
+                    },
+                    messageBase: "{keyboard}.options.messageBase"
+                }
+            }
+        },
+        protoTree: {
+            expander: {
+                type: "fluid.renderer.condition",
+                condition: "{that}.model.offerAssistance",
+                trueTree: {
+                    input: {
+                        value: "${userInput}",
+                        decorators: {
+                            attrs: {
+                                placeholder: "{that}.msgLookup.placeholder"
+                            }
+                        }
+                    },
+                    instructions: {markup: {messagekey: "stickyKeysInstructions"}}
+                },
+                falseTree: {
+                    expander: {
+                        type: "fluid.renderer.condition",
+                        condition: {
+                            funcName: "gpii.firstDiscovery.panel.keyboard.isSet",
+                            args: ["{that}.model", "offerAssistance"]
+                        },
+                        trueTree: {
+                            instructions: {markup: {messagekey: "successInstructions"}}
+                        },
+                        falseTree: {
+                            input: {
+                                decorators: {
+                                    attrs: {
+                                        placeholder: "{that}.msgLookup.placeholder"
+                                    }
+                                }
+                            },
+                            instructions: {markup: {messagekey: "keyboardInstructions"}}
+                        }
+                    }
+                }
+            }
+        },
+        invokers: {
+            toggleAssistance: {
+                "this": "{that}.dom.assistance",
+                "method": "toggle",
+                "args": ["{arguments}.0"]
+            }
+        },
+        listeners: {
+            "afterRender.toggleAssistance": {
+                func: "{that}.toggleAssistance",
+                args: ["{that}.model.offerAssistance"]
+            },
+            "afterRender.relayEvents": {
+                funcName: "gpii.firstDiscovery.panel.keyboard.relayEvents",
+                args: ["{that}"]
+            }
+        },
+        modelListeners: {
+            offerAssistance: [{
+                listener: "{that}.refreshView",
+                excludeSource: "init"
+            }, {
+                listener: "gpii.firstDiscovery.panel.keyboard.destroy",
+                args: ["{stickyKeysAssessor}"]
+            }]
+        }
+    });
+
+    gpii.firstDiscovery.panel.keyboard.isSet = function (model, path) {
+        var value = fluid.get(model, path);
+        return value !== undefined;
+    };
+
+    gpii.firstDiscovery.panel.keyboard.relayEvents = function (that) {
+        var offerAssistance = that.model.offerAssistance;
+        if (offerAssistance !== false) {
+            that.events.onInitInput.fire();
+            if (offerAssistance) {
+                that.events.onOfferAssistance.fire();
+            }
+        }
+    };
+
+    gpii.firstDiscovery.panel.keyboard.destroy = function (that) {
+        if (that) {
+            that.destroy();
+        }
+    };
+
     /*
      * Text size panel
      */
-
     fluid.defaults("gpii.firstDiscovery.panel.textSize", {
         gradeNames: ["gpii.firstDiscovery.panel.ranged", "autoInit"],
         preferenceMap: {
@@ -148,6 +293,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         modelRelay: {
             source: "{that}.model",
             target: "{that}.model.speak",
+            // Setup the backward restriction to prevent the component instantiation writes back to
+            // the central model that ends up wiping out the saved prefs at the page reload.
+            backward: "liveOnly",
             singleTransform: {
                 type: "fluid.transforms.valueMapper",
                 inputPath: "speakChoice",
@@ -242,29 +390,29 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             firstLangSelected: false,
             lastLangSelected: false
         },
-        // TODO: When FLUID-5659 (http://issues.fluidproject.org/browse/FLUID-5659) is fixed, change
-        // the model relay to use fluid.transforms.indexOf to get the index of the current selected
-        // language and calculate firstLangSelected and lastLangSelected based on it.
         modelRelay: [{
+            target: "langIndex",
+            singleTransform: {
+                type: "fluid.transforms.indexOf",
+                array: "{that}.options.controlValues.lang",
+                value: "{that}.model.lang",
+                offset: 1
+            }
+        }, {
             target: "firstLangSelected",
             singleTransform: {
                 type: "fluid.transforms.binaryOp",
-                left: "{that}.model.lang",
+                left: "{that}.model.langIndex",
                 operator: "===",
-                right: "{that}.options.controlValues.lang.0"
+                right: 1
             }
         }, {
             target: "lastLangSelected",
             singleTransform: {
                 type: "fluid.transforms.binaryOp",
-                left: "{that}.model.lang",
+                left: "{that}.model.langIndex",
                 operator: "===",
-                right: {
-                    expander: {
-                        funcName: "gpii.firstDiscovery.panel.lang.getLastArrayElement",
-                        args: ["{that}.options.controlValues.lang"]
-                    }
-                }
+                right: "{that}.options.controlValues.lang.length"
             }
         }],
         numOfLangPerPage: 3,
@@ -352,11 +500,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         }
     });
-
-    gpii.firstDiscovery.panel.lang.getLastArrayElement = function (array) {
-        array = fluid.makeArray(array);
-        return array[array.length - 1];
-    };
 
     gpii.firstDiscovery.panel.lang.moveLangFocus = function (that, adjustBy) {
         var langArray = that.options.controlValues.lang,
@@ -532,9 +675,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 tooltipAtSelect: "{that}.options.stringArrayIndex.tooltipAtSelect"
             }
         },
-        styles: {
-            defaultThemeLabel: "fl-prefsEditor-contrast-defaultThemeLabel"
-        },
         selectors: {
             instructions: ".gpiic-fd-instructions",
             themeRow: ".flc-prefsEditor-themeRow",
@@ -543,7 +683,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         repeatingSelectors: ["themeRow"],
         listeners: {
-            afterRender: "{that}.style"
+            "afterRender.style": "{that}.style"
         },
         stringArrayIndex: {
             theme: ["contrast-default", "contrast-bw", "contrast-wb"],
@@ -574,23 +714,22 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 args: [
                     "{that}.dom.themeLabel",
                     "{that}.options.controlValues.theme",
-                    "default",
-                    "{that}.options.classnameMap.theme",
-                    "{that}.options.styles.defaultThemeLabel"
+                    "{that}.options.controlValues.theme.0",
+                    "{that}.options.classnameMap.theme"
                 ],
                 dynamic: true
             }
         }
     });
 
-    gpii.firstDiscovery.panel.contrast.style = function (labels, theme, defaultThemeName, style, defaultLabelStyle) {
+    gpii.firstDiscovery.panel.contrast.style = function (labels, theme, defaultThemeName, style) {
+        // TODO: A potential further improvement would be to use a utility such as the one in the video player to
+        // make this automatically model bound.
+        // see: https://github.com/fluid-project/videoPlayer/blob/master/js/VideoPlayer_showHide.js
         fluid.each(labels, function (label, index) {
             label = $(label);
 
             var labelTheme = theme[index];
-            if (labelTheme === defaultThemeName) {
-                label.addClass(defaultLabelStyle);
-            }
             label.addClass(style[labelTheme]);
         });
     };

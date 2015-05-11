@@ -17,7 +17,11 @@
         <script type="text/javascript" src="../src/js/tooltip.js"></script>
         <script type="text/javascript" src="../src/js/msgLookup.js"></script>
         <script type="text/javascript" src="../src/js/selfVoicing.js"></script>
+        <script type="text/javascript" src="../src/js/stickyKeysAssessment.js"></script>
+        <script type="text/javascript" src="../src/js/keyboardInput.js"></script>
+        <script type="text/javascript" src="../src/js/stickyKeysAdjuster.js"></script>
         <script type="text/javascript" src="../src/js/panels.js"></script>
+        <script type="text/javascript" src="../src/js/enactors.js"></script>
         <script type="text/javascript" src="../src/schemas/schemas.js"></script>
         <script type="text/javascript" src="../src/js/navButtons.js"></script>
         <script type="text/javascript" src="../src/js/navIcons.js"></script>
@@ -72,6 +76,10 @@
                             <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
                             <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
                         </li>
+                        <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-keyboard">
+                            <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                            <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -88,7 +96,11 @@
                             gradeNames: ["gpii.firstDiscovery.auxSchema"]
                         },
                         prefsEditor: {
-                            prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor"
+                            store: {
+                                cookie: {
+                                    name: "demo-firstDiscovery"
+                                }
+                            }
                         }
                     });
                 } else {

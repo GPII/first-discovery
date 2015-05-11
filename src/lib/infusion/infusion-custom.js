@@ -1,4 +1,4 @@
-/*! infusion - v2.0.0-SNAPSHOT Tuesday, April 28th, 2015, 11:10:42 AM*/
+/*! infusion - v2.0.0-SNAPSHOT Thursday, May 7th, 2015, 10:51:01 AM*/
 /*!
  * jQuery JavaScript Library v1.11.0
  * http://jquery.com/
@@ -12532,6 +12532,21 @@ var fluid = fluid || fluid_2_0;
         });
         return togo;
     };
+    
+    /** Converts an array consisting of a mixture of arrays and non-arrays into the concatenation of any inner arrays 
+     * with the non-array elements
+     */
+    fluid.flatten = function (array) {
+        var togo = [];
+        fluid.each(array, function (element) {
+            if (fluid.isArrayable(element)) {
+                togo = togo.concat(element);
+            } else {
+                togo.push(element);
+            }
+        });
+        return togo;
+    };
 
     /**
      * Clears an object or array of its contents. For objects, each property is deleted.
@@ -14470,6 +14485,20 @@ var fluid_2_0 = fluid_2_0 || {};
         return totest && typeof(totest.then) === "function";
     };
     
+    /** Coerces any value to a promise
+     * @param promiseOrValue The value to be coerced
+     * @return If the supplied value is already a promise, it is returned unchanged. Otherwise a fresh promise is created with the value as resolution and returned
+     */
+    fluid.toPromise = function (promiseOrValue) {
+        if (fluid.isPromise(promiseOrValue)) {
+            return promiseOrValue;
+        } else {
+            var togo = fluid.promise();
+            togo.resolve(promiseOrValue);
+            return togo;
+        }
+    };
+    
     /** Chains the resolution methods of one promise (target) so that they follow those of another (source).
       * That is, whenever source resolves, target will resolve, or when source rejects, target will reject, with the
       * same payloads in each case.
@@ -14484,17 +14513,14 @@ var fluid_2_0 = fluid_2_0 || {};
      * @return {Promise} A promise for the resolved mapped value.
      */
     fluid.promise.map = function (source, func) {
+        var promise = fluid.toPromise(source);
         var togo = fluid.promise();
-        if (fluid.isPromise(source)) {
-            source.then(function (value) {
-                var mapped = func(value);
-                togo.resolve(mapped);
-            }, function (error) {
-                togo.reject(error);
-            });
-        } else {
-            togo.resolve(func(source));
-        }
+        promise.then(function (value) {
+            var mapped = func(value);
+            togo.resolve(mapped);
+        }, function (error) {
+            togo.reject(error);
+        });
         return togo;
     };
     
@@ -14508,6 +14534,7 @@ var fluid_2_0 = fluid_2_0 || {};
         }
         return {
             sources: sources,
+            resolvedSources: [], // the values of "sources" only with functions invoked (an array of promises or values)
             index: 0,
             strategy: strategy,
             options: options, // available to be supplied to each listener
@@ -14523,16 +14550,26 @@ var fluid_2_0 = fluid_2_0 || {};
         fluid.promise.resumeSequence(that);
     };
     
+    fluid.promise.processSequenceReject = function (that, error) { // Allow earlier promises in the sequence to wrap the rejection supplied by later ones (FLUID-5584)
+        for (var i = that.index - 1; i >= 0; -- i) {
+            var resolved = that.resolvedSources[i];
+            var accumulator = fluid.isPromise(resolved) && typeof(resolved.accumulateRejectionReason) === "function" ? resolved.accumulateRejectionReason : fluid.identity;
+            error = accumulator(error);
+        }
+        that.promise.reject(error);
+    };
+    
     fluid.promise.resumeSequence = function (that) {
         if (that.index === that.sources.length) {
             that.promise.resolve(that.strategy.resolveResult(that));
         } else {
             var value = that.strategy.invokeNext(that);
+            that.resolvedSources[that.index] = value;
             if (fluid.isPromise(value)) {
                 value.then(function (retValue) {
                     fluid.promise.progressSequence(that, retValue);
                 }, function (error) {
-                    that.promise.reject(error);
+                    fluid.promise.processSequenceReject(that, error);
                 });
             } else {
                 fluid.promise.progressSequence(that, value);
@@ -17890,8 +17927,8 @@ var fluid_2_0 = fluid_2_0 || {};
         fluid.each(transRec, function (value, key) {
             if (typeof(value) === "number") {
                 transRec[key] = 0;
-            } else if (relaysAlso && value.options && typeof(value.options.relayCount) === "number") {
-                value.options.relayCount = 0;
+            } else if (relaysAlso && value.options && typeof(value.relayCount) === "number") {
+                value.relayCount = 0;
             }
         });
     };
@@ -18058,7 +18095,7 @@ var fluid_2_0 = fluid_2_0 || {};
                 ++transRec[linkId];
                 if (!existing) {
                     var newTrans = targetApplier.initiate("relay", transId); // non-top-level transaction will defeat postCommit
-                    existing = transRec[applierId] = {transaction: newTrans, options: options};
+                    existing = transRec[applierId] = {transaction: newTrans, relayCount: 0, options: options};
                 }
                 if (transducer && !options.targetApplier) {
                     // TODO: This is just for safety but is still unusual and now abused. The transducer doesn't need the "newValue" since all the transform information
@@ -18111,7 +18148,6 @@ var fluid_2_0 = fluid_2_0 || {};
                 fluid.registerDirectChangeRelay(source, sourceSegs, target, targetSegs, linkId, null, {
                     transactional: false,
                     targetApplier: options.targetApplier,
-                    relayCount: options.relayCount,
                     update: options.update
                 });
             } else {
@@ -18174,7 +18210,6 @@ var fluid_2_0 = fluid_2_0 || {};
         }
         that.update = that.invalidator.fire; // necessary so that both routes to fluid.connectModelRelay from here hit the first branch
         var implicitOptions = {
-            relayCount: 0, // this count is updated in fluid.model.updateRelays
             targetApplier: that.forwardApplier, // this special field identifies us to fluid.connectModelRelay
             update: that.update,
             refCount: 0
@@ -18292,8 +18327,8 @@ var fluid_2_0 = fluid_2_0 || {};
         fluid.each(transRec, function (transEl) {
             // TODO: integrate the "source" if any into this computation, and fire the relay if it has changed - perhaps by adding a listener
             // to it that updates changeRecord.changes (assuming we can find it)
-            if (transEl.options && transEl.transaction && transEl.transaction.changeRecord.changes > 0 && transEl.options.relayCount < 2 && transEl.options.update) {
-                transEl.options.relayCount++;
+            if (transEl.options && transEl.transaction && transEl.transaction.changeRecord.changes > 0 && transEl.relayCount < 2 && transEl.options.update) {
+                transEl.relayCount++;
                 fluid.clearLinkCounts(transRec);
                 transEl.options.update(transEl.transaction, transRec);
                 ++updates;
@@ -21999,6 +22034,28 @@ var fluid_2_0 = fluid_2_0 || {};
 
 (function ($, fluid) {
     "use strict";
+    
+    /** NOTE: All contents of this file are DEPRECATED and no entry point should be considered a supported API **/
+    
+    fluid.explodeLocalisedName = function (fileName, locale, defaultLocale) {
+        var lastDot = fileName.lastIndexOf(".");
+        if (lastDot === -1 || lastDot === 0) {
+            lastDot = fileName.length;
+        }
+        var baseName = fileName.substring(0, lastDot);
+        var extension = fileName.substring(lastDot);
+        
+        var segs = locale.split("_");
+        
+        var exploded = fluid.transform(segs, function (seg, index) {
+            var shortSegs = segs.slice(0, index + 1);
+            return baseName + "_" + shortSegs.join("_") + extension;
+        });
+        if (defaultLocale) {
+            exploded.unshift(baseName + "_" + defaultLocale + extension);
+        }
+        return exploded;
+    };
 
     /** Framework-global caching state for fluid.fetchResources **/
 
@@ -22026,12 +22083,65 @@ var fluid_2_0 = fluid_2_0 || {};
             if (resourceSpec.url && !resourceSpec.href) {
                 resourceSpec.href = resourceSpec.url;
             }
+            if (that.options.defaultLocale) {
+                resourceSpec.defaultLocale = that.options.defaultLocale;
+                if (resourceSpec.locale === undefined) {
+                    resourceSpec.locale = that.options.defaultLocale;
+                }
+            }
         });
         if (that.options.amalgamateClasses) {
             fluid.fetchResources.amalgamateClasses(resourceSpecs, that.options.amalgamateClasses, that.operate);
         }
+        fluid.fetchResources.explodeForLocales(resourceSpecs);
         that.operate();
         return that;
+    };
+    
+    fluid.fetchResources.explodeForLocales = function (resourceSpecs) {
+        fluid.each(resourceSpecs, function (resourceSpec, key) {
+            if (resourceSpec.locale) {
+                var exploded = fluid.explodeLocalisedName(resourceSpec.href, resourceSpec.locale, resourceSpec.defaultLocale);
+                for (var i = 0; i < exploded.length; ++ i) {
+                    var newKey = key + "$localised-" + i;
+                    var newRecord = $.extend(true, {}, resourceSpec, {
+                        href: exploded[i],
+                        localeExploded: true
+                    });
+                    resourceSpecs[newKey] = newRecord;
+                }
+                resourceSpec.localeExploded = exploded.length;
+            }
+        });
+        return resourceSpecs;
+    };
+    
+    fluid.fetchResources.condenseOneResource = function (resourceSpecs, resourceSpec, key, localeCount) {
+        var localeSpecs = [resourceSpec];
+        for (var i = 0; i < localeCount; ++ i) {
+            var localKey = key + "$localised-" + i;
+            localeSpecs.unshift(resourceSpecs[localKey]);
+            delete resourceSpecs[localKey];
+        }
+        var lastNonError = fluid.find_if(localeSpecs, function (spec) {
+            return !spec.fetchError;
+        });
+        if (lastNonError) {
+            resourceSpecs[key] = lastNonError;
+        }
+    };
+    
+    fluid.fetchResources.condenseForLocales = function (resourceSpecs) {
+        fluid.each(resourceSpecs, function (resourceSpec, key) {
+            if (typeof(resourceSpec.localeExploded) === "number") {
+                fluid.fetchResources.condenseOneResource(resourceSpecs, resourceSpec, key, resourceSpec.localeExploded);
+            }
+        });
+    };
+        
+    fluid.fetchResources.notifyResources = function (that, resourceSpecs, callback) {
+        fluid.fetchResources.condenseForLocales(resourceSpecs);
+        callback(resourceSpecs);
     };
 
     /*
@@ -22082,7 +22192,7 @@ var fluid_2_0 = fluid_2_0 || {};
     /*
      * This function is unsupported: It is not really intended for use by implementors.
      */
-    fluid.fetchResources.handleCachedRequest = function(resourceSpec, response) {
+    fluid.fetchResources.handleCachedRequest = function(resourceSpec, response, fetchError) {
         var canon = canonUrl(resourceSpec.href);
         var cached = resourceCache[canon];
         if (cached.$$firer$$) {
@@ -22092,8 +22202,9 @@ var fluid_2_0 = fluid_2_0 || {};
                 fluid.log("Clearing pendingClass entry for class " + fetchClass);
                 delete pendingClass[fetchClass][canon];
             }
-            resourceCache[canon] = response;
-            cached.fire(response);
+            var result = {response: response, fetchError: fetchError};
+            resourceCache[canon] = result;
+            cached.fire(response, fetchError);
         }
     };
 
@@ -22127,6 +22238,9 @@ var fluid_2_0 = fluid_2_0 || {};
                     textStatus: response.textStatus,
                     errorThrown: errorThrown
                 };
+                if (thisSpec.forceCache) {
+                    fluid.fetchResources.handleCachedRequest(thisSpec, null, thisSpec.fetchError);
+                }
                 fluid.fetchResources.completeRequest(thisSpec);
             }
 
@@ -22157,12 +22271,20 @@ var fluid_2_0 = fluid_2_0 || {};
         }
         else {
             if (!cached.$$firer$$) {
-                options.success(cached);
+                if (cached.response) {
+                    options.success(cached.response);
+                } else {
+                    options.error(cached.fetchError);
+                }
             }
             else {
                 fluid.log("Request for cached resource which is in flight: url " + canon);
-                cached.addListener(function(response) {
-                    options.success(response);
+                cached.addListener(function(response, fetchError) {
+                    if (response) {
+                        options.success(response);
+                    } else {
+                        options.error(fetchError);
+                    }
                 });
             }
         }
@@ -22224,6 +22346,7 @@ var fluid_2_0 = fluid_2_0 || {};
         }
     };
 
+
     fluid.fetchResources.fetchResourcesImpl = function(that) {
         var complete = true;
         var allSync = true;
@@ -22254,11 +22377,11 @@ var fluid_2_0 = fluid_2_0 || {};
             if ($.browser.mozilla && !allSync) {
                 // Defer this callback to avoid debugging problems on Firefox
                 setTimeout(function() {
-                    that.callback(resourceSpecs);
+                    fluid.fetchResources.notifyResources(that, resourceSpecs, that.callback);
                 }, 1);
             }
             else {
-                that.callback(resourceSpecs);
+                fluid.fetchResources.notifyResources(that, resourceSpecs, that.callback);
             }
         }
     };
@@ -32473,12 +32596,29 @@ var fluid_2_0 = fluid_2_0 || {};
      * @param {Object} options
      */
     fluid.defaults("fluid.prefs.prefsEditorLoader", {
-        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "fluid.prefs.settingsGetter", "fluid.prefs.initialModel", "autoInit"],
+        defaultLocale: "en",
+        members: {
+            settings: {
+                expander: {
+                    funcName: "fluid.prefs.prefsEditorLoader.getCompleteSettings",
+                    args: ["{that}.initialModel", "{that}.getSettings"]
+                }
+            }
+        },
         components: {
             prefsEditor: {
                 priority: "last",
                 type: "fluid.prefs.prefsEditor",
-                createOnEvent: "onCreatePrefsEditorReady"
+                createOnEvent: "onCreatePrefsEditorReady",
+                options: {
+                    members: {
+                        initialModel: "{prefsEditorLoader}.initialModel"
+                    },
+                    invokers: {
+                        getSettings: "{prefsEditorLoader}.getSettings"
+                    }
+                }
             },
             templateLoader: {
                 type: "fluid.prefs.resourceLoader",
@@ -32491,6 +32631,8 @@ var fluid_2_0 = fluid_2_0 || {};
             messageLoader: {
                 type: "fluid.prefs.resourceLoader",
                 options: {
+                    defaultLocale: "{prefsEditorLoader}.options.defaultLocale",
+                    locale: "{prefsEditorLoader}.settings.locale",
                     resourceOptions: {
                         dataType: "json"
                     },
@@ -32530,6 +32672,11 @@ var fluid_2_0 = fluid_2_0 || {};
             target: "{that > prefsEditor}.options"
         }]
     });
+
+    fluid.prefs.prefsEditorLoader.getCompleteSettings = function (initialModel, getSettingsFunc) {
+        var savedSettings = getSettingsFunc();
+        return $.extend(true, {}, initialModel, savedSettings);
+    };
 
     // TODO: This mixin grade appears to be supplied manually by various test cases but no longer appears in
     // the main configuration. We should remove the need for users to supply this - also the use of "defaultPanels" in fact
@@ -32577,6 +32724,8 @@ var fluid_2_0 = fluid_2_0 || {};
                 args: ["{that}", {expander: {func: "{that}.resolveResources"}}]
             }
         },
+        defaultLocale: null,
+        locale: null,
         resources: {},
         resourceOptions: {},
         // Unsupported, non-API option
@@ -32604,7 +32753,8 @@ var fluid_2_0 = fluid_2_0 || {};
         var mapped = fluid.transform(that.options.resources, that.transformURL);
 
         return fluid.transform(mapped, function (url) {
-            return {url: url, forceCache: true, options: that.options.resourceOptions};
+            var resourceSpec = {url: url, forceCache: true, options: that.options.resourceOptions};
+            return $.extend(resourceSpec, fluid.filterKeys(that.options, ["defaultLocale", "locale"]));
         });
     };
 
@@ -32703,7 +32853,7 @@ var fluid_2_0 = fluid_2_0 || {};
      * @param {Object} options
      */
     fluid.defaults("fluid.prefs.prefsEditor", {
-        gradeNames: ["fluid.viewRelayComponent", "fluid.prefs.settingsGetter", "fluid.prefs.settingsSetter", "fluid.prefs.initialModel", "autoInit"],
+        gradeNames: ["fluid.viewRelayComponent", "fluid.prefs.settingsSetter", "autoInit"],
         invokers: {
             /**
              * Updates the change applier and fires modelChanged on subcomponent fluid.prefs.controls
@@ -35431,7 +35581,7 @@ var fluid_2_0 = fluid_2_0 || {};
 
 })(jQuery, fluid_2_0);
 ;/*
-Copyright 2013 OCAD University
+Copyright 2013-2015 OCAD University
 
 Licensed under the Educational Community License (ECL), Version 2.0 or the New
 BSD license. You may not use this file except in compliance with one these
@@ -35455,7 +35605,9 @@ var fluid_2_0 = fluid_2_0 || {};
 
     fluid.defaults("fluid.prefs.auxSchema", {
         gradeNames: ["fluid.littleComponent", "autoInit"],
-        auxiliarySchema: {}
+        auxiliarySchema: {
+            "loaderGrades": ["fluid.prefs.separatedPanel"]
+        }
     });
 
     /**
@@ -35937,7 +36089,7 @@ var fluid_2_0 = fluid_2_0 || {};
 
 })(jQuery, fluid_2_0);
 ;/*
-Copyright 2013 OCAD University
+Copyright 2013-2015 OCAD University
 
 Licensed under the Educational Community License (ECL), Version 2.0 or the New
 BSD license. You may not use this file except in compliance with one these
@@ -35962,6 +36114,7 @@ var fluid_2_0 = fluid_2_0 || {};
     fluid.defaults("fluid.prefs.auxSchema.starter", {
         gradeNames: ["fluid.prefs.auxSchema", "autoInit"],
         auxiliarySchema: {
+            "loaderGrades": ["fluid.prefs.separatedPanel"],
             "namespace": "fluid.prefs.constructed", // The author of the auxiliary schema will provide this and will be the component to call to initialize the constructed PrefsEditor.
             "templatePrefix": "../../framework/preferences/html/",  // The common path to settings panel templates. The template defined in "panels" element will take precedence over this definition.
             "template": "%prefix/SeparatedPanelPrefsEditor.html",
@@ -36248,7 +36401,7 @@ var fluid_2_0 = fluid_2_0 || {};
 
 })(fluid_2_0);
 ;/*
-Copyright 2013 OCAD University
+Copyright 2013-2015 OCAD University
 
 Licensed under the Educational Community License (ECL), Version 2.0 or the New
 BSD license. You may not use this file except in compliance with one these
@@ -36276,7 +36429,8 @@ var fluid_2_0 = fluid_2_0 || {};
                 func: "fluid.prefs.builder.generateGrade",
                 args: ["prefsEditor", "{that}.options.auxSchema.namespace", {
                     gradeNames: ["fluid.viewRelayComponent", "autoInit", "fluid.prefs.assembler.prefsEd"],
-                    componentGrades: "{that}.options.constructedGrades"
+                    componentGrades: "{that}.options.constructedGrades",
+                    loaderGrades: "{that}.options.auxSchema.loaderGrades"
                 }]
             }
         },
@@ -36368,8 +36522,13 @@ var fluid_2_0 = fluid_2_0 || {};
                 container: "{fluid.prefs.assembler.prefsEd}.container",
                 priority: "last",
                 options: {
-                    gradeNames: ["{fluid.prefs.assembler.prefsEd}.options.componentGrades.templatePrefix", "{fluid.prefs.assembler.prefsEd}.options.componentGrades.messagePrefix", "{fluid.prefs.assembler.prefsEd}.options.componentGrades.messages", "{that}.options.prefsEditorType"],
-                    prefsEditorType: "fluid.prefs.separatedPanel",
+                    gradeNames: [
+                        "{fluid.prefs.assembler.prefsEd}.options.componentGrades.templatePrefix",
+                        "{fluid.prefs.assembler.prefsEd}.options.componentGrades.messagePrefix",
+                        "{fluid.prefs.assembler.prefsEd}.options.componentGrades.messages",
+                        "{fluid.prefs.assembler.prefsEd}.options.componentGrades.initialModel",
+                        "{that}.options.loaderGrades"
+                    ],
                     templateLoader: {
                         gradeNames: ["{fluid.prefs.assembler.prefsEd}.options.componentGrades.templateLoader"]
                     },
@@ -36377,7 +36536,7 @@ var fluid_2_0 = fluid_2_0 || {};
                         gradeNames: ["{fluid.prefs.assembler.prefsEd}.options.componentGrades.messageLoader"]
                     },
                     prefsEditor: {
-                        gradeNames: ["{fluid.prefs.assembler.prefsEd}.options.componentGrades.panels", "{fluid.prefs.assembler.prefsEd}.options.componentGrades.initialModel", "fluid.prefs.uiEnhancerRelay"]
+                        gradeNames: ["{fluid.prefs.assembler.prefsEd}.options.componentGrades.panels", "fluid.prefs.uiEnhancerRelay"]
                     },
                     events: {
                         onReady: "{fluid.prefs.assembler.prefsEd}.events.onPrefsEditorReady"
@@ -36396,9 +36555,9 @@ var fluid_2_0 = fluid_2_0 || {};
             }
         },
         distributeOptions: [{
-            source: "{that}.options.prefsEditorType",
+            source: "{that}.options.loaderGrades",
             removeSource: true,
-            target: "{that > prefsEditorLoader}.options.prefsEditorType"
+            target: "{that > prefsEditorLoader}.options.loaderGrades"
         }, {
             source: "{that}.options.prefsEditor",
             removeSource: true,

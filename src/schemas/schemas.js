@@ -23,6 +23,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.defaults("gpii.firstDiscovery.auxSchema", {
         gradeNames: ["fluid.prefs.auxSchema", "autoInit"],
         auxiliarySchema: {
+            "loaderGrades": ["gpii.firstDiscovery.firstDiscoveryEditor"],
             "namespace": "gpii.firstDiscovery",
             "templatePrefix": "../src/html/",
             "template": "../src/html/firstDiscovery.html",
@@ -30,11 +31,23 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "message": "%prefix/firstDiscovery.json",
             "lang": {
                 "type": "gpii.firstDiscovery.language",
+                "enactor": {
+                    "type": "gpii.firstDiscovery.enactor.lang"
+                },
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.lang",
                     "container": ".gpiic-fd-prefsEditor-panel-lang",
                     "template": "%prefix/lang.html",
                     "message": "%prefix/lang.json"
+                }
+            },
+            "keyboard": {
+                "type": "gpii.firstDiscovery.stickyKeys",
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.keyboard",
+                    "container": ".gpiic-fd-prefsEditor-panel-keyboard",
+                    "template": "%prefix/keyboard.html",
+                    "message": "%prefix/keyboard.json"
                 }
             },
             "welcome": {
@@ -137,7 +150,18 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         schema: {
             "gpii.firstDiscovery.speak": {
                 "type": "boolean",
-                "default": "true"
+                "default": true
+            }
+        }
+    });
+
+
+    fluid.defaults("gpii.firstDiscovery.schemas.stickyKeys", {
+        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.stickyKeys": {
+                "type": "boolean",
+                "default": false
             }
         }
     });

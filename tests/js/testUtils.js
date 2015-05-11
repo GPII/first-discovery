@@ -22,9 +22,10 @@ https://github.com/gpii/universal/LICENSE.txt
         textSize: 3,
         tts: 4,
         contrast: 5,
-        secondLast: 5,
-        congrats: 6,
-        last: 6
+        keyboard: 6,
+        secondLast: 6,
+        congrats: 7,
+        last: 7
     };
 
     gpii.tests.utils.hasClass = function (elementName, element, selector, expected) {
