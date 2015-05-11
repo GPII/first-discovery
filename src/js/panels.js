@@ -159,15 +159,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 options: {
                     requiredInput: "@",
                     model: {
-                        userInput: "{keyboard}.model.userInput"
-                    },
-                    modelRelay: {
-                        source: "offerAssistance",
-                        target: "{keyboard}.model.offerAssistance",
-                        forward: "liveOnly",
-                        singleTransform: {
-                            type: "fluid.transforms.identity"
-                        }
+                        userInput: "{keyboard}.model.userInput",
+                        offerAssistance: "{keyboard}.model.offerAssistance"
                     }
                 }
             },
@@ -301,6 +294,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         modelRelay: {
             source: "{that}.model",
             target: "{that}.model.speak",
+            // Setup the backward restriction to prevent the component instantiation writes back to
+            // the central model that ends up wiping out the saved prefs at the page reload.
+            backward: "liveOnly",
             singleTransform: {
                 type: "fluid.transforms.valueMapper",
                 inputPath: "speakChoice",
@@ -395,29 +391,29 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             firstLangSelected: false,
             lastLangSelected: false
         },
-        // TODO: When FLUID-5659 (http://issues.fluidproject.org/browse/FLUID-5659) is fixed, change
-        // the model relay to use fluid.transforms.indexOf to get the index of the current selected
-        // language and calculate firstLangSelected and lastLangSelected based on it.
         modelRelay: [{
+            target: "langIndex",
+            singleTransform: {
+                type: "fluid.transforms.indexOf",
+                array: "{that}.options.controlValues.lang",
+                value: "{that}.model.lang",
+                offset: 1
+            }
+        }, {
             target: "firstLangSelected",
             singleTransform: {
                 type: "fluid.transforms.binaryOp",
-                left: "{that}.model.lang",
+                left: "{that}.model.langIndex",
                 operator: "===",
-                right: "{that}.options.controlValues.lang.0"
+                right: 1
             }
         }, {
             target: "lastLangSelected",
             singleTransform: {
                 type: "fluid.transforms.binaryOp",
-                left: "{that}.model.lang",
+                left: "{that}.model.langIndex",
                 operator: "===",
-                right: {
-                    expander: {
-                        funcName: "gpii.firstDiscovery.panel.lang.getLastArrayElement",
-                        args: ["{that}.options.controlValues.lang"]
-                    }
-                }
+                right: "{that}.options.controlValues.lang.length"
             }
         }],
         numOfLangPerPage: 3,
@@ -505,11 +501,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         }
     });
-
-    gpii.firstDiscovery.panel.lang.getLastArrayElement = function (array) {
-        array = fluid.makeArray(array);
-        return array[array.length - 1];
-    };
 
     gpii.firstDiscovery.panel.lang.moveLangFocus = function (that, adjustBy) {
         var langArray = that.options.controlValues.lang,
