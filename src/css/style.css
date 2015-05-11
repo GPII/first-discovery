@@ -230,17 +230,17 @@ button {
     background-color: #425165; /* blue-grey */
     border: 0.2rem solid #000;
 }
-.gpii-fd-theme-default {
+.gpii-fd-theme.fl-theme-prefsEditor-default {
     color: #425165 !important;
     background-color: #eeeeee !important;
     border-color: #425165 !important;
 }
-.gpii-fd-theme-bw {
+.gpii-fd-theme.fl-theme-bw {
     color: #000000 !important;
     background-color: #ffffff !important;
     border-color: #000000 !important;
 }
-.gpii-fd-theme-wb {
+.gpii-fd-theme.fl-theme-wb, {
     color: #ffffff !important;
     background-color: #000000 !important;
     border-color: #000000 !important;
@@ -422,8 +422,8 @@ button {
 }
 .gpii-fd-navIcons {
     clear: both;
-    margin: 0 2rem;
-    margin-top: 1.5rem; /* gap between main body and icons*/
+    padding: 0 2rem;
+    padding-top: 1.5rem; /* gap between main body and icons*/
 }
 .gpii-fd-navIcon {
     padding: 0.5rem;
@@ -486,7 +486,7 @@ button {
     border-left: 1.25rem solid transparent;
     border-right: 1.25rem solid transparent;
     border-top: 1.5rem solid #fff;
-    margin: -7.2rem auto 3rem auto;
+    margin: -7.3rem auto 3rem auto;
 }
 
 .gpii-fd-show {
@@ -596,3 +596,87 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 .gpii-keyboardInput-shiftLatched ~ .gpii-fd-keyboard-shift-indicator {
     visibility: visible;
 }
+
+
+/* high-contrast themes: white-on-black */
+.fl-theme-wb .gpii-fd,
+.fl-theme-wb .gpii-fd-topButtons,
+.fl-theme-wb .gpii-fd-navIcons,
+.fl-theme-wb .gpii-fd-navIcons ul,
+.fl-theme-wb .gpii-fd-navButtons-next:hover,
+.fl-theme-wb .gpii-fd-navButtons-back:hover,
+.fl-theme-wb .gpii-fd-navButtons-next:hover *,
+.fl-theme-wb .gpii-fd-navButtons-back:hover * {
+    color: #000000 !important;
+    background-color: #ffffff !important;
+}
+.fl-theme-wb .gpii-fd,
+.fl-theme-wb .gpii-fd-navButtons-next,
+.fl-theme-wb .gpii-fd-navButtons-back,
+.fl-theme-wb .gpii-fd-tooltip {
+    border: 1px solid #ffffff !important;
+}
+.fl-theme-wb .gpii-fd-navButtons-next:focus,
+.fl-theme-wb .gpii-fd-navButtons-back:focus {
+    box-shadow: 0 0 0 0.4rem rgb(255, 255, 255), /* white */
+                0 0 0 0.6rem rgb(0, 0, 0) !important;
+}
+.fl-theme-wb .gpii-fd-navButtons-next:hover,
+.fl-theme-wb .gpii-fd-navButtons-back:hover {
+    box-shadow: 0 0 0 0.4rem rgb(0, 0, 0),
+                0 0 0 0.6rem rgb(0, 0, 0) !important;
+}
+.fl-theme-wb .gpii-fd-activeIndicator {
+    border-left-color #ffffff !important;
+    border-right-color #ffffff !important;
+    border-top-color: #000000 !important;
+}
+.fl-theme-wb .gpii-fd-confirmedIndicator {
+    background-color: transparent !important;
+}
+.fl-theme-wb .gpii-fd-confirmedIndicator:before {
+    color: #ffffff;
+    background-color: #000000 !important;
+}
+
+/* high-contrast themes: black-on-white */
+.fl-theme-bw .gpii-fd,
+.fl-theme-bw .gpii-fd-topButtons,
+.fl-theme-bw .gpii-fd-navIcons,
+.fl-theme-bw .gpii-fd-navIcons ul,
+.fl-theme-bw .gpii-fd-navButtons-next:hover,
+.fl-theme-bw .gpii-fd-navButtons-back:hover,
+.fl-theme-bw .gpii-fd-navButtons-next:hover *,
+.fl-theme-bw .gpii-fd-navButtons-back:hover * {
+    color: #ffffff !important;
+    background-color: #000000 !important;
+}
+.fl-theme-bw .gpii-fd,
+.fl-theme-bw .gpii-fd-navButtons-next,
+.fl-theme-bw .gpii-fd-navButtons-back,
+.fl-theme-bw .gpii-fd-tooltip {
+    border: 1px solid #000000 !important;
+}
+.fl-theme-bw .gpii-fd-navButtons-next:focus,
+.fl-theme-bw .gpii-fd-navButtons-back:focus {
+    box-shadow: 0 0 0 0.4rem rgb(0, 0, 0),
+                0 0 0 0.6rem rgb(255, 255, 255) !important;
+}
+.fl-theme-bw .gpii-fd-navButtons-next:hover,
+.fl-theme-bw .gpii-fd-navButtons-back:hover {
+    box-shadow: 0 0 0 0.4rem rgb(255, 255, 255),
+                0 0 0 0.6rem rgb(255, 255, 255) !important;
+}
+.fl-theme-bw .gpii-fd-activeIndicator {
+    border-left-color #000000 !important;
+    border-right-color #000000 !important;
+    border-top-color: #ffffff !important;
+}
+.fl-theme-bw .gpii-fd-confirmedIndicator {
+    background-color: transparent !important;
+}
+.fl-theme-bw .gpii-fd-confirmedIndicator:before {
+    color: #000000;
+    background-color: #ffffff !important;
+}
+
