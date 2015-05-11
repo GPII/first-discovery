@@ -87,6 +87,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 options: {
                     messageBase: "{messageLoader}.resources.prefsEditor.resourceText"
                 }
+            },
+            messageLoader: {
+                options: {
+                    locale: "{prefsEditorLoader}.settings.gpii_firstDiscovery_language"
+                }
             }
         },
         tooltipOptions: {
