@@ -603,18 +603,31 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 .fl-theme-wb .gpii-fd-topButtons,
 .fl-theme-wb .gpii-fd-navIcons,
 .fl-theme-wb .gpii-fd-navIcons ul,
+.fl-theme-wb .gpii-fd-mute:hover,
+.fl-theme-wb .gpii-fd-mute:hover *,
 .fl-theme-wb .gpii-fd-navButtons-next:hover,
 .fl-theme-wb .gpii-fd-navButtons-back:hover,
 .fl-theme-wb .gpii-fd-navButtons-next:hover *,
-.fl-theme-wb .gpii-fd-navButtons-back:hover * {
+.fl-theme-wb .gpii-fd-navButtons-back:hover *,
+.fl-theme-wb .gpii-fd-choice-label:hover,
+.fl-theme-wb .gpii-fd-lang-prev:hover,
+.fl-theme-wb .gpii-fd-lang-next:hover,
+.fl-theme-wb .gpii-fd-decrease:hover,
+.fl-theme-wb .gpii-fd-increase:hover,
+.fl-theme-wb .gpii-fd-decrease:hover *,
+.fl-theme-wb .gpii-fd-increase:hover * {
     color: #000000 !important;
     background-color: #ffffff !important;
+    box-shadow: none !important;
 }
 .fl-theme-wb .gpii-fd,
 .fl-theme-wb .gpii-fd-navButtons-next,
 .fl-theme-wb .gpii-fd-navButtons-back,
 .fl-theme-wb .gpii-fd-tooltip {
     border: 1px solid #ffffff !important;
+}
+.fl-theme-wb .gpii-fd-mute:hover {
+    border: 1px solid #000000 !important;
 }
 .fl-theme-wb .gpii-fd-navButtons-next:focus,
 .fl-theme-wb .gpii-fd-navButtons-back:focus {
@@ -638,24 +651,41 @@ input[type="text"].gpii-fd-keyboard-input:focus {
     color: #ffffff;
     background-color: #000000 !important;
 }
+.fl-theme-wb .gpii-fd-theme:hover,
+.fl-theme-wb .gpii-fd-keyboard-input:hover {
+    box-shadow: 0 0 0 0.6rem rgb(255,255,255);
+}
 
 /* high-contrast themes: black-on-white */
 .fl-theme-bw .gpii-fd,
 .fl-theme-bw .gpii-fd-topButtons,
 .fl-theme-bw .gpii-fd-navIcons,
 .fl-theme-bw .gpii-fd-navIcons ul,
+.fl-theme-bw .gpii-fd-mute:hover,
+.fl-theme-bw .gpii-fd-mute:hover *,
 .fl-theme-bw .gpii-fd-navButtons-next:hover,
 .fl-theme-bw .gpii-fd-navButtons-back:hover,
 .fl-theme-bw .gpii-fd-navButtons-next:hover *,
-.fl-theme-bw .gpii-fd-navButtons-back:hover * {
+.fl-theme-bw .gpii-fd-navButtons-back:hover *,
+.fl-theme-bw .gpii-fd-choice-label:hover,
+.fl-theme-bw .gpii-fd-lang-prev:hover,
+.fl-theme-bw .gpii-fd-lang-next:hover,
+.fl-theme-bw .gpii-fd-decrease:hover,
+.fl-theme-bw .gpii-fd-increase:hover,
+.fl-theme-bw .gpii-fd-decrease:hover *,
+.fl-theme-bw .gpii-fd-increase:hover * {
     color: #ffffff !important;
     background-color: #000000 !important;
+    box-shadow: none !important;
 }
 .fl-theme-bw .gpii-fd,
 .fl-theme-bw .gpii-fd-navButtons-next,
 .fl-theme-bw .gpii-fd-navButtons-back,
 .fl-theme-bw .gpii-fd-tooltip {
     border: 1px solid #000000 !important;
+}
+.fl-theme-bw .gpii-fd-mute:hover {
+    border: 1px solid #ffffff !important;
 }
 .fl-theme-bw .gpii-fd-navButtons-next:focus,
 .fl-theme-bw .gpii-fd-navButtons-back:focus {
@@ -678,5 +708,20 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 .fl-theme-bw .gpii-fd-confirmedIndicator:before {
     color: #000000;
     background-color: #ffffff !important;
+}
+.fl-theme-bw .gpii-fd-choice-label:hover,
+.fl-theme-bw .gpii-fd-lang-prev:hover,
+.fl-theme-bw .gpii-fd-lang-next:hover,
+.fl-theme-bw .gpii-fd-decrease:hover,
+.fl-theme-bw .gpii-fd-increase:hover,
+.fl-theme-bw .gpii-fd-decrease:hover *,
+.fl-theme-bw .gpii-fd-increase:hover * {
+    color: #ffffff !important;
+    background-color: #000000 !important;
+    box-shadow: none !important;
+}
+.fl-theme-bw .gpii-fd-theme:hover,
+.fl-theme-bw .gpii-fd-keyboard-input:hover {
+    box-shadow: 0 0 0 0.6rem rgb(0,0,0) !important;
 }
 
