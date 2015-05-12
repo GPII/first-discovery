@@ -659,10 +659,29 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * Contrast panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.contrast", {
-        gradeNames: ["fluid.prefs.panel", "autoInit"],
+        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip.renderer", "autoInit"],
         preferenceMap: {
             "fluid.prefs.contrast": {
                 "model.value": "default"
+            }
+        },
+        modelRelay: {
+            source: "{that}.model.value",
+            target: "currentSelectedIndex",
+            singleTransform: {
+                type: "fluid.transforms.indexOf",
+                array: "{that}.options.controlValues.theme",
+                value: "{that}.model.value"
+            }
+        },
+        tooltipContentMap: {
+            themeLabel: {
+                tooltip: "{that}.options.stringArrayIndex.tooltip",
+                tooltipAtSelect: "{that}.options.stringArrayIndex.tooltipAtSelect"
+            },
+            themeInput: {
+                tooltip: "{that}.options.stringArrayIndex.tooltip",
+                tooltipAtSelect: "{that}.options.stringArrayIndex.tooltipAtSelect"
             }
         },
         selectors: {
@@ -676,7 +695,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "afterRender.style": "{that}.style"
         },
         stringArrayIndex: {
-            theme: ["contrast-default", "contrast-bw", "contrast-wb"]
+            theme: ["contrast-default", "contrast-bw", "contrast-wb"],
+            tooltip: ["contrast-default-tooltip", "contrast-bw-tooltip", "contrast-wb-tooltip"],
+            tooltipAtSelect: ["contrast-default-tooltipAtSelect", "contrast-bw-tooltipAtSelect", "contrast-wb-tooltipAtSelect"]
         },
         controlValues: {
             theme: ["default", "bw", "wb"]
@@ -703,15 +724,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "{that}.dom.themeLabel",
                     "{that}.options.controlValues.theme",
                     "{that}.options.controlValues.theme.0",
-                    "{that}.options.classnameMap.theme",
-                    "{that}.options.styles.defaultThemeLabel"
+                    "{that}.options.classnameMap.theme"
                 ],
                 dynamic: true
             }
         }
     });
 
-    gpii.firstDiscovery.panel.contrast.style = function (labels, theme, defaultThemeName, style, defaultLabelStyle) {
+    gpii.firstDiscovery.panel.contrast.style = function (labels, theme, defaultThemeName, style) {
         // TODO: A potential further improvement would be to use a utility such as the one in the video player to
         // make this automatically model bound.
         // see: https://github.com/fluid-project/videoPlayer/blob/master/js/VideoPlayer_showHide.js

@@ -423,7 +423,15 @@ https://github.com/gpii/universal/LICENSE.txt
             "contrastLabel": "Contrast",
             "contrast-default": "no change",
             "contrast-bw": "black on white",
-            "contrast-wb": "white on black"
+            "contrast-wb": "white on black",
+
+            "contrast-default-tooltip": "reset to original screen colors",
+            "contrast-bw-tooltip": "change the screen color to black on white",
+            "contrast-wb-tooltip": "change the screen color to white on black",
+
+            "contrast-default-tooltipAtSelect": "no change is currently selected",
+            "contrast-bw-tooltipAtSelect": "black on white is currently selected",
+            "contrast-wb-tooltipAtSelect": "white on black is currently selected"
         },
         themeLabels: ["no change", "black on white", "white on black"]
     });
@@ -446,7 +454,7 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "Test the contrast settings panel",
             tests: [{
-                expect: 8,
+                expect: 14,
                 name: "Rendering",
                 sequence: [{
                     func: "{contrast}.refreshView"
@@ -455,36 +463,68 @@ https://github.com/gpii/universal/LICENSE.txt
                     event: "{contrast}.events.afterRender"
                 }]
             }, {
-                expect: 3,
+                expect: 21,
                 name: "Selection",
                 sequence: [{
                     func: "gpii.tests.firstDiscovery.panel.utils.triggerRadioButton",
                     args: ["{contrast}.dom.themeInput", 1]
                 }, {
-                    listener: "gpii.tests.contrastTester.verifyModel",
+                    listener: "gpii.tests.contrastTester.verifySelection",
                     args: ["{contrast}", "bw"],
                     spec: {path: "value", priority: "last"},
                     changeEvent: "{contrast}.applier.modelChanged"
                 }, {
+                    func: "{contrast}.refreshView"
+                }, {
+                    listener: "gpii.tests.contrastTester.verifyTooltipOnRenderedContent",
+                    args: ["{contrast}"],
+                    event: "{contrast}.events.afterRender"
+                }, {
                     func: "gpii.tests.firstDiscovery.panel.utils.triggerRadioButton",
                     args: ["{contrast}.dom.themeInput", 2]
                 }, {
-                    listener: "gpii.tests.contrastTester.verifyModel",
+                    listener: "gpii.tests.contrastTester.verifySelection",
                     args: ["{contrast}", "wb"],
                     spec: {path: "value", priority: "last"},
                     changeEvent: "{contrast}.applier.modelChanged"
                 }, {
+                    func: "{contrast}.refreshView"
+                }, {
+                    listener: "gpii.tests.contrastTester.verifyTooltipOnRenderedContent",
+                    args: ["{contrast}"],
+                    event: "{contrast}.events.afterRender"
+                }, {
                     func: "gpii.tests.firstDiscovery.panel.utils.triggerRadioButton",
                     args: ["{contrast}.dom.themeInput", 0]
                 }, {
-                    listener: "gpii.tests.contrastTester.verifyModel",
+                    listener: "gpii.tests.contrastTester.verifySelection",
                     args: ["{contrast}", "default"],
                     spec: {path: "value", priority: "last"},
                     changeEvent: "{contrast}.applier.modelChanged"
+                }, {
+                    func: "{contrast}.refreshView"
+                }, {
+                    listener: "gpii.tests.contrastTester.verifyTooltipOnRenderedContent",
+                    args: ["{contrast}"],
+                    event: "{contrast}.events.afterRender"
                 }]
             }]
         }]
     });
+
+    gpii.tests.contrastTester.verifyTooltipOnRenderedContent = function (that) {
+        var idToContent = that.tooltip.model.idToContent;
+
+        that.locate("themeLabel").each(function (idx, elm) {
+            var labels = $(elm);
+            var inputs = that.locate("themeInput").eq(idx);
+            var messageName = that.options.stringArrayIndex[that.options.controlValues.theme[idx] === that.model.value ? "tooltipAtSelect" : "tooltip"][idx];
+            var expected = that.options.messageBase[messageName];
+
+            jqUnit.assertEquals("The tooltip definition for the theme label #" + idx + " has been correctly populated", expected, idToContent[labels.attr("id")]);
+            jqUnit.assertEquals("The tooltip definition for the theme input #" + idx + " has been populated correctly", expected, idToContent[inputs.attr("id")]);
+        });
+    };
 
     gpii.tests.contrastTester.verifyRendering = function (that) {
         var themeInput = that.locate("themeInput");
@@ -496,9 +536,10 @@ https://github.com/gpii/universal/LICENSE.txt
             var className = that.options.classnameMap.theme[themeInput.eq(idx).val()];
             jqUnit.assertTrue("The #" + idx + " label should have the '" + className + "' applied.", $(elm).hasClass(className));
         });
+        gpii.tests.contrastTester.verifyTooltipOnRenderedContent(that);
     };
 
-    gpii.tests.contrastTester.verifyModel = function (that, expectedValue) {
+    gpii.tests.contrastTester.verifySelection = function (that, expectedValue) {
         jqUnit.assertEquals("The model value should have been set correctly", expectedValue, that.model.value);
     };
 
