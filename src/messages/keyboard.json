@@ -17,5 +17,7 @@
     "keyboardInputTooltip": "Select to begin typing",
     "tryTooltip": "Select to turn Sticky Keys on",
     "turnOnTooltip": "Select to turn Sticky Keys on",
-    "turnOffTooltip": "Select to turn Sticky Keys off"
+    "turnOffTooltip": "Select to turn Sticky Keys off",
+
+    "shiftLatched": "shift"
 }

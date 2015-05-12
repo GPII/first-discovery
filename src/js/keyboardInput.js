@@ -236,19 +236,57 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     fluid.defaults("gpii.firstDiscovery.keyboardInputTts", {
-        gradeNames: ["fluid.modelRelayComponent", "autoInit"],
         invokers: {
             speak: {
                 func: "{fluid.textToSpeech}.queueSpeech"
+            },
+            speakOnFocusMessage: {
+                funcName: "gpii.firstDiscovery.keyboardInputTts.speakOnFocusMessage",
+                args: ["{that}", "{gpii.firstDiscovery.keyboardInput}.container"]
+            },
+            speakShiftOnLatch: {
+                funcName: "gpii.firstDiscovery.keyboardInputTts.speakShiftOnLatch",
+                args: [
+                    "{that}",
+                    "{gpii.firstDiscovery.keyboardInput}.model.shiftLatched",
+                    "{that}.msgLookup.shiftLatched"
+                ]
             }
+        },
+        modelListeners: {
+            "shiftLatched.speakShiftOnLatch": "{that}.speakShiftOnLatch"
         },
         listeners: {
             "keypress.speak": {
                 listener: "{that}.speak",
                 args: ["{arguments}.0"],
                 priority: "first"
+            },
+            // This onCreate.registerSpeakOnFocusMessage listener has
+            // a priority of 1 as it must happen after the
+            // onCreate.removeFocusin listener of keyboardInput
+            "onCreate.registerSpeakOnFocusMessage": {
+                "this": "{gpii.firstDiscovery.keyboardInput}.container",
+                method: "on",
+                args: ["focusin.speakOnFocusMessage", "{that}.speakOnFocusMessage"],
+                priority: 1
             }
         }
     });
+
+    fluid.registerNamespace("gpii.firstDiscovery.keyboardInputTts");
+
+    gpii.firstDiscovery.keyboardInputTts.speakOnFocusMessage = function (that, input) {
+        var placeholder = input.attr("placeholder");
+        if (placeholder && placeholder.length !== 0) {
+            that.speak(placeholder);
+        }
+    };
+
+    gpii.firstDiscovery.keyboardInputTts.speakShiftOnLatch = function (that, shiftLatched, msg) {
+        if (shiftLatched) {
+            that.speak(msg);
+        }
+    };
 
 })();
