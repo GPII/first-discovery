@@ -11,28 +11,6 @@ https://github.com/gpii/universal/LICENSE.txt
 (function ($, fluid) {
     "use strict";
 
-    fluid.registerNamespace("gpii.tests.firstDiscovery.panel.utils");
-
-    gpii.tests.firstDiscovery.panel.utils.triggerRadioButton = function (radioButtons, idx) {
-        radioButtons.eq(idx).click();
-    };
-
-    gpii.tests.firstDiscovery.panel.utils.verifyRadioButtonRendering = function (inputs, inputLabels, labelText, selection) {
-        fluid.each(inputLabels, function (elm, idx) {
-            elm = $(elm);
-            jqUnit.assertEquals("Choice #" + idx + " should have the correct label.", labelText[idx], elm.text());
-        });
-        jqUnit.assertEquals("The correct choice should be checked", selection, inputs.filter(":checked").val());
-    };
-
-    gpii.tests.firstDiscovery.panel.utils.verifyTooltipContents = function (domElems, currentValue, idToContent, controlValues, stringArray, messages) {
-        fluid.each(domElems, function (elem, idx) {
-            var tooltipLabelSuffix = controlValues[idx] === currentValue ? "-tooltipAtSelect" : "-tooltip";
-            elem = $(elem);
-            jqUnit.assertEquals("The tooltip definition for the element #" + idx + " has been populated correctly", messages[stringArray[idx] + tooltipLabelSuffix], idToContent[elem.attr("id")]);
-        });
-    };
-
     /************************
      * Language Panel Tests *
      ************************/
@@ -159,8 +137,8 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     gpii.tests.langTester.verifyTooltip = function (that) {
-        gpii.tests.firstDiscovery.panel.utils.verifyTooltipContents(that.locate("langRow"), that.model.lang, that.attachTooltipOnLang.tooltip.model.idToContent, that.options.controlValues.lang, that.options.stringArrayIndex.lang, that.options.messageBase);
-        gpii.tests.firstDiscovery.panel.utils.verifyTooltipContents(that.locate("langInput"), that.model.lang, that.attachTooltipOnLang.tooltip.model.idToContent, that.options.controlValues.lang, that.options.stringArrayIndex.lang, that.options.messageBase);
+        gpii.tests.utils.verifyTooltipContents("language button row element", that.locate("langRow"), that.model.lang, that.attachTooltipOnLang.tooltip.model.idToContent, that.options.controlValues.lang, that.options.stringArrayIndex.lang, that.options.messageBase);
+        gpii.tests.utils.verifyTooltipContents("language button input element", that.locate("langInput"), that.model.lang, that.attachTooltipOnLang.tooltip.model.idToContent, that.options.controlValues.lang, that.options.stringArrayIndex.lang, that.options.messageBase);
     };
 
     gpii.tests.langTester.verifyRendering = function (that) {
@@ -393,7 +371,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 expect: 10,
                 name: "Selections on the speak text panel",
                 sequence: [{
-                    func: "gpii.tests.firstDiscovery.panel.utils.triggerRadioButton",
+                    func: "gpii.tests.utils.triggerRadioButton",
                     args: ["{speakText}.dom.choiceInput", 1]
                 }, {
                     listener: "gpii.tests.speakTextTester.verifyModel",
@@ -407,7 +385,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     args: ["{speakText}"],
                     event: "{speakText}.events.afterRender"
                 }, {
-                    func: "gpii.tests.firstDiscovery.panel.utils.triggerRadioButton",
+                    func: "gpii.tests.utils.triggerRadioButton",
                     args: ["{speakText}.dom.choiceInput", 0]
                 }, {
                     listener: "gpii.tests.speakTextTester.verifyModel",
@@ -426,13 +404,13 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     gpii.tests.speakTextTester.verifyTooltip = function (that) {
-        gpii.tests.firstDiscovery.panel.utils.verifyTooltipContents(that.locate("choiceLabel"), that.model.speakChoice, that.tooltip.model.idToContent, that.options.controlValues.choice, that.options.stringArrayIndex.choice, that.options.messageBase);
-        gpii.tests.firstDiscovery.panel.utils.verifyTooltipContents(that.locate("choiceInput"), that.model.speakChoice, that.tooltip.model.idToContent, that.options.controlValues.choice, that.options.stringArrayIndex.choice, that.options.messageBase);
+        gpii.tests.utils.verifyTooltipContents("choice label", that.locate("choiceLabel"), that.model.speakChoice, that.tooltip.model.idToContent, that.options.controlValues.choice, that.options.stringArrayIndex.choice, that.options.messageBase);
+        gpii.tests.utils.verifyTooltipContents("choice input", that.locate("choiceInput"), that.model.speakChoice, that.tooltip.model.idToContent, that.options.controlValues.choice, that.options.stringArrayIndex.choice, that.options.messageBase);
     };
 
     gpii.tests.speakTextTester.verifyRendering = function (that) {
         jqUnit.assertEquals("The instructions should have been set correctly.", that.options.messageBase.speakTextInstructions, that.locate("instructions").text());
-        gpii.tests.firstDiscovery.panel.utils.verifyRadioButtonRendering(that.locate("choiceInput"), that.locate("choiceLabel"), that.options.choiceLabels, that.model.speakChoice);
+        gpii.tests.utils.verifyRadioButtonRendering(that.locate("choiceInput"), that.locate("choiceLabel"), that.options.choiceLabels, that.model.speakChoice);
         gpii.tests.speakTextTester.verifyTooltip(that);
     };
 
@@ -504,7 +482,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 expect: 21,
                 name: "Selection",
                 sequence: [{
-                    func: "gpii.tests.firstDiscovery.panel.utils.triggerRadioButton",
+                    func: "gpii.tests.utils.triggerRadioButton",
                     args: ["{contrast}.dom.themeInput", 1]
                 }, {
                     listener: "gpii.tests.contrastTester.verifySelection",
@@ -518,7 +496,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     args: ["{contrast}"],
                     event: "{contrast}.events.afterRender"
                 }, {
-                    func: "gpii.tests.firstDiscovery.panel.utils.triggerRadioButton",
+                    func: "gpii.tests.utils.triggerRadioButton",
                     args: ["{contrast}.dom.themeInput", 2]
                 }, {
                     listener: "gpii.tests.contrastTester.verifySelection",
@@ -532,7 +510,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     args: ["{contrast}"],
                     event: "{contrast}.events.afterRender"
                 }, {
-                    func: "gpii.tests.firstDiscovery.panel.utils.triggerRadioButton",
+                    func: "gpii.tests.utils.triggerRadioButton",
                     args: ["{contrast}.dom.themeInput", 0]
                 }, {
                     listener: "gpii.tests.contrastTester.verifySelection",
@@ -551,8 +529,8 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     gpii.tests.contrastTester.verifyTooltip = function (that) {
-        gpii.tests.firstDiscovery.panel.utils.verifyTooltipContents(that.locate("themeLabel"), that.model.value, that.tooltip.model.idToContent, that.options.controlValues.theme, that.options.stringArrayIndex.theme, that.options.messageBase);
-        gpii.tests.firstDiscovery.panel.utils.verifyTooltipContents(that.locate("themeInput"), that.model.value, that.tooltip.model.idToContent, that.options.controlValues.theme, that.options.stringArrayIndex.theme, that.options.messageBase);
+        gpii.tests.utils.verifyTooltipContents("contrast theme label", that.locate("themeLabel"), that.model.value, that.tooltip.model.idToContent, that.options.controlValues.theme, that.options.stringArrayIndex.theme, that.options.messageBase);
+        gpii.tests.utils.verifyTooltipContents("contrast theme input", that.locate("themeInput"), that.model.value, that.tooltip.model.idToContent, that.options.controlValues.theme, that.options.stringArrayIndex.theme, that.options.messageBase);
     };
 
     gpii.tests.contrastTester.verifyRendering = function (that) {
@@ -560,7 +538,7 @@ https://github.com/gpii/universal/LICENSE.txt
         var themeLabel = that.locate("themeLabel");
 
         jqUnit.assertEquals("The instructions should have been set correctly.", that.options.messageBase.instructions, that.locate("instructions").text());
-        gpii.tests.firstDiscovery.panel.utils.verifyRadioButtonRendering(themeInput, themeLabel, that.options.themeLabels, that.model.value);
+        gpii.tests.utils.verifyRadioButtonRendering(themeInput, themeLabel, that.options.themeLabels, that.model.value);
         themeLabel.each(function (idx, elm) {
             var className = that.options.classnameMap.theme[themeInput.eq(idx).val()];
             jqUnit.assertTrue("The #" + idx + " label should have the '" + className + "' applied.", $(elm).hasClass(className));

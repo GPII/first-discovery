@@ -101,6 +101,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     gpii.firstDiscovery.attachTooltip.getTooltipModel = function (domBinder, map, getElementInfo, attachTooltip) {
+        // Passing in "{attachTooltip}" instead of "{attachTooltip}.model" is to avoid attachTooltip.model
+        // being instantiated as undefined when it's not supposed to at the tool initialization. It would cause the
+        // language enactor to unnecessarily reload the page twice.
         if (!attachTooltip.model) {
             return;
         }

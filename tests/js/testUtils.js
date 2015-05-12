@@ -33,4 +33,24 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals(elementName + stateMsg + selector + " applied", expected, element.hasClass(selector));
     };
 
+    gpii.tests.utils.triggerRadioButton = function (radioButtons, idx) {
+        radioButtons.eq(idx).click();
+    };
+
+    gpii.tests.utils.verifyRadioButtonRendering = function (inputs, inputLabels, labelText, selection) {
+        fluid.each(inputLabels, function (elm, idx) {
+            elm = $(elm);
+            jqUnit.assertEquals("Choice #" + idx + " should have the correct label.", labelText[idx], elm.text());
+        });
+        jqUnit.assertEquals("The correct choice should be checked", selection, inputs.filter(":checked").val());
+    };
+
+    gpii.tests.utils.verifyTooltipContents = function (elemName, domElems, currentValue, idToContent, controlValues, stringArray, messages) {
+        fluid.each(domElems, function (elem, idx) {
+            var tooltipLabelSuffix = controlValues[idx] === currentValue ? "-tooltipAtSelect" : "-tooltip";
+            elem = $(elem);
+            jqUnit.assertEquals("The tooltip definition for the " + elemName + " #" + idx + " has been populated correctly", messages[stringArray[idx] + tooltipLabelSuffix], idToContent[elem.attr("id")]);
+        });
+    };
+
 })(jQuery, fluid);
