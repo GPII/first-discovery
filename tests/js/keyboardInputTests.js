@@ -120,8 +120,12 @@ https://github.com/gpii/universal/LICENSE.txt
 
     gpii.tests.firstDiscovery.keyboardInput.setUpTooltipTest = function (keyboardInput) {
         // Set the focus and tooltip state to a known starting point
-        $("#gpiic-tests-other-input").focus();
+        gpii.tests.firstDiscovery.keyboardInput.focusOther();
         keyboardInput.tooltip.close();
+    };
+
+    gpii.tests.firstDiscovery.keyboardInput.focusOther = function () {
+        $("#gpiic-tests-other-input").focus();
     };
 
     gpii.tests.firstDiscovery.keyboardInput.checkTooltipMessage = function (keyboardInput) {
@@ -496,6 +500,10 @@ https://github.com/gpii/universal/LICENSE.txt
         }]
     });
 
+    gpii.tests.firstDiscovery.keyboardInputTts.clearInput = function (keyboardInput) {
+        keyboardInput.container.val("");
+    };
+
     gpii.tests.firstDiscovery.keyboardInputTts.recordSpoken = function (keyboardInput, text) {
         keyboardInput.lastSpokenText = text;
         keyboardInput.events.speak.fire();
@@ -517,7 +525,7 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.defaults("gpii.tests.firstDiscovery.keyboardInputWithTts", {
         gradeNames: ["gpii.tests.firstDiscovery.keyboardInput", "gpii.firstDiscovery.keyboardInputTts", "autoInit"],
         messageBase: {
-            "shiftLatched": "shift"
+            "shiftLatched": "shiftLatched message"
         },
         invokers: {
             speak: {
@@ -552,7 +560,7 @@ https://github.com/gpii/universal/LICENSE.txt
             name: "keyboardInputTts tests",
             tests: [
                 {
-                    name: "Check key presses spoken when sticky keys is off",
+                    name: "Check placeholder spoken",
                     expect: 4,
                     sequence: [
                         {
@@ -564,6 +572,61 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["Sticky Keys should be off",
                                    "{keyboardInput}.model.stickyKeysEnabled"]
                         },
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInputTts.clearInput",
+                            args: ["{keyboardInput}"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInput.focusOther"
+                        },
+                        {
+                            element: "{keyboardInput}.container",
+                            jQueryTrigger: "focus"
+                        },
+                        // Verify that the placeholder text is read on
+                        // focus when the input is empty
+                        {
+                            event: "{keyboardInput}.events.speak",
+                            listener: "gpii.tests.firstDiscovery.keyboardInputTts.checkSpoken",
+                            args: ["{keyboardInput}", "placeholder text"]
+                        },
+                        // Press "a" and verify that it is spoken
+                        {
+                            func: "gpii.tests.firstDiscovery.triggerKeypress",
+                            args: ["{keyboardInput}.container", "a"]
+                        },
+                        {
+                            event: "{keyboardInput}.events.speak",
+                            listener: "gpii.tests.firstDiscovery.keyboardInputTts.checkSpoken",
+                            args: ["{keyboardInput}", "a"]
+                        },
+                        // Focus away and back again and verify that
+                        // the placeholder text is also read in the
+                        // case that we now have content in the input
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInput.focusOther"
+                        },
+                        {
+                            element: "{keyboardInput}.container",
+                            jQueryTrigger: "focus"
+                        },
+                        {
+                            event: "{keyboardInput}.events.speak",
+                            listener: "gpii.tests.firstDiscovery.keyboardInputTts.checkSpoken",
+                            args: ["{keyboardInput}", "placeholder text"]
+                        }
+                    ]
+                },
+                {
+                    name: "Check key presses spoken and shift not spoken when sticky keys is off",
+                    expect: 4,
+                    sequence: [
+                        {
+                            func: "jqUnit.assertFalse",
+                            args: ["Sticky Keys should be off",
+                                   "{keyboardInput}.model.stickyKeysEnabled"]
+                        },
+                        // Press "a" and verify that it is spoken
                         {
                             func: "gpii.tests.firstDiscovery.triggerKeypress",
                             args: ["{keyboardInput}.container", "a"]
@@ -628,7 +691,7 @@ https://github.com/gpii/universal/LICENSE.txt
                         {
                             event: "{keyboardInput}.events.speak",
                             listener: "gpii.tests.firstDiscovery.keyboardInputTts.checkSpoken",
-                            args: ["{keyboardInput}", "shift"]
+                            args: ["{keyboardInput}", "shiftLatched message"]
                         },
                         {
                             func: "gpii.tests.firstDiscovery.triggerKeypress",
