@@ -591,10 +591,11 @@ input[type="text"].gpii-fd-keyboard-input:focus {
     background-color: #767675;
     border-radius: 7px;
     color: #FFFFFF;
-    margin-left: 21.75rem;
 }
 .gpii-fd-keyboard-shift-indicator {
     visibility: hidden;
+    width: 6rem;
+    margin-left: 23.75rem;
     margin-top: -3.3rem;
 }
 .gpii-keyboardInput-shiftLatched ~ .gpii-fd-keyboard-shift-indicator {
@@ -606,6 +607,8 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 .fl-theme-wb .gpii-fd,
 .fl-theme-wb .gpii-fd-navButtons-next,
 .fl-theme-wb .gpii-fd-navButtons-back,
+.fl-theme-wb .gpii-fd-keyboard-try,
+.fl-theme-wb .gpii-fd-keyboard-accommodationToggle,
 .fl-theme-wb .gpii-fd-tooltip {
     border: 1px solid #ffffff !important;
 }
@@ -637,7 +640,9 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 .fl-theme-wb .gpii-fd-decrease:hover,
 .fl-theme-wb .gpii-fd-increase:hover,
 .fl-theme-wb .gpii-fd-decrease:hover *,
-.fl-theme-wb .gpii-fd-increase:hover * {
+.fl-theme-wb .gpii-fd-increase:hover *,
+.fl-theme-wb .gpii-fd-keyboard-try:hover,
+.fl-theme-wb .gpii-fd-keyboard-accommodationToggle:hover {
     color: #000000 !important;
     background-color: #ffffff !important;
     box-shadow: none !important;
@@ -647,20 +652,23 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 }
 .fl-theme-wb .gpii-fd-navButtons-next:hover,
 .fl-theme-wb .gpii-fd-navButtons-back:hover {
-    box-shadow: 0 0 0 0.4rem rgb(0, 0, 0),
-                0 0 0 0.6rem rgb(0, 0, 0) !important;
+    box-shadow: none !important;
+}
+.fl-theme-wb .gpii-fd-theme:focus,
+.fl-theme-wb .gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
+    border: none !important;
 }
 .fl-theme-wb .gpii-fd-keyboard-input:focus,
 .fl-theme-wb .gpii-fd-theme:hover,
 .fl-theme-wb .gpii-fd-keyboard-input:hover {
-    box-shadow: 0 0 0 0.6rem rgb(255,255,255);
+    box-shadow: 0 0 0 0.6rem rgb(255,255,255) !important;
 }
-.fl-theme-wb .gpii-fd-mute:focus,
-.fl-theme-wb .gpii-fd-choice-label:focus,
-.fl-theme-wb .gpii-fd-lang-prev:focus,
-.fl-theme-wb .gpii-fd-lang-next:focus,
+.fl-theme-wb .gpii-fd-decrease:focus,
+.fl-theme-wb .gpii-fd-increase:focus,
 .fl-theme-wb .gpii-fd-navButtons-next:focus,
 .fl-theme-wb .gpii-fd-navButtons-back:focus,
+.fl-theme-wb .gpii-fd-keyboard-try:focus,
+.fl-theme-wb .gpii-fd-keyboard-accommodationToggle:focus,
 .fl-theme-wb .gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
     box-shadow: 0 0 0 0.4rem rgb(255,255,255) !important;
 }
@@ -669,13 +677,22 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 }
 .fl-theme-wb .gpii-fd-prefsEditor-panel-contrast input:focus ~ label {
     box-shadow: 0 0 0 0.2rem rgb(0,0,0),
-                0 0 0 0.6rem rgb(255, 255, 255);
+                0 0 0 0.6rem rgb(255, 255, 255) !important;
+}
+.fl-theme-wb .gpii-fd-keyboard-shift-indicator .gpii-fd-keyboard-shift-indicatorLabel {
+    border-style: dashed;
+    border-width: 1px;
+}
+.fl-theme-wb input[type="text"].gpii-fd-keyboard-input::-webkit-input-placeholder {
+    color: #ffffff !important;
 }
 
 /* high-contrast themes: black-on-white */
 .fl-theme-bw .gpii-fd,
 .fl-theme-bw .gpii-fd-navButtons-next,
 .fl-theme-bw .gpii-fd-navButtons-back,
+.fl-theme-bw .gpii-fd-keyboard-try,
+.fl-theme-bw .gpii-fd-keyboard-accommodationToggle,
 .fl-theme-bw .gpii-fd-tooltip {
     border: 1px solid #000000 !important;
 }
@@ -707,7 +724,9 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 .fl-theme-bw .gpii-fd-decrease:hover,
 .fl-theme-bw .gpii-fd-increase:hover,
 .fl-theme-bw .gpii-fd-decrease:hover *,
-.fl-theme-bw .gpii-fd-increase:hover * {
+.fl-theme-bw .gpii-fd-increase:hover *,
+.fl-theme-bw .gpii-fd-keyboard-try:hover,
+.fl-theme-bw .gpii-fd-keyboard-accommodationToggle:hover {
     color: #ffffff !important;
     background-color: #000000 !important;
     box-shadow: none !important;
@@ -717,8 +736,11 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 }
 .fl-theme-bw .gpii-fd-navButtons-next:hover,
 .fl-theme-bw .gpii-fd-navButtons-back:hover {
-    box-shadow: 0 0 0 0.4rem rgb(255, 255, 255),
-                0 0 0 0.6rem rgb(255, 255, 255) !important;
+    box-shadow: none !important;
+}
+.fl-theme-bw .gpii-fd-theme:focus,
+.fl-theme-bw .gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
+    border: none !important;
 }
 .fl-theme-bw .gpii-fd-keyboard-input:focus,
 .fl-theme-bw .gpii-fd-theme:hover,
@@ -729,20 +751,23 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 .fl-theme-bw .gpii-fd-increase:focus,
 .fl-theme-bw .gpii-fd-navButtons-next:focus,
 .fl-theme-bw .gpii-fd-navButtons-back:focus,
+.fl-theme-bw .gpii-fd-keyboard-try:focus,
+.fl-theme-bw .gpii-fd-keyboard-accommodationToggle:focus,
 .fl-theme-bw .gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
     box-shadow: 0 0 0 0.4rem rgb(0, 0, 0) !important;
 }
 .fl-theme-bw .gpii-fd-mute:focus {
     box-shadow: 0 0 0 0.4rem rgb(255,255,255) !important;
 }
-.fl-theme-wb .gpii-fd-theme:focus,
-.fl-theme-wb .gpii-fd-choice input:focus ~ .gpii-fd-choice-label,
-.fl-theme-bw .gpii-fd-theme:focus,
-.fl-theme-bw .gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
-    border: none !important;
-}
 .fl-theme-bw .gpii-fd-prefsEditor-panel-contrast input:focus ~ label {
     box-shadow: 0 0 0 0.2rem rgb(255, 255, 255),
-                0 0 0 0.6rem rgb(0,0,0);
+                0 0 0 0.6rem rgb(0,0,0) !important;
+}
+.fl-theme-bw .gpii-fd-keyboard-shift-indicator .gpii-fd-keyboard-shift-indicatorLabel {
+    border-style: dashed;
+    border-width: 1px;
+}
+.fl-theme-bw input[type="text"].gpii-fd-keyboard-input::-webkit-input-placeholder {
+    color: #000000 !important;
 }
 
