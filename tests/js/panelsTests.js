@@ -474,6 +474,12 @@ https://github.com/gpii/universal/LICENSE.txt
                     spec: {path: "value", priority: "last"},
                     changeEvent: "{contrast}.applier.modelChanged"
                 }, {
+                    func: "{contrast}.refreshView"
+                }, {
+                    listener: "gpii.tests.contrastTester.verifyTooltipOnRenderedContent",
+                    args: ["{contrast}"],
+                    event: "{contrast}.events.afterRender"
+                }, {
                     func: "gpii.tests.firstDiscovery.panel.utils.triggerRadioButton",
                     args: ["{contrast}.dom.themeInput", 2]
                 }, {
@@ -482,6 +488,12 @@ https://github.com/gpii/universal/LICENSE.txt
                     spec: {path: "value", priority: "last"},
                     changeEvent: "{contrast}.applier.modelChanged"
                 }, {
+                    func: "{contrast}.refreshView"
+                }, {
+                    listener: "gpii.tests.contrastTester.verifyTooltipOnRenderedContent",
+                    args: ["{contrast}"],
+                    event: "{contrast}.events.afterRender"
+                }, {
                     func: "gpii.tests.firstDiscovery.panel.utils.triggerRadioButton",
                     args: ["{contrast}.dom.themeInput", 0]
                 }, {
@@ -489,6 +501,12 @@ https://github.com/gpii/universal/LICENSE.txt
                     args: ["{contrast}", "default"],
                     spec: {path: "value", priority: "last"},
                     changeEvent: "{contrast}.applier.modelChanged"
+                }, {
+                    func: "{contrast}.refreshView"
+                }, {
+                    listener: "gpii.tests.contrastTester.verifyTooltipOnRenderedContent",
+                    args: ["{contrast}"],
+                    event: "{contrast}.events.afterRender"
                 }]
             }]
         }]
@@ -523,7 +541,6 @@ https://github.com/gpii/universal/LICENSE.txt
 
     gpii.tests.contrastTester.verifySelection = function (that, expectedValue) {
         jqUnit.assertEquals("The model value should have been set correctly", expectedValue, that.model.value);
-        gpii.tests.contrastTester.verifyTooltipOnRenderedContent(that);
     };
 
     /************

@@ -665,6 +665,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "model.value": "default"
             }
         },
+        modelRelay: {
+            source: "{that}.model.value",
+            target: "currentSelectedIndex",
+            singleTransform: {
+                type: "fluid.transforms.indexOf",
+                array: "{that}.options.controlValues.theme",
+                value: "{that}.model.value"
+            }
+        },
         tooltipContentMap: {
             themeLabel: {
                 tooltip: "{that}.options.stringArrayIndex.tooltip",
