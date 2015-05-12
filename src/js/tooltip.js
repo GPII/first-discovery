@@ -30,7 +30,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * }
      * The left hand side is the name in the selectors block for the element to have the tooltip.
      * Note: the empty string "" at the left hand is to reference the component container itself.
-     * The right hand side is the name in the message bundle for the content to be shown for that element.
+     * The right hand side is the name in the message bundle referencing the tooltip content for that element.
      *
      * 2. The mapping btw one common selector used by multiple DOM elements and their correspondig tooltips.
      * This is typically used by defining tooltips for rendered radio buttons or checkboxes. When
@@ -80,7 +80,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         getTooltipModel: {
                             funcName: "gpii.firstDiscovery.attachTooltip.getTooltipModel",
                             // Specifying each elements in the argument list to force them to resolve.
-                            args: ["{attachTooltip}.dom", "{attachTooltip}.options.tooltipContentMap", "{that}.getElementInfo", "{attachTooltip}.model.currentSelectedIndex"]
+                            args: ["{attachTooltip}.dom", "{attachTooltip}.options.tooltipContentMap", "{that}.getElementInfo", "{attachTooltip}"]
                         }
                     }
                 }
@@ -100,8 +100,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         };
     };
 
-    gpii.firstDiscovery.attachTooltip.getTooltipModel = function (domBinder, map, getElementInfo, currentSelectedIndex) {
+    gpii.firstDiscovery.attachTooltip.getTooltipModel = function (domBinder, map, getElementInfo, attachTooltip) {
+        if (!attachTooltip.model) {
+            return;
+        }
+
         var idToContent = {};
+        var currentSelectedIndex = attachTooltip.model.currentSelectedIndex;
 
         fluid.each(map, function (labelInfo, selector) {
             var element = domBinder.locate(selector);
