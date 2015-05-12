@@ -14,6 +14,7 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.registerNamespace("gpii.tests.firstDiscovery.usKeymap");
     fluid.registerNamespace("gpii.tests.firstDiscovery.keyboardInput");
+    fluid.registerNamespace("gpii.tests.firstDiscovery.keyboardInputTts");
 
     gpii.tests.firstDiscovery.charCodeLowerCaseA = 97;
     gpii.tests.firstDiscovery.charCodeLowerCaseZ = 122;
@@ -495,8 +496,158 @@ https://github.com/gpii/universal/LICENSE.txt
         }]
     });
 
+    gpii.tests.firstDiscovery.keyboardInputTts.recordSpoken = function (keyboardInput, text) {
+        keyboardInput.lastSpokenText = text;
+        keyboardInput.events.speak.fire();
+    };
+
+    gpii.tests.firstDiscovery.keyboardInputTts.clearSpoken = function (keyboardInput) {
+        keyboardInput.lastSpokenText = undefined;
+    };
+
+    gpii.tests.firstDiscovery.keyboardInputTts.checkSpoken = function (keyboardInput, expected) {
+        var msg = "should have spoken \"" + expected + "\"";
+        jqUnit.assertEquals(msg, expected, keyboardInput.lastSpokenText);
+    };
+
+    gpii.tests.firstDiscovery.keyboardInputTts.checkNothingSpoken = function (keyboardInput) {
+        jqUnit.assertUndefined("nothing should have been spoken", keyboardInput.lastSpokenText);
+    };
+
+    fluid.defaults("gpii.tests.firstDiscovery.keyboardInputWithTts", {
+        gradeNames: ["gpii.tests.firstDiscovery.keyboardInput", "gpii.firstDiscovery.keyboardInputTts", "autoInit"],
+        messageBase: {
+            "shiftLatched": "shift"
+        },
+        invokers: {
+            speak: {
+                funcName: "gpii.tests.firstDiscovery.keyboardInputTts.recordSpoken",
+                args: ["{that}", "{arguments}.0"]
+            }
+        },
+        events: {
+            speak: null
+        }
+    });
+
+    fluid.defaults("gpii.tests.firstDiscovery.keyboardInputWithTtsTestTree", {
+        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        components: {
+            keyboardInput: {
+                type: "gpii.tests.firstDiscovery.keyboardInputWithTts",
+                container: "#gpiic-tests-keyboardInputWithTts"
+            },
+            keyboardInputTester: {
+                type: "gpii.tests.firstDiscovery.keyboardInputTester"
+            },
+            keyboardInputTtsTester: {
+                type: "gpii.tests.firstDiscovery.keyboardInputTtsTester"
+            }
+        }
+    });
+
+    fluid.defaults("gpii.tests.firstDiscovery.keyboardInputTtsTester", {
+        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        modules: [{
+            name: "keyboardInputTts tests",
+            tests: [
+                {
+                    name: "Check key presses spoken when sticky keys is off",
+                    expect: 4,
+                    sequence: [
+                        {
+                            func: "{keyboardInput}.applier.change",
+                            args: ["stickyKeysEnabled", false]
+                        },
+                        {
+                            func: "jqUnit.assertFalse",
+                            args: ["Sticky Keys should be off",
+                                   "{keyboardInput}.model.stickyKeysEnabled"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.triggerKeypress",
+                            args: ["{keyboardInput}.container", "a"]
+                        },
+                        {
+                            event: "{keyboardInput}.events.speak",
+                            listener: "gpii.tests.firstDiscovery.keyboardInputTts.checkSpoken",
+                            args: ["{keyboardInput}", "a"]
+                        },
+                        // Trigger shift, wait a little time and verify that it wasn't spoken
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInputTts.clearSpoken",
+                            args: ["{keyboardInput}"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.triggerKeydown",
+                            args: ["{keyboardInput}.container",
+                                   "{keyboardInput}.keymap.shiftKeyCode"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInput.wait",
+                            args: ["{keyboardInput}", 200]
+                        },
+                        {
+                            event: "{keyboardInput}.events.waitTimeElapsed",
+                            listener: "jqUnit.assert",
+                            args: ["waitTimeElasped should have fired"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInputTts.checkNothingSpoken",
+                            args: ["{keyboardInput}"]
+                        }
+                    ]
+                },
+                {
+                    name: "Check key presses and shift spoken when sticky keys is on",
+                    expect: 4,
+                    sequence: [
+                        {
+                            func: "{keyboardInput}.applier.change",
+                            args: ["stickyKeysEnabled", true]
+                        },
+                        {
+                            func: "jqUnit.assertTrue",
+                            args: ["Sticky Keys should be on",
+                                   "{keyboardInput}.model.stickyKeysEnabled"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.triggerKeypress",
+                            args: ["{keyboardInput}.container", "a"]
+                        },
+                        {
+                            event: "{keyboardInput}.events.speak",
+                            listener: "gpii.tests.firstDiscovery.keyboardInputTts.checkSpoken",
+                            args: ["{keyboardInput}", "a"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.triggerKeydown",
+                            args: ["{keyboardInput}.container",
+                                   "{keyboardInput}.keymap.shiftKeyCode"]
+                        },
+                        {
+                            event: "{keyboardInput}.events.speak",
+                            listener: "gpii.tests.firstDiscovery.keyboardInputTts.checkSpoken",
+                            args: ["{keyboardInput}", "shift"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.triggerKeypress",
+                            args: ["{keyboardInput}.container", "2"]
+                        },
+                        {
+                            event: "{keyboardInput}.events.speak",
+                            listener: "gpii.tests.firstDiscovery.keyboardInputTts.checkSpoken",
+                            args: ["{keyboardInput}", "@"]
+                        }
+                    ]
+                }
+            ]
+        }]
+    });
+
     $(document).ready(function () {
         fluid.test.runTests([ "gpii.tests.firstDiscovery.keyboardInputTestTree" ]);
+        fluid.test.runTests([ "gpii.tests.firstDiscovery.keyboardInputWithTtsTestTree" ]);
     });
 
 })(jQuery, fluid);
