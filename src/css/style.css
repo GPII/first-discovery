@@ -617,9 +617,6 @@ input[type="text"].gpii-fd-keyboard-input:focus {
     border-right-color #ffffff !important;
     border-top-color: #000000 !important;
 }
-.fl-theme-wb .gpii-fd-confirmedIndicator {
-    background-color: transparent !important;
-}
 .fl-theme-wb .gpii-fd-confirmedIndicator:before {
     color: #ffffff;
     background-color: #000000 !important;
@@ -650,14 +647,6 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 .fl-theme-wb .gpii-fd-mute:hover {
     border: 1px solid #000000 !important;
 }
-.fl-theme-wb .gpii-fd-navButtons-next:hover,
-.fl-theme-wb .gpii-fd-navButtons-back:hover {
-    box-shadow: none !important;
-}
-.fl-theme-wb .gpii-fd-theme:focus,
-.fl-theme-wb .gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
-    border: none !important;
-}
 .fl-theme-wb .gpii-fd-keyboard-input:focus,
 .fl-theme-wb .gpii-fd-theme:hover,
 .fl-theme-wb .gpii-fd-keyboard-input:hover {
@@ -679,12 +668,11 @@ input[type="text"].gpii-fd-keyboard-input:focus {
     box-shadow: 0 0 0 0.2rem rgb(0,0,0),
                 0 0 0 0.6rem rgb(255, 255, 255) !important;
 }
-.fl-theme-wb .gpii-fd-keyboard-shift-indicator .gpii-fd-keyboard-shift-indicatorLabel {
-    border-style: dashed;
-    border-width: 1px;
-}
 .fl-theme-wb input[type="text"].gpii-fd-keyboard-input::-webkit-input-placeholder {
     color: #ffffff !important;
+}
+.fl-theme-wb .gpii-fd-statusFill {
+    background-color: #ffffff !important;
 }
 
 /* high-contrast themes: black-on-white */
@@ -700,9 +688,6 @@ input[type="text"].gpii-fd-keyboard-input:focus {
     border-left-color #000000 !important;
     border-right-color #000000 !important;
     border-top-color: #ffffff !important;
-}
-.fl-theme-bw .gpii-fd-confirmedIndicator {
-    background-color: transparent !important;
 }
 .fl-theme-bw .gpii-fd-confirmedIndicator:before {
     color: #000000;
@@ -734,14 +719,6 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 .fl-theme-bw .gpii-fd-mute:hover {
     border: 1px solid #ffffff !important;
 }
-.fl-theme-bw .gpii-fd-navButtons-next:hover,
-.fl-theme-bw .gpii-fd-navButtons-back:hover {
-    box-shadow: none !important;
-}
-.fl-theme-bw .gpii-fd-theme:focus,
-.fl-theme-bw .gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
-    border: none !important;
-}
 .fl-theme-bw .gpii-fd-keyboard-input:focus,
 .fl-theme-bw .gpii-fd-theme:hover,
 .fl-theme-bw .gpii-fd-keyboard-input:hover {
@@ -763,11 +740,55 @@ input[type="text"].gpii-fd-keyboard-input:focus {
     box-shadow: 0 0 0 0.2rem rgb(255, 255, 255),
                 0 0 0 0.6rem rgb(0,0,0) !important;
 }
-.fl-theme-bw .gpii-fd-keyboard-shift-indicator .gpii-fd-keyboard-shift-indicatorLabel {
+.fl-theme-bw input[type="text"].gpii-fd-keyboard-input::-webkit-input-placeholder {
+    color: #000000 !important;
+}
+.fl-theme-bw .gpii-fd-statusFill {
+    background-color: #000000 !important;
+}
+
+/* high-contrast themes, shared by both */
+.fl-theme-bw .gpii-fd-navButtons-next:hover,
+.fl-theme-bw .gpii-fd-navButtons-back:hover,
+.fl-theme-wb .gpii-fd-navButtons-next:hover,
+.fl-theme-wb .gpii-fd-navButtons-back:hover {
+    box-shadow: none !important;
+}
+.fl-theme-wb .gpii-fd-confirmedIndicator,
+.fl-theme-bw .gpii-fd-confirmedIndicator {
+    background-color: transparent !important;
+}
+.fl-theme-bw .gpii-fd-theme:focus,
+.fl-theme-bw .gpii-fd-choice input:focus ~ .gpii-fd-choice-label,
+.fl-theme-wb .gpii-fd-theme:focus,
+.fl-theme-wb .gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
+    border: none !important;
+}
+.fl-theme-bw .gpii-fd-keyboard-shift-indicator .gpii-fd-keyboard-shift-indicatorLabel,
+.fl-theme-wb .gpii-fd-keyboard-shift-indicator .gpii-fd-keyboard-shift-indicatorLabel {
     border-style: dashed;
     border-width: 1px;
 }
-.fl-theme-bw input[type="text"].gpii-fd-keyboard-input::-webkit-input-placeholder {
-    color: #000000 !important;
+.fl-theme-wb .gpii-fd *:disabled:hover::before,
+.fl-theme-wb .gpii-fd *:disabled:focus::before,
+.fl-theme-wb .gpii-fd *:disabled:active::before,
+.fl-theme-wb .gpii-fd *:disabled::before,
+.fl-theme-bw .gpii-fd *:disabled:hover::before,
+.fl-theme-bw .gpii-fd *:disabled:focus::before,
+.fl-theme-bw .gpii-fd *:disabled:active::before,
+.fl-theme-bw .gpii-fd *:disabled::before {
+    font-family: "PGA-FD";
+    content: "\e603"; /* TODO: replace by something userful */
+    position: relative;
+}
+.fl-theme-wb .gpii-fd .gpii-fd-help:disabled::before,
+.fl-theme-bw .gpii-fd .gpii-fd-help:disabled::before {
+    left: 3rem;
+}
+.fl-theme-wb .gpii-fd .gpii-fd-lang-prev:disabled::before,
+.fl-theme-wb .gpii-fd .gpii-fd-lang-next:disabled::before,
+.fl-theme-bw .gpii-fd .gpii-fd-lang-prev:disabled::before,
+.fl-theme-bw .gpii-fd .gpii-fd-lang-next:disabled::before {
+    left: 2rem;
 }
 
