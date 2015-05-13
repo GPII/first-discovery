@@ -284,27 +284,46 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * Text to speech panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.speakText", {
-        gradeNames: ["fluid.prefs.panel", "autoInit"],
+        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip.renderer", "autoInit"],
         preferenceMap: {
             "gpii.firstDiscovery.speak": {
                 "model.speak": "default"
             }
         },
-        modelRelay: {
-            source: "{that}.model",
+        modelRelay: [{
+            source: "{that}.model.speakChoice",
             target: "{that}.model.speak",
             // Setup the backward restriction to prevent the component instantiation writes back to
-            // the central model that ends up wiping out the saved prefs at the page reload.
-            backward: "liveOnly",
+            // the central model that results in wiping out the saved prefs at the page reload.
+            forward: "liveOnly",
             singleTransform: {
                 type: "fluid.transforms.valueMapper",
-                inputPath: "speakChoice",
+                inputPath: "",
                 options: {
                     "yes": true,
                     "no": {
                         outputValue: false
                     }
                 }
+            }
+        }, {
+            source: "{that}.model.speakChoice",
+            target: "currentSelectedIndex",
+            backward: "never",
+            singleTransform: {
+                type: "fluid.transforms.indexOf",
+                array: "{that}.options.controlValues.choice",
+                value: "{that}.model.speakChoice"
+            }
+        }],
+        tooltipContentMap: {
+            choiceLabel: {
+                tooltip: ["speakText-yes-tooltip", "speakText-no-tooltip"],
+                tooltipAtSelect: ["speakText-yes-tooltipAtSelect", "speakText-no-tooltipAtSelect"]
+            },
+            choiceInput: {
+                tooltip: ["speakText-yes-tooltip", "speakText-no-tooltip"],
+                tooltipAtSelect: ["speakText-yes-tooltipAtSelect", "speakText-no-tooltipAtSelect"]
             }
         },
         stringArrayIndex: {
