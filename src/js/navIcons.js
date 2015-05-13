@@ -53,6 +53,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      */
     fluid.defaults("gpii.firstDiscovery.navIcons", {
         gradeNames: ["fluid.viewRelayComponent", "autoInit"],
+        model: {
+            visitedPanelNums: []
+        },
         dynamicComponents: {
             icon: {
                 createOnEvent: "onCreateIcon",
@@ -61,23 +64,46 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 options: {
                     position: "{arguments}.1",
                     styles: "{navIcons}.options.styles",
-                    modelListeners: {
-                        "{navIcons}.model.currentPanelNum": {
-                            listener: "gpii.firstDiscovery.navIcons.updateIconModel",
-                            args: ["{that}", "{change}.value", "{change}.oldValue"]
+                    listeners: {
+                        "{navIcons}.events.onSetIconState": {
+                            funcName: "gpii.firstDiscovery.navIcons.updateIconModel",
+                            args: ["{that}", "{arguments}.0", "{arguments}.1"]
                         }
                     }
                 }
             }
         },
+        modelListeners: {
+            currentPanelNum: [{
+                funcName: "gpii.firstDiscovery.navIcons.saveVisitedPanelNum",
+                args: ["{that}", "{change}.value", "{change}.oldValue"]
+            }, {
+                funcName: "{that}.events.onSetIconState.fire",
+                args: ["{change}.value", "{change}.oldValue"]
+            }]
+        },
         selectors: {
             icon: ".gpiic-fd-navIcon"
         },
         events: {
-            onCreateIcon: null
+            onCreateIcon: null,
+            onSetIconState: null
         },
         listeners: {
-            "onCreate.createIcons": "gpii.firstDiscovery.navIcons.createIcons"
+            "onCreate.createIcons": {
+                funcName: "gpii.firstDiscovery.navIcons.createIcons",
+                priority: 3
+            },
+            "onCreate.setInitialIconState": {
+                funcName: "gpii.firstDiscovery.navIcons.setInitialIconState",
+                args: ["{that}"],
+                priority: 2
+            },
+            "onCreate.setInitialActiveState": {
+                funcName: "{that}.events.onSetIconState.fire",
+                args: ["{that}.model.currentPanelNum", 0],
+                priority: 1
+            }
         }
     });
 
@@ -91,7 +117,26 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.navIcons.updateIconModel = function (icon, currentPanelNum, prevPanelNum) {
         var position = icon.options.position;
         icon.applier.change("isActive", currentPanelNum === position);
-        icon.applier.change("isConfirmed", prevPanelNum === position && currentPanelNum > prevPanelNum);
+        // The part before "||" is to set confirmed state at the page reload. The part after is to set
+        // when users navigate thru panels.
+        icon.applier.change("isConfirmed", typeof (prevPanelNum) === "undefined" && currentPanelNum === position || prevPanelNum === position && currentPanelNum > prevPanelNum);
+    };
+
+    gpii.firstDiscovery.navIcons.saveVisitedPanelNum = function (that, currentPanelNum, prevPanelNum) {
+        var visitedPanelNums = that.model.visitedPanelNums;
+        if (currentPanelNum > prevPanelNum && $.inArray(prevPanelNum, visitedPanelNums) === -1) {
+            // Cannot fire the change request directly on visitedPanelNums due to this issue: http://issues.fluidproject.org/browse/FLUID-3504
+            that.applier.change("visitedPanelNums." + visitedPanelNums.length, prevPanelNum);
+        }
+    };
+
+    gpii.firstDiscovery.navIcons.setInitialIconState = function (that) {
+        if (that.model.visitedPanelNums.length === 0) {
+            return;
+        }
+        fluid.each(that.model.visitedPanelNums, function (panelNum) {
+            that.events.onSetIconState.fire(panelNum);
+        });
     };
 
 })(jQuery, fluid);

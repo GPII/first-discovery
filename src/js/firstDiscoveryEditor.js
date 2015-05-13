@@ -36,6 +36,17 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             prefsEditor: {
                 container: "{that}.dom.prefsEditor",
                 options: {
+                    modelListeners: {
+                        states: {
+                            funcName: "{that}.save",
+                            excludeSource: "init"
+                        }
+                    },
+                    model: {
+                        states: {
+                            currentPanelNum: "{firstDiscoveryEditor}.model.currentPanelNum"
+                        }
+                    },
                     selectors: {
                         panel: "{firstDiscoveryEditor}.options.selectors.panel"
                     },
@@ -73,9 +84,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             navIcons: {
                 type: "gpii.firstDiscovery.navIcons",
                 container: "{firstDiscoveryEditor}.dom.navIcons",
+                createOnEvent: "onPrefsEditorReady",
                 options: {
                     model: {
-                        currentPanelNum: "{firstDiscoveryEditor}.model.currentPanelNum"
+                        currentPanelNum: "{firstDiscoveryEditor}.model.currentPanelNum",
+                        visitedPanelNums: "{prefsEditor}.model.states.visitedPanelNums"
                     },
                     styles: "{firstDiscoveryEditor}.options.styles"
                 }
