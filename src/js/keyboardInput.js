@@ -98,6 +98,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         modelListeners: {
             "stickyKeysEnabled.unlatchShift": "{that}.unlatchShift",
+            "stickyKeysEnabled.clearInput": "{that}.clearInput",
             "shiftLatched.updateShiftLatchedClass": "{that}.updateShiftLatchedClass"
         },
         events: {
@@ -116,6 +117,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "this": "{that}.container",
                 method: "toggleClass",
                 args: ["{that}.options.styles.shiftLatched", "{that}.model.shiftLatched"]
+            },
+            "clearInput": {
+                funcName: "gpii.firstDiscovery.keyboardInput.setElementValueAndTriggerChange",
+                args: ["{that}.container", ""]
             },
             "openTooltipIfNotFocused": {
                 funcName: "gpii.firstDiscovery.keyboardInput.openTooltipIfNotFocused",

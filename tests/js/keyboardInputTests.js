@@ -118,6 +118,14 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("keypress character should be \"" + expected + "\"", expected, actual);
     };
 
+    gpii.tests.firstDiscovery.keyboardInput.checkUserInput = function (keyboardInput, expected) {
+        // Check both the model value and the HTML input value
+        jqUnit.assertEquals("userInput should be \"" + expected + "\"",
+                            expected, keyboardInput.model.userInput);
+        jqUnit.assertEquals("HTML input value should be \"" + expected + "\"",
+                            expected, keyboardInput.container.val());
+    };
+
     gpii.tests.firstDiscovery.keyboardInput.setUpTooltipTest = function (keyboardInput) {
         // Set the focus and tooltip state to a known starting point
         gpii.tests.firstDiscovery.keyboardInput.focusOther();
@@ -222,7 +230,7 @@ https://github.com/gpii/universal/LICENSE.txt
             tests: [
                 {
                     name: "Check user input when sticky keys is off",
-                    expect: 8,
+                    expect: 10,
                     sequence: [
                         {
                             func: "jqUnit.assertFalse",
@@ -243,11 +251,10 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["a", "{arguments}.0"]
                         },
                         {
-                            listener: "jqUnit.assertEquals",
-                            args: ["Pressed \"a\", userInput should be \"a\"",
-                                   "a", "{keyboardInput}.model.userInput"],
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
                             spec: {path: "userInput", priority: "last"},
-                            changeEvent: "{keyboardInput}.applier.modelChanged"
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            args: ["{keyboardInput}", "a"]
                         },
                         {
                             func: "gpii.tests.firstDiscovery.triggerKeydown",
@@ -273,28 +280,27 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["b", "{arguments}.0"]
                         },
                         {
-                            listener: "jqUnit.assertEquals",
-                            args: ["Pressed \"b\", userInput should be \"b\" (not shifted)",
-                                   "b", "{keyboardInput}.model.userInput"],
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
                             spec: {path: "userInput", priority: "last"},
-                            changeEvent: "{keyboardInput}.applier.modelChanged"
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            args: ["{keyboardInput}", "b"]
                         }
                     ]
                 },
                 {
                     name: "Check user input when sticky keys is on",
-                    expect: 11,
+                    expect: 14,
                     sequence: [
                         {
                             func: "{keyboardInput}.applier.change",
                             args: ["stickyKeysEnabled", true]
                         },
                         {
-                            listener: "jqUnit.assertTrue",
-                            args: ["Sticky Keys should be enabled",
-                                   "{keyboardInput}.model.stickyKeysEnabled"],
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
                             spec: {path: "stickyKeysEnabled", priority: "last"},
-                            changeEvent: "{keyboardInput}.applier.modelChanged"
+                            listener: "jqUnit.assertTrue",
+                            args: ["Sticky Keys should be on",
+                                   "{keyboardInput}.model.stickyKeysEnabled"]
                         },
                         {
                             func: "gpii.tests.firstDiscovery.checkShiftLatchedClass",
@@ -310,11 +316,10 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["a", "{arguments}.0"]
                         },
                         {
-                            listener: "jqUnit.assertEquals",
-                            args: ["Pressed \"a\", userInput should be \"a\"",
-                                   "a", "{keyboardInput}.model.userInput"],
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
                             spec: {path: "userInput", priority: "last"},
-                            changeEvent: "{keyboardInput}.applier.modelChanged"
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            args: ["{keyboardInput}", "a"]
                         },
                         {
                             func: "gpii.tests.firstDiscovery.triggerKeydown",
@@ -322,11 +327,11 @@ https://github.com/gpii/universal/LICENSE.txt
                                    "{keyboardInput}.keymap.shiftKeyCode"]
                         },
                         {
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
+                            spec: {path: "shiftLatched", priority: "last"},
                             listener: "jqUnit.assertTrue",
                             args: ["Pressed shift, shiftLatched should be true",
-                                   "{keyboardInput}.model.shiftLatched"],
-                            spec: {path: "shiftLatched", priority: "last"},
-                            changeEvent: "{keyboardInput}.applier.modelChanged"
+                                   "{keyboardInput}.model.shiftLatched"]
                         },
                         {
                             func: "gpii.tests.firstDiscovery.checkShiftLatchedClass",
@@ -342,11 +347,10 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["B", "{arguments}.0"]
                         },
                         {
-                            listener: "jqUnit.assertEquals",
-                            args: ["Pressed \"b\", userInput should be \"B\" (shifted)",
-                                   "B", "{keyboardInput}.model.userInput"],
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
                             spec: {path: "userInput", priority: "last"},
-                            changeEvent: "{keyboardInput}.applier.modelChanged"
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            args: ["{keyboardInput}", "B"]
                         },
                         {
                             func: "gpii.tests.firstDiscovery.checkShiftLatchedClass",
@@ -362,11 +366,10 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["c", "{arguments}.0"]
                         },
                         {
-                            listener: "jqUnit.assertEquals",
-                            args: ["Pressed \"c\", userInput should be \"c\" (not shifted)",
-                                   "c", "{keyboardInput}.model.userInput"],
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
                             spec: {path: "userInput", priority: "last"},
-                            changeEvent: "{keyboardInput}.applier.modelChanged"
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            args: ["{keyboardInput}", "c"]
                         }
                     ]
                 },
@@ -376,7 +379,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     sequence: [
                         {
                             func: "jqUnit.assertTrue",
-                            args: ["Sticky Keys should be enabled",
+                            args: ["Sticky Keys should be on",
                                    "{keyboardInput}.model.stickyKeysEnabled"]
                         },
                         {
@@ -385,11 +388,11 @@ https://github.com/gpii/universal/LICENSE.txt
                                    "{keyboardInput}.keymap.shiftKeyCode"]
                         },
                         {
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
+                            spec: {path: "shiftLatched", priority: "last"},
                             listener: "jqUnit.assertTrue",
                             args: ["Pressed shift, shiftLatched should be true",
-                                   "{keyboardInput}.model.shiftLatched"],
-                            spec: {path: "shiftLatched", priority: "last"},
-                            changeEvent: "{keyboardInput}.applier.modelChanged"
+                                   "{keyboardInput}.model.shiftLatched"]
                         },
                         {
                             func: "gpii.tests.firstDiscovery.triggerKeydown",
@@ -397,11 +400,74 @@ https://github.com/gpii/universal/LICENSE.txt
                                    "{keyboardInput}.keymap.shiftKeyCode"]
                         },
                         {
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
+                            spec: {path: "shiftLatched", priority: "last"},
                             listener: "jqUnit.assertFalse",
                             args: ["Pressed shift, shiftLatched should be false",
-                                   "{keyboardInput}.model.shiftLatched"],
-                            spec: {path: "shiftLatched", priority: "last"},
-                            changeEvent: "{keyboardInput}.applier.modelChanged"
+                                   "{keyboardInput}.model.shiftLatched"]
+                        }
+                    ]
+                },
+                {
+                    name: "Changing Sticky Keys state clears the text",
+                    expect: 12,
+                    sequence: [
+                        // Verify starting state
+                        {
+                            func: "jqUnit.assertTrue",
+                            args: ["Sticky Keys should be on",
+                                   "{keyboardInput}.model.stickyKeysEnabled"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            args: ["{keyboardInput}", "c"]
+                        },
+                        // Turn Sticky Keys off and check the input is cleared
+                        {
+                            func: "{keyboardInput}.applier.change",
+                            args: ["stickyKeysEnabled", false]
+                        },
+                        {
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
+                            spec: {path: "stickyKeysEnabled", priority: "last"},
+                            listener: "jqUnit.assertFalse",
+                            args: ["Sticky Keys should be off",
+                                   "{keyboardInput}.model.stickyKeysEnabled"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            args: ["{keyboardInput}", ""]
+                        },
+                        // Type something, turn sticky keys on, and verify cleared
+                        {
+                            func: "gpii.tests.firstDiscovery.triggerKeypress",
+                            args: ["{keyboardInput}.container", "a"]
+                        },
+                        {
+                            event: "{keyboardInput}.events.keypress",
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
+                            args: ["a", "{arguments}.0"]
+                        },
+                        {
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
+                            spec: {path: "userInput", priority: "last"},
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            args: ["{keyboardInput}", "a"]
+                        },
+                        {
+                            func: "{keyboardInput}.applier.change",
+                            args: ["stickyKeysEnabled", true]
+                        },
+                        {
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
+                            spec: {path: "stickyKeysEnabled", priority: "last"},
+                            listener: "jqUnit.assertTrue",
+                            args: ["Sticky Keys should be on",
+                                   "{keyboardInput}.model.stickyKeysEnabled"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            args: ["{keyboardInput}", ""]
                         }
                     ]
                 },
