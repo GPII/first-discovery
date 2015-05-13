@@ -11,13 +11,11 @@ https://github.com/gpii/universal/LICENSE.txt
 (function ($, fluid) {
     "use strict";
 
-    fluid.registerNamespace("gpii.tests");
-
     /************************
      * Language Panel Tests *
      ************************/
 
-    fluid.defaults("gpii.tests.prefs.panel.lang", {
+    fluid.defaults("gpii.tests.firstDiscovery.panel.lang", {
         gradeNames: ["gpii.firstDiscovery.panel.lang", "autoInit"],
         messageBase: {
             "langInstructions": "Select your preferred language",
@@ -61,7 +59,7 @@ https://github.com/gpii/universal/LICENSE.txt
         gradeNames: ["fluid.test.testEnvironment", "autoInit"],
         components: {
             lang: {
-                type: "gpii.tests.prefs.panel.lang",
+                type: "gpii.tests.firstDiscovery.panel.lang",
                 container: ".gpiic-fd-lang"
             },
             langTester: {
@@ -75,7 +73,7 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "Test the language settings panel",
             tests: [{
-                expect: 52,
+                expect: 88,
                 name: "Test the language panel",
                 sequence: [{
                     func: "{lang}.refreshView"
@@ -138,6 +136,11 @@ https://github.com/gpii/universal/LICENSE.txt
         }]
     });
 
+    gpii.tests.langTester.verifyTooltip = function (that) {
+        gpii.tests.utils.verifyTooltipContents("language button row element", that.locate("langRow"), that.model.lang, that.attachTooltipOnLang.tooltip.model.idToContent, that.options.controlValues.lang, that.options.stringArrayIndex.lang, that.options.messageBase);
+        gpii.tests.utils.verifyTooltipContents("language button input element", that.locate("langInput"), that.model.lang, that.attachTooltipOnLang.tooltip.model.idToContent, that.options.controlValues.lang, that.options.stringArrayIndex.lang, that.options.messageBase);
+    };
+
     gpii.tests.langTester.verifyRendering = function (that) {
         var messages = that.options.messageBase,
             stringArray = that.options.stringArrayIndex.lang,
@@ -148,18 +151,16 @@ https://github.com/gpii/universal/LICENSE.txt
 
         jqUnit.assertEquals("The instruction has been set correctly.", messages.langInstructions, that.locate("instructions").text());
         fluid.each(that.locate("langRow"), function (langButton, idx) {
-            var tooltipLabelSuffix = that.options.controlValues.lang[idx] === that.model.lang ? "-tooltipAtSelect" : "-tooltip";
             langButton = $(langButton);
-            var langLabel = langButton.find(that.options.selectors.langLabel),
-                langInput = langButton.find(that.options.selectors.langInput);
+            var langLabel = langButton.find(that.options.selectors.langLabel);
             jqUnit.assertEquals("The language button #" + idx + " has the correct label.", messages[stringArray[idx]], langLabel.text());
-            jqUnit.assertEquals("The tooltip definition for the language button #" + idx + " has been populated correctly", messages[stringArray[idx] + tooltipLabelSuffix], idToContent[langButton.attr("id")]);
-            jqUnit.assertEquals("The tooltip definition for the language input #" + idx + " has been populated correctly", messages[stringArray[idx] + tooltipLabelSuffix], idToContent[langInput.attr("id")]);
         });
 
         jqUnit.assertEquals("The correct language button has been checked", that.model.lang, that.locate("langInput").filter(":checked").val());
         jqUnit.assertEquals("The previous button is enabled", false, that.locate("prev").is(":disabled"));
         jqUnit.assertEquals("The next button is enabled", false, that.locate("next").is(":disabled"));
+
+        gpii.tests.langTester.verifyTooltip(that);
 
         fluid.each(["prev", "next"], function (selector) {
             jqUnit.assertEquals("The tooltip definition for element " + selector + " has been populated", messages.navButtonTooltip, idToContent[that.locate(selector).attr("id")]);
@@ -197,6 +198,7 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("The model value for the selected language is set correctly", expectedLang, that.model.lang);
         jqUnit.assertEquals("The previous button has been " + prevDisabledMsg, prevDisabled, that.locate("prev").is(":disabled"));
         jqUnit.assertEquals("The next button has been " + nextDisabledMsg, nextDisabled, that.locate("next").is(":disabled"));
+        gpii.tests.langTester.verifyTooltip(that);
         gpii.tests.langTester.verifyButtonInView(that);
     };
 
@@ -213,7 +215,7 @@ https://github.com/gpii/universal/LICENSE.txt
      * Text Size Panel Tests *
      *************************/
 
-    fluid.defaults("gpii.tests.prefs.panel.textSize", {
+    fluid.defaults("gpii.tests.firstDiscovery.panel.textSize", {
         gradeNames: ["gpii.firstDiscovery.panel.textSize", "autoInit"],
         messageBase: {
             rangeInstructions: "Text size instructions.",
@@ -229,7 +231,7 @@ https://github.com/gpii/universal/LICENSE.txt
         gradeNames: ["fluid.test.testEnvironment", "autoInit"],
         components: {
             textSize: {
-                type: "gpii.tests.prefs.panel.textSize",
+                type: "gpii.tests.firstDiscovery.panel.textSize",
                 container: ".gpiic-fd-textSize"
             },
             textSizeTester: {
@@ -318,17 +320,20 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("The decrease button should have the correct enabled/disabled state", decreaseDisabled, that.locate("decrease").prop("disabled"));
     };
 
-
     /**************************
      * Speak Text Panel Tests *
      **************************/
 
-    fluid.defaults("gpii.tests.prefs.panel.speakText", {
+    fluid.defaults("gpii.tests.firstDiscovery.panel.speakText", {
         gradeNames: ["gpii.firstDiscovery.panel.speakText", "autoInit"],
         messageBase: {
             "speakTextInstructions": "Speak text instructions",
             "speakText-no": "no",
-            "speakText-yes": "yes"
+            "speakText-yes": "yes",
+            "speakText-yes-tooltip": "Select to turn voice on",
+            "speakText-no-tooltip": "Select to turn voice off",
+            "speakText-yes-tooltipAtSelect": "Voice is on",
+            "speakText-no-tooltipAtSelect": "Voice is off"
         },
         choiceLabels: ["yes", "no"],
         model: {
@@ -340,7 +345,7 @@ https://github.com/gpii/universal/LICENSE.txt
         gradeNames: ["fluid.test.testEnvironment", "autoInit"],
         components: {
             speakText: {
-                type: "gpii.tests.prefs.panel.speakText",
+                type: "gpii.tests.firstDiscovery.panel.speakText",
                 container: ".gpiic-fd-speakText"
             },
             speakTextTester: {
@@ -354,15 +359,19 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "Test the speak text settings panel",
             tests: [{
-                expect: 6,
-                name: "Test the rendering of the speak text panel",
+                expect: 8,
+                name: "The initial rendering of the speak text panel",
                 sequence: [{
                     func: "{speakText}.refreshView"
                 }, {
                     listener: "gpii.tests.speakTextTester.verifyRendering",
                     event: "{speakText}.events.afterRender"
-                }, {
-                    func: "gpii.tests.speakTextTester.triggerRadioButton",
+                }]
+            }, {
+                expect: 10,
+                name: "Selections on the speak text panel",
+                sequence: [{
+                    func: "gpii.tests.utils.triggerRadioButton",
                     args: ["{speakText}.dom.choiceInput", 1]
                 }, {
                     listener: "gpii.tests.speakTextTester.verifyModel",
@@ -370,33 +379,175 @@ https://github.com/gpii/universal/LICENSE.txt
                     spec: {path: "speak", priority: "last"},
                     changeEvent: "{speakText}.applier.modelChanged"
                 }, {
-                    func: "gpii.tests.speakTextTester.triggerRadioButton",
+                    func: "{speakText}.refreshView"
+                }, {
+                    listener: "gpii.tests.speakTextTester.verifyTooltip",
+                    args: ["{speakText}"],
+                    event: "{speakText}.events.afterRender"
+                }, {
+                    func: "gpii.tests.utils.triggerRadioButton",
                     args: ["{speakText}.dom.choiceInput", 0]
                 }, {
                     listener: "gpii.tests.speakTextTester.verifyModel",
                     args: ["{speakText}", true],
                     spec: {path: "speak", priority: "last"},
                     changeEvent: "{speakText}.applier.modelChanged"
+                }, {
+                    func: "{speakText}.refreshView"
+                }, {
+                    listener: "gpii.tests.speakTextTester.verifyTooltip",
+                    args: ["{speakText}"],
+                    event: "{speakText}.events.afterRender"
                 }]
             }]
         }]
     });
 
-    gpii.tests.speakTextTester.triggerRadioButton = function (radioButtons, idx) {
-        radioButtons.eq(idx).click();
+    gpii.tests.speakTextTester.verifyTooltip = function (that) {
+        gpii.tests.utils.verifyTooltipContents("choice label", that.locate("choiceLabel"), that.model.speakChoice, that.tooltip.model.idToContent, that.options.controlValues.choice, that.options.stringArrayIndex.choice, that.options.messageBase);
+        gpii.tests.utils.verifyTooltipContents("choice input", that.locate("choiceInput"), that.model.speakChoice, that.tooltip.model.idToContent, that.options.controlValues.choice, that.options.stringArrayIndex.choice, that.options.messageBase);
     };
 
     gpii.tests.speakTextTester.verifyRendering = function (that) {
         jqUnit.assertEquals("The instructions should have been set correctly.", that.options.messageBase.speakTextInstructions, that.locate("instructions").text());
-        fluid.each(that.locate("choiceLabel"), function (elm, idx) {
-            elm = $(elm);
-            jqUnit.assertEquals("Choice #" + idx + " should have the correct label.", that.options.choiceLabels[idx], elm.text());
-        });
-        jqUnit.assertEquals("The correct choice should be checked", that.model.speakChoice, that.locate("choiceInput").filter(":checked").val());
+        gpii.tests.utils.verifyRadioButtonRendering(that.locate("choiceInput"), that.locate("choiceLabel"), that.options.choiceLabels, that.model.speakChoice);
+        gpii.tests.speakTextTester.verifyTooltip(that);
     };
 
     gpii.tests.speakTextTester.verifyModel = function (that, expectedValue) {
         jqUnit.assertEquals("The model value should have been set correctly", expectedValue, that.model.speak);
+    };
+
+    /************************
+     * Contrast Panel Tests *
+     ************************/
+
+    fluid.defaults("gpii.tests.firstDiscovery.panel.contrast", {
+        gradeNames: ["gpii.firstDiscovery.panel.contrast", "autoInit"],
+        classnameMap: {
+            theme: {
+                "default": "fl-theme-prefsEditor-default",
+                "bw": "fl-theme-prefsEditor-bw fl-theme-bw",
+                "wb": "fl-theme-prefsEditor-wb fl-theme-wb"
+            }
+        },
+        model: {
+            value: "default"
+        },
+        messageBase: {
+            "instructions": "You can choose a screen colour to make things easier to see.",
+            "contrastLabel": "Contrast",
+            "contrast-default": "no change",
+            "contrast-bw": "black on white",
+            "contrast-wb": "white on black",
+
+            "contrast-default-tooltip": "reset to original screen colors",
+            "contrast-bw-tooltip": "change the screen color to black on white",
+            "contrast-wb-tooltip": "change the screen color to white on black",
+
+            "contrast-default-tooltipAtSelect": "no change is currently selected",
+            "contrast-bw-tooltipAtSelect": "black on white is currently selected",
+            "contrast-wb-tooltipAtSelect": "white on black is currently selected"
+        },
+        themeLabels: ["no change", "black on white", "white on black"]
+    });
+
+    fluid.defaults("gpii.tests.contrastPanel", {
+        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        components: {
+            contrast: {
+                type: "gpii.tests.firstDiscovery.panel.contrast",
+                container: ".gpiic-fd-contrast"
+            },
+            contrastTester: {
+                type: "gpii.tests.contrastTester"
+            }
+        }
+    });
+
+    fluid.defaults("gpii.tests.contrastTester", {
+        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        modules: [{
+            name: "Test the contrast settings panel",
+            tests: [{
+                expect: 14,
+                name: "Rendering",
+                sequence: [{
+                    func: "{contrast}.refreshView"
+                }, {
+                    listener: "gpii.tests.contrastTester.verifyRendering",
+                    event: "{contrast}.events.afterRender"
+                }]
+            }, {
+                expect: 21,
+                name: "Selection",
+                sequence: [{
+                    func: "gpii.tests.utils.triggerRadioButton",
+                    args: ["{contrast}.dom.themeInput", 1]
+                }, {
+                    listener: "gpii.tests.contrastTester.verifySelection",
+                    args: ["{contrast}", "bw"],
+                    spec: {path: "value", priority: "last"},
+                    changeEvent: "{contrast}.applier.modelChanged"
+                }, {
+                    func: "{contrast}.refreshView"
+                }, {
+                    listener: "gpii.tests.contrastTester.verifyTooltip",
+                    args: ["{contrast}"],
+                    event: "{contrast}.events.afterRender"
+                }, {
+                    func: "gpii.tests.utils.triggerRadioButton",
+                    args: ["{contrast}.dom.themeInput", 2]
+                }, {
+                    listener: "gpii.tests.contrastTester.verifySelection",
+                    args: ["{contrast}", "wb"],
+                    spec: {path: "value", priority: "last"},
+                    changeEvent: "{contrast}.applier.modelChanged"
+                }, {
+                    func: "{contrast}.refreshView"
+                }, {
+                    listener: "gpii.tests.contrastTester.verifyTooltip",
+                    args: ["{contrast}"],
+                    event: "{contrast}.events.afterRender"
+                }, {
+                    func: "gpii.tests.utils.triggerRadioButton",
+                    args: ["{contrast}.dom.themeInput", 0]
+                }, {
+                    listener: "gpii.tests.contrastTester.verifySelection",
+                    args: ["{contrast}", "default"],
+                    spec: {path: "value", priority: "last"},
+                    changeEvent: "{contrast}.applier.modelChanged"
+                }, {
+                    func: "{contrast}.refreshView"
+                }, {
+                    listener: "gpii.tests.contrastTester.verifyTooltip",
+                    args: ["{contrast}"],
+                    event: "{contrast}.events.afterRender"
+                }]
+            }]
+        }]
+    });
+
+    gpii.tests.contrastTester.verifyTooltip = function (that) {
+        gpii.tests.utils.verifyTooltipContents("contrast theme label", that.locate("themeLabel"), that.model.value, that.tooltip.model.idToContent, that.options.controlValues.theme, that.options.stringArrayIndex.theme, that.options.messageBase);
+        gpii.tests.utils.verifyTooltipContents("contrast theme input", that.locate("themeInput"), that.model.value, that.tooltip.model.idToContent, that.options.controlValues.theme, that.options.stringArrayIndex.theme, that.options.messageBase);
+    };
+
+    gpii.tests.contrastTester.verifyRendering = function (that) {
+        var themeInput = that.locate("themeInput");
+        var themeLabel = that.locate("themeLabel");
+
+        jqUnit.assertEquals("The instructions should have been set correctly.", that.options.messageBase.instructions, that.locate("instructions").text());
+        gpii.tests.utils.verifyRadioButtonRendering(themeInput, themeLabel, that.options.themeLabels, that.model.value);
+        themeLabel.each(function (idx, elm) {
+            var className = that.options.classnameMap.theme[themeInput.eq(idx).val()];
+            jqUnit.assertTrue("The #" + idx + " label should have the '" + className + "' applied.", $(elm).hasClass(className));
+        });
+        gpii.tests.contrastTester.verifyTooltip(that);
+    };
+
+    gpii.tests.contrastTester.verifySelection = function (that, expectedValue) {
+        jqUnit.assertEquals("The model value should have been set correctly", expectedValue, that.model.value);
     };
 
     /************
@@ -610,6 +761,7 @@ https://github.com/gpii/universal/LICENSE.txt
             "gpii.tests.langPanel",
             "gpii.tests.textSizePanel",
             "gpii.tests.speakTextPanel",
+            "gpii.tests.contrastPanel",
             "gpii.tests.keyboardPanel",
             "gpii.tests.welcomePanel",
             "gpii.tests.congratulationsPanel"

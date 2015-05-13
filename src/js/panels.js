@@ -285,27 +285,46 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * Text to speech panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.speakText", {
-        gradeNames: ["fluid.prefs.panel", "autoInit"],
+        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip.renderer", "autoInit"],
         preferenceMap: {
             "gpii.firstDiscovery.speak": {
                 "model.speak": "default"
             }
         },
-        modelRelay: {
-            source: "{that}.model",
+        modelRelay: [{
+            source: "{that}.model.speakChoice",
             target: "{that}.model.speak",
             // Setup the backward restriction to prevent the component instantiation writes back to
-            // the central model that ends up wiping out the saved prefs at the page reload.
-            backward: "liveOnly",
+            // the central model that results in wiping out the saved prefs at the page reload.
+            forward: "liveOnly",
             singleTransform: {
                 type: "fluid.transforms.valueMapper",
-                inputPath: "speakChoice",
+                inputPath: "",
                 options: {
                     "yes": true,
                     "no": {
                         outputValue: false
                     }
                 }
+            }
+        }, {
+            source: "{that}.model.speakChoice",
+            target: "currentSelectedIndex",
+            backward: "never",
+            singleTransform: {
+                type: "fluid.transforms.indexOf",
+                array: "{that}.options.controlValues.choice",
+                value: "{that}.model.speakChoice"
+            }
+        }],
+        tooltipContentMap: {
+            choiceLabel: {
+                tooltip: ["speakText-yes-tooltip", "speakText-no-tooltip"],
+                tooltipAtSelect: ["speakText-yes-tooltipAtSelect", "speakText-no-tooltipAtSelect"]
+            },
+            choiceInput: {
+                tooltip: ["speakText-yes-tooltip", "speakText-no-tooltip"],
+                tooltipAtSelect: ["speakText-yes-tooltipAtSelect", "speakText-no-tooltipAtSelect"]
             }
         },
         stringArrayIndex: {
@@ -660,14 +679,89 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * Contrast panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.contrast", {
-        gradeNames: ["fluid.prefs.panel", "autoInit"],
+        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip.renderer", "autoInit"],
         preferenceMap: {
             "fluid.prefs.contrast": {
-                "model.value": "default",
-                "controlValues.lang": "enum"
+                "model.value": "default"
+            }
+        },
+        modelRelay: {
+            source: "{that}.model.value",
+            target: "currentSelectedIndex",
+            singleTransform: {
+                type: "fluid.transforms.indexOf",
+                array: "{that}.options.controlValues.theme",
+                value: "{that}.model.value"
+            }
+        },
+        tooltipContentMap: {
+            themeLabel: {
+                tooltip: "{that}.options.stringArrayIndex.tooltip",
+                tooltipAtSelect: "{that}.options.stringArrayIndex.tooltipAtSelect"
+            },
+            themeInput: {
+                tooltip: "{that}.options.stringArrayIndex.tooltip",
+                tooltipAtSelect: "{that}.options.stringArrayIndex.tooltipAtSelect"
+            }
+        },
+        selectors: {
+            instructions: ".gpiic-fd-instructions",
+            themeRow: ".flc-prefsEditor-themeRow",
+            themeLabel: ".flc-prefsEditor-theme-label",
+            themeInput: ".flc-prefsEditor-themeInput"
+        },
+        repeatingSelectors: ["themeRow"],
+        listeners: {
+            "afterRender.style": "{that}.style"
+        },
+        stringArrayIndex: {
+            theme: ["contrast-default", "contrast-bw", "contrast-wb"],
+            tooltip: ["contrast-default-tooltip", "contrast-bw-tooltip", "contrast-wb-tooltip"],
+            tooltipAtSelect: ["contrast-default-tooltipAtSelect", "contrast-bw-tooltipAtSelect", "contrast-wb-tooltipAtSelect"]
+        },
+        controlValues: {
+            theme: ["default", "bw", "wb"]
+        },
+        protoTree: {
+            instructions: {messagekey: "instructions"},
+            expander: {
+                type: "fluid.renderer.selection.inputs",
+                rowID: "themeRow",
+                labelID: "themeLabel",
+                inputID: "themeInput",
+                selectID: "theme-radio",
+                tree: {
+                    optionnames: "${{that}.msgLookup.theme}",
+                    optionlist: "${{that}.options.controlValues.theme}",
+                    selection: "${value}"
+                }
+            }
+        },
+        invokers: {
+            style: {
+                funcName: "gpii.firstDiscovery.panel.contrast.style",
+                args: [
+                    "{that}.dom.themeLabel",
+                    "{that}.options.controlValues.theme",
+                    "{that}.options.controlValues.theme.0",
+                    "{that}.options.classnameMap.theme"
+                ],
+                dynamic: true
             }
         }
     });
+
+    gpii.firstDiscovery.panel.contrast.style = function (labels, theme, defaultThemeName, style) {
+        // TODO: A potential further improvement would be to use a utility such as the one in the video player to
+        // make this automatically model bound.
+        // see: https://github.com/fluid-project/videoPlayer/blob/master/js/VideoPlayer_showHide.js
+        fluid.each(labels, function (label, index) {
+            label = $(label);
+
+            var labelTheme = theme[index];
+            label.addClass(style[labelTheme]);
+        });
+    };
 
     /*
      * Welcome panel
