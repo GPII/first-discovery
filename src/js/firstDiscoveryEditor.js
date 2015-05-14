@@ -58,7 +58,22 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                             listener: "{firstDiscoveryEditor}.events.onPrefsEditorReady",
                             args: "{firstDiscoveryEditor}"
                         },
-                        onAutoSave: "{that}.saveAndApply"
+                        onAutoSave: "{that}.saveAndApply",
+                        // the page is reloaded to reset language and etc.
+                        "onReset.reload": {
+                            "this": "location",
+                            method: "reload",
+                            args: true
+                        },
+                        "onCreate.bindResetShortcut": {
+                            listener: "gpii.firstDiscovery.keyboardShortcut.bindShortcut",
+                            args: [
+                                "body",
+                                gpii.firstDiscovery.keyboardShortcut.key.r,
+                                ["ctrlKey", "altKey"],
+                                "{that}.reset"
+                            ]
+                        }
                     },
                     autoSave: true,
                     connectionGradeForLang: "gpii.firstDiscovery.panel.lang.prefEditorConnection",

@@ -14,6 +14,7 @@
         <script src="../lib/infusion/test-core/utils/js/IoCTestUtils.js"></script>
 
         <script src="../../src/schemas/schemas.js"></script>
+        <script src="../../src/js/keyboardShortcut.js"></script>
         <script src="../../src/js/ttsHookup.js"></script>
         <script src="../../src/js/tooltip.js"></script>
         <script src="../../src/js/msgLookup.js"></script>
@@ -39,6 +40,8 @@
         <ol id="qunit-tests"></ol>
 
         <!-- Test HTML -->
+
+        <!-- Nav Controls Tests -->
         <div id="gpiic-fd-navControlsTests">
             <div class="gpiic-fd-selfVoicing">
                 <button class="gpiic-fd-selfVoicing-mute left gpii-fd-mute">
@@ -80,6 +83,7 @@
             </div>
         </div>
 
+        <!-- TTS Hookup Tests -->
         <div id="gpiic-fd-ttsHookupTests">
             <div class="gpiic-fd-selfVoicing">
                 <button class="gpiic-fd-selfVoicing-mute left gpii-fd-mute">
@@ -121,6 +125,49 @@
             </div>
         </div>
 
+        <!-- Reset Shortcut Tests -->
+        <div id="gpiic-fd-resetShortcutTests">
+            <div class="gpiic-fd-selfVoicing">
+                <button class="gpiic-fd-selfVoicing-mute left gpii-fd-mute">
+                    <span class="left gpii-fd-icon"></span>
+                    <span class="gpiic-fd-selfVoicing-muteLabel"></span>
+                </button>
+            </div>
+
+            <button class="gpiic-fd-help"></button>
+
+            <section class="gpiic-fd-prefsEditor"></section>
+
+            <div class="gpiic-fd-navButtons">
+                <button id="gpiic-fd-navButtons-back"></button>
+                <button id="gpiic-fd-navButtons-next"></button>
+            </div>
+
+            <div class="gpiic-fd-navIcons text-center gpii-fd-navIcons">
+                <ul>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-lang">
+                        <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                        <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
+                    </li>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon-welcome">
+                    </li>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-text">
+                        <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                        <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
+                    </li>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-volume">
+                        <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                        <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
+                    </li>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-contrast">
+                        <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                        <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Lang Tests -->
         <div id="gpiic-fd-langTests">
             <div class="gpiic-fd-selfVoicing">
                 <button class="gpiic-fd-selfVoicing-mute left gpii-fd-mute">
