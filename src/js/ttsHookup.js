@@ -63,9 +63,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     },
                     listeners: {
                         "onCreate.bindKeypress": {
-                            listener: "gpii.firstDiscovery.tts.fdHookup.bindKeypress",
-                            // 104 === 'h'
-                            args: ["body", 104, "{that}.speakPanelInstructions"]
+                            listener: "gpii.firstDiscovery.keyboardShortcut.bindShortcut",
+                            args: ["body", gpii.firstDiscovery.keyboardShortcut.key.h, [], "{that}.speakPanelInstructions"]
                         }
                     },
                     modelListeners: {
@@ -76,14 +75,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         panelInstructionsSelector: ".gpiic-fd-instructions"
     });
-
-    gpii.firstDiscovery.tts.fdHookup.bindKeypress = function (elm, keyCode, func) {
-        $(elm).keypress(function (e) {
-            if (e.keyCode === keyCode) {
-                func();
-            }
-        });
-    };
 
     gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions = function (that) {
         return that.panels.eq(that.model.currentPanelNum - 1).find(that.options.panelInstructionsSelector).text();

@@ -44,7 +44,14 @@ https://github.com/gpii/universal/LICENSE.txt
             assembledPrefsEditorGrade: {
                 funcName: "gpii.tests.firstDiscovery.getPrefsEditorGrade"
             }
-        }
+        },
+        resetListeners: {
+            "onReset.reload": "fluid.identity"
+        },
+        distributeOptions: [{
+            source: "{that}.options.resetListeners",
+            target: "{that prefsEditor}.options.listeners"
+        }]
     });
 
     gpii.tests.firstDiscovery.getPrefsEditorGrade = function () {
@@ -61,9 +68,11 @@ https://github.com/gpii/universal/LICENSE.txt
 
     // The mapping between the model value of "currentPanelNum" and actual panels
     // 1. language, 2. welcome, 3. audio, 4. text size, 5. contrast
-    gpii.tests.firstDiscovery.runTest = function (msg, container, panelNum, testFunc) {
+    gpii.tests.firstDiscovery.runTest = function (msg, container, panelNum, testFunc, gradeName) {
+        var gradeNames = fluid.makeArray(gradeName || []);
         jqUnit.asyncTest(msg, function () {
             gpii.tests.firstDiscovery(container, {
+                gradeNames: gradeNames,
                 components: {
                     prefsEditorLoader: {
                         options: {
@@ -197,8 +206,32 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("The instruction text should be sourced from the active panel", expected, actual);
     };
 
+    fluid.defaults("gpii.tests.firstDiscovery.reset", {
+        resetListeners: {
+            "onReset.reload": {
+                listener: "jqUnit.assert",
+                args: ["The reset should be triggered"],
+                "this": null,
+                method: null
+            }
+        }
+    });
+
+    gpii.tests.firstDiscovery.testResetShortcut = function () {
+        jqUnit.expect(1);
+
+        var eventObj = {
+            which: gpii.firstDiscovery.keyboardShortcut.key.r,
+            altKey: true,
+            ctrlKey: true
+        };
+
+        gpii.tests.utils.simulateKeyEvent("body", "keydown", eventObj);
+    };
+
     gpii.tests.firstDiscovery.runTest("Init and navigation controls", "#gpiic-fd-navControlsTests", 1, gpii.tests.firstDiscovery.testControls);
     gpii.tests.firstDiscovery.runTest("TTS Hookup", "#gpiic-fd-ttsHookupTests", 3, gpii.tests.firstDiscovery.testTTSHookup);
+    gpii.tests.firstDiscovery.runTest("Reset Shortcut", "#gpiic-fd-resetShortcutTests", 1, gpii.tests.firstDiscovery.testResetShortcut, "gpii.tests.firstDiscovery.reset");
 
     // Test the connection between the top level first discovery editor and the language panel: the language panel resets button positions every
     // time when the panel itself becomes visible to accommodate the possible text or control size changes that cause the shift of button positions.
