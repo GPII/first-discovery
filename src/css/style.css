@@ -177,7 +177,7 @@ button {
     border-radius: 0.7rem;
     margin-left: -0.6rem;
     padding: 0.7rem;
-    border: 2px solid #ffffff;
+    border: 3px solid #ffffff;
 }
 .gpii-fd-choice-label:hover {
     background-color: #425165; /* blue-grey, to override foundation's blue */
@@ -196,7 +196,7 @@ button {
 .gpii-fd-choice-label:active {
     background-color: #fff;
     color: #425165; /* blue-grey */
-    border: 2px solid #fff;
+    border: 3px solid #fff;
     box-shadow: 0 0 0 0.4rem rgb(72, 82, 100); /* blue-grey */
 }
 
@@ -676,11 +676,11 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 }
 .fl-theme-wb .gpii-fd *:disabled {
     background-image: repeating-linear-gradient(
-        -30deg,
+        -20deg,
         #ffffff,
-        #ffffff 5px,
-        #000000 5px,
-        #000000 20px
+        #ffffff 0.3rem,
+        #000000 0.3rem,
+        #000000 1.5rem
     );
 }
 .fl-theme-wb .gpii-fd-lang-prev:disabled:hover,
@@ -761,11 +761,11 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 }
 .fl-theme-bw .gpii-fd *:disabled {
     background-image: repeating-linear-gradient(
-        -30deg,
+        -20deg,
         #000000,
-        #000000 5px,
-        #ffffff 5px,
-        #ffffff 20px
+        #000000 0.3rem,
+        #ffffff 0.3rem,
+        #ffffff 1.5rem
     );
 }
 .fl-theme-bw .gpii-fd-lang-prev:disabled:hover,
