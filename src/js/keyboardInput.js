@@ -262,6 +262,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "shiftLatched.speakShiftOnLatch": "{that}.speakShiftOnLatch"
         },
         listeners: {
+            // This keypress.speak listener has a priority of "first"
+            // as it needs to happen before the keyboard assessment
+            // check is run. That check will cause the panel to be
+            // re-rendered and we need to get our speech queued before
+            // the re-rendering happens.
             "keypress.speak": {
                 listener: "{that}.speak",
                 args: ["{arguments}.0"],
