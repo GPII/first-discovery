@@ -74,7 +74,7 @@ https://github.com/gpii/universal/LICENSE.txt
             tests: [
                 {
                     expect: 3,
-                    name: "gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions",
+                    name: "Test the gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions function",
                     sequence: [
                         {
                             // Panel 1 has a single instruction

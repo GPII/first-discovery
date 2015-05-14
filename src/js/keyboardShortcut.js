@@ -47,7 +47,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.keyboardShortcut.modfiers = ["altKey", "ctrlKey", "metaKey", "shiftKey"];
 
     /**
-     * elm {Object} - any jQueryable selector refering to the element to bind a keypress to
+     * elm {Object} - any jQueryable selector referring to the element to bind a keypress to
      * key {Int} - An integer representation of the key to bind as a shortcut (see: gpii.firstDiscovery.keyboardShortcut.key)
      * modifiers {Array} - an array of modifiers required ("altKey", "ctrlKey", "metaKey", "shiftKey")
      * func {Object} - the function to call when the shortcut is triggered.
