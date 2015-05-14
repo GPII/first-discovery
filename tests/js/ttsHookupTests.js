@@ -13,17 +13,109 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.registerNamespace("gpii.tests");
 
-    jqUnit.test("gpii.firstDiscovery.tts.fdHookup.bindKeypress", function () {
-        jqUnit.expect(1);
-        var elm = $(".bindKeypress-test");
-        var keyCode = 104; // 'h'
+    fluid.defaults("gpii.tests.mock.firstDiscoveryEditor", {
+        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
+        selectors: {
+            panel: ".gpiic-fd-prefsEditor-panel"
+        },
+        model: {
+            currentPanelNum: 1
+        },
+        components: {
+            selfVoicing: {
+                type: "fluid.standardComponent",
+                options: {
+                    gradeNames: ["gpii.firstDiscovery.msgLookup"],
+                    model: {
+                        enabled: true
+                    },
+                    messageBase: {
+                        "panelMsg": "This is step %currentPanel of %numPanels. %instructions Press 'h' for help."
+                    },
+                    invokers: {
+                        queueSpeech: "{firstDiscoveryEditor}.events.onTestQueueSpeech.fire"
+                    }
+                }
+            }
+        },
+        events: {
+            onTestQueueSpeech: null
+        },
+        listeners: {
+            "onCreate.setPanels": {
+                listener: "fluid.set",
+                args: ["{that}", "panels", "{that}.dom.panel"],
+                priority: "first"
+            }
+        }
+    });
 
-        gpii.firstDiscovery.tts.fdHookup.bindKeypress(elm, keyCode, function () {
-            jqUnit.assert("The keypress function should have exectued");
-        });
+    fluid.defaults("gpii.tests.firstDiscovery.tts.fdHookup", {
+        gradeNames: ["gpii.tests.mock.firstDiscoveryEditor", "gpii.firstDiscovery.tts.fdHookup", "autoInit"]
+    });
 
-        // simulate the keypress
-        elm.simulate("keypress", {keyCode: keyCode});
+    fluid.defaults("gpii.tests.fdHookupTests", {
+        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        components: {
+            fdHookup: {
+                type: "gpii.tests.firstDiscovery.tts.fdHookup",
+                container: ".gpiic-tests-firstDiscovery-tts-fdHookup"
+            },
+            ttsHookupTester: {
+                type: "gpii.tests.ttsHookupTester"
+            }
+        }
+    });
+
+    fluid.defaults("gpii.tests.ttsHookupTester", {
+        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        modules: [{
+            name: "Tests the fdHookup component",
+            tests: [{
+                expect: 1,
+                name: "Test the gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions function",
+                type: "test",
+                func: "gpii.tests.ttsHookupTester.verifyGetCurrentPanelInstructions",
+                args: ["{fdHookup}", "Test Instructions"]
+            }, {
+                expect: 3,
+                name: "TTS message tests",
+                sequence: [{
+                    func: "{fdHookup}.selfVoicing.speakPanelMessage"
+                }, {
+                    listener: "jqUnit.assertEquals",
+                    args: [
+                        "The correct message for the panel should be sent to the TTS",
+                        "This is step 1 of 1. Test Instructions Press 'h' for help.",
+                        "{arguments}.0"
+                    ],
+                    event: "{fdHookup}.events.onTestQueueSpeech"
+                }, {
+                    func: "{fdHookup}.selfVoicing.speakPanelInstructions"
+                }, {
+                    listener: "jqUnit.assertEquals",
+                    args: ["The panel instructions should be sent to the TTS", "Test Instructions", "{arguments}.0"],
+                    event: "{fdHookup}.events.onTestQueueSpeech"
+                }, {
+                    func: "gpii.tests.utils.simulateKeyEvent",
+                    args: ["body", "keydown", {which: gpii.firstDiscovery.keyboardShortcut.key.h}]
+                }, {
+                    listener: "jqUnit.assertEquals",
+                    args: ["The panel instructions should be sent to the TTS", "Test Instructions", "{arguments}.0"],
+                    event: "{fdHookup}.events.onTestQueueSpeech"
+                }]
+            }]
+        }]
+    });
+
+    gpii.tests.ttsHookupTester.verifyGetCurrentPanelInstructions = function (that, expected) {
+        jqUnit.assertEquals("The current panel instructions should be retrieved correctly", expected, gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions(that));
+    };
+
+    $(document).ready(function () {
+        fluid.test.runTests([
+            "gpii.tests.fdHookupTests"
+        ]);
     });
 
 })(jQuery, fluid);

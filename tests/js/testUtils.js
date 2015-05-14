@@ -37,6 +37,10 @@ https://github.com/gpii/universal/LICENSE.txt
         radioButtons.eq(idx).click();
     };
 
+    gpii.tests.utils.simulateKeyEvent = function (elm, keyEvent, eventObj) {
+        $(elm).triggerHandler(jQuery.Event(keyEvent, eventObj));
+    };
+
     gpii.tests.utils.verifyRadioButtonRendering = function (inputs, inputLabels, labelText, selection) {
         fluid.each(inputLabels, function (elm, idx) {
             elm = $(elm);

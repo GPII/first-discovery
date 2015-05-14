@@ -8,12 +8,13 @@
 
         <script src="../lib/infusion/lib/qunit/js/qunit.js"></script>
         <script src="../../src/lib/infusion/infusion-custom.js"></script>
-        <script src="../lib/infusion/lib/jquery-ui/js/jquery.simulate.js"></script>
         <script src="../lib/infusion/test-core/jqUnit/js/jqUnit.js"></script>
         <script src="../lib/infusion/test-core/utils/js/IoCTestUtils.js"></script>
 
-
+        <script src="../../src/js/keyboardShortcut.js"></script>
+        <script src="../../src/js/msgLookup.js"></script>
         <script src="../../src/js/ttsHookup.js"></script>
+        <script src="../js/testUtils.js"></script>
         <script src="../js/ttsHookupTests.js"></script>
     </head>
 
@@ -25,6 +26,10 @@
         <ol id="qunit-tests"></ol>
 
         <!-- Test HTML -->
-        <span class="bindKeypress-test"></span>
+        <div class="gpiic-tests-firstDiscovery-tts-fdHookup">
+            <div class="gpiic-fd-prefsEditor-panel">
+                <span class="gpiic-fd-instructions">Test Instructions</span>
+            </div>
+        </div>
     </body>
 </html>
