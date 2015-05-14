@@ -99,11 +99,11 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     gpii.tests.firstDiscovery.triggerKeypress = function (elem, ch) {
-        elem.triggerHandler(jQuery.Event("keypress", { which: ch.charCodeAt(0) }));
+        gpii.tests.utils.simulateKeyEvent(elem, "keypress", { which: ch.charCodeAt(0) });
     };
 
     gpii.tests.firstDiscovery.triggerKeydown = function (elem, keyCode) {
-        elem.triggerHandler(jQuery.Event("keydown", { which: keyCode }));
+        gpii.tests.utils.simulateKeyEvent(elem, "keydown", { which: keyCode });
     };
 
     gpii.tests.firstDiscovery.checkShiftLatchedClass = function (keyboardInput) {
