@@ -1,6 +1,6 @@
 {
     "keyboardInstructions": "Adjustments can be made to help you with using the keyboard.",
-    "placeholder": "Type the @ symbol now",
+    "placeholder": "Type the % symbol here",
 
     "try": "try it",
     "on": "ON",
@@ -9,7 +9,7 @@
     "turnOff": "turn OFF",
 
     "stickyKeysInstructions": "<strong>Sticky Keys</strong> can help with holding two keys down at once.",
-    "stickyKeysAccomInstr": "With Sticky Keys on, type @ by first pressing the Shift key and then the 2 key.",
+    "stickyKeysAccomInstr": "With Sticky Keys on, type % by first pressing the Shift key and then the 5 key.",
     "stickyKeys": "Sticky Keys is",
 
     "successInstructions": "You don’t appear to need any keyboard adjustments. Please proceed to the next screen.",

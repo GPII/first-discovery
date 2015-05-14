@@ -157,7 +157,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             stickyKeysAssessor: {
                 type: "gpii.firstDiscovery.keyboard.stickyKeysAssessment",
                 options: {
-                    requiredInput: "@",
+                    requiredInput: "%",
                     model: {
                         userInput: "{keyboard}.model.userInput",
                         offerAssistance: "{keyboard}.model.offerAssistance"
