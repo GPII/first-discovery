@@ -73,7 +73,7 @@ https://github.com/gpii/universal/LICENSE.txt
             name: "Tests the fdHookup component",
             tests: [{
                 expect: 1,
-                name: "gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions",
+                name: "Test the gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions function",
                 type: "test",
                 func: "gpii.tests.ttsHookupTester.verifyGetCurrentPanelInstructions",
                 args: ["{fdHookup}", "Test Instructions"]
