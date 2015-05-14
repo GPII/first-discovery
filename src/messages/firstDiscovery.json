@@ -17,5 +17,5 @@
 
     "help": "help",
 
-    "panelMsg": "This is step %currentPanel of %numPanels. %instructions Press 'h' for help."
+    "panelMsg": "This is step %currentPanel of %numPanels. %instructions. Press 'h' for help."
 }

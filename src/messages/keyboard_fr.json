@@ -1,0 +1,21 @@
+{
+    "keyboardInstructions": "Des ajustements peuvent être faits pour vous aider avec l'usage du clavier.",
+    "placeholder": "Tapez le symbole @ ici.",
+
+    "try": "Essayez-le",
+    "on": "activées",
+    "off": "désactivées",
+    "turnOn": "activer",
+    "turnOff": "désactiver",
+
+    "stickyKeysInstructions": "<strong>Les touches rémanentes</strong> peuvent aider à la tenue de deux touches enfoncées à la fois.",
+    "stickyKeysAccomInstr": "Maintenant, vous pouvez taper @ en appuyant d'abord sur la touche Maj (Shift), puis sur la touche 2.",
+    "stickyKeys": "Touches rémanentes sont ",
+
+    "successInstructions": "Vous ne semblez pas avoir besoin d'ajustements de clavier. S'il vous plaît passez à l'écran suivant.",
+
+    "keyboardInputTooltip": "Sélectionner pour commencer à taper",
+    "tryTooltip": "Sélectionnez pour transformer les touches rémanentes",
+    "turnOnTooltip": "Sélectionnez pour transformer les touches rémanentes",
+    "turnOffTooltip": "Sélectionnez pour transformer les touches rémanentes"
+}
