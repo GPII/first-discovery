@@ -63,9 +63,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     },
                     listeners: {
                         "onCreate.bindKeypress": {
-                            listener: "gpii.firstDiscovery.tts.fdHookup.bindKeypress",
-                            // 104 === 'h'
-                            args: ["body", 104, "{that}.speakPanelInstructions"]
+                            listener: "gpii.firstDiscovery.keyboardShortcut.bindShortcut",
+                            args: ["body", gpii.firstDiscovery.keyboardShortcut.key.h, [], "{that}.speakPanelInstructions"]
                         }
                     },
                     modelListeners: {
@@ -77,25 +76,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         panelInstructionsSelector: ".gpiic-fd-instructions"
     });
 
-    gpii.firstDiscovery.tts.fdHookup.bindKeypress = function (elm, keyCode, func) {
-        $(elm).keypress(function (e) {
-            if (e.keyCode === keyCode) {
-                func();
-            }
-        });
-    };
-
-    gpii.firstDiscovery.tts.fdHookup.getVisibleInstructions = function (container, selector) {
-        // Collect all the instructions and join them
-        var texts = fluid.transform(container.find(selector).filter(":visible"), function (elem) {
+    gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions = function (that) {
+        var panel = that.panels.eq(that.model.currentPanelNum - 1);
+        var texts = fluid.transform(panel.find(that.options.panelInstructionsSelector).filter(":visible"), function (elem) {
             return $.text(elem);
         });
         return texts.join(" ");
-    };
-
-    gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions = function (that) {
-        var panel = that.panels.eq(that.model.currentPanelNum - 1);
-        return gpii.firstDiscovery.tts.fdHookup.getVisibleInstructions(panel, that.options.panelInstructionsSelector);
     };
 
     gpii.firstDiscovery.tts.fdHookup.speakPanelMessage = function (that, template, speakFn) {

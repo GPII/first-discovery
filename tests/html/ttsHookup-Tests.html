@@ -8,12 +8,13 @@
 
         <script src="../lib/infusion/lib/qunit/js/qunit.js"></script>
         <script src="../../src/lib/infusion/infusion-custom.js"></script>
-        <script src="../lib/infusion/lib/jquery-ui/js/jquery.simulate.js"></script>
         <script src="../lib/infusion/test-core/jqUnit/js/jqUnit.js"></script>
         <script src="../lib/infusion/test-core/utils/js/IoCTestUtils.js"></script>
 
-
+        <script src="../../src/js/keyboardShortcut.js"></script>
+        <script src="../../src/js/msgLookup.js"></script>
         <script src="../../src/js/ttsHookup.js"></script>
+        <script src="../js/testUtils.js"></script>
         <script src="../js/ttsHookupTests.js"></script>
     </head>
 
@@ -25,17 +26,22 @@
         <ol id="qunit-tests"></ol>
 
         <!-- Test HTML -->
-        <span class="bindKeypress-test"></span>
-        <div id="gpiic-tests-no-instructions"></div>
-        <div id="gpiic-tests-one-instruction">
-            <div class="gpiic-fd-instructions">single instruction text</div>
-        </div>
-        <div id="gpiic-tests-multiple-instructions">
-            <div class="gpiic-fd-instructions">instruction element one.</div>
-            <div class="gpiic-fd-instructions" style="display:none">hidden element</div>
-            <div class="gpiic-fd-instructions">instruction element two</div>
-            <div style="display:none">
-                <div class="gpiic-fd-instructions">inside a hidden element</div>
+        <div class="gpiic-tests-firstDiscovery-tts-fdHookup">
+            <div class="gpiic-fd-prefsEditor-panel">
+                <!-- Single instruction -->
+                <span class="gpiic-fd-instructions">Test Instructions</span>
+            </div>
+            <div class="gpiic-fd-prefsEditor-panel">
+                <!-- Multiple instructions -->
+                <span class="gpiic-fd-instructions">instruction element one.</span>
+                <div class="gpiic-fd-instructions" style="display:none">hidden element</div>
+                <span class="gpiic-fd-instructions">instruction element two</span>
+                <div style="display:none">
+                    <span class="gpiic-fd-instructions">inside a hidden element</span>
+                </div>
+            </div>
+            <div class="gpiic-fd-prefsEditor-panel">
+                <!-- No instructions -->
             </div>
         </div>
     </body>
