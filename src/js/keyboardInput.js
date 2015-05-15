@@ -240,6 +240,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     };
 
+    // The gpii.firstDiscovery.keyboardInputTts mixin grade adds
+    // self-voicing to the keyboardInput grade. keyboardInputTts
+    // relies on the availablility of a component with the
+    // fluid.textToSpeech grade within the component hierarchy to do
+    // the actual speaking.
     fluid.defaults("gpii.firstDiscovery.keyboardInputTts", {
         invokers: {
             speak: {
@@ -262,7 +267,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "shiftLatched.speakShiftOnLatch": "{that}.speakShiftOnLatch"
         },
         listeners: {
-            // This keypress.speak listener has a priority of "first"
+            // This keypress.speak listener has a priority of -10
             // as it needs to happen before the keyboard assessment
             // check is run. That check will cause the panel to be
             // re-rendered and we need to get our speech queued before
@@ -270,7 +275,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "keypress.speak": {
                 listener: "{that}.speak",
                 args: ["{arguments}.0"],
-                priority: "first"
+                priority: -10
             },
             // This onCreate.registerSpeakOnFocusMessage listener has
             // a priority of 1 as it must happen after the

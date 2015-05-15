@@ -133,7 +133,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.firstDiscovery.keyboardInput.focusOther = function () {
-        $("#gpiic-tests-other-input").focus();
+        fluid.focus("#gpiic-tests-other-input");
     };
 
     gpii.tests.firstDiscovery.keyboardInput.checkTooltipMessage = function (keyboardInput) {
@@ -519,8 +519,8 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["{keyboardInput}", true]
                         },
                         {
-                            element: "{keyboardInput}.container",
-                            jQueryTrigger: "focus"
+                            func: "fluid.focus",
+                            args: ["{keyboardInput}.container"]
                         },
                         {
                             event: "{keyboardInput}.events.tooltipClose",
@@ -538,8 +538,8 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["{keyboardInput}"]
                         },
                         {
-                            element: "{keyboardInput}.container",
-                            jQueryTrigger: "focus"
+                            func: "fluid.focus",
+                            args: ["{keyboardInput}.container"]
                         },
                         {
                             element: "{keyboardInput}.container",
@@ -646,8 +646,8 @@ https://github.com/gpii/universal/LICENSE.txt
                             func: "gpii.tests.firstDiscovery.keyboardInput.focusOther"
                         },
                         {
-                            element: "{keyboardInput}.container",
-                            jQueryTrigger: "focus"
+                            func: "fluid.focus",
+                            args: ["{keyboardInput}.container"]
                         },
                         // Verify that the placeholder text is read on
                         // focus when the input is empty
@@ -673,8 +673,8 @@ https://github.com/gpii/universal/LICENSE.txt
                             func: "gpii.tests.firstDiscovery.keyboardInput.focusOther"
                         },
                         {
-                            element: "{keyboardInput}.container",
-                            jQueryTrigger: "focus"
+                            func: "fluid.focus",
+                            args: ["{keyboardInput}.container"]
                         },
                         {
                             event: "{keyboardInput}.events.speak",
