@@ -14,6 +14,7 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.registerNamespace("gpii.tests.firstDiscovery.usKeymap");
     fluid.registerNamespace("gpii.tests.firstDiscovery.keyboardInput");
+    fluid.registerNamespace("gpii.tests.firstDiscovery.keyboardInputTts");
 
     gpii.tests.firstDiscovery.charCodeLowerCaseA = 97;
     gpii.tests.firstDiscovery.charCodeLowerCaseZ = 122;
@@ -113,10 +114,26 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals(msg, expected, keyboardInput.container.hasClass(className));
     };
 
+    gpii.tests.firstDiscovery.keyboardInput.checkKeypress = function (expected, actual) {
+        jqUnit.assertEquals("keypress character should be \"" + expected + "\"", expected, actual);
+    };
+
+    gpii.tests.firstDiscovery.keyboardInput.checkUserInput = function (keyboardInput, expected) {
+        // Check both the model value and the HTML input value
+        jqUnit.assertEquals("userInput should be \"" + expected + "\"",
+                            expected, keyboardInput.model.userInput);
+        jqUnit.assertEquals("HTML input value should be \"" + expected + "\"",
+                            expected, keyboardInput.container.val());
+    };
+
     gpii.tests.firstDiscovery.keyboardInput.setUpTooltipTest = function (keyboardInput) {
         // Set the focus and tooltip state to a known starting point
-        $("#gpiic-tests-other-input").focus();
+        gpii.tests.firstDiscovery.keyboardInput.focusOther();
         keyboardInput.tooltip.close();
+    };
+
+    gpii.tests.firstDiscovery.keyboardInput.focusOther = function () {
+        fluid.focus("#gpiic-tests-other-input");
     };
 
     gpii.tests.firstDiscovery.keyboardInput.checkTooltipMessage = function (keyboardInput) {
@@ -213,7 +230,7 @@ https://github.com/gpii/universal/LICENSE.txt
             tests: [
                 {
                     name: "Check user input when sticky keys is off",
-                    expect: 6,
+                    expect: 10,
                     sequence: [
                         {
                             func: "jqUnit.assertFalse",
@@ -229,11 +246,15 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["{keyboardInput}.container", "a"]
                         },
                         {
-                            listener: "jqUnit.assertEquals",
-                            args: ["Pressed \"a\", userInput should be \"a\"",
-                                   "a", "{keyboardInput}.model.userInput"],
+                            event: "{keyboardInput}.events.keypress",
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
+                            args: ["a", "{arguments}.0"]
+                        },
+                        {
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
                             spec: {path: "userInput", priority: "last"},
-                            changeEvent: "{keyboardInput}.applier.modelChanged"
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            args: ["{keyboardInput}", "a"]
                         },
                         {
                             func: "gpii.tests.firstDiscovery.triggerKeydown",
@@ -254,28 +275,32 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["{keyboardInput}.container", "b"]
                         },
                         {
-                            listener: "jqUnit.assertEquals",
-                            args: ["Pressed \"b\", userInput should be \"b\" (not shifted)",
-                                   "b", "{keyboardInput}.model.userInput"],
+                            event: "{keyboardInput}.events.keypress",
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
+                            args: ["b", "{arguments}.0"]
+                        },
+                        {
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
                             spec: {path: "userInput", priority: "last"},
-                            changeEvent: "{keyboardInput}.applier.modelChanged"
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            args: ["{keyboardInput}", "b"]
                         }
                     ]
                 },
                 {
                     name: "Check user input when sticky keys is on",
-                    expect: 8,
+                    expect: 14,
                     sequence: [
                         {
                             func: "{keyboardInput}.applier.change",
                             args: ["stickyKeysEnabled", true]
                         },
                         {
-                            listener: "jqUnit.assertTrue",
-                            args: ["Sticky Keys should be enabled",
-                                   "{keyboardInput}.model.stickyKeysEnabled"],
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
                             spec: {path: "stickyKeysEnabled", priority: "last"},
-                            changeEvent: "{keyboardInput}.applier.modelChanged"
+                            listener: "jqUnit.assertTrue",
+                            args: ["Sticky Keys should be on",
+                                   "{keyboardInput}.model.stickyKeysEnabled"]
                         },
                         {
                             func: "gpii.tests.firstDiscovery.checkShiftLatchedClass",
@@ -286,11 +311,15 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["{keyboardInput}.container", "a"]
                         },
                         {
-                            listener: "jqUnit.assertEquals",
-                            args: ["Pressed \"a\", userInput should be \"a\"",
-                                   "a", "{keyboardInput}.model.userInput"],
+                            event: "{keyboardInput}.events.keypress",
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
+                            args: ["a", "{arguments}.0"]
+                        },
+                        {
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
                             spec: {path: "userInput", priority: "last"},
-                            changeEvent: "{keyboardInput}.applier.modelChanged"
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            args: ["{keyboardInput}", "a"]
                         },
                         {
                             func: "gpii.tests.firstDiscovery.triggerKeydown",
@@ -298,11 +327,11 @@ https://github.com/gpii/universal/LICENSE.txt
                                    "{keyboardInput}.keymap.shiftKeyCode"]
                         },
                         {
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
+                            spec: {path: "shiftLatched", priority: "last"},
                             listener: "jqUnit.assertTrue",
                             args: ["Pressed shift, shiftLatched should be true",
-                                   "{keyboardInput}.model.shiftLatched"],
-                            spec: {path: "shiftLatched", priority: "last"},
-                            changeEvent: "{keyboardInput}.applier.modelChanged"
+                                   "{keyboardInput}.model.shiftLatched"]
                         },
                         {
                             func: "gpii.tests.firstDiscovery.checkShiftLatchedClass",
@@ -313,11 +342,15 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["{keyboardInput}.container", "b"]
                         },
                         {
-                            listener: "jqUnit.assertEquals",
-                            args: ["Pressed \"b\", userInput should be \"B\" (shifted)",
-                                   "B", "{keyboardInput}.model.userInput"],
+                            event: "{keyboardInput}.events.keypress",
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
+                            args: ["B", "{arguments}.0"]
+                        },
+                        {
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
                             spec: {path: "userInput", priority: "last"},
-                            changeEvent: "{keyboardInput}.applier.modelChanged"
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            args: ["{keyboardInput}", "B"]
                         },
                         {
                             func: "gpii.tests.firstDiscovery.checkShiftLatchedClass",
@@ -328,11 +361,15 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["{keyboardInput}.container", "c"]
                         },
                         {
-                            listener: "jqUnit.assertEquals",
-                            args: ["Pressed \"c\", userInput should be \"c\" (not shifted)",
-                                   "c", "{keyboardInput}.model.userInput"],
+                            event: "{keyboardInput}.events.keypress",
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
+                            args: ["c", "{arguments}.0"]
+                        },
+                        {
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
                             spec: {path: "userInput", priority: "last"},
-                            changeEvent: "{keyboardInput}.applier.modelChanged"
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            args: ["{keyboardInput}", "c"]
                         }
                     ]
                 },
@@ -342,7 +379,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     sequence: [
                         {
                             func: "jqUnit.assertTrue",
-                            args: ["Sticky Keys should be enabled",
+                            args: ["Sticky Keys should be on",
                                    "{keyboardInput}.model.stickyKeysEnabled"]
                         },
                         {
@@ -351,11 +388,11 @@ https://github.com/gpii/universal/LICENSE.txt
                                    "{keyboardInput}.keymap.shiftKeyCode"]
                         },
                         {
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
+                            spec: {path: "shiftLatched", priority: "last"},
                             listener: "jqUnit.assertTrue",
                             args: ["Pressed shift, shiftLatched should be true",
-                                   "{keyboardInput}.model.shiftLatched"],
-                            spec: {path: "shiftLatched", priority: "last"},
-                            changeEvent: "{keyboardInput}.applier.modelChanged"
+                                   "{keyboardInput}.model.shiftLatched"]
                         },
                         {
                             func: "gpii.tests.firstDiscovery.triggerKeydown",
@@ -363,11 +400,74 @@ https://github.com/gpii/universal/LICENSE.txt
                                    "{keyboardInput}.keymap.shiftKeyCode"]
                         },
                         {
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
+                            spec: {path: "shiftLatched", priority: "last"},
                             listener: "jqUnit.assertFalse",
                             args: ["Pressed shift, shiftLatched should be false",
-                                   "{keyboardInput}.model.shiftLatched"],
-                            spec: {path: "shiftLatched", priority: "last"},
-                            changeEvent: "{keyboardInput}.applier.modelChanged"
+                                   "{keyboardInput}.model.shiftLatched"]
+                        }
+                    ]
+                },
+                {
+                    name: "Changing Sticky Keys state clears the text",
+                    expect: 12,
+                    sequence: [
+                        // Verify starting state
+                        {
+                            func: "jqUnit.assertTrue",
+                            args: ["Sticky Keys should be on",
+                                   "{keyboardInput}.model.stickyKeysEnabled"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            args: ["{keyboardInput}", "c"]
+                        },
+                        // Turn Sticky Keys off and check the input is cleared
+                        {
+                            func: "{keyboardInput}.applier.change",
+                            args: ["stickyKeysEnabled", false]
+                        },
+                        {
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
+                            spec: {path: "stickyKeysEnabled", priority: "last"},
+                            listener: "jqUnit.assertFalse",
+                            args: ["Sticky Keys should be off",
+                                   "{keyboardInput}.model.stickyKeysEnabled"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            args: ["{keyboardInput}", ""]
+                        },
+                        // Type something, turn sticky keys on, and verify cleared
+                        {
+                            func: "gpii.tests.firstDiscovery.triggerKeypress",
+                            args: ["{keyboardInput}.container", "a"]
+                        },
+                        {
+                            event: "{keyboardInput}.events.keypress",
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
+                            args: ["a", "{arguments}.0"]
+                        },
+                        {
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
+                            spec: {path: "userInput", priority: "last"},
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            args: ["{keyboardInput}", "a"]
+                        },
+                        {
+                            func: "{keyboardInput}.applier.change",
+                            args: ["stickyKeysEnabled", true]
+                        },
+                        {
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
+                            spec: {path: "stickyKeysEnabled", priority: "last"},
+                            listener: "jqUnit.assertTrue",
+                            args: ["Sticky Keys should be on",
+                                   "{keyboardInput}.model.stickyKeysEnabled"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            args: ["{keyboardInput}", ""]
                         }
                     ]
                 },
@@ -419,8 +519,8 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["{keyboardInput}", true]
                         },
                         {
-                            element: "{keyboardInput}.container",
-                            jQueryTrigger: "focus"
+                            func: "fluid.focus",
+                            args: ["{keyboardInput}.container"]
                         },
                         {
                             event: "{keyboardInput}.events.tooltipClose",
@@ -438,8 +538,8 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["{keyboardInput}"]
                         },
                         {
-                            element: "{keyboardInput}.container",
-                            jQueryTrigger: "focus"
+                            func: "fluid.focus",
+                            args: ["{keyboardInput}.container"]
                         },
                         {
                             element: "{keyboardInput}.container",
@@ -466,8 +566,217 @@ https://github.com/gpii/universal/LICENSE.txt
         }]
     });
 
+    gpii.tests.firstDiscovery.keyboardInputTts.clearInput = function (keyboardInput) {
+        keyboardInput.container.val("");
+    };
+
+    gpii.tests.firstDiscovery.keyboardInputTts.recordSpoken = function (keyboardInput, text) {
+        keyboardInput.lastSpokenText = text;
+        keyboardInput.events.speak.fire();
+    };
+
+    gpii.tests.firstDiscovery.keyboardInputTts.clearSpoken = function (keyboardInput) {
+        keyboardInput.lastSpokenText = undefined;
+    };
+
+    gpii.tests.firstDiscovery.keyboardInputTts.checkSpoken = function (keyboardInput, expected) {
+        var msg = "should have spoken \"" + expected + "\"";
+        jqUnit.assertEquals(msg, expected, keyboardInput.lastSpokenText);
+    };
+
+    gpii.tests.firstDiscovery.keyboardInputTts.checkNothingSpoken = function (keyboardInput) {
+        jqUnit.assertUndefined("nothing should have been spoken", keyboardInput.lastSpokenText);
+    };
+
+    fluid.defaults("gpii.tests.firstDiscovery.keyboardInputWithTts", {
+        gradeNames: ["gpii.tests.firstDiscovery.keyboardInput", "gpii.firstDiscovery.keyboardInputTts", "autoInit"],
+        messageBase: {
+            "shiftLatched": "shiftLatched message"
+        },
+        invokers: {
+            speak: {
+                funcName: "gpii.tests.firstDiscovery.keyboardInputTts.recordSpoken",
+                args: ["{that}", "{arguments}.0"]
+            }
+        },
+        events: {
+            speak: null
+        }
+    });
+
+    fluid.defaults("gpii.tests.firstDiscovery.keyboardInputWithTtsTestTree", {
+        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        components: {
+            keyboardInput: {
+                type: "gpii.tests.firstDiscovery.keyboardInputWithTts",
+                container: "#gpiic-tests-keyboardInputWithTts"
+            },
+            keyboardInputTester: {
+                type: "gpii.tests.firstDiscovery.keyboardInputTester"
+            },
+            keyboardInputTtsTester: {
+                type: "gpii.tests.firstDiscovery.keyboardInputTtsTester"
+            }
+        }
+    });
+
+    fluid.defaults("gpii.tests.firstDiscovery.keyboardInputTtsTester", {
+        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        modules: [{
+            name: "keyboardInputTts tests",
+            tests: [
+                {
+                    name: "Check placeholder spoken",
+                    expect: 4,
+                    sequence: [
+                        {
+                            func: "{keyboardInput}.applier.change",
+                            args: ["stickyKeysEnabled", false]
+                        },
+                        {
+                            func: "jqUnit.assertFalse",
+                            args: ["Sticky Keys should be off",
+                                   "{keyboardInput}.model.stickyKeysEnabled"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInputTts.clearInput",
+                            args: ["{keyboardInput}"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInput.focusOther"
+                        },
+                        {
+                            func: "fluid.focus",
+                            args: ["{keyboardInput}.container"]
+                        },
+                        // Verify that the placeholder text is read on
+                        // focus when the input is empty
+                        {
+                            event: "{keyboardInput}.events.speak",
+                            listener: "gpii.tests.firstDiscovery.keyboardInputTts.checkSpoken",
+                            args: ["{keyboardInput}", "placeholder text"]
+                        },
+                        // Press "a" and verify that it is spoken
+                        {
+                            func: "gpii.tests.firstDiscovery.triggerKeypress",
+                            args: ["{keyboardInput}.container", "a"]
+                        },
+                        {
+                            event: "{keyboardInput}.events.speak",
+                            listener: "gpii.tests.firstDiscovery.keyboardInputTts.checkSpoken",
+                            args: ["{keyboardInput}", "a"]
+                        },
+                        // Focus away and back again and verify that
+                        // the placeholder text is also read in the
+                        // case that we now have content in the input
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInput.focusOther"
+                        },
+                        {
+                            func: "fluid.focus",
+                            args: ["{keyboardInput}.container"]
+                        },
+                        {
+                            event: "{keyboardInput}.events.speak",
+                            listener: "gpii.tests.firstDiscovery.keyboardInputTts.checkSpoken",
+                            args: ["{keyboardInput}", "placeholder text"]
+                        }
+                    ]
+                },
+                {
+                    name: "Check key presses spoken and shift not spoken when sticky keys is off",
+                    expect: 4,
+                    sequence: [
+                        {
+                            func: "jqUnit.assertFalse",
+                            args: ["Sticky Keys should be off",
+                                   "{keyboardInput}.model.stickyKeysEnabled"]
+                        },
+                        // Press "a" and verify that it is spoken
+                        {
+                            func: "gpii.tests.firstDiscovery.triggerKeypress",
+                            args: ["{keyboardInput}.container", "a"]
+                        },
+                        {
+                            event: "{keyboardInput}.events.speak",
+                            listener: "gpii.tests.firstDiscovery.keyboardInputTts.checkSpoken",
+                            args: ["{keyboardInput}", "a"]
+                        },
+                        // Trigger shift, wait a little time and verify that it wasn't spoken
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInputTts.clearSpoken",
+                            args: ["{keyboardInput}"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.triggerKeydown",
+                            args: ["{keyboardInput}.container",
+                                   "{keyboardInput}.keymap.shiftKeyCode"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInput.wait",
+                            args: ["{keyboardInput}", 200]
+                        },
+                        {
+                            event: "{keyboardInput}.events.waitTimeElapsed",
+                            listener: "jqUnit.assert",
+                            args: ["waitTimeElasped should have fired"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.keyboardInputTts.checkNothingSpoken",
+                            args: ["{keyboardInput}"]
+                        }
+                    ]
+                },
+                {
+                    name: "Check key presses and shift spoken when sticky keys is on",
+                    expect: 4,
+                    sequence: [
+                        {
+                            func: "{keyboardInput}.applier.change",
+                            args: ["stickyKeysEnabled", true]
+                        },
+                        {
+                            func: "jqUnit.assertTrue",
+                            args: ["Sticky Keys should be on",
+                                   "{keyboardInput}.model.stickyKeysEnabled"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.triggerKeypress",
+                            args: ["{keyboardInput}.container", "a"]
+                        },
+                        {
+                            event: "{keyboardInput}.events.speak",
+                            listener: "gpii.tests.firstDiscovery.keyboardInputTts.checkSpoken",
+                            args: ["{keyboardInput}", "a"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.triggerKeydown",
+                            args: ["{keyboardInput}.container",
+                                   "{keyboardInput}.keymap.shiftKeyCode"]
+                        },
+                        {
+                            event: "{keyboardInput}.events.speak",
+                            listener: "gpii.tests.firstDiscovery.keyboardInputTts.checkSpoken",
+                            args: ["{keyboardInput}", "shiftLatched message"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.triggerKeypress",
+                            args: ["{keyboardInput}.container", "2"]
+                        },
+                        {
+                            event: "{keyboardInput}.events.speak",
+                            listener: "gpii.tests.firstDiscovery.keyboardInputTts.checkSpoken",
+                            args: ["{keyboardInput}", "@"]
+                        }
+                    ]
+                }
+            ]
+        }]
+    });
+
     $(document).ready(function () {
         fluid.test.runTests([ "gpii.tests.firstDiscovery.keyboardInputTestTree" ]);
+        fluid.test.runTests([ "gpii.tests.firstDiscovery.keyboardInputWithTtsTestTree" ]);
     });
 
 })(jQuery, fluid);

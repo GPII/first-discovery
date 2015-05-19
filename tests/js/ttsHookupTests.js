@@ -11,7 +11,7 @@ https://github.com/gpii/universal/LICENSE.txt
 (function ($, fluid) {
     "use strict";
 
-    fluid.registerNamespace("gpii.tests");
+    fluid.registerNamespace("gpii.tests.firstDiscovery.tts.fdHookup");
 
     fluid.defaults("gpii.tests.mock.firstDiscoveryEditor", {
         gradeNames: ["fluid.viewRelayComponent", "autoInit"],
@@ -71,40 +71,77 @@ https://github.com/gpii/universal/LICENSE.txt
         gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
         modules: [{
             name: "Tests the fdHookup component",
-            tests: [{
-                expect: 1,
-                name: "Test the gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions function",
-                type: "test",
-                func: "gpii.tests.ttsHookupTester.verifyGetCurrentPanelInstructions",
-                args: ["{fdHookup}", "Test Instructions"]
-            }, {
-                expect: 3,
-                name: "TTS message tests",
-                sequence: [{
-                    func: "{fdHookup}.selfVoicing.speakPanelMessage"
-                }, {
-                    listener: "jqUnit.assertEquals",
-                    args: [
-                        "The correct message for the panel should be sent to the TTS",
-                        "This is step 1 of 1. Test Instructions Press 'h' for help.",
-                        "{arguments}.0"
-                    ],
-                    event: "{fdHookup}.events.onTestQueueSpeech"
-                }, {
-                    func: "{fdHookup}.selfVoicing.speakPanelInstructions"
-                }, {
-                    listener: "jqUnit.assertEquals",
-                    args: ["The panel instructions should be sent to the TTS", "Test Instructions", "{arguments}.0"],
-                    event: "{fdHookup}.events.onTestQueueSpeech"
-                }, {
-                    func: "gpii.tests.utils.simulateKeyEvent",
-                    args: ["body", "keydown", {which: gpii.firstDiscovery.keyboardShortcut.key.h}]
-                }, {
-                    listener: "jqUnit.assertEquals",
-                    args: ["The panel instructions should be sent to the TTS", "Test Instructions", "{arguments}.0"],
-                    event: "{fdHookup}.events.onTestQueueSpeech"
-                }]
-            }]
+            tests: [
+                {
+                    expect: 3,
+                    name: "Test the gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions function",
+                    sequence: [
+                        {
+                            // Panel 1 has a single instruction
+                            func: "gpii.tests.ttsHookupTester.verifyGetCurrentPanelInstructions",
+                            args: ["{fdHookup}", "Test Instructions"]
+                        },
+                        {
+                            func: "{fdHookup}.applier.change",
+                            args: ["currentPanelNum", 2]
+                        },
+                        {
+                            // Panel 2 has multiple instructions
+                            func: "gpii.tests.ttsHookupTester.verifyGetCurrentPanelInstructions",
+                            args: ["{fdHookup}", "instruction element one. instruction element two"]
+                        },
+                        {
+                            func: "{fdHookup}.applier.change",
+                            args: ["currentPanelNum", 3]
+                        },
+                        {
+                            // Panel 3 has no instructions
+                            func: "gpii.tests.ttsHookupTester.verifyGetCurrentPanelInstructions",
+                            args: ["{fdHookup}", ""]
+                        }
+                    ]
+                },
+                {
+                    expect: 3,
+                    name: "TTS message tests",
+                    sequence: [
+                        // Move back to the first panel
+                        {
+                            func: "{fdHookup}.applier.change",
+                            args: ["currentPanelNum", 1]
+                        },
+                        {
+                            func: "{fdHookup}.selfVoicing.speakPanelMessage"
+                        },
+                        {
+                            listener: "jqUnit.assertEquals",
+                            args: [
+                                "The correct message for the panel should be sent to the TTS",
+                                "This is step 1 of 3. Test Instructions Press 'h' for help.",
+                                "{arguments}.0"
+                            ],
+                            event: "{fdHookup}.events.onTestQueueSpeech"
+                        },
+                        {
+                            func: "{fdHookup}.selfVoicing.speakPanelInstructions"
+                        },
+                        {
+                            listener: "jqUnit.assertEquals",
+                            args: ["The panel instructions should be sent to the TTS", "Test Instructions", "{arguments}.0"],
+                            event: "{fdHookup}.events.onTestQueueSpeech"
+                        },
+                        {
+                            func: "gpii.tests.utils.simulateKeyEvent",
+                            args: ["body", "keydown", {which: gpii.firstDiscovery.keyboardShortcut.key.h}]
+                        },
+                        {
+                            listener: "jqUnit.assertEquals",
+                            args: ["The panel instructions should be sent to the TTS", "Test Instructions", "{arguments}.0"],
+                            event: "{fdHookup}.events.onTestQueueSpeech"
+                        }
+                    ]
+                }
+            ]
         }]
     });
 

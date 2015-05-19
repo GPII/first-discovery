@@ -13,8 +13,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     "use strict";
 
-    fluid.registerNamespace("gpii.firstDiscovery");
-
     fluid.defaults("gpii.firstDiscovery.usKeymap", {
         gradeNames: ["fluid.littleComponent", "autoInit"],
         invokers: {
@@ -100,10 +98,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         modelListeners: {
             "stickyKeysEnabled.unlatchShift": "{that}.unlatchShift",
+            "stickyKeysEnabled.clearInput": "{that}.clearInput",
             "shiftLatched.updateShiftLatchedClass": "{that}.updateShiftLatchedClass"
         },
         events: {
-            shiftKeydown: null
+            shiftKeydown: null,
+            keypress: null
         },
         styles: {
             shiftLatched: "gpii-keyboardInput-shiftLatched"
@@ -117,6 +117,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "this": "{that}.container",
                 method: "toggleClass",
                 args: ["{that}.options.styles.shiftLatched", "{that}.model.shiftLatched"]
+            },
+            "clearInput": {
+                funcName: "gpii.firstDiscovery.keyboardInput.setElementValueAndTriggerChange",
+                args: ["{that}.container", ""]
             },
             "openTooltipIfNotFocused": {
                 funcName: "gpii.firstDiscovery.keyboardInput.openTooltipIfNotFocused",
@@ -135,6 +139,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "onCreate.registerChangeListener": {
                 funcName: "gpii.firstDiscovery.keyboardInput.registerChangeListener",
                 args: ["{that}", "{that}.container"]
+            },
+            "keypress.setInputValueAndTriggerChange": {
+                funcName: "gpii.firstDiscovery.keyboardInput.setElementValueAndTriggerChange",
+                args: ["{that}.container", "{arguments}.0"],
+                priority: "last"
             },
             // begin TOOLTIP HANDLER CONFIGURATION
             //
@@ -198,6 +207,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.keyboardInput.registerKeypressListener = function (that, input, keymap) {
         input.keypress(function (e) {
             e.preventDefault();
+            e.stopPropagation();
             var ch = gpii.firstDiscovery.keyboardInput.charFromKeypress(e);
             if (that.model.stickyKeysEnabled && that.model.shiftLatched) {
                 that.unlatchShift();
@@ -206,12 +216,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 }
             }
             if (ch !== "") {
-                input.val(ch);
-                // programmatic change of the input value does not
-                // fire a change event, so we trigger it explicitly
-                input.triggerHandler("change");
+                that.events.keypress.fire(ch);
             }
         });
+    };
+
+    gpii.firstDiscovery.keyboardInput.setElementValueAndTriggerChange = function (elem, value) {
+        elem.val(value);
+        // programmatic change of the value does not fire a change
+        // event, so we trigger it explicitly
+        elem.triggerHandler("change");
     };
 
     gpii.firstDiscovery.keyboardInput.registerChangeListener = function (that, input) {
@@ -223,6 +237,70 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.keyboardInput.openTooltipIfNotFocused = function (that, input) {
         if (!input.is(":focus")) {
             that.tooltip.open();
+        }
+    };
+
+    // The gpii.firstDiscovery.keyboardInputTts mixin grade adds
+    // self-voicing to the keyboardInput grade. keyboardInputTts
+    // relies on the availablility of a component with the
+    // fluid.textToSpeech grade within the component hierarchy to do
+    // the actual speaking.
+    fluid.defaults("gpii.firstDiscovery.keyboardInputTts", {
+        invokers: {
+            speak: {
+                func: "{fluid.textToSpeech}.queueSpeech"
+            },
+            speakOnFocusMessage: {
+                funcName: "gpii.firstDiscovery.keyboardInputTts.speakOnFocusMessage",
+                args: ["{that}", "{gpii.firstDiscovery.keyboardInput}.container"]
+            },
+            speakShiftOnLatch: {
+                funcName: "gpii.firstDiscovery.keyboardInputTts.speakShiftOnLatch",
+                args: [
+                    "{that}",
+                    "{gpii.firstDiscovery.keyboardInput}.model.shiftLatched",
+                    "{that}.msgLookup.shiftLatched"
+                ]
+            }
+        },
+        modelListeners: {
+            "shiftLatched.speakShiftOnLatch": "{that}.speakShiftOnLatch"
+        },
+        listeners: {
+            // This keypress.speak listener has a priority of -10
+            // as it needs to happen before the keyboard assessment
+            // check is run. That check will cause the panel to be
+            // re-rendered and we need to get our speech queued before
+            // the re-rendering happens.
+            "keypress.speak": {
+                listener: "{that}.speak",
+                args: ["{arguments}.0"],
+                priority: -10
+            },
+            // This onCreate.registerSpeakOnFocusMessage listener has
+            // a priority of 1 as it must happen after the
+            // onCreate.removeFocusin listener of keyboardInput
+            "onCreate.registerSpeakOnFocusMessage": {
+                "this": "{gpii.firstDiscovery.keyboardInput}.container",
+                method: "on",
+                args: ["focusin.speakOnFocusMessage", "{that}.speakOnFocusMessage"],
+                priority: 1
+            }
+        }
+    });
+
+    fluid.registerNamespace("gpii.firstDiscovery.keyboardInputTts");
+
+    gpii.firstDiscovery.keyboardInputTts.speakOnFocusMessage = function (that, input) {
+        var placeholder = input.attr("placeholder");
+        if (placeholder && placeholder.length !== 0) {
+            that.speak(placeholder);
+        }
+    };
+
+    gpii.firstDiscovery.keyboardInputTts.speakShiftOnLatch = function (that, shiftLatched, msg) {
+        if (shiftLatched) {
+            that.speak(msg);
         }
     };
 
