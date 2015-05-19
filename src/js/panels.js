@@ -638,7 +638,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.panel.lang.preventWrapWithArrowKeys = function (that) {
         var langButtons = that.locate("langInput"),
             firstLangButton = langButtons[0],
-            lastLangButton = langButtons[langButtons.length];
+            lastLangButton = langButtons[langButtons.length - 1];
 
         gpii.firstDiscovery.panel.lang.stopArrowBrowseOnEdgeButtons(firstLangButton, [$.ui.keyCode.UP, $.ui.keyCode.LEFT]);
         gpii.firstDiscovery.panel.lang.stopArrowBrowseOnEdgeButtons(lastLangButton, [$.ui.keyCode.DOWN, $.ui.keyCode.RIGHT]);
