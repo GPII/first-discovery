@@ -77,10 +77,17 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     },
                     autoSave: true,
                     connectionGradeForLang: "gpii.firstDiscovery.panel.lang.prefEditorConnection",
-                    distributeOptions: {
+                    modelRelayForStickyKey: {
+                        offerAssistance: "{prefsEditor}.model.states.stickyKey.offerAssistance",
+                        tryAccommodation: "{prefsEditor}.model.states.stickyKey.tryAccommodation"
+                    },
+                    distributeOptions: [{
                         source: "{that}.options.connectionGradeForLang",
                         target: "{that > gpii.firstDiscovery.panel.lang}.options.prefsEditorConnection"
-                    }
+                    }, {
+                        source: "{that}.options.modelRelayForStickyKey",
+                        target: "{that > gpii.firstDiscovery.panel.keyboard}.options.model"
+                    }]
                 }
             },
             navButtons: {
