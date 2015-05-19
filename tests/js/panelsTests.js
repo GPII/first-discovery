@@ -19,39 +19,39 @@ https://github.com/gpii/universal/LICENSE.txt
         gradeNames: ["gpii.firstDiscovery.panel.lang", "autoInit"],
         messageBase: {
             "langInstructions": "Select your preferred language",
-            "lang-en": "English",
-            "lang-fr": "Français",
-            "lang-es": "Español",
-            "lang-de": "Deutsch",
-            "lang-ne": "Nederlands",
-            "lang-sv": "Svenska",
+            "lang-en-US": "English",
+            "lang-fr-FR": "Français",
+            "lang-es-ES": "Español",
+            "lang-de-DE": "Deutsch",
+            "lang-nl-NL": "Nederlands",
+            "lang-sv-SE": "Svenska",
 
             "navButtonTooltip": "Select to view more languages",
-            "lang-en-tooltip": "Select for English",
-            "lang-fr-tooltip": "Sélectionnez pour le Français",
-            "lang-es-tooltip": "Seleccionar para Español",
-            "lang-de-tooltip": "Wählen Sie für die Deutsche",
-            "lang-ne-tooltip": "Select for Nederlands",
-            "lang-sv-tooltip": "Select for Svenska",
+            "lang-en-US-tooltip": "Select for English",
+            "lang-fr-FR-tooltip": "Sélectionnez pour le Français",
+            "lang-es-ES-tooltip": "Seleccionar para Español",
+            "lang-de-DE-tooltip": "Wählen Sie für die Deutsche",
+            "lang-nl-NL-tooltip": "Select for Nederlands",
+            "lang-sv-SE-tooltip": "Select for Svenska",
 
-            "lang-en-tooltipAtSelect": "English is currently selected",
-            "lang-fr-tooltipAtSelect": "Français est actuellement sélectionné",
-            "lang-es-tooltipAtSelect": "Español está seleccionado actualmente",
-            "lang-de-tooltipAtSelect": "Deutsch gegenwärtig ausgewählt ist",
-            "lang-ne-tooltipAtSelect": "Nederlands is currently selected",
-            "lang-sv-tooltipAtSelect": "Svenska is currently selected"
+            "lang-en-US-tooltipAtSelect": "English is currently selected",
+            "lang-fr-FR-tooltipAtSelect": "Français est actuellement sélectionné",
+            "lang-es-ES-tooltipAtSelect": "Español está seleccionado actualmente",
+            "lang-de-DE-tooltipAtSelect": "Deutsch gegenwärtig ausgewählt ist",
+            "lang-nl-NL-tooltipAtSelect": "Nederlands is currently selected",
+            "lang-sv-SE-tooltipAtSelect": "Svenska is currently selected"
         },
         model: {
-            lang: "ne"
+            lang: "nl-NL"
         },
         numOfLangPerPage: 3,
         controlValues: {
-            lang: ["en", "fr", "es", "de", "ne", "sv"]
+            lang: ["en-US", "fr-FR", "es-ES", "de-DE", "nl-NL", "sv-SE"]
         },
         stringArrayIndex: {
-            lang: ["lang-en", "lang-fr", "lang-es", "lang-de", "lang-ne", "lang-sv"],
-            tooltip: ["lang-en-tooltip", "lang-fr-tooltip", "lang-es-tooltip", "lang-de-tooltip", "lang-ne-tooltip", "lang-sv-tooltip"],
-            tooltipAtSelect: ["lang-en-tooltipAtSelect", "lang-fr-tooltipAtSelect", "lang-es-tooltipAtSelect", "lang-de-tooltipAtSelect", "lang-ne-tooltipAtSelect", "lang-sv-tooltipAtSelect"]
+            lang: ["lang-en-US", "lang-fr-FR", "lang-es-ES", "lang-de-DE", "lang-nl-NL", "lang-sv-SE"],
+            tooltip: ["lang-en-US-tooltip", "lang-fr-FR-tooltip", "lang-es-ES-tooltip", "lang-de-DE-tooltip", "lang-nl-NL-tooltip", "lang-sv-SE-tooltip"],
+            tooltipAtSelect: ["lang-en-US-tooltipAtSelect", "lang-fr-FR-tooltipAtSelect", "lang-es-ES-tooltipAtSelect", "lang-de-DE-tooltipAtSelect", "lang-nl-NL-tooltipAtSelect", "lang-sv-SE-tooltipAtSelect"]
         }
     });
 
@@ -91,14 +91,14 @@ https://github.com/gpii/universal/LICENSE.txt
                     element: "{lang}.dom.next"
                 }, {
                     listener: "gpii.tests.langTester.verifyLangModel",
-                    args: ["{lang}", "sv"],
+                    args: ["{lang}", "sv-SE"],
                     spec: {path: "lang", priority: "last"},
                     changeEvent: "{lang}.applier.modelChanged"
                 }, {
                     func: "{lang}.refreshView"
                 }, {
                     listener: "gpii.tests.langTester.verifyButtonStates",
-                    args: ["{lang}", "sv", false, true],
+                    args: ["{lang}", "sv-SE", false, true],
                     priority: "last",
                     event: "{lang}.events.afterRender"
                 }, {
@@ -106,29 +106,29 @@ https://github.com/gpii/universal/LICENSE.txt
                     element: "{lang}.dom.prev"
                 }, {
                     listener: "gpii.tests.langTester.verifyLangModel",
-                    args: ["{lang}", "ne"],
+                    args: ["{lang}", "nl-NL"],
                     spec: {path: "lang", priority: "last"},
                     changeEvent: "{lang}.applier.modelChanged"
                 }, {
                     func: "{lang}.refreshView"
                 }, {
                     listener: "gpii.tests.langTester.verifyButtonStates",
-                    args: ["{lang}", "ne", false, false],
+                    args: ["{lang}", "nl-NL", false, false],
                     priority: "last",
                     event: "{lang}.events.afterRender"
                 }, {
                     func: "{lang}.applier.change",
-                    args: ["lang", "en"]
+                    args: ["lang", "en-US"]
                 }, {
                     listener: "gpii.tests.langTester.verifyLangModel",
-                    args: ["{lang}", "en"],
+                    args: ["{lang}", "en-US"],
                     spec: {path: "lang", priority: "last"},
                     changeEvent: "{lang}.applier.modelChanged"
                 }, {
                     func: "{lang}.refreshView"
                 }, {
                     listener: "gpii.tests.langTester.verifyButtonStates",
-                    args: ["{lang}", "en", true, false],
+                    args: ["{lang}", "en-US", true, false],
                     priority: "last",
                     event: "{lang}.events.afterRender"
                 }]
@@ -137,7 +137,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     gpii.tests.langTester.verifyTooltip = function (that) {
-        gpii.tests.utils.verifyTooltipContents("language button row element", that.locate("langRow"), that.model.lang, that.attachTooltipOnLang.tooltip.model.idToContent, that.options.controlValues.lang, that.options.stringArrayIndex.lang, that.options.messageBase);
+        gpii.tests.utils.verifyTooltipContents("language button row element", that.locate("langLabel"), that.model.lang, that.attachTooltipOnLang.tooltip.model.idToContent, that.options.controlValues.lang, that.options.stringArrayIndex.lang, that.options.messageBase);
         gpii.tests.utils.verifyTooltipContents("language button input element", that.locate("langInput"), that.model.lang, that.attachTooltipOnLang.tooltip.model.idToContent, that.options.controlValues.lang, that.options.stringArrayIndex.lang, that.options.messageBase);
     };
 

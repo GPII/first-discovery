@@ -670,13 +670,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             listeners: {
                 "afterOpen.setLangAttr": {
                     priority: -2,
-                    listener: "gpii.firstDiscovery.tts.tooltipHookup.setLangAttr"
+                    listener: "gpii.firstDiscovery.panel.lang.attachTooltipOnLang.setLangAttr"
                 }
             }
         }
     });
 
-    gpii.firstDiscovery.tts.tooltipHookup.setLangAttr = function (that, originalTarget, tooltip) {
+    gpii.firstDiscovery.panel.lang.attachTooltipOnLang.setLangAttr = function (that, originalTarget, tooltip) {
         originalTarget = $(originalTarget);
         var lang;
 
