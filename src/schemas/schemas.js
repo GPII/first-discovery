@@ -134,7 +134,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "gpii.firstDiscovery.language": {
                 "type": "string",
                 "default": "en",
-                "enum": ["en", "fr", "es", "de", "ne", "sv"],
+                "enum": ["en-US", "fr-FR", "es-ES", "de-DE", "nl-NL", "sv-SE"],
                 "label": ["lang-en", "lang-fr", "lang-es", "lang-de", "lang-ne", "lang-sv"],
                 "tooltip": ["lang-en-tooltip", "lang-fr-tooltip", "lang-es-tooltip", "lang-de-tooltip", "lang-ne-tooltip", "lang-sv-tooltip"],
                 "tooltipAtSelect": ["lang-en-tooltipAtSelect", "lang-fr-tooltipAtSelect", "lang-es-tooltipAtSelect", "lang-de-tooltipAtSelect", "lang-ne-tooltipAtSelect", "lang-sv-tooltipAtSelect"]
