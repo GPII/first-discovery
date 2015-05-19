@@ -77,7 +77,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions = function (that) {
-        return that.panels.eq(that.model.currentPanelNum - 1).find(that.options.panelInstructionsSelector).text();
+        var panel = that.panels.eq(that.model.currentPanelNum - 1);
+        var texts = fluid.transform(panel.find(that.options.panelInstructionsSelector).filter(":visible"), function (elem) {
+            return $.text(elem);
+        });
+        return texts.join(" ");
     };
 
     gpii.firstDiscovery.tts.fdHookup.speakPanelMessage = function (that, template, speakFn) {
