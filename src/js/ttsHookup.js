@@ -34,7 +34,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         // content for elements being selected (there are cases of having different tooltip content for unselected
         // and selected states), the updated model info is not accessible in "afterClose".
         setTimeout(function () {
-            that.speak(tooltip.text());
+            that.speak(tooltip.text(), {lang: tooltip.attr("lang")});
         });
     };
 
