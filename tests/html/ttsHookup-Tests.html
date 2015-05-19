@@ -28,7 +28,20 @@
         <!-- Test HTML -->
         <div class="gpiic-tests-firstDiscovery-tts-fdHookup">
             <div class="gpiic-fd-prefsEditor-panel">
+                <!-- Single instruction -->
                 <span class="gpiic-fd-instructions">Test Instructions</span>
+            </div>
+            <div class="gpiic-fd-prefsEditor-panel">
+                <!-- Multiple instructions -->
+                <span class="gpiic-fd-instructions">instruction element one.</span>
+                <div class="gpiic-fd-instructions" style="display:none">hidden element</div>
+                <span class="gpiic-fd-instructions">instruction element two</span>
+                <div style="display:none">
+                    <span class="gpiic-fd-instructions">inside a hidden element</span>
+                </div>
+            </div>
+            <div class="gpiic-fd-prefsEditor-panel">
+                <!-- No instructions -->
             </div>
         </div>
     </body>

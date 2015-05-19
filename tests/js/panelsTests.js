@@ -73,7 +73,7 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "Test the language settings panel",
             tests: [{
-                expect: 88,
+                expect: 92,
                 name: "Test the language panel",
                 sequence: [{
                     func: "{lang}.refreshView"
@@ -159,6 +159,7 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("The correct language button has been checked", that.model.lang, that.locate("langInput").filter(":checked").val());
         jqUnit.assertEquals("The previous button is enabled", false, that.locate("prev").is(":disabled"));
         jqUnit.assertEquals("The next button is enabled", false, that.locate("next").is(":disabled"));
+        jqUnit.assertEquals("The language code has been added to the html \"lang\" attribute", that.model.lang, $("html").attr("lang"));
 
         gpii.tests.langTester.verifyTooltip(that);
 
@@ -198,6 +199,7 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("The model value for the selected language is set correctly", expectedLang, that.model.lang);
         jqUnit.assertEquals("The previous button has been " + prevDisabledMsg, prevDisabled, that.locate("prev").is(":disabled"));
         jqUnit.assertEquals("The next button has been " + nextDisabledMsg, nextDisabled, that.locate("next").is(":disabled"));
+        jqUnit.assertEquals("The language code has been added to the html \"lang\" attribute", that.model.lang, $("html").attr("lang"));
         gpii.tests.langTester.verifyTooltip(that);
         gpii.tests.langTester.verifyButtonInView(that);
     };
