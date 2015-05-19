@@ -598,27 +598,27 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 }
 
 /* French-specific styles */
-.gpii-fd-lang-fr .gpii-fd-mute {
+html:lang(fr) .gpii-fd-mute {
   width: 24rem;
 }
-.gpii-fd-lang-fr .gpii-fd-prefsEditor-panel-welcome .gpii-fd-instructions p {
+html:lang(fr) .gpii-fd-prefsEditor-panel-welcome .gpii-fd-instructions p {
   line-height: 1.1;
 }
-.gpii-fd-lang-fr .gpii-fd-prefsEditor-panel-keyboard {
+html:lang(fr) .gpii-fd-prefsEditor-panel-keyboard {
     padding-left: 1rem;
     padding-right: 1rem;
 }
-.gpii-fd-lang-fr .gpii-fd-prefsEditor-panel-keyboard .gpii-fd-instructions,
-.gpii-fd-lang-fr .gpii-fd-keyboard-stickyKeysAdjuster-accommodationInstr {
+html:lang(fr) .gpii-fd-prefsEditor-panel-keyboard .gpii-fd-instructions,
+html:lang(fr) .gpii-fd-keyboard-stickyKeysAdjuster-accommodationInstr {
     padding: 0 0 1rem 0;
     margin-bottom: 0;
 }
-.gpii-fd-lang-fr .gpii-fd-keyboard-stickyKeysAdjuster-accommodationNameState {
+html:lang(fr) .gpii-fd-keyboard-stickyKeysAdjuster-accommodationNameState {
     width: 23rem;
     display: block;
     margin-left: -1rem;
 }
-.gpii-fd-lang-fr .gpii-fd-keyboard-accommodationToggle {
+html:lang(fr) .gpii-fd-keyboard-accommodationToggle {
     display: block;
     margin-top: -4rem;
     margin-left: 22rem;
