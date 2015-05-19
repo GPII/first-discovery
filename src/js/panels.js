@@ -517,6 +517,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "afterRender.preventWrapWithArrowKeys": {
                 funcName: "gpii.firstDiscovery.panel.lang.preventWrapWithArrowKeys",
                 args: ["{that}"]
+            },
+            "afterRender.setLangOnHtml": {
+                funcName: "gpii.firstDiscovery.panel.lang.setLangOnHtml",
+                args: ["{that}.model.lang"]
             }
         }
     });
@@ -642,6 +646,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
         gpii.firstDiscovery.panel.lang.stopArrowBrowseOnEdgeButtons(firstLangButton, [$.ui.keyCode.UP, $.ui.keyCode.LEFT]);
         gpii.firstDiscovery.panel.lang.stopArrowBrowseOnEdgeButtons(lastLangButton, [$.ui.keyCode.DOWN, $.ui.keyCode.RIGHT]);
+    };
+
+    gpii.firstDiscovery.panel.lang.setLangOnHtml = function (currentLang) {
+        $("html").attr("lang", currentLang);
     };
 
     // This component is needed for the following demands block to be only applied to the language panel "gpii.firstDiscovery.panel.lang".
