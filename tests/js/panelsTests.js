@@ -52,7 +52,18 @@ https://github.com/gpii/universal/LICENSE.txt
             lang: ["lang-en-US", "lang-fr-FR", "lang-es-ES", "lang-de-DE", "lang-nl-NL", "lang-sv-SE"],
             tooltip: ["lang-en-US-tooltip", "lang-fr-FR-tooltip", "lang-es-ES-tooltip", "lang-de-DE-tooltip", "lang-nl-NL-tooltip", "lang-sv-SE-tooltip"],
             tooltipAtSelect: ["lang-en-US-tooltipAtSelect", "lang-fr-FR-tooltipAtSelect", "lang-es-ES-tooltipAtSelect", "lang-de-DE-tooltipAtSelect", "lang-nl-NL-tooltipAtSelect", "lang-sv-SE-tooltipAtSelect"]
-        }
+        },
+        events: {
+            afterTooltipOpen: null
+        },
+        boilTooltipOpenEvent: {
+            listener: "{gpii.tests.firstDiscovery.panel.lang}.events.afterTooltipOpen",
+            priority: "last"
+        },
+        distributeOptions: [{
+            source: "{that}.options.boilTooltipOpenEvent",
+            target: "{that tooltip}.options.listeners.afterOpen"
+        }]
     });
 
     fluid.defaults("gpii.tests.langPanel", {
@@ -73,7 +84,7 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "Test the language settings panel",
             tests: [{
-                expect: 92,
+                expect: 94,
                 name: "Test the language panel",
                 sequence: [{
                     func: "{lang}.refreshView"
@@ -86,6 +97,20 @@ https://github.com/gpii/universal/LICENSE.txt
                     args: ["{lang}"],
                     priority: "last",
                     event: "{lang}.events.onButtonTopsReady"
+                }, {
+                    funcName: "gpii.tests.langTester.hoverElm",
+                    args: ["{lang}.dom.langLabel", 0]
+                }, {
+                    listener: "gpii.tests.langTester.verifyTooltipLang",
+                    args: ["{arguments}.2", "en-US"],
+                    event: "{lang}.events.afterTooltipOpen"
+                }, {
+                    funcName: "gpii.tests.langTester.hoverElm",
+                    args: ["{lang}.dom.langLabel", 4]
+                }, {
+                    listener: "gpii.tests.langTester.verifyTooltipLang",
+                    args: ["{arguments}.2", "nl-NL"],
+                    event: "{lang}.events.afterTooltipOpen"
                 }, {
                     jQueryTrigger: "click",
                     element: "{lang}.dom.next"
@@ -136,9 +161,17 @@ https://github.com/gpii/universal/LICENSE.txt
         }]
     });
 
+    gpii.tests.langTester.hoverElm = function (elms, idx) {
+        $(elms).eq(idx || 0).mouseover();
+    };
+
     gpii.tests.langTester.verifyTooltip = function (that) {
         gpii.tests.utils.verifyTooltipContents("language button row element", that.locate("langLabel"), that.model.lang, that.attachTooltipOnLang.tooltip.model.idToContent, that.options.controlValues.lang, that.options.stringArrayIndex.lang, that.options.messageBase);
         gpii.tests.utils.verifyTooltipContents("language button input element", that.locate("langInput"), that.model.lang, that.attachTooltipOnLang.tooltip.model.idToContent, that.options.controlValues.lang, that.options.stringArrayIndex.lang, that.options.messageBase);
+    };
+
+    gpii.tests.langTester.verifyTooltipLang = function (tooltip, expectedLang) {
+        jqUnit.assertEquals("The lang attribute should be set correctly for the tooltip.", expectedLang, tooltip.attr("lang"));
     };
 
     gpii.tests.langTester.verifyRendering = function (that) {
