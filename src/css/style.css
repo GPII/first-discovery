@@ -613,7 +613,8 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 .fl-theme-wb .gpii-fd-navButtons-back,
 .fl-theme-wb .gpii-fd-keyboard-try,
 .fl-theme-wb .gpii-fd-keyboard-accommodationToggle,
-.fl-theme-wb .gpii-fd-tooltip {
+.fl-theme-wb .gpii-fd-tooltip,
+.fl-theme-wb .gpii-fd-tooltip-lang {
     border: 1px solid #ffffff !important;
 }
 .fl-theme-wb .gpii-fd-activeIndicator {
@@ -702,7 +703,8 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 .fl-theme-bw .gpii-fd-navButtons-back,
 .fl-theme-bw .gpii-fd-keyboard-try,
 .fl-theme-bw .gpii-fd-keyboard-accommodationToggle,
-.fl-theme-bw .gpii-fd-tooltip {
+.fl-theme-bw .gpii-fd-tooltip,
+.fl-theme-bw .gpii-fd-tooltip-lang {
     border: 1px solid #000000 !important;
 }
 .fl-theme-bw .gpii-fd-activeIndicator {
