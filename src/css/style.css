@@ -31,7 +31,7 @@ body {
     margin: 0 auto;
 }
 
-.gpii-fd button {
+button {
     color: inherit;
     background-color: inherit;
     font-size: inherit;
