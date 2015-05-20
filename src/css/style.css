@@ -9,7 +9,7 @@
 body {
     background-color: #dddddd;
 }
-.row .row { /* override foundation, which causes problems in high-contrast */
+.gpii-fd .row .row { /* override foundation, which causes problems in high-contrast */
     margin-left: 0;
     margin-right: 0;
 }
@@ -31,7 +31,7 @@ body {
     margin: 0 auto;
 }
 
-button {
+.gpii-fd button {
     color: inherit;
     background-color: inherit;
     font-size: inherit;
