@@ -19,6 +19,9 @@ body {
     padding: 0 2rem;
 }
 
+.gpii-fd button {
+    transition: none !important; /* override foundation, which causes flashing in high-contrast */
+}
 .gpii-fd {
     font-family: 'Open Sans', sans-serif;
     color: #ffffff;
@@ -687,6 +690,10 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 .fl-theme-wb .gpii-fd-lang-next:disabled:hover {
     color: #ffffff !important;
 }
+.fl-theme-wb button:disabled:hover * {
+        background-color: transparent !important;
+        color: #ffffff !important;
+}
 
 /* high-contrast themes: black-on-white */
 .fl-theme-bw .gpii-fd,
@@ -772,6 +779,10 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 .fl-theme-bw .gpii-fd-lang-next:disabled:hover {
     color: #000000 !important;
 }
+.fl-theme-bw button:disabled:hover * {
+        background-color: transparent !important;
+        color: #000000 !important;
+}
 
 /* high-contrast themes, shared by both */
 .fl-theme-bw .gpii-fd-navButtons-next:hover,
@@ -801,3 +812,9 @@ input[type="text"].gpii-fd-keyboard-input:focus {
     padding: 1rem;
 }
 
+.fl-theme-wb .gpii-fd-icon,
+.fl-theme-bw .gpii-fd-icon,
+.fl-theme-wb .gpii-fd-icon:hover,
+.fl-theme-bw .gpii-fd-icon:hover {
+        background-color: transparent !important;
+}
