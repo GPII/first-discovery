@@ -106,8 +106,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     gpii.firstDiscovery.panel.ranged.updateButtonState = function (that) {
-        var isMax = that.model.value >= that.options.range.max;
-        var isMin = that.model.value <= that.options.range.min;
+        // assumes that values can't go out of range (based on range limit modelRelay)
+        var isMax = fluid.model.isSameValue(that.model.value, that.options.range.max);
+        var isMin = fluid.model.isSameValue(that.model.value, that.options.range.min);
 
         that.locate("increase").prop("disabled", isMax);
         that.locate("decrease").prop("disabled", isMin);
