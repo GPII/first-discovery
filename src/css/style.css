@@ -45,6 +45,7 @@ button {
     border-color: #6C6D70;
     color: #fff;
     opacity: 1.0;
+    box-shadow: none;
 }
 
 .gpii-fd-icon {
