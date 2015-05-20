@@ -200,7 +200,7 @@ https://github.com/gpii/universal/LICENSE.txt
     gpii.tests.firstDiscovery.testTTSHookup = function (that) {
         jqUnit.expect(1);
 
-        var expected = that.prefsEditor.gpii_firstDiscovery_panel_textSize.msgResolver.lookup(["rangeInstructions"]).template;
+        var expected = that.prefsEditor.gpii_firstDiscovery_panel_speakText.msgResolver.lookup(["speakTextInstructions"]).template;
         var actual = gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions(that);
 
         jqUnit.assertEquals("The instruction text should be sourced from the active panel", expected, actual);
