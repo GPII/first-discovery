@@ -676,16 +676,22 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
+    gpii.firstDiscovery.panel.lang.attachTooltipOnLang.getLangForElm = {
+        "LABEL": function (target) {
+            return fluid.jById(target.attr("for")).val();
+        },
+        "INPUT": function (target) {
+            return target.val();
+        }
+    };
+
     gpii.firstDiscovery.panel.lang.attachTooltipOnLang.setLangAttr = function (that, originalTarget, tooltip) {
         originalTarget = $(originalTarget);
-        var lang;
+        var tagName = originalTarget.prop("tagName");
+        var getLangFn = gpii.firstDiscovery.panel.lang.attachTooltipOnLang.getLangForElm[tagName];
 
-        if (originalTarget.is("label")) {
-            lang = fluid.jById($(originalTarget).attr("for")).val();
-            tooltip.attr("lang", lang);
-        } else if (originalTarget.is("input")) {
-            lang = $(originalTarget).val();
-            tooltip.attr("lang", lang);
+        if (getLangFn) {
+            tooltip.attr("lang", getLangFn(originalTarget));
         }
     };
 
