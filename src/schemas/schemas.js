@@ -38,7 +38,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "type": "gpii.firstDiscovery.panel.lang",
                     "container": ".gpiic-fd-prefsEditor-panel-lang",
                     "template": "%prefix/lang.html",
-                    "message": "%prefix/lang.json"
+                    "message": "%prefix/lang.json",
+                    "stringArrayIndex": {
+                        "lang": ["lang-en", "lang-fr", "lang-es", "lang-de", "lang-ne", "lang-sv"],
+                        "tooltip": ["lang-en-tooltip", "lang-fr-tooltip", "lang-es-tooltip", "lang-de-tooltip", "lang-ne-tooltip", "lang-sv-tooltip"],
+                        "tooltipAtSelect": ["lang-en-tooltipAtSelect", "lang-fr-tooltipAtSelect", "lang-es-tooltipAtSelect", "lang-de-tooltipAtSelect", "lang-ne-tooltipAtSelect", "lang-sv-tooltipAtSelect"]
+                    }
                 }
             },
             "keyboard": {
@@ -134,10 +139,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "gpii.firstDiscovery.language": {
                 "type": "string",
                 "default": "en",
-                "enum": ["en", "fr", "es", "de", "ne", "sv"],
-                "label": ["lang-en", "lang-fr", "lang-es", "lang-de", "lang-ne", "lang-sv"],
-                "tooltip": ["lang-en-tooltip", "lang-fr-tooltip", "lang-es-tooltip", "lang-de-tooltip", "lang-ne-tooltip", "lang-sv-tooltip"],
-                "tooltipAtSelect": ["lang-en-tooltipAtSelect", "lang-fr-tooltipAtSelect", "lang-es-tooltipAtSelect", "lang-de-tooltipAtSelect", "lang-ne-tooltipAtSelect", "lang-sv-tooltipAtSelect"]
+                "enum": ["en", "fr", "es", "de", "ne", "sv"]
             }
         }
     });

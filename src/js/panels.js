@@ -365,10 +365,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         preferenceMap: {
             "gpii.firstDiscovery.language": {
                 "model.lang": "default",
-                "controlValues.lang": "enum",
-                "stringArrayIndex.lang": "label",
-                "stringArrayIndex.tooltip": "tooltip",
-                "stringArrayIndex.tooltipAtSelect": "tooltipAtSelect"
+                "controlValues.lang": "enum"
             }
         },
         components: {
