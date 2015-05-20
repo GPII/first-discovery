@@ -389,7 +389,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     tooltipContentMap: {
                         "prev": "navButtonTooltip",
                         "next": "navButtonTooltip",
-                        "langRow": {
+                        "langLabel": {
                             tooltip: "{lang}.options.stringArrayIndex.tooltip",
                             tooltipAtSelect: "{lang}.options.stringArrayIndex.tooltipAtSelect"
                         },
@@ -666,9 +666,34 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         options: {
             styles: {
                 tooltip: "gpii-fd-tooltip-lang"
+            },
+            listeners: {
+                "afterOpen.setLangAttr": {
+                    priority: -2,
+                    listener: "gpii.firstDiscovery.panel.lang.attachTooltipOnLang.setLangAttr"
+                }
             }
         }
     });
+
+    gpii.firstDiscovery.panel.lang.attachTooltipOnLang.getLangForElm = {
+        "LABEL": function (target) {
+            return fluid.jById(target.attr("for")).val();
+        },
+        "INPUT": function (target) {
+            return target.val();
+        }
+    };
+
+    gpii.firstDiscovery.panel.lang.attachTooltipOnLang.setLangAttr = function (that, originalTarget, tooltip) {
+        originalTarget = $(originalTarget);
+        var tagName = originalTarget.prop("tagName");
+        var getLangFn = gpii.firstDiscovery.panel.lang.attachTooltipOnLang.getLangForElm[tagName];
+
+        if (getLangFn) {
+            tooltip.attr("lang", getLangFn(originalTarget));
+        }
+    };
 
     // To accommodate the possiblity of text/control size change that causes the shift of button positions,
     // re-collect button tops every time when users come back to the language panel. The button positions

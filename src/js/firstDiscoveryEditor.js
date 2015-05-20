@@ -30,7 +30,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     model: {
                         enabled: true
                     },
-                    messageBase: "{messageLoader}.resources.prefsEditor.resourceText"
+                    messageBase: "{messageLoader}.resources.prefsEditor.resourceText",
+                    utteranceOpts: {
+                        lang: "{prefsEditorLoader}.settings.gpii_firstDiscovery_language"
+                    }
                 }
             },
             prefsEditor: {
