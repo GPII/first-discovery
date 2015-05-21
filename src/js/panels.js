@@ -31,15 +31,39 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             max: 2
         },
         step: 0.1,
-        modelRelay: {
+        modelRelay: [{
             target: "value",
             singleTransform: {
                 type: "fluid.transforms.limitRange",
                 input: "{that}.model.value",
                 min: "{that}.options.range.min",
-                max: "{that}.options.prange.max"
+                max: "{that}.options.range.max"
             }
-        },
+        // TODO: Due to FLUID-5669 the isMax and isMin
+        // transformations are performed using the fluid.transforms.free
+        // transformation. Once FLUID-5669 has been addressed, it should be
+        // possible to simply make use of fluid.transforms.binaryOp.
+        }, {
+            target: "isMax",
+            singleTransform: {
+                type: "fluid.transforms.free",
+                args: {
+                    "value": "{that}.model.value",
+                    "limit": "{that}.options.range.max"
+                },
+                func: "gpii.firstDiscovery.panel.ranged.isAtLimit"
+            }
+        }, {
+            target: "isMin",
+            singleTransform: {
+                type: "fluid.transforms.free",
+                args: {
+                    "value": "{that}.model.value",
+                    "limit": "{that}.options.range.min"
+                },
+                func: "gpii.firstDiscovery.panel.ranged.isAtLimit"
+            }
+        }],
         selectors: {
             rangeInstructions: ".gpiic-fd-range-instructions",
             meter: ".gpiic-fd-range-indicator",
@@ -86,16 +110,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "afterRender.updateMeter": "{that}.updateMeter"
         },
         modelListeners: {
-            value: [{
+            value: {
                 listener: "{that}.updateMeter",
                 excludeSource: "init"
-            }, {
-                listener: "gpii.firstDiscovery.panel.ranged.updateButtonState",
-                excludeSource: "init",
-                args: ["{that}"]
-            }]
+            }
         }
     });
+
+    gpii.firstDiscovery.panel.ranged.isAtLimit = function (model) {
+        return fluid.model.isSameValue(model.limit, model.value);
+    };
 
     gpii.firstDiscovery.panel.ranged.step = function (that, reverse) {
         that.tooltip.close();   // close the existing tooltip before the panel is re-rendered
@@ -106,11 +130,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     gpii.firstDiscovery.panel.ranged.updateButtonState = function (that) {
-        var isMax = that.model.value >= that.options.range.max;
-        var isMin = that.model.value <= that.options.range.min;
-
-        that.locate("increase").prop("disabled", isMax);
-        that.locate("decrease").prop("disabled", isMin);
+        that.locate("increase").prop("disabled", that.model.isMax);
+        that.locate("decrease").prop("disabled", that.model.isMin);
     };
 
     gpii.firstDiscovery.panel.ranged.updateMeter = function (that, value) {
