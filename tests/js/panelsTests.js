@@ -226,6 +226,10 @@ https://github.com/gpii/universal/LICENSE.txt
         },
         model: {
             value: 1
+        },
+        modelListeners: {
+            // rerenders on modelChange like panel behaves in the prefsEditor
+            "value": "{that}.refreshView"
         }
     });
 
@@ -252,7 +256,7 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "Test the text sizer settings panel",
             tests: [{
-                expect: 11,
+                expect: 17,
                 name: "Test the rendering of the text size panel",
                 sequence: [{
                     func: "{textSize}.refreshView"
@@ -280,7 +284,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 }, {
                     listener: "gpii.tests.textSizeTester.verifyButtonStates",
                     args: ["{textSize}", true, false],
-                    spec: {path: "value", priority: "last"},
+                    spec: {path: "isMax", priority: "last"},
                     changeEvent: "{textSize}.applier.modelChanged"
                 }, {
                     func: "{textSize}.applier.change",
@@ -288,7 +292,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 }, {
                     listener: "gpii.tests.textSizeTester.verifyButtonStates",
                     args: ["{textSize}", false, true],
-                    spec: {path: "value", priority: "last"},
+                    spec: {path: "isMin", priority: "last"},
                     changeEvent: "{textSize}.applier.modelChanged"
                 }, {
                     func: "{textSize}.applier.change",
@@ -296,7 +300,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 }, {
                     listener: "gpii.tests.textSizeTester.verifyButtonStates",
                     args: ["{textSize}", false, false],
-                    spec: {path: "value", priority: "last"},
+                    spec: {path: "isMin", priority: "last"},
                     changeEvent: "{textSize}.applier.modelChanged"
                 }]
             }]
@@ -314,11 +318,14 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.textSizeTester.verifyModel = function (that, expectedModel) {
-        jqUnit.assertEquals("The model value should be set correctly", expectedModel, that.model.value);
+        jqUnit.assertEquals("The model value " + expectedModel + " should be set correctly", expectedModel, that.model.value);
     };
 
     gpii.tests.textSizeTester.verifyButtonStates = function (that, increaseDisabled, decreaseDisabled) {
+        jqUnit.assertEquals("The isMax model value should be set correctly", increaseDisabled, that.model.isMax);
         jqUnit.assertEquals("The increase button should have the correct enabled/disabled state", increaseDisabled, that.locate("increase").prop("disabled"));
+
+        jqUnit.assertEquals("The isMin model value should be set correctly", decreaseDisabled, that.model.isMin);
         jqUnit.assertEquals("The decrease button should have the correct enabled/disabled state", decreaseDisabled, that.locate("decrease").prop("disabled"));
     };
 
