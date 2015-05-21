@@ -197,10 +197,21 @@ https://github.com/gpii/universal/LICENSE.txt
         });
     };
 
-    gpii.tests.firstDiscovery.testTTSHookup = function (that) {
-        jqUnit.expect(1);
+    fluid.defaults("gpii.tests.firstDiscovery.TTSHookupTest", {
+        ttsLangTest: {
+            listener: "jqUnit.assertEquals",
+            args: ["The utterance language should be set correctly", "{prefsEditorLoader}.settings.gpii_firstDiscovery_language", "{that}.options.utteranceOpts.lang"]
+        },
+        distributeOptions: {
+            source: "{that}.options.ttsLangTest",
+            target: "{that selfVoicing}.options.listeners.onCreate"
+        }
+    });
 
-        var expected = that.prefsEditor.gpii_firstDiscovery_panel_textSize.msgResolver.lookup(["rangeInstructions"]).template;
+    gpii.tests.firstDiscovery.testTTSHookup = function (that) {
+        jqUnit.expect(2);
+
+        var expected = that.prefsEditor.gpii_firstDiscovery_panel_speakText.msgResolver.lookup(["speakTextInstructions"]).template;
         var actual = gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions(that);
 
         jqUnit.assertEquals("The instruction text should be sourced from the active panel", expected, actual);
@@ -230,7 +241,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.firstDiscovery.runTest("Init and navigation controls", "#gpiic-fd-navControlsTests", 1, gpii.tests.firstDiscovery.testControls);
-    gpii.tests.firstDiscovery.runTest("TTS Hookup", "#gpiic-fd-ttsHookupTests", 3, gpii.tests.firstDiscovery.testTTSHookup);
+    gpii.tests.firstDiscovery.runTest("TTS Hookup", "#gpiic-fd-ttsHookupTests", 3, gpii.tests.firstDiscovery.testTTSHookup, "gpii.tests.firstDiscovery.TTSHookupTest");
     gpii.tests.firstDiscovery.runTest("Reset Shortcut", "#gpiic-fd-resetShortcutTests", 1, gpii.tests.firstDiscovery.testResetShortcut, "gpii.tests.firstDiscovery.reset");
 
     // Test the connection between the top level first discovery editor and the language panel: the language panel resets button positions every
