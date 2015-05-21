@@ -448,17 +448,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         selectorsToIgnore: ["controlsDiv", "prev", "next"],
         repeatingSelectors: ["langRow"],
         protoTree: {
-            instructions: {markup: {messagekey: "langInstructions"}},
-            expander: {
-                type: "fluid.renderer.selection.inputs",
-                rowID: "langRow",
-                labelID: "langLabel",
-                inputID: "langInput",
-                selectID: "lang-radio",
-                tree: {
-                    optionnames: "${{that}.msgLookup.lang}",
-                    optionlist: "${{that}.options.controlValues.lang}",
-                    selection: "${lang}"
+            instructions: {markup: {messagekey: "langInstructions"}}
+        },
+        markup: {
+            langOptions: {
+                expander: {
+                    func: "gpii.firstDiscovery.panel.lang.buildLangOptionsMarkup",
+                    args: ["{that}.msgLookup.lang", "{that}.options.controlValues.lang"]
                 }
             }
         },
@@ -470,12 +466,17 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             bindNext: {
                 funcName: "gpii.firstDiscovery.panel.lang.moveLangFocus",
                 args: ["{that}", 1]
+            },
+            onActivateLanguage: {
+                funcName: "gpii.firstDiscovery.panel.lang.onActivateLanguage",
+                args: ["{that}", "{arguments}.0"]
             }
         },
         events: {
             onButtonTopsReady: null
         },
         listeners: {
+            /*
             "afterRender.bindPrev": {
                 "this": "{that}.dom.prev",
                 method: "click",
@@ -522,8 +523,55 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 funcName: "gpii.firstDiscovery.panel.lang.setLangOnHtml",
                 args: ["{that}.model.lang"]
             }
+             */
+            "afterRender.setLangOptionsMarkup": {
+                "this": "{that}.dom.controlsDiv",
+                method: "append",
+                args: ["{that}.options.markup.langOptions"],
+                priority: 10
+            },
+            "afterRender.makeLangsSelectable": {
+                funcName: "gpii.firstDiscovery.panel.lang.makeLangsSelectable",
+                args: ["{that}.dom.controlsDiv"],
+                priority: 5
+            },
+            "afterRender.makeLangsActivatable": {
+                funcName: "gpii.firstDiscovery.panel.lang.makeLangsActivatable",
+                args: ["{that}.dom.langRow", "{that}.onActivateLanguage"],
+                priority: 5
+            }
         }
     });
+
+    gpii.firstDiscovery.panel.lang.buildLangOptionsMarkup = function (langNames, langCodes) {
+        var template = "<div class=\"gpiic-fd-lang-row selectable\" data-lang=\"%langCode\">%langName</div>";
+        var markup = "";
+        for (var i=0; i < langNames.length; i++) {
+            var langName = langNames[i];
+            var langCode = langCodes[i];
+            var langOption = fluid.stringTemplate(template, {
+                langName: langName,
+                langCode: langCode
+            });
+            markup += langOption;
+        }
+        return markup;
+    };
+
+    gpii.firstDiscovery.panel.lang.makeLangsSelectable = function (langList) {
+        langList.fluid("tabbable");
+        langList.fluid("selectable");
+    };
+
+    gpii.firstDiscovery.panel.lang.makeLangsActivatable = function (langRows, handler) {
+        langRows.fluid("activatable", handler);
+        langRows.click(handler);
+    };
+
+    gpii.firstDiscovery.panel.lang.onActivateLanguage = function (that, evt) {
+        var lang = $(evt.delegateTarget).attr("data-lang");
+        that.applier.change("lang", lang);
+    };
 
     gpii.firstDiscovery.panel.lang.moveLangFocus = function (that, adjustBy) {
         var langArray = that.options.controlValues.lang,
