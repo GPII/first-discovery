@@ -303,17 +303,72 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     /*
+     * The base component for all yes-no-selection panels
+     */
+    fluid.defaults("gpii.firstDiscovery.panel.yesNo", {
+        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip.renderer", "autoInit"],
+        modelRelay: {
+            source: "{that}.model.choice",
+            target: "currentSelectedIndex",
+            backward: "never",
+            singleTransform: {
+                type: "fluid.transforms.indexOf",
+                array: "{that}.options.controlValues.choice",
+                value: "{that}.model.choice"
+            }
+        },
+        tooltipContentMap: {
+            choiceLabel: {
+                tooltip: ["yes-tooltip", "no-tooltip"],
+                tooltipAtSelect: ["yes-tooltipAtSelect", "no-tooltipAtSelect"]
+            },
+            choiceInput: {
+                tooltip: ["yes-tooltip", "no-tooltip"],
+                tooltipAtSelect: ["yes-tooltipAtSelect", "no-tooltipAtSelect"]
+            }
+        },
+        stringArrayIndex: {
+            choice: ["yes", "no"]
+        },
+        selectors: {
+            choiceRow: ".gpiic-fd-yesNo-choiceRow",
+            choiceLabel: ".gpiic-fd-yesNo-choiceLabel",
+            choiceInput: ".gpiic-fd-yesNo-choiceInput",
+            instructions: ".gpiic-fd-yesNo-instructions"
+        },
+        controlValues: {
+            choice: ["yes", "no"]
+        },
+        repeatingSelectors: ["choiceRow"],
+        protoTree: {
+            instructions: {messagekey: "instructions"},
+            expander: {
+                type: "fluid.renderer.selection.inputs",
+                rowID: "choiceRow",
+                labelID: "choiceLabel",
+                inputID: "choiceInput",
+                selectID: "choice-radio",
+                tree: {
+                    optionnames: "${{that}.msgLookup.choice}",
+                    optionlist: "${{that}.options.controlValues.choice}",
+                    selection: "${choice}"
+                }
+            }
+        }
+    });
+
+    /*
      * Text to speech panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.speakText", {
-        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip.renderer", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.panel.yesNo", "autoInit"],
         preferenceMap: {
             "gpii.firstDiscovery.speak": {
                 "model.speak": "default"
             }
         },
-        modelRelay: [{
-            source: "{that}.model.speakChoice",
+        modelRelay: {
+            source: "{that}.model.choice",
             target: "{that}.model.speak",
             // Setup the backward restriction to prevent the component instantiation writes back to
             // the central model that results in wiping out the saved prefs at the page reload.
@@ -326,53 +381,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "no": {
                         outputValue: false
                     }
-                }
-            }
-        }, {
-            source: "{that}.model.speakChoice",
-            target: "currentSelectedIndex",
-            backward: "never",
-            singleTransform: {
-                type: "fluid.transforms.indexOf",
-                array: "{that}.options.controlValues.choice",
-                value: "{that}.model.speakChoice"
-            }
-        }],
-        tooltipContentMap: {
-            choiceLabel: {
-                tooltip: ["speakText-yes-tooltip", "speakText-no-tooltip"],
-                tooltipAtSelect: ["speakText-yes-tooltipAtSelect", "speakText-no-tooltipAtSelect"]
-            },
-            choiceInput: {
-                tooltip: ["speakText-yes-tooltip", "speakText-no-tooltip"],
-                tooltipAtSelect: ["speakText-yes-tooltipAtSelect", "speakText-no-tooltipAtSelect"]
-            }
-        },
-        stringArrayIndex: {
-            choice: ["speakText-yes", "speakText-no"]
-        },
-        selectors: {
-            choiceRow: ".gpiic-fd-speakText-choiceRow",
-            choiceLabel: ".gpiic-fd-speakText-choice-label",
-            choiceInput: ".gpiic-fd-speakText-choiceInput",
-            instructions: ".gpiic-fd-speakText-instructions"
-        },
-        controlValues: {
-            choice: ["yes", "no"]
-        },
-        repeatingSelectors: ["choiceRow"],
-        protoTree: {
-            instructions: {messagekey: "speakTextInstructions"},
-            expander: {
-                type: "fluid.renderer.selection.inputs",
-                rowID: "choiceRow",
-                labelID: "choiceLabel",
-                inputID: "choiceInput",
-                selectID: "choice-radio",
-                tree: {
-                    optionnames: "${{that}.msgLookup.choice}",
-                    optionlist: "${{that}.options.controlValues.choice}",
-                    selection: "${speakChoice}"
                 }
             }
         }

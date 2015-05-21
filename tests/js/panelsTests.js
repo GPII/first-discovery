@@ -362,6 +362,104 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("The decrease button should have the correct enabled/disabled state", decreaseDisabled, that.locate("decrease").prop("disabled"));
     };
 
+    /**********************
+     * Yes No Panel Tests *
+     **********************/
+
+    fluid.defaults("gpii.tests.firstDiscovery.panel.yesNo", {
+        gradeNames: ["gpii.firstDiscovery.panel.yesNo", "autoInit"],
+        messageBase: {
+            "instructions": "Yes no panel instructions",
+            "no": "no",
+            "yes": "yes",
+            "yes-tooltip": "Select to choose yes",
+            "no-tooltip": "Select to choose no",
+            "yes-tooltipAtSelect": "Yes is choosen",
+            "no-tooltipAtSelect": "No is choosen"
+        },
+        choiceLabels: ["yes", "no"],
+        model: {
+            choice: "yes"
+        }
+    });
+
+    fluid.defaults("gpii.tests.yesNoPanel", {
+        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        components: {
+            yesNo: {
+                type: "gpii.tests.firstDiscovery.panel.yesNo",
+                container: ".gpiic-fd-yesNo"
+            },
+            yesNoTester: {
+                type: "gpii.tests.yesNoTester"
+            }
+        }
+    });
+
+    fluid.defaults("gpii.tests.yesNoTester", {
+        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        modules: [{
+            name: "Test the yes no selection panel",
+            tests: [{
+                expect: 8,
+                name: "The initial rendering of the yes no panel",
+                sequence: [{
+                    func: "{yesNo}.refreshView"
+                }, {
+                    listener: "gpii.tests.yesNoTester.verifyRendering",
+                    event: "{yesNo}.events.afterRender"
+                }]
+            }, {
+                expect: 10,
+                name: "Selections on the yes no panel",
+                sequence: [{
+                    func: "gpii.tests.utils.triggerRadioButton",
+                    args: ["{yesNo}.dom.choiceInput", 1]
+                }, {
+                    listener: "gpii.tests.yesNoTester.verifyModel",
+                    args: ["{yesNo}", "no"],
+                    spec: {path: "choice", priority: "last"},
+                    changeEvent: "{yesNo}.applier.modelChanged"
+                }, {
+                    func: "{yesNo}.refreshView"
+                }, {
+                    listener: "gpii.tests.yesNoTester.verifyTooltip",
+                    args: ["{yesNo}"],
+                    event: "{yesNo}.events.afterRender"
+                }, {
+                    func: "gpii.tests.utils.triggerRadioButton",
+                    args: ["{yesNo}.dom.choiceInput", 0]
+                }, {
+                    listener: "gpii.tests.yesNoTester.verifyModel",
+                    args: ["{yesNo}", "yes"],
+                    spec: {path: "choice", priority: "last"},
+                    changeEvent: "{yesNo}.applier.modelChanged"
+                }, {
+                    func: "{yesNo}.refreshView"
+                }, {
+                    listener: "gpii.tests.yesNoTester.verifyTooltip",
+                    args: ["{yesNo}"],
+                    event: "{yesNo}.events.afterRender"
+                }]
+            }]
+        }]
+    });
+
+    gpii.tests.yesNoTester.verifyTooltip = function (that) {
+        gpii.tests.utils.verifyTooltipContents("choice label", that.locate("choiceLabel"), that.model.choice, that.tooltip.model.idToContent, that.options.controlValues.choice, that.options.stringArrayIndex.choice, that.options.messageBase);
+        gpii.tests.utils.verifyTooltipContents("choice input", that.locate("choiceInput"), that.model.choice, that.tooltip.model.idToContent, that.options.controlValues.choice, that.options.stringArrayIndex.choice, that.options.messageBase);
+    };
+
+    gpii.tests.yesNoTester.verifyRendering = function (that) {
+        jqUnit.assertEquals("The instructions should have been set correctly.", that.options.messageBase.instructions, that.locate("instructions").text());
+        gpii.tests.utils.verifyRadioButtonRendering(that.locate("choiceInput"), that.locate("choiceLabel"), that.options.choiceLabels, that.model.choice);
+        gpii.tests.yesNoTester.verifyTooltip(that);
+    };
+
+    gpii.tests.yesNoTester.verifyModel = function (that, expectedValue) {
+        jqUnit.assertEquals("The model value should have been set correctly", expectedValue, that.model.choice);
+    };
+
     /**************************
      * Speak Text Panel Tests *
      **************************/
@@ -369,15 +467,14 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.defaults("gpii.tests.firstDiscovery.panel.speakText", {
         gradeNames: ["gpii.firstDiscovery.panel.speakText", "autoInit"],
         messageBase: {
-            "speakTextInstructions": "Speak text instructions",
-            "speakText-no": "no",
-            "speakText-yes": "yes",
-            "speakText-yes-tooltip": "Select to turn voice on",
-            "speakText-no-tooltip": "Select to turn voice off",
-            "speakText-yes-tooltipAtSelect": "Voice is on",
-            "speakText-no-tooltipAtSelect": "Voice is off"
+            "instructions": "Speak text instructions",
+            "no": "no",
+            "yes": "yes",
+            "yes-tooltip": "Select to turn voice on",
+            "no-tooltip": "Select to turn voice off",
+            "yes-tooltipAtSelect": "Voice is on",
+            "no-tooltipAtSelect": "Voice is off"
         },
-        choiceLabels: ["yes", "no"],
         model: {
             speak: true
         }
@@ -401,63 +498,42 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "Test the speak text settings panel",
             tests: [{
-                expect: 8,
-                name: "The initial rendering of the speak text panel",
+                expect: 2,
+                name: "The initial model of the speak text panel",
                 sequence: [{
                     func: "{speakText}.refreshView"
                 }, {
-                    listener: "gpii.tests.speakTextTester.verifyRendering",
+                    listener: "gpii.tests.speakTextTester.verifyModel",
+                    args: ["{speakText}", true, "yes"],
                     event: "{speakText}.events.afterRender"
                 }]
             }, {
-                expect: 10,
+                expect: 4,
                 name: "Selections on the speak text panel",
                 sequence: [{
                     func: "gpii.tests.utils.triggerRadioButton",
                     args: ["{speakText}.dom.choiceInput", 1]
                 }, {
                     listener: "gpii.tests.speakTextTester.verifyModel",
-                    args: ["{speakText}", false],
+                    args: ["{speakText}", false, "no"],
                     spec: {path: "speak", priority: "last"},
                     changeEvent: "{speakText}.applier.modelChanged"
-                }, {
-                    func: "{speakText}.refreshView"
-                }, {
-                    listener: "gpii.tests.speakTextTester.verifyTooltip",
-                    args: ["{speakText}"],
-                    event: "{speakText}.events.afterRender"
                 }, {
                     func: "gpii.tests.utils.triggerRadioButton",
                     args: ["{speakText}.dom.choiceInput", 0]
                 }, {
                     listener: "gpii.tests.speakTextTester.verifyModel",
-                    args: ["{speakText}", true],
+                    args: ["{speakText}", true, "yes"],
                     spec: {path: "speak", priority: "last"},
                     changeEvent: "{speakText}.applier.modelChanged"
-                }, {
-                    func: "{speakText}.refreshView"
-                }, {
-                    listener: "gpii.tests.speakTextTester.verifyTooltip",
-                    args: ["{speakText}"],
-                    event: "{speakText}.events.afterRender"
                 }]
             }]
         }]
     });
 
-    gpii.tests.speakTextTester.verifyTooltip = function (that) {
-        gpii.tests.utils.verifyTooltipContents("choice label", that.locate("choiceLabel"), that.model.speakChoice, that.tooltip.model.idToContent, that.options.controlValues.choice, that.options.stringArrayIndex.choice, that.options.messageBase);
-        gpii.tests.utils.verifyTooltipContents("choice input", that.locate("choiceInput"), that.model.speakChoice, that.tooltip.model.idToContent, that.options.controlValues.choice, that.options.stringArrayIndex.choice, that.options.messageBase);
-    };
-
-    gpii.tests.speakTextTester.verifyRendering = function (that) {
-        jqUnit.assertEquals("The instructions should have been set correctly.", that.options.messageBase.speakTextInstructions, that.locate("instructions").text());
-        gpii.tests.utils.verifyRadioButtonRendering(that.locate("choiceInput"), that.locate("choiceLabel"), that.options.choiceLabels, that.model.speakChoice);
-        gpii.tests.speakTextTester.verifyTooltip(that);
-    };
-
-    gpii.tests.speakTextTester.verifyModel = function (that, expectedValue) {
-        jqUnit.assertEquals("The model value should have been set correctly", expectedValue, that.model.speak);
+    gpii.tests.speakTextTester.verifyModel = function (that, expectedSpeakValue, expectedChoiceValue) {
+        jqUnit.assertEquals("The model value for \"speak\" should have been set correctly", expectedSpeakValue, that.model.speak);
+        jqUnit.assertEquals("The model value for \"choice\" should have been set correctly", expectedChoiceValue, that.model.choice);
     };
 
     /************************
@@ -802,6 +878,7 @@ https://github.com/gpii/universal/LICENSE.txt
         fluid.test.runTests([
             "gpii.tests.langPanel",
             "gpii.tests.textSizePanel",
+            "gpii.tests.yesNoPanel",
             "gpii.tests.speakTextPanel",
             "gpii.tests.contrastPanel",
             "gpii.tests.keyboardPanel",
