@@ -389,7 +389,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     tooltipContentMap: {
                         "prev": "navButtonTooltip",
                         "next": "navButtonTooltip",
-                        "langRow": {
+                        "langLabel": {
                             tooltip: "{lang}.options.stringArrayIndex.tooltip",
                             tooltipAtSelect: "{lang}.options.stringArrayIndex.tooltipAtSelect"
                         },
@@ -517,6 +517,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "afterRender.preventWrapWithArrowKeys": {
                 funcName: "gpii.firstDiscovery.panel.lang.preventWrapWithArrowKeys",
                 args: ["{that}"]
+            },
+            "afterRender.setLangOnHtml": {
+                funcName: "gpii.firstDiscovery.panel.lang.setLangOnHtml",
+                args: ["{that}.model.lang"]
             }
         }
     });
@@ -644,6 +648,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         gpii.firstDiscovery.panel.lang.stopArrowBrowseOnEdgeButtons(lastLangButton, [$.ui.keyCode.DOWN, $.ui.keyCode.RIGHT]);
     };
 
+    gpii.firstDiscovery.panel.lang.setLangOnHtml = function (currentLang) {
+        $("html").attr("lang", currentLang);
+    };
+
     // This component is needed for the following demands block to be only applied to the language panel "gpii.firstDiscovery.panel.lang".
     // Without this component being the sub-component of the language panel, according to http://wiki.fluidproject.org/display/docs/Contexts,
     // when the context component of the demands block was the language panel itself, the demands block would also be applied to siblings of
@@ -658,9 +666,34 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         options: {
             styles: {
                 tooltip: "gpii-fd-tooltip-lang"
+            },
+            listeners: {
+                "afterOpen.setLangAttr": {
+                    priority: -2,
+                    listener: "gpii.firstDiscovery.panel.lang.attachTooltipOnLang.setLangAttr"
+                }
             }
         }
     });
+
+    gpii.firstDiscovery.panel.lang.attachTooltipOnLang.getLangForElm = {
+        "LABEL": function (target) {
+            return fluid.jById(target.attr("for")).val();
+        },
+        "INPUT": function (target) {
+            return target.val();
+        }
+    };
+
+    gpii.firstDiscovery.panel.lang.attachTooltipOnLang.setLangAttr = function (that, originalTarget, tooltip) {
+        originalTarget = $(originalTarget);
+        var tagName = originalTarget.prop("tagName");
+        var getLangFn = gpii.firstDiscovery.panel.lang.attachTooltipOnLang.getLangForElm[tagName];
+
+        if (getLangFn) {
+            tooltip.attr("lang", getLangFn(originalTarget));
+        }
+    };
 
     // To accommodate the possiblity of text/control size change that causes the shift of button positions,
     // re-collect button tops every time when users come back to the language panel. The button positions

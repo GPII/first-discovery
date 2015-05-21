@@ -32,8 +32,37 @@ https://github.com/gpii/universal/LICENSE.txt
             "tryTooltip": "Select to turn Sticky Keys on",
             "turnOnTooltip": "Select to turn Sticky Keys on",
             "turnOffTooltip": "Select to turn Sticky Keys off"
+        },
+        tryButtonTooltipState: null,
+        events: {
+            afterTooltipOpen: null,
+            afterTooltipClose: null
+        },
+        listeners: {
+            "afterTooltipOpen.setState": {
+                listener: "gpii.tests.firstDiscovery.keyboard.stickyKeysAdjuster.setTooltipState",
+                args: ["{that}", "{arguments}.1", true]
+            },
+            "afterTooltipClose.setState": {
+                listener: "gpii.tests.firstDiscovery.keyboard.stickyKeysAdjuster.setTooltipState",
+                args: ["{that}", "{arguments}.1", false]
+            }
+        },
+        tooltipEvents: {
+            afterOpen: "{gpii.tests.firstDiscovery.keyboard.stickyKeysAdjuster}.events.afterTooltipOpen",
+            afterClose: "{gpii.tests.firstDiscovery.keyboard.stickyKeysAdjuster}.events.afterTooltipClose"
+        },
+        distributeOptions: {
+            source: "{that}.options.tooltipEvents",
+            target: "{that tooltip}.options.events"
         }
     });
+
+    gpii.tests.firstDiscovery.keyboard.stickyKeysAdjuster.setTooltipState = function (that, target, state) {
+        if ($(target).attr("id") === that.locate("tryButton").attr("id")) {
+            that.options.tryButtonTooltipState = state;
+        }
+    };
 
     fluid.defaults("gpii.tests.keyboard.stickyKeysAdjusterTest", {
         gradeNames: ["fluid.test.testEnvironment", "autoInit"],
@@ -59,9 +88,17 @@ https://github.com/gpii/universal/LICENSE.txt
                 func: "gpii.tests.keyboard.stickyKeysAdjusterTester.verifyInitialRendering",
                 args: ["{stickyKeysAdjuster}"]
             }, {
-                expect:25,
+                expect:27,
                 name: "Adjuster Workflow",
                 sequence: [{
+                    jQueryTrigger: "mouseover",
+                    element: "{stickyKeysAdjuster}.dom.tryButton"
+                }, {
+                    listener: "gpii.tests.keyboard.stickyKeysAdjusterTester.verifyTryButtonTooltip",
+                    args: ["{stickyKeysAdjuster}", true],
+                    priority: "last",
+                    event: "{stickyKeysAdjuster}.events.afterTooltipOpen"
+                }, {
                     jQueryTrigger: "click",
                     element: "{stickyKeysAdjuster}.dom.tryButton"
                 }, {
@@ -100,6 +137,11 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.notVisible("The sticky keys adjuster should not be visible", that.locate("accommodation"));
     };
 
+    gpii.tests.keyboard.stickyKeysAdjusterTester.verifyTryButtonTooltip = function (that, expected) {
+        var msg = expected ? "opened" : "closed";
+        jqUnit.assertEquals("The tooltip for the try button is " + msg, expected, that.options.tryButtonTooltipState);
+    };
+
     gpii.tests.keyboard.stickyKeysAdjusterTester.verifyAdjusterRendering = function (that, isEnabled) {
         var accommodationToggle = that.locate("accommodationToggle");
         var accommodationToggleID = accommodationToggle.attr("id");
@@ -118,6 +160,7 @@ https://github.com/gpii/universal/LICENSE.txt
     gpii.tests.keyboard.stickyKeysAdjusterTester.verifyTry = function (that) {
         jqUnit.assertTrue("The tryAccommodation model value should be true", that.model.tryAccommodation);
         gpii.tests.keyboard.stickyKeysAdjusterTester.verifyAccommodationToggle(that, true);
+        gpii.tests.keyboard.stickyKeysAdjusterTester.verifyTryButtonTooltip(that, false);
     };
 
     gpii.tests.keyboard.stickyKeysAdjusterTester.verifyAccommodationToggle = function (that, expectedState) {
