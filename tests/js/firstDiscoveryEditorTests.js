@@ -96,105 +96,55 @@ https://github.com/gpii/universal/LICENSE.txt
         });
     };
 
-    gpii.tests.firstDiscovery.verifyStates = function (that, currentPanelNum, backVisible, nextVisible, activeVisible, panelsVisibility) {
-        var prefsEditorContainer = that.locate("prefsEditor"),
+    gpii.tests.firstDiscovery.verifyStates = function (that, currentPanelNum, visibility) {
+        var panelIndex = currentPanelNum - 1,
+            prefsEditorContainer = that.locate("prefsEditor"),
             backButton = that.navButtons.locate("back"),
             nextButton = that.navButtons.locate("next"),
             activeCss = that.options.styles.active,
             showCss = that.options.styles.show,
             icons = that.navIcons.locate("icon"),
-            activeIcon = icons.eq(currentPanelNum - 1);
+            activeIcon = icons.eq(panelIndex);
 
         jqUnit.assertEquals("The model value for \"currentPanelNum\" has been set to " + currentPanelNum, currentPanelNum, that.model.currentPanelNum);
-        fluid.each(panelsVisibility, function (panelSelectors, visibility) {
-            fluid.each(panelSelectors, function (selector) {
-                var isVisible = visibility === "isVisible" ? true : false;
-                gpii.tests.utils.hasClass(selector, prefsEditorContainer.find(selector), that.options.styles.currentPanel, isVisible);
-            });
+        fluid.each(gpii.tests.utils.firstDiscovery.panels, function (selector, idx) {
+            var isVisible = idx === panelIndex;
+            gpii.tests.utils.hasClass(selector, prefsEditorContainer.find(selector), that.options.styles.currentPanel, isVisible);
         });
 
-        gpii.tests.utils.hasClass("The back button", backButton, showCss, backVisible);
-        gpii.tests.utils.hasClass("The next button", nextButton, showCss, nextVisible);
-        gpii.tests.utils.hasClass("The active icon", activeIcon, activeCss, activeVisible);
+        gpii.tests.utils.hasClass("The back button", backButton, showCss, !!visibility.back);
+        gpii.tests.utils.hasClass("The next button", nextButton, showCss, !!visibility.next);
+        gpii.tests.utils.hasClass("The active icon", activeIcon, activeCss, !!visibility.active);
     };
 
     gpii.tests.firstDiscovery.testControls = function (that) {
-        jqUnit.expect(58);
+        jqUnit.expect(63);
 
         var backButton = that.navButtons.locate("back");
         var nextButton = that.navButtons.locate("next");
+        var lastPanel = gpii.tests.utils.firstDiscovery.panels.length;
 
         // Test the instantiated sub-components
         jqUnit.assertNotUndefined("The subcomponent \"prefsEditor\" has been instantiated", that.prefsEditor);
         jqUnit.assertNotUndefined("The subcomponent \"navButtons\" has been instantiated", that.navButtons);
         jqUnit.assertNotUndefined("The subcomponent \"navIcons\" has been instantiated", that.navIcons);
-        gpii.tests.firstDiscovery.verifyStates(that, gpii.tests.firstDiscovery.panelNums.lang, false, true, true, {
-            isVisible: [".gpiic-fd-prefsEditor-panel-lang"],
-            notVisible: [
-                ".gpiic-fd-prefsEditor-panel-welcome",
-                ".gpiic-fd-prefsEditor-panel-size",
-                ".gpiic-fd-prefsEditor-panel-speakText",
-                ".gpiic-fd-prefsEditor-panel-contrast",
-                ".gpiic-fd-prefsEditor-panel-keyboard",
-                ".gpiic-fd-prefsEditor-panel-congratulations"
-            ]
-        });
+        gpii.tests.firstDiscovery.verifyStates(that, 1, {next: true, active: true});
 
         // Clicking the next button leads to the 2nd panel
         nextButton.click();
-        gpii.tests.firstDiscovery.verifyStates(that, gpii.tests.firstDiscovery.panelNums.welcome, true, true, true, {
-            isVisible: [".gpiic-fd-prefsEditor-panel-welcome"],
-            notVisible: [
-                ".gpiic-fd-prefsEditor-panel-lang",
-                ".gpiic-fd-prefsEditor-panel-speakText",
-                ".gpiic-fd-prefsEditor-panel-size",
-                ".gpiic-fd-prefsEditor-panel-contrast",
-                ".gpiic-fd-prefsEditor-panel-keyboard",
-                ".gpiic-fd-prefsEditor-panel-congratulations"
-            ]
-        });
+        gpii.tests.firstDiscovery.verifyStates(that, 2, {back: true, next: true, active:true});
 
         // Clicking the back button brings back the first panel
         backButton.click();
-        gpii.tests.firstDiscovery.verifyStates(that, gpii.tests.firstDiscovery.panelNums.lang, false, true, true, {
-            isVisible: [".gpiic-fd-prefsEditor-panel-lang"],
-            notVisible: [
-                ".gpiic-fd-prefsEditor-panel-welcome",
-                ".gpiic-fd-prefsEditor-panel-size",
-                ".gpiic-fd-prefsEditor-panel-speakText",
-                ".gpiic-fd-prefsEditor-panel-contrast",
-                ".gpiic-fd-prefsEditor-panel-keyboard",
-                ".gpiic-fd-prefsEditor-panel-congratulations"
-            ]
-        });
+        gpii.tests.firstDiscovery.verifyStates(that, 1, {next: true, active: true});
 
         // Directs to the congrats page by firing a change request directly
-        that.applier.change("currentPanelNum", gpii.tests.firstDiscovery.panelNums.congrats);
-        gpii.tests.firstDiscovery.verifyStates(that, gpii.tests.firstDiscovery.panelNums.congrats, true, false, false, {
-            isVisible: [".gpiic-fd-prefsEditor-panel-congratulations"],
-            notVisible: [
-                ".gpiic-fd-prefsEditor-panel-welcome",
-                ".gpiic-fd-prefsEditor-panel-lang",
-                ".gpiic-fd-prefsEditor-panel-size",
-                ".gpiic-fd-prefsEditor-panel-speakText",
-                ".gpiic-fd-prefsEditor-panel-contrast",
-                ".gpiic-fd-prefsEditor-panel-keyboard"
-            ]
-        });
+        that.applier.change("currentPanelNum", 4);
+        gpii.tests.firstDiscovery.verifyStates(that, 4, {back: true, next: true, active: true});
 
         // Directs to the last panel by firing a change request directly
-        that.applier.change("currentPanelNum", gpii.tests.firstDiscovery.panelNums.last);
-        gpii.tests.firstDiscovery.verifyStates(that, gpii.tests.firstDiscovery.panelNums.last, true, false, false, {
-            isVisible: [".gpiic-fd-prefsEditor-panel-congratulations"],
-            notVisible: [
-                ".gpiic-fd-prefsEditor-panel-welcome",
-                ".gpiic-fd-prefsEditor-panel-lang",
-                ".gpiic-fd-prefsEditor-panel-size",
-                ".gpiic-fd-prefsEditor-panel-speakText",
-                ".gpiic-fd-prefsEditor-panel-contrast",
-                ".gpiic-fd-prefsEditor-panel-keyboard"
-            ]
-        });
+        that.applier.change("currentPanelNum", lastPanel);
+        gpii.tests.firstDiscovery.verifyStates(that, lastPanel, {back: true});
     };
 
     gpii.tests.firstDiscovery.testTTSHookup = function (that) {
