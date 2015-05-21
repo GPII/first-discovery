@@ -31,15 +31,39 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             max: 2
         },
         step: 0.1,
-        modelRelay: {
+        modelRelay: [{
             target: "value",
             singleTransform: {
                 type: "fluid.transforms.limitRange",
                 input: "{that}.model.value",
                 min: "{that}.options.range.min",
-                max: "{that}.options.prange.max"
+                max: "{that}.options.range.max"
             }
-        },
+        // TODO: Due to FLUID-5669 the isMax and isMin
+        // transformations are performed using the fluid.transforms.free
+        // transformation. Once FLUID-5669 has been addressed, it should be
+        // possible to simply make use of fluid.transforms.binaryOp.
+        }, {
+            target: "isMax",
+            singleTransform: {
+                type: "fluid.transforms.free",
+                args: {
+                    "value": "{that}.model.value",
+                    "limit": "{that}.options.range.max"
+                },
+                func: "gpii.firstDiscovery.panel.ranged.isAtLimit"
+            }
+        }, {
+            target: "isMin",
+            singleTransform: {
+                type: "fluid.transforms.free",
+                args: {
+                    "value": "{that}.model.value",
+                    "limit": "{that}.options.range.min"
+                },
+                func: "gpii.firstDiscovery.panel.ranged.isAtLimit"
+            }
+        }],
         selectors: {
             rangeInstructions: ".gpiic-fd-range-instructions",
             meter: ".gpiic-fd-range-indicator",
@@ -90,16 +114,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "afterRender.updateMeter": "{that}.updateMeter"
         },
         modelListeners: {
-            value: [{
+            value: {
                 listener: "{that}.updateMeter",
                 excludeSource: "init"
-            }, {
-                listener: "gpii.firstDiscovery.panel.ranged.updateButtonState",
-                excludeSource: "init",
-                args: ["{that}"]
-            }]
+            }
         }
     });
+
+    gpii.firstDiscovery.panel.ranged.isAtLimit = function (model) {
+        return fluid.model.isSameValue(model.limit, model.value);
+    };
 
     gpii.firstDiscovery.panel.ranged.step = function (that, reverse) {
         that.tooltip.close();   // close the existing tooltip before the panel is re-rendered
@@ -110,11 +134,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     gpii.firstDiscovery.panel.ranged.updateButtonState = function (that) {
-        var isMax = that.model.value >= that.options.range.max;
-        var isMin = that.model.value <= that.options.range.min;
-
-        that.locate("increase").prop("disabled", isMax);
-        that.locate("decrease").prop("disabled", isMin);
+        that.locate("increase").prop("disabled", that.model.isMax);
+        that.locate("decrease").prop("disabled", that.model.isMin);
     };
 
     gpii.firstDiscovery.panel.ranged.updateMeter = function (that, value) {
@@ -408,7 +429,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     tooltipContentMap: {
                         "prev": "navButtonTooltip",
                         "next": "navButtonTooltip",
-                        "langRow": {
+                        "langLabel": {
                             tooltip: "{lang}.options.stringArrayIndex.tooltip",
                             tooltipAtSelect: "{lang}.options.stringArrayIndex.tooltipAtSelect"
                         },
@@ -685,9 +706,34 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         options: {
             styles: {
                 tooltip: "gpii-fd-tooltip-lang"
+            },
+            listeners: {
+                "afterOpen.setLangAttr": {
+                    priority: -2,
+                    listener: "gpii.firstDiscovery.panel.lang.attachTooltipOnLang.setLangAttr"
+                }
             }
         }
     });
+
+    gpii.firstDiscovery.panel.lang.attachTooltipOnLang.getLangForElm = {
+        "LABEL": function (target) {
+            return fluid.jById(target.attr("for")).val();
+        },
+        "INPUT": function (target) {
+            return target.val();
+        }
+    };
+
+    gpii.firstDiscovery.panel.lang.attachTooltipOnLang.setLangAttr = function (that, originalTarget, tooltip) {
+        originalTarget = $(originalTarget);
+        var tagName = originalTarget.prop("tagName");
+        var getLangFn = gpii.firstDiscovery.panel.lang.attachTooltipOnLang.getLangForElm[tagName];
+
+        if (getLangFn) {
+            tooltip.attr("lang", getLangFn(originalTarget));
+        }
+    };
 
     // To accommodate the possiblity of text/control size change that causes the shift of button positions,
     // re-collect button tops every time when users come back to the language panel. The button positions
