@@ -9,12 +9,19 @@
 body {
     background-color: #dddddd;
 }
+.gpii-fd .row .row { /* override foundation, which causes problems in high-contrast */
+    margin-left: 0;
+    margin-right: 0;
+}
 .gpii-fd,
 .gpii-fd p {
     font-size: 2.25rem; /*base font size */
     padding: 0 2rem;
 }
 
+.gpii-fd button {
+    transition: none !important; /* override foundation, which causes flashing in high-contrast */
+}
 .gpii-fd {
     font-family: 'Open Sans', sans-serif;
     color: #ffffff;
@@ -38,6 +45,7 @@ button {
     border-color: #6C6D70;
     color: #fff;
     opacity: 1.0;
+    box-shadow: none;
 }
 
 .gpii-fd-icon {
@@ -63,7 +71,7 @@ button {
 
 .gpii-fd-help,
 .gpii-fd-mute {
-    border: 0.2rem solid #ffffff;
+    border: 2px solid #ffffff;
     border-radius: 0.5rem;
     padding: 1rem;
     line-height: 2rem;
@@ -101,7 +109,7 @@ button {
 
 .gpii-fd-help:focus,
 .gpii-fd-mute:focus {
-    border: 0.2rem solid #fff; /* Yellow */
+    border: 2px solid #fff; /* Yellow */
     box-shadow: 0 0 0 0.4rem rgb(244, 215, 75), /* Yellow */
                 0 0 0 0.6rem rgb(0, 0, 0);
     outline: none;
@@ -173,7 +181,7 @@ button {
     border-radius: 0.7rem;
     margin-left: -0.6rem;
     padding: 0.7rem;
-    border: 0.2rem solid #ffffff;
+    border: 3px solid #ffffff;
 }
 .gpii-fd-choice-label:hover {
     background-color: #425165; /* blue-grey, to override foundation's blue */
@@ -183,7 +191,7 @@ button {
 
 .gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
     background-color: #425165; /* blue-grey */
-    border: 0.2rem solid #fed73a; /* Yellow */
+    border: 2px solid #fed73a; /* Yellow */
     box-shadow: 0 0 0 0.2rem rgb(244, 215, 75), /* Yellow */
                 0 0 0 0.6rem rgb(0, 0, 0);
     outline: none;
@@ -192,7 +200,7 @@ button {
 .gpii-fd-choice-label:active {
     background-color: #fff;
     color: #425165; /* blue-grey */
-    border: 0.2rem solid #fff;
+    border: 3px solid #fff;
     box-shadow: 0 0 0 0.4rem rgb(72, 82, 100); /* blue-grey */
 }
 
@@ -228,19 +236,19 @@ button {
     text-align: center;
     color: #ffffff;
     background-color: #425165; /* blue-grey */
-    border: 0.2rem solid #000;
+    border: 2px solid #000;
 }
-.gpii-fd-theme-default {
+.gpii-fd-theme.fl-theme-prefsEditor-default {
     color: #425165 !important;
     background-color: #eeeeee !important;
     border-color: #425165 !important;
 }
-.gpii-fd-theme-bw {
+.gpii-fd-theme.fl-theme-bw {
     color: #000000 !important;
     background-color: #ffffff !important;
     border-color: #000000 !important;
 }
-.gpii-fd-theme-wb {
+.gpii-fd-theme.fl-theme-wb, {
     color: #ffffff !important;
     background-color: #000000 !important;
     border-color: #000000 !important;
@@ -252,7 +260,7 @@ button {
     height: 6rem;
     color: #ffffff;
     background-color: #425165; /* blue-grey */
-    border: 0.1rem solid #fff;
+    border: 1px solid #fff;
     border-radius: 0.7rem;
     font-size: 4rem;
     margin-bottom: 1rem;
@@ -263,7 +271,7 @@ button {
 .gpii-fd .gpii-fd-lang-prev:focus,
 .gpii-fd .gpii-fd-lang-next:focus {
     background-color: #425165; /* blue-grey */
-    border: 0.1rem solid #fed73a; /* Yellow */
+    border: 1px solid #fed73a; /* Yellow */
     box-shadow: 0 0 0 0.2rem rgb(244, 215, 75), /* Yellow */
                 0 0 0 0.6rem rgb(0, 0, 0);
     outline: none;
@@ -275,7 +283,7 @@ button {
 .gpii-fd .gpii-fd-lang-next:active {
     background-color: #fff;
     color: #425165; /* blue-grey */
-    border: 0.1rem solid #fff;
+    border: 1px solid #fff;
     box-shadow: 0 0 0 0.4rem rgb(72, 82, 100); /* blue-grey */
 }
 
@@ -327,7 +335,7 @@ button {
     height: 2.5rem;
     width: 24rem;
     padding-top: 0.1rem;
-    border: 0.1rem solid #fff;
+    border: 1px solid #fff;
     border-radius: 0.7rem;
     font-size: 2rem;
     line-height: 2.5rem;
@@ -340,7 +348,7 @@ button {
     height: 100%;
     width: 1.75rem;
     margin-right: 1rem;
-    border: 0.2rem solid #425165; /* blue-grey */
+    border: 2px solid #425165; /* blue-grey */
 }
 .gpii-fd-statusFill {
     position: relative;
@@ -422,8 +430,8 @@ button {
 }
 .gpii-fd-navIcons {
     clear: both;
-    margin: 0 2rem;
-    margin-top: 1.5rem; /* gap between main body and icons*/
+    padding: 0 2rem;
+    padding-top: 1.5rem; /* gap between main body and icons*/
 }
 .gpii-fd-navIcon {
     padding: 0.5rem;
@@ -468,7 +476,7 @@ button {
 
 .gpii-fd-prefsEditor-panel-contrast input:focus ~ label {
     background-color: #425165; /* blue-grey */
-    border: 0.2rem solid #fed73a; /* Yellow */
+    border: 2px solid #fed73a; /* Yellow */
     box-shadow: 0 0 0 0.2rem rgb(244, 215, 75), /* Yellow */
                 0 0 0 0.6rem rgb(0, 0, 0);
     outline: none;
@@ -486,7 +494,7 @@ button {
     border-left: 1.25rem solid transparent;
     border-right: 1.25rem solid transparent;
     border-top: 1.5rem solid #fff;
-    margin: -7.2rem auto 3rem auto;
+    margin: -7.3rem auto 3rem auto;
 }
 
 .gpii-fd-show {
@@ -543,7 +551,7 @@ input[type="text"].gpii-fd-keyboard-input::-webkit-input-placeholder {
     color: #425165;
 }
 input[type="text"].gpii-fd-keyboard-input:focus {
-    border: 0.2rem solid #fff; /* Yellow */
+    border: 2px solid #fff; /* Yellow */
     box-shadow: 0 0 0 0.4rem rgb(244, 215, 75), /* Yellow */
                 0 0 0 0.6rem rgb(0, 0, 0);
     outline: none;
@@ -587,10 +595,11 @@ input[type="text"].gpii-fd-keyboard-input:focus {
     background-color: #767675;
     border-radius: 7px;
     color: #FFFFFF;
-    margin-left: 21.75rem;
 }
 .gpii-fd-keyboard-shift-indicator {
     visibility: hidden;
+    width: 6rem;
+    margin-left: 23.75rem;
     margin-top: -3.3rem;
 }
 .gpii-keyboardInput-shiftLatched ~ .gpii-fd-keyboard-shift-indicator {
@@ -622,4 +631,218 @@ html:lang(fr) .gpii-fd-keyboard-accommodationToggle {
     display: block;
     margin-top: -4rem;
     margin-left: 22rem;
+
+/* high-contrast themes: white-on-black */
+.fl-theme-wb .gpii-fd,
+.fl-theme-wb .gpii-fd-navButtons-next,
+.fl-theme-wb .gpii-fd-navButtons-back,
+.fl-theme-wb .gpii-fd-keyboard-try,
+.fl-theme-wb .gpii-fd-keyboard-accommodationToggle,
+.fl-theme-wb .gpii-fd-tooltip,
+.fl-theme-wb .gpii-fd-tooltip-lang {
+    border: 1px solid #ffffff !important;
+}
+.fl-theme-wb .gpii-fd-activeIndicator {
+    border-left-color #ffffff !important;
+    border-right-color #ffffff !important;
+    border-top-color: #000000 !important;
+}
+.fl-theme-wb .gpii-fd-confirmedIndicator:before {
+    color: #ffffff;
+    background-color: #000000 !important;
+}
+.fl-theme-wb .gpii-fd,
+.fl-theme-wb .gpii-fd-topButtons,
+.fl-theme-wb .gpii-fd-navIcons,
+.fl-theme-wb .gpii-fd-navIcons ul,
+.fl-theme-wb .gpii-fd-mute:hover,
+.fl-theme-wb .gpii-fd-mute:hover *,
+.fl-theme-wb .gpii-fd-navButtons-next:hover,
+.fl-theme-wb .gpii-fd-navButtons-back:hover,
+.fl-theme-wb .gpii-fd-navButtons-next:hover *,
+.fl-theme-wb .gpii-fd-navButtons-back:hover *,
+.fl-theme-wb .gpii-fd-choice-label:hover,
+.fl-theme-wb .gpii-fd-lang-prev:hover,
+.fl-theme-wb .gpii-fd-lang-next:hover,
+.fl-theme-wb .gpii-fd-decrease:hover,
+.fl-theme-wb .gpii-fd-increase:hover,
+.fl-theme-wb .gpii-fd-decrease:hover *,
+.fl-theme-wb .gpii-fd-increase:hover *,
+.fl-theme-wb .gpii-fd-keyboard-try:hover,
+.fl-theme-wb .gpii-fd-keyboard-accommodationToggle:hover {
+    color: #000000 !important;
+    background-color: #ffffff !important;
+    box-shadow: none !important;
+}
+.fl-theme-wb .gpii-fd-mute:hover {
+    border: 1px solid #000000 !important;
+}
+.fl-theme-wb .gpii-fd-keyboard-input:focus,
+.fl-theme-wb .gpii-fd-theme:hover,
+.fl-theme-wb .gpii-fd-keyboard-input:hover {
+    box-shadow: 0 0 0 0.6rem rgb(255,255,255) !important;
+}
+.fl-theme-wb .gpii-fd-decrease:focus,
+.fl-theme-wb .gpii-fd-increase:focus,
+.fl-theme-wb .gpii-fd-navButtons-next:focus,
+.fl-theme-wb .gpii-fd-navButtons-back:focus,
+.fl-theme-wb .gpii-fd-keyboard-try:focus,
+.fl-theme-wb .gpii-fd-keyboard-accommodationToggle:focus,
+.fl-theme-wb .gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
+    box-shadow: 0 0 0 0.4rem rgb(255,255,255) !important;
+}
+.fl-theme-wb .gpii-fd-mute:focus {
+    box-shadow: 0 0 0 0.4rem rgb(0,0,0) !important;
+}
+.fl-theme-wb .gpii-fd-prefsEditor-panel-contrast input:focus ~ label {
+    box-shadow: 0 0 0 0.2rem rgb(0,0,0),
+                0 0 0 0.6rem rgb(255, 255, 255) !important;
+}
+.fl-theme-wb input[type="text"].gpii-fd-keyboard-input::-webkit-input-placeholder {
+    color: #ffffff !important;
+}
+.fl-theme-wb .gpii-fd-statusFill {
+    background-color: #ffffff !important;
+}
+.fl-theme-wb .gpii-fd *:disabled {
+    background-image: repeating-linear-gradient(
+        -20deg,
+        #ffffff,
+        #ffffff 0.3rem,
+        #000000 0.3rem,
+        #000000 1.5rem
+    );
+}
+.fl-theme-wb .gpii-fd-lang-prev:disabled:hover,
+.fl-theme-wb .gpii-fd-lang-next:disabled:hover {
+    color: #ffffff !important;
+}
+.fl-theme-wb button:disabled:hover * {
+        background-color: transparent !important;
+        color: #ffffff !important;
+}
+
+/* high-contrast themes: black-on-white */
+.fl-theme-bw .gpii-fd,
+.fl-theme-bw .gpii-fd-navButtons-next,
+.fl-theme-bw .gpii-fd-navButtons-back,
+.fl-theme-bw .gpii-fd-keyboard-try,
+.fl-theme-bw .gpii-fd-keyboard-accommodationToggle,
+.fl-theme-bw .gpii-fd-tooltip,
+.fl-theme-bw .gpii-fd-tooltip-lang {
+    border: 1px solid #000000 !important;
+}
+.fl-theme-bw .gpii-fd-activeIndicator {
+    border-left-color #000000 !important;
+    border-right-color #000000 !important;
+    border-top-color: #ffffff !important;
+}
+.fl-theme-bw .gpii-fd-confirmedIndicator:before {
+    color: #000000;
+    background-color: #ffffff !important;
+}
+.fl-theme-bw .gpii-fd,
+.fl-theme-bw .gpii-fd-topButtons,
+.fl-theme-bw .gpii-fd-navIcons,
+.fl-theme-bw .gpii-fd-navIcons ul,
+.fl-theme-bw .gpii-fd-mute:hover,
+.fl-theme-bw .gpii-fd-mute:hover *,
+.fl-theme-bw .gpii-fd-navButtons-next:hover,
+.fl-theme-bw .gpii-fd-navButtons-back:hover,
+.fl-theme-bw .gpii-fd-navButtons-next:hover *,
+.fl-theme-bw .gpii-fd-navButtons-back:hover *,
+.fl-theme-bw .gpii-fd-choice-label:hover,
+.fl-theme-bw .gpii-fd-lang-prev:hover,
+.fl-theme-bw .gpii-fd-lang-next:hover,
+.fl-theme-bw .gpii-fd-decrease:hover,
+.fl-theme-bw .gpii-fd-increase:hover,
+.fl-theme-bw .gpii-fd-decrease:hover *,
+.fl-theme-bw .gpii-fd-increase:hover *,
+.fl-theme-bw .gpii-fd-keyboard-try:hover,
+.fl-theme-bw .gpii-fd-keyboard-accommodationToggle:hover {
+    color: #ffffff !important;
+    background-color: #000000 !important;
+    box-shadow: none !important;
+}
+.fl-theme-bw .gpii-fd-mute:hover {
+    border: 1px solid #ffffff !important;
+}
+.fl-theme-bw .gpii-fd-keyboard-input:focus,
+.fl-theme-bw .gpii-fd-theme:hover,
+.fl-theme-bw .gpii-fd-keyboard-input:hover {
+    box-shadow: 0 0 0 0.6rem rgb(0,0,0) !important;
+}
+.fl-theme-bw .gpii-fd-decrease:focus,
+.fl-theme-bw .gpii-fd-increase:focus,
+.fl-theme-bw .gpii-fd-navButtons-next:focus,
+.fl-theme-bw .gpii-fd-navButtons-back:focus,
+.fl-theme-bw .gpii-fd-keyboard-try:focus,
+.fl-theme-bw .gpii-fd-keyboard-accommodationToggle:focus,
+.fl-theme-bw .gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
+    box-shadow: 0 0 0 0.4rem rgb(0, 0, 0) !important;
+}
+.fl-theme-bw .gpii-fd-mute:focus {
+    box-shadow: 0 0 0 0.4rem rgb(255,255,255) !important;
+}
+.fl-theme-bw .gpii-fd-prefsEditor-panel-contrast input:focus ~ label {
+    box-shadow: 0 0 0 0.2rem rgb(255, 255, 255),
+                0 0 0 0.6rem rgb(0,0,0) !important;
+}
+.fl-theme-bw input[type="text"].gpii-fd-keyboard-input::-webkit-input-placeholder {
+    color: #000000 !important;
+}
+.fl-theme-bw .gpii-fd-statusFill {
+    background-color: #000000 !important;
+}
+.fl-theme-bw .gpii-fd *:disabled {
+    background-image: repeating-linear-gradient(
+        -20deg,
+        #000000,
+        #000000 0.3rem,
+        #ffffff 0.3rem,
+        #ffffff 1.5rem
+    );
+}
+.fl-theme-bw .gpii-fd-lang-prev:disabled:hover,
+.fl-theme-bw .gpii-fd-lang-next:disabled:hover {
+    color: #000000 !important;
+}
+.fl-theme-bw button:disabled:hover * {
+        background-color: transparent !important;
+        color: #000000 !important;
+}
+
+/* high-contrast themes, shared by both */
+.fl-theme-bw .gpii-fd-navButtons-next:hover,
+.fl-theme-bw .gpii-fd-navButtons-back:hover,
+.fl-theme-wb .gpii-fd-navButtons-next:hover,
+.fl-theme-wb .gpii-fd-navButtons-back:hover {
+    box-shadow: none !important;
+}
+.fl-theme-wb .gpii-fd-confirmedIndicator,
+.fl-theme-bw .gpii-fd-confirmedIndicator {
+    background-color: transparent !important;
+}
+.fl-theme-bw .gpii-fd-theme:focus,
+.fl-theme-bw .gpii-fd-choice input:focus ~ .gpii-fd-choice-label,
+.fl-theme-wb .gpii-fd-theme:focus,
+.fl-theme-wb .gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
+    border: none !important;
+}
+.fl-theme-bw .gpii-fd-keyboard-shift-indicator .gpii-fd-keyboard-shift-indicatorLabel,
+.fl-theme-wb .gpii-fd-keyboard-shift-indicator .gpii-fd-keyboard-shift-indicatorLabel {
+    border-style: dashed;
+    border-width: 1px;
+}
+.fl-theme-wb .gpii-fd-help:disabled:hover,
+.fl-theme-bw .gpii-fd-help:disabled:hover {
+    border-width: 2px;
+    padding: 1rem;
+}
+
+.fl-theme-wb .gpii-fd-icon,
+.fl-theme-bw .gpii-fd-icon,
+.fl-theme-wb .gpii-fd-icon:hover,
+.fl-theme-bw .gpii-fd-icon:hover {
+        background-color: transparent !important;
 }

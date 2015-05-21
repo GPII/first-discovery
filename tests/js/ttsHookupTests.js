@@ -13,6 +13,28 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.registerNamespace("gpii.tests.firstDiscovery.tts.fdHookup");
 
+    jqUnit.asyncTest("test 'gpii.firstDiscovery.tts.tooltipHookup.speakTooltip' method", function () {
+        jqUnit.expect(4);
+
+        var mockNoLang = {
+            speak: function (text, options) {
+                jqUnit.assertEquals("The text should be passed in correctly.", "No lang", text);
+                jqUnit.assertDeepEq("The options should be set correctly", {lang: undefined}, options);
+            }
+        };
+
+        var mockLang = {
+            speak: function (text, options) {
+                jqUnit.assertEquals("The text should be passed in correctly.", "lang set", text);
+                jqUnit.assertDeepEq("The options should be set correctly", {lang: "en-US"}, options);
+                jqUnit.start();
+            }
+        };
+
+        gpii.firstDiscovery.tts.tooltipHookup.speakTooltip(mockNoLang, $("#tooltipNoLang"));
+        gpii.firstDiscovery.tts.tooltipHookup.speakTooltip(mockLang, $("#tooltipLang"));
+    });
+
     fluid.defaults("gpii.tests.mock.firstDiscoveryEditor", {
         gradeNames: ["fluid.viewRelayComponent", "autoInit"],
         selectors: {

@@ -133,11 +133,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         schema: {
             "gpii.firstDiscovery.language": {
                 "type": "string",
-                "default": "en",
-                "enum": ["en-US", "fr-CA", "es-MX", "de-DE", "nl-NL", "sv-SE"],
-                "label": ["lang-en", "lang-fr", "lang-es", "lang-de", "lang-ne", "lang-sv"],
-                "tooltip": ["lang-en-tooltip", "lang-fr-tooltip", "lang-es-tooltip", "lang-de-tooltip", "lang-ne-tooltip", "lang-sv-tooltip"],
-                "tooltipAtSelect": ["lang-en-tooltipAtSelect", "lang-fr-tooltipAtSelect", "lang-es-tooltipAtSelect", "lang-de-tooltipAtSelect", "lang-ne-tooltipAtSelect", "lang-sv-tooltipAtSelect"]
+                "default": "en-US",
+                "enum": ["en-US", "fr-FR", "es-MX", "de-DE", "nl-NL", "sv-SE"],
+                "label": ["lang-en-US", "lang-fr-FR", "lang-es-MX", "lang-de-DE", "lang-nl-NL", "lang-sv-SE"],
+                "tooltip": ["lang-en-US-tooltip", "lang-fr-FR-tooltip", "lang-es-MX-tooltip", "lang-de-DE-tooltip", "lang-nl-NL-tooltip", "lang-sv-SE-tooltip"],
+                "tooltipAtSelect": ["lang-en-US-tooltipAtSelect", "lang-fr-FR-tooltipAtSelect", "lang-es-MX-tooltipAtSelect", "lang-de-DE-tooltipAtSelect", "lang-nl-NL-tooltipAtSelect", "lang-sv-SE-tooltipAtSelect"]
             }
         }
     });
