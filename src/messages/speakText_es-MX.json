@@ -1,0 +1,10 @@
+{
+    "speakTextInstructions": "Prefieres que los elementos que aparecen en pantalla sean leidos en voz alta?",
+    "speakText-no": "No",
+    "speakText-yes": "Si",
+
+    "speakText-yes-tooltip": "Selecciona activar voz",
+    "speakText-no-tooltip": "Selecciona desactivar voz",
+    "speakText-yes-tooltipAtSelect": "Voz está activada",
+    "speakText-no-tooltipAtSelect": "Voz está desactivada"
+}

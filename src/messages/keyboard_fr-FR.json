@@ -17,5 +17,7 @@
     "keyboardInputTooltip": "Sélectionner pour commencer à taper",
     "tryTooltip": "Sélectionnez pour transformer les touches rémanentes",
     "turnOnTooltip": "Sélectionnez pour transformer les touches rémanentes",
-    "turnOffTooltip": "Sélectionnez pour transformer les touches rémanentes"
+    "turnOffTooltip": "Sélectionnez pour transformer les touches rémanentes",
+
+    "shiftLatched": "la touch Maj est activée"
 }

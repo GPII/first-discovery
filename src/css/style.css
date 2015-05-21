@@ -607,30 +607,51 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 }
 
 /* French-specific styles */
-html:lang(fr) .gpii-fd-mute {
+html:lang(fr-FR) .gpii-fd-mute {
   width: 24rem;
 }
-html:lang(fr) .gpii-fd-prefsEditor-panel-welcome .gpii-fd-instructions p {
+html:lang(es-MX) .gpii-fd-prefsEditor-panel-welcome .gpii-fd-instructions p,
+html:lang(fr-FR) .gpii-fd-prefsEditor-panel-welcome .gpii-fd-instructions p {
   line-height: 1.1;
 }
-html:lang(fr) .gpii-fd-prefsEditor-panel-keyboard {
+html:lang(es-MX) .gpii-fd-theme {
+    width: 23rem;
+}
+html:lang(fr-FR) .gpii-fd-prefsEditor-panel-keyboard {
     padding-left: 1rem;
     padding-right: 1rem;
 }
-html:lang(fr) .gpii-fd-prefsEditor-panel-keyboard .gpii-fd-instructions,
-html:lang(fr) .gpii-fd-keyboard-stickyKeysAdjuster-accommodationInstr {
+html:lang(es-MX) .gpii-fd-prefsEditor-panel-keyboard .gpii-fd-instructions {
+    padding: 0;
+    margin-bottom: 0;
+}
+html:lang(es-MX) .gpii-fd-keyboard-stickyKeysAdjuster-accommodationInstr,
+html:lang(fr-FR) .gpii-fd-prefsEditor-panel-keyboard .gpii-fd-instructions,
+html:lang(fr-FR) .gpii-fd-keyboard-stickyKeysAdjuster-accommodationInstr {
     padding: 0 0 1rem 0;
     margin-bottom: 0;
 }
-html:lang(fr) .gpii-fd-keyboard-stickyKeysAdjuster-accommodationNameState {
+html:lang(es-MX) .gpii-fd-keyboard-stickyKeysAdjuster-accommodationNameState,
+html:lang(fr-FR) .gpii-fd-keyboard-stickyKeysAdjuster-accommodationNameState {
     width: 23rem;
     display: block;
     margin-left: -1rem;
 }
-html:lang(fr) .gpii-fd-keyboard-accommodationToggle {
+html:lang(es-MX) .gpii-fd-main.gpii-fd-prefsEditor-panel-keyboard {
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+}
+html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle,
+html:lang(fr-FR) .gpii-fd-keyboard-accommodationToggle {
     display: block;
     margin-top: -4rem;
+}
+html:lang(fr-FR) .gpii-fd-keyboard-accommodationToggle {
     margin-left: 22rem;
+}
+html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
+    margin-left: 20rem;
+}
 
 /* high-contrast themes: white-on-black */
 .fl-theme-wb .gpii-fd,
