@@ -457,11 +457,15 @@ button {
 .gpii-fd-volume:before {
     content: "\e609";
 }
+.gpii-fd-contrast:before {
+    content: "\e60c";
+}
 .gpii-fd-text:before {
     content: "\e60b";
 }
-.gpii-fd-contrast:before {
-    content: "\e60c";
+/* A temporary icon to be replaced by the new icon for on-screen keyboard */
+.gpii-fd-onScreenKeyboard:before {
+    content: "\e60d";
 }
 
 .gpii-fd-prefsEditor-panel-contrast label {

@@ -46,15 +46,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     }
                 }
             },
-            "keyboard": {
-                "type": "gpii.firstDiscovery.stickyKeys",
-                "panel": {
-                    "type": "gpii.firstDiscovery.panel.keyboard",
-                    "container": ".gpiic-fd-prefsEditor-panel-keyboard",
-                    "template": "%prefix/keyboard.html",
-                    "message": "%prefix/keyboard.json"
-                }
-            },
             "welcome": {
                 "type": "gpii.firstDiscovery.welcome",
                 "panel": {
@@ -62,18 +53,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "container": ".gpiic-fd-prefsEditor-panel-welcome",
                     "template": "%prefix/welcomeTemplate.html",
                     "message": "%prefix/welcome.json"
-                }
-            },
-            "textSize": {
-                "type": "fluid.prefs.textSize",
-                "enactor": {
-                    "type": "fluid.prefs.enactor.textSize"
-                },
-                "panel": {
-                    "type": "gpii.firstDiscovery.panel.textSize",
-                    "container": ".gpiic-fd-prefsEditor-panel-size",
-                    "template": "%prefix/rangeTemplate.html",
-                    "message": "%prefix/textSize.json"
                 }
             },
             "speakText": {
@@ -104,6 +83,36 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "message": "%prefix/contrast.json"
                 }
             },
+            "textSize": {
+                "type": "fluid.prefs.textSize",
+                "enactor": {
+                    "type": "fluid.prefs.enactor.textSize"
+                },
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.textSize",
+                    "container": ".gpiic-fd-prefsEditor-panel-size",
+                    "template": "%prefix/rangeTemplate.html",
+                    "message": "%prefix/textSize.json"
+                }
+            },
+            "onScreenKeyboard": {
+                "type": "gpii.firstDiscovery.onScreenKeyboard",
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.onScreenKeyboard",
+                    "container": ".gpiic-fd-prefsEditor-panel-onScreenKeyboard",
+                    "template": "%prefix/yesNo.html",
+                    "message": "%prefix/onScreenKeyboard.json"
+                }
+            },
+            "keyboard": {
+                "type": "gpii.firstDiscovery.stickyKeys",
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.keyboard",
+                    "container": ".gpiic-fd-prefsEditor-panel-keyboard",
+                    "template": "%prefix/keyboard.html",
+                    "message": "%prefix/keyboard.json"
+                }
+            },
             "congratulations": {
                 "type": "gpii.firstDiscovery.congratulations",
                 "panel": {
@@ -120,6 +129,27 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * Primary Schema
     *******************************************************************************/
 
+    fluid.defaults("gpii.firstDiscovery.schemas.language", {
+        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.language": {
+                "type": "string",
+                "default": "en-US",
+                "enum": ["en-US", "fr-FR", "es-ES", "de-DE", "nl-NL", "sv-SE"]
+            }
+        }
+    });
+
+    fluid.defaults("gpii.firstDiscovery.schemas.speak", {
+        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.speak": {
+                "type": "boolean",
+                "default": true
+            }
+        }
+    });
+
     fluid.defaults("gpii.firstDiscovery.schemas.textSize", {
         gradeNames: ["autoInit", "fluid.prefs.schemas"],
         schema: {
@@ -133,30 +163,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    fluid.defaults("gpii.firstDiscovery.schemas.language", {
+    fluid.defaults("gpii.firstDiscovery.schemas.onScreenKeyboard", {
         gradeNames: ["autoInit", "fluid.prefs.schemas"],
         schema: {
-            "gpii.firstDiscovery.language": {
-                "type": "string",
-                "default": "en-US",
-                "enum": ["en-US", "fr-FR", "es-ES", "de-DE", "nl-NL", "sv-SE"]
-            }
-        }
-    });
-
-    // TODO: currently to get around an issue where the
-    // boolean value needed to be specified as a string in the speak text
-    // adjuster, the default is set to "true" instead of true
-    fluid.defaults("gpii.firstDiscovery.schemas.speak", {
-        gradeNames: ["autoInit", "fluid.prefs.schemas"],
-        schema: {
-            "gpii.firstDiscovery.speak": {
+            "gpii.firstDiscovery.onScreenKeyboard": {
                 "type": "boolean",
                 "default": true
             }
         }
     });
-
 
     fluid.defaults("gpii.firstDiscovery.schemas.stickyKeys", {
         gradeNames: ["autoInit", "fluid.prefs.schemas"],

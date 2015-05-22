@@ -119,7 +119,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.firstDiscovery.testControls = function (that) {
-        jqUnit.expect(58);
+        jqUnit.expect(63);
 
         var backButton = that.navButtons.locate("back");
         var nextButton = that.navButtons.locate("next");
@@ -135,6 +135,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 ".gpiic-fd-prefsEditor-panel-size",
                 ".gpiic-fd-prefsEditor-panel-speakText",
                 ".gpiic-fd-prefsEditor-panel-contrast",
+                ".gpiic-fd-prefsEditor-panel-onScreenKeyboard",
                 ".gpiic-fd-prefsEditor-panel-keyboard",
                 ".gpiic-fd-prefsEditor-panel-congratulations"
             ]
@@ -149,6 +150,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 ".gpiic-fd-prefsEditor-panel-speakText",
                 ".gpiic-fd-prefsEditor-panel-size",
                 ".gpiic-fd-prefsEditor-panel-contrast",
+                ".gpiic-fd-prefsEditor-panel-onScreenKeyboard",
                 ".gpiic-fd-prefsEditor-panel-keyboard",
                 ".gpiic-fd-prefsEditor-panel-congratulations"
             ]
@@ -163,6 +165,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 ".gpiic-fd-prefsEditor-panel-size",
                 ".gpiic-fd-prefsEditor-panel-speakText",
                 ".gpiic-fd-prefsEditor-panel-contrast",
+                ".gpiic-fd-prefsEditor-panel-onScreenKeyboard",
                 ".gpiic-fd-prefsEditor-panel-keyboard",
                 ".gpiic-fd-prefsEditor-panel-congratulations"
             ]
@@ -178,6 +181,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 ".gpiic-fd-prefsEditor-panel-size",
                 ".gpiic-fd-prefsEditor-panel-speakText",
                 ".gpiic-fd-prefsEditor-panel-contrast",
+                ".gpiic-fd-prefsEditor-panel-onScreenKeyboard",
                 ".gpiic-fd-prefsEditor-panel-keyboard"
             ]
         });
@@ -192,6 +196,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 ".gpiic-fd-prefsEditor-panel-size",
                 ".gpiic-fd-prefsEditor-panel-speakText",
                 ".gpiic-fd-prefsEditor-panel-contrast",
+                ".gpiic-fd-prefsEditor-panel-onScreenKeyboard",
                 ".gpiic-fd-prefsEditor-panel-keyboard"
             ]
         });

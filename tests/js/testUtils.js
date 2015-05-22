@@ -22,10 +22,11 @@ https://github.com/gpii/universal/LICENSE.txt
         tts: 3,
         contrast: 4,
         textSize: 5,
-        keyboard: 6,
-        secondLast: 6,
-        congrats: 7,
-        last: 7
+        onScreenKeyboard: 6,
+        keyboard: 7,
+        secondLast: 7,
+        congrats: 8,
+        last: 8
     };
 
     gpii.tests.utils.hasClass = function (elementName, element, selector, expected) {
@@ -55,6 +56,11 @@ https://github.com/gpii/universal/LICENSE.txt
             elem = $(elem);
             jqUnit.assertEquals("The tooltip definition for the " + elemName + " #" + idx + " has been populated correctly", messages[stringArray[idx] + tooltipLabelSuffix], idToContent[elem.attr("id")]);
         });
+    };
+
+    gpii.tests.utils.verifyYesNoModel = function (that, modelPath, expectedSpeakValue, expectedChoiceValue) {
+        jqUnit.assertEquals("The model value for \"" + modelPath + "\" should have been set correctly", expectedSpeakValue, fluid.get(that.model, modelPath));
+        jqUnit.assertEquals("The model value for \"choice\" should have been set correctly", expectedChoiceValue, that.model.choice);
     };
 
 })(jQuery, fluid);

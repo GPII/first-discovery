@@ -387,6 +387,35 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     /*
+     * On screen keyboard panel
+     */
+    fluid.defaults("gpii.firstDiscovery.panel.onScreenKeyboard", {
+        gradeNames: ["gpii.firstDiscovery.panel.yesNo", "autoInit"],
+        preferenceMap: {
+            "gpii.firstDiscovery.onScreenKeyboard": {
+                "model.onScreenKeyboard": "default"
+            }
+        },
+        modelRelay: {
+            source: "{that}.model.choice",
+            target: "{that}.model.onScreenKeyboard",
+            // Setup the backward restriction to prevent the component instantiation writes back to
+            // the central model that results in wiping out the saved prefs at the page reload.
+            forward: "liveOnly",
+            singleTransform: {
+                type: "fluid.transforms.valueMapper",
+                inputPath: "",
+                options: {
+                    "yes": true,
+                    "no": {
+                        outputValue: false
+                    }
+                }
+            }
+        }
+    });
+
+    /*
      * language panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.lang", {

@@ -466,15 +466,6 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.defaults("gpii.tests.firstDiscovery.panel.speakText", {
         gradeNames: ["gpii.firstDiscovery.panel.speakText", "autoInit"],
-        messageBase: {
-            "instructions": "Speak text instructions",
-            "no": "no",
-            "yes": "yes",
-            "yes-tooltip": "Select to turn voice on",
-            "no-tooltip": "Select to turn voice off",
-            "yes-tooltipAtSelect": "Voice is on",
-            "no-tooltipAtSelect": "Voice is off"
-        },
         model: {
             speak: true
         }
@@ -503,27 +494,27 @@ https://github.com/gpii/universal/LICENSE.txt
                 sequence: [{
                     func: "{speakText}.refreshView"
                 }, {
-                    listener: "gpii.tests.speakTextTester.verifyModel",
-                    args: ["{speakText}", true, "yes"],
+                    listener: "gpii.tests.utils.verifyYesNoModel",
+                    args: ["{speakText}", "speak", true, "yes"],
                     event: "{speakText}.events.afterRender"
                 }]
             }, {
                 expect: 4,
-                name: "Selections on the speak text panel",
+                name: "Model relay with selections on the speak text panel",
                 sequence: [{
                     func: "gpii.tests.utils.triggerRadioButton",
                     args: ["{speakText}.dom.choiceInput", 1]
                 }, {
-                    listener: "gpii.tests.speakTextTester.verifyModel",
-                    args: ["{speakText}", false, "no"],
+                    listener: "gpii.tests.utils.verifyYesNoModel",
+                    args: ["{speakText}", "speak", false, "no"],
                     spec: {path: "speak", priority: "last"},
                     changeEvent: "{speakText}.applier.modelChanged"
                 }, {
                     func: "gpii.tests.utils.triggerRadioButton",
                     args: ["{speakText}.dom.choiceInput", 0]
                 }, {
-                    listener: "gpii.tests.speakTextTester.verifyModel",
-                    args: ["{speakText}", true, "yes"],
+                    listener: "gpii.tests.utils.verifyYesNoModel",
+                    args: ["{speakText}", "speak", true, "yes"],
                     spec: {path: "speak", priority: "last"},
                     changeEvent: "{speakText}.applier.modelChanged"
                 }]
@@ -531,10 +522,67 @@ https://github.com/gpii/universal/LICENSE.txt
         }]
     });
 
-    gpii.tests.speakTextTester.verifyModel = function (that, expectedSpeakValue, expectedChoiceValue) {
-        jqUnit.assertEquals("The model value for \"speak\" should have been set correctly", expectedSpeakValue, that.model.speak);
-        jqUnit.assertEquals("The model value for \"choice\" should have been set correctly", expectedChoiceValue, that.model.choice);
-    };
+    /**********************************
+     * On-screen Keyboard Panel Tests *
+     **********************************/
+
+    fluid.defaults("gpii.tests.firstDiscovery.panel.onScreenKeyboard", {
+        gradeNames: ["gpii.firstDiscovery.panel.onScreenKeyboard", "autoInit"],
+        model: {
+            onScreenKeyboard: true
+        }
+    });
+
+    fluid.defaults("gpii.tests.onScreenKeyboardPanel", {
+        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        components: {
+            onScreenKeyboard: {
+                type: "gpii.tests.firstDiscovery.panel.onScreenKeyboard",
+                container: ".gpiic-fd-onScreenKeyboard"
+            },
+            onScreenKeyboardTester: {
+                type: "gpii.tests.onScreenKeyboardTester"
+            }
+        }
+    });
+
+    fluid.defaults("gpii.tests.onScreenKeyboardTester", {
+        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        modules: [{
+            name: "Test the on-screen keyboard settings panel",
+            tests: [{
+                expect: 2,
+                name: "The initial model of the on-screen keyboard panel",
+                sequence: [{
+                    func: "{onScreenKeyboard}.refreshView"
+                }, {
+                    listener: "gpii.tests.utils.verifyYesNoModel",
+                    args: ["{onScreenKeyboard}", "onScreenKeyboard", true, "yes"],
+                    event: "{onScreenKeyboard}.events.afterRender"
+                }]
+            }, {
+                expect: 4,
+                name: "Model relay with selections on the on-screen keyboard panel",
+                sequence: [{
+                    func: "gpii.tests.utils.triggerRadioButton",
+                    args: ["{onScreenKeyboard}.dom.choiceInput", 1]
+                }, {
+                    listener: "gpii.tests.utils.verifyYesNoModel",
+                    args: ["{onScreenKeyboard}", "onScreenKeyboard", false, "no"],
+                    spec: {path: "onScreenKeyboard", priority: "last"},
+                    changeEvent: "{onScreenKeyboard}.applier.modelChanged"
+                }, {
+                    func: "gpii.tests.utils.triggerRadioButton",
+                    args: ["{onScreenKeyboard}.dom.choiceInput", 0]
+                }, {
+                    listener: "gpii.tests.utils.verifyYesNoModel",
+                    args: ["{onScreenKeyboard}", "onScreenKeyboard", true, "yes"],
+                    spec: {path: "onScreenKeyboard", priority: "last"},
+                    changeEvent: "{onScreenKeyboard}.applier.modelChanged"
+                }]
+            }]
+        }]
+    });
 
     /************************
      * Contrast Panel Tests *
@@ -881,6 +929,7 @@ https://github.com/gpii/universal/LICENSE.txt
             "gpii.tests.yesNoPanel",
             "gpii.tests.speakTextPanel",
             "gpii.tests.contrastPanel",
+            "gpii.tests.onScreenKeyboardPanel",
             "gpii.tests.keyboardPanel",
             "gpii.tests.welcomePanel",
             "gpii.tests.congratulationsPanel"
