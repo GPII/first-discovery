@@ -81,7 +81,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.speakText",
                     "container": ".gpiic-fd-prefsEditor-panel-speakText",
-                    "template": "%prefix/speakText.html",
+                    "template": "%prefix/yesNo.html",
                     "message": "%prefix/speakText.json"
                 }
             },
