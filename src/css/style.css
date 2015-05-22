@@ -431,7 +431,6 @@ button {
 .gpii-fd-navIcons {
     clear: both;
     padding: 0 2rem;
-    padding-top: 1.5rem; /* gap between main body and icons*/
 }
 .gpii-fd-navIcon {
     padding: 0.5rem;
@@ -469,6 +468,24 @@ button {
 }
 .gpii-fd-contrast:before {
     content: "\e60c";
+}
+
+.gpii-fd-dummy:before {
+    content: "\e60d";
+}
+
+.gpii-fd-navIcon-outer {
+    width: 30rem; /* Space for 5 icons */
+    overflow: hidden;
+    padding-top: 1.5rem; /* gap between main body and icons*/
+}
+
+.gpii-fd-navIcon-inner {
+    white-space: nowrap;
+    position: relative;
+    left: 0rem;
+    margin-left: 0;
+    width: 36rem; /* Space for 6 icons */
 }
 
 .gpii-fd-prefsEditor-panel-contrast label {
