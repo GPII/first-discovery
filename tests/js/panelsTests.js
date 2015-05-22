@@ -377,7 +377,6 @@ https://github.com/gpii/universal/LICENSE.txt
             "yes-tooltipAtSelect": "Yes is choosen",
             "no-tooltipAtSelect": "No is choosen"
         },
-        choiceLabels: ["yes", "no"],
         model: {
             choice: "yes"
         }
@@ -399,7 +398,7 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.defaults("gpii.tests.yesNoTester", {
         gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
         modules: [{
-            name: "Test the yes no selection panel",
+            name: "Test the yes and no selection panel",
             tests: [{
                 expect: 8,
                 name: "The initial rendering of the yes no panel",
@@ -452,7 +451,7 @@ https://github.com/gpii/universal/LICENSE.txt
 
     gpii.tests.yesNoTester.verifyRendering = function (that) {
         jqUnit.assertEquals("The instructions should have been set correctly.", that.options.messageBase.instructions, that.locate("instructions").text());
-        gpii.tests.utils.verifyRadioButtonRendering(that.locate("choiceInput"), that.locate("choiceLabel"), that.options.choiceLabels, that.model.choice);
+        gpii.tests.utils.verifyRadioButtonRendering(that.locate("choiceInput"), that.locate("choiceLabel"), that.options.controlValues.choice, that.model.choice);
         gpii.tests.yesNoTester.verifyTooltip(that);
     };
 

@@ -340,22 +340,35 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             choice: ["yes", "no"]
         },
         repeatingSelectors: ["choiceRow"],
-        protoTree: {
+        invokers: {
+            produceTree: {
+                funcName: "gpii.firstDiscovery.panel.yesNo.produceTree",
+                args: "{that}"
+            }
+        }
+    });
+
+    gpii.firstDiscovery.panel.yesNo.produceTree = function (that) {
+        // Make sure each derived panel using yesNo grade has a unique
+        // selectID, the name used for inputs.
+        var selectID = fluid.allocateGuid();
+        var protoTree = {
             instructions: {messagekey: "instructions"},
             expander: {
                 type: "fluid.renderer.selection.inputs",
                 rowID: "choiceRow",
                 labelID: "choiceLabel",
                 inputID: "choiceInput",
-                selectID: "choice-radio",
+                selectID: selectID,
                 tree: {
                     optionnames: "${{that}.msgLookup.choice}",
                     optionlist: "${{that}.options.controlValues.choice}",
                     selection: "${choice}"
                 }
             }
-        }
-    });
+        };
+        return protoTree;
+    };
 
     /*
      * Text to speech panel
