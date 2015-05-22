@@ -457,6 +457,13 @@ button {
 .gpii-fd-volume:before {
     content: "\e609";
 }
+/*
+    TODO: Replace with correct icon.
+    This is just a placeholder till the new icons are added.
+*/
+.gpii-fd-speechRate:before {
+    content: "\e60a";
+}
 .gpii-fd-text:before {
     content: "\e60b";
 }
@@ -664,8 +671,8 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
     border: 1px solid #ffffff !important;
 }
 .fl-theme-wb .gpii-fd-activeIndicator {
-    border-left-color #ffffff !important;
-    border-right-color #ffffff !important;
+    border-left-color: #ffffff !important;
+    border-right-color: #ffffff !important;
     border-top-color: #000000 !important;
 }
 .fl-theme-wb .gpii-fd-confirmedIndicator:before {
@@ -754,8 +761,8 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
     border: 1px solid #000000 !important;
 }
 .fl-theme-bw .gpii-fd-activeIndicator {
-    border-left-color #000000 !important;
-    border-right-color #000000 !important;
+    border-left-color: #000000 !important;
+    border-right-color: #000000 !important;
     border-top-color: #ffffff !important;
 }
 .fl-theme-bw .gpii-fd-confirmedIndicator:before {

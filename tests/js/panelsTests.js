@@ -246,6 +246,107 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("The closes number for " + numberToFind + " in a number array " + numbers + " is " + expected, expected, gpii.firstDiscovery.panel.lang.findClosestNumber(numberToFind, numbers));
     };
 
+    /*********************
+     * Range panel Tests *
+     *********************/
+
+    fluid.defaults("gpii.tests.rangePanel", {
+        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        components: {
+            range: {},
+            rangePanelTester: {
+                type: "gpii.tests.rangePanelTester"
+            }
+        }
+    });
+
+    fluid.defaults("gpii.tests.rangePanelTester", {
+        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        testOptions: {
+            increasedStep: 1.1,
+            decreasedStep: 1.0,
+            testValue: 1.5
+        },
+        modules: [{
+            name: "Test the range settings panel",
+            tests: [{
+                expect: 19,
+                name: "Test the rendering of the range panel",
+                sequence: [{
+                    func: "{range}.refreshView"
+                }, {
+                    listener: "gpii.tests.rangePanelTester.verifyRendering",
+                    priority: "last",
+                    event: "{range}.events.afterRender"
+                }, {
+                    func: "{range}.stepUp"
+                }, {
+                    listener: "gpii.tests.rangePanelTester.verifyModel",
+                    args: ["{range}.model", {value: "{that}.options.testOptions.increasedStep", isMax: false, isMin: false}],
+                    spec: {path: "", priority: "last"},
+                    changeEvent: "{range}.applier.modelChanged"
+                }, {
+                    func: "{range}.stepDown"
+                }, {
+                    listener: "gpii.tests.rangePanelTester.verifyModel",
+                    args: ["{range}.model", {value: "{that}.options.testOptions.decreasedStep", isMax: false, isMin: true}],
+                    spec: {path: "value", priority: "last"},
+                    changeEvent: "{range}.applier.modelChanged"
+                }, {
+                    func: "{range}.applier.change",
+                    args: ["value", "{range}.options.range.max"]
+                }, {
+                    listener: "gpii.tests.rangePanelTester.verifyButtonStates",
+                    args: ["{range}", true, false],
+                    spec: {path: "isMax", priority: "last"},
+                    changeEvent: "{range}.applier.modelChanged"
+                }, {
+                    func: "{range}.applier.change",
+                    args: ["value", "{range}.options.range.min"]
+                }, {
+                    listener: "gpii.tests.rangePanelTester.verifyButtonStates",
+                    args: ["{range}", false, true],
+                    spec: {path: "isMin", priority: "last"},
+                    changeEvent: "{range}.applier.modelChanged"
+                }, {
+                    func: "{range}.applier.change",
+                    args: ["value", "{that}.options.testOptions.testValue"]
+                }, {
+                    listener: "gpii.tests.rangePanelTester.verifyButtonStates",
+                    args: ["{range}", false, false],
+                    spec: {path: "isMin", priority: "last"},
+                    changeEvent: "{range}.applier.modelChanged"
+                }]
+            }]
+        }]
+    });
+
+    gpii.tests.rangePanelTester.verifyRendering = function (that) {
+        var messages = that.options.messageBase;
+        var panelName = that.nickName;
+        jqUnit.assertEquals("The text for " + panelName + " instructions should be rendered.", messages.rangeInstructions, that.locate("rangeInstructions").text());
+        jqUnit.assertEquals("The upper bound label for the " + panelName + " meter should be rendered.", messages.maxLabel, that.locate("max").text());
+        jqUnit.assertEquals("The lower bound label for the " + panelName + " meter should be rendered.", messages.minLabel, that.locate("min").text());
+
+        var increaseId = that.locate("increase").attr("id");
+        var decreaseId = that.locate("decrease").attr("id");
+        jqUnit.assertEquals("The tooltip model for the " + panelName + " increase button has been properly set", that.options.messageBase.increaseLabel, that.tooltip.model.idToContent[increaseId]);
+        jqUnit.assertEquals("The tooltip model for the " + panelName + " decrease button has been properly set", that.options.messageBase.decreaseLabel, that.tooltip.model.idToContent[decreaseId]);
+    };
+
+    gpii.tests.rangePanelTester.verifyModel = function (model, expectedModel) {
+        jqUnit.assertDeepEq("The model value " + expectedModel.value + " should be set correctly", expectedModel, model);
+    };
+
+    gpii.tests.rangePanelTester.verifyButtonStates = function (that, increaseDisabled, decreaseDisabled) {
+        var panelName = that.nickName;
+        jqUnit.assertEquals("The " + panelName + " isMax model value should be set correctly", increaseDisabled, that.model.isMax);
+        jqUnit.assertEquals("The " + panelName + " increase button should have the correct enabled/disabled state", increaseDisabled, that.locate("increase").prop("disabled"));
+
+        jqUnit.assertEquals("The " + panelName + " isMin model value should be set correctly", decreaseDisabled, that.model.isMin);
+        jqUnit.assertEquals("The " + panelName + " decrease button should have the correct enabled/disabled state", decreaseDisabled, that.locate("decrease").prop("disabled"));
+    };
+
     /*************************
      * Text Size Panel Tests *
      *************************/
@@ -253,7 +354,9 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.defaults("gpii.tests.firstDiscovery.panel.textSize", {
         gradeNames: ["gpii.firstDiscovery.panel.textSize", "autoInit"],
         messageBase: {
-            rangeInstructions: "Text size instructions.",
+            rangeInstructions: "Adjust the text and controls to a size you like best.",
+            maxLabel: "max",
+            minLabel: "min",
             increaseLabel: "larger",
             decreaseLabel: "smaller"
         },
@@ -267,100 +370,46 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.textSizePanel", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["gpii.tests.rangePanel", "autoInit"],
         components: {
-            textSize: {
+            range: {
                 type: "gpii.tests.firstDiscovery.panel.textSize",
                 container: ".gpiic-fd-textSize"
-            },
-            textSizeTester: {
-                type: "gpii.tests.textSizeTester"
             }
         }
     });
 
-    fluid.defaults("gpii.tests.textSizeTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
-        testOptions: {
-            increasedStep: 1.1,
-            decreasedStep: 1.0,
-            testValue: 1.5
+    /***************************
+     * Speech Rate Panel Tests *
+     ***************************/
+
+    fluid.defaults("gpii.tests.firstDiscovery.panel.speechRate", {
+        gradeNames: ["gpii.firstDiscovery.panel.speechRate", "autoInit"],
+        messageBase: {
+            rangeInstructions: "Adjust the speed at which items on the screen are read out loud.",
+            maxLabel: "fast",
+            minLabel: "slow",
+            increaseLabel: "faster",
+            decreaseLabel: "slower"
         },
-        modules: [{
-            name: "Test the text sizer settings panel",
-            tests: [{
-                expect: 17,
-                name: "Test the rendering of the text size panel",
-                sequence: [{
-                    func: "{textSize}.refreshView"
-                }, {
-                    listener: "gpii.tests.textSizeTester.verifyRendering",
-                    priority: "last",
-                    event: "{textSize}.events.afterRender"
-                }, {
-                    func: "{textSize}.stepUp"
-                }, {
-                    listener: "gpii.tests.textSizeTester.verifyModel",
-                    args: ["{textSize}", "{that}.options.testOptions.increasedStep"],
-                    spec: {path: "value", priority: "last"},
-                    changeEvent: "{textSize}.applier.modelChanged"
-                }, {
-                    func: "{textSize}.stepDown"
-                }, {
-                    listener: "gpii.tests.textSizeTester.verifyModel",
-                    args: ["{textSize}", "{that}.options.testOptions.decreasedStep"],
-                    spec: {path: "value", priority: "last"},
-                    changeEvent: "{textSize}.applier.modelChanged"
-                }, {
-                    func: "{textSize}.applier.change",
-                    args: ["value", "{textSize}.options.range.max"]
-                }, {
-                    listener: "gpii.tests.textSizeTester.verifyButtonStates",
-                    args: ["{textSize}", true, false],
-                    spec: {path: "isMax", priority: "last"},
-                    changeEvent: "{textSize}.applier.modelChanged"
-                }, {
-                    func: "{textSize}.applier.change",
-                    args: ["value", "{textSize}.options.range.min"]
-                }, {
-                    listener: "gpii.tests.textSizeTester.verifyButtonStates",
-                    args: ["{textSize}", false, true],
-                    spec: {path: "isMin", priority: "last"},
-                    changeEvent: "{textSize}.applier.modelChanged"
-                }, {
-                    func: "{textSize}.applier.change",
-                    args: ["value", "{that}.options.testOptions.testValue"]
-                }, {
-                    listener: "gpii.tests.textSizeTester.verifyButtonStates",
-                    args: ["{textSize}", false, false],
-                    spec: {path: "isMin", priority: "last"},
-                    changeEvent: "{textSize}.applier.modelChanged"
-                }]
-            }]
-        }]
+        model: {
+            value: 1
+        },
+        modelListeners: {
+            // rerenders on modelChange like panel behaves in the prefsEditor
+            "value": "{that}.refreshView"
+        }
     });
 
-    gpii.tests.textSizeTester.verifyRendering = function (that) {
-        var messages = that.options.messageBase;
-        jqUnit.assertEquals("The text for instructions should be rendered.", messages.rangeInstructions, that.locate("rangeInstructions").text());
-
-        var increaseId = that.locate("increase").attr("id");
-        var decreaseId = that.locate("decrease").attr("id");
-        jqUnit.assertEquals("The tooltip model for the increase button has been properly set", that.options.messageBase.increaseLabel, that.tooltip.model.idToContent[increaseId]);
-        jqUnit.assertEquals("The tooltip model for the decrease button has been properly set", that.options.messageBase.decreaseLabel, that.tooltip.model.idToContent[decreaseId]);
-    };
-
-    gpii.tests.textSizeTester.verifyModel = function (that, expectedModel) {
-        jqUnit.assertEquals("The model value " + expectedModel + " should be set correctly", expectedModel, that.model.value);
-    };
-
-    gpii.tests.textSizeTester.verifyButtonStates = function (that, increaseDisabled, decreaseDisabled) {
-        jqUnit.assertEquals("The isMax model value should be set correctly", increaseDisabled, that.model.isMax);
-        jqUnit.assertEquals("The increase button should have the correct enabled/disabled state", increaseDisabled, that.locate("increase").prop("disabled"));
-
-        jqUnit.assertEquals("The isMin model value should be set correctly", decreaseDisabled, that.model.isMin);
-        jqUnit.assertEquals("The decrease button should have the correct enabled/disabled state", decreaseDisabled, that.locate("decrease").prop("disabled"));
-    };
+    fluid.defaults("gpii.tests.speechRatePanel", {
+        gradeNames: ["gpii.tests.rangePanel", "autoInit"],
+        components: {
+            range: {
+                type: "gpii.tests.firstDiscovery.panel.speechRate",
+                container: ".gpiic-fd-speechRate"
+            }
+        }
+    });
 
     /**************************
      * Speak Text Panel Tests *
@@ -802,6 +851,7 @@ https://github.com/gpii/universal/LICENSE.txt
         fluid.test.runTests([
             "gpii.tests.langPanel",
             "gpii.tests.textSizePanel",
+            "gpii.tests.speechRatePanel",
             "gpii.tests.speakTextPanel",
             "gpii.tests.contrastPanel",
             "gpii.tests.keyboardPanel",

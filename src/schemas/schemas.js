@@ -80,6 +80,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "message": "%prefix/speakText.json"
                 }
             },
+            "speechRate": {
+                "type": "gpii.firstDiscovery.speechRate",
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.speechRate",
+                    "container": ".gpiic-fd-prefsEditor-panel-speechRate",
+                    "template": "%prefix/rangeTemplate.html",
+                    "message": "%prefix/speechRate.json"
+                }
+            },
             "contrast": {
                 "type": "fluid.prefs.contrast",
                 "classes": {
@@ -142,9 +151,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    // TODO: currently to get around an issue where the
-    // boolean value needed to be specified as a string in the speak text
-    // adjuster, the default is set to "true" instead of true
     fluid.defaults("gpii.firstDiscovery.schemas.speak", {
         gradeNames: ["autoInit", "fluid.prefs.schemas"],
         schema: {
@@ -155,6 +161,18 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
+    fluid.defaults("gpii.firstDiscovery.schemas.speechRate", {
+        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.speechRate": {
+                "type": "number",
+                "default": 1,
+                "minimum": 0.1,
+                "maximum": 10,
+                "divisibleBy": 0.1
+            }
+        }
+    });
 
     fluid.defaults("gpii.firstDiscovery.schemas.stickyKeys", {
         gradeNames: ["autoInit", "fluid.prefs.schemas"],
