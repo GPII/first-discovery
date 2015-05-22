@@ -267,6 +267,10 @@ https://github.com/gpii/universal/LICENSE.txt
             decreasedStep: 1.0,
             testValue: 1.5
         },
+        expectedModels: {
+            increasedStep: {value: "{that}.options.testOptions.increasedStep", isMax: false, isMin: false},
+            decreasedStep:{value: "{that}.options.testOptions.decreasedStep", isMax: false, isMin: true}
+        },
         modules: [{
             name: "Test the range settings panel",
             tests: [{
@@ -282,14 +286,14 @@ https://github.com/gpii/universal/LICENSE.txt
                     func: "{range}.stepUp"
                 }, {
                     listener: "gpii.tests.rangePanelTester.verifyModel",
-                    args: ["{range}.model", {value: "{that}.options.testOptions.increasedStep", isMax: false, isMin: false}],
+                    args: ["{range}.model", "{that}.options.expectedModels.increasedStep"],
                     spec: {path: "", priority: "last"},
                     changeEvent: "{range}.applier.modelChanged"
                 }, {
                     func: "{range}.stepDown"
                 }, {
                     listener: "gpii.tests.rangePanelTester.verifyModel",
-                    args: ["{range}.model", {value: "{that}.options.testOptions.decreasedStep", isMax: false, isMin: true}],
+                    args: ["{range}.model", "{that}.options.expectedModels.decreasedStep"],
                     spec: {path: "value", priority: "last"},
                     changeEvent: "{range}.applier.modelChanged"
                 }, {
@@ -390,14 +394,17 @@ https://github.com/gpii/universal/LICENSE.txt
             maxLabel: "fast",
             minLabel: "slow",
             increaseLabel: "faster",
-            decreaseLabel: "slower"
+            decreaseLabel: "slower",
+            disabledMsg: "disabled message"
         },
         model: {
+            enabled: true,
             value: 1
         },
         modelListeners: {
-            // rerenders on modelChange like panel behaves in the prefsEditor
-            "value": "{that}.refreshView"
+            // rerenders on modelChange like the panel behaves in the prefsEditor
+            "value": "{that}.refreshView",
+            "enabled": "{that}.refreshView"
         }
     });
 
@@ -407,9 +414,68 @@ https://github.com/gpii/universal/LICENSE.txt
             range: {
                 type: "gpii.tests.firstDiscovery.panel.speechRate",
                 container: ".gpiic-fd-speechRate"
+            },
+            speechRatePanelTester: {
+                type: "gpii.tests.speechRatePanelTester"
             }
-        }
+        },
+        expectedModels: {
+            increasedStep: {value: "{that}.options.testOptions.increasedStep", isMax: false, isMin: false, enabled: true},
+            decreasedStep:{value: "{that}.options.testOptions.decreasedStep", isMax: false, isMin: true, enabled: true}
+        },
+        distributeOptions: [{
+            source: "{that}.options.expectedModels",
+            target: "{that rangePanelTester}.options.expectedModels"
+        }]
     });
+
+    fluid.defaults("gpii.tests.speechRatePanelTester", {
+        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        modules: [{
+            name: "Test the speech rate settings panel",
+            tests: [{
+                expect: 2,
+                name: "Verify the initial rendering of the speech rate panel",
+                type: "test",
+                func: "gpii.tests.speechRatePanelTester.verifyRendering",
+                args: ["{range}", true]
+            }, {
+                expect: 5,
+                name: "Test the rendering of the speech rate panel after model change",
+                sequence: [{
+                    func: "{range}.applier.change",
+                    args: ["enabled", false]
+                }, {
+                    listener: "gpii.tests.speechRatePanelTester.verifyRendering",
+                    args: ["{range}", false],
+                    priority: "last",
+                    event: "{range}.events.afterRender"
+                }, {
+                    func: "{range}.applier.change",
+                    args: ["enabled", true]
+                }, {
+                    listener: "gpii.tests.speechRatePanelTester.verifyRendering",
+                    args: ["{range}", true],
+                    priority: "last",
+                    event: "{range}.events.afterRender"
+                }]
+            }]
+        }]
+    });
+
+    gpii.tests.speechRatePanelTester.verifyRendering = function (that, isEnabled) {
+        var controls = that.locate("controls");
+        var disabledMsg = that.locate("disabledMsg");
+
+        if (isEnabled) {
+            jqUnit.isVisible("The controls should be visible.", controls);
+            jqUnit.notVisible("The disabled message should be hidden.", disabledMsg);
+        } else {
+            jqUnit.notVisible("The controls should be hidden.", controls);
+            jqUnit.isVisible("The disabled message should be visible.", disabledMsg);
+            jqUnit.assertEquals("The disabledMsg should be rendered correctly.", that.options.messageBase.disabledMsg, disabledMsg.text());
+        }
+    };
 
     /**************************
      * Speak Text Panel Tests *
