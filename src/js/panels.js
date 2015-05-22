@@ -539,12 +539,17 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 funcName: "gpii.firstDiscovery.panel.lang.makeLangsActivatable",
                 args: ["{that}.dom.langRow", "{that}.onActivateLanguage"],
                 priority: 5
+            },
+            "afterRender.setSelectedLang": {
+                funcName: "gpii.firstDiscovery.panel.lang.setSelectedLang",
+                args: ["{that}.model.lang", "{that}.dom.langRow"],
+                priority: 5
             }
         }
     });
 
     gpii.firstDiscovery.panel.lang.buildLangOptionsMarkup = function (langNames, langCodes) {
-        var template = "<div class=\"gpiic-fd-lang-row selectable\" data-lang=\"%langCode\">%langName</div>";
+        var template = "<div class=\"gpiic-fd-lang-row selectable\" role=\"option\" aria-selected=\"false\" data-lang=\"%langCode\">%langName</div>";
         var markup = "";
         for (var i=0; i < langNames.length; i++) {
             var langName = langNames[i];
@@ -571,6 +576,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.panel.lang.onActivateLanguage = function (that, evt) {
         var lang = $(evt.delegateTarget).attr("data-lang");
         that.applier.change("lang", lang);
+    };
+
+    gpii.firstDiscovery.panel.lang.setSelectedLang = function (langCode, langOptions) {
+        fluid.each(langOptions, function (langOption) {
+            var optionLangCode = $(langOption).attr("data-lang");
+            var ariaSelected = (optionLangCode === langCode ? true : false);
+            $(langOption).attr("aria-selected", ariaSelected);
+        });
     };
 
     gpii.firstDiscovery.panel.lang.moveLangFocus = function (that, adjustBy) {
