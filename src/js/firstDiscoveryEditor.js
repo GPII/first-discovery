@@ -28,7 +28,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 type: "gpii.firstDiscovery.selfVoicing",
                 options: {
                     model: {
-                        enabled: true
+                        enabled: "{prefsEditor}.model.gpii_firstDiscovery_speak"
                     },
                     messageBase: "{messageLoader}.resources.prefsEditor.resourceText",
                     utteranceOpts: {

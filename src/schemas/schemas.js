@@ -64,6 +64,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "message": "%prefix/speakText.json"
                 }
             },
+            "speechRate": {
+                "type": "gpii.firstDiscovery.speechRate",
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.speechRate",
+                    "container": ".gpiic-fd-prefsEditor-panel-speechRate",
+                    "template": "%prefix/rangeTemplate.html",
+                    "message": "%prefix/speechRate.json"
+                }
+            },
             "contrast": {
                 "type": "fluid.prefs.contrast",
                 "classes": {
@@ -158,6 +167,19 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "default": 1,
                 "minimum": 0.2,
                 "maximum": 1.2,
+                "divisibleBy": 0.1
+            }
+        }
+    });
+
+    fluid.defaults("gpii.firstDiscovery.schemas.speechRate", {
+        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.speechRate": {
+                "type": "number",
+                "default": 1,
+                "minimum": 0.1,
+                "maximum": 10,
                 "divisibleBy": 0.1
             }
         }
