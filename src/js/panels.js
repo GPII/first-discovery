@@ -549,7 +549,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     gpii.firstDiscovery.panel.lang.buildLangOptionsMarkup = function (langNames, langCodes) {
-        var template = "<div class=\"gpiic-fd-lang-row selectable\" role=\"option\" aria-selected=\"false\" data-lang=\"%langCode\">%langName</div>";
+        // TODO move this template somewhere better
+        var template = "<div class=\"gpiic-fd-lang-row selectable gpii-fd-choice\" role=\"option\" aria-selected=\"false\" data-lang=\"%langCode\"><span class=\"gpii-fd-indicator gpii-fd-icon\"></span><span class=\"gpii-fd-lang-label gpii-fd-choice-label\">%langName</span></div>";
         var markup = "";
         for (var i=0; i < langNames.length; i++) {
             var langName = langNames[i];
