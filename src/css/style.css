@@ -202,7 +202,8 @@ button {
     outline: none;
 }
 
-.gpii-fd-choice-label:active {
+.gpii-fd-choice-label:active,
+.gpii-fd-choice:focus .gpii-fd-choice-label:active {
     background-color: #fff;
     color: #425165; /* blue-grey */
     border: 3px solid #fff;
