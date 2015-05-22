@@ -268,10 +268,10 @@ https://github.com/gpii/universal/LICENSE.txt
             testValue: 1.5
         },
         modules: [{
-            name: "Test the text sizer settings panel",
+            name: "Test the range settings panel",
             tests: [{
                 expect: 19,
-                name: "Test the rendering of the text size panel",
+                name: "Test the rendering of the range panel",
                 sequence: [{
                     func: "{range}.refreshView"
                 }, {
@@ -323,14 +323,15 @@ https://github.com/gpii/universal/LICENSE.txt
 
     gpii.tests.rangePanelTester.verifyRendering = function (that) {
         var messages = that.options.messageBase;
-        jqUnit.assertEquals("The text for instructions should be rendered.", messages.rangeInstructions, that.locate("rangeInstructions").text());
-        jqUnit.assertEquals("The upper bound label for the meter should be rendered.", messages.maxLabel, that.locate("max").text());
-        jqUnit.assertEquals("The lower bound label for the meter should be rendered.", messages.minLabel, that.locate("min").text());
+        var panelName = that.nickName;
+        jqUnit.assertEquals("The text for " + panelName + " instructions should be rendered.", messages.rangeInstructions, that.locate("rangeInstructions").text());
+        jqUnit.assertEquals("The upper bound label for the " + panelName + " meter should be rendered.", messages.maxLabel, that.locate("max").text());
+        jqUnit.assertEquals("The lower bound label for the " + panelName + " meter should be rendered.", messages.minLabel, that.locate("min").text());
 
         var increaseId = that.locate("increase").attr("id");
         var decreaseId = that.locate("decrease").attr("id");
-        jqUnit.assertEquals("The tooltip model for the increase button has been properly set", that.options.messageBase.increaseLabel, that.tooltip.model.idToContent[increaseId]);
-        jqUnit.assertEquals("The tooltip model for the decrease button has been properly set", that.options.messageBase.decreaseLabel, that.tooltip.model.idToContent[decreaseId]);
+        jqUnit.assertEquals("The tooltip model for the " + panelName + " increase button has been properly set", that.options.messageBase.increaseLabel, that.tooltip.model.idToContent[increaseId]);
+        jqUnit.assertEquals("The tooltip model for the " + panelName + " decrease button has been properly set", that.options.messageBase.decreaseLabel, that.tooltip.model.idToContent[decreaseId]);
     };
 
     gpii.tests.rangePanelTester.verifyModel = function (model, expectedModel) {
@@ -338,11 +339,12 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.rangePanelTester.verifyButtonStates = function (that, increaseDisabled, decreaseDisabled) {
-        jqUnit.assertEquals("The isMax model value should be set correctly", increaseDisabled, that.model.isMax);
-        jqUnit.assertEquals("The increase button should have the correct enabled/disabled state", increaseDisabled, that.locate("increase").prop("disabled"));
+        var panelName = that.nickName;
+        jqUnit.assertEquals("The " + panelName + " isMax model value should be set correctly", increaseDisabled, that.model.isMax);
+        jqUnit.assertEquals("The " + panelName + " increase button should have the correct enabled/disabled state", increaseDisabled, that.locate("increase").prop("disabled"));
 
-        jqUnit.assertEquals("The isMin model value should be set correctly", decreaseDisabled, that.model.isMin);
-        jqUnit.assertEquals("The decrease button should have the correct enabled/disabled state", decreaseDisabled, that.locate("decrease").prop("disabled"));
+        jqUnit.assertEquals("The " + panelName + " isMin model value should be set correctly", decreaseDisabled, that.model.isMin);
+        jqUnit.assertEquals("The " + panelName + " decrease button should have the correct enabled/disabled state", decreaseDisabled, that.locate("decrease").prop("disabled"));
     };
 
     /*************************
