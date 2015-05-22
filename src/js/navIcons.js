@@ -47,7 +47,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             that.locate("confirmedIndicator").addClass(that.options.styles.show);
         }
     };
-    
+
     /*
      * The navigation icons: the wrapper component to help determine the position of each nav icon.
      */
@@ -55,7 +55,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         gradeNames: ["fluid.viewRelayComponent", "autoInit"],
         pageSize: 5,
         iconWidth: "6rem",
-        iconHoles: [2], // a list of all the panel positions which have no nav icons (currently the "welcome" page)
+        iconHoles: [2, 8], // a list of all the panel positions which have no nav icons (currently the "welcome" and "congratulations" pages)
         dynamicComponents: {
             icon: {
                 createOnEvent: "onCreateIcon",

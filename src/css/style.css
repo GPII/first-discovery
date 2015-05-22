@@ -483,9 +483,7 @@ button {
 .gpii-fd-navIcon-inner {
     white-space: nowrap;
     position: relative;
-    left: 0rem;
     margin-left: 0;
-    width: 36rem; /* Space for 6 icons */
 }
 
 .gpii-fd-prefsEditor-panel-contrast label {
