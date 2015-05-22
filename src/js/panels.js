@@ -67,6 +67,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         selectors: {
             rangeInstructions: ".gpiic-fd-range-instructions",
             meter: ".gpiic-fd-range-indicator",
+            max: ".gpiic-fd-range-max",
+            min: ".gpiic-fd-range-min",
             increase: ".gpiic-fd-range-increase",
             decrease: ".gpiic-fd-range-decrease"
         },
@@ -76,7 +78,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "decrease": "decreaseLabel"
         },
         protoTree: {
-            rangeInstructions: {messagekey: "rangeInstructions"}
+            rangeInstructions: {messagekey: "rangeInstructions"},
+            max: {messagekey: "maxLabel"},
+            min: {messagekey: "minLabel"}
         },
         invokers: {
             stepUp: {
@@ -294,6 +298,21 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         gradeNames: ["gpii.firstDiscovery.panel.ranged", "autoInit"],
         preferenceMap: {
             "fluid.prefs.textSize": {
+                "model.value": "default",
+                "range.min": "minimum",
+                "range.max": "maximum",
+                "step": "divisibleBy"
+            }
+        }
+    });
+
+    /*
+     * Speech rate panel
+     */
+    fluid.defaults("gpii.firstDiscovery.panel.speechRate", {
+        gradeNames: ["gpii.firstDiscovery.panel.ranged", "autoInit"],
+        preferenceMap: {
+            "gpii.firstDiscovery.speechRate": {
                 "model.value": "default",
                 "range.min": "minimum",
                 "range.max": "maximum",
