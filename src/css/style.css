@@ -470,10 +470,6 @@ button {
     content: "\e60c";
 }
 
-.gpii-fd-dummy:before {
-    content: "\e60d";
-}
-
 .gpii-fd-navIcon-outer {
     width: 30rem; /* Space for 5 icons */
     overflow: hidden;
