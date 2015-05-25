@@ -120,7 +120,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.firstDiscovery.testControls = function (that) {
-        jqUnit.expect(68);
+        jqUnit.expect(73);
 
         var backButton = that.navButtons.locate("back");
         var nextButton = that.navButtons.locate("next");
