@@ -483,6 +483,10 @@ button {
 .gpii-fd-onScreenKeyboard:before {
     content: "\e60d";
 }
+/* A temporary icon to be replaced by the new icon for on-screen keyboard */
+.gpii-fd-captions:before {
+    content: "\e601";
+}
 
 .gpii-fd-prefsEditor-panel-contrast label {
     margin-bottom: 0.4rem;
