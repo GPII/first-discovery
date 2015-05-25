@@ -30,7 +30,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     model: {
                         enabled: "{prefsEditor}.model.gpii_firstDiscovery_speak",
                         utteranceOpts: {
-                            lang: "{prefsEditorLoader}.settings.gpii_firstDiscovery_language"
+                            lang: "{prefsEditor}.model.gpii_firstDiscovery_language",
+                            rate: "{prefsEditor}.model.gpii_firstDiscovery_speechRate"
                         }
                     },
                     messageBase: "{messageLoader}.resources.prefsEditor.resourceText"
