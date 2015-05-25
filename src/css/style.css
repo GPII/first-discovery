@@ -254,7 +254,7 @@ button {
     border-color: #000000 !important;
 }
 
-/* text size increase/decrease controls */
+/* range increase/decrease controls */
 .gpii-fd-increase, .gpii-fd-decrease {
     width: 6rem;
     height: 6rem;
@@ -308,6 +308,13 @@ button {
 }
 .gpii-fd-decrease .gpii-fd-icon:before {
     content: "\e604";
+}
+
+/* range disabledMsg */
+.gpii-fd .gpii-fd-range-disabledMsg {
+    line-height: 1.1;
+    border: 1px solid #425165;
+    padding: 1.5rem 2rem;
 }
 
 /* language controls */

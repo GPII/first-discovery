@@ -69,8 +69,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.speechRate",
                     "container": ".gpiic-fd-prefsEditor-panel-speechRate",
-                    "template": "%prefix/rangeTemplate.html",
-                    "message": "%prefix/speechRate.json"
+                    "template": "%prefix/rangeWithDisabledMsgTemplate.html",
+                    "message": "%prefix/speechRate.json",
+                    "gradeNames": ["gpii.firstDiscovery.panel.speechRate.prefsEditorConnection"]
                 }
             },
             "contrast": {
