@@ -118,7 +118,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.firstDiscovery.testControls = function (that) {
-        jqUnit.expect(63);
+        jqUnit.expect(68);
 
         var backButton = that.navButtons.locate("back");
         var nextButton = that.navButtons.locate("next");
@@ -128,6 +128,7 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertNotUndefined("The subcomponent \"prefsEditor\" has been instantiated", that.prefsEditor);
         jqUnit.assertNotUndefined("The subcomponent \"navButtons\" has been instantiated", that.navButtons);
         jqUnit.assertNotUndefined("The subcomponent \"navIcons\" has been instantiated", that.navIcons);
+
         gpii.tests.firstDiscovery.verifyStates(that, 1, {next: true, active: true});
 
         // Clicking the next button leads to the 2nd panel
@@ -161,7 +162,7 @@ https://github.com/gpii/universal/LICENSE.txt
     gpii.tests.firstDiscovery.testTTSHookup = function (that) {
         jqUnit.expect(2);
 
-        var expected = that.prefsEditor.gpii_firstDiscovery_panel_speakText.msgResolver.lookup(["speakTextInstructions"]).template;
+        var expected = that.prefsEditor.gpii_firstDiscovery_panel_speakText.msgResolver.lookup(["instructions"]).template;
         var actual = gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions(that);
 
         jqUnit.assertEquals("The instruction text should be sourced from the active panel", expected, actual);
