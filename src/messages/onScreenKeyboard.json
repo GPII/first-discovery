@@ -1,0 +1,10 @@
+{
+    "instructions": "Do you want to use an on-screen keyboard? This would let you type by selecting letters on the screen.",
+    "no": "No",
+    "yes": "Yes",
+
+    "yes-tooltip": "Select to turn on the on-screen keyboard",
+    "no-tooltip": "Select to turn off the on-screen keyboard",
+    "yes-tooltipAtSelect": "On-screen keyboard is turned on",
+    "no-tooltipAtSelect": "On-screen keyboard is turned off"
+}
