@@ -574,7 +574,7 @@ https://github.com/gpii/universal/LICENSE.txt
             "no-tooltipAtSelect": "Voice is off"
         },
         model: {
-            speak: true
+            value: true
         }
     });
 
@@ -607,7 +607,7 @@ https://github.com/gpii/universal/LICENSE.txt
             "no-tooltipAtSelect": "On-screen keyboard is turned off"
         },
         model: {
-            onScreenKeyboard: true
+            value: true
         }
     });
 
@@ -617,6 +617,39 @@ https://github.com/gpii/universal/LICENSE.txt
             yesNo: {
                 type: "gpii.tests.firstDiscovery.panel.onScreenKeyboard",
                 container: ".gpiic-fd-onScreenKeyboard"
+            },
+            yesNoTester: {
+                type: "gpii.tests.yesNoTester"
+            }
+        }
+    });
+
+    /************************
+     * Captions Panel Tests *
+     ************************/
+
+    fluid.defaults("gpii.tests.firstDiscovery.panel.captions", {
+        gradeNames: ["gpii.firstDiscovery.panel.captions", "autoInit"],
+        messageBase: {
+            "instructions": "Do you want to see text for speech (captions) when playing videos?",
+            "no": "No",
+            "yes": "Yes",
+            "yes-tooltip": "Select to turn video captions on",
+            "no-tooltip": "Select to turn video captions off",
+            "yes-tooltipAtSelect": "Video captions are on",
+            "no-tooltipAtSelect": "Video captions are off"
+        },
+        model: {
+            value: true
+        }
+    });
+
+    fluid.defaults("gpii.tests.captionsPanel", {
+        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        components: {
+            yesNo: {
+                type: "gpii.tests.firstDiscovery.panel.captions",
+                container: ".gpiic-fd-captions"
             },
             yesNoTester: {
                 type: "gpii.tests.yesNoTester"
@@ -969,6 +1002,7 @@ https://github.com/gpii/universal/LICENSE.txt
             "gpii.tests.speechRatePanel",
             "gpii.tests.speakTextPanel",
             "gpii.tests.onScreenKeyboardPanel",
+            "gpii.tests.captionsPanel",
             "gpii.tests.contrastPanel",
             "gpii.tests.keyboardPanel",
             "gpii.tests.welcomePanel",
