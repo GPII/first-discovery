@@ -415,51 +415,25 @@ https://github.com/gpii/universal/LICENSE.txt
      * Yes No Panel Tests *
      **********************/
 
-    fluid.defaults("gpii.tests.firstDiscovery.panel.yesNo", {
-        gradeNames: ["gpii.firstDiscovery.panel.yesNo", "autoInit"],
-        messageBase: {
-            "instructions": "Yes no panel instructions",
-            "no": "no",
-            "yes": "yes",
-            "yes-tooltip": "Select to choose yes",
-            "no-tooltip": "Select to choose no",
-            "yes-tooltipAtSelect": "Yes is choosen",
-            "no-tooltipAtSelect": "No is choosen"
-        },
-        model: {
-            choice: "yes"
-        }
-    });
-
-    fluid.defaults("gpii.tests.yesNoPanel", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
-        components: {
-            yesNo: {
-                type: "gpii.tests.firstDiscovery.panel.yesNo",
-                container: ".gpiic-fd-yesNo"
-            },
-            yesNoTester: {
-                type: "gpii.tests.yesNoTester"
-            }
-        }
-    });
-
     fluid.defaults("gpii.tests.yesNoTester", {
         gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
         expectedModels: {
             choiceYes: {
                 choice: "yes",
-                currentSelectedIndex: 0
+                currentSelectedIndex: 0,
+                value: true
             },
             choiceNo: {
                 choice: "no",
-                currentSelectedIndex: 1
+                currentSelectedIndex: 1,
+                value: false
             }
         },
         modules: [{
             name: "Test the yes and no selection panel",
             tests: [{
                 name: "Test the yes no panel",
+                expect: 22,
                 sequence: [{
                     func: "{yesNo}.refreshView"
                 }, {
@@ -546,21 +520,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 container: ".gpiic-fd-speakText"
             },
             yesNoTester: {
-                type: "gpii.tests.yesNoTester",
-                options: {
-                    expectedModels: {
-                        choiceYes: {
-                            choice: "yes",
-                            currentSelectedIndex: 0,
-                            speak: true
-                        },
-                        choiceNo: {
-                            choice: "no",
-                            currentSelectedIndex: 1,
-                            speak: false
-                        }
-                    }
-                }
+                type: "gpii.tests.yesNoTester"
             }
         }
     });
@@ -593,21 +553,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 container: ".gpiic-fd-onScreenKeyboard"
             },
             yesNoTester: {
-                type: "gpii.tests.yesNoTester",
-                options: {
-                    expectedModels: {
-                        choiceYes: {
-                            choice: "yes",
-                            currentSelectedIndex: 0,
-                            onScreenKeyboard: true
-                        },
-                        choiceNo: {
-                            choice: "no",
-                            currentSelectedIndex: 1,
-                            onScreenKeyboard: false
-                        }
-                    }
-                }
+                type: "gpii.tests.yesNoTester"
             }
         }
     });
@@ -955,7 +901,6 @@ https://github.com/gpii/universal/LICENSE.txt
             "gpii.tests.langPanel",
             "gpii.tests.textSizePanel",
             "gpii.tests.speechRatePanel",
-            "gpii.tests.yesNoPanel",
             "gpii.tests.speakTextPanel",
             "gpii.tests.onScreenKeyboardPanel",
             "gpii.tests.contrastPanel",

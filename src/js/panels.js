@@ -326,7 +326,23 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      */
     fluid.defaults("gpii.firstDiscovery.panel.yesNo", {
         gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip.renderer", "autoInit"],
-        modelRelay: {
+        modelRelay: [{
+            source: "{that}.model.choice",
+            target: "{that}.model.value",
+            // Setup the backward restriction to prevent the component instantiation writes back to
+            // the central model that results in wiping out the saved prefs at the page reload.
+            forward: "liveOnly",
+            singleTransform: {
+                type: "fluid.transforms.valueMapper",
+                inputPath: "",
+                options: {
+                    "yes": true,
+                    "no": {
+                        outputValue: false
+                    }
+                }
+            }
+        }, {
             source: "{that}.model.choice",
             target: "currentSelectedIndex",
             backward: "never",
@@ -335,7 +351,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 array: "{that}.options.controlValues.choice",
                 value: "{that}.model.choice"
             }
-        },
+        }],
         tooltipContentMap: {
             choiceLabel: {
                 tooltip: ["yes-tooltip", "no-tooltip"],
@@ -396,24 +412,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         gradeNames: ["gpii.firstDiscovery.panel.yesNo", "autoInit"],
         preferenceMap: {
             "gpii.firstDiscovery.speak": {
-                "model.speak": "default"
-            }
-        },
-        modelRelay: {
-            source: "{that}.model.choice",
-            target: "{that}.model.speak",
-            // Setup the backward restriction to prevent the component instantiation writes back to
-            // the central model that results in wiping out the saved prefs at the page reload.
-            forward: "liveOnly",
-            singleTransform: {
-                type: "fluid.transforms.valueMapper",
-                inputPath: "",
-                options: {
-                    "yes": true,
-                    "no": {
-                        outputValue: false
-                    }
-                }
+                "model.value": "default"
             }
         }
     });
@@ -425,24 +424,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         gradeNames: ["gpii.firstDiscovery.panel.yesNo", "autoInit"],
         preferenceMap: {
             "gpii.firstDiscovery.onScreenKeyboard": {
-                "model.onScreenKeyboard": "default"
-            }
-        },
-        modelRelay: {
-            source: "{that}.model.choice",
-            target: "{that}.model.onScreenKeyboard",
-            // Setup the backward restriction to prevent the component instantiation writes back to
-            // the central model that results in wiping out the saved prefs at the page reload.
-            forward: "liveOnly",
-            singleTransform: {
-                type: "fluid.transforms.valueMapper",
-                inputPath: "",
-                options: {
-                    "yes": true,
-                    "no": {
-                        outputValue: false
-                    }
-                }
+                "model.value": "default"
             }
         }
     });
