@@ -1,7 +1,7 @@
 {
     "instructions": "Prefieres que los elementos que aparecen en pantalla sean leidos en voz alta?",
     "no": "No",
-    "yes": "Si",
+    "yes": "Sí",
 
     "yes-tooltip": "Selecciona activar voz",
     "no-tooltip": "Selecciona desactivar voz",

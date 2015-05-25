@@ -1,7 +1,7 @@
 {
     "instructions": "Quieres usar un teclado en pantalla? Esto te permitirá escribir seleccionando letras en la pantalla.",
     "no": "No",
-    "yes": "Si",
+    "yes": "Sí",
 
     "yes-tooltip": "Selecciona activar teclado en pantalla",
     "no-tooltip": "Selecciona desactivar teclado en pantalla",

@@ -1,7 +1,7 @@
 {
     "rangeInstructions": "Personaliza el tamaño del texto y botón.",
-    "maxLabel": "Máx.",
-    "minLabel": "Min.",
+    "maxLabel": "máx.",
+    "minLabel": "min.",
     "increaseLabel": "grande",
     "decreaseLabel": "pequeño "
 }
