@@ -367,7 +367,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    gpii.firstDiscovery.panel.yesNo.produceTree = function (that) {
+    gpii.firstDiscovery.panel.yesNo.produceTree = function () {
         // Make sure each derived panel using yesNo grade has a unique
         // selectID, the name used for inputs.
         var selectID = fluid.allocateGuid();

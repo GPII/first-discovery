@@ -446,66 +446,76 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.defaults("gpii.tests.yesNoTester", {
         gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        expectedModels: {
+            choiceYes: {
+                choice: "yes",
+                currentSelectedIndex: 0
+            },
+            choiceNo: {
+                choice: "no",
+                currentSelectedIndex: 1
+            }
+        },
         modules: [{
             name: "Test the yes and no selection panel",
             tests: [{
-                expect: 8,
-                name: "The initial rendering of the yes no panel",
+                name: "Test the yes no panel",
                 sequence: [{
                     func: "{yesNo}.refreshView"
                 }, {
                     listener: "gpii.tests.yesNoTester.verifyRendering",
+                    args: ["{arguments}.0", "{yesNo}.nickName"],
                     event: "{yesNo}.events.afterRender"
-                }]
-            }, {
-                expect: 10,
-                name: "Selections on the yes no panel",
-                sequence: [{
+                }, {
                     func: "gpii.tests.utils.triggerRadioButton",
                     args: ["{yesNo}.dom.choiceInput", 1]
                 }, {
                     listener: "gpii.tests.yesNoTester.verifyModel",
-                    args: ["{yesNo}", "no"],
+                    args: ["{yesNo}", "{yesNo}.nickName", "{that}.options.expectedModels.choiceNo"],
                     spec: {path: "choice", priority: "last"},
                     changeEvent: "{yesNo}.applier.modelChanged"
                 }, {
                     func: "{yesNo}.refreshView"
                 }, {
                     listener: "gpii.tests.yesNoTester.verifyTooltip",
-                    args: ["{yesNo}"],
+                    args: ["{yesNo}", "{yesNo}.nickName"],
                     event: "{yesNo}.events.afterRender"
                 }, {
                     func: "gpii.tests.utils.triggerRadioButton",
                     args: ["{yesNo}.dom.choiceInput", 0]
                 }, {
                     listener: "gpii.tests.yesNoTester.verifyModel",
-                    args: ["{yesNo}", "yes"],
+                    args: ["{yesNo}", "{yesNo}.nickName", "{that}.options.expectedModels.choiceYes"],
                     spec: {path: "choice", priority: "last"},
                     changeEvent: "{yesNo}.applier.modelChanged"
                 }, {
                     func: "{yesNo}.refreshView"
                 }, {
                     listener: "gpii.tests.yesNoTester.verifyTooltip",
-                    args: ["{yesNo}"],
+                    args: ["{yesNo}", "{yesNo}.nickName"],
                     event: "{yesNo}.events.afterRender"
                 }]
             }]
         }]
     });
 
-    gpii.tests.yesNoTester.verifyTooltip = function (that) {
-        gpii.tests.utils.verifyTooltipContents("choice label", that.locate("choiceLabel"), that.model.choice, that.tooltip.model.idToContent, that.options.controlValues.choice, that.options.stringArrayIndex.choice, that.options.messageBase);
-        gpii.tests.utils.verifyTooltipContents("choice input", that.locate("choiceInput"), that.model.choice, that.tooltip.model.idToContent, that.options.controlValues.choice, that.options.stringArrayIndex.choice, that.options.messageBase);
+    gpii.tests.yesNoTester.verifyTooltip = function (that, panelName) {
+        gpii.tests.utils.verifyTooltipContents(panelName + " panel, choice label", that.locate("choiceLabel"), that.model.choice, that.tooltip.model.idToContent, that.options.controlValues.choice, that.options.stringArrayIndex.choice, that.options.messageBase);
+        gpii.tests.utils.verifyTooltipContents(panelName + " panel, choice input", that.locate("choiceInput"), that.model.choice, that.tooltip.model.idToContent, that.options.controlValues.choice, that.options.stringArrayIndex.choice, that.options.messageBase);
     };
 
-    gpii.tests.yesNoTester.verifyRendering = function (that) {
-        jqUnit.assertEquals("The instructions should have been set correctly.", that.options.messageBase.instructions, that.locate("instructions").text());
-        gpii.tests.utils.verifyRadioButtonRendering(that.locate("choiceInput"), that.locate("choiceLabel"), that.options.controlValues.choice, that.model.choice);
-        gpii.tests.yesNoTester.verifyTooltip(that);
+    gpii.tests.yesNoTester.verifyRendering = function (that, panelName) {
+        var messages = that.options.messageBase;
+        var controlValues = that.options.controlValues.choice;
+        jqUnit.assertEquals(panelName + ": The instructions should have been set correctly.", messages.instructions, that.locate("instructions").text());
+        gpii.tests.utils.verifyRadioButtonRendering(that.locate("choiceInput"), that.locate("choiceLabel"), [messages[controlValues[0]], messages[controlValues[1]]], that.model.choice);
+        gpii.tests.yesNoTester.verifyTooltip(that, panelName);
     };
 
-    gpii.tests.yesNoTester.verifyModel = function (that, expectedValue) {
-        jqUnit.assertEquals("The model value should have been set correctly", expectedValue, that.model.choice);
+    gpii.tests.yesNoTester.verifyModel = function (that, panelName, expectedModel) {
+        fluid.each(expectedModel, function (value, path) {
+            jqUnit.assertEquals(panelName + ": The model value for path " + path + " has been set to " + value, value, fluid.get(that.model, path));
+        });
     };
 
     /**************************
@@ -514,6 +524,15 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.defaults("gpii.tests.firstDiscovery.panel.speakText", {
         gradeNames: ["gpii.firstDiscovery.panel.speakText", "autoInit"],
+        messageBase: {
+            "instructions": "Do you prefer to have items on the screen read out loud to you?",
+            "no": "No",
+            "yes": "Yes",
+            "yes-tooltip": "Select to turn voice on",
+            "no-tooltip": "Select to turn voice off",
+            "yes-tooltipAtSelect": "Voice is on",
+            "no-tooltipAtSelect": "Voice is off"
+        },
         model: {
             speak: true
         }
@@ -522,52 +541,28 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.defaults("gpii.tests.speakTextPanel", {
         gradeNames: ["fluid.test.testEnvironment", "autoInit"],
         components: {
-            speakText: {
+            yesNo: {
                 type: "gpii.tests.firstDiscovery.panel.speakText",
                 container: ".gpiic-fd-speakText"
             },
-            speakTextTester: {
-                type: "gpii.tests.speakTextTester"
+            yesNoTester: {
+                type: "gpii.tests.yesNoTester",
+                options: {
+                    expectedModels: {
+                        choiceYes: {
+                            choice: "yes",
+                            currentSelectedIndex: 0,
+                            speak: true
+                        },
+                        choiceNo: {
+                            choice: "no",
+                            currentSelectedIndex: 1,
+                            speak: false
+                        }
+                    }
+                }
             }
         }
-    });
-
-    fluid.defaults("gpii.tests.speakTextTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
-        modules: [{
-            name: "Test the speak text settings panel",
-            tests: [{
-                expect: 2,
-                name: "The initial model of the speak text panel",
-                sequence: [{
-                    func: "{speakText}.refreshView"
-                }, {
-                    listener: "gpii.tests.utils.verifyYesNoModel",
-                    args: ["{speakText}", "speak", true, "yes"],
-                    event: "{speakText}.events.afterRender"
-                }]
-            }, {
-                expect: 4,
-                name: "Model relay with selections on the speak text panel",
-                sequence: [{
-                    func: "gpii.tests.utils.triggerRadioButton",
-                    args: ["{speakText}.dom.choiceInput", 1]
-                }, {
-                    listener: "gpii.tests.utils.verifyYesNoModel",
-                    args: ["{speakText}", "speak", false, "no"],
-                    spec: {path: "speak", priority: "last"},
-                    changeEvent: "{speakText}.applier.modelChanged"
-                }, {
-                    func: "gpii.tests.utils.triggerRadioButton",
-                    args: ["{speakText}.dom.choiceInput", 0]
-                }, {
-                    listener: "gpii.tests.utils.verifyYesNoModel",
-                    args: ["{speakText}", "speak", true, "yes"],
-                    spec: {path: "speak", priority: "last"},
-                    changeEvent: "{speakText}.applier.modelChanged"
-                }]
-            }]
-        }]
     });
 
     /**********************************
@@ -576,6 +571,15 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.defaults("gpii.tests.firstDiscovery.panel.onScreenKeyboard", {
         gradeNames: ["gpii.firstDiscovery.panel.onScreenKeyboard", "autoInit"],
+        messageBase: {
+            "instructions": "Do you want to use an on-screen keyboard? This would let you type by selecting letters on the screen.",
+            "no": "No",
+            "yes": "Yes",
+            "yes-tooltip": "Select to turn on the on-screen keyboard",
+            "no-tooltip": "Select to turn off the on-screen keyboard",
+            "yes-tooltipAtSelect": "On-screen keyboard is turned on",
+            "no-tooltipAtSelect": "On-screen keyboard is turned off"
+        },
         model: {
             onScreenKeyboard: true
         }
@@ -584,52 +588,28 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.defaults("gpii.tests.onScreenKeyboardPanel", {
         gradeNames: ["fluid.test.testEnvironment", "autoInit"],
         components: {
-            onScreenKeyboard: {
+            yesNo: {
                 type: "gpii.tests.firstDiscovery.panel.onScreenKeyboard",
                 container: ".gpiic-fd-onScreenKeyboard"
             },
-            onScreenKeyboardTester: {
-                type: "gpii.tests.onScreenKeyboardTester"
+            yesNoTester: {
+                type: "gpii.tests.yesNoTester",
+                options: {
+                    expectedModels: {
+                        choiceYes: {
+                            choice: "yes",
+                            currentSelectedIndex: 0,
+                            onScreenKeyboard: true
+                        },
+                        choiceNo: {
+                            choice: "no",
+                            currentSelectedIndex: 1,
+                            onScreenKeyboard: false
+                        }
+                    }
+                }
             }
         }
-    });
-
-    fluid.defaults("gpii.tests.onScreenKeyboardTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
-        modules: [{
-            name: "Test the on-screen keyboard settings panel",
-            tests: [{
-                expect: 2,
-                name: "The initial model of the on-screen keyboard panel",
-                sequence: [{
-                    func: "{onScreenKeyboard}.refreshView"
-                }, {
-                    listener: "gpii.tests.utils.verifyYesNoModel",
-                    args: ["{onScreenKeyboard}", "onScreenKeyboard", true, "yes"],
-                    event: "{onScreenKeyboard}.events.afterRender"
-                }]
-            }, {
-                expect: 4,
-                name: "Model relay with selections on the on-screen keyboard panel",
-                sequence: [{
-                    func: "gpii.tests.utils.triggerRadioButton",
-                    args: ["{onScreenKeyboard}.dom.choiceInput", 1]
-                }, {
-                    listener: "gpii.tests.utils.verifyYesNoModel",
-                    args: ["{onScreenKeyboard}", "onScreenKeyboard", false, "no"],
-                    spec: {path: "onScreenKeyboard", priority: "last"},
-                    changeEvent: "{onScreenKeyboard}.applier.modelChanged"
-                }, {
-                    func: "gpii.tests.utils.triggerRadioButton",
-                    args: ["{onScreenKeyboard}.dom.choiceInput", 0]
-                }, {
-                    listener: "gpii.tests.utils.verifyYesNoModel",
-                    args: ["{onScreenKeyboard}", "onScreenKeyboard", true, "yes"],
-                    spec: {path: "onScreenKeyboard", priority: "last"},
-                    changeEvent: "{onScreenKeyboard}.applier.modelChanged"
-                }]
-            }]
-        }]
     });
 
     /************************
