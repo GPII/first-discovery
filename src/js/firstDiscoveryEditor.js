@@ -28,12 +28,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 type: "gpii.firstDiscovery.selfVoicing",
                 options: {
                     model: {
-                        enabled: "{prefsEditor}.model.gpii_firstDiscovery_speak"
+                        enabled: "{prefsEditor}.model.gpii_firstDiscovery_speak",
+                        utteranceOpts: {
+                            lang: "{prefsEditorLoader}.settings.gpii_firstDiscovery_language"
+                        }
                     },
-                    messageBase: "{messageLoader}.resources.prefsEditor.resourceText",
-                    utteranceOpts: {
-                        lang: "{prefsEditorLoader}.settings.gpii_firstDiscovery_language"
-                    }
+                    messageBase: "{messageLoader}.resources.prefsEditor.resourceText"
                 }
             },
             prefsEditor: {

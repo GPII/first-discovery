@@ -28,8 +28,10 @@ https://github.com/gpii/universal/LICENSE.txt
                     components: {
                         selfVoicing: {
                             options: {
-                                utteranceOpts: {
-                                    volume: 0
+                                model: {
+                                    utteranceOpts: {
+                                        volume: 0
+                                    }
                                 }
                             }
                         }
@@ -151,7 +153,7 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.defaults("gpii.tests.firstDiscovery.TTSHookupTest", {
         ttsLangTest: {
             listener: "jqUnit.assertEquals",
-            args: ["The utterance language should be set correctly", "{prefsEditorLoader}.settings.gpii_firstDiscovery_language", "{that}.options.utteranceOpts.lang"]
+            args: ["The utterance language should be set correctly", "{prefsEditorLoader}.settings.gpii_firstDiscovery_language", "{that}.model.utteranceOpts.lang"]
         },
         distributeOptions: {
             source: "{that}.options.ttsLangTest",
