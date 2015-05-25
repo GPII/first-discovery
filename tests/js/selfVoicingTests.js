@@ -45,8 +45,10 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.defaults("gpii.tests.firstDiscovery.selfVoicing", {
         gradeNames: ["gpii.firstDiscovery.selfVoicing", "autoInit"],
-        utteranceOpts: {
-            volume: 0
+        model: {
+            utteranceOpts: {
+                volume: 0
+            }
         }
     });
 
