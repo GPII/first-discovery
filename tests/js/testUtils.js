@@ -54,9 +54,4 @@ https://github.com/gpii/universal/LICENSE.txt
         });
     };
 
-    gpii.tests.utils.verifyYesNoModel = function (that, modelPath, expectedSpeakValue, expectedChoiceValue) {
-        jqUnit.assertEquals("The model value for \"" + modelPath + "\" should have been set correctly", expectedSpeakValue, fluid.get(that.model, modelPath));
-        jqUnit.assertEquals("The model value for \"choice\" should have been set correctly", expectedChoiceValue, that.model.choice);
-    };
-
 })(jQuery, fluid);
