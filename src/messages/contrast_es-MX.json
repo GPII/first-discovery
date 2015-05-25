@@ -5,11 +5,11 @@
     "contrast-bw": "Negro sobre blanco",
     "contrast-wb": "Blanco sobre negro",
 
-    "contrast-default-tooltip": "reset to original screen colors",
-    "contrast-bw-tooltip": "change the screen color to black on white",
-    "contrast-wb-tooltip": "change the screen color to white on black",
+    "contrast-default-tooltip": "Reinicio a colores de la pantalla originales",
+    "contrast-bw-tooltip": "Cambiar el color de la pantalla en negro sobre blanco",
+    "contrast-wb-tooltip": "Cambiar el color de la pantalla en Blanco sobre negro",
 
-    "contrast-default-tooltipAtSelect": "original is currently selected",
-    "contrast-bw-tooltipAtSelect": "black on white is currently selected",
-    "contrast-wb-tooltipAtSelect": "white on black is currently selected"
+    "contrast-default-tooltipAtSelect": "Original es la selección actual",
+    "contrast-bw-tooltipAtSelect": "Negro sobre blanco es la selección actual",
+    "contrast-wb-tooltipAtSelect": "Blanco sobre negro es la selección actual"
 }

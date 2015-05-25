@@ -17,5 +17,5 @@
 
     "help": "ayuda",
 
-    "panelMsg": "Paso del %currentPanel al %numPanels. %instructions. Para obetener ayuda, presiona la tecla H."
+    "panelMsg": "Paso del %currentPanel al %numPanels. %instructions. Para obetener ayuda, presiona la tecla 'A'."
 }

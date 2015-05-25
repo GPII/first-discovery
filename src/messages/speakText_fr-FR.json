@@ -1,10 +1,10 @@
 {
-    "speakTextInstructions": "Préférez-vous avoir les éléments sur l'écran lu à haute voix pour vous?",
-    "speakText-no": "Non",
-    "speakText-yes": "Oui",
+    "instructions": "Préférez-vous avoir les éléments sur l'écran lu à haute voix pour vous?",
+    "no": "Non",
+    "yes": "Oui",
 
-    "speakText-yes-tooltip": "Sélectionner pour activer la voix",
-    "speakText-no-tooltip": "Sélectionner pour désactiver la voix",
-    "speakText-yes-tooltipAtSelect": "Voix est activée",
-    "speakText-no-tooltipAtSelect": "Voix est désactivée"
+    "yes-tooltip": "Sélectionner pour activer la voix",
+    "no-tooltip": "Sélectionner pour désactiver la voix",
+    "yes-tooltipAtSelect": "Voix est activée",
+    "no-tooltipAtSelect": "Voix est désactivée"
 }

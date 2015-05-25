@@ -1,5 +1,5 @@
 {
-    "keyboardInstructions": "Adjustments can be made to help you with using the keyboard.",
+    "keyboardInstructions": "Los ajustes se pueden hacer para ayudarle con el uso del teclado.",
     "placeholder": "Escriba aquí el símbolo % ",
 
     "try": "Inténtalo",
@@ -19,5 +19,5 @@
     "turnOnTooltip": "Selecciona activar STICKY KEYS",
     "turnOffTooltip": "Selecciona desactivar STICKY KEYS",
 
-    "shiftLatched": "shift is on"
+    "shiftLatched": "shift está activada"
 }
