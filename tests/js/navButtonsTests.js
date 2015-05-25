@@ -108,15 +108,14 @@ https://github.com/gpii/universal/LICENSE.txt
 
     jqUnit.test("Nav buttons", function () {
         jqUnit.expect(38);
-/*
+
         var firstPanelNum = 1;
         var secondPanelNum = firstPanelNum + 1;
-        var panelTotalNum = 6;
+        var panelTotalNum = gpii.tests.utils.firstDiscovery.panels.length;
         var secondLastPanelNum = panelTotalNum - 1;
-*/
 
         var that = gpii.firstDiscovery.navButtons(".gpiic-nav", {
-            panelTotalNum: gpii.tests.firstDiscovery.panelNums.last,
+            panelTotalNum: panelTotalNum,
             model: {
                 currentPanelNum: null
             },
@@ -136,25 +135,25 @@ https://github.com/gpii/universal/LICENSE.txt
             nextButton = that.locate("next");
 
         // Test button states of being on the first panel
-        that.applier.change("currentPanelNum", gpii.tests.firstDiscovery.panelNums.first);
+        that.applier.change("currentPanelNum", firstPanelNum);
         jqUnit.assertNotUndefined("The model for tooltip has been populated", that.tooltip.model.idToContent);
-        gpii.tests.firstDiscovery.navButtons.verifyButtons(that, gpii.tests.firstDiscovery.panelNums.first);
+        gpii.tests.firstDiscovery.navButtons.verifyButtons(that, firstPanelNum);
 
         // Clicking the next button increases the current panel number and changes button states
         nextButton.click();
-        gpii.tests.firstDiscovery.navButtons.verifyButtons(that, gpii.tests.firstDiscovery.panelNums.second);
+        gpii.tests.firstDiscovery.navButtons.verifyButtons(that, secondPanelNum);
 
         // Clicking the back button decreases the current panel number and brings back the states of being on the first panel
         backButton.click();
-        gpii.tests.firstDiscovery.navButtons.verifyButtons(that, gpii.tests.firstDiscovery.panelNums.first);
+        gpii.tests.firstDiscovery.navButtons.verifyButtons(that, firstPanelNum);
 
         // Test the button states of being on the second last panel
-        that.applier.change("currentPanelNum", gpii.tests.firstDiscovery.panelNums.secondLast);
-        gpii.tests.firstDiscovery.navButtons.verifyButtons(that, gpii.tests.firstDiscovery.panelNums.secondLast);
+        that.applier.change("currentPanelNum", secondLastPanelNum);
+        gpii.tests.firstDiscovery.navButtons.verifyButtons(that, secondLastPanelNum);
 
         // Test the button states of being on the last panel
-        that.applier.change("currentPanelNum", gpii.tests.firstDiscovery.panelNums.last);
-        gpii.tests.firstDiscovery.navButtons.verifyButtons(that, gpii.tests.firstDiscovery.panelNums.last);
+        that.applier.change("currentPanelNum", panelTotalNum);
+        gpii.tests.firstDiscovery.navButtons.verifyButtons(that, panelTotalNum);
     });
 
 })(jQuery, fluid);

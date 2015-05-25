@@ -1,0 +1,7 @@
+{
+    "rangeInstructions": "Adjust the speed at which items on the screen are read out loud.",
+    "maxLabel": "fast",
+    "minLabel": "slow",
+    "increaseLabel": "faster",
+    "decreaseLabel": "slower"
+}

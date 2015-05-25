@@ -50,32 +50,82 @@
 
         <!-- Test Text Size Panel -->
         <section class="gpiic-fd-textSize gpii-adjusterContainer-size gpii-main gpii-current">
-            <p class="gpiic-fd-range-instructions gpiic-fd-instructions gpii-instructions"></p>
-            <div class="row gpii-controlsContainer">
-                <div class="small-offset-1 small-1 medium-offset-4 columns gpii-fd-status">
-                    <div class="gpiic-fd-range-indicator gpii-fd-statusFill"></div>
+            <p class="gpiic-fd-range-instructions gpiic-fd-instructions gpii-fd-instructions"></p>
+            <div class="row gpii-fd-controls">
+                <div class="row">
+                    <div class="gpiic-fd-range-max small-offset-3 small-1 columns gpii-fd-label-max">max</div>
                 </div>
-                <div class="small-7 medium-6 end columns">
-                    <div class="row">
-                        <input type="button" value="+" class="gpiic-fd-range-increase left gpii-increase" id="gpii-increase" tabindex="1" />
-                        <label class="gpiic-fd-range-increaseLabel gpii-control-label" for="gpii-increase">larger</label>
+                <div class="row">
+                    <div class="small-offset-4 small-1 columns gpii-fd-status">
+                        <div class="gpii-fd-statusFillMin"></div>
+                        <div class="gpii-fd-statusFillContainer">
+                            <div class="gpiic-fd-range-indicator gpii-fd-statusFill"></div>
+                        </div>
                     </div>
-                    <div class="row">
-                        <input type="button" value="-" class="gpiic-fd-range-decrease left gpii-decrease" id="gpii-decrease" tabindex="2" />
-                        <label class="gpiic-fd-range-decreaseLabel gpii-control-label" for="gpii-decrease">smaller</label>
+                    <div class="small-7 medium-6 end columns">
+                        <div class="row">
+                            <button class="gpiic-fd-range-increase left gpii-fd-increase" id="gpiic-fd-increase" name="increase" tabindex="1"><span class="gpii-fd-icon"></span></button>
+                        </div>
+                        <div class="row">
+                            <button class="gpiic-fd-range-decrease left gpii-fd-decrease" id="gpiic-fd-decrease" name="decrease" tabindex="1"><span class="gpii-fd-icon"></span></button>
+                        </div>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="gpiic-fd-range-min small-offset-3 small-1 columns gpii-fd-label-min">min</div>
                 </div>
             </div>
         </section>
 
         <!-- Test Speak Text Panel -->
         <section class="gpiic-fd-speakText">
-            <p class="gpiic-fd-speakText-instructions gpiic-fd-instructions gpii-fd-instructions"></p>
+            <p class="gpiic-fd-yesNo-instructions gpiic-fd-instructions gpii-fd-instructions"></p>
             <div class="row gpii-fd-controls small-offset-2 medium-offset-3 small-7 medium-6 end text-center">
-                <div class="gpiic-fd-speakText-choiceRow gpii-fd-choice">
-                    <input type="radio" class="gpiic-fd-speakText-choiceInput gpii-fd-hidden-accessible" name="speakText" id="speakText-choice" tabindex="1">
+                <div class="gpiic-fd-yesNo-choiceRow gpii-fd-choice">
+                    <input type="radio" class="gpiic-fd-yesNo-choiceInput gpii-fd-hidden-accessible" name="yesNo" id="yesNo-choice" tabindex="1">
                     <span class="gpii-fd-indicator gpii-fd-icon"></span>
-                    <label for="speakText-choice" class="gpiic-fd-speakText-choice-label gpii-fd-choice-label"></label>
+                    <label for="yesNo-choice" class="gpiic-fd-yesNo-choiceLabel gpii-fd-choice-label"></label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Test On-screen Keyboard Panel -->
+        <section class="gpiic-fd-onScreenKeyboard">
+            <p class="gpiic-fd-yesNo-instructions gpiic-fd-instructions gpii-fd-instructions"></p>
+            <div class="row gpii-fd-controls small-offset-2 medium-offset-3 small-7 medium-6 end text-center">
+                <div class="gpiic-fd-yesNo-choiceRow gpii-fd-choice">
+                    <input type="radio" class="gpiic-fd-yesNo-choiceInput gpii-fd-hidden-accessible" name="yesNo" id="yesNo-choice" tabindex="1">
+                    <span class="gpii-fd-indicator gpii-fd-icon"></span>
+                    <label for="yesNo-choice" class="gpiic-fd-yesNo-choiceLabel gpii-fd-choice-label"></label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Test Speech Rate Panel -->
+        <section class="gpiic-fd-speechRate gpii-adjusterContainer-size gpii-main gpii-current">
+            <p class="gpiic-fd-range-instructions gpiic-fd-instructions gpii-fd-instructions"></p>
+            <div class="row gpii-fd-controls">
+                <div class="row">
+                    <div class="gpiic-fd-range-max small-offset-3 small-1 columns gpii-fd-label-max">max</div>
+                </div>
+                <div class="row">
+                    <div class="small-offset-4 small-1 columns gpii-fd-status">
+                        <div class="gpii-fd-statusFillMin"></div>
+                        <div class="gpii-fd-statusFillContainer">
+                            <div class="gpiic-fd-range-indicator gpii-fd-statusFill"></div>
+                        </div>
+                    </div>
+                    <div class="small-7 medium-6 end columns">
+                        <div class="row">
+                            <button class="gpiic-fd-range-increase left gpii-fd-increase" id="gpiic-fd-increase" name="increase" tabindex="1"><span class="gpii-fd-icon"></span></button>
+                        </div>
+                        <div class="row">
+                            <button class="gpiic-fd-range-decrease left gpii-fd-decrease" id="gpiic-fd-decrease" name="decrease" tabindex="1"><span class="gpii-fd-icon"></span></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="gpiic-fd-range-min small-offset-3 small-1 columns gpii-fd-label-min">min</div>
                 </div>
             </div>
         </section>

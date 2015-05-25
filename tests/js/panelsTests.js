@@ -246,36 +246,21 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("The closes number for " + numberToFind + " in a number array " + numbers + " is " + expected, expected, gpii.firstDiscovery.panel.lang.findClosestNumber(numberToFind, numbers));
     };
 
-    /*************************
-     * Text Size Panel Tests *
-     *************************/
+    /*********************
+     * Range panel Tests *
+     *********************/
 
-    fluid.defaults("gpii.tests.firstDiscovery.panel.textSize", {
-        gradeNames: ["gpii.firstDiscovery.panel.textSize", "autoInit"],
-        messageBase: {
-            rangeInstructions: "Text size instructions.",
-            increaseLabel: "larger",
-            decreaseLabel: "smaller"
-        },
-        model: {
-            value: 1
-        }
-    });
-
-    fluid.defaults("gpii.tests.textSizePanel", {
+    fluid.defaults("gpii.tests.rangePanel", {
         gradeNames: ["fluid.test.testEnvironment", "autoInit"],
         components: {
-            textSize: {
-                type: "gpii.tests.firstDiscovery.panel.textSize",
-                container: ".gpiic-fd-textSize"
-            },
-            textSizeTester: {
-                type: "gpii.tests.textSizeTester"
+            range: {},
+            rangePanelTester: {
+                type: "gpii.tests.rangePanelTester"
             }
         }
     });
 
-    fluid.defaults("gpii.tests.textSizeTester", {
+    fluid.defaults("gpii.tests.rangePanelTester", {
         gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
         testOptions: {
             increasedStep: 1.1,
@@ -283,76 +268,228 @@ https://github.com/gpii/universal/LICENSE.txt
             testValue: 1.5
         },
         modules: [{
-            name: "Test the text sizer settings panel",
+            name: "Test the range settings panel",
             tests: [{
-                expect: 11,
-                name: "Test the rendering of the text size panel",
+                expect: 19,
+                name: "Test the rendering of the range panel",
                 sequence: [{
-                    func: "{textSize}.refreshView"
+                    func: "{range}.refreshView"
                 }, {
-                    listener: "gpii.tests.textSizeTester.verifyRendering",
+                    listener: "gpii.tests.rangePanelTester.verifyRendering",
                     priority: "last",
-                    event: "{textSize}.events.afterRender"
+                    event: "{range}.events.afterRender"
                 }, {
-                    func: "{textSize}.stepUp"
+                    func: "{range}.stepUp"
                 }, {
-                    listener: "gpii.tests.textSizeTester.verifyModel",
-                    args: ["{textSize}", "{that}.options.testOptions.increasedStep"],
+                    listener: "gpii.tests.rangePanelTester.verifyModel",
+                    args: ["{range}.model", {value: "{that}.options.testOptions.increasedStep", isMax: false, isMin: false}],
+                    spec: {path: "", priority: "last"},
+                    changeEvent: "{range}.applier.modelChanged"
+                }, {
+                    func: "{range}.stepDown"
+                }, {
+                    listener: "gpii.tests.rangePanelTester.verifyModel",
+                    args: ["{range}.model", {value: "{that}.options.testOptions.decreasedStep", isMax: false, isMin: true}],
                     spec: {path: "value", priority: "last"},
-                    changeEvent: "{textSize}.applier.modelChanged"
+                    changeEvent: "{range}.applier.modelChanged"
                 }, {
-                    func: "{textSize}.stepDown"
+                    func: "{range}.applier.change",
+                    args: ["value", "{range}.options.range.max"]
                 }, {
-                    listener: "gpii.tests.textSizeTester.verifyModel",
-                    args: ["{textSize}", "{that}.options.testOptions.decreasedStep"],
-                    spec: {path: "value", priority: "last"},
-                    changeEvent: "{textSize}.applier.modelChanged"
+                    listener: "gpii.tests.rangePanelTester.verifyButtonStates",
+                    args: ["{range}", true, false],
+                    spec: {path: "isMax", priority: "last"},
+                    changeEvent: "{range}.applier.modelChanged"
                 }, {
-                    func: "{textSize}.applier.change",
-                    args: ["value", "{textSize}.options.range.max"]
+                    func: "{range}.applier.change",
+                    args: ["value", "{range}.options.range.min"]
                 }, {
-                    listener: "gpii.tests.textSizeTester.verifyButtonStates",
-                    args: ["{textSize}", true, false],
-                    spec: {path: "value", priority: "last"},
-                    changeEvent: "{textSize}.applier.modelChanged"
+                    listener: "gpii.tests.rangePanelTester.verifyButtonStates",
+                    args: ["{range}", false, true],
+                    spec: {path: "isMin", priority: "last"},
+                    changeEvent: "{range}.applier.modelChanged"
                 }, {
-                    func: "{textSize}.applier.change",
-                    args: ["value", "{textSize}.options.range.min"]
-                }, {
-                    listener: "gpii.tests.textSizeTester.verifyButtonStates",
-                    args: ["{textSize}", false, true],
-                    spec: {path: "value", priority: "last"},
-                    changeEvent: "{textSize}.applier.modelChanged"
-                }, {
-                    func: "{textSize}.applier.change",
+                    func: "{range}.applier.change",
                     args: ["value", "{that}.options.testOptions.testValue"]
                 }, {
-                    listener: "gpii.tests.textSizeTester.verifyButtonStates",
-                    args: ["{textSize}", false, false],
-                    spec: {path: "value", priority: "last"},
-                    changeEvent: "{textSize}.applier.modelChanged"
+                    listener: "gpii.tests.rangePanelTester.verifyButtonStates",
+                    args: ["{range}", false, false],
+                    spec: {path: "isMin", priority: "last"},
+                    changeEvent: "{range}.applier.modelChanged"
                 }]
             }]
         }]
     });
 
-    gpii.tests.textSizeTester.verifyRendering = function (that) {
+    gpii.tests.rangePanelTester.verifyRendering = function (that) {
         var messages = that.options.messageBase;
-        jqUnit.assertEquals("The text for instructions should be rendered.", messages.rangeInstructions, that.locate("rangeInstructions").text());
+        var panelName = that.nickName;
+        jqUnit.assertEquals("The text for " + panelName + " instructions should be rendered.", messages.rangeInstructions, that.locate("rangeInstructions").text());
+        jqUnit.assertEquals("The upper bound label for the " + panelName + " meter should be rendered.", messages.maxLabel, that.locate("max").text());
+        jqUnit.assertEquals("The lower bound label for the " + panelName + " meter should be rendered.", messages.minLabel, that.locate("min").text());
 
         var increaseId = that.locate("increase").attr("id");
         var decreaseId = that.locate("decrease").attr("id");
-        jqUnit.assertEquals("The tooltip model for the increase button has been properly set", that.options.messageBase.increaseLabel, that.tooltip.model.idToContent[increaseId]);
-        jqUnit.assertEquals("The tooltip model for the decrease button has been properly set", that.options.messageBase.decreaseLabel, that.tooltip.model.idToContent[decreaseId]);
+        jqUnit.assertEquals("The tooltip model for the " + panelName + " increase button has been properly set", that.options.messageBase.increaseLabel, that.tooltip.model.idToContent[increaseId]);
+        jqUnit.assertEquals("The tooltip model for the " + panelName + " decrease button has been properly set", that.options.messageBase.decreaseLabel, that.tooltip.model.idToContent[decreaseId]);
     };
 
-    gpii.tests.textSizeTester.verifyModel = function (that, expectedModel) {
-        jqUnit.assertEquals("The model value should be set correctly", expectedModel, that.model.value);
+    gpii.tests.rangePanelTester.verifyModel = function (model, expectedModel) {
+        jqUnit.assertDeepEq("The model value " + expectedModel.value + " should be set correctly", expectedModel, model);
     };
 
-    gpii.tests.textSizeTester.verifyButtonStates = function (that, increaseDisabled, decreaseDisabled) {
-        jqUnit.assertEquals("The increase button should have the correct enabled/disabled state", increaseDisabled, that.locate("increase").prop("disabled"));
-        jqUnit.assertEquals("The decrease button should have the correct enabled/disabled state", decreaseDisabled, that.locate("decrease").prop("disabled"));
+    gpii.tests.rangePanelTester.verifyButtonStates = function (that, increaseDisabled, decreaseDisabled) {
+        var panelName = that.nickName;
+        jqUnit.assertEquals("The " + panelName + " isMax model value should be set correctly", increaseDisabled, that.model.isMax);
+        jqUnit.assertEquals("The " + panelName + " increase button should have the correct enabled/disabled state", increaseDisabled, that.locate("increase").prop("disabled"));
+
+        jqUnit.assertEquals("The " + panelName + " isMin model value should be set correctly", decreaseDisabled, that.model.isMin);
+        jqUnit.assertEquals("The " + panelName + " decrease button should have the correct enabled/disabled state", decreaseDisabled, that.locate("decrease").prop("disabled"));
+    };
+
+    /*************************
+     * Text Size Panel Tests *
+     *************************/
+
+    fluid.defaults("gpii.tests.firstDiscovery.panel.textSize", {
+        gradeNames: ["gpii.firstDiscovery.panel.textSize", "autoInit"],
+        messageBase: {
+            rangeInstructions: "Adjust the text and controls to a size you like best.",
+            maxLabel: "max",
+            minLabel: "min",
+            increaseLabel: "larger",
+            decreaseLabel: "smaller"
+        },
+        model: {
+            value: 1
+        },
+        modelListeners: {
+            // rerenders on modelChange like panel behaves in the prefsEditor
+            "value": "{that}.refreshView"
+        }
+    });
+
+    fluid.defaults("gpii.tests.textSizePanel", {
+        gradeNames: ["gpii.tests.rangePanel", "autoInit"],
+        components: {
+            range: {
+                type: "gpii.tests.firstDiscovery.panel.textSize",
+                container: ".gpiic-fd-textSize"
+            }
+        }
+    });
+
+    /***************************
+     * Speech Rate Panel Tests *
+     ***************************/
+
+    fluid.defaults("gpii.tests.firstDiscovery.panel.speechRate", {
+        gradeNames: ["gpii.firstDiscovery.panel.speechRate", "autoInit"],
+        messageBase: {
+            rangeInstructions: "Adjust the speed at which items on the screen are read out loud.",
+            maxLabel: "fast",
+            minLabel: "slow",
+            increaseLabel: "faster",
+            decreaseLabel: "slower"
+        },
+        model: {
+            value: 1
+        },
+        modelListeners: {
+            // rerenders on modelChange like panel behaves in the prefsEditor
+            "value": "{that}.refreshView"
+        }
+    });
+
+    fluid.defaults("gpii.tests.speechRatePanel", {
+        gradeNames: ["gpii.tests.rangePanel", "autoInit"],
+        components: {
+            range: {
+                type: "gpii.tests.firstDiscovery.panel.speechRate",
+                container: ".gpiic-fd-speechRate"
+            }
+        }
+    });
+
+    /**********************
+     * Yes No Panel Tests *
+     **********************/
+
+    fluid.defaults("gpii.tests.yesNoTester", {
+        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        expectedModels: {
+            choiceYes: {
+                choice: "yes",
+                currentSelectedIndex: 0,
+                value: true
+            },
+            choiceNo: {
+                choice: "no",
+                currentSelectedIndex: 1,
+                value: false
+            }
+        },
+        modules: [{
+            name: "Test the yes and no selection panel",
+            tests: [{
+                name: "Test the yes no panel",
+                expect: 22,
+                sequence: [{
+                    func: "{yesNo}.refreshView"
+                }, {
+                    listener: "gpii.tests.yesNoTester.verifyRendering",
+                    args: ["{arguments}.0", "{yesNo}.nickName"],
+                    event: "{yesNo}.events.afterRender"
+                }, {
+                    func: "gpii.tests.utils.triggerRadioButton",
+                    args: ["{yesNo}.dom.choiceInput", 1]
+                }, {
+                    listener: "gpii.tests.yesNoTester.verifyModel",
+                    args: ["{yesNo}", "{yesNo}.nickName", "{that}.options.expectedModels.choiceNo"],
+                    spec: {path: "choice", priority: "last"},
+                    changeEvent: "{yesNo}.applier.modelChanged"
+                }, {
+                    func: "{yesNo}.refreshView"
+                }, {
+                    listener: "gpii.tests.yesNoTester.verifyTooltip",
+                    args: ["{yesNo}", "{yesNo}.nickName"],
+                    event: "{yesNo}.events.afterRender"
+                }, {
+                    func: "gpii.tests.utils.triggerRadioButton",
+                    args: ["{yesNo}.dom.choiceInput", 0]
+                }, {
+                    listener: "gpii.tests.yesNoTester.verifyModel",
+                    args: ["{yesNo}", "{yesNo}.nickName", "{that}.options.expectedModels.choiceYes"],
+                    spec: {path: "choice", priority: "last"},
+                    changeEvent: "{yesNo}.applier.modelChanged"
+                }, {
+                    func: "{yesNo}.refreshView"
+                }, {
+                    listener: "gpii.tests.yesNoTester.verifyTooltip",
+                    args: ["{yesNo}", "{yesNo}.nickName"],
+                    event: "{yesNo}.events.afterRender"
+                }]
+            }]
+        }]
+    });
+
+    gpii.tests.yesNoTester.verifyTooltip = function (that, panelName) {
+        gpii.tests.utils.verifyTooltipContents(panelName + " panel, choice label", that.locate("choiceLabel"), that.model.choice, that.tooltip.model.idToContent, that.options.controlValues.choice, that.options.stringArrayIndex.choice, that.options.messageBase);
+        gpii.tests.utils.verifyTooltipContents(panelName + " panel, choice input", that.locate("choiceInput"), that.model.choice, that.tooltip.model.idToContent, that.options.controlValues.choice, that.options.stringArrayIndex.choice, that.options.messageBase);
+    };
+
+    gpii.tests.yesNoTester.verifyRendering = function (that, panelName) {
+        var messages = that.options.messageBase;
+        var controlValues = that.options.controlValues.choice;
+        jqUnit.assertEquals(panelName + ": The instructions should have been set correctly.", messages.instructions, that.locate("instructions").text());
+        gpii.tests.utils.verifyRadioButtonRendering(that.locate("choiceInput"), that.locate("choiceLabel"), [messages[controlValues[0]], messages[controlValues[1]]], that.model.choice);
+        gpii.tests.yesNoTester.verifyTooltip(that, panelName);
+    };
+
+    gpii.tests.yesNoTester.verifyModel = function (that, panelName, expectedModel) {
+        fluid.each(expectedModel, function (value, path) {
+            jqUnit.assertEquals(panelName + ": The model value for path " + path + " has been set to " + value, value, fluid.get(that.model, path));
+        });
     };
 
     /**************************
@@ -362,15 +499,14 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.defaults("gpii.tests.firstDiscovery.panel.speakText", {
         gradeNames: ["gpii.firstDiscovery.panel.speakText", "autoInit"],
         messageBase: {
-            "speakTextInstructions": "Speak text instructions",
-            "speakText-no": "no",
-            "speakText-yes": "yes",
-            "speakText-yes-tooltip": "Select to turn voice on",
-            "speakText-no-tooltip": "Select to turn voice off",
-            "speakText-yes-tooltipAtSelect": "Voice is on",
-            "speakText-no-tooltipAtSelect": "Voice is off"
+            "instructions": "Do you prefer to have items on the screen read out loud to you?",
+            "no": "No",
+            "yes": "Yes",
+            "yes-tooltip": "Select to turn voice on",
+            "no-tooltip": "Select to turn voice off",
+            "yes-tooltipAtSelect": "Voice is on",
+            "no-tooltipAtSelect": "Voice is off"
         },
-        choiceLabels: ["yes", "no"],
         model: {
             speak: true
         }
@@ -379,79 +515,48 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.defaults("gpii.tests.speakTextPanel", {
         gradeNames: ["fluid.test.testEnvironment", "autoInit"],
         components: {
-            speakText: {
+            yesNo: {
                 type: "gpii.tests.firstDiscovery.panel.speakText",
                 container: ".gpiic-fd-speakText"
             },
-            speakTextTester: {
-                type: "gpii.tests.speakTextTester"
+            yesNoTester: {
+                type: "gpii.tests.yesNoTester"
             }
         }
     });
 
-    fluid.defaults("gpii.tests.speakTextTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
-        modules: [{
-            name: "Test the speak text settings panel",
-            tests: [{
-                expect: 8,
-                name: "The initial rendering of the speak text panel",
-                sequence: [{
-                    func: "{speakText}.refreshView"
-                }, {
-                    listener: "gpii.tests.speakTextTester.verifyRendering",
-                    event: "{speakText}.events.afterRender"
-                }]
-            }, {
-                expect: 10,
-                name: "Selections on the speak text panel",
-                sequence: [{
-                    func: "gpii.tests.utils.triggerRadioButton",
-                    args: ["{speakText}.dom.choiceInput", 1]
-                }, {
-                    listener: "gpii.tests.speakTextTester.verifyModel",
-                    args: ["{speakText}", false],
-                    spec: {path: "speak", priority: "last"},
-                    changeEvent: "{speakText}.applier.modelChanged"
-                }, {
-                    func: "{speakText}.refreshView"
-                }, {
-                    listener: "gpii.tests.speakTextTester.verifyTooltip",
-                    args: ["{speakText}"],
-                    event: "{speakText}.events.afterRender"
-                }, {
-                    func: "gpii.tests.utils.triggerRadioButton",
-                    args: ["{speakText}.dom.choiceInput", 0]
-                }, {
-                    listener: "gpii.tests.speakTextTester.verifyModel",
-                    args: ["{speakText}", true],
-                    spec: {path: "speak", priority: "last"},
-                    changeEvent: "{speakText}.applier.modelChanged"
-                }, {
-                    func: "{speakText}.refreshView"
-                }, {
-                    listener: "gpii.tests.speakTextTester.verifyTooltip",
-                    args: ["{speakText}"],
-                    event: "{speakText}.events.afterRender"
-                }]
-            }]
-        }]
+    /**********************************
+     * On-screen Keyboard Panel Tests *
+     **********************************/
+
+    fluid.defaults("gpii.tests.firstDiscovery.panel.onScreenKeyboard", {
+        gradeNames: ["gpii.firstDiscovery.panel.onScreenKeyboard", "autoInit"],
+        messageBase: {
+            "instructions": "Do you want to use an on-screen keyboard? This would let you type by selecting letters on the screen.",
+            "no": "No",
+            "yes": "Yes",
+            "yes-tooltip": "Select to turn on the on-screen keyboard",
+            "no-tooltip": "Select to turn off the on-screen keyboard",
+            "yes-tooltipAtSelect": "On-screen keyboard is turned on",
+            "no-tooltipAtSelect": "On-screen keyboard is turned off"
+        },
+        model: {
+            onScreenKeyboard: true
+        }
     });
 
-    gpii.tests.speakTextTester.verifyTooltip = function (that) {
-        gpii.tests.utils.verifyTooltipContents("choice label", that.locate("choiceLabel"), that.model.speakChoice, that.tooltip.model.idToContent, that.options.controlValues.choice, that.options.stringArrayIndex.choice, that.options.messageBase);
-        gpii.tests.utils.verifyTooltipContents("choice input", that.locate("choiceInput"), that.model.speakChoice, that.tooltip.model.idToContent, that.options.controlValues.choice, that.options.stringArrayIndex.choice, that.options.messageBase);
-    };
-
-    gpii.tests.speakTextTester.verifyRendering = function (that) {
-        jqUnit.assertEquals("The instructions should have been set correctly.", that.options.messageBase.speakTextInstructions, that.locate("instructions").text());
-        gpii.tests.utils.verifyRadioButtonRendering(that.locate("choiceInput"), that.locate("choiceLabel"), that.options.choiceLabels, that.model.speakChoice);
-        gpii.tests.speakTextTester.verifyTooltip(that);
-    };
-
-    gpii.tests.speakTextTester.verifyModel = function (that, expectedValue) {
-        jqUnit.assertEquals("The model value should have been set correctly", expectedValue, that.model.speak);
-    };
+    fluid.defaults("gpii.tests.onScreenKeyboardPanel", {
+        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        components: {
+            yesNo: {
+                type: "gpii.tests.firstDiscovery.panel.onScreenKeyboard",
+                container: ".gpiic-fd-onScreenKeyboard"
+            },
+            yesNoTester: {
+                type: "gpii.tests.yesNoTester"
+            }
+        }
+    });
 
     /************************
      * Contrast Panel Tests *
@@ -795,7 +900,9 @@ https://github.com/gpii/universal/LICENSE.txt
         fluid.test.runTests([
             "gpii.tests.langPanel",
             "gpii.tests.textSizePanel",
+            "gpii.tests.speechRatePanel",
             "gpii.tests.speakTextPanel",
+            "gpii.tests.onScreenKeyboardPanel",
             "gpii.tests.contrastPanel",
             "gpii.tests.keyboardPanel",
             "gpii.tests.welcomePanel",
