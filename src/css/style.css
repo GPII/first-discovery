@@ -445,10 +445,21 @@ button {
     text-transform: none;
     line-height: initial;
 }
-/* Special handling for the welcome icon that does not have an icon */
+/* Special handling for the welcome and congratulations icons that do not have an icon */
 .gpii-fd-navIcon-welcome {
     display: inline-block;
     margin: 0.2rem -0.3rem 0 0;
+}
+.gpii-fd-navIcon-congratulations {
+    display: inline-block;
+    margin: 0.2rem -0.3rem 0 0;
+}
+/* Spacer required to make sure icon bar is scrollable to the end - designs require empty space at end of
+ * list in final position. This must be at least the width of the icon bar minus one icon
+ */
+.gpii-fd-navIcon-spacer {
+    display: inline-block;
+    width: 36rem;
 }
 .gpii-fd-lang:before {
     content: "\e608";
@@ -472,13 +483,9 @@ button {
 
 .gpii-fd-navIcon-outer {
     width: 30rem; /* Space for 5 icons */
+    white-space: nowrap;
     overflow: hidden;
     padding-top: 1.5rem; /* gap between main body and icons*/
-}
-
-.gpii-fd-navIcon-inner {
-    white-space: nowrap;
-    position: relative;
     margin-left: 0;
 }
 

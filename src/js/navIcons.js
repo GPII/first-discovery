@@ -54,7 +54,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.defaults("gpii.firstDiscovery.navIcons", {
         gradeNames: ["fluid.viewRelayComponent", "autoInit"],
         pageSize: 5,
-        iconWidth: "6rem",
         iconHoles: [2, 8], // a list of all the panel positions which have no nav icons (currently the "welcome" and "congratulations" pages)
         dynamicComponents: {
             icon: {
@@ -69,9 +68,19 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                             listener: "gpii.firstDiscovery.navIcons.updateIconModel",
                             args: ["{that}", "{change}.value", "{change}.oldValue"]
                         }
+                    },
+                    listeners: {
+                        "onCreate.measureIcon": {
+                            func: "gpii.firstDiscovery.icon.measure",
+                            args: ["{that}", "{navIcons}.applier", "iconWidth"]
+                        }
                     }
                 }
             }
+        },
+        model: {
+            pageNum: 0,
+            iconWidth: 0
         },
         modelRelay: {
             source: "currentPanelNum",
@@ -87,11 +96,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         modelListeners: {
-            pageNum: "gpii.firstDiscovery.navIcons.showPage({change}.value, {that}.options.pageSize, {that}.options.iconWidth, {that}.dom.pager)"
+            pageNum: "gpii.firstDiscovery.navIcons.showPage({change}.value, {that}.options.pageSize, {that}.model.iconWidth, {that}.dom.pager)"
         },
         selectors: {
             icon: ".gpiic-fd-navIcon",
-            pager: ".gpii-fd-navIcon-inner"
+            pager: ".gpii-fd-navIcon-outer"
         },
         events: {
             onCreateIcon: null
@@ -101,16 +110,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
     
-    /** @param measure {String} A CSS measure as a string, consisting of a numeric dimension followed by units, such as "6rem"
-     * @return {Object} A parsed representation of the measure, holding the dimension in field <code>dimension</code> and the units in field <code>units</code>
-     */
-    gpii.parseCSSMeasure = function (measure) {
-        // Regular expression taken from http://stackoverflow.com/questions/2671427/parsing-css-measures
-        var parts = measure.match(/^([+-]?(?:\d+|\d*\.\d+))([a-z]*|%)$/);
-        return {
-            dimension: Number(parts[1]),
-            units: parts[2]
-        };
+    gpii.firstDiscovery.icon.measure = function (that, applier, field) {
+        var width = that.container.outerWidth();
+        if (width !== 0) { // avoid storing width of "holes"
+            applier.change(field, width);
+        }
     };
     
     gpii.firstDiscovery.navIcons.indexToPage = function (panelNum, pageSize, holes) {
@@ -124,9 +128,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
     
     gpii.firstDiscovery.navIcons.showPage = function (pageNum, pageSize, iconWidth, pagerElement) {
-        var parsedWidth = gpii.parseCSSMeasure(iconWidth);
-        var newLeft = - parsedWidth.dimension * pageNum * pageSize;
-        pagerElement.css("left", newLeft + parsedWidth.units);
+        var newLeft = iconWidth * pageNum * pageSize;
+        pagerElement.scrollLeft(newLeft);
     };
 
     gpii.firstDiscovery.navIcons.createIcons = function (that) {
