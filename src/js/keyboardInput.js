@@ -293,11 +293,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 priority: 1
             },
             // The shiftLatchChange.speakShiftState listener has
-            // a priority of "last" as it must happen after the model
+            // a priority of -10 as it must happen after the model
             // is changed via the shiftLatchChange.toggleShiftLatched listener
             "shiftLatchChange.speakShiftState": {
                 listener: "{that}.speakShiftState",
-                priority: "last"
+                priority: -10
             }
         }
     });
