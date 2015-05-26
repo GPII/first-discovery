@@ -1,0 +1,10 @@
+{
+    "instructions": "Do you want the screen to flash when a sound is played?",
+    "no": "No",
+    "yes": "Yes",
+
+    "yes-tooltip": "Select to turn on screen-flash for sounds",
+    "no-tooltip": "Select to turn off screen-flash for sounds",
+    "yes-tooltipAtSelect": "Screen-flash for sounds is on",
+    "no-tooltipAtSelect": "Screen-flash for sounds is off"
+}

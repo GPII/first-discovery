@@ -28,8 +28,10 @@ https://github.com/gpii/universal/LICENSE.txt
                     components: {
                         selfVoicing: {
                             options: {
-                                utteranceOpts: {
-                                    volume: 0
+                                model: {
+                                    utteranceOpts: {
+                                        volume: 0
+                                    }
                                 }
                             }
                         }
@@ -118,7 +120,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.firstDiscovery.testControls = function (that) {
-        jqUnit.expect(73);
+        jqUnit.expect(78);
 
         var backButton = that.navButtons.locate("back");
         var nextButton = that.navButtons.locate("next");
@@ -149,12 +151,20 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     fluid.defaults("gpii.tests.firstDiscovery.TTSHookupTest", {
-        ttsLangTest: {
-            listener: "jqUnit.assertEquals",
-            args: ["The utterance language should be set correctly", "{prefsEditorLoader}.settings.gpii_firstDiscovery_language", "{that}.options.utteranceOpts.lang"]
+        ttsUtteranceTest: {
+            listener: "jqUnit.assertDeepEq",
+            args: [
+                "The utterance options should be set correctly",
+                {
+                    lang: "{prefsEditorLoader}.settings.gpii_firstDiscovery_language",
+                    rate: "{prefsEditorLoader}.settings.gpii_firstDiscovery_speechRate",
+                    volume: 0 // the volume is set to 0 for the test.
+                },
+                "{that}.model.utteranceOpts"
+            ]
         },
         distributeOptions: {
-            source: "{that}.options.ttsLangTest",
+            source: "{that}.options.ttsUtteranceTest",
             target: "{that selfVoicing}.options.listeners.onCreate"
         }
     });
