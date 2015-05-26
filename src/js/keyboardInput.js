@@ -128,7 +128,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 args: ["{that}", "{that}.container"]
             },
             "toggleShiftLatched": {
-                funcName: "gpii.firstDiscovery.keyboardInputTts.toggleShiftLatched",
+                funcName: "gpii.firstDiscovery.keyboardInput.toggleShiftLatched",
                 args: ["{that}"]
             }
         },
@@ -249,6 +249,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     };
 
+    gpii.firstDiscovery.keyboardInput.toggleShiftLatched = function (that) {
+        that.applier.change("shiftLatched", !(that.model.shiftLatched));
+    };
+
     // The gpii.firstDiscovery.keyboardInputTts mixin grade adds
     // self-voicing to the keyboardInput grade. keyboardInputTts
     // relies on the availablility of a component with the
@@ -314,10 +318,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.keyboardInputTts.speakShiftState = function (that, latchedMsg, unlatchedMsg) {
         var msg = that.model.shiftLatched ? latchedMsg : unlatchedMsg;
         that.speak(msg);
-    };
-
-    gpii.firstDiscovery.keyboardInputTts.toggleShiftLatched = function (that) {
-        that.applier.change("shiftLatched", !(that.model.shiftLatched));
     };
 
 })();
