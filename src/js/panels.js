@@ -183,7 +183,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.defaults("gpii.firstDiscovery.panel.keyboard", {
         gradeNames: ["fluid.prefs.panel", "autoInit"],
         preferenceMap: {
-            "gpii.firstDiscovery.stickyKeysEnabled": {
+            "gpii.firstDiscovery.stickyKeys": {
                 "model.stickyKeysEnabled": "default"
             }
         },
