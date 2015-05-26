@@ -53,6 +53,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      */
     fluid.defaults("gpii.firstDiscovery.navIcons", {
         gradeNames: ["fluid.viewRelayComponent", "autoInit"],
+        pageSize: 5,
+        iconHoles: [2, 8], // a list of all the panel positions which have no nav icons (currently the "welcome" and "congratulations" pages)
         dynamicComponents: {
             icon: {
                 createOnEvent: "onCreateIcon",
@@ -66,12 +68,39 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                             listener: "gpii.firstDiscovery.navIcons.updateIconModel",
                             args: ["{that}", "{change}.value", "{change}.oldValue"]
                         }
+                    },
+                    listeners: {
+                        "onCreate.measureIcon": {
+                            func: "gpii.firstDiscovery.icon.measure",
+                            args: ["{that}", "{navIcons}.applier", "iconWidth"]
+                        }
                     }
                 }
             }
         },
+        model: {
+            pageNum: 0,
+            iconWidth: 0
+        },
+        modelRelay: {
+            source: "currentPanelNum",
+            target: "pageNum",
+            singleTransform: {
+                type: "fluid.transforms.free",
+                args: [
+                    "{that}.model.currentPanelNum",
+                    "{that}.options.pageSize",
+                    "{that}.options.iconHoles"
+                ],
+                func: "gpii.firstDiscovery.navIcons.indexToPage"
+            }
+        },
+        modelListeners: {
+            pageNum: "gpii.firstDiscovery.navIcons.showPage({change}.value, {that}.options.pageSize, {that}.model.iconWidth, {that}.dom.pager)"
+        },
         selectors: {
-            icon: ".gpiic-fd-navIcon"
+            icon: ".gpiic-fd-navIcon",
+            pager: ".gpii-fd-navIcon-outer"
         },
         events: {
             onCreateIcon: null
@@ -80,6 +109,28 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "onCreate.createIcons": "gpii.firstDiscovery.navIcons.createIcons"
         }
     });
+    
+    gpii.firstDiscovery.icon.measure = function (that, applier, field) {
+        var width = that.container.outerWidth();
+        if (width !== 0) { // avoid storing width of "holes"
+            applier.change(field, width);
+        }
+    };
+    
+    gpii.firstDiscovery.navIcons.indexToPage = function (panelNum, pageSize, holes) {
+        var pastHoles = 0;
+        for (var i = 0; i < holes.length; ++ i) {
+            if (panelNum >= holes[i]) {
+                ++ pastHoles;
+            }
+        }
+        return Math.floor((panelNum - 1 - pastHoles) / pageSize);
+    };
+    
+    gpii.firstDiscovery.navIcons.showPage = function (pageNum, pageSize, iconWidth, pagerElement) {
+        var newLeft = iconWidth * pageNum * pageSize;
+        pagerElement.scrollLeft(newLeft);
+    };
 
     gpii.firstDiscovery.navIcons.createIcons = function (that) {
         var icons = that.locate("icon");

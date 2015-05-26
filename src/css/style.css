@@ -438,7 +438,6 @@ button {
 .gpii-fd-navIcons {
     clear: both;
     padding: 0 2rem;
-    padding-top: 1.5rem; /* gap between main body and icons*/
 }
 .gpii-fd-navIcon {
     padding: 0.5rem;
@@ -453,10 +452,18 @@ button {
     text-transform: none;
     line-height: initial;
 }
-/* Special handling for the welcome icon that does not have an icon */
-.gpii-fd-navIcon-welcome {
+/* Special handling for the welcome and congratulations icons that do not have an icon */
+.gpii-fd-navIcon-welcome, .gpii-fd-navIcon-congratulations {
     display: inline-block;
     margin: 0.2rem -0.3rem 0 0;
+}
+
+/* Spacer required to make sure icon bar is scrollable to the end - designs require empty space at end of
+ * list in final position. This must be at least the width of the icon bar minus one icon
+ */
+.gpii-fd-navIcon-spacer {
+    display: inline-block;
+    width: 36rem;
 }
 .gpii-fd-lang:before {
     content: "\e608";
@@ -490,6 +497,14 @@ button {
 /* A temporary icon to be replaced by the new icon for show sounds */
 .gpii-fd-showSounds:before {
     content: "\e60d";
+}
+
+.gpii-fd-navIcon-outer {
+    width: 30rem; /* Space for 5 icons */
+    white-space: nowrap;
+    overflow: hidden;
+    padding-top: 1.5rem; /* gap between main body and icons*/
+    margin-left: 0.8rem;
 }
 
 .gpii-fd-prefsEditor-panel-contrast label {
