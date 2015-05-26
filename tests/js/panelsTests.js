@@ -657,6 +657,39 @@ https://github.com/gpii/universal/LICENSE.txt
         }
     });
 
+    /***************************
+     * Show Sounds Panel Tests *
+     ***************************/
+
+    fluid.defaults("gpii.tests.firstDiscovery.panel.showSounds", {
+        gradeNames: ["gpii.firstDiscovery.panel.showSounds", "autoInit"],
+        messageBase: {
+            "instructions": "Do you want the screen to flash when a sound is played?",
+            "no": "No",
+            "yes": "Yes",
+            "yes-tooltip": "Select to turn on screen-flash for sounds",
+            "no-tooltip": "Select to turn off screen-flash for sounds",
+            "yes-tooltipAtSelect": "Screen-flash for sounds is on",
+            "no-tooltipAtSelect": "Screen-flash for sounds is off"
+        },
+        model: {
+            value: true
+        }
+    });
+
+    fluid.defaults("gpii.tests.showSoundsPanel", {
+        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        components: {
+            yesNo: {
+                type: "gpii.tests.firstDiscovery.panel.showSounds",
+                container: ".gpiic-fd-showSounds"
+            },
+            yesNoTester: {
+                type: "gpii.tests.yesNoTester"
+            }
+        }
+    });
+
     /************************
      * Contrast Panel Tests *
      ************************/
@@ -1003,6 +1036,7 @@ https://github.com/gpii/universal/LICENSE.txt
             "gpii.tests.speakTextPanel",
             "gpii.tests.onScreenKeyboardPanel",
             "gpii.tests.captionsPanel",
+            "gpii.tests.showSoundsPanel",
             "gpii.tests.contrastPanel",
             "gpii.tests.keyboardPanel",
             "gpii.tests.welcomePanel",

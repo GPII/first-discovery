@@ -474,7 +474,7 @@ button {
     This is just a placeholder till the new icons are added.
 */
 .gpii-fd-speechRate:before {
-    content: "\e60a";
+    content: "\e60d";
 }
 .gpii-fd-text:before {
     content: "\e60b";
@@ -483,9 +483,13 @@ button {
 .gpii-fd-onScreenKeyboard:before {
     content: "\e60d";
 }
-/* A temporary icon to be replaced by the new icon for on-screen keyboard */
+/* A temporary icon to be replaced by the new icon for captions */
 .gpii-fd-captions:before {
-    content: "\e601";
+    content: "\e60d";
+}
+/* A temporary icon to be replaced by the new icon for show sounds */
+.gpii-fd-showSounds:before {
+    content: "\e60d";
 }
 
 .gpii-fd-prefsEditor-panel-contrast label {
