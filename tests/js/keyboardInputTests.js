@@ -591,7 +591,8 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.defaults("gpii.tests.firstDiscovery.keyboardInputWithTts", {
         gradeNames: ["gpii.tests.firstDiscovery.keyboardInput", "gpii.firstDiscovery.keyboardInputTts", "autoInit"],
         messageBase: {
-            "shiftLatched": "shiftLatched message"
+            "shiftLatched": "shiftLatched message",
+            "shiftUnlatched": "shiftUnlatched message"
         },
         invokers: {
             speak: {
@@ -729,7 +730,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 },
                 {
                     name: "Check key presses and shift spoken when sticky keys is on",
-                    expect: 4,
+                    expect: 6,
                     sequence: [
                         {
                             func: "{keyboardInput}.applier.change",
@@ -748,6 +749,26 @@ https://github.com/gpii/universal/LICENSE.txt
                             event: "{keyboardInput}.events.speak",
                             listener: "gpii.tests.firstDiscovery.keyboardInputTts.checkSpoken",
                             args: ["{keyboardInput}", "a"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.triggerKeydown",
+                            args: ["{keyboardInput}.container",
+                                   "{keyboardInput}.keymap.shiftKeyCode"]
+                        },
+                        {
+                            event: "{keyboardInput}.events.speak",
+                            listener: "gpii.tests.firstDiscovery.keyboardInputTts.checkSpoken",
+                            args: ["{keyboardInput}", "shiftLatched message"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.triggerKeydown",
+                            args: ["{keyboardInput}.container",
+                                   "{keyboardInput}.keymap.shiftKeyCode"]
+                        },
+                        {
+                            event: "{keyboardInput}.events.speak",
+                            listener: "gpii.tests.firstDiscovery.keyboardInputTts.checkSpoken",
+                            args: ["{keyboardInput}", "shiftUnlatched message"]
                         },
                         {
                             func: "gpii.tests.firstDiscovery.triggerKeydown",

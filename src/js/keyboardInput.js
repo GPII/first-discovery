@@ -103,7 +103,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         events: {
             shiftKeydown: null,
-            keypress: null
+            keypress: null,
+            shiftLatchChange: null
         },
         styles: {
             shiftLatched: "gpii-keyboardInput-shiftLatched"
@@ -125,6 +126,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "openTooltipIfNotFocused": {
                 funcName: "gpii.firstDiscovery.keyboardInput.openTooltipIfNotFocused",
                 args: ["{that}", "{that}.container"]
+            },
+            "toggleShiftLatched": {
+                funcName: "gpii.firstDiscovery.keyboardInput.toggleShiftLatched",
+                args: ["{that}"]
             }
         },
         listeners: {
@@ -145,6 +150,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 args: ["{that}.container", "{arguments}.0"],
                 priority: "last"
             },
+            "shiftLatchChange.toggleShiftLatched": "{that}.toggleShiftLatched",
             // begin TOOLTIP HANDLER CONFIGURATION
             //
             // We want to control the tooltip opening ourselves so we
@@ -197,8 +203,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             if (keymap.isShiftEvent(e)) {
                 that.events.shiftKeydown.fire();
                 if (that.model.stickyKeysEnabled) {
-                    // toggle the shiftLatched state
-                    that.applier.change("shiftLatched", !(that.model.shiftLatched));
+                    // TODO: After FLUID-5490 has been implemented
+                    // this change notification workflow can be fully
+                    // realized via model listener, making use of
+                    // source tracking.
+                    that.events.shiftLatchChange.fire(that);
                 }
             }
         });
@@ -240,6 +249,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     };
 
+    gpii.firstDiscovery.keyboardInput.toggleShiftLatched = function (that) {
+        that.applier.change("shiftLatched", !(that.model.shiftLatched));
+    };
+
     // The gpii.firstDiscovery.keyboardInputTts mixin grade adds
     // self-voicing to the keyboardInput grade. keyboardInputTts
     // relies on the availablility of a component with the
@@ -254,17 +267,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 funcName: "gpii.firstDiscovery.keyboardInputTts.speakOnFocusMessage",
                 args: ["{that}", "{gpii.firstDiscovery.keyboardInput}.container"]
             },
-            speakShiftOnLatch: {
-                funcName: "gpii.firstDiscovery.keyboardInputTts.speakShiftOnLatch",
+            speakShiftState: {
+                funcName: "gpii.firstDiscovery.keyboardInputTts.speakShiftState",
                 args: [
                     "{that}",
-                    "{gpii.firstDiscovery.keyboardInput}.model.shiftLatched",
-                    "{that}.msgLookup.shiftLatched"
+                    "{that}.msgLookup.shiftLatched",
+                    "{that}.msgLookup.shiftUnlatched"
                 ]
             }
-        },
-        modelListeners: {
-            "shiftLatched.speakShiftOnLatch": "{that}.speakShiftOnLatch"
         },
         listeners: {
             // This keypress.speak listener has a priority of -10
@@ -285,6 +295,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 method: "on",
                 args: ["focusin.speakOnFocusMessage", "{that}.speakOnFocusMessage"],
                 priority: 1
+            },
+            // The shiftLatchChange.speakShiftState listener has
+            // a priority of -10 as it must happen after the model
+            // is changed via the shiftLatchChange.toggleShiftLatched listener
+            "shiftLatchChange.speakShiftState": {
+                listener: "{that}.speakShiftState",
+                priority: -10
             }
         }
     });
@@ -298,10 +315,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     };
 
-    gpii.firstDiscovery.keyboardInputTts.speakShiftOnLatch = function (that, shiftLatched, msg) {
-        if (shiftLatched) {
-            that.speak(msg);
-        }
+    gpii.firstDiscovery.keyboardInputTts.speakShiftState = function (that, latchedMsg, unlatchedMsg) {
+        var msg = that.model.shiftLatched ? latchedMsg : unlatchedMsg;
+        that.speak(msg);
     };
 
 })();
