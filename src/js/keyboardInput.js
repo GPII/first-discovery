@@ -150,6 +150,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 args: ["{that}.container", "{arguments}.0"],
                 priority: "last"
             },
+            "shiftLatchChange.toggleShiftLatched": "{that}.toggleShiftLatched",
             // begin TOOLTIP HANDLER CONFIGURATION
             //
             // We want to control the tooltip opening ourselves so we
@@ -183,8 +184,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 method: "on",
                 args: ["focusin.closeTooltip", "{that}.tooltip.close"],
                 priority: 1
-            },
-            "shiftLatchChange.toggleShiftLatched": "{that}.toggleShiftLatched"
+            }
             // END TOOLTIP HANDLER CONFIGURATION
         },
         components: {
