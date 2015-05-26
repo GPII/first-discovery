@@ -409,6 +409,40 @@ https://github.com/gpii/universal/LICENSE.txt
                     ]
                 },
                 {
+                    name: "Focusout  unlatches",
+                    expect: 3,
+                    sequence: [
+                        {
+                            func: "jqUnit.assertTrue",
+                            args: ["Sticky Keys should be on",
+                                   "{keyboardInput}.model.stickyKeysEnabled"]
+                        },
+                        {
+                            func: "gpii.tests.firstDiscovery.triggerKeydown",
+                            args: ["{keyboardInput}.container",
+                                   "{keyboardInput}.keymap.shiftKeyCode"]
+                        },
+                        {
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
+                            spec: {path: "shiftLatched", priority: "last"},
+                            listener: "jqUnit.assertTrue",
+                            args: ["Pressed shift, shiftLatched should be true",
+                                   "{keyboardInput}.model.shiftLatched"]
+                        },
+                        {
+                            element: "{keyboardInput}.container",
+                            jQueryTrigger: "focusout"
+                        },
+                        {
+                            changeEvent: "{keyboardInput}.applier.modelChanged",
+                            spec: {path: "shiftLatched", priority: "last"},
+                            listener: "jqUnit.assertFalse",
+                            args: ["Pressed shift, shiftLatched should be false",
+                                   "{keyboardInput}.model.shiftLatched"]
+                        }
+                    ]
+                },
+                {
                     name: "Changing Sticky Keys state clears the text",
                     expect: 12,
                     sequence: [
