@@ -22,6 +22,7 @@ https://github.com/gpii/universal/LICENSE.txt
         ".gpiic-fd-prefsEditor-panel-size",
         ".gpiic-fd-prefsEditor-panel-onScreenKeyboard",
         ".gpiic-fd-prefsEditor-panel-captions",
+        ".gpiic-fd-prefsEditor-panel-showSounds",
         ".gpiic-fd-prefsEditor-panel-keyboard",
         ".gpiic-fd-prefsEditor-panel-congratulations"
     ];
