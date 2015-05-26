@@ -483,7 +483,7 @@ button {
     white-space: nowrap;
     overflow: hidden;
     padding-top: 1.5rem; /* gap between main body and icons*/
-    margin-left: 0;
+    margin-left: 0.8rem;
 }
 
 .gpii-fd-prefsEditor-panel-contrast label {
