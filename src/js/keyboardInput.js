@@ -151,6 +151,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 priority: "last"
             },
             "shiftLatchChange.toggleShiftLatched": "{that}.toggleShiftLatched",
+            "onCreate.focusoutHandler": {
+                "this": "{that}.container",
+                method: "on",
+                args: ["focusout.unlatchShift", "{that}.unlatchShift"]
+            },
             // begin TOOLTIP HANDLER CONFIGURATION
             //
             // We want to control the tooltip opening ourselves so we
