@@ -562,6 +562,15 @@ button {
     visibility: visible;
 }
 
+/* Step count message */
+.gpii-fd-stepCount {
+    font-size: 0.5em;
+    position: relative;
+    top: -1em;
+    height: 0;
+    text-align: center;
+}
+
 /* Tooltips */
 .gpii-fd-tooltip {
     width: auto;

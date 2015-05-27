@@ -107,6 +107,18 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     messageBase: "{messageLoader}.resources.prefsEditor.resourceText"
                 }
             },
+            stepCount: {
+                type: "gpii.firstDiscovery.stepCount",
+                container: "{that}.dom.stepCount",
+                createOnEvent: "onPrefsEditorReady",
+                options: {
+                    messageBase: "{messageLoader}.resources.prefsEditor.resourceText",
+                    model: {
+                        currentPanelNum: "{firstDiscoveryEditor}.model.currentPanelNum"
+                    },
+                    panelTotalNum: "{firstDiscoveryEditor}.panels.length"
+                }
+            },
             messageLoader: {
                 options: {
                     locale: "{prefsEditorLoader}.settings.gpii_firstDiscovery_language"
@@ -129,7 +141,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             navButtons: ".gpiic-fd-navButtons",
             navIcons: ".gpiic-fd-navIcons",
             selfVoicing: ".gpiic-fd-selfVoicing",
-            helpButton: ".gpiic-fd-help"
+            helpButton: ".gpiic-fd-help",
+            stepCount: ".gpiic-fd-stepCountMsg"
         },
         styles: {
             active: "gpii-fd-active",
