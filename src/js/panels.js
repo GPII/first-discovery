@@ -440,6 +440,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "controlValues.lang": "enum"
             }
         },
+        members: {
+            maxDisplayLangIndex: {
+                expander: {
+                    funcName: "gpii.firstDiscovery.panel.lang.calculateMaxDisplayLangIndex",
+                    args: [ "{that}.options.controlValues.lang.length",
+                            "{that}.options.numOfLangPerPage" ]
+                }
+            }
+        },
         components: {
             attachTooltipOnLang: {
                 type: "gpii.firstDiscovery.panel.lang.attachTooltipOnLang",
@@ -476,6 +485,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         model: {
+            selectedLang: undefined,
+            displayLangIndex: 0,
             firstLangSelected: false,
             lastLangSelected: false
         },
@@ -503,7 +514,23 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 operator: "===",
                 right: "{that}.options.controlValues.lang.length"
             }
+        }, {
+            target: "displayLangIndex",
+            singleTransform: {
+                type: "fluid.transforms.limitRange",
+                input: "{that}.model.displayLangIndex",
+                min: 0,
+                max: "{that}.maxDisplayLangIndex"
+            }
         }],
+        modelListeners: {
+            selectedLang: {
+                listener: "{that}.scrollToSelectedLang"
+            },
+            displayLangIndex: {
+                listener: "{that}.updateDisplayedLangs"
+            }
+        },
         numOfLangPerPage: 3,
         selectors: {
             instructions: ".gpiic-fd-lang-instructions",
@@ -528,13 +555,21 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         invokers: {
-            bindPrev: {
-                funcName: "gpii.firstDiscovery.panel.lang.moveLangFocus",
+            scrollLangsPrev: {
+                funcName: "gpii.firstDiscovery.panel.lang.scrollLangs",
                 args: ["{that}", -1]
             },
-            bindNext: {
-                funcName: "gpii.firstDiscovery.panel.lang.moveLangFocus",
+            scrollLangsNext: {
+                funcName: "gpii.firstDiscovery.panel.lang.scrollLangs",
                 args: ["{that}", 1]
+            },
+            scrollToSelectedLang: {
+                funcName: "gpii.firstDiscovery.panel.lang.scrollLangIntoView",
+                args: ["{that}", "{that}.model.selectedLang"]
+            },
+            updateDisplayedLangs: {
+                funcName: "gpii.firstDiscovery.panel.lang.updateDisplayedLangs",
+                args: ["{that}", "{that}.model.displayLangIndex"]
             },
             onActivateLanguage: {
                 funcName: "gpii.firstDiscovery.panel.lang.onActivateLanguage",
@@ -545,17 +580,17 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             onButtonTopsReady: null
         },
         listeners: {
-            /*
             "afterRender.bindPrev": {
                 "this": "{that}.dom.prev",
                 method: "click",
-                args: ["{that}.bindPrev"]
+                args: ["{that}.scrollLangsPrev"]
             },
             "afterRender.bindNext": {
                 "this": "{that}.dom.next",
                 method: "click",
-                args: ["{that}.bindNext"]
+                args: ["{that}.scrollLangsNext"]
             },
+            /*
             "afterRender.setPrevButtonStatus": {
                 "this": "{that}.dom.prev",
                 method: "prop",
@@ -566,16 +601,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 method: "prop",
                 args: ["disabled", "{that}.model.lastLangSelected"]
             },
-            "afterRender.getButtonTops": {
-                funcName: "gpii.firstDiscovery.panel.lang.getButtonTops",
-                args: ["{that}"]
-            },
-            // To override the default scrolling behavior from buttons' parent overflow div to make sure when using keyboard to focus
-            // on the button, the overflow div scrolls to the calculated position.
-            "afterRender.overrideDefaultScroll": {
-                funcName: "gpii.firstDiscovery.panel.lang.overrideDefaultScroll",
-                args: ["{that}"]
-            },
             "afterRender.scrollLangIntoView": {
                 funcName: "gpii.firstDiscovery.panel.lang.scrollLangIntoView",
                 args: ["{that}"]
@@ -584,15 +609,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 funcName: "gpii.firstDiscovery.panel.lang.scrollLangIntoView",
                 args: ["{that}"]
             },
-            "afterRender.preventWrapWithArrowKeys": {
-                funcName: "gpii.firstDiscovery.panel.lang.preventWrapWithArrowKeys",
-                args: ["{that}"]
-            },
+            */
             "afterRender.setLangOnHtml": {
                 funcName: "gpii.firstDiscovery.panel.lang.setLangOnHtml",
                 args: ["{that}.model.lang"]
-            }
-             */
+            },
             "afterRender.setLangOptionsMarkup": {
                 "this": "{that}.dom.controlsDiv",
                 method: "append",
@@ -601,7 +622,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             "afterRender.makeLangsSelectable": {
                 funcName: "gpii.firstDiscovery.panel.lang.makeLangsSelectable",
-                args: ["{that}.dom.controlsDiv"],
+                args: ["{that}", "{that}.dom.controlsDiv"],
                 priority: 5
             },
             "afterRender.makeLangsActivatable": {
@@ -609,13 +630,17 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 args: ["{that}.dom.langRow", "{that}.onActivateLanguage"],
                 priority: 5
             },
-            "afterRender.setSelectedLang": {
-                funcName: "gpii.firstDiscovery.panel.lang.setSelectedLang",
+            "afterRender.setAriaSelected": {
+                funcName: "gpii.firstDiscovery.panel.lang.setAriaSelected",
                 args: ["{that}.model.lang", "{that}.dom.langRow"],
                 priority: 5
             }
         }
     });
+
+    gpii.firstDiscovery.panel.lang.calculateMaxDisplayLangIndex = function (numLangs, numLangsPerPage) {
+        return Math.max(numLangs - numLangsPerPage, 0);
+    };
 
     gpii.firstDiscovery.panel.lang.buildLangOptionsMarkup = function (langNames, langCodes) {
         // TODO move this template somewhere better
@@ -633,9 +658,19 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         return markup;
     };
 
-    gpii.firstDiscovery.panel.lang.makeLangsSelectable = function (langList) {
-        langList.fluid("tabbable");
-        langList.fluid("selectable");
+    gpii.firstDiscovery.panel.lang.makeLangsSelectable = function (that, controlsDiv) {
+        controlsDiv.fluid("tabbable");
+        controlsDiv.fluid("selectable", {
+            noWrap: true,
+            onSelect: function (elem) {
+                var selectedLang = $(elem).attr("data-lang");
+                that.applier.change("selectedLang", selectedLang);
+            },
+            onUnselect: function () {
+                that.applier.change("selectedLang", undefined);
+            },
+            rememberSelectionState: false
+        });
     };
 
     gpii.firstDiscovery.panel.lang.makeLangsActivatable = function (langRows, handler) {
@@ -648,7 +683,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         that.applier.change("lang", lang);
     };
 
-    gpii.firstDiscovery.panel.lang.setSelectedLang = function (langCode, langOptions) {
+    gpii.firstDiscovery.panel.lang.setAriaSelected = function (langCode, langOptions) {
         fluid.each(langOptions, function (langOption) {
             var optionLangCode = $(langOption).attr("data-lang");
             var ariaSelected = (optionLangCode === langCode ? true : false);
@@ -656,127 +691,41 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         });
     };
 
-    gpii.firstDiscovery.panel.lang.moveLangFocus = function (that, adjustBy) {
-        var langArray = that.options.controlValues.lang,
-            guardNext = fluid.model.transform({}, {
-                nextIndex: {
-                    transform: {
-                        type: "fluid.transforms.limitRange",
-                        value: langArray.indexOf(that.model.lang) + adjustBy,
-                        min: 0,
-                        max: langArray.length
-                    }
-                }
-            }),
-            nextIndex = guardNext.nextIndex;
-
-        that.applier.change("lang", langArray[nextIndex]);
+    gpii.firstDiscovery.panel.lang.scrollLangs = function (that, adjustBy) {
+        var newIndex = that.model.displayLangIndex + adjustBy;
+        that.applier.change("displayLangIndex", newIndex);
     };
 
-    // find the number in the "numbers" array that's closest to the given "currentNumber"
-    gpii.firstDiscovery.panel.lang.findClosestNumber = function (currentNumber, numbers) {
-        var distance = Infinity,
-            idx = -1;
-
-        for (var c = 0; c <= numbers.length - 1; c++) {
-            var cdistance = Math.abs(numbers[c] - currentNumber);
-            if (cdistance < distance) {
-                idx = c;
-                distance = cdistance;
+    gpii.firstDiscovery.panel.lang.scrollLangIntoView = function (that, lang) {
+        var langIndex = that.options.controlValues.lang.indexOf(lang);
+        if (langIndex !== -1) {
+            // Test if the language that we want to scroll to is above
+            // or below the currently displayed languages. If it is
+            // neither, we don't need to scroll.
+            var startOfNextPage = that.model.displayLangIndex + that.options.numOfLangPerPage;
+            if (langIndex < that.model.displayLangIndex) {
+                // the language that we want to scroll to is above
+                that.applier.change("displayLangIndex", langIndex);
+            } else if (langIndex >= startOfNextPage) {
+                // the language that we want to scroll to is below
+                var newIndex = langIndex - that.options.numOfLangPerPage + 1;
+                that.applier.change("displayLangIndex", newIndex);
             }
         }
-        return numbers[idx];
     };
 
-    // When arrow keys are used to navigate thru language buttons, this function scrolls the select button
-    // to the appropriate position to ensure,
-    // 1. the selected button is in the view;
-    // 2. the top and bottom buttons are not partially shown.
-    // To achieve this, when the page is rendered, this function saves the initial positions of in-view buttons,
-    // and scroll the selected language button to the closest position. When arrow keys are used
-    // to move an out-of-view language button into the view, also finds the closest saved position to
-    // move the button to.
-    gpii.firstDiscovery.panel.lang.scrollLangIntoView = function (that) {
-        if (!that.buttonTops) {
-            return;
+    gpii.firstDiscovery.panel.lang.updateDisplayedLangs = function (that, langIndex) {
+
+        console.log("UPDATE DISPLAY = " + langIndex);
+
+        // TODO disable and enable next/prev buttons
+        var buttons = that.locate("langRow");
+        if (buttons.length > 0) {
+            var firstButtonTop = buttons.offset().top;
+            var displayFromButton = $(buttons[langIndex]);
+            var scrollTo = displayFromButton.offset().top - firstButtonTop;
+            $(that.options.selectors.controlsDiv).animate({scrollTop: scrollTo}, 0);
         }
-
-        // TODO: Replace this private variable to some measurement from the DOM (http://issues.fluidproject.org/browse/FLOE-305)
-        that.lastMovedHeight = that.lastMovedHeight || 0;
-
-        var buttons = that.locate("langRow"),
-            currentLang = that.model.lang,
-            currentLangIndex = that.options.controlValues.lang.indexOf(currentLang),
-            currentButton = $(buttons[currentLangIndex]),
-            controlsDiv = $(that.options.selectors.controlsDiv),
-            controlsDivScrollTop = controlsDiv[0].scrollTop,
-            // The line below to add the scrolled distance of the parent container, which is "controlsDivScrollTop",
-            // rather than using button.offset().top only, is to fix an issue in Chrome and Safari that button.offset().top
-            // returns inconsistent value. The returned value sometimes has "controlsDivScrollTop" added, sometimes not.
-            // This line ensures consistent top values for the calculation to base upon.
-            currentButtonTop = currentButton.offset().top + controlsDivScrollTop,
-            closestPosition = gpii.firstDiscovery.panel.lang.findClosestNumber(currentButtonTop - that.lastMovedHeight, that.buttonTops),
-            heightToMove = currentButtonTop - closestPosition;
-
-        $(that.options.selectors.controlsDiv).animate({scrollTop: heightToMove + "px"}, 0);
-
-        that.lastMovedHeight = heightToMove;
-    };
-
-    gpii.firstDiscovery.panel.lang.getButtonTops = function (that) {
-        // setTimeout() is to work around the issue that position() in synchronous calls receives 0 for initial button positions
-        // when the panel is in the middle of rendering.
-        setTimeout(function () {
-            var buttons = that.locate("langRow"),
-                numOfLangPerPage = that.options.numOfLangPerPage;
-
-            // Keep track of the original positions of buttons on display
-            if (!that.buttonTops) {
-                that.buttonTops = [];
-                for (var i = 0; i < numOfLangPerPage; i++) {
-                    if (buttons[i]) {
-                        that.buttonTops[i] = $(buttons[i]).position().top;
-                    }
-                }
-                that.events.onButtonTopsReady.fire();
-            }
-        });
-    };
-
-    gpii.firstDiscovery.panel.lang.resetButtonTops = function (that, shownPanelId) {
-        var langPanelId = that.container.attr("id");
-        if (langPanelId === shownPanelId) {
-            that.buttonTops = undefined;
-            that.refreshView();
-        }
-    };
-
-    gpii.firstDiscovery.panel.lang.overrideDefaultScroll = function (that) {
-        that.locate("controlsDiv").scroll(function () {
-            gpii.firstDiscovery.panel.lang.scrollLangIntoView(that);
-        });
-    };
-
-    gpii.firstDiscovery.panel.lang.stopArrowBrowseOnEdgeButtons = function (button, keyCodes) {
-        $(button).keydown(function (e) {
-            if (keyCodes.indexOf(e.which) !== -1) {
-                e.preventDefault();
-                return false;
-            }
-        });
-    };
-
-    // When the focus is on the first language button, prevent the press of up or left arrow keys moving to the last language button;
-    // when the focus is on the last language button, prevent the press of down or right arrow keys moving to the first language button.
-    // TODO: Replace this funciton with fluid.selectable() plugin with noWrap: true when FLUID-5642 (http://issues.fluidproject.org/browse/FLUID-5642)
-    // is fixed.
-    gpii.firstDiscovery.panel.lang.preventWrapWithArrowKeys = function (that) {
-        var langButtons = that.locate("langInput"),
-            firstLangButton = langButtons[0],
-            lastLangButton = langButtons[langButtons.length - 1];
-
-        gpii.firstDiscovery.panel.lang.stopArrowBrowseOnEdgeButtons(firstLangButton, [$.ui.keyCode.UP, $.ui.keyCode.LEFT]);
-        gpii.firstDiscovery.panel.lang.stopArrowBrowseOnEdgeButtons(lastLangButton, [$.ui.keyCode.DOWN, $.ui.keyCode.RIGHT]);
     };
 
     gpii.firstDiscovery.panel.lang.setLangOnHtml = function (currentLang) {
@@ -825,19 +774,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             tooltip.attr("lang", getLangFn(originalTarget));
         }
     };
-
-    // To accommodate the possiblity of text/control size change that causes the shift of button positions,
-    // re-collect button tops every time when users come back to the language panel. The button positions
-    // are only accurate when they are not hidden.
-    fluid.defaults("gpii.firstDiscovery.panel.lang.prefEditorConnection", {
-        gradeNames: ["fluid.eventedComponent", "autoInit"],
-        listeners: {
-            "{prefsEditor}.events.onPanelShown": {
-                funcName: "gpii.firstDiscovery.panel.lang.resetButtonTops",
-                args: ["{that}", "{arguments}.0"]
-            }
-        }
-    });
 
     /*
      * Contrast panel
