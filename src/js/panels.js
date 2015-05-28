@@ -467,11 +467,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     tooltipContentMap: {
                         "prev": "navButtonTooltip",
                         "next": "navButtonTooltip",
-                        "langLabel": {
-                            tooltip: "{lang}.options.stringArrayIndex.tooltip",
-                            tooltipAtSelect: "{lang}.options.stringArrayIndex.tooltipAtSelect"
-                        },
-                        "langInput": {
+                        "langRow": {
                             tooltip: "{lang}.options.stringArrayIndex.tooltip",
                             tooltipAtSelect: "{lang}.options.stringArrayIndex.tooltipAtSelect"
                         }
@@ -537,8 +533,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         selectors: {
             instructions: ".gpiic-fd-lang-instructions",
             langRow: ".gpiic-fd-lang-row",
-            langLabel: ".gpiic-fd-lang-label",
-            langInput: ".gpiic-fd-lang-input",
             controlsDiv: ".gpiic-fd-lang-controls",
             prev: ".gpiic-fd-lang-prev",
             next: ".gpiic-fd-lang-next"
@@ -602,6 +596,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 method: "prop",
                 args: ["disabled", "{that}.model.atEndOfLangs"]
             },
+            // TODO scroll to the active language on load
             /*
             "afterRender.scrollLangIntoView": {
                 funcName: "gpii.firstDiscovery.panel.lang.scrollLangIntoView",
@@ -720,7 +715,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
         console.log("UPDATE DISPLAY = " + langIndex);
 
-        // TODO disable and enable next/prev buttons
         var buttons = that.locate("langRow");
         if (buttons.length > 0) {
             var firstButtonTop = buttons.offset().top;
@@ -758,23 +752,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    gpii.firstDiscovery.panel.lang.attachTooltipOnLang.getLangForElm = {
-        "LABEL": function (target) {
-            return fluid.jById(target.attr("for")).val();
-        },
-        "INPUT": function (target) {
-            return target.val();
-        }
-    };
-
     gpii.firstDiscovery.panel.lang.attachTooltipOnLang.setLangAttr = function (that, originalTarget, tooltip) {
-        originalTarget = $(originalTarget);
-        var tagName = originalTarget.prop("tagName");
-        var getLangFn = gpii.firstDiscovery.panel.lang.attachTooltipOnLang.getLangForElm[tagName];
-
-        if (getLangFn) {
-            tooltip.attr("lang", getLangFn(originalTarget));
-        }
+        tooltip.attr("lang", $(originalTarget).attr("data-lang"));
     };
 
     /*
