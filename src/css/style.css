@@ -500,11 +500,12 @@ button {
 }
 
 .gpii-fd-navIcon-outer {
-    width: 30rem; /* Space for 5 icons */
+    width: 29.77rem; /* Space for 5 icons. This isn't a perfect 30rem,
+                        otherwise a white bar appears at the end (FLOE-350). */
     white-space: nowrap;
     overflow: hidden;
-    padding-top: 1.5rem; /* gap between main body and icons*/
-    margin-left: 0.8rem;
+    padding: 1.5rem 0; /* gap between main body and icons*/
+    margin: 0 auto;
 }
 
 .gpii-fd-prefsEditor-panel-contrast label {
@@ -551,7 +552,6 @@ button {
     background-color: #ffffff;
     border-radius: 2rem;
     border: 1px solid #ffffff;
-    margin-left: -2rem;
     position: relative;
     top: -1rem;
 }
