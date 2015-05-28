@@ -198,7 +198,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "type": "number",
                 "default": 1,
                 "minimum": 0.1,
-                "maximum": 10,
+                "maximum": 2, // The spec allows for up to 10, but in chrome 2 seems to be the upper bound.
                 "divisibleBy": 0.1
             }
         }
