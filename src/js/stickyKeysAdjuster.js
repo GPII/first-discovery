@@ -96,7 +96,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         that.locate("tryButton").toggle(!state);
         that.locate("accommodation").toggle(state);
         // Close the tooltip for "try it" button otherwise it will linger after the button is hidden
-        if (state) {
+        if (state && that.tooltip) {
             that.tooltip.close();
         }
     };

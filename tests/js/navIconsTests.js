@@ -40,8 +40,9 @@ https://github.com/gpii/universal/LICENSE.txt
         gpii.tests.utils.hasClass("The confirmed indicator is still shown", confirmedIndicator, showCss, true);
     });
 
-    gpii.tests.verifyStates = function (that, currentPanelNum, prevPanelNums) {
+    gpii.tests.verifyStates = function (that, currentPanelNum, prevPanelNums, pageNum) {
         jqUnit.assertEquals("The model value has been updated", currentPanelNum, that.model.currentPanelNum);
+        jqUnit.assertEquals("The icon page index is correct", pageNum, that.model.pageNum);
 
         var icons = that.locate("icon");
         fluid.each(icons, function (icon, index) {
@@ -68,10 +69,11 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     jqUnit.test("Nav Icons", function () {
-        jqUnit.expect(64);
+        jqUnit.expect(180);
 
-        var that = gpii.firstDiscovery.navIcons(".gpiic-nav"),
-            icons = that.locate("icon");
+        var that = gpii.firstDiscovery.navIcons(".gpiic-nav", {
+            holes: [4]
+        }), icons = that.locate("icon");
 
         fluid.each(icons, function (icon, index) {
             var subcomponentName = index === 0 ? "icon" : "icon-" + index;
@@ -81,17 +83,23 @@ https://github.com/gpii/universal/LICENSE.txt
         });
 
         that.applier.change("currentPanelNum", 1);
-        gpii.tests.verifyStates(that, 1, []);
+        gpii.tests.verifyStates(that, 1, [], 0);
 
         that.applier.change("currentPanelNum", 3);
-        gpii.tests.verifyStates(that, 3, [1]);
+        gpii.tests.verifyStates(that, 3, [1], 0);
 
         // going back doesn't trigger the confirmed indicator to show for the previous panel
         that.applier.change("currentPanelNum", 2);
-        gpii.tests.verifyStates(that, 2, [1]);
+        gpii.tests.verifyStates(that, 2, [1], 0);
 
         that.applier.change("currentPanelNum", 4);
-        gpii.tests.verifyStates(that, 4, [1, 2]);
+        gpii.tests.verifyStates(that, 4, [1, 2], 0);
+        
+        that.applier.change("currentPanelNum", 6);
+        gpii.tests.verifyStates(that, 6, [1, 2], 0); // Still page 1 because of "hole", 4 not visited because of "hole"
+        
+        that.applier.change("currentPanelNum", 7);
+        gpii.tests.verifyStates(that, 7, [1, 2, 6], 1);
     });
 
 })(jQuery, fluid);

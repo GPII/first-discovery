@@ -66,13 +66,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }],
         selectors: {
             rangeInstructions: ".gpiic-fd-range-instructions",
+            controls: ".gpiic-fd-range-controls",
             meter: ".gpiic-fd-range-indicator",
             max: ".gpiic-fd-range-max",
             min: ".gpiic-fd-range-min",
             increase: ".gpiic-fd-range-increase",
             decrease: ".gpiic-fd-range-decrease"
         },
-        selectorsToIgnore: ["meter", "increase", "decrease"],
+        selectorsToIgnore: ["controls", "meter", "increase", "decrease"],
         tooltipContentMap: {
             "increase": "increaseLabel",
             "decrease": "decreaseLabel"
@@ -144,10 +145,45 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         that.locate("meter").css("height", percentage + "%");
     };
 
+    fluid.defaults("gpii.firstDiscovery.panel.rangedWithDisabledMsg", {
+        gradeNames: ["gpii.firstDiscovery.panel.ranged", "autoInit"],
+        selectors: {
+            disabledMsg: ".gpiic-fd-range-disabledMsg"
+        },
+        protoTree: {
+            rangeInstructions: {messagekey: "rangeInstructions"},
+            max: {messagekey: "maxLabel"},
+            min: {messagekey: "minLabel"},
+            disabledMsg: {messagekey: "disabledMsg"}
+        },
+        listeners: {
+            "afterRender.toggleDisplay": {
+                listener: "{that}.toggleDisplay",
+                priority: "first",
+                args: ["{that}.model.enabled"]
+            }
+        },
+        invokers: {
+            toggleDisplay: {
+                funcName: "gpii.firstDiscovery.panel.rangedWithDisabledMsg.toggleDisplay",
+                args: ["{that}", "{arguments}.0"]
+            }
+        }
+    });
+
+    gpii.firstDiscovery.panel.rangedWithDisabledMsg.toggleDisplay = function (that, isEnabled) {
+        that.locate("controls").toggle(isEnabled);
+        that.locate("disabledMsg").toggle(!isEnabled);
+    };
+
+    /*
+     * Keyboard Panel
+     */
+
     fluid.defaults("gpii.firstDiscovery.panel.keyboard", {
         gradeNames: ["fluid.prefs.panel", "autoInit"],
         preferenceMap: {
-            "gpii.firstDiscovery.stickyKeysEnabled": {
+            "gpii.firstDiscovery.stickyKeys": {
                 "model.stickyKeysEnabled": "default"
             }
         },
@@ -310,7 +346,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * Speech rate panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.speechRate", {
-        gradeNames: ["gpii.firstDiscovery.panel.ranged", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.panel.rangedWithDisabledMsg", "autoInit"],
         preferenceMap: {
             "gpii.firstDiscovery.speechRate": {
                 "model.value": "default",
@@ -318,6 +354,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "range.max": "maximum",
                 "step": "divisibleBy"
             }
+        }
+    });
+
+    fluid.defaults("gpii.firstDiscovery.panel.speechRate.prefsEditorConnection", {
+        model: {
+            enabled: "{prefsEditor}.model.gpii_firstDiscovery_speak"
         }
     });
 
@@ -424,6 +466,30 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         gradeNames: ["gpii.firstDiscovery.panel.yesNo", "autoInit"],
         preferenceMap: {
             "gpii.firstDiscovery.onScreenKeyboard": {
+                "model.value": "default"
+            }
+        }
+    });
+
+    /*
+     * Captions panel
+     */
+    fluid.defaults("gpii.firstDiscovery.panel.captions", {
+        gradeNames: ["gpii.firstDiscovery.panel.yesNo", "autoInit"],
+        preferenceMap: {
+            "gpii.firstDiscovery.captions": {
+                "model.value": "default"
+            }
+        }
+    });
+
+    /*
+     * Show sounds panel
+     */
+    fluid.defaults("gpii.firstDiscovery.panel.showSounds", {
+        gradeNames: ["gpii.firstDiscovery.panel.yesNo", "autoInit"],
+        preferenceMap: {
+            "gpii.firstDiscovery.showSounds": {
                 "model.value": "default"
             }
         }

@@ -69,8 +69,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.speechRate",
                     "container": ".gpiic-fd-prefsEditor-panel-speechRate",
-                    "template": "%prefix/rangeTemplate.html",
-                    "message": "%prefix/speechRate.json"
+                    "template": "%prefix/rangeWithDisabledMsgTemplate.html",
+                    "message": "%prefix/speechRate.json",
+                    "gradeNames": ["gpii.firstDiscovery.panel.speechRate.prefsEditorConnection"]
                 }
             },
             "contrast": {
@@ -111,6 +112,24 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "container": ".gpiic-fd-prefsEditor-panel-onScreenKeyboard",
                     "template": "%prefix/yesNo.html",
                     "message": "%prefix/onScreenKeyboard.json"
+                }
+            },
+            "captions": {
+                "type": "gpii.firstDiscovery.captions",
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.captions",
+                    "container": ".gpiic-fd-prefsEditor-panel-captions",
+                    "template": "%prefix/yesNo.html",
+                    "message": "%prefix/captions.json"
+                }
+            },
+            "showSounds": {
+                "type": "gpii.firstDiscovery.showSounds",
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.showSounds",
+                    "container": ".gpiic-fd-prefsEditor-panel-showSounds",
+                    "template": "%prefix/yesNo.html",
+                    "message": "%prefix/showSounds.json"
                 }
             },
             "keyboard": {
@@ -179,7 +198,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "type": "number",
                 "default": 1,
                 "minimum": 0.1,
-                "maximum": 10,
+                "maximum": 2, // The spec allows for up to 10, but in chrome 2 seems to be the upper bound.
                 "divisibleBy": 0.1
             }
         }
@@ -189,6 +208,26 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         gradeNames: ["autoInit", "fluid.prefs.schemas"],
         schema: {
             "gpii.firstDiscovery.onScreenKeyboard": {
+                "type": "boolean",
+                "default": true
+            }
+        }
+    });
+
+    fluid.defaults("gpii.firstDiscovery.schemas.captions", {
+        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.captions": {
+                "type": "boolean",
+                "default": true
+            }
+        }
+    });
+
+    fluid.defaults("gpii.firstDiscovery.schemas.showSouns", {
+        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.showSounds": {
                 "type": "boolean",
                 "default": true
             }

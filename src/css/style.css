@@ -259,7 +259,7 @@ button {
     border-color: #000000 !important;
 }
 
-/* text size increase/decrease controls */
+/* range increase/decrease controls */
 .gpii-fd-increase, .gpii-fd-decrease {
     width: 6rem;
     height: 6rem;
@@ -313,6 +313,13 @@ button {
 }
 .gpii-fd-decrease .gpii-fd-icon:before {
     content: "\e604";
+}
+
+/* range disabledMsg */
+.gpii-fd .gpii-fd-range-disabledMsg {
+    line-height: 1.1;
+    border: 1px solid #425165;
+    padding: 1.5rem 2rem;
 }
 
 /* language controls */
@@ -436,7 +443,6 @@ button {
 .gpii-fd-navIcons {
     clear: both;
     padding: 0 2rem;
-    padding-top: 1.5rem; /* gap between main body and icons*/
 }
 .gpii-fd-navIcon {
     padding: 0.5rem;
@@ -451,10 +457,18 @@ button {
     text-transform: none;
     line-height: initial;
 }
-/* Special handling for the welcome icon that does not have an icon */
-.gpii-fd-navIcon-welcome {
+/* Special handling for the welcome and congratulations icons that do not have an icon */
+.gpii-fd-navIcon-welcome, .gpii-fd-navIcon-congratulations {
     display: inline-block;
     margin: 0.2rem -0.3rem 0 0;
+}
+
+/* Spacer required to make sure icon bar is scrollable to the end - designs require empty space at end of
+ * list in final position. This must be at least the width of the icon bar minus one icon
+ */
+.gpii-fd-navIcon-spacer {
+    display: inline-block;
+    width: 36rem;
 }
 .gpii-fd-lang:before {
     content: "\e608";
@@ -472,7 +486,7 @@ button {
     This is just a placeholder till the new icons are added.
 */
 .gpii-fd-speechRate:before {
-    content: "\e60a";
+    content: "\e60d";
 }
 .gpii-fd-text:before {
     content: "\e60b";
@@ -480,6 +494,22 @@ button {
 /* A temporary icon to be replaced by the new icon for on-screen keyboard */
 .gpii-fd-onScreenKeyboard:before {
     content: "\e60d";
+}
+/* A temporary icon to be replaced by the new icon for captions */
+.gpii-fd-captions:before {
+    content: "\e60d";
+}
+/* A temporary icon to be replaced by the new icon for show sounds */
+.gpii-fd-showSounds:before {
+    content: "\e60d";
+}
+
+.gpii-fd-navIcon-outer {
+    width: 30rem; /* Space for 5 icons */
+    white-space: nowrap;
+    overflow: hidden;
+    padding-top: 1.5rem; /* gap between main body and icons*/
+    margin-left: 0.8rem;
 }
 
 .gpii-fd-prefsEditor-panel-contrast label {
