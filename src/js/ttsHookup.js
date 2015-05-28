@@ -54,11 +54,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     invokers: {
                         speakPanelMessage: {
                             funcName: "gpii.firstDiscovery.tts.fdHookup.speakPanelMessage",
-                            args: ["{firstDiscoveryEditor}", "{that}.msgLookup.panelMsg", "{that}.queueSpeech"]
+                            args: ["{firstDiscoveryEditor}", "{that}.msgLookup.panelMsg", "{that}.queueSpeech", "{arguments}.0"]
                         },
                         speakPanelInstructions: {
                             funcName: "gpii.firstDiscovery.tts.fdHookup.speakPanelInstructions",
-                            args: ["{firstDiscoveryEditor}", "{that}.queueSpeech"]
+                            args: ["{firstDiscoveryEditor}", "{that}.queueSpeech", "{arguments}.0"]
                         }
                     },
                     listeners: {
@@ -84,20 +84,20 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         return texts.join(" ");
     };
 
-    gpii.firstDiscovery.tts.fdHookup.speakPanelMessage = function (that, template, speakFn) {
+    gpii.firstDiscovery.tts.fdHookup.speakPanelMessage = function (that, template, speakFn, speakOpts) {
         var currentPanelNum = that.model.currentPanelNum;
         var msg = fluid.stringTemplate(template, {
             currentPanel: currentPanelNum,
             numPanels: that.panels.length,
             instructions: gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions(that)
         });
-        speakFn(msg);
+        speakFn(msg, speakOpts);
     };
 
-    gpii.firstDiscovery.tts.fdHookup.speakPanelInstructions = function (that, speakFn) {
+    gpii.firstDiscovery.tts.fdHookup.speakPanelInstructions = function (that, speakFn, speakOpts) {
         var msg = gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions(that);
 
-        speakFn(msg);
+        speakFn(msg, speakOpts);
     };
 
 })(jQuery, fluid);
