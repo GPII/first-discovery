@@ -45,9 +45,26 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.defaults("gpii.tests.firstDiscovery.selfVoicing", {
         gradeNames: ["gpii.firstDiscovery.selfVoicing", "autoInit"],
+        members: {
+            queueRecord: []
+        },
         model: {
             utteranceOpts: {
                 volume: 0
+            }
+        },
+        messageBase: {
+            "unmuted": "turn voice OFF",
+            "unmutedTooltip": "Select to turn voice off",
+            "unmutedMsg": "voice is on",
+            "muted": "turn voice ON",
+            "mutedTooltip": "Select to turn voice on",
+            "mutedMsg": "voice is off"
+        },
+        listeners: {
+            onSpeechQueued: {
+                "this": "{that}.queueRecord",
+                "method": "push"
             }
         }
     });
@@ -81,13 +98,16 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.defaults("gpii.tests.selfVoicingTester", {
         gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
         testOptions: {
-            increasedStep: 1.1,
-            decreasedStep: 1.0
+            speechQueue: ["Test Text", "Test More Text"]
         },
         invokers: {
             testRendering: {
                 funcName: "gpii.tests.selfVoicingTester.testRendering",
                 args: ["{selfVoicing}", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
+            },
+            testMuted: {
+                funcName: "gpii.tests.selfVoicingTester.testMuted",
+                args: ["{that}", "{selfVoicing}", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
             }
         },
         modules: [{
@@ -99,22 +119,24 @@ https://github.com/gpii/universal/LICENSE.txt
                 func: "{that}.testRendering",
                 args: ["{selfVoicing}.options.messageBase.unmuted", "{selfVoicing}.options.messageBase.unmutedTooltip", "{selfVoicing}.options.styles.unmuted"]
             }, {
-                expect: 4,
+                expect: 5,
                 name: "Test interaction",
                 sequence: [{
+                    func: "{selfVoicing}.queueSpeech",
+                    args: ["{that}.options.testOptions.speechQueue.0"]
+                }, {
+                    func: "{selfVoicing}.queueSpeech",
+                    args: ["{that}.options.testOptions.speechQueue.1", {queue: true}]
+                }, {
+                    listener: "jqUnit.assertDeepEq",
+                    args: ["The speech queue should have been populated correctly", "{that}.options.testOptions.speechQueue", "{selfVoicing}.queueRecord"],
+                    event: "{selfVoicing}.events.onStop"
+                }, {
                     jQueryTrigger: "click",
                     element: "{selfVoicing}.dom.mute"
                 }, {
-                    listener: "{that}.testRendering",
+                    listener: "{that}.testMuted",
                     args: ["{selfVoicing}.options.messageBase.muted", "{selfVoicing}.options.messageBase.mutedTooltip", "{selfVoicing}.options.styles.muted"],
-                    spec: {path: "enabled", priority: "last"},
-                    changeEvent: "{selfVoicing}.applier.modelChanged"
-                }, {
-                    func: "{selfVoicing}.queueSpeech",
-                    args: ["Test Text"]
-                }, {
-                    listener: "jqUnit.assert",
-                    args: ["The speaking should have completed"],
                     event: "{selfVoicing}.events.onStop"
                 }]
             }]
@@ -126,6 +148,12 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("The label should be set correctly", label, that.locate("muteLabel").text());
         jqUnit.assertEquals("The tooltip text should be set correctly", tooltipContent, that.tooltip.model.idToContent[muteId]);
         jqUnit.assertTrue("The class should be applied to the container", that.container.hasClass(cssClass));
+    };
+
+    gpii.tests.selfVoicingTester.testMuted = function (that, selfVoicing, label, tooltipContent, cssClass) {
+        that.testRendering(label, tooltipContent, cssClass);
+        var lastSpokenIdx = selfVoicing.queueRecord.length - 1;
+        jqUnit.assertEquals("The muted message should be spoken", selfVoicing.options.messageBase.mutedMsg, selfVoicing.queueRecord[lastSpokenIdx]);
     };
 
     $(document).ready(function () {
