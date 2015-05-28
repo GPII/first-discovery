@@ -409,7 +409,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     ]
                 },
                 {
-                    name: "Focusout  unlatches",
+                    name: "Focusout unlatches",
                     expect: 3,
                     sequence: [
                         {

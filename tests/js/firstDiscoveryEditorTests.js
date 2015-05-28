@@ -101,11 +101,11 @@ https://github.com/gpii/universal/LICENSE.txt
     gpii.tests.firstDiscovery.verifyStates = function (that, currentPanelNum, visibility) {
         var panelIndex = currentPanelNum - 1,
             prefsEditorContainer = that.locate("prefsEditor"),
-            backButton = that.navButtons.locate("back"),
-            nextButton = that.navButtons.locate("next"),
+            backButton = that.nav.navButtons.locate("back"),
+            nextButton = that.nav.navButtons.locate("next"),
             activeCss = that.options.styles.active,
             showCss = that.options.styles.show,
-            icons = that.navIcons.locate("icon"),
+            icons = that.nav.navIcons.locate("icon"),
             activeIcon = icons.eq(panelIndex);
 
         jqUnit.assertEquals("The model value for \"currentPanelNum\" has been set to " + currentPanelNum, currentPanelNum, that.model.currentPanelNum);
@@ -120,16 +120,17 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.firstDiscovery.testControls = function (that) {
-        jqUnit.expect(78);
-
-        var backButton = that.navButtons.locate("back");
-        var nextButton = that.navButtons.locate("next");
-        var lastPanel = gpii.tests.utils.firstDiscovery.panels.length;
+        jqUnit.expect(79);
 
         // Test the instantiated sub-components
         jqUnit.assertNotUndefined("The subcomponent \"prefsEditor\" has been instantiated", that.prefsEditor);
-        jqUnit.assertNotUndefined("The subcomponent \"navButtons\" has been instantiated", that.navButtons);
-        jqUnit.assertNotUndefined("The subcomponent \"navIcons\" has been instantiated", that.navIcons);
+        jqUnit.assertNotUndefined("The subcomponent \"selfVoicing\" has been instantiated", that.selfVoicing);
+        jqUnit.assertNotUndefined("The subcomponent \"helpButton\" has been instantiated", that.helpButton);
+        jqUnit.assertNotUndefined("The subcomponent \"nav\" has been instantiated", that.nav);
+
+        var backButton = that.nav.navButtons.locate("back");
+        var nextButton = that.nav.navButtons.locate("next");
+        var lastPanel = gpii.tests.utils.firstDiscovery.panels.length;
 
         gpii.tests.firstDiscovery.verifyStates(that, 1, {next: true, active: true});
 
@@ -147,7 +148,7 @@ https://github.com/gpii/universal/LICENSE.txt
 
         // Directs to the last panel by firing a change request directly
         that.applier.change("currentPanelNum", lastPanel);
-        gpii.tests.firstDiscovery.verifyStates(that, lastPanel, {back: true});
+        gpii.tests.firstDiscovery.verifyStates(that, lastPanel, {back: true, active: true});
     };
 
     fluid.defaults("gpii.tests.firstDiscovery.TTSHookupTest", {

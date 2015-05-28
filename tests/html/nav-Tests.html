@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Navigation Tests</title>
+
+        <link rel="stylesheet" media="screen" href="../lib/infusion/lib/qunit/css/qunit.css" />
+
+        <script src="../lib/infusion/lib/qunit/js/qunit.js"></script>
+        <script src="../../src/lib/infusion/infusion-custom.js"></script>
+        <script src="../lib/infusion/test-core/jqUnit/js/jqUnit.js"></script>
+
+        <script src="../../src/js/msgLookup.js"></script>
+        <script src="../../src/js/tooltip.js"></script>
+        <script src="../../src/js/navIcons.js"></script>
+        <script src="../../src/js/navButtons.js"></script>
+        <script src="../../src/js/stepCount.js"></script>
+        <script src="../../src/js/nav.js"></script>
+        <script src="../js/navTests.js"></script>
+    </head>
+
+    <body id="body">
+        <h1 id="qunit-header">Navigation Tests</h1>
+        <h2 id="qunit-banner"></h2>
+        <div id="qunit-testrunner-toolbar"></div>
+        <h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests"></ol>
+
+        <!-- Test HTML -->
+        <nav id="gpiic-tests-nav">
+            <div class="gpiic-fd-navButtons gpii-fd-navButtons">
+                <button id="gpiic-fd-navButtons-back" class="left gpii-fd-navButtons-back" tabindex="1">
+                    <span class="left gpii-fd-icon"></span>
+                    <span class="gpiic-fd-navButtons-backLabel">back</span>
+                </button>
+                <button id="gpiic-fd-navButtons-next" class="right gpii-fd-navButtons-next" tabindex="1">
+                    <span class="gpiic-fd-navButtons-nextLabel">next</span>
+                    <span class="right gpii-fd-icon"></span>
+                </button>
+            </div>
+            <div class="gpiic-fd-navIcons text-center gpii-fd-navIcons">
+                <ul class="gpii-fd-navIcon-outer">
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-lang">
+                        <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                        <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
+                    </li>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon-welcome">
+                    </li>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-volume">
+                        <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                        <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
+                    </li>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-speechRate">
+                        <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                        <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
+                    </li>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-contrast">
+                        <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                        <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
+                    </li>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-text">
+                        <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                        <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
+                    </li>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-onScreenKeyboard">
+                        <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                        <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
+                    </li>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-captions">
+                        <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                        <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
+                    </li>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-showSounds">
+                        <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                        <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
+                    </li>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-keyboard">
+                        <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                        <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
+                    </li>
+                    <li class="gpiic-fd-navIcon gpii-fd-navIcon-congratulations">
+                    </li>
+                    <li class="gpii-fd-navIcon-spacer">
+                    </li>
+                </ul>
+            </div>
+            <div class="gpii-fd-stepCount">
+                <span class="gpiic-fd-stepCountMsg"></span>
+            </div>
+        </nav>
+    </body>
+</html>

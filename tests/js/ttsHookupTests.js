@@ -52,7 +52,8 @@ https://github.com/gpii/universal/LICENSE.txt
                         enabled: true
                     },
                     messageBase: {
-                        "panelMsg": "This is step %currentPanel of %numPanels. %instructions Press 'h' for help."
+                        "stepCountMsg": "Step %currentPanel of %numPanels",
+                        "panelMsg": "This is %stepCountMsg. %instructions Press 'h' for help."
                     },
                     invokers: {
                         queueSpeech: "{firstDiscoveryEditor}.events.onTestQueueSpeech.fire"
@@ -139,7 +140,7 @@ https://github.com/gpii/universal/LICENSE.txt
                             listener: "jqUnit.assertEquals",
                             args: [
                                 "The correct message for the panel should be sent to the TTS",
-                                "This is step 1 of 3. Test Instructions Press 'h' for help.",
+                                "This is Step 1 of 3. Test Instructions Press 'h' for help.",
                                 "{arguments}.0"
                             ],
                             event: "{fdHookup}.events.onTestQueueSpeech"
