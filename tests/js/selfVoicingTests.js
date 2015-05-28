@@ -21,7 +21,7 @@ https://github.com/gpii/universal/LICENSE.txt
         };
 
         gpii.firstDiscovery.selfVoicing.setLabel(elm, testStrings.unmuted, testStrings.muted, true);
-        jqUnit.assertEquals("The mute label should be applied", testStrings.unmuted, elm.text());
+        jqUnit.assertEquals("The unmute label should be applied", testStrings.unmuted, elm.text());
 
         gpii.firstDiscovery.selfVoicing.setLabel(elm, testStrings.unmuted, testStrings.muted, false);
         jqUnit.assertEquals("The mute label should be applied", testStrings.muted, elm.text());
