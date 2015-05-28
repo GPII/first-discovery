@@ -487,40 +487,32 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         model: {
             selectedLang: undefined,
             displayLangIndex: 0,
-            firstLangSelected: false,
-            lastLangSelected: false
+            atStartOfLangs: false,
+            atEndOfLangs: false
         },
         modelRelay: [{
-            target: "langIndex",
-            singleTransform: {
-                type: "fluid.transforms.indexOf",
-                array: "{that}.options.controlValues.lang",
-                value: "{that}.model.lang",
-                offset: 1
-            }
-        }, {
-            target: "firstLangSelected",
-            singleTransform: {
-                type: "fluid.transforms.binaryOp",
-                left: "{that}.model.langIndex",
-                operator: "===",
-                right: 1
-            }
-        }, {
-            target: "lastLangSelected",
-            singleTransform: {
-                type: "fluid.transforms.binaryOp",
-                left: "{that}.model.langIndex",
-                operator: "===",
-                right: "{that}.options.controlValues.lang.length"
-            }
-        }, {
             target: "displayLangIndex",
             singleTransform: {
                 type: "fluid.transforms.limitRange",
                 input: "{that}.model.displayLangIndex",
                 min: 0,
                 max: "{that}.maxDisplayLangIndex"
+            }
+        }, {
+            target: "atStartOfLangs",
+            singleTransform: {
+                type: "fluid.transforms.binaryOp",
+                left: "{that}.model.displayLangIndex",
+                operator: "===",
+                right: 0
+            }
+        }, {
+            target: "atEndOfLangs",
+            singleTransform: {
+                type: "fluid.transforms.binaryOp",
+                left: "{that}.model.displayLangIndex",
+                operator: "===",
+                right: "{that}.maxDisplayLangIndex"
             }
         }],
         modelListeners: {
@@ -529,6 +521,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             displayLangIndex: {
                 listener: "{that}.updateDisplayedLangs"
+            },
+            atStartOfLangs: {
+                "this": "{that}.dom.prev",
+                method: "prop",
+                args: ["disabled", "{that}.model.atStartOfLangs"]
+            },
+            atEndOfLangs: {
+                "this": "{that}.dom.next",
+                method: "prop",
+                args: ["disabled", "{that}.model.atEndOfLangs"]
             }
         },
         numOfLangPerPage: 3,
@@ -590,17 +592,17 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 method: "click",
                 args: ["{that}.scrollLangsNext"]
             },
-            /*
             "afterRender.setPrevButtonStatus": {
                 "this": "{that}.dom.prev",
                 method: "prop",
-                args: ["disabled", "{that}.model.firstLangSelected"]
+                args: ["disabled", "{that}.model.atStartOfLangs"]
             },
             "afterRender.setNextButtonStatus": {
                 "this": "{that}.dom.next",
                 method: "prop",
-                args: ["disabled", "{that}.model.lastLangSelected"]
+                args: ["disabled", "{that}.model.atEndOfLangs"]
             },
+            /*
             "afterRender.scrollLangIntoView": {
                 funcName: "gpii.firstDiscovery.panel.lang.scrollLangIntoView",
                 args: ["{that}"]
