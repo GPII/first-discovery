@@ -707,7 +707,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     gpii.firstDiscovery.panel.lang.buildLangOptionsMarkup = function (langNames, langCodes) {
         // TODO move this template somewhere better
-        var template = "<div class=\"gpiic-fd-lang-row selectable gpii-fd-choice\" role=\"option\" aria-selected=\"false\" data-lang=\"%langCode\"><span class=\"gpii-fd-indicator gpii-fd-icon\"></span> <span class=\"gpii-fd-lang-label gpii-fd-choice-label\">%langName</span></div>";
+        var template = "<div class=\"gpiic-fd-lang-row selectable gpii-fd-choice\" role=\"option\" aria-selected=\"false\" lang=\"%langCode\"><span class=\"gpii-fd-indicator gpii-fd-icon\"></span> <span class=\"gpii-fd-lang-label gpii-fd-choice-label\" lang=\"%langCode\">%langName</span></div>";
         var markup = "";
         for (var i=0; i < langNames.length; i++) {
             var langName = langNames[i];
@@ -726,7 +726,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         controlsDiv.fluid("selectable", {
             noWrap: true,
             onSelect: function (elem) {
-                var selectedLang = $(elem).attr("data-lang");
+                var selectedLang = $(elem).attr("lang");
                 that.applier.change("selectedLang", selectedLang);
             },
             onUnselect: function () {
@@ -742,13 +742,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     gpii.firstDiscovery.panel.lang.onActivateLanguage = function (that, evt) {
-        var lang = $(evt.delegateTarget).attr("data-lang");
+        var lang = $(evt.delegateTarget).attr("lang");
         that.applier.change("lang", lang);
     };
 
     gpii.firstDiscovery.panel.lang.setAriaSelected = function (langCode, langOptions) {
         fluid.each(langOptions, function (langOption) {
-            var optionLangCode = $(langOption).attr("data-lang");
+            var optionLangCode = $(langOption).attr("lang");
             var ariaSelected = (optionLangCode === langCode ? true : false);
             $(langOption).attr("aria-selected", ariaSelected);
         });
@@ -819,7 +819,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     gpii.firstDiscovery.panel.lang.attachTooltipOnLang.setLangAttr = function (that, originalTarget, tooltip) {
-        tooltip.attr("lang", $(originalTarget).attr("data-lang"));
+        tooltip.attr("lang", $(originalTarget).attr("lang"));
     };
 
     /*
