@@ -612,9 +612,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             langOptions: {
                 expander: {
                     func: "gpii.firstDiscovery.panel.lang.buildLangOptionsMarkup",
-                    args: ["{that}.msgLookup.lang", "{that}.options.controlValues.lang"]
+                    args: [ "{that}.msgLookup.lang",
+                            "{that}.options.controlValues.lang",
+                            "{that}.options.markup.langOptionTemplate" ]
                 }
-            }
+            },
+            langOptionTemplate: "<div class=\"gpiic-fd-lang-row selectable gpii-fd-choice\" role=\"option\" aria-selected=\"false\" lang=\"%langCode\"><span class=\"gpii-fd-indicator gpii-fd-icon\"></span> <span class=\"gpii-fd-lang-label gpii-fd-choice-label\" lang=\"%langCode\">%langName</span></div>"
         },
         invokers: {
             scrollLangsPrev: {
@@ -639,7 +642,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         events: {
-            onButtonTopsReady: null
+            langButtonsReady: null
         },
         listeners: {
             "afterRender.bindPrev": {
@@ -662,17 +665,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 method: "prop",
                 args: ["disabled", "{that}.model.atEndOfLangs"]
             },
-            // TODO scroll to the active language on load
-            /*
-            "afterRender.scrollLangIntoView": {
-                funcName: "gpii.firstDiscovery.panel.lang.scrollLangIntoView",
-                args: ["{that}"]
-            },
-            "onButtonTopsReady.scrollLangIntoView": {
-                funcName: "gpii.firstDiscovery.panel.lang.scrollLangIntoView",
-                args: ["{that}"]
-            },
-            */
             "afterRender.setLangOnHtml": {
                 funcName: "gpii.firstDiscovery.panel.lang.setLangOnHtml",
                 args: ["{that}.model.lang"]
@@ -681,22 +673,31 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "this": "{that}.dom.controlsDiv",
                 method: "append",
                 args: ["{that}.options.markup.langOptions"],
-                priority: 10
+                priority: 20
             },
             "afterRender.makeLangsSelectable": {
                 funcName: "gpii.firstDiscovery.panel.lang.makeLangsSelectable",
                 args: ["{that}", "{that}.dom.controlsDiv"],
-                priority: 5
+                priority: 10
             },
             "afterRender.makeLangsActivatable": {
                 funcName: "gpii.firstDiscovery.panel.lang.makeLangsActivatable",
                 args: ["{that}.dom.langRow", "{that}.onActivateLanguage"],
-                priority: 5
+                priority: 10
             },
             "afterRender.setAriaSelected": {
                 funcName: "gpii.firstDiscovery.panel.lang.setAriaSelected",
                 args: ["{that}.model.lang", "{that}.dom.langRow"],
-                priority: 5
+                priority: 10
+            },
+            "afterRender.fireLangButtonsReady": {
+                funcName: "gpii.firstDiscovery.panel.lang.fireLangButtonsReady",
+                args: ["{that}"],
+                priority: 10
+            },
+            "langButtonsReady.displayAvtiveLang": {
+                funcName: "gpii.firstDiscovery.panel.lang.displayActiveLang",
+                args: ["{that}", "{that}.model.lang"]
             }
         }
     });
@@ -705,14 +706,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         return Math.max(numLangs - numLangsPerPage, 0);
     };
 
-    gpii.firstDiscovery.panel.lang.buildLangOptionsMarkup = function (langNames, langCodes) {
-        // TODO move this template somewhere better
-        var template = "<div class=\"gpiic-fd-lang-row selectable gpii-fd-choice\" role=\"option\" aria-selected=\"false\" lang=\"%langCode\"><span class=\"gpii-fd-indicator gpii-fd-icon\"></span> <span class=\"gpii-fd-lang-label gpii-fd-choice-label\" lang=\"%langCode\">%langName</span></div>";
+    gpii.firstDiscovery.panel.lang.buildLangOptionsMarkup = function (langNames, langCodes, langOptionTemplate) {
         var markup = "";
         for (var i=0; i < langNames.length; i++) {
             var langName = langNames[i];
             var langCode = langCodes[i];
-            var langOption = fluid.stringTemplate(template, {
+            var langOption = fluid.stringTemplate(langOptionTemplate, {
                 langName: langName,
                 langCode: langCode
             });
@@ -754,6 +753,19 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         });
     };
 
+    gpii.firstDiscovery.panel.lang.fireLangButtonsReady = function (that) {
+        // TODO: We should investigate the use of setTimeout() here
+        //
+        // The positions of the language buttons are not ready at
+        // afterRender but appear to be ready after a setTimeout()
+        // called from afterRender. This was the practice used in the
+        // radio buttons version of the language panel and has been
+        // continued in the FLOE-333 reworking.
+        setTimeout(function () {
+            that.events.langButtonsReady.fire();
+        });
+    };
+
     gpii.firstDiscovery.panel.lang.scrollLangs = function (that, adjustBy) {
         var newIndex = that.model.displayLangIndex + adjustBy;
         that.applier.change("displayLangIndex", newIndex);
@@ -777,10 +789,17 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     };
 
+    gpii.firstDiscovery.panel.lang.displayActiveLang = function (that, lang) {
+        var langIndex = that.options.controlValues.lang.indexOf(lang);
+        if (langIndex < that.options.numOfLangPerPage) {
+            // if our active language is on the first page, display
+            // from the start of the list
+            langIndex = 0;
+        }
+        that.applier.change("displayLangIndex", langIndex);
+    };
+
     gpii.firstDiscovery.panel.lang.updateDisplayedLangs = function (that, langIndex) {
-
-        console.log("UPDATE DISPLAY = " + langIndex);
-
         var buttons = that.locate("langRow");
         if (buttons.length > 0) {
             var firstButtonTop = buttons.offset().top;
