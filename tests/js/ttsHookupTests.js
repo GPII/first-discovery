@@ -52,7 +52,8 @@ https://github.com/gpii/universal/LICENSE.txt
                         enabled: true
                     },
                     messageBase: {
-                        "panelMsg": "This is step %currentPanel of %numPanels. %instructions Press 'h' for help."
+                        "stepCountMsg": "Step %currentPanel of %numPanels",
+                        "panelMsg": "This is %stepCountMsg. %instructions Press 'h' for help."
                     },
                     invokers: {
                         queueSpeech: "{firstDiscoveryEditor}.events.onTestQueueSpeech.fire"
@@ -141,7 +142,7 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: [
                                 "message",
                                 {
-                                    text: "This is step 1 of 3. Test Instructions Press 'h' for help.",
+                                    text: "This is Step 1 of 3. Test Instructions Press 'h' for help.",
                                     opts: {queue: false}
                                 },
                                 {

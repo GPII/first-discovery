@@ -20,6 +20,8 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     jqUnit.test("helpButton should set the message on its container", function () {
+        jqUnit.expect(1);
+
         var helpButton = gpii.tests.firstDiscovery.helpButton("#gpiic-tests-helpButton");
         var expected = helpButton.options.messageBase.help;
         var actual = helpButton.container.text();
