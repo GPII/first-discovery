@@ -37,6 +37,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     messageBase: "{messageLoader}.resources.prefsEditor.resourceText"
                 }
             },
+            helpButton: {
+                type: "gpii.firstDiscovery.helpButton",
+                container: "{that}.dom.helpButton",
+                createOnEvent: "onPrefsEditorReady",
+                options: {
+                    messageBase: "{messageLoader}.resources.prefsEditor.resourceText"
+                }
+            },
             prefsEditor: {
                 container: "{that}.dom.prefsEditor",
                 options: {
@@ -76,10 +84,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     }
                 }
             },
-            navButtons: {
-                type: "gpii.firstDiscovery.navButtons",
-                container: "{that}.dom.navButtons",
-                createOnEvent: "onCreateNavButtons",
+            nav: {
+                type: "gpii.firstDiscovery.nav",
+                container: "{that}.dom.nav",
+                createOnEvent: "onCreateNav",
                 options: {
                     model: {
                         currentPanelNum: "{firstDiscoveryEditor}.model.currentPanelNum"
@@ -87,24 +95,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     messageBase: "{messageLoader}.resources.prefsEditor.resourceText",
                     styles: "{firstDiscoveryEditor}.options.styles",
                     panelTotalNum: "{firstDiscoveryEditor}.panels.length"
-                }
-            },
-            navIcons: {
-                type: "gpii.firstDiscovery.navIcons",
-                container: "{firstDiscoveryEditor}.dom.navIcons",
-                options: {
-                    model: {
-                        currentPanelNum: "{firstDiscoveryEditor}.model.currentPanelNum"
-                    },
-                    styles: "{firstDiscoveryEditor}.options.styles"
-                }
-            },
-            helpButton: {
-                type: "gpii.firstDiscovery.helpButton",
-                container: "{that}.dom.helpButton",
-                createOnEvent: "onPrefsEditorReady",
-                options: {
-                    messageBase: "{messageLoader}.resources.prefsEditor.resourceText"
                 }
             },
             messageLoader: {
@@ -126,10 +116,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         selectors: {
             prefsEditor: ".gpiic-fd-prefsEditor",
             panel: ".gpiic-fd-prefsEditor-panel",
-            navButtons: ".gpiic-fd-navButtons",
-            navIcons: ".gpiic-fd-navIcons",
             selfVoicing: ".gpiic-fd-selfVoicing",
-            helpButton: ".gpiic-fd-help"
+            helpButton: ".gpiic-fd-help",
+            nav: ".gpiic-fd-nav"
         },
         styles: {
             active: "gpii-fd-active",
@@ -151,7 +140,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         events: {
             onPrefsEditorReady: null,
-            onCreateNavButtons: null,
+            onCreateNav: null,
             // onPanelShown is fired with one argument that is the id of the panel being shown
             onPanelShown: null
         },
@@ -163,7 +152,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             "onPrefsEditorReady.showInitialPanel": "{that}.showPanel",
             "onPrefsEditorReady.createNavButtons": {
-                listener: "{that}.events.onCreateNavButtons"
+                listener: "{that}.events.onCreateNav"
             }
         },
         invokers: {
