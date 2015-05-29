@@ -19,5 +19,6 @@
     "turnOnTooltip": "Sélectionnez pour transformer les touches rémanentes",
     "turnOffTooltip": "Sélectionnez pour transformer les touches rémanentes",
 
-    "shiftLatched": "la touch Maj est activée"
+    "shiftLatched": "la touch Maj est activée",
+    "shiftUnlatched": "la touch Maj est désactivée",
 }
