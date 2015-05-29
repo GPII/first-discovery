@@ -320,10 +320,10 @@ https://github.com/gpii/universal/LICENSE.txt
         }]
     });
 
-    $(document).ready(function () {
-        fluid.test.runTests([
-            "gpii.tests.firstDiscovery.langTests"
-        ]);
-    });
+    // $(document).ready(function () {
+    //     fluid.test.runTests([
+    //         "gpii.tests.firstDiscovery.langTests"
+    //     ]);
+    // });
 
 })(jQuery, fluid);

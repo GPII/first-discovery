@@ -599,6 +599,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         selectors: {
             instructions: ".gpiic-fd-lang-instructions",
             langRow: ".gpiic-fd-lang-row",
+            langLabel: ".gpiic-fd-lang-label",
             controlsDiv: ".gpiic-fd-lang-controls",
             prev: ".gpiic-fd-lang-prev",
             next: ".gpiic-fd-lang-next"
@@ -617,7 +618,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                             "{that}.options.markup.langOptionTemplate" ]
                 }
             },
-            langOptionTemplate: "<div class=\"gpiic-fd-lang-row selectable gpii-fd-choice\" role=\"option\" aria-selected=\"false\" lang=\"%langCode\"><span class=\"gpii-fd-indicator gpii-fd-icon\"></span> <span class=\"gpii-fd-lang-label gpii-fd-choice-label\" lang=\"%langCode\">%langName</span></div>"
+            langOptionTemplate: "<div class=\"gpiic-fd-lang-row selectable gpii-fd-choice\" role=\"option\" aria-selected=\"false\" lang=\"%langCode\"><span class=\"gpii-fd-indicator gpii-fd-icon\"></span> <span class=\"gpiic-fd-lang-label gpii-fd-lang-label gpii-fd-choice-label\" lang=\"%langCode\">%langName</span></div>"
         },
         invokers: {
             scrollLangsPrev: {
@@ -642,7 +643,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         events: {
-            langButtonsReady: null
+            langButtonsReady: null,
+            displayedLangsUpdated: null
         },
         listeners: {
             "afterRender.bindPrev": {
@@ -807,6 +809,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             var scrollTo = displayFromButton.offset().top - firstButtonTop;
             $(that.options.selectors.controlsDiv).animate({scrollTop: scrollTo}, 0);
         }
+        that.events.displayedLangsUpdated.fire();
     };
 
     gpii.firstDiscovery.panel.lang.setLangOnHtml = function (currentLang) {
