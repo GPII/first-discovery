@@ -17,5 +17,6 @@
 
     "help": "aide",
 
-    "panelMsg": "Ceci est l'étape %currentPanel de %numPanels. %instructions. Appuyez sur la touche A pour de l'aide."
+    "stepCountMsg": "l'étape %currentPanel de %numPanels",
+    "panelMsg": "Ceci est %stepCountMsg. %instructions Appuyez sur la touche A pour de l'aide."
 }
