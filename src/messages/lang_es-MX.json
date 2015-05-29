@@ -1,5 +1,5 @@
 {
-    "langInstructions": "Sélectionnez votre langue préférée",
+    "langInstructions": "Selecciona el idioma de tu preferencia",
     "lang-en-US": "English",
     "lang-fr-FR": "Français",
     "lang-es-MX": "Español",
@@ -7,9 +7,9 @@
     "lang-nl-NL": "Nederlands",
     "lang-sv-SE": "Svenska",
 
-    "navButtonTooltip": "Sélectionnez pour afficher d'autres langues",
+    "navButtonTooltip": "Selecciona más idiomas",
     "lang-en-US-tooltip": "Select for English",
-    "lang-fr-FR-tooltip": "Sélectionnez pour le français",
+    "lang-fr-FR-tooltip": "Sélectionnez pour le Français",
     "lang-es-MX-tooltip": "Selecciona Español",
     "lang-de-DE-tooltip": "Wählen Sie für die Deutsche",
     "lang-nl-NL-tooltip": "Kies voor Nederlands",
