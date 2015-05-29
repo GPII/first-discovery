@@ -1,0 +1,10 @@
+{
+    "instructions": "Prefieres que la pantalla titile cuando un sonido se reprodzca?",
+    "no": "No",
+    "yes": "Sí",
+
+    "yes-tooltip": "Selecciona activar titileo",
+    "no-tooltip": "Selecciona desactivar titileo de pantalla",
+    "yes-tooltipAtSelect": "Titileo de pantalla activado",
+    "no-tooltipAtSelect": "Titileo de pantalla desactivado"
+}

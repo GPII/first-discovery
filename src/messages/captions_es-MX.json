@@ -1,0 +1,10 @@
+{
+    "instructions": "Prefieres ver subtítulos mientras se reproduce el video?",
+    "no": "No",
+    "yes": "Sí",
+
+    "yes-tooltip": "Selecciona activar subtítulos",
+    "no-tooltip": "Selecciona desactivar subtítulos",
+    "yes-tooltipAtSelect": "Subtítulos activados",
+    "no-tooltipAtSelect": "Subtítulos desactivados"
+}

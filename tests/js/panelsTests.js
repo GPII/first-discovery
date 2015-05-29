@@ -21,7 +21,7 @@ https://github.com/gpii/universal/LICENSE.txt
             "langInstructions": "Select your preferred language",
             "lang-en-US": "English",
             "lang-fr-FR": "Français",
-            "lang-es-ES": "Español",
+            "lang-es-MX": "Español",
             "lang-de-DE": "Deutsch",
             "lang-nl-NL": "Nederlands",
             "lang-sv-SE": "Svenska",
@@ -29,14 +29,14 @@ https://github.com/gpii/universal/LICENSE.txt
             "navButtonTooltip": "Select to view more languages",
             "lang-en-US-tooltip": "Select for English",
             "lang-fr-FR-tooltip": "Sélectionnez pour le Français",
-            "lang-es-ES-tooltip": "Seleccionar para Español",
+            "lang-es-MX-tooltip": "Seleccionar para Español",
             "lang-de-DE-tooltip": "Wählen Sie für die Deutsche",
             "lang-nl-NL-tooltip": "Select for Nederlands",
             "lang-sv-SE-tooltip": "Select for Svenska",
 
             "lang-en-US-tooltipAtSelect": "English is currently selected",
             "lang-fr-FR-tooltipAtSelect": "Français est actuellement sélectionné",
-            "lang-es-ES-tooltipAtSelect": "Español está seleccionado actualmente",
+            "lang-es-MX-tooltipAtSelect": "Español está seleccionado actualmente",
             "lang-de-DE-tooltipAtSelect": "Deutsch gegenwärtig ausgewählt ist",
             "lang-nl-NL-tooltipAtSelect": "Nederlands is currently selected",
             "lang-sv-SE-tooltipAtSelect": "Svenska is currently selected"
@@ -46,12 +46,12 @@ https://github.com/gpii/universal/LICENSE.txt
         },
         numOfLangPerPage: 3,
         controlValues: {
-            lang: ["en-US", "fr-FR", "es-ES", "de-DE", "nl-NL", "sv-SE"]
+            lang: ["en-US", "fr-FR", "es-MX", "de-DE", "nl-NL", "sv-SE"]
         },
         stringArrayIndex: {
-            lang: ["lang-en-US", "lang-fr-FR", "lang-es-ES", "lang-de-DE", "lang-nl-NL", "lang-sv-SE"],
-            tooltip: ["lang-en-US-tooltip", "lang-fr-FR-tooltip", "lang-es-ES-tooltip", "lang-de-DE-tooltip", "lang-nl-NL-tooltip", "lang-sv-SE-tooltip"],
-            tooltipAtSelect: ["lang-en-US-tooltipAtSelect", "lang-fr-FR-tooltipAtSelect", "lang-es-ES-tooltipAtSelect", "lang-de-DE-tooltipAtSelect", "lang-nl-NL-tooltipAtSelect", "lang-sv-SE-tooltipAtSelect"]
+            lang: ["lang-en-US", "lang-fr-FR", "lang-es-MX", "lang-de-DE", "lang-nl-NL", "lang-sv-SE"],
+            tooltip: ["lang-en-US-tooltip", "lang-fr-FR-tooltip", "lang-es-MX-tooltip", "lang-de-DE-tooltip", "lang-nl-NL-tooltip", "lang-sv-SE-tooltip"],
+            tooltipAtSelect: ["lang-en-US-tooltipAtSelect", "lang-fr-FR-tooltipAtSelect", "lang-es-MX-tooltipAtSelect", "lang-de-DE-tooltipAtSelect", "lang-nl-NL-tooltipAtSelect", "lang-sv-SE-tooltipAtSelect"]
         },
         events: {
             afterTooltipOpen: null

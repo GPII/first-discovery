@@ -1,0 +1,10 @@
+{
+    "instructions": "Quieres usar un teclado en pantalla? Esto te permitirá escribir seleccionando letras en la pantalla.",
+    "no": "No",
+    "yes": "Sí",
+
+    "yes-tooltip": "Selecciona activar teclado en pantalla",
+    "no-tooltip": "Selecciona desactivar teclado en pantalla",
+    "yes-tooltipAtSelect": "Teclado en pantalla activado",
+    "no-tooltipAtSelect": "Teclado en pantalla desactivado"
+}
