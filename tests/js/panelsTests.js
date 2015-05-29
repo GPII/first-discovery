@@ -119,7 +119,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     element: "{lang}.dom.prev"
                 }, {
                     listener: "gpii.tests.langTester.verifyLangsInView",
-                    args: ["{lang}", ["es-ES", "de-DE", "nl-NL"]],
+                    args: ["{lang}", ["es-MX", "de-DE", "nl-NL"]],
                     priority: "last",
                     event: "{lang}.events.displayedLangsUpdated"
                 }, /*{
