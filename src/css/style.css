@@ -506,28 +506,22 @@ button {
     content: "\e60c";
 }
 
-/*
-    TODO: Replace with correct icon.
-    This is just a placeholder till the new icons are added.
-*/
 .gpii-fd-speechRate:before {
-    content: "\e60d";
+    content: "\e60f";
 }
 
 .gpii-fd-text:before {
     content: "\e60b";
 }
 
-/* A temporary icon to be replaced by the new icon for on-screen keyboard */
 .gpii-fd-onScreenKeyboard:before {
-    content: "\e60d";
+    content: "\e611";
 }
 
-/* A temporary icon to be replaced by the new icon for captions */
 .gpii-fd-captions:before {
-    content: "\e60d";
+    content: "\e610";
 }
-/* A temporary icon to be replaced by the new icon for show sounds */
+
 .gpii-fd-showSounds:before {
     content: "\e60d";
 }
