@@ -1,0 +1,29 @@
+
+body {
+    background-color: #dddddd;
+}
+.quiz {
+    color: #ffffff;
+    background-color: #425165; /* blue-grey */
+    padding: 1rem;
+    width: 36rem;
+    margin: 0 auto;
+}
+h1, h2, h3 {
+    color: #ffffff;
+}
+.quiz-button {
+    float: right;
+    border: 2px solid #ffffff;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin: 1rem;
+    background-color: #425165; /* blue-grey */
+   font-size: 1.5rem;
+}
+.quiz-question {
+    color: #425165; /* blue-grey */
+    background-color: #ffffff;
+    padding: 1.5rem;
+    height: 43rem;
+}
