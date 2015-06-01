@@ -11,6 +11,8 @@ body {
 }
 h1, h2, h3 {
     color: #ffffff;
+    font-size: 2rem;
+    line-height: 1;
 }
 .quiz-button {
     float: right;
@@ -25,5 +27,5 @@ h1, h2, h3 {
     color: #425165; /* blue-grey */
     background-color: #ffffff;
     padding: 1.5rem;
-    height: 43rem;
+    height: 44rem;
 }
