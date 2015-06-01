@@ -1,0 +1,8 @@
+{
+    "rangeInstructions": "Ajusta la velocidad de lectura en voz alta de los elementos en pantalla.",
+    "maxLabel": "rápido",
+    "minLabel": "lento",
+    "increaseLabel": "Más rápido",
+    "decreaseLabel": "Más lento",
+    "disabledMsg": "Si quieres usar esta opción, activa la opción \"Leer texto en voz alta\" en la pantalla anterior. Presiona el botón \"Atrás\", o selecciona el botón \"activar voz\" en la parte superior."
+}

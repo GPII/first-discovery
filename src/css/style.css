@@ -430,15 +430,18 @@ button {
 .gpii-fd-navButtons-next .gpii-fd-icon:after {
     content: "\e605";
 }
+
 .gpii-fd-navButtons:after {
   content:"";
   display:table;
   clear:both;
 }
+
 .gpii-fd-navIcons {
     clear: both;
     padding: 0 2rem;
 }
+
 .gpii-fd-navIcon {
     padding: 0.5rem;
     color: #425165; /* blue-grey */
@@ -452,6 +455,7 @@ button {
     text-transform: none;
     line-height: initial;
 }
+
 /* Special handling for the welcome and congratulations icons that do not have an icon */
 .gpii-fd-navIcon-welcome, .gpii-fd-navIcon-congratulations {
     display: inline-block;
@@ -465,9 +469,11 @@ button {
     display: inline-block;
     width: 36rem;
 }
+
 .gpii-fd-lang:before {
     content: "\e608";
 }
+
 .gpii-fd-volume:before {
     content: "\e609";
 }
@@ -476,25 +482,22 @@ button {
     content: "\e60c";
 }
 
-/*
-    TODO: Replace with correct icon.
-    This is just a placeholder till the new icons are added.
-*/
 .gpii-fd-speechRate:before {
-    content: "\e60d";
+    content: "\e60f";
 }
+
 .gpii-fd-text:before {
     content: "\e60b";
 }
-/* A temporary icon to be replaced by the new icon for on-screen keyboard */
+
 .gpii-fd-onScreenKeyboard:before {
-    content: "\e60d";
+    content: "\e611";
 }
-/* A temporary icon to be replaced by the new icon for captions */
+
 .gpii-fd-captions:before {
-    content: "\e60d";
+    content: "\e610";
 }
-/* A temporary icon to be replaced by the new icon for show sounds */
+
 .gpii-fd-showSounds:before {
     content: "\e60d";
 }
@@ -658,6 +661,52 @@ input[type="text"].gpii-fd-keyboard-input:focus {
     visibility: visible;
 }
 
+/* French-specific styles */
+html:lang(fr-FR) .gpii-fd-mute {
+  width: 24rem;
+}
+html:lang(es-MX) .gpii-fd-prefsEditor-panel-welcome .gpii-fd-instructions p,
+html:lang(fr-FR) .gpii-fd-prefsEditor-panel-welcome .gpii-fd-instructions p {
+  line-height: 1.1;
+}
+html:lang(es-MX) .gpii-fd-theme {
+    width: 23rem;
+}
+html:lang(fr-FR) .gpii-fd-prefsEditor-panel-keyboard {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+html:lang(es-MX) .gpii-fd-prefsEditor-panel-keyboard .gpii-fd-instructions {
+    padding: 0;
+    margin-bottom: 0;
+}
+html:lang(es-MX) .gpii-fd-keyboard-stickyKeysAdjuster-accommodationInstr,
+html:lang(fr-FR) .gpii-fd-prefsEditor-panel-keyboard .gpii-fd-instructions,
+html:lang(fr-FR) .gpii-fd-keyboard-stickyKeysAdjuster-accommodationInstr {
+    padding: 0 0 1rem 0;
+    margin-bottom: 0;
+}
+html:lang(es-MX) .gpii-fd-keyboard-stickyKeysAdjuster-accommodationNameState,
+html:lang(fr-FR) .gpii-fd-keyboard-stickyKeysAdjuster-accommodationNameState {
+    width: 23rem;
+    display: block;
+    margin-left: -1rem;
+}
+html:lang(es-MX) .gpii-fd-main.gpii-fd-prefsEditor-panel-keyboard {
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+}
+html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle,
+html:lang(fr-FR) .gpii-fd-keyboard-accommodationToggle {
+    display: block;
+    margin-top: -4rem;
+}
+html:lang(fr-FR) .gpii-fd-keyboard-accommodationToggle {
+    margin-left: 22rem;
+}
+html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
+    margin-left: 20rem;
+}
 
 /* high-contrast themes: white-on-black */
 .fl-theme-wb .gpii-fd,
