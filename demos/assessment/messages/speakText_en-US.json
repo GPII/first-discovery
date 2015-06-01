@@ -1,0 +1,10 @@
+{
+    "instructions": "Do you want the computer to talk to you?",
+    "no": "No",
+    "yes": "Yes",
+
+    "yes-tooltip": "Select to turn voice on",
+    "no-tooltip": "Select to turn voice off",
+    "yes-tooltipAtSelect": "Voice is on",
+    "no-tooltipAtSelect": "Voice is off"
+}
