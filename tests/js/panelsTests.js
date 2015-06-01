@@ -84,7 +84,7 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "Test the language settings panel",
             tests: [{
-                expect: 47,
+                expect: 48,
                 name: "Test the language panel",
                 sequence: [{
                     func: "{lang}.refreshView"
@@ -133,10 +133,18 @@ https://github.com/gpii/universal/LICENSE.txt
                     args: ["{lang}", ["de-DE", "nl-NL", "sv-SE"]],
                     priority: "last",
                     event: "{lang}.events.displayedLangsUpdated"
-                }/*, {
+                }, /*{
                     funcName: "gpii.tests.langTester.verifyPrevNextButtonsEnabled",
                     args: ["{lang}", true, false]
-                }*/]
+                },*/ {
+                    funcName: "gpii.tests.langTester.clickLangButton",
+                    args: ["{lang}", "fr-FR"]
+                }, {
+                    listener: "gpii.tests.langTester.verifyLangModel",
+                    args: ["{lang}", "fr-FR"],
+                    spec: {path: "lang", priority: "last"},
+                    changeEvent: "{lang}.applier.modelChanged"
+                }]
             }]
         }]
     });
@@ -212,10 +220,9 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("The next button should be " + nextEnabledMsg, nextEnabled, !(that.locate("next").is(":disabled")));
     };
 
-    // TODO this function is never called
     gpii.tests.langTester.clickLangButton = function (that, langCode) {
         var langButtons = that.locate("langRow");
-        $(langButtons).find("input[value='" + langCode + "']").click();
+        $(langButtons).find("[lang='" + langCode + "']").click();
     };
 
     gpii.tests.langTester.verifyLangModel = function (that, expected) {
