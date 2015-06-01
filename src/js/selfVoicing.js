@@ -92,7 +92,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     gpii.firstDiscovery.selfVoicing.queueSpeech = function (that, text, options) {
         if (that.model.enabled) {
-            fluid.textToSpeech.queueSpeech(that, text, true, options);
+            fluid.textToSpeech.queueSpeech(that, text, !fluid.get(options, "queue"), options);
         }
     };
 
