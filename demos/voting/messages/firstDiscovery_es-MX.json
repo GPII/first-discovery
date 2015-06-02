@@ -1,0 +1,23 @@
+{
+    "back": "atrás",
+    "backTooltip": "Selecciona regresar al último paso",
+    "next": "siguiente",
+    "nextTooltip": "Selecciona ir al siguiente paso",
+    "start": "continuar",
+    "startTooltip": "Selecciona continuar",
+    "finish": "siguiente",
+    "finishTooltip": "Selecciona ir al siguiente paso",
+
+    "unmuted": "desactivar voz",
+    "unmutedTooltip": "Selecciona desactivar voz",
+    "unmutedMsg": "Voz está activada",
+    "muted": "Activar voz",
+    "mutedTooltip": "Selecciona activar voz",
+    "mutedMsg": "Voz está desactivada",
+
+    "help": "ayuda",
+
+    "stepCountMsg": "Paso del %currentPanel al %numPanels",
+    "panelMsg": "%stepCountMsg. %instructions Para obetener ayuda, presiona la tecla 'H'."
+
+}
