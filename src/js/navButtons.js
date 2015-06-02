@@ -100,11 +100,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "onCreate.setButtonLabels": "{that}.setButtonLabels",
             "onCreate.toggleBackButtonStates": {
                 listener: "{that}.toggleButtonSates",
-                args: ["{that}.dom.back", "{that}.model.isFirstPanel"],
+                args: ["{that}.dom.back", "{that}.model.isFirstPanel"]
             },
             "onCreate.toggleNextButtonStates": {
                 listener: "{that}.toggleButtonSates",
-                args: ["{that}.dom.next", "{that}.model.isLastPanel"],
+                args: ["{that}.dom.next", "{that}.model.isLastPanel"]
             }
         },
         invokers: {
@@ -137,7 +137,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     gpii.firstDiscovery.navButtons.setButtonLabels = function (that) {
         var currentPanelNum = that.model.currentPanelNum,
-            backButton = that.locate("back"),
             nextButton = that.locate("next"),
             nextButtonId = fluid.allocateSimpleId(nextButton),
             disposition = gpii.firstDiscovery.navButtons.indexToDisposition(currentPanelNum, that.options.panelStartNum, that.options.panelTotalNum),
