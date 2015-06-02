@@ -167,6 +167,7 @@
 .gpii-fd-navIcon {
     color: #000;
     background-color: #ffffff;
+    font-size: 3.3rem;
 }
 
 .gpii-fd-active {
@@ -175,4 +176,16 @@
 
 .gpii-fd-active:before {
     outline: none;
+}
+
+.gpii-fd-lang:before {
+    content: "1";
+}
+
+.gpii-fd-contrast:before {
+    content: "2";
+}
+
+.gpii-fd-text:before {
+    content: "3";
 }
