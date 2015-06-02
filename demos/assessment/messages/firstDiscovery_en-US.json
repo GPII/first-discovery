@@ -5,8 +5,8 @@
     "nextTooltip": "Select to go to next step",
     "start": "continue",
     "startTooltip": "Select to continue",
-    "finish": "finish",
-    "finishTooltip": "Select to finish",
+    "finish": "done",
+    "finishTooltip": "Select to continue to test",
 
     "unmuted": "turn voice OFF",
     "unmutedTooltip": "Select to turn voice off",
