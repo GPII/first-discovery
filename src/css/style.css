@@ -492,6 +492,9 @@ button {
 .gpii-fd-navIcon-spacer {
     display: inline-block;
     width: 36rem;
+    height: 6rem;
+    margin-bottom: 1.4rem;
+    background-color: #ffffff;
 }
 
 .gpii-fd-lang:before {
