@@ -29,3 +29,12 @@ h1, h2, h3 {
     padding: 1.5rem;
     height: 44rem;
 }
+ul.multiple-choice {
+    list-style: none;
+}
+figure {
+    margin: 0;
+}
+figcaption {
+    text-align: center;
+}
