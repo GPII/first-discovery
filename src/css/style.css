@@ -480,18 +480,19 @@ button {
     line-height: initial;
 }
 
-/* Special handling for the welcome and congratulations icons that do not have an icon */
-.gpii-fd-navIcon-welcome, .gpii-fd-navIcon-congratulations {
-    display: inline-block;
-    margin: 0.2rem -0.3rem 0 0;
-}
-
 /* Spacer required to make sure icon bar is scrollable to the end - designs require empty space at end of
  * list in final position. This must be at least the width of the icon bar minus one icon
  */
-.gpii-fd-navIcon-spacer {
-    display: inline-block;
-    width: 36rem;
+
+.gpii-fd-navIcon-spacer:before {
+    content: "\200B"; /* unicode for zero width space */
+    color: #fff;
+}
+
+/* Special handling for the welcome and congratulations icons that do not have an icon */
+.gpii-fd-navIcon-welcome, .gpii-fd-navIcon-congratulations {
+    width: 0; /* set width to zero so that icon paging works */
+    display: none;
 }
 
 .gpii-fd-lang:before {
