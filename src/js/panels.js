@@ -829,6 +829,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         that.events.displayedLangsUpdated.fire();
     };
 
+    gpii.firstDiscovery.panel.lang.refreshDisplayedLangsOnShowPanel = function (that, shownPanelId) {
+        var langPanelId = that.container.attr("id");
+        if (langPanelId === shownPanelId) {
+            // reset back to the top of the list and refresh
+            $(that.options.selectors.controlsDiv).animate({scroolTop: 0}, 0);
+            that.applier.change("displayLangIndex", 0);
+            that.refreshView();
+        }
+    };
+
     gpii.firstDiscovery.panel.lang.setLangOnHtml = function (currentLang) {
         $("html").attr("lang", currentLang);
     };
@@ -860,6 +870,21 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.panel.lang.attachTooltipOnLang.setLangAttr = function (that, originalTarget, tooltip) {
         tooltip.attr("lang", $(originalTarget).attr("lang"));
     };
+
+    // Any change to the model causes all panels to be rerendered. If
+    // the language panel is rerendered while off-screen, we cannot
+    // scroll to the correct position as position information is not
+    // available while hidden. Instead, we need to rerender again when
+    // the user naviagates back to the language panel.
+    fluid.defaults("gpii.firstDiscovery.panel.lang.prefEditorConnection", {
+        gradeNames: ["fluid.eventedComponent", "autoInit"],
+        listeners: {
+            "{prefsEditor}.events.onPanelShown": {
+                funcName: "gpii.firstDiscovery.panel.lang.refreshDisplayedLangsOnShowPanel",
+                args: ["{that}", "{arguments}.0"]
+            }
+        }
+    });
 
     /*
      * Contrast panel

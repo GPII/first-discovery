@@ -76,7 +76,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                             ]
                         }
                     },
-                    autoSave: true
+                    autoSave: true,
+                    connectionGradeForLang: "gpii.firstDiscovery.panel.lang.prefEditorConnection",
+                    distributeOptions: {
+                        source: "{that}.options.connectionGradeForLang",
+                        target: "{that > gpii.firstDiscovery.panel.lang}.options.prefsEditorConnection"
+                    }
                 }
             },
             nav: {
