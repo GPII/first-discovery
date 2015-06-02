@@ -12,6 +12,19 @@
     color: #000;
 }
 
+.gpii-fd-help:hover,
+.gpii-fd-mute:hover {
+    background-color: inherit;
+    color: #fff;
+    border-width: 0.4rem;
+    padding: 0.8rem;
+}
+.gpii-fd-help:active,
+.gpii-fd-mute:active {
+    background-color: #fff;
+    color: #000;
+}
+
 .gpii-fd-main {
     color: #000;
 }
