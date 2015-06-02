@@ -199,7 +199,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         model: {
             // offerAssistance: boolean
-            // tryAccommodation: boolean
+            tryAccommodation: false,
             userInput: ""
         },
         components: {
@@ -326,6 +326,23 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             that.destroy();
         }
     };
+
+    // Reads the instructions at the various stages of the panels workflow
+    fluid.defaults("gpii.firstDiscovery.panel.keyboardTts", {
+        invokers: {
+            speakPanelInstructions: "{fluid.textToSpeech}.speakPanelInstructions"
+        },
+        modelListeners: {
+            offerAssistance: {
+                func: "{that}.speakPanelInstructions",
+                args: [{queue: true}]
+            },
+            tryAccommodation: {
+                listener: "{that}.speakPanelInstructions",
+                excludeSource: "init"
+            }
+        }
+    });
 
     /*
      * Text size panel

@@ -125,7 +125,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     ]
                 },
                 {
-                    expect: 3,
+                    expect: 6,
                     name: "TTS message tests",
                     sequence: [
                         // Move back to the first panel
@@ -134,23 +134,41 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["currentPanelNum", 1]
                         },
                         {
-                            func: "{fdHookup}.selfVoicing.speakPanelMessage"
+                            func: "{fdHookup}.selfVoicing.speakPanelMessage",
+                            args: [{queue: false}]
                         },
                         {
-                            listener: "jqUnit.assertEquals",
+                            listener: "gpii.tests.ttsHookupTester.assertSpeak",
                             args: [
-                                "The correct message for the panel should be sent to the TTS",
-                                "This is Step 1 of 3. Test Instructions Press 'h' for help.",
-                                "{arguments}.0"
+                                "message",
+                                {
+                                    text: "This is Step 1 of 3. Test Instructions Press 'h' for help.",
+                                    opts: {queue: false}
+                                },
+                                {
+                                    text: "{arguments}.0",
+                                    opts: "{arguments}.1"
+                                }
                             ],
                             event: "{fdHookup}.events.onTestQueueSpeech"
                         },
                         {
-                            func: "{fdHookup}.selfVoicing.speakPanelInstructions"
+                            func: "{fdHookup}.selfVoicing.speakPanelInstructions",
+                            args: [{queue: false}]
                         },
                         {
-                            listener: "jqUnit.assertEquals",
-                            args: ["The panel instructions should be sent to the TTS", "Test Instructions", "{arguments}.0"],
+                            listener: "gpii.tests.ttsHookupTester.assertSpeak",
+                            args: [
+                                "instructions",
+                                {
+                                    text: "Test Instructions",
+                                    opts: {queue: false}
+                                },
+                                {
+                                    text: "{arguments}.0",
+                                    opts: "{arguments}.1"
+                                }
+                            ],
                             event: "{fdHookup}.events.onTestQueueSpeech"
                         },
                         {
@@ -158,8 +176,17 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["body", "keydown", {which: gpii.firstDiscovery.keyboardShortcut.key.h}]
                         },
                         {
-                            listener: "jqUnit.assertEquals",
-                            args: ["The panel instructions should be sent to the TTS", "Test Instructions", "{arguments}.0"],
+                            listener: "gpii.tests.ttsHookupTester.assertSpeak",
+                            args: [
+                                "instructions",
+                                {
+                                    text: "Test Instructions"
+                                },
+                                {
+                                    text: "{arguments}.0",
+                                    opts: "{arguments}.1"
+                                }
+                            ],
                             event: "{fdHookup}.events.onTestQueueSpeech"
                         }
                     ]
@@ -170,6 +197,11 @@ https://github.com/gpii/universal/LICENSE.txt
 
     gpii.tests.ttsHookupTester.verifyGetCurrentPanelInstructions = function (that, expected) {
         jqUnit.assertEquals("The current panel instructions should be retrieved correctly", expected, gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions(that));
+    };
+
+    gpii.tests.ttsHookupTester.assertSpeak = function (textType, expected, actual) {
+        jqUnit.assertEquals("The correct " + textType + " for the panel should be sent to the TTS", expected.text, actual.text);
+        jqUnit.assertDeepEq("The correct " + textType + " for the panel should be sent to the TTS", expected.opts, actual.opts);
     };
 
     $(document).ready(function () {
