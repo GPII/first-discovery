@@ -1,0 +1,22 @@
+{
+    "back": "back",
+    "backTooltip": "Select to go back to last step",
+    "next": "next",
+    "nextTooltip": "Select to go to next step",
+    "start": "continue",
+    "startTooltip": "Select to continue",
+    "finish": "next",
+    "finishTooltip": "Select to go to next step",
+
+    "unmuted": "turn voice OFF",
+    "unmutedTooltip": "Select to turn voice off",
+    "unmutedMsg": "voice is on",
+    "muted": "turn voice ON",
+    "mutedTooltip": "Select to turn voice on",
+    "mutedMsg": "voice is off",
+
+    "help": "help",
+
+    "stepCountMsg": "Step %currentPanel of %numPanels",
+    "panelMsg": "This is %stepCountMsg. %instructions Press 'h' for help."
+}
