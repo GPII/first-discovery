@@ -52,7 +52,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "type": "gpii.firstDiscovery.panel.welcome",
                     "container": ".gpiic-fd-prefsEditor-panel-welcome",
                     "template": "%prefix/welcomeTemplate.html",
-                    "message": "%prefix/welcome.json"
+                    "message": "messages/welcome.json"
                 }
             },
             "contrast": {
