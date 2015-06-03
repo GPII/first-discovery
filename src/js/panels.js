@@ -669,7 +669,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                             "{that}.options.markup.langOptionTemplate" ]
                 }
             },
-            langOptionTemplate: "<div class=\"gpiic-fd-lang-row selectable gpii-fd-choice\" role=\"option\" aria-selected=\"false\" lang=\"%langCode\"><span class=\"gpii-fd-indicator gpii-fd-icon\"></span> <span class=\"gpiic-fd-lang-label gpii-fd-lang-label gpii-fd-choice-label\" lang=\"%langCode\">%langName</span></div>"
+            langOptionTemplate: "<div class=\"gpiic-fd-lang-row gpiic-fd-tooltip selectable gpii-fd-choice\" role=\"option\" aria-selected=\"false\" lang=\"%langCode\"><span class=\"gpii-fd-indicator gpii-fd-icon\"></span> <span class=\"gpiic-fd-lang-label gpii-fd-lang-label gpii-fd-choice-label\" lang=\"%langCode\">%langName</span></div>"
         },
         invokers: {
             scrollLangsPrev: {
