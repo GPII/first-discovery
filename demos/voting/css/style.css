@@ -33,15 +33,14 @@
     background-color: #000;
 }
 
-
 .gpii-fd-choice-label:hover {
-    background-color: #000; /* blue-grey, to override foundation's blue */
+    background-color: #000; /* to override foundation's blue */
     box-shadow: 0 0 0 0.04rem rgb(255,255,255), /* white */
                 0 0 0 0.6rem rgb(0,0,0); /*blue-grey */
 }
 
 .gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
-    background-color: #000; /* blue-grey */
+    background-color: #000;
     border: 2px solid #fed73a; /* Yellow */
     box-shadow: 0 0 0 0.2rem rgb(244, 215, 75), /* Yellow */
                 0 0 0 0.6rem rgb(0, 0, 0);
@@ -50,13 +49,12 @@
 
 .gpii-fd-choice-label:active {
     background-color: #fff;
-    color: #000; /* blue-grey */
+    color: #000;
     border: 0.2rem solid #fff;
     box-shadow: 0 0 0 0.4rem rgb(0, 0, 0); /* blue-grey */
 }
 
 /* Language and Navigation section at bottom, containing back/next and icons */
-
 .gpii-fd-lang-next,
 .gpii-fd-lang-prev {
     background-color: #000;
@@ -181,6 +179,8 @@
     color: #000;
     background-color: #ffffff;
     font-size: 3.3rem;
+    min-width: 6rem;
+    width: initial;
 }
 
 .gpii-fd-navIcon:before {
@@ -189,4 +189,8 @@
 
 .gpii-fd-active {
     background: #F4D75D;
+}
+
+.gpii-fd-active:before {
+    outline: none;
 }
