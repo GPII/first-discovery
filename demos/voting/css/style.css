@@ -183,22 +183,10 @@
     font-size: 3.3rem;
 }
 
+.gpii-fd-navIcon:before {
+    content: attr(data-step);
+}
+
 .gpii-fd-active {
     background: #F4D75D;
-}
-
-.gpii-fd-active:before {
-    outline: none;
-}
-
-.gpii-fd-lang:before {
-    content: "1";
-}
-
-.gpii-fd-contrast:before {
-    content: "2";
-}
-
-.gpii-fd-text:before {
-    content: "3";
 }
