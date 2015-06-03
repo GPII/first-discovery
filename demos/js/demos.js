@@ -17,23 +17,30 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.registerNamespace("demo.firstDiscovery");
 
     /*
-     * A grade component to show the next button on the last panel. It can be applied to demos where the last panel is not the congratulations.
+     * A grade component to handle the integration customizations for the demos.
      */
-    fluid.defaults("demo.firstDiscovery.showNextOnLastPanel", {
+    fluid.defaults("demo.firstDiscovery.integration", {
         gradeNames: ["fluid.littleComponent", "autoInit"],
-        distributeOptions: {
+        demoURL: "",
+        distributeOptions: [{
             target: "{that navButtons}.options.modelListeners.currentPanelNum",
             record: {
-                listener: "demo.firstDiscovery.showNextOnLastPanel.showNextButton",
+                listener: "demo.firstDiscovery.integration.showNextButton",
                 args: ["{that}", "{change}.value"],
                 namespace: "showNextButton",
                 priority: "last",
                 excludeSource: "init"
             }
-        }
+        }, {
+            target: "{that navButtons}.options.invokers.nextButtonClicked",
+            record: {
+                funcName: "demo.firstDiscovery.integration.nextTrigger",
+                args: ["{that}", 1, "{integration}.options.demoURL"]
+            }
+        }]
     });
 
-    demo.firstDiscovery.showNextOnLastPanel.showNextButton = function (that, currentPanelNum) {
+    demo.firstDiscovery.integration.showNextButton = function (that, currentPanelNum) {
         var nextButton = that.locate("next");
         var isLastPanel = currentPanelNum === that.options.panelTotalNum;
         var secondLastPanel = currentPanelNum === (that.options.panelTotalNum - 1);
@@ -66,5 +73,22 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         });
     };
+
+    demo.firstDiscovery.integration.nextTrigger = function (that, toChange, demoURL) {
+        if (!that.model.isLastPanel) {
+            gpii.firstDiscovery.navButtons.adjustCurrentPanelNum(that, 1);
+        } else if (demoURL) {
+            window.location.href = demoURL;
+        }
+    };
+
+    /***************************
+     * Demo Integration Grades *
+     ***************************/
+
+    fluid.defaults("demo.firstDiscovery.integration.voting", {
+        gradeNames: ["demo.firstDiscovery.integration", "autoInit"],
+        demoURL: "vote.html"
+    });
 
 })(jQuery, fluid);
