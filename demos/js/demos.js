@@ -22,10 +22,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.defaults("demo.firstDiscovery.showNextOnLastPanel", {
         gradeNames: ["fluid.littleComponent", "autoInit"],
         distributeOptions: {
-            target: "{that navButtons}.options.modelListeners.isLastPanel",
+            target: "{that navButtons}.options.modelListeners.currentPanelNum",
             record: {
                 listener: "demo.firstDiscovery.showNextOnLastPanel.showNextButton",
-                args: ["{that}.dom.next", "{change}.value", "{that}.options.styles.show"],
+                args: ["{that}", "{change}.value"],
                 namespace: "showNextButton",
                 priority: "last",
                 excludeSource: "init"
@@ -33,10 +33,20 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    demo.firstDiscovery.showNextOnLastPanel.showNextButton = function (element, isLastPanel, showSelector) {
+    demo.firstDiscovery.showNextOnLastPanel.showNextButton = function (that, currentPanelNum) {
+        var nextButton = that.locate("next");
+        var isLastPanel = currentPanelNum === that.options.panelTotalNum;
+        var secondLastPanel = currentPanelNum === (that.options.panelTotalNum - 1);
+
         if (isLastPanel) {
-            element.prop("disabled", !isLastPanel);
-            element.toggleClass(showSelector, isLastPanel);
+            gpii.firstDiscovery.navButtons.toggleButtonSates(nextButton, !isLastPanel, that.options.styles.show);
+        } else if (secondLastPanel) {
+            var nextButtonID = fluid.allocateSimpleId(nextButton),
+                nextLabel = that.msgResolver.resolve("next"),
+                nextTooltipContent = that.msgResolver.resolve("nextTooltip");
+
+            that.locate("nextLabel").html(nextLabel);
+            that.tooltip.applier.change("idToContent." + nextButtonID, nextTooltipContent);
         }
     };
 
