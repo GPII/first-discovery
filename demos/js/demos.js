@@ -17,6 +17,23 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.registerNamespace("demo.firstDiscovery");
 
     /*
+     * Create a UI Enhancer and add it to the page
+     */
+    demo.firstDiscovery.addUIE = function (container, options) {
+        fluid.prefs.builder({
+            gradeNames: [options.auxSchemaName],
+            primarySchema: gpii.firstDiscovery.schemas
+        });
+        gpii.firstDiscovery.uie(container, {
+            store: {
+                cookie: {
+                    name: options.cookieName
+                }
+            }
+        });
+    };
+
+    /*
      * A grade component to handle the integration customizations for the demos.
      */
     fluid.defaults("demo.firstDiscovery.integration", {
@@ -55,23 +72,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             that.locate("nextLabel").html(nextLabel);
             that.tooltip.applier.change("idToContent." + nextButtonID, nextTooltipContent);
         }
-    };
-
-    /*
-     * Create a UI Enhancer and add it to the page
-     */
-    demo.firstDiscovery.addUIE = function (container, options) {
-        fluid.prefs.builder({
-            gradeNames: [options.auxSchemaName],
-            primarySchema: gpii.firstDiscovery.schemas
-        });
-        gpii.firstDiscovery.uie(container, {
-            store: {
-                cookie: {
-                    name: options.cookieName
-                }
-            }
-        });
     };
 
     demo.firstDiscovery.integration.nextTrigger = function (that, toChange, demoURL) {
