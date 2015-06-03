@@ -286,8 +286,7 @@ https://github.com/gpii/universal/LICENSE.txt
 
     gpii.tests.firstDiscovery.testDefaultLocale = function (that) {
         var locale = that.prefsEditorLoader.options.defaultLocale;
-        var expectedLocale = fluid.get(fluid.defaults("gpii.firstDiscovery.schemas.language"), ["schema", "properties", "gpii.firstDiscovery.language", "default"]);
-        jqUnit.assertEquals("default locale is as expected", expectedLocale, locale);
+        jqUnit.assertEquals("default locale is as expected", "en-US", locale);
     };
 
 
