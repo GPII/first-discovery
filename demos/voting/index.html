@@ -91,8 +91,7 @@
                 var container = $("#gpiic-fd");
                 var unsupportedText = "This browser is currently not supported. Please try using the latest version of Chrome or Safari.";
 
-                /*if (fluid.textToSpeech.isSupported()) {*/
-                if (true) {
+                if (fluid.textToSpeech.isSupported()) {
                     fluid.prefs.create(container, {
                         build: {
                             gradeNames: ["demo.voting.auxSchema"]
