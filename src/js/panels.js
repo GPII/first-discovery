@@ -744,7 +744,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 args: ["{that}"],
                 priority: 10
             },
-            "langButtonsReady.displayAvtiveLang": {
+            "langButtonsReady.displayActiveLang": {
                 funcName: "gpii.firstDiscovery.panel.lang.displayActiveLang",
                 args: ["{that}", "{that}.model.lang"]
             }
@@ -863,7 +863,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         var langPanelId = that.container.attr("id");
         if (langPanelId === shownPanelId) {
             // reset back to the top of the list and refresh
-            $(that.options.selectors.controlsDiv).animate({scroolTop: 0}, 0);
             that.applier.change("displayLangIndex", 0);
             that.refreshView();
         }
