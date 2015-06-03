@@ -21,7 +21,8 @@
     height: 5.5rem;
 }
 
-.demo-vote button {
+.demo-vote button,
+.demo-vote header a {
     background: rgba(200, 200, 200, 1) none repeat scroll 0 0 !important;
     border: medium none;
     border-radius: 6px;
@@ -40,7 +41,8 @@
     display: inline-block;
 }
 
-.demo-vote button span {
+.demo-vote button span,
+.demo-vote a span {
     font-family: 'demo-voting';
     display: inline-block;
     padding: 0 0.6rem 0 0;
