@@ -17,7 +17,7 @@
 }
 
 .demo-ballot div {
-    border: 0.1rem solid #000;
+    outline: 0.1rem solid #000;
     height: 5.5rem;
 }
 
@@ -69,4 +69,8 @@
     padding: 1rem;
     margin: 0;
     max-width: 100%;
+}
+
+.demo-vote header .show-for-medium-up {
+    min-width: 40rem;
 }
