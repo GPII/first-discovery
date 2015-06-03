@@ -863,6 +863,11 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
         color: #ffffff !important;
 }
 
+.fl-theme-wb .gpii-fd-stepCount span {
+    color: #000 !important;
+    background-color: #fff !important;
+}
+
 /* high-contrast themes: black-on-white */
 .fl-theme-bw .gpii-fd,
 .fl-theme-bw .gpii-fd-navButtons-next,
@@ -964,6 +969,11 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
 .fl-theme-bw button:disabled:hover * {
         background-color: transparent !important;
         color: #000000 !important;
+}
+
+.fl-theme-bw .gpii-fd-stepCount span {
+    color: #fff !important;
+    background-color: #000 !important;
 }
 
 /* high-contrast themes, shared by both */

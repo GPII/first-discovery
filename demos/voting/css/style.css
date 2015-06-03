@@ -194,3 +194,7 @@
 .gpii-fd-active:before {
     outline: none;
 }
+
+.gpii-fd-navIcon-outer {
+  width: 26.1rem;
+}
