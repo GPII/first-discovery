@@ -327,9 +327,20 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     };
 
+    // TODO: Need to add an integration test keyboardTts
+    // Will need to construct a mock TTS which will allow for the
+    // verification of queued speech.
+    // see: https://issues.fluidproject.org/browse/FLOE-370
+
+    fluid.registerNamespace("gpii.firstDiscovery.panel.keyboardTts");
+
     // Reads the instructions at the various stages of the panels workflow
     fluid.defaults("gpii.firstDiscovery.panel.keyboardTts", {
         invokers: {
+            speakStickyKeysState: {
+                funcName: "gpii.firstDiscovery.panel.keyboardTts.speakStickyKeysState",
+                args: ["{arguments}.0", "{fluid.textToSpeech}.queueSpeech", "{arguments}.1"]
+            },
             speakPanelInstructions: "{fluid.textToSpeech}.speakPanelInstructions"
         },
         modelListeners: {
@@ -341,8 +352,24 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 listener: "{that}.speakPanelInstructions",
                 excludeSource: "init"
             }
-        }
+        },
+        distributeOptions: [{
+            target: "{that assistance}.options.modelListeners",
+            record: {
+                stickyKeysEnabled: {
+                    listener: "{keyboardTts}.speakStickyKeysState",
+                    namespace: "speakStickyKeysState",
+                    args: ["{that}", "{change}.value"]
+                }
+            }
+        }]
     });
+
+    gpii.firstDiscovery.panel.keyboardTts.speakStickyKeysState = function (that, speakFn, state) {
+        if (that.model.tryAccommodation) {
+            speakFn(state ? that.msgResolver.resolve("enabledMsg") : that.msgResolver.resolve("disabledMsg"));
+        }
+    };
 
     /*
      * Text size panel

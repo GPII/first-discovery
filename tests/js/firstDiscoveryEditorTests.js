@@ -28,10 +28,9 @@ https://github.com/gpii/universal/LICENSE.txt
                     components: {
                         selfVoicing: {
                             options: {
-                                model: {
-                                    utteranceOpts: {
-                                        volume: 0
-                                    }
+                                // Override queueSpeech() to work around this issue: http://issues.fluidproject.org/browse/FLOE-304
+                                invokers: {
+                                    queueSpeech: "fluid.identity"
                                 }
                             }
                         }
@@ -158,8 +157,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 "The utterance options should be set correctly",
                 {
                     lang: "{prefsEditorLoader}.settings.gpii_firstDiscovery_language",
-                    rate: "{prefsEditorLoader}.settings.gpii_firstDiscovery_speechRate",
-                    volume: 0 // the volume is set to 0 for the test.
+                    rate: "{prefsEditorLoader}.settings.gpii_firstDiscovery_speechRate"
                 },
                 "{that}.model.utteranceOpts"
             ]
@@ -215,18 +213,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 options: {
                     listeners: {
                         "onPanelShown.escalate": "{firstDiscoveryLang}.events.onPanelShown"
-                    },
-                    components: {
-                        selfVoicing: {
-                            options: {
-                                // Override queueSpeech() to work around this issue: http://issues.fluidproject.org/browse/FLOE-304
-                                invokers: {
-                                    queueSpeech: "fluid.identity"
-                                }
-                            }
-                        }
                     }
-
                 }
             }
         },
@@ -320,9 +307,89 @@ https://github.com/gpii/universal/LICENSE.txt
         }]
     });
 
+    // Re-calculate the nav icon size at text size change
+    fluid.defaults("gpii.tests.firstDiscoveryNavIcons", {
+        gradeNames: ["gpii.tests.firstDiscovery", "autoInit"],
+        components: {
+            prefsEditorLoader: {
+                options: {
+                    listeners: {
+                        "onPrefsEditorReady.escalate": "{firstDiscoveryNavIcons}.events.onPrefsEditorReady"
+                    }
+                }
+            }
+        },
+        events: {
+            onPrefsEditorReady: null,
+            onPageShown: null
+        },
+        navIconsModelListeners: {
+            listener: "{firstDiscoveryNavIcons}.events.onPageShown",
+            priority: "last"
+        },
+        distributeOptions: {
+            source: "{that}.options.navIconsModelListeners",
+            target: "{that gpii.firstDiscovery.navIcons}.options.modelListeners.pageNum"
+        }
+    });
+
+    fluid.defaults("gpii.tests.firstDiscovery.navIconsTests", {
+        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        components: {
+            firstDiscovery: {
+                type: "gpii.tests.firstDiscoveryNavIcons",
+                container: "#gpiic-fd-recalculateIconSize",
+                createOnEvent: "{navIconsTester}.events.onTestCaseStart"
+            },
+            navIconsTester: {
+                type: "gpii.tests.firstDiscovery.navIconsTester"
+            }
+        }
+    });
+
+    gpii.tests.firstDiscovery.testInitIconWidth = function (firstDiscovery, that) {
+        that.initialIconWidth = firstDiscovery.prefsEditorLoader.nav.navIcons.model.iconWidth;
+        jqUnit.assertTrue("The initial icon size should have been set", that.initialIconWidth > 0);
+    };
+
+    gpii.tests.firstDiscovery.testChangedIconWidth = function (that, initialSize) {
+        var newSize = that.prefsEditorLoader.nav.navIcons.model.iconWidth;
+        jqUnit.assertTrue("The new icon size should have been re-collected", newSize > initialSize);
+    };
+
+    fluid.defaults("gpii.tests.firstDiscovery.navIconsTester", {
+        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        initialIconWidth: null,
+        modules: [{
+            name: "Tests the re-collection of the nav icon size at the text size change",
+            tests: [{
+                expect: 2,
+                name: "Re-collect the nav icon size at the text size change",
+                sequence: [{
+                    listener: "gpii.tests.firstDiscovery.testInitIconWidth",
+                    args: ["{firstDiscovery}", "{that}"],
+                    priority: "last",
+                    event: "{navIconsTests firstDiscovery}.events.onPrefsEditorReady"
+                }, {
+                    jQueryTrigger: "click",
+                    element: "{firstDiscovery}.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_textSize.dom.increase"
+                }, {
+                    func: "{firstDiscovery}.prefsEditorLoader.applier.change",
+                    args: ["currentPanelNum", 8]
+                }, {
+                    listener: "gpii.tests.firstDiscovery.testChangedIconWidth",
+                    args: ["{firstDiscovery}", "{that}.initialIconWidth"],
+                    priority: "last",
+                    event: "{firstDiscovery}.events.onPageShown"
+                }]
+            }]
+        }]
+    });
+
     $(document).ready(function () {
         fluid.test.runTests([
-            "gpii.tests.firstDiscovery.langTests"
+            "gpii.tests.firstDiscovery.langTests",
+            "gpii.tests.firstDiscovery.navIconsTests"
         ]);
     });
 
