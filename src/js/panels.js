@@ -327,6 +327,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     };
 
+    // TODO: Need to add an integration test keyboardTts
+    // Will need to construct a mock TTS which will allow for the
+    // verification of queued speech.
+    // see: https://issues.fluidproject.org/browse/FLOE-370
+
     fluid.registerNamespace("gpii.firstDiscovery.panel.keyboardTts");
 
     // Reads the instructions at the various stages of the panels workflow
