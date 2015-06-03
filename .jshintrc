@@ -30,6 +30,7 @@
     "globals": {
         "fluid": false,
         "jqUnit": false,
-        "gpii": true
+        "gpii": true,
+        "demo": true
     }
 }
