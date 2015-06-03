@@ -122,7 +122,9 @@ https://github.com/gpii/universal/LICENSE.txt
                     args: ["{lang}", ["es-MX", "de-DE", "nl-NL"]],
                     priority: "last",
                     event: "{lang}.events.displayedLangsUpdated"
-                }, /*{
+                }, /* TODO Add an event (or other mechanism) to know when the
+                           next/prev buttons have been updated
+                {
                     funcName: "gpii.tests.langTester.verifyPrevNextButtonsEnabled",
                     args: ["{lang}", true, true]
                 },*/ {
@@ -133,7 +135,9 @@ https://github.com/gpii/universal/LICENSE.txt
                     args: ["{lang}", ["de-DE", "nl-NL", "sv-SE"]],
                     priority: "last",
                     event: "{lang}.events.displayedLangsUpdated"
-                }, /*{
+                }, /* TODO Add an event (or other mechanism) to know when the
+                           next/prev buttons have been updated
+                {
                     funcName: "gpii.tests.langTester.verifyPrevNextButtonsEnabled",
                     args: ["{lang}", true, false]
                 },*/ {
@@ -144,7 +148,10 @@ https://github.com/gpii/universal/LICENSE.txt
                     args: ["{lang}", "fr-FR"],
                     spec: {path: "lang", priority: "last"},
                     changeEvent: "{lang}.applier.modelChanged"
-                }]
+                }
+                // TODO Test moving selection with the keyboard
+                // TODO Test activation of language with the keyboard
+                ]
             }]
         }]
     });
@@ -208,8 +215,8 @@ https://github.com/gpii/universal/LICENSE.txt
         var langButtonTop = langButton.offset().top;
         var controlsDiv = that.locate("controlsDiv");
         var controlsDivTop = controlsDiv.offset().top;
-        var isVisible = (langButtonTop >= controlsDivTop) &&
-                (langButtonTop < controlsDivTop + controlsDiv.height());
+        var isVisible = (Math.floor(langButtonTop) >= Math.floor(controlsDivTop)) &&
+                (Math.floor(langButtonTop) < Math.floor(controlsDivTop + controlsDiv.height()));
         jqUnit.assertEquals(msg, expected, isVisible);
     };
 

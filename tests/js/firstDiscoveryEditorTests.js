@@ -320,6 +320,8 @@ https://github.com/gpii/universal/LICENSE.txt
         }]
     });
 
+    // TODO Update this test for the new language panel structure and re-enable
+    //
     // $(document).ready(function () {
     //     fluid.test.runTests([
     //         "gpii.tests.firstDiscovery.langTests"

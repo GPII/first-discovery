@@ -565,6 +565,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         model: {
             selectedLang: undefined,
+            // TODO the displayLangIndex model property contains the index
+            //      of the top language to display on the panel -- choose
+            //      a better name
             displayLangIndex: 0,
             atStartOfLangs: false,
             atEndOfLangs: false
