@@ -922,7 +922,7 @@ https://github.com/gpii/universal/LICENSE.txt
     gpii.tests.keyboardTester.verifyOfferAssistance = function (that) {
         jqUnit.assertTrue("The offerAssistance model value should be true", that.model.offerAssistance);
         jqUnit.isVisible("The assistance element should be visible", that.locate("assistance"));
-        gpii.tests.keyboard.stickyKeysAdjusterTester.verifyInitialRendering(that.assistance);
+        gpii.tests.keyboard.stickyKeysAdjusterTester.verifyInitialRendering(that.assistance, true);
 
         jqUnit.assertValue("The assistance subcomponent should have been created yet", that.assistance);
         jqUnit.assertUndefined("The stickyKeysAssessor subcomponent should have been destroyed", that.stickyKeysAssessor);

@@ -212,6 +212,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     model: {
                         tryAccommodation: "{keyboard}.model.tryAccommodation",
                         stickyKeysEnabled: "{keyboard}.model.stickyKeysEnabled"
+                    },
+                    // Need to close the tooltip before the DOM elements are removed
+                    listeners: {
+                        "{keyboard}.events.onRenderTree": "{that}.tooltip.close"
                     }
                 }
             },
