@@ -20,5 +20,8 @@
     "turnOffTooltip": "Select to turn Sticky Keys off",
 
     "shiftLatched": "shift is on",
-    "shiftUnlatched": "shift is off"
+    "shiftUnlatched": "shift is off",
+
+    "enabledMsg": "Sticky Keys is on",
+    "disabledMsg": "Sticky Keys is off"
 }
