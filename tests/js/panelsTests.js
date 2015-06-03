@@ -236,26 +236,6 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("The model value for the language is set correctly", expected, that.model.lang);
     };
 
-    // gpii.tests.langTester.verifyButtonStates = function (that, expectedLang, prevDisabled, nextDisabled) {
-    //     var prevDisabledMsg = prevDisabled ? "disabled" : "enabled";
-    //     var nextDisabledMsg = nextDisabled ? "disabled" : "enabled";
-    //     jqUnit.assertEquals("The model value for the selected language is set correctly", expectedLang, that.model.lang);
-    //     jqUnit.assertEquals("The previous button has been " + prevDisabledMsg, prevDisabled, that.locate("prev").is(":disabled"));
-    //     jqUnit.assertEquals("The next button has been " + nextDisabledMsg, nextDisabled, that.locate("next").is(":disabled"));
-    //     jqUnit.assertEquals("The language code has been added to the html \"lang\" attribute", that.model.lang, $("html").attr("lang"));
-    //     gpii.tests.langTester.verifyTooltip(that);
-    //     gpii.tests.langTester.verifyButtonInView(that);
-    // };
-
-    // jqUnit.test("Test gpii.firstDiscovery.panel.lang.findClosestNumber()", function () {
-    //     gpii.tests.langTester.testFindClosestNumber(5, [1, 3, 6], 6);
-    //     gpii.tests.langTester.testFindClosestNumber(0, [-1, -0.5, 1], -0.5);
-    // });
-
-    // gpii.tests.langTester.testFindClosestNumber = function (numberToFind, numbers, expected) {
-    //     jqUnit.assertEquals("The closes number for " + numberToFind + " in a number array " + numbers + " is " + expected, expected, gpii.firstDiscovery.panel.lang.findClosestNumber(numberToFind, numbers));
-    // };
-
     /*********************
      * Range panel Tests *
      *********************/
