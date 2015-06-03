@@ -21,6 +21,17 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      */
     fluid.defaults("gpii.firstDiscovery.firstDiscoveryEditor", {
         gradeNames: ["gpii.firstDiscovery.tts.fdHookup", "fluid.prefs.prefsEditorLoader", "autoInit"],
+        defaultLocale: {
+            expander: {
+                funcName: "fluid.get",
+                args: [{
+                    expander: {
+                        funcName: "fluid.defaults",
+                        args: ["gpii.firstDiscovery.schemas.language"]
+                    }
+                }, ["schema", "properties", "gpii.firstDiscovery.language", "default"]]
+            }
+        },
         components: {
             selfVoicing: {
                 container: "{that}.dom.selfVoicing",
