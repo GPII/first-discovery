@@ -84,7 +84,7 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "Test the language settings panel",
             tests: [{
-                expect: 94,
+                expect: 48,
                 name: "Test the language panel",
                 sequence: [{
                     func: "{lang}.refreshView"
@@ -93,70 +93,65 @@ https://github.com/gpii/universal/LICENSE.txt
                     priority: "last",
                     event: "{lang}.events.afterRender"
                 }, {
-                    listener: "gpii.tests.langTester.verifyButtonTopsReady",
-                    args: ["{lang}"],
+                    listener: "gpii.tests.langTester.verifyLangsInView",
+                    args: ["{lang}", ["de-DE", "nl-NL", "sv-SE"]],
                     priority: "last",
-                    event: "{lang}.events.onButtonTopsReady"
+                    event: "{lang}.events.langButtonsReady"
+                }, {
+                    funcName: "gpii.tests.langTester.verifyPrevNextButtonsEnabled",
+                    args: ["{lang}", true, false]
                 }, {
                     funcName: "gpii.tests.langTester.hoverElm",
-                    args: ["{lang}.dom.langLabel", 0]
+                    args: ["{lang}.dom.langRow", 0]
                 }, {
                     listener: "gpii.tests.langTester.verifyTooltipLang",
                     args: ["{arguments}.2", "en-US"],
                     event: "{lang}.events.afterTooltipOpen"
                 }, {
                     funcName: "gpii.tests.langTester.hoverElm",
-                    args: ["{lang}.dom.langLabel", 4]
+                    args: ["{lang}.dom.langRow", 4]
                 }, {
                     listener: "gpii.tests.langTester.verifyTooltipLang",
                     args: ["{arguments}.2", "nl-NL"],
                     event: "{lang}.events.afterTooltipOpen"
                 }, {
                     jQueryTrigger: "click",
-                    element: "{lang}.dom.next"
-                }, {
-                    listener: "gpii.tests.langTester.verifyLangModel",
-                    args: ["{lang}", "sv-SE"],
-                    spec: {path: "lang", priority: "last"},
-                    changeEvent: "{lang}.applier.modelChanged"
-                }, {
-                    func: "{lang}.refreshView"
-                }, {
-                    listener: "gpii.tests.langTester.verifyButtonStates",
-                    args: ["{lang}", "sv-SE", false, true],
-                    priority: "last",
-                    event: "{lang}.events.afterRender"
-                }, {
-                    jQueryTrigger: "click",
                     element: "{lang}.dom.prev"
                 }, {
+                    listener: "gpii.tests.langTester.verifyLangsInView",
+                    args: ["{lang}", ["es-MX", "de-DE", "nl-NL"]],
+                    priority: "last",
+                    event: "{lang}.events.displayedLangsUpdated"
+                }, /* TODO Add an event (or other mechanism) to know when the
+                           next/prev buttons have been updated
+                {
+                    funcName: "gpii.tests.langTester.verifyPrevNextButtonsEnabled",
+                    args: ["{lang}", true, true]
+                },*/ {
+                    jQueryTrigger: "click",
+                    element: "{lang}.dom.next"
+                }, {
+                    listener: "gpii.tests.langTester.verifyLangsInView",
+                    args: ["{lang}", ["de-DE", "nl-NL", "sv-SE"]],
+                    priority: "last",
+                    event: "{lang}.events.displayedLangsUpdated"
+                }, /* TODO Add an event (or other mechanism) to know when the
+                           next/prev buttons have been updated
+                {
+                    funcName: "gpii.tests.langTester.verifyPrevNextButtonsEnabled",
+                    args: ["{lang}", true, false]
+                },*/ {
+                    funcName: "gpii.tests.langTester.clickLangButton",
+                    args: ["{lang}", "fr-FR"]
+                }, {
                     listener: "gpii.tests.langTester.verifyLangModel",
-                    args: ["{lang}", "nl-NL"],
+                    args: ["{lang}", "fr-FR"],
                     spec: {path: "lang", priority: "last"},
                     changeEvent: "{lang}.applier.modelChanged"
-                }, {
-                    func: "{lang}.refreshView"
-                }, {
-                    listener: "gpii.tests.langTester.verifyButtonStates",
-                    args: ["{lang}", "nl-NL", false, false],
-                    priority: "last",
-                    event: "{lang}.events.afterRender"
-                }, {
-                    func: "{lang}.applier.change",
-                    args: ["lang", "en-US"]
-                }, {
-                    listener: "gpii.tests.langTester.verifyLangModel",
-                    args: ["{lang}", "en-US"],
-                    spec: {path: "lang", priority: "last"},
-                    changeEvent: "{lang}.applier.modelChanged"
-                }, {
-                    func: "{lang}.refreshView"
-                }, {
-                    listener: "gpii.tests.langTester.verifyButtonStates",
-                    args: ["{lang}", "en-US", true, false],
-                    priority: "last",
-                    event: "{lang}.events.afterRender"
-                }]
+                }
+                // TODO Test moving selection with the keyboard
+                // TODO Test activation of language with the keyboard
+                ]
             }]
         }]
     });
@@ -166,8 +161,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.langTester.verifyTooltip = function (that) {
-        gpii.tests.utils.verifyTooltipContents("language button row element", that.locate("langLabel"), that.model.lang, that.attachTooltipOnLang.tooltip.model.idToContent, that.options.controlValues.lang, that.options.stringArrayIndex.lang, that.options.messageBase);
-        gpii.tests.utils.verifyTooltipContents("language button input element", that.locate("langInput"), that.model.lang, that.attachTooltipOnLang.tooltip.model.idToContent, that.options.controlValues.lang, that.options.stringArrayIndex.lang, that.options.messageBase);
+        gpii.tests.utils.verifyTooltipContents("language button row element", that.locate("langRow"), that.model.lang, that.attachTooltipOnLang.tooltip.model.idToContent, that.options.controlValues.lang, that.options.stringArrayIndex.lang, that.options.messageBase);
     };
 
     gpii.tests.langTester.verifyTooltipLang = function (tooltip, expectedLang) {
@@ -183,15 +177,21 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertNotUndefined("The gradechild component \"tooltip\" has been instantiated", that.attachTooltipOnLang.tooltip);
 
         jqUnit.assertEquals("The instruction has been set correctly.", messages.langInstructions, that.locate("instructions").text());
+        var numAriaSelectedTrue = 0;
         fluid.each(that.locate("langRow"), function (langButton, idx) {
             langButton = $(langButton);
             var langLabel = langButton.find(that.options.selectors.langLabel);
             jqUnit.assertEquals("The language button #" + idx + " has the correct label.", messages[stringArray[idx]], langLabel.text());
+            var langButtonLang = langButton.attr("lang");
+            var expectedAriaSelected = "false";
+            if (langButtonLang === that.model.lang) {
+                expectedAriaSelected = "true";
+                numAriaSelectedTrue++;
+            }
+            jqUnit.assertEquals("The language button #" + idx + " (" + langButtonLang + ") has aria-selected=" + expectedAriaSelected, expectedAriaSelected, langButton.attr("aria-selected"));
         });
 
-        jqUnit.assertEquals("The correct language button has been checked", that.model.lang, that.locate("langInput").filter(":checked").val());
-        jqUnit.assertEquals("The previous button is enabled", false, that.locate("prev").is(":disabled"));
-        jqUnit.assertEquals("The next button is enabled", false, that.locate("next").is(":disabled"));
+        jqUnit.assertEquals("Exactly one language button has aria-selected=true", 1, numAriaSelectedTrue);
         jqUnit.assertEquals("The language code has been added to the html \"lang\" attribute", that.model.lang, $("html").attr("lang"));
 
         gpii.tests.langTester.verifyTooltip(that);
@@ -201,49 +201,39 @@ https://github.com/gpii/universal/LICENSE.txt
         });
     };
 
-    gpii.tests.langTester.verifyButtonTopsReady = function (that) {
-        jqUnit.assertNotUndefined("The button positions have been collected", that.buttonTops);
-        jqUnit.assertNotUndefined("The controls div has been scrolled", that.lastMovedHeight);
-        gpii.tests.langTester.verifyButtonInView(that);
+    gpii.tests.langTester.verifyLangsInView = function (that, expectedVisibleLangs) {
+        fluid.each(that.locate("langRow"), function(langButton) {
+            langButton = $(langButton);
+            var expected = expectedVisibleLangs.indexOf(langButton.attr("lang")) !== -1;
+            gpii.tests.langTester.assertLangButtonInView(that, langButton, expected);
+        });
     };
 
-    gpii.tests.langTester.verifyButtonInView = function (that) {
-        jqUnit.assertNotUndefined("The button positions have been collected", that.buttonTops);
-        var currentButtonInput = that.locate("langInput").filter(":checked");
-        jqUnit.assertEquals("The correct language button has been selected", that.model.lang, currentButtonInput.val());
-        var currentButtonTop = currentButtonInput.closest(that.options.selectors.langRow).position().top,
-            controlsDivScrollTop = $(that.options.selectors.controlsDiv)[0].scrollTop,
-            movedToTop = currentButtonTop + controlsDivScrollTop - that.lastMovedHeight;
-        jqUnit.assertNotEquals("The selected button has been moved to the correct button position", that.buttonTops.indexOf(movedToTop), -1);
+    gpii.tests.langTester.assertLangButtonInView = function (that, langButton, expected) {
+        var msg = "The button for language " + langButton.attr("lang") +
+                " should be " + (expected ? "visible" : "non-visible");
+        var langButtonTop = langButton.offset().top;
+        var controlsDiv = that.locate("controlsDiv");
+        var controlsDivTop = controlsDiv.offset().top;
+        var isVisible = (Math.floor(langButtonTop) >= Math.floor(controlsDivTop)) &&
+                (Math.floor(langButtonTop) < Math.floor(controlsDivTop + controlsDiv.height()));
+        jqUnit.assertEquals(msg, expected, isVisible);
+    };
+
+    gpii.tests.langTester.verifyPrevNextButtonsEnabled = function (that, prevEnabled, nextEnabled) {
+        var prevEnabledMsg = prevEnabled ? "enabled" : "disabled";
+        var nextEnabledMsg = nextEnabled ? "enabled" : "disabled";
+        jqUnit.assertEquals("The previous button should be " + prevEnabledMsg, prevEnabled, !(that.locate("prev").is(":disabled")));
+        jqUnit.assertEquals("The next button should be " + nextEnabledMsg, nextEnabled, !(that.locate("next").is(":disabled")));
     };
 
     gpii.tests.langTester.clickLangButton = function (that, langCode) {
         var langButtons = that.locate("langRow");
-        $(langButtons).find("input[value='" + langCode + "']").click();
+        $(langButtons).find("[lang='" + langCode + "']").click();
     };
 
     gpii.tests.langTester.verifyLangModel = function (that, expected) {
         jqUnit.assertEquals("The model value for the language is set correctly", expected, that.model.lang);
-    };
-
-    gpii.tests.langTester.verifyButtonStates = function (that, expectedLang, prevDisabled, nextDisabled) {
-        var prevDisabledMsg = prevDisabled ? "disabled" : "enabled";
-        var nextDisabledMsg = nextDisabled ? "disabled" : "enabled";
-        jqUnit.assertEquals("The model value for the selected language is set correctly", expectedLang, that.model.lang);
-        jqUnit.assertEquals("The previous button has been " + prevDisabledMsg, prevDisabled, that.locate("prev").is(":disabled"));
-        jqUnit.assertEquals("The next button has been " + nextDisabledMsg, nextDisabled, that.locate("next").is(":disabled"));
-        jqUnit.assertEquals("The language code has been added to the html \"lang\" attribute", that.model.lang, $("html").attr("lang"));
-        gpii.tests.langTester.verifyTooltip(that);
-        gpii.tests.langTester.verifyButtonInView(that);
-    };
-
-    jqUnit.test("Test gpii.firstDiscovery.panel.lang.findClosestNumber()", function () {
-        gpii.tests.langTester.testFindClosestNumber(5, [1, 3, 6], 6);
-        gpii.tests.langTester.testFindClosestNumber(0, [-1, -0.5, 1], -0.5);
-    });
-
-    gpii.tests.langTester.testFindClosestNumber = function (numberToFind, numbers, expected) {
-        jqUnit.assertEquals("The closes number for " + numberToFind + " in a number array " + numbers + " is " + expected, expected, gpii.firstDiscovery.panel.lang.findClosestNumber(numberToFind, numbers));
     };
 
     /*********************

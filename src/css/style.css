@@ -198,7 +198,12 @@ button {
                 0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
 }
 
-.gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
+.gpii-fd-choice:focus {
+    outline: none;
+}
+
+.gpii-fd-choice input:focus ~ .gpii-fd-choice-label,
+.gpii-fd-choice:focus .gpii-fd-choice-label {
     background-color: #425165; /* blue-grey */
     border: 2px solid #fed73a; /* Yellow */
     box-shadow: 0 0 0 0.2rem rgb(244, 215, 75), /* Yellow */
@@ -206,7 +211,8 @@ button {
     outline: none;
 }
 
-.gpii-fd-choice-label:active {
+.gpii-fd-choice-label:active,
+.gpii-fd-choice:focus .gpii-fd-choice-label:active {
     background-color: #fff;
     color: #425165; /* blue-grey */
     border: 3px solid #fff;
@@ -221,20 +227,19 @@ button {
     left: -2.1rem;
 }
 
-.gpii-fd-choice input:checked ~ .gpii-fd-choice-label {
+.gpii-fd-choice input:checked ~ .gpii-fd-choice-label,
+.gpii-fd-choice[aria-selected=true] .gpii-fd-choice-label {
     color: #fed73a;
 }
 
-.gpii-fd-choice input:checked:active ~ .gpii-fd-choice-label {
+.gpii-fd-choice input:checked:active ~ .gpii-fd-choice-label,
+.gpii-fd-choice[aria-selected=true]:active .gpii-fd-choice-label {
     color: #425165;
 }
 
-.gpii-fd-choice input:checked + .gpii-fd-indicator:before {
+.gpii-fd-choice input:checked + .gpii-fd-indicator:before,
+.gpii-fd-choice[aria-selected=true] .gpii-fd-indicator:before {
     content: "\e600";
-}
-
-.gpii-fd-choice input:checked ~ .gpii-fd-indicator.gpii-fd-choice-label {
-    color: #fed73a; /* yellow */
 }
 
 /* theme controls */
