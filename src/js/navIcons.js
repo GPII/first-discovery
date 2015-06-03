@@ -67,12 +67,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         "{navIcons}.model.currentPanelNum": {
                             listener: "gpii.firstDiscovery.navIcons.updateIconModel",
                             args: ["{that}", "{change}.value", "{change}.oldValue"]
-                        }
-                    },
-                    listeners: {
-                        "onCreate.measureIcon": {
-                            func: "gpii.firstDiscovery.icon.measure",
-                            args: ["{that}", "{navIcons}.applier", "iconWidth"]
+                        },
+                        "{navIcons}.model.pageNum": {
+                            listener: "gpii.firstDiscovery.icon.measure",
+                            args: ["{that}", "{navIcons}.applier", "iconWidth"],
+                            priority: 10
                         }
                     }
                 }
@@ -96,7 +95,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         modelListeners: {
-            pageNum: "gpii.firstDiscovery.navIcons.showPage({change}.value, {that}.options.pageSize, {that}.model.iconWidth, {that}.dom.pager)"
+            pageNum: {
+                listener: "gpii.firstDiscovery.navIcons.showPage",
+                args: ["{change}.value", "{that}.options.pageSize", "{that}.model.iconWidth", "{that}.dom.pager"],
+                priority: 5
+            }
         },
         selectors: {
             icon: ".gpiic-fd-navIcon",
@@ -109,14 +112,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "onCreate.createIcons": "gpii.firstDiscovery.navIcons.createIcons"
         }
     });
-    
+
     gpii.firstDiscovery.icon.measure = function (that, applier, field) {
         var width = that.container.outerWidth();
         if (width !== 0) { // avoid storing width of "holes"
             applier.change(field, width);
         }
     };
-    
+
     gpii.firstDiscovery.navIcons.indexToPage = function (panelNum, pageSize, holes) {
         var pastHoles = 0;
         for (var i = 0; i < holes.length; ++ i) {
@@ -126,7 +129,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
         return Math.floor((panelNum - 1 - pastHoles) / pageSize);
     };
-    
+
     gpii.firstDiscovery.navIcons.showPage = function (pageNum, pageSize, iconWidth, pagerElement) {
         var newLeft = iconWidth * pageNum * pageSize;
         pagerElement.scrollLeft(newLeft);

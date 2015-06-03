@@ -20,5 +20,8 @@
     "turnOffTooltip": "Selecciona desactivar STICKY KEYS",
 
     "shiftLatched": "shift está activada",
-    "shiftUnlatched": "shift está desactivada"
+    "shiftUnlatched": "shift está desactivada",
+
+    "enabledMsg": "STICKY KEYS activado",
+    "disabledMsg": "STICKY KEYS desactivado"
 }
