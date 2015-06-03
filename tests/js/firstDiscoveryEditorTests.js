@@ -271,6 +271,12 @@ https://github.com/gpii/universal/LICENSE.txt
         });
     };
 
+    gpii.tests.firstDiscovery.testDefaultLocale = function (that) {
+        var locale = that.prefsEditorLoader.options.defaultLocale;
+        jqUnit.assertEquals("default locale is as expected", "en-US", locale);
+    };
+
+
     fluid.defaults("gpii.tests.firstDiscovery.langTester", {
         gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
         testData: {
@@ -302,6 +308,16 @@ https://github.com/gpii/universal/LICENSE.txt
                     listener: "gpii.tests.firstDiscovery.testChangedButtonTops",
                     args: ["{firstDiscovery}", "{that}.buttonTops"],
                     event: "{langTests}.events.onButtonTopsReady"
+                }]
+            }]
+        },{
+            name: "Test locales",
+            tests: [{
+                expect: 1,
+                name: "Default Locale",
+                sequence: [{
+                    func: "gpii.tests.firstDiscovery.testDefaultLocale",
+                    args: ["{firstDiscovery}", "{that}"]
                 }]
             }]
         }]
