@@ -88,7 +88,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     fluid.defaults("demo.firstDiscovery.integration.voting", {
         gradeNames: ["demo.firstDiscovery.integration", "autoInit"],
-        demoURL: "vote.html"
+        demoURL: "vote.html",
+        // remove the step count component
+        distributeOptions: [{
+            target: "{that nav}.options.components.stepCount",
+            record: {
+                type: "fluid.emptySubcomponent"
+            }
+        }]
     });
 
     fluid.defaults("demo.firstDiscovery.integration.assessment", {
