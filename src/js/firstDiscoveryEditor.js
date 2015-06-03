@@ -118,7 +118,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             delay: 0,
             duration: 0,
             position: {
-                my: "left+70 bottom-70"
+                my: "left bottom",
+                at: "right+1 top"
             },
             styles: {
                 tooltip: "gpii-fd-tooltip"
