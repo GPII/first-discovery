@@ -91,4 +91,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         demoURL: "vote.html"
     });
 
+    fluid.defaults("demo.firstDiscovery.integration.assessment", {
+        gradeNames: ["demo.firstDiscovery.integration", "autoInit"],
+        demoURL: "math3-2.html"
+    });
 })(jQuery, fluid);

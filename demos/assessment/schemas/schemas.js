@@ -23,7 +23,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.defaults("demo.assessment.auxSchema", {
         gradeNames: ["fluid.prefs.auxSchema", "autoInit"],
         auxiliarySchema: {
-            "loaderGrades": ["gpii.firstDiscovery.firstDiscoveryEditor", "demo.firstDiscovery.showNextOnLastPanel"],
+            "loaderGrades": ["gpii.firstDiscovery.firstDiscoveryEditor", "demo.firstDiscovery.showNextOnLastPanel", "demo.firstDiscovery.integration.assessment"],
             "namespace": "gpii.firstDiscovery",
             "templatePrefix": "../../src/html/",
             "template": "./html/firstDiscovery.html",
