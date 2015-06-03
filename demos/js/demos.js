@@ -50,4 +50,21 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     };
 
+    /*
+     * Create a UI Enhancer and add it to the page
+     */
+    demo.firstDiscovery.addUIE = function (container, options) {
+        fluid.prefs.builder({
+            gradeNames: [options.auxSchemaName],
+            primarySchema: gpii.firstDiscovery.schemas
+        });
+        gpii.firstDiscovery.uie(container, {
+            store: {
+                cookie: {
+                    name: options.cookieName
+                }
+            }
+        });
+    };
+
 })(jQuery, fluid);

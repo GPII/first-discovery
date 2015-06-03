@@ -14,13 +14,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     "use strict";
 
-    fluid.registerNamespace("mySchool.assessment");
+    fluid.registerNamespace("demo.assessment");
 
     /*******************************************************************************
      * Auxiliary Schema for Assessment
     *******************************************************************************/
 
-    fluid.defaults("mySchool.assessment.auxSchema", {
+    fluid.defaults("demo.assessment.auxSchema", {
         gradeNames: ["fluid.prefs.auxSchema", "autoInit"],
         auxiliarySchema: {
             "loaderGrades": ["gpii.firstDiscovery.firstDiscoveryEditor", "demo.firstDiscovery.showNextOnLastPanel"],
