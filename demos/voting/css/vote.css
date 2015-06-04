@@ -76,3 +76,26 @@
 .demo-vote header .show-for-medium-up {
     min-width: 40rem;
 }
+
+.fl-theme-wb .demo-ballot div {
+    outline-color: #ffffff;
+}
+.fl-theme-wb .demo-vote header a,
+.fl-theme-bw .demo-vote header a,
+.fl-theme-bw .demo-vote button,
+.fl-theme-wb .demo-vote button {
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+.fl-theme-wb .demo-vote header a,
+.fl-theme-wb .demo-vote button {
+    outline: 1px solid #ffffff !important;
+    color: #ffffff !important;
+    background-color: #000000 !important;
+}
+.fl-theme-bw .demo-vote header a,
+.fl-theme-bw .demo-vote button {
+    outline: 1px solid #000000 !important;
+    color: #000000 !important;
+    background-color: #ffffff !important;
+}

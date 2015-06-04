@@ -1,3 +1,7 @@
+.gpii-fd-main {
+  height: 32rem;
+}
+
 /* show the selfVoicing toggle on the last panel since it's no longer the congratulations page */
 .gpii-fd-lastPanel .gpii-fd-selfVoicing {
     display: block;
@@ -196,5 +200,10 @@
 }
 
 .gpii-fd-navIcon-outer {
-  width: 26.1rem;
+  width: 27rem;
 }
+
+.gpii-fd-activeIndicator {
+    margin-top: -6.3rem
+}
+
