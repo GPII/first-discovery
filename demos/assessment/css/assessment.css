@@ -2,14 +2,11 @@
 body {
     background-color: #dddddd;
 }
-.quiz, .quiz p, .quiz label {
-    font-size: 2.25rem; /*base font size */
-}
 .quiz {
     color: #ffffff;
     background-color: #425165; /* blue-grey */
     padding: 1rem;
-    width: 56rem;
+    width: 36rem;
     margin: 0 auto;
 }
 h1, h2, h3 {
@@ -35,6 +32,7 @@ h1, h2, h3 {
     color: #425165; /* blue-grey */
     background-color: #ffffff;
     padding: 1.5rem;
+    height: 44rem;
 }
 ul.multiple-choice {
     list-style: none;
