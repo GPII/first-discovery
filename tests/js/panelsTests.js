@@ -84,7 +84,7 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "Test the language settings panel",
             tests: [{
-                expect: 48,
+                expect: 52,
                 name: "Test the language panel",
                 sequence: [{
                     func: "{lang}.refreshView"
@@ -120,27 +120,23 @@ https://github.com/gpii/universal/LICENSE.txt
                 }, {
                     listener: "gpii.tests.langTester.verifyLangsInView",
                     args: ["{lang}", ["es-MX", "de-DE", "nl-NL"]],
-                    priority: "last",
-                    event: "{lang}.events.displayedLangsUpdated"
-                }, /* TODO Add an event (or other mechanism) to know when the
-                           next/prev buttons have been updated
-                {
+                    spec: {path: "displayLangIndex", priority: "last"},
+                    changeEvent: "{lang}.applier.modelChanged"
+                }, {
                     funcName: "gpii.tests.langTester.verifyPrevNextButtonsEnabled",
                     args: ["{lang}", true, true]
-                },*/ {
+                }, {
                     jQueryTrigger: "click",
                     element: "{lang}.dom.next"
                 }, {
                     listener: "gpii.tests.langTester.verifyLangsInView",
                     args: ["{lang}", ["de-DE", "nl-NL", "sv-SE"]],
-                    priority: "last",
-                    event: "{lang}.events.displayedLangsUpdated"
-                }, /* TODO Add an event (or other mechanism) to know when the
-                           next/prev buttons have been updated
-                {
+                    spec: {path: "displayLangIndex", priority: "last"},
+                    changeEvent: "{lang}.applier.modelChanged"
+                }, {
                     funcName: "gpii.tests.langTester.verifyPrevNextButtonsEnabled",
                     args: ["{lang}", true, false]
-                },*/ {
+                }, {
                     funcName: "gpii.tests.langTester.clickLangButton",
                     args: ["{lang}", "fr-FR"]
                 }, {

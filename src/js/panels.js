@@ -712,8 +712,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         events: {
-            langButtonsReady: null,
-            displayedLangsUpdated: null
+            langButtonsReady: null
         },
         listeners: {
             "afterRender.bindPrev": {
@@ -878,7 +877,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             var scrollTo = displayFromButton.offset().top - firstButtonTop;
             $(that.options.selectors.controlsDiv).scrollTop(scrollTo);
         }
-        that.events.displayedLangsUpdated.fire();
     };
 
     gpii.firstDiscovery.panel.lang.refreshDisplayedLangsOnShowPanel = function (that, shownPanelId) {
