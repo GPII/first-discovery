@@ -43,7 +43,11 @@ button {
 .gpii-fd *:disabled:hover,
 .gpii-fd *:disabled:focus,
 .gpii-fd *:disabled:active,
-.gpii-fd *:disabled {
+.gpii-fd *:disabled,
+.gpii-fd *:active:disabled:hover,
+.gpii-fd *:active:disabled:focus,
+.gpii-fd *:active:disabled:active,
+.gpii-fd *:active:disabled {
     background-color: #6C6D70;
     border-color: #6C6D70;
     color: #fff;
