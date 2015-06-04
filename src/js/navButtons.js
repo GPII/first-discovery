@@ -100,16 +100,18 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             nextLabel = that.msgResolver.resolve(["start", "next", "finish"][disposition]),
             nextTooltipContent = that.msgResolver.resolve(["startTooltip", "nextTooltip", "finishTooltip"][disposition]);
 
+        // Must close the tooltip before disabling buttons because the tooltip is defined not to show for the disabled DOM elements, closing
+        // the tooltip after the disabling would cause the tooltip component not able to find the target.
+        if (isFirstPanel || isLastPanel) {
+            that.tooltip.close();  // Close the existing tooltip otherwise it will linger after the button is hidden
+        }
+
         backButton.prop("disabled", isFirstPanel);
         backButton.toggleClass(showSelector, !isFirstPanel);
         that.locate("backLabel").html(that.msgResolver.resolve("back"));
         that.locate("nextLabel").html(nextLabel);
         nextButton.toggleClass(showSelector, !isLastPanel);
         nextButton.prop("disabled", isLastPanel);
-
-        if (isFirstPanel || isLastPanel) {
-            that.tooltip.close();  // Close the existing tooltip otherwise it will linger after the button is hidden
-        }
 
         that.tooltip.applier.change("idToContent." + nextButtonId, nextTooltipContent);
     };

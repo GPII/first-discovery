@@ -126,7 +126,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             // This class should be applied to any element that will
             // be used to show the tooltip.
-            items: ".gpiic-fd-tooltip"
+            items: ".gpiic-fd-tooltip:not([disabled])"
         },
         selectors: {
             prefsEditor: ".gpiic-fd-prefsEditor",
