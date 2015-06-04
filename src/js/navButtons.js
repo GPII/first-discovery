@@ -36,7 +36,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         styles: {
             show: "gpii-fd-show"
         },
-        modelRelay: [{
+        modelRelay: {
             target: "currentPanelNum",
             singleTransform: {
                 type: "fluid.transforms.limitRange",
@@ -44,47 +44,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 min: "{that}.options.panelStartNum",
                 max: "{that}.options.panelTotalNum"
             }
-        }, {
-            target: "isFirstPanel",
-            singleTransform: {
-                type: "fluid.transforms.binaryOp",
-                left: "{that}.model.currentPanelNum",
-                operator: "===",
-                right: "{that}.options.panelStartNum"
-            }
-        }, {
-            target: "isLastPanel",
-            singleTransform: {
-                type: "fluid.transforms.binaryOp",
-                left: "{that}.model.currentPanelNum",
-                operator: "===",
-                right: "{that}.options.panelTotalNum"
-            }
-        }],
+        },
         modelListeners: {
             currentPanelNum: {
-                listener: "{that}.setButtonLabels",
-                namespace: "setButtonLabels",
+                listener: "{that}.setButtonStates",
                 excludeSource: "init"
-            },
-            isFirstPanel: [{
-                listener: "{that}.toggleButtonSates",
-                args: ["{that}.dom.back", "{change}.value"],
-                namespace: "toggleBackButtonStates",
-                excludeSource: "init"
-            }, {
-                listener: "{that}.tooltip.close",
-                excludeSource: "init"
-            }],
-            isLastPanel: [{
-                listener: "{that}.toggleButtonSates",
-                args: ["{that}.dom.next", "{change}.value"],
-                namespace: "toggleNextButtonStates",
-                excludeSource: "init"
-            }, {
-                listener: "{that}.tooltip.close",
-                excludeSource: "init"
-            }]
+            }
         },
         listeners: {
             "onCreate.bindBack": {
@@ -97,24 +62,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "method": "click",
                 args: ["{that}.nextButtonClicked"]
             },
-            "onCreate.setButtonLabels": "{that}.setButtonLabels",
-            "onCreate.toggleBackButtonStates": {
-                listener: "{that}.toggleButtonSates",
-                args: ["{that}.dom.back", "{that}.model.isFirstPanel"]
-            },
-            "onCreate.toggleNextButtonStates": {
-                listener: "{that}.toggleButtonSates",
-                args: ["{that}.dom.next", "{that}.model.isLastPanel"]
-            }
+            "onCreate.setButtonStates": "{that}.setButtonStates"
         },
         invokers: {
-            setButtonLabels: {
-                funcName: "gpii.firstDiscovery.navButtons.setButtonLabels",
+            setButtonStates: {
+                funcName: "gpii.firstDiscovery.navButtons.setButtonStates",
                 args: ["{that}"]
-            },
-            toggleButtonSates: {
-                funcName: "gpii.firstDiscovery.navButtons.toggleButtonSates",
-                args: ["{arguments}.0", "{arguments}.1", "{that}.options.styles.show"]
             },
             adjustCurrentPanelNum: {
                 funcName: "gpii.firstDiscovery.navButtons.adjustCurrentPanelNum",
@@ -135,10 +88,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         return currentPanelNum === panelStartNum ? 0 : (currentPanelNum < panelTotalNum - 1 ? 1 : 2);
     };
 
-    gpii.firstDiscovery.navButtons.setButtonLabels = function (that) {
+    gpii.firstDiscovery.navButtons.setButtonStates = function (that) {
         var currentPanelNum = that.model.currentPanelNum,
+            backButton = that.locate("back"),
             nextButton = that.locate("next"),
             nextButtonId = fluid.allocateSimpleId(nextButton),
+            showSelector = that.options.styles.show,
+            isFirstPanel = currentPanelNum === that.options.panelStartNum,
+            isLastPanel = currentPanelNum === that.options.panelTotalNum,
             disposition = gpii.firstDiscovery.navButtons.indexToDisposition(currentPanelNum, that.options.panelStartNum, that.options.panelTotalNum),
             nextLabel = that.msgResolver.resolve(["start", "next", "finish"][disposition]),
             nextTooltipContent = that.msgResolver.resolve(["startTooltip", "nextTooltip", "finishTooltip"][disposition]);
@@ -157,11 +114,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         nextButton.prop("disabled", isLastPanel);
 
         that.tooltip.applier.change("idToContent." + nextButtonId, nextTooltipContent);
-    };
-
-    gpii.firstDiscovery.navButtons.toggleButtonSates = function (element, disabled, showSelector) {
-        element.prop("disabled", disabled);
-        element.toggleClass(showSelector, !disabled);
     };
 
     gpii.firstDiscovery.navButtons.adjustCurrentPanelNum = function (that, toChange) {
