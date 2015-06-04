@@ -116,6 +116,10 @@ button {
     border-width: 0.4rem;
     padding: 0.8rem;
 }
+.gpii-fd-help:disabled:hover {
+    border-width: 2px;
+    padding: 1rem;
+}
 
 .gpii-fd-help:focus,
 .gpii-fd-mute:focus {
@@ -586,6 +590,7 @@ button {
     border: 1px solid #ffffff;
     position: relative;
     top: -1rem;
+    left: 3rem;
 }
 .gpii-fd-active {
     background-color: #fed73a; /* Yellow */
