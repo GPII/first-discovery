@@ -589,7 +589,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     listeners: {
                         "{lang}.events.afterRender": {
                             funcName: "{that}.tooltip.updateIdToContent"
-                        }
+                        },
+                        // Need to close the tooltip before the DOM elements are removed
+                        "{lang}.events.onRenderTree": "{that}.tooltip.close"
                     }
                 }
             }
