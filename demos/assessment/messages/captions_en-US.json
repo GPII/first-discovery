@@ -1,0 +1,10 @@
+{
+    "instructions": "When you play videos do you want to see the spoken words written at the bottom of the video?",
+    "no": "No",
+    "yes": "Yes",
+
+    "yes-tooltip": "Select to turn video captions on",
+    "no-tooltip": "Select to turn video captions off",
+    "yes-tooltipAtSelect": "Video captions are on",
+    "no-tooltipAtSelect": "Video captions are off"
+}
