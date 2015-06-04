@@ -30,6 +30,7 @@
         <script type="text/javascript" src="../src/js/stepCount.js"></script>
         <script type="text/javascript" src="../src/js/nav.js"></script>
         <script type="text/javascript" src="../src/js/firstDiscoveryEditor.js"></script>
+        <script type="text/javascript" src="js/demos.js"></script>
 
         <title>First Discovery Tool</title>
     </head>
@@ -100,7 +101,7 @@
                             <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
                         </li>
                         <li class="gpiic-fd-navIcon gpii-fd-navIcon-congratulations">
--                       </li>
+                        </li>
                         <li class="gpii-fd-navIcon gpii-fd-navIcon-spacer">
                             <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
                             <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
@@ -114,27 +115,7 @@
 
         </div>
         <script type="text/javascript">
-            $(document).ready(function () {
-                var container = $("#gpiic-fd");
-                var unsupportedText = "This browser is currently not supported. Please try using the latest version of Chrome or Safari.";
-
-                if (fluid.textToSpeech.isSupported()) {
-                    fluid.prefs.create(container, {
-                        build: {
-                            gradeNames: ["gpii.firstDiscovery.auxSchema"]
-                        },
-                        prefsEditor: {
-                            store: {
-                                cookie: {
-                                    name: "demo-firstDiscovery"
-                                }
-                            }
-                        }
-                    });
-                } else {
-                    container.text(unsupportedText);
-                }
-            });
+            demo.firstDiscovery.init("#gpiic-fd", "gpii.firstDiscovery.auxSchema", "demo-firstDiscovery");
         </script>
     </body>
 </html>

@@ -16,6 +16,28 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     fluid.registerNamespace("demo.firstDiscovery");
 
+    demo.firstDiscovery.init = function (container, auxSchemaGrade, cookieName) {
+        container = $(container);
+        var unsupportedText = "This browser is currently not supported. Please try using the latest version of Chrome or Safari.";
+
+        if (fluid.textToSpeech.isSupported()) {
+            fluid.prefs.create(container, {
+                build: {
+                    gradeNames: [auxSchemaGrade]
+                },
+                prefsEditor: {
+                    store: {
+                        cookie: {
+                            name: cookieName
+                        }
+                    }
+                }
+            });
+        } else {
+            container.text(unsupportedText);
+        }
+    };
+
     /*
      * Create a UI Enhancer and add it to the page
      */
