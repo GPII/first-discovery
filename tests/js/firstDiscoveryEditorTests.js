@@ -264,17 +264,17 @@ https://github.com/gpii/universal/LICENSE.txt
         }
     });
 
-    gpii.tests.firstDiscovery.testInitialScrolling = function (that, isScrolled, testData) {
+    gpii.tests.firstDiscovery.testInitialScrolling = function (that, testData) {
         testData.scrollTop = that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.locate("controlsDiv")[0].scrollTop;
         jqUnit.assertTrue("The control div is scrolled", testData.scrollTop > 0);
     };
 
-    gpii.tests.firstDiscovery.testScrollingAtHidden = function (that, isScrolled) {
+    gpii.tests.firstDiscovery.testScrollingAtHidden = function (that) {
         var scrollTop = that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.locate("controlsDiv")[0].scrollTop;
         jqUnit.assertTrue("The control div is scrolled", scrollTop === 0);
     };
 
-    gpii.tests.firstDiscovery.testScrollingAtVisible = function (that, isScrolled, testData) {
+    gpii.tests.firstDiscovery.testScrollingAtVisible = function (that, testData) {
         var scrollTop = that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.locate("controlsDiv")[0].scrollTop;
         jqUnit.assertTrue("The control div is scrolled", scrollTop > 0);
         jqUnit.assertFalse("The scrolled distance is different from the initial distance", scrollTop === testData.scrollTop);
@@ -298,7 +298,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 name: "Test the connection between the first discovery editor and the language panel",
                 sequence: [{
                     listener: "gpii.tests.firstDiscovery.testInitialScrolling",
-                    args: ["{firstDiscovery}", true, "{that}.options.testData"],
+                    args: ["{firstDiscovery}", "{that}.options.testData"],
                     priority: "last",
                     event: "{langTests}.events.langButtonsReady"
                 }, {
@@ -310,7 +310,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 }, {
                     // The controls div cannot be scrolled when it remains hidden
                     listener: "gpii.tests.firstDiscovery.testScrollingAtHidden",
-                    args: ["{firstDiscovery}", false],
+                    args: ["{firstDiscovery}"],
                     event: "{langTests}.events.langButtonsReady"
                 }, {
                     func: "{firstDiscovery}.prefsEditorLoader.applier.change",
@@ -318,7 +318,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 }, {
                     // The language panel is re-rendered and the controls div is scrolled when the panel becomes visible
                     listener: "gpii.tests.firstDiscovery.testScrollingAtVisible",
-                    args: ["{firstDiscovery}", true, "{that}.options.testData"],
+                    args: ["{firstDiscovery}", "{that}.options.testData"],
                     event: "{langTests}.events.langButtonsReady"
                 }]
             }]
