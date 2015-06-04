@@ -858,7 +858,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             var firstButtonTop = buttons.offset().top;
             var displayFromButton = $(buttons[langIndex]);
             var scrollTo = displayFromButton.offset().top - firstButtonTop;
-            $(that.options.selectors.controlsDiv).animate({scrollTop: scrollTo}, 0);
+            $(that.options.selectors.controlsDiv).scrollTop(scrollTo);
         }
         that.events.displayedLangsUpdated.fire();
     };
