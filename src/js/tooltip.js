@@ -86,6 +86,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 }
             }
         },
+        listeners: { // FLOE-375: model may not be present at time of component creation
+            "onCreate.updateIdToContent": "{that}.tooltip.updateIdToContent"
+        },
         distributeOptions: {
             source: "{that}.options.tooltipOptions",
             target: "{that > tooltip}.options"

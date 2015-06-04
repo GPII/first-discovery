@@ -68,22 +68,26 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 excludeSource: "init"
             },
             isFirstPanel: [{
+                listener: "{that}.tooltip.close",
+                excludeSource: "init",
+                priority: 10
+            }, {
                 listener: "{that}.toggleButtonSates",
                 args: ["{that}.dom.back", "{change}.value"],
                 namespace: "toggleBackButtonStates",
-                excludeSource: "init"
-            }, {
-                listener: "{that}.tooltip.close",
-                excludeSource: "init"
+                excludeSource: "init",
+                priority: 5
             }],
             isLastPanel: [{
+                listener: "{that}.tooltip.close",
+                excludeSource: "init",
+                priority: 10
+            }, {
                 listener: "{that}.toggleButtonSates",
                 args: ["{that}.dom.next", "{change}.value"],
                 namespace: "toggleNextButtonStates",
-                excludeSource: "init"
-            }, {
-                listener: "{that}.tooltip.close",
-                excludeSource: "init"
+                excludeSource: "init",
+                priority: 5
             }]
         },
         listeners: {
