@@ -586,6 +586,20 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                             tooltipAtSelect: "{lang}.options.stringArrayIndex.tooltipAtSelect"
                         }
                     },
+                    modelListeners: {
+                        // Must close the tooltip before disabling buttons because
+                        // the tooltip is defined not to show for the disabled DOM
+                        // elements, closing the tooltip after the disabling would
+                        // cause the tooltip component not able to find the target.
+                        "{lang}.model.atStartOfLangs": {
+                            listener: "{that}.tooltip.close",
+                            priority: 10
+                        },
+                        "{lang}.model.atEndOfLangs": {
+                            listener: "{that}.tooltip.close",
+                            priority: 10
+                        }
+                    },
                     listeners: {
                         "{lang}.events.afterRender": {
                             funcName: "{that}.tooltip.updateIdToContent"
@@ -640,12 +654,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             atStartOfLangs: {
                 "this": "{that}.dom.prev",
                 method: "prop",
-                args: ["disabled", "{that}.model.atStartOfLangs"]
+                args: ["disabled", "{that}.model.atStartOfLangs"],
+                priority: 5
             },
             atEndOfLangs: {
                 "this": "{that}.dom.next",
                 method: "prop",
-                args: ["disabled", "{that}.model.atEndOfLangs"]
+                args: ["disabled", "{that}.model.atEndOfLangs"],
+                priority: 5
             }
         },
         numOfLangPerPage: 3,

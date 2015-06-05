@@ -127,7 +127,7 @@ https://github.com/gpii/universal/LICENSE.txt
         }]
     });
 
-    gpii.tests.keyboard.stickyKeysAdjusterTester.verifyInitialRendering = function (that, tooltipClosed) {
+    gpii.tests.keyboard.stickyKeysAdjusterTester.verifyInitialRendering = function (that) {
         var tryButton = that.locate("tryButton");
         var tryButtonID = tryButton.attr("id");
 
@@ -136,13 +136,7 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.isVisible("The try button should be visible", that.locate("tryButton"));
         jqUnit.notVisible("The sticky keys adjuster should not be visible", that.locate("accommodation"));
 
-        if (tooltipClosed) {
-            fluid.each(that.tooltip.model.idToContent, function (text, id) {
-                jqUnit.assertFalse("The tooltip id '" + id + "' should not be added to the button", tryButton.is("#" + id));
-            });
-        } else {
-            jqUnit.assertEquals("The tooltip for the try button should have the correct content", that.options.messageBase.tryTooltip, that.tooltip.model.idToContent[tryButtonID]);
-        }
+        jqUnit.assertEquals("The tooltip for the try button should have the correct content", that.options.messageBase.tryTooltip, that.tooltip.model.idToContent[tryButtonID]);
     };
 
     gpii.tests.keyboard.stickyKeysAdjusterTester.verifyTryButtonTooltip = function (that, expected) {
