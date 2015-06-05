@@ -13,6 +13,11 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.registerNamespace("gpii.tests");
 
+    // To override the default use of fluid.cookieStore from the prefs framework
+    fluid.demands("fluid.prefs.store", ["fluid.globalSettingsStore", "gpii.tests.firstDiscovery"], {
+        funcName: "fluid.tempStore"
+    });
+
     fluid.defaults("gpii.tests.firstDiscovery", {
         gradeNames: ["fluid.viewRelayComponent", "{that}.assembledPrefsEditorGrade", "autoInit"],
         prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor",
@@ -219,15 +224,19 @@ https://github.com/gpii/universal/LICENSE.txt
         },
         events: {
             onPanelShown: null,
-            onButtonTopsReady: null
+            langButtonsReady: null
         },
-        langListeners: {
-            "onButtonTopsReady.escalate": "{firstDiscoveryLang}.events.onButtonTopsReady"
-        },
-        distributeOptions: {
-            source: "{that}.options.langListeners",
-            target: "{that gpii.firstDiscovery.panel.lang}.options.listeners"
-        }
+        distributeOptions: [{
+            target: "{that gpii.firstDiscovery.panel.lang}.options.listeners",
+            record: {
+                "langButtonsReady.escalate": "{firstDiscoveryLang}.events.langButtonsReady"
+            }
+        }, {
+            target: "{that gpii.firstDiscovery.panel.lang}.options.model",
+            record: {
+                "lang": "nl-NL"
+            }
+        }]
     });
 
     fluid.defaults("gpii.tests.firstDiscovery.langTests", {
@@ -240,9 +249,9 @@ https://github.com/gpii/universal/LICENSE.txt
                 options: {
                     // The work around for an issue in the IoC testing framework (http://issues.fluidproject.org/browse/FLUID-5633)
                     // that IoCSS-broadcast listeners are not un-bound so that in test sequences, the event reference can use
-                    // "{langTests}.events.onButtonTopsReady" instead of the IoCSS reference "{langTests firstDiscoveryLang}.events.onButtonTopsReady"
+                    // "{langTests}.events.langButtonsReady" instead of the IoCSS reference "{langTests firstDiscoveryLang}.events.langButtonsReady"
                     events: {
-                        onButtonTopsReady: "{langTests}.events.onButtonTopsReady"
+                        langButtonsReady: "{langTests}.events.langButtonsReady"
                     }
                 }
             },
@@ -251,24 +260,24 @@ https://github.com/gpii/universal/LICENSE.txt
             }
         },
         events: {
-            onButtonTopsReady: null
+            langButtonsReady: null
         }
     });
 
-    gpii.tests.firstDiscovery.testInitButtonTops = function (that, tester) {
-        tester.buttonTops = that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.buttonTops;
-        jqUnit.assertNotUndefined("The initial button positions have been collected", tester.buttonTops);
+    gpii.tests.firstDiscovery.testInitialScrolling = function (that, testData) {
+        testData.scrollTop = that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.locate("controlsDiv")[0].scrollTop;
+        jqUnit.assertTrue("The control div is scrolled", testData.scrollTop > 0);
     };
 
-    gpii.tests.firstDiscovery.testUnchangedButtonTops = function (that, initialButtonTops) {
-        jqUnit.assertDeepEq("The button positions stay unchanged", initialButtonTops, that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.buttonTops);
+    gpii.tests.firstDiscovery.testScrollingAtHidden = function (that) {
+        var scrollTop = that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.locate("controlsDiv")[0].scrollTop;
+        jqUnit.assertTrue("The control div is scrolled", scrollTop === 0);
     };
 
-    gpii.tests.firstDiscovery.testChangedButtonTops = function (that, initialButtonTops) {
-        var newButtonTops = that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.buttonTops;
-        fluid.each(newButtonTops, function (newPosition, index){
-            jqUnit.assertNotEquals("The position for button #" + index + " has been re-collected", initialButtonTops[index], newPosition);
-        });
+    gpii.tests.firstDiscovery.testScrollingAtVisible = function (that, testData) {
+        var scrollTop = that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.locate("controlsDiv")[0].scrollTop;
+        jqUnit.assertTrue("The control div is scrolled", scrollTop > 0);
+        jqUnit.assertFalse("The scrolled distance is different from the initial distance", scrollTop === testData.scrollTop);
     };
 
     gpii.tests.firstDiscovery.testDefaultLocale = function (that) {
@@ -280,34 +289,37 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.defaults("gpii.tests.firstDiscovery.langTester", {
         gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
         testData: {
-            buttonTops: null
+            scrollTop: null
         },
         modules: [{
-            name: "Tests the connection between the first discovery editor and the language panel",
+            name: "The language panel",
             tests: [{
-                expect: 5,
-                name: "Initialization",
+                expect: 4,
+                name: "Test the connection between the first discovery editor and the language panel",
                 sequence: [{
-                    listener: "gpii.tests.firstDiscovery.testInitButtonTops",
-                    args: ["{firstDiscovery}", "{that}"],
-                    event: "{langTests}.events.onButtonTopsReady"
+                    listener: "gpii.tests.firstDiscovery.testInitialScrolling",
+                    args: ["{firstDiscovery}", "{that}.options.testData"],
+                    priority: "last",
+                    event: "{langTests}.events.langButtonsReady"
                 }, {
                     func: "{firstDiscovery}.prefsEditorLoader.applier.change",
-                    args: ["currentPanelNum", 3]
+                    args: ["currentPanelNum", 2]
                 }, {
-                    listener: "gpii.tests.firstDiscovery.testUnchangedButtonTops",
-                    args: ["{firstDiscovery}", "{that}.buttonTops"],
-                    event: "{firstDiscovery}.events.onPanelShown"
+                    func: "{firstDiscovery}.prefsEditorLoader.prefsEditor.applier.change",
+                    args: ["fluid_prefs_textSize", 0.2]
                 }, {
-                    jQueryTrigger: "click",
-                    element: "{firstDiscovery}.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_textSize.dom.increase"
+                    // The controls div cannot be scrolled when it remains hidden
+                    listener: "gpii.tests.firstDiscovery.testScrollingAtHidden",
+                    args: ["{firstDiscovery}"],
+                    event: "{langTests}.events.langButtonsReady"
                 }, {
                     func: "{firstDiscovery}.prefsEditorLoader.applier.change",
                     args: ["currentPanelNum", 1]
                 }, {
-                    listener: "gpii.tests.firstDiscovery.testChangedButtonTops",
-                    args: ["{firstDiscovery}", "{that}.buttonTops"],
-                    event: "{langTests}.events.onButtonTopsReady"
+                    // The language panel is re-rendered and the controls div is scrolled when the panel becomes visible
+                    listener: "gpii.tests.firstDiscovery.testScrollingAtVisible",
+                    args: ["{firstDiscovery}", "{that}.options.testData"],
+                    event: "{langTests}.events.langButtonsReady"
                 }]
             }]
         },{

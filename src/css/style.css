@@ -206,7 +206,12 @@ button {
                 0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
 }
 
-.gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
+.gpii-fd-choice:focus {
+    outline: none;
+}
+
+.gpii-fd-choice input:focus ~ .gpii-fd-choice-label,
+.gpii-fd-choice:focus .gpii-fd-choice-label {
     background-color: #425165; /* blue-grey */
     border: 2px solid #fed73a; /* Yellow */
     box-shadow: 0 0 0 0.2rem rgb(244, 215, 75), /* Yellow */
@@ -214,7 +219,8 @@ button {
     outline: none;
 }
 
-.gpii-fd-choice-label:active {
+.gpii-fd-choice-label:active,
+.gpii-fd-choice:focus .gpii-fd-choice-label:active {
     background-color: #fff;
     color: #425165; /* blue-grey */
     border: 3px solid #fff;
@@ -229,20 +235,19 @@ button {
     left: -2.1rem;
 }
 
-.gpii-fd-choice input:checked ~ .gpii-fd-choice-label {
+.gpii-fd-choice input:checked ~ .gpii-fd-choice-label,
+.gpii-fd-choice[aria-selected=true] .gpii-fd-choice-label {
     color: #fed73a;
 }
 
-.gpii-fd-choice input:checked:active ~ .gpii-fd-choice-label {
+.gpii-fd-choice input:checked:active ~ .gpii-fd-choice-label,
+.gpii-fd-choice[aria-selected=true]:active .gpii-fd-choice-label {
     color: #425165;
 }
 
-.gpii-fd-choice input:checked + .gpii-fd-indicator:before {
+.gpii-fd-choice input:checked + .gpii-fd-indicator:before,
+.gpii-fd-choice[aria-selected=true] .gpii-fd-indicator:before {
     content: "\e600";
-}
-
-.gpii-fd-choice input:checked ~ .gpii-fd-indicator.gpii-fd-choice-label {
-    color: #fed73a; /* yellow */
 }
 
 /* theme controls */
@@ -830,7 +835,8 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
 .fl-theme-wb .gpii-fd-navButtons-back:focus,
 .fl-theme-wb .gpii-fd-keyboard-try:focus,
 .fl-theme-wb .gpii-fd-keyboard-accommodationToggle:focus,
-.fl-theme-wb .gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
+.fl-theme-wb .gpii-fd-choice input:focus ~ .gpii-fd-choice-label,
+.fl-theme-wb .gpii-fd-choice:focus .gpii-fd-choice-label {
     box-shadow: 0 0 0 0.4rem rgb(255,255,255) !important;
 }
 
@@ -938,7 +944,8 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
 .fl-theme-bw .gpii-fd-navButtons-back:focus,
 .fl-theme-bw .gpii-fd-keyboard-try:focus,
 .fl-theme-bw .gpii-fd-keyboard-accommodationToggle:focus,
-.fl-theme-bw .gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
+.fl-theme-bw .gpii-fd-choice input:focus ~ .gpii-fd-choice-label,
+.fl-theme-bw .gpii-fd-choice:focus .gpii-fd-choice-label {
     box-shadow: 0 0 0 0.4rem rgb(0, 0, 0) !important;
 }
 
@@ -1021,4 +1028,10 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
 .fl-theme-wb .gpii-fd-icon:hover,
 .fl-theme-bw .gpii-fd-icon:hover {
         background-color: transparent !important;
+}
+
+/* Override an outline-setting rule in Enactors.css */
+.fl-theme-wb .gpii-fd-lang-controls .selectable,
+.fl-theme-bw .gpii-fd-lang-controls .selectable {
+    outline-style: none;
 }
