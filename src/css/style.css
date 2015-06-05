@@ -835,7 +835,8 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
 .fl-theme-wb .gpii-fd-navButtons-back:focus,
 .fl-theme-wb .gpii-fd-keyboard-try:focus,
 .fl-theme-wb .gpii-fd-keyboard-accommodationToggle:focus,
-.fl-theme-wb .gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
+.fl-theme-wb .gpii-fd-choice input:focus ~ .gpii-fd-choice-label,
+.fl-theme-wb .gpii-fd-choice:focus .gpii-fd-choice-label {
     box-shadow: 0 0 0 0.4rem rgb(255,255,255) !important;
 }
 
@@ -938,7 +939,8 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
 .fl-theme-bw .gpii-fd-navButtons-back:focus,
 .fl-theme-bw .gpii-fd-keyboard-try:focus,
 .fl-theme-bw .gpii-fd-keyboard-accommodationToggle:focus,
-.fl-theme-bw .gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
+.fl-theme-bw .gpii-fd-choice input:focus ~ .gpii-fd-choice-label,
+.fl-theme-bw .gpii-fd-choice:focus .gpii-fd-choice-label {
     box-shadow: 0 0 0 0.4rem rgb(0, 0, 0) !important;
 }
 
@@ -1016,4 +1018,10 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
 .fl-theme-wb .gpii-fd-icon:hover,
 .fl-theme-bw .gpii-fd-icon:hover {
         background-color: transparent !important;
+}
+
+/* Override an outline-setting rule in Enactors.css */
+.fl-theme-wb .gpii-fd-lang-controls .selectable,
+.fl-theme-bw .gpii-fd-lang-controls .selectable {
+    outline-style: none;
 }
