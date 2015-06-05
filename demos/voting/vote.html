@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="./css/vote.css" />
+        <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.min.css" />
+        <title>Straight Party Vote</title>
+
+        <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/Enactors.css" />
+        <!-- <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/PrefsEditor.css" /> -->
+
+        <script type="text/javascript" src="../../src/lib/infusion/infusion-custom.js"></script>
+        <script type="text/javascript" src="../../src/js/keyboardShortcut.js"></script>
+        <script type="text/javascript" src="../../src/js/ttsHookup.js"></script>
+        <script type="text/javascript" src="../../src/js/tooltip.js"></script>
+        <script type="text/javascript" src="../../src/js/msgLookup.js"></script>
+        <script type="text/javascript" src="../../src/js/selfVoicing.js"></script>
+        <script type="text/javascript" src="../../src/js/panels.js"></script>
+        <script type="text/javascript" src="../../src/js/enactors.js"></script>
+        <script type="text/javascript" src="../../src/schemas/schemas.js"></script>
+        <script type="text/javascript" src="../../src/js/navButtons.js"></script>
+        <script type="text/javascript" src="../../src/js/navIcons.js"></script>
+        <script type="text/javascript" src="../../src/js/helpButton.js"></script>
+        <script type="text/javascript" src="../../src/js/stepCount.js"></script>
+        <script type="text/javascript" src="../../src/js/nav.js"></script>
+        <script type="text/javascript" src="../../src/js/firstDiscoveryEditor.js"></script>
+        <script type="text/javascript" src="../js/demos.js"></script>
+        <script type="text/javascript" src="schemas/schemas.js"></script>
+    </head>
+
+    <body>
+        <script type="text/javascript">
+            demo.firstDiscovery.addUIE("body", {
+                auxSchemaName: "demo.voting.auxSchema",
+                cookieName: "demo-voting"
+            });
+        </script>
+        <div class="demo-vote">
+            <header class="row">
+                <div class="show-for-medium-up small-10 small-offset-1 column end text-center">
+                    <a class="left" href="index.html"><span class="demo-vote-settings"></span>Settings</a>
+                    <button disabled="disabled"><span class="demo-vote-help"></span>Help</button>
+                    <button disabled="disabled" class="right"><span class="demo-vote-review"></span>Review your votes</button>
+                </div>
+                <div class="show-for-small-only small-10 small-offset-1 medium-6 column end text-center">
+                    <button disabled="disabled"><span class="demo-vote-settings"></span>Settings</button>
+                    <button disabled="disabled"><span class="demo-vote-help"></span>Help</button>
+                    <button disabled="disabled"><span class="demo-vote-review"></span>Review your votes</button>
+                </div>
+
+            </header>
+            <section class="row">
+                <div class="small-8 small-offset-2 column end">
+                    <h1>Straight Party Vote</h1>
+                    <p>
+                        You can vote all at once for all the candidates for one political party.
+                    </p>
+                    <p>
+                        To vote for candidates from one party, touch the party name, then touch <strong>Next</strong>.
+                    </p>
+                    <p>
+                        If you don't want to vote for a party, just touch <strong>Skip</strong>.
+                    </p>
+                    <p>
+                        For more information touch <strong>Help</strong>.
+                    </p>
+                </div>
+
+                <div class="small-8 small-offset-2 medium-7 column end">
+                    <div class="demo-ballot row">
+                        <div class="small-12 medium-2 column"></div>
+                        <div class="small-12 medium-10 column">Orange</div>
+                    </div>
+                    <div class="demo-ballot row">
+                        <div class="small-12 medium-2 column"></div>
+                        <div class="small-12 medium-10 column">Yellow</div>
+                    </div>
+                    <div class="demo-ballot row">
+                        <div class="small-12 medium-2 column"></div>
+                        <div class="small-12 medium-10 column">Tan</div>
+                    </div>
+                    <div class="demo-ballot row">
+                        <div class="small-12 medium-2 column"></div>
+                        <div class="small-12 medium-10 column">Gold</div>
+                    </div>
+                </div>
+            </section>
+            <footer class="row">
+                <div class="show-for-medium-up small-10 small-offset-1 column end">
+                    <button class="left" disabled="disabled"><span class="demo-vote-back"></span>Back</button>
+                    <button class="right" disabled="disabled">Skip<span class="demo-vote-skip"></span></button>
+                </div>
+                <div class="show-for-small-only small-10 small-offset-1 column end">
+                    <button disabled="disabled"><span class="demo-vote-back"></span>Back</button>
+                    <button disabled="disabled">Skip<span class="demo-vote-skip"></span></button>
+                </div>
+
+            </footer>
+        </div>
+    </body>
+</html>
