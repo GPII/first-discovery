@@ -1,0 +1,15 @@
+{
+    "instructions": "You can choose a screen colour to make things easier to see.",
+    "contrastLabel": "Contrast",
+    "contrast-default": "original",
+    "contrast-bw": "black on white",
+    "contrast-wb": "white on black",
+
+    "contrast-default-tooltip": "reset to original screen colors",
+    "contrast-bw-tooltip": "change the screen color to black on white",
+    "contrast-wb-tooltip": "change the screen color to white on black",
+
+    "contrast-default-tooltipAtSelect": "original is currently selected",
+    "contrast-bw-tooltipAtSelect": "black on white is currently selected",
+    "contrast-wb-tooltipAtSelect": "white on black is currently selected"
+}

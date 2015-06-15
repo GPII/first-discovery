@@ -1,0 +1,27 @@
+{
+    "keyboardInstructions": "Los ajustes se pueden hacer para ayudarle con el uso del teclado.",
+    "placeholder": "Escriba aquí el símbolo % ",
+
+    "try": "Inténtalo",
+    "on": "activado",
+    "off": "desactivado",
+    "turnOn": "Activar",
+    "turnOff": "Desactivar",
+
+    "stickyKeysInstructions": "La función <strong>STICKY KEYS</strong> te puede ayudar a mantener oprimidas dos teclas al mismo tiempo.",
+    "stickyKeysAccomInstr": "Con la función STICKY KEYS activada, escribe el símbolo % presionando la tecla SHIFT y luego la tecla 5.",
+    "stickyKeys": "STICKY KEYS ",
+
+    "successInstructions": "Parece que no necesitas hacer ningún ajuste al teclado. Por favor pasa a la siguiente pantalla.",
+
+    "keyboardInputTooltip": "Selecciona para empezar a escribir",
+    "tryTooltip": "Selecciona activar STICKY KEYS",
+    "turnOnTooltip": "Selecciona activar STICKY KEYS",
+    "turnOffTooltip": "Selecciona desactivar STICKY KEYS",
+
+    "shiftLatched": "shift está activada",
+    "shiftUnlatched": "shift está desactivada",
+
+    "enabledMsg": "STICKY KEYS activado",
+    "disabledMsg": "STICKY KEYS desactivado"
+}

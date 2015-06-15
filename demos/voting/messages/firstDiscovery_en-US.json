@@ -5,8 +5,8 @@
     "nextTooltip": "Select to go to next step",
     "start": "continue",
     "startTooltip": "Select to continue",
-    "finish": "finish",
-    "finishTooltip": "Select to finish",
+    "finish": "next",
+    "finishTooltip": "Select to go to next step",
 
     "unmuted": "turn voice OFF",
     "unmutedTooltip": "Select to turn voice off",
@@ -17,5 +17,6 @@
 
     "help": "help",
 
-    "panelMsg": "This is step %currentPanel of %numPanels. %instructions Press 'h' for help."
+    "stepCountMsg": "Step %currentPanel of %numPanels",
+    "panelMsg": "This is %stepCountMsg. %instructions Press 'h' for help."
 }

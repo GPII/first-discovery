@@ -11,22 +11,21 @@ https://github.com/gpii/universal/LICENSE.txt
 (function ($, fluid) {
     "use strict";
 
-    fluid.registerNamespace("gpii.tests.utils");
-    fluid.registerNamespace("gpii.tests.firstDiscovery");
+    fluid.registerNamespace("gpii.tests.utils.firstDiscovery");
 
-    gpii.tests.firstDiscovery.panelNums = {
-        first: 1,
-        second: 2,
-        lang: 1,
-        welcome: 2,
-        textSize: 3,
-        tts: 4,
-        contrast: 5,
-        keyboard: 6,
-        secondLast: 6,
-        congrats: 7,
-        last: 7
-    };
+    gpii.tests.utils.firstDiscovery.panels = [
+        ".gpiic-fd-prefsEditor-panel-lang",
+        ".gpiic-fd-prefsEditor-panel-welcome",
+        ".gpiic-fd-prefsEditor-panel-speakText",
+        ".gpiic-fd-prefsEditor-panel-speechRate",
+        ".gpiic-fd-prefsEditor-panel-contrast",
+        ".gpiic-fd-prefsEditor-panel-size",
+        ".gpiic-fd-prefsEditor-panel-onScreenKeyboard",
+        ".gpiic-fd-prefsEditor-panel-captions",
+        ".gpiic-fd-prefsEditor-panel-showSounds",
+        ".gpiic-fd-prefsEditor-panel-keyboard",
+        ".gpiic-fd-prefsEditor-panel-congratulations"
+    ];
 
     gpii.tests.utils.hasClass = function (elementName, element, selector, expected) {
         var stateMsg = expected ? " has " : " does not have ";

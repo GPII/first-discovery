@@ -1,0 +1,10 @@
+{
+    "instructions": "Do you want to see text for speech (captions) when playing videos?",
+    "no": "No",
+    "yes": "Yes",
+
+    "yes-tooltip": "Select to turn video captions on",
+    "no-tooltip": "Select to turn video captions off",
+    "yes-tooltipAtSelect": "Video captions are on",
+    "no-tooltipAtSelect": "Video captions are off"
+}

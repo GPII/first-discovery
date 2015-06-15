@@ -1,0 +1,24 @@
+{
+    "langInstructions": "Pick your language",
+    "lang-en-US": "English",
+    "lang-fr-FR": "Français",
+    "lang-es-MX": "Español",
+    "lang-de-DE": "Deutsch",
+    "lang-nl-NL": "Nederlands",
+    "lang-sv-SE": "Svenska",
+
+    "navButtonTooltip": "Select to view more languages",
+    "lang-en-US-tooltip": "Select for English",
+    "lang-fr-FR-tooltip": "Sélectionnez pour le Français",
+    "lang-es-MX-tooltip": "Selecciona Español",
+    "lang-de-DE-tooltip": "Wählen Sie für die Deutsche",
+    "lang-nl-NL-tooltip": "Kies voor Nederlands",
+    "lang-sv-SE-tooltip": "Välj för Svenska",
+
+    "lang-en-US-tooltipAtSelect": "English is currently selected",
+    "lang-fr-FR-tooltipAtSelect": "Français est actuellement sélectionné",
+    "lang-es-MX-tooltipAtSelect": "Español es la selección actual",
+    "lang-de-DE-tooltipAtSelect": "Deutsch gegenwärtig ausgewählt ist",
+    "lang-nl-NL-tooltipAtSelect": "Nederlands is geselecteerd",
+    "lang-sv-SE-tooltipAtSelect": "Svenska är vald"
+}

@@ -1,0 +1,15 @@
+{
+    "instructions": "Personaliza el color de pantalla para que puedas ver los elementos más facilmente.",
+    "contrastLabel": "Contrast",
+    "contrast-default": "original",
+    "contrast-bw": "negro sobre blanco",
+    "contrast-wb": "blanco sobre negro",
+
+    "contrast-default-tooltip": "Reinicio a colores de la pantalla originales",
+    "contrast-bw-tooltip": "Cambiar el color de la pantalla en negro sobre blanco",
+    "contrast-wb-tooltip": "Cambiar el color de la pantalla en Blanco sobre negro",
+
+    "contrast-default-tooltipAtSelect": "Original es la selección actual",
+    "contrast-bw-tooltipAtSelect": "Negro sobre blanco es la selección actual",
+    "contrast-wb-tooltipAtSelect": "Blanco sobre negro es la selección actual"
+}

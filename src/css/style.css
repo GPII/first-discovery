@@ -9,10 +9,20 @@
 body {
     background-color: #dddddd;
 }
+
+.gpii-fd .row .row { /* override foundation, which causes problems in high-contrast */
+    margin-left: 0;
+    margin-right: 0;
+}
+
 .gpii-fd,
 .gpii-fd p {
     font-size: 2.25rem; /*base font size */
     padding: 0 2rem;
+}
+
+.gpii-fd button {
+    transition: none !important; /* override foundation, which causes flashing in high-contrast */
 }
 
 .gpii-fd {
@@ -33,11 +43,16 @@ button {
 .gpii-fd *:disabled:hover,
 .gpii-fd *:disabled:focus,
 .gpii-fd *:disabled:active,
-.gpii-fd *:disabled {
+.gpii-fd *:disabled,
+.gpii-fd *:active:disabled:hover,
+.gpii-fd *:active:disabled:focus,
+.gpii-fd *:active:disabled:active,
+.gpii-fd *:active:disabled {
     background-color: #6C6D70;
     border-color: #6C6D70;
     color: #fff;
     opacity: 1.0;
+    box-shadow: none;
 }
 
 .gpii-fd-icon {
@@ -63,15 +78,17 @@ button {
 
 .gpii-fd-help,
 .gpii-fd-mute {
-    border: 0.2rem solid #ffffff;
+    border: 2px solid #ffffff;
     border-radius: 0.5rem;
     padding: 1rem;
     line-height: 2rem;
     height: 4.5rem;
 }
+
 .gpii-fd-mute {
     width: 23rem;
 }
+
 .gpii-fd-mute .gpii-fd-icon:before {
     font-size: 4rem;
     position: relative;
@@ -81,6 +98,7 @@ button {
 .gpii-fd-selfVoicing-unmuted .gpii-fd-mute .gpii-fd-icon:before {
     content: "\e601";
 }
+
 .gpii-fd-selfVoicing-muted .gpii-fd-mute .gpii-fd-icon:before {
     content: "\e60a";
     font-size: 3.5rem;
@@ -98,10 +116,14 @@ button {
     border-width: 0.4rem;
     padding: 0.8rem;
 }
+.gpii-fd-help:disabled:hover {
+    border-width: 2px;
+    padding: 1rem;
+}
 
 .gpii-fd-help:focus,
 .gpii-fd-mute:focus {
-    border: 0.2rem solid #fff; /* Yellow */
+    border: 2px solid #fff; /* Yellow */
     box-shadow: 0 0 0 0.4rem rgb(244, 215, 75), /* Yellow */
                 0 0 0 0.6rem rgb(0, 0, 0);
     outline: none;
@@ -133,6 +155,7 @@ button {
     line-height: 1.4;
     padding: 0;
 }
+
 /* controls */
 /* to try to keep the +/- buttons centred in the page,
  * look at http://css-tricks.com/snippets/css/a-guide-to-flexbox/
@@ -147,6 +170,7 @@ button {
 .gpii-fd-controls .gpii-fd-label-min {
     margin-bottom: 1rem;
 }
+
 .gpii-fd-control-label {
     color: inherit;
     background-color: inherit;
@@ -173,26 +197,33 @@ button {
     border-radius: 0.7rem;
     margin-left: -0.6rem;
     padding: 0.7rem;
-    border: 0.2rem solid #ffffff;
+    border: 3px solid #ffffff;
 }
+
 .gpii-fd-choice-label:hover {
     background-color: #425165; /* blue-grey, to override foundation's blue */
     box-shadow: 0 0 0 0.04rem rgb(255,255,255), /* white */
                 0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
 }
 
-.gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
+.gpii-fd-choice:focus {
+    outline: none;
+}
+
+.gpii-fd-choice input:focus ~ .gpii-fd-choice-label,
+.gpii-fd-choice:focus .gpii-fd-choice-label {
     background-color: #425165; /* blue-grey */
-    border: 0.2rem solid #fed73a; /* Yellow */
+    border: 2px solid #fed73a; /* Yellow */
     box-shadow: 0 0 0 0.2rem rgb(244, 215, 75), /* Yellow */
                 0 0 0 0.6rem rgb(0, 0, 0);
     outline: none;
 }
 
-.gpii-fd-choice-label:active {
+.gpii-fd-choice-label:active,
+.gpii-fd-choice:focus .gpii-fd-choice-label:active {
     background-color: #fff;
     color: #425165; /* blue-grey */
-    border: 0.2rem solid #fff;
+    border: 3px solid #fff;
     box-shadow: 0 0 0 0.4rem rgb(72, 82, 100); /* blue-grey */
 }
 
@@ -204,20 +235,19 @@ button {
     left: -2.1rem;
 }
 
-.gpii-fd-choice input:checked ~ .gpii-fd-choice-label {
+.gpii-fd-choice input:checked ~ .gpii-fd-choice-label,
+.gpii-fd-choice[aria-selected=true] .gpii-fd-choice-label {
     color: #fed73a;
 }
 
-.gpii-fd-choice input:checked:active ~ .gpii-fd-choice-label {
+.gpii-fd-choice input:checked:active ~ .gpii-fd-choice-label,
+.gpii-fd-choice[aria-selected=true]:active .gpii-fd-choice-label {
     color: #425165;
 }
 
-.gpii-fd-choice input:checked + .gpii-fd-indicator:before {
+.gpii-fd-choice input:checked + .gpii-fd-indicator:before,
+.gpii-fd-choice[aria-selected=true] .gpii-fd-indicator:before {
     content: "\e600";
-}
-
-.gpii-fd-choice input:checked ~ .gpii-fd-indicator.gpii-fd-choice-label {
-    color: #fed73a; /* yellow */
 }
 
 /* theme controls */
@@ -228,31 +258,34 @@ button {
     text-align: center;
     color: #ffffff;
     background-color: #425165; /* blue-grey */
-    border: 0.2rem solid #000;
+    border: 2px solid #000;
 }
-.gpii-fd-theme-default {
+
+.gpii-fd-theme.fl-theme-prefsEditor-default {
     color: #425165 !important;
     background-color: #eeeeee !important;
     border-color: #425165 !important;
 }
-.gpii-fd-theme-bw {
+
+.gpii-fd-theme.fl-theme-bw {
     color: #000000 !important;
     background-color: #ffffff !important;
     border-color: #000000 !important;
 }
-.gpii-fd-theme-wb {
+
+.gpii-fd-theme.fl-theme-wb, {
     color: #ffffff !important;
     background-color: #000000 !important;
     border-color: #000000 !important;
 }
 
-/* text size increase/decrease controls */
+/* range increase/decrease controls */
 .gpii-fd-increase, .gpii-fd-decrease {
     width: 6rem;
     height: 6rem;
     color: #ffffff;
     background-color: #425165; /* blue-grey */
-    border: 0.1rem solid #fff;
+    border: 1px solid #fff;
     border-radius: 0.7rem;
     font-size: 4rem;
     margin-bottom: 1rem;
@@ -263,7 +296,7 @@ button {
 .gpii-fd .gpii-fd-lang-prev:focus,
 .gpii-fd .gpii-fd-lang-next:focus {
     background-color: #425165; /* blue-grey */
-    border: 0.1rem solid #fed73a; /* Yellow */
+    border: 1px solid #fed73a; /* Yellow */
     box-shadow: 0 0 0 0.2rem rgb(244, 215, 75), /* Yellow */
                 0 0 0 0.6rem rgb(0, 0, 0);
     outline: none;
@@ -275,7 +308,7 @@ button {
 .gpii-fd .gpii-fd-lang-next:active {
     background-color: #fff;
     color: #425165; /* blue-grey */
-    border: 0.1rem solid #fff;
+    border: 1px solid #fff;
     box-shadow: 0 0 0 0.4rem rgb(72, 82, 100); /* blue-grey */
 }
 
@@ -295,11 +328,20 @@ button {
     top: -0.4rem;
     left: -1.1rem;
 }
+
 .gpii-fd-increase .gpii-fd-icon:before {
     content: "\e603";
 }
+
 .gpii-fd-decrease .gpii-fd-icon:before {
     content: "\e604";
+}
+
+/* range disabledMsg */
+.gpii-fd .gpii-fd-range-disabledMsg {
+    line-height: 1.1;
+    border: 1px solid #425165;
+    padding: 1.5rem 2rem;
 }
 
 /* language controls */
@@ -327,7 +369,7 @@ button {
     height: 2.5rem;
     width: 24rem;
     padding-top: 0.1rem;
-    border: 0.1rem solid #fff;
+    border: 1px solid #fff;
     border-radius: 0.7rem;
     font-size: 2rem;
     line-height: 2.5rem;
@@ -340,14 +382,16 @@ button {
     height: 100%;
     width: 1.75rem;
     margin-right: 1rem;
-    border: 0.2rem solid #425165; /* blue-grey */
+    border: 2px solid #425165; /* blue-grey */
 }
+
 .gpii-fd-statusFill {
     position: relative;
     background-color: #425165;
     width: inherit;
     height: 0;
 }
+
 .gpii-fd-statusFillContainer {
     position: relative;
     width: inherit;
@@ -357,6 +401,7 @@ button {
     top: 11.7rem;
     height: 12rem;
 }
+
 .gpii-fd-statusFillMin {
     position: relative;
     background-color: #425165;
@@ -373,6 +418,7 @@ button {
     color: #425165; /* blue-grey */
     background-color: #ffffff;
 }
+
 .gpii-fd-navButtons-back, .gpii-fd-navButtons-next {
     border-radius: 0.5rem;
     visibility: hidden;
@@ -382,20 +428,24 @@ button {
     line-height: 2rem;
     height: 4.2rem;
 }
+
 .gpii-fd-navButtons-back {
     padding-left: 0;
     margin: 0 0 1rem 1rem;
 }
+
 .gpii-fd-navButtons-next {
     padding-right: 0;
     margin: 0 1rem 1rem 0;
 }
+
 .gpii-fd-navButtons-back:hover,
 .gpii-fd-navButtons-next:hover {
     background-color: #425165; /* blue-grey, to override foundation's blue */
     box-shadow: 0 0 0 0.1rem rgb(255,255,255), /* white */
                 0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
 }
+
 .gpii-fd-navButtons-back:focus,
 .gpii-fd-navButtons-next:focus {
     background-color: #425165; /* blue-grey */
@@ -403,11 +453,13 @@ button {
                 0 0 0 0.6rem rgb(0, 0, 0);
     outline: none;
 }
+
 .gpii-fd-navButtons-back .gpii-fd-icon:before,
 .gpii-fd-navButtons-next .gpii-fd-icon:after {
     position: relative;
     font-size: 4rem;
 }
+
 .gpii-fd-navButtons-back .gpii-fd-icon:before {
     content:  "\e606";
 }
@@ -415,16 +467,18 @@ button {
 .gpii-fd-navButtons-next .gpii-fd-icon:after {
     content: "\e605";
 }
+
 .gpii-fd-navButtons:after {
   content:"";
   display:table;
   clear:both;
 }
+
 .gpii-fd-navIcons {
     clear: both;
-    margin: 0 2rem;
-    margin-top: 1.5rem; /* gap between main body and icons*/
+    padding: 0 2rem;
 }
+
 .gpii-fd-navIcon {
     padding: 0.5rem;
     color: #425165; /* blue-grey */
@@ -438,22 +492,61 @@ button {
     text-transform: none;
     line-height: initial;
 }
-/* Special handling for the welcome icon that does not have an icon */
-.gpii-fd-navIcon-welcome {
-    display: inline-block;
-    margin: 0.2rem -0.3rem 0 0;
+
+/* Spacer required to make sure icon bar is scrollable to the end - designs require empty space at end of
+ * list in final position. This must be at least the width of the icon bar minus one icon
+ */
+
+.gpii-fd-navIcon-spacer:before {
+    content: "\200B"; /* unicode for zero width space */
+    color: #fff;
 }
+
+/* Special handling for the welcome and congratulations icons that do not have an icon */
+.gpii-fd-navIcon-welcome, .gpii-fd-navIcon-congratulations {
+    width: 0; /* set width to zero so that icon paging works */
+    display: none;
+}
+
 .gpii-fd-lang:before {
     content: "\e608";
 }
+
 .gpii-fd-volume:before {
     content: "\e609";
 }
+
+.gpii-fd-contrast:before {
+    content: "\e60c";
+}
+
+.gpii-fd-speechRate:before {
+    content: "\e60f";
+}
+
 .gpii-fd-text:before {
     content: "\e60b";
 }
-.gpii-fd-contrast:before {
-    content: "\e60c";
+
+.gpii-fd-onScreenKeyboard:before {
+    content: "\e611";
+}
+
+.gpii-fd-captions:before {
+    content: "\e610";
+}
+
+.gpii-fd-showSounds:before {
+    content: "\e60d";
+}
+
+.gpii-fd-navIcon-outer {
+    width: 29.77rem; /* Space for 5 icons. This isn't a perfect 30rem,
+                        otherwise a white bar appears at the end (FLOE-350). */
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 1.5rem 0; /* gap between main body and icons*/
+    margin: 0 auto;
 }
 
 .gpii-fd-prefsEditor-panel-contrast label {
@@ -468,7 +561,7 @@ button {
 
 .gpii-fd-prefsEditor-panel-contrast input:focus ~ label {
     background-color: #425165; /* blue-grey */
-    border: 0.2rem solid #fed73a; /* Yellow */
+    border: 2px solid #fed73a; /* Yellow */
     box-shadow: 0 0 0 0.2rem rgb(244, 215, 75), /* Yellow */
                 0 0 0 0.6rem rgb(0, 0, 0);
     outline: none;
@@ -486,7 +579,7 @@ button {
     border-left: 1.25rem solid transparent;
     border-right: 1.25rem solid transparent;
     border-top: 1.5rem solid #fff;
-    margin: -7.2rem auto 3rem auto;
+    margin: -7.3rem auto 3rem auto;
 }
 
 .gpii-fd-show {
@@ -500,15 +593,29 @@ button {
     background-color: #ffffff;
     border-radius: 2rem;
     border: 1px solid #ffffff;
-    margin-left: -2rem;
     position: relative;
     top: -1rem;
+    left: 3rem;
 }
 .gpii-fd-active {
     background-color: #fed73a; /* Yellow */
 }
+
+.gpii-fd-active:before {
+    outline: 0.2rem solid;
+}
+
 .gpii-fd-active .gpii-fd-activeIndicator {
     visibility: visible;
+}
+
+/* Step count message */
+.gpii-fd-stepCount {
+    font-size: 1rem;
+    position: relative;
+    top: -1.1rem;
+    height: 0;
+    text-align: center;
 }
 
 /* Tooltips */
@@ -520,13 +627,13 @@ button {
     background-color: #fed73a;
     bottom: -1rem;
 }
+
 .gpii-fd-tooltip-lang {
     width: auto;
     max-width: 8.5em;
     font-size: 2rem;
     padding: 0.5rem;
     background-color: #fed73a;
-    right: 16rem;
 }
 
 /* Keyboard screens */
@@ -539,20 +646,24 @@ input[type="text"].gpii-fd-keyboard-input {
     border-radius: 7px;
     background-color: #eeeeee;
 }
+
 input[type="text"].gpii-fd-keyboard-input::-webkit-input-placeholder {
     color: #425165;
 }
+
 input[type="text"].gpii-fd-keyboard-input:focus {
-    border: 0.2rem solid #fff; /* Yellow */
+    border: 2px solid #fff; /* Yellow */
     box-shadow: 0 0 0 0.4rem rgb(244, 215, 75), /* Yellow */
                 0 0 0 0.6rem rgb(0, 0, 0);
     outline: none;
 }
+
 .gpii-fd-keyboard-stickyKeysAdjuster-accommodationInstr {
     display: block;
     text-align: left;
     padding: 0 2rem 1rem 2rem;
 }
+
 .gpii-fd-keyboard-try,
 .gpii-fd-keyboard-accommodationToggle {
     border-radius: 0.5rem;
@@ -562,16 +673,19 @@ input[type="text"].gpii-fd-keyboard-input:focus {
     line-height: 2rem;
     height: 4.2rem;
 }
+
 .gpii-fd-keyboard-try,
 .gpii-fd-keyboard-accommodationToggle {
     margin: 0 1rem 1rem 0;
 }
+
 .gpii-fd-keyboard-try:hover,
 .gpii-fd-keyboard-accommodationToggle:hover {
     background-color: #425165; /* blue-grey, to override foundation's blue */
     box-shadow: 0 0 0 0.1rem rgb(255,255,255), /* white */
                 0 0 0 0.6rem rgb(72, 82, 100); /*blue-grey */
 }
+
 .gpii-fd-keyboard-try:focus,
 .gpii-fd-keyboard-accommodationToggle:focus {
     background-color: #425165; /* blue-grey */
@@ -579,20 +693,345 @@ input[type="text"].gpii-fd-keyboard-input:focus {
                 0 0 0 0.6rem rgb(0, 0, 0);
     outline: none;
 }
+
 .gpii-fd-keyboard:before {
     content: "\e60e";
 }
+
 .gpii-fd-keyboard-shift-indicator .gpii-fd-keyboard-shift-indicatorLabel {
     padding: 0.4rem;
     background-color: #767675;
     border-radius: 7px;
     color: #FFFFFF;
-    margin-left: 21.75rem;
 }
+
 .gpii-fd-keyboard-shift-indicator {
     visibility: hidden;
+    width: 6rem;
+    margin-left: 23.75rem;
     margin-top: -3.3rem;
 }
+
 .gpii-keyboardInput-shiftLatched ~ .gpii-fd-keyboard-shift-indicator {
     visibility: visible;
+}
+
+/* French-specific styles */
+html:lang(fr-FR) .gpii-fd-mute {
+  width: 24rem;
+}
+
+html:lang(es-MX) .gpii-fd-prefsEditor-panel-welcome .gpii-fd-instructions p,
+html:lang(fr-FR) .gpii-fd-prefsEditor-panel-welcome .gpii-fd-instructions p {
+  line-height: 1.1;
+}
+
+html:lang(es-MX) .gpii-fd-theme {
+    width: 23rem;
+}
+
+html:lang(fr-FR) .gpii-fd-prefsEditor-panel-keyboard {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+html:lang(es-MX) .gpii-fd-prefsEditor-panel-keyboard .gpii-fd-instructions {
+    padding: 0;
+    margin-bottom: 0;
+}
+
+html:lang(es-MX) .gpii-fd-keyboard-stickyKeysAdjuster-accommodationInstr,
+html:lang(fr-FR) .gpii-fd-prefsEditor-panel-keyboard .gpii-fd-instructions,
+html:lang(fr-FR) .gpii-fd-keyboard-stickyKeysAdjuster-accommodationInstr {
+    padding: 0 0 1rem 0;
+    margin-bottom: 0;
+}
+
+html:lang(es-MX) .gpii-fd-keyboard-stickyKeysAdjuster-accommodationNameState,
+html:lang(fr-FR) .gpii-fd-keyboard-stickyKeysAdjuster-accommodationNameState {
+    width: 23rem;
+    display: block;
+    margin-left: -1rem;
+}
+
+html:lang(es-MX) .gpii-fd-main.gpii-fd-prefsEditor-panel-keyboard {
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+}
+
+html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle,
+html:lang(fr-FR) .gpii-fd-keyboard-accommodationToggle {
+    display: block;
+    margin-top: -4rem;
+}
+
+html:lang(fr-FR) .gpii-fd-keyboard-accommodationToggle {
+    margin-left: 22rem;
+}
+
+html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
+    margin-left: 20rem;
+}
+
+/* high-contrast themes: white-on-black */
+.fl-theme-wb .gpii-fd,
+.fl-theme-wb .gpii-fd-navButtons-next,
+.fl-theme-wb .gpii-fd-navButtons-back,
+.fl-theme-wb .gpii-fd-keyboard-try,
+.fl-theme-wb .gpii-fd-keyboard-accommodationToggle,
+.fl-theme-wb .gpii-fd-tooltip,
+.fl-theme-wb .gpii-fd-tooltip-lang {
+    border: 1px solid #ffffff !important;
+}
+
+.fl-theme-wb .gpii-fd-activeIndicator {
+    border-left-color: #ffffff !important;
+    border-right-color: #ffffff !important;
+    border-top-color: #000000 !important;
+}
+
+.fl-theme-wb .gpii-fd-confirmedIndicator:before {
+    color: #ffffff;
+    background-color: #000000 !important;
+}
+
+.fl-theme-wb .gpii-fd,
+.fl-theme-wb .gpii-fd-topButtons,
+.fl-theme-wb .gpii-fd-navIcons,
+.fl-theme-wb .gpii-fd-navIcons ul,
+.fl-theme-wb .gpii-fd-mute:hover,
+.fl-theme-wb .gpii-fd-mute:hover *,
+.fl-theme-wb .gpii-fd-navButtons-next:hover,
+.fl-theme-wb .gpii-fd-navButtons-back:hover,
+.fl-theme-wb .gpii-fd-navButtons-next:hover *,
+.fl-theme-wb .gpii-fd-navButtons-back:hover *,
+.fl-theme-wb .gpii-fd-choice-label:hover,
+.fl-theme-wb .gpii-fd-lang-prev:hover,
+.fl-theme-wb .gpii-fd-lang-next:hover,
+.fl-theme-wb .gpii-fd-decrease:hover,
+.fl-theme-wb .gpii-fd-increase:hover,
+.fl-theme-wb .gpii-fd-decrease:hover *,
+.fl-theme-wb .gpii-fd-increase:hover *,
+.fl-theme-wb .gpii-fd-keyboard-try:hover,
+.fl-theme-wb .gpii-fd-keyboard-accommodationToggle:hover {
+    color: #000000 !important;
+    background-color: #ffffff !important;
+    box-shadow: none !important;
+}
+
+.fl-theme-wb .gpii-fd-mute:hover {
+    border: 1px solid #000000 !important;
+}
+
+.fl-theme-wb .gpii-fd-keyboard-input:focus,
+.fl-theme-wb .gpii-fd-theme:hover,
+.fl-theme-wb .gpii-fd-keyboard-input:hover {
+    box-shadow: 0 0 0 0.6rem rgb(255,255,255) !important;
+}
+
+.fl-theme-wb .gpii-fd-decrease:focus,
+.fl-theme-wb .gpii-fd-increase:focus,
+.fl-theme-wb .gpii-fd-navButtons-next:focus,
+.fl-theme-wb .gpii-fd-navButtons-back:focus,
+.fl-theme-wb .gpii-fd-keyboard-try:focus,
+.fl-theme-wb .gpii-fd-keyboard-accommodationToggle:focus,
+.fl-theme-wb .gpii-fd-choice input:focus ~ .gpii-fd-choice-label,
+.fl-theme-wb .gpii-fd-choice:focus .gpii-fd-choice-label {
+    box-shadow: 0 0 0 0.4rem rgb(255,255,255) !important;
+}
+
+.fl-theme-wb .gpii-fd-mute:focus {
+    box-shadow: 0 0 0 0.4rem rgb(0,0,0) !important;
+}
+
+.fl-theme-wb .gpii-fd-prefsEditor-panel-contrast input:focus ~ label {
+    box-shadow: 0 0 0 0.2rem rgb(0,0,0),
+                0 0 0 0.6rem rgb(255, 255, 255) !important;
+}
+
+.fl-theme-wb input[type="text"].gpii-fd-keyboard-input::-webkit-input-placeholder {
+    color: #ffffff !important;
+}
+
+.fl-theme-wb .gpii-fd-statusFill {
+    background-color: #ffffff !important;
+}
+
+.fl-theme-wb .gpii-fd *:disabled {
+    background-image: repeating-linear-gradient(
+        -20deg,
+        #ffffff,
+        #ffffff 0.3rem,
+        #000000 0.3rem,
+        #000000 1.5rem
+    );
+}
+
+.fl-theme-wb .gpii-fd-lang-prev:disabled:hover,
+.fl-theme-wb .gpii-fd-lang-next:disabled:hover {
+    color: #ffffff !important;
+}
+
+.fl-theme-wb button:disabled:hover * {
+        background-color: transparent !important;
+        color: #ffffff !important;
+}
+
+.fl-theme-wb .gpii-fd-stepCount span {
+    color: #000 !important;
+    background-color: #fff !important;
+}
+
+/* high-contrast themes: black-on-white */
+.fl-theme-bw .gpii-fd,
+.fl-theme-bw .gpii-fd-navButtons-next,
+.fl-theme-bw .gpii-fd-navButtons-back,
+.fl-theme-bw .gpii-fd-keyboard-try,
+.fl-theme-bw .gpii-fd-keyboard-accommodationToggle,
+.fl-theme-bw .gpii-fd-tooltip,
+.fl-theme-bw .gpii-fd-tooltip-lang {
+    border: 1px solid #000000 !important;
+}
+
+.fl-theme-bw .gpii-fd-activeIndicator {
+    border-left-color: #000000 !important;
+    border-right-color: #000000 !important;
+    border-top-color: #ffffff !important;
+}
+
+.fl-theme-bw .gpii-fd-confirmedIndicator:before {
+    color: #000000;
+    background-color: #ffffff !important;
+}
+
+.fl-theme-bw .gpii-fd,
+.fl-theme-bw .gpii-fd-topButtons,
+.fl-theme-bw .gpii-fd-navIcons,
+.fl-theme-bw .gpii-fd-navIcons ul,
+.fl-theme-bw .gpii-fd-mute:hover,
+.fl-theme-bw .gpii-fd-mute:hover *,
+.fl-theme-bw .gpii-fd-navButtons-next:hover,
+.fl-theme-bw .gpii-fd-navButtons-back:hover,
+.fl-theme-bw .gpii-fd-navButtons-next:hover *,
+.fl-theme-bw .gpii-fd-navButtons-back:hover *,
+.fl-theme-bw .gpii-fd-choice-label:hover,
+.fl-theme-bw .gpii-fd-lang-prev:hover,
+.fl-theme-bw .gpii-fd-lang-next:hover,
+.fl-theme-bw .gpii-fd-decrease:hover,
+.fl-theme-bw .gpii-fd-increase:hover,
+.fl-theme-bw .gpii-fd-decrease:hover *,
+.fl-theme-bw .gpii-fd-increase:hover *,
+.fl-theme-bw .gpii-fd-keyboard-try:hover,
+.fl-theme-bw .gpii-fd-keyboard-accommodationToggle:hover {
+    color: #ffffff !important;
+    background-color: #000000 !important;
+    box-shadow: none !important;
+}
+
+.fl-theme-bw .gpii-fd-mute:hover {
+    border: 1px solid #ffffff !important;
+}
+
+.fl-theme-bw .gpii-fd-keyboard-input:focus,
+.fl-theme-bw .gpii-fd-theme:hover,
+.fl-theme-bw .gpii-fd-keyboard-input:hover {
+    box-shadow: 0 0 0 0.6rem rgb(0,0,0) !important;
+}
+
+.fl-theme-bw .gpii-fd-decrease:focus,
+.fl-theme-bw .gpii-fd-increase:focus,
+.fl-theme-bw .gpii-fd-navButtons-next:focus,
+.fl-theme-bw .gpii-fd-navButtons-back:focus,
+.fl-theme-bw .gpii-fd-keyboard-try:focus,
+.fl-theme-bw .gpii-fd-keyboard-accommodationToggle:focus,
+.fl-theme-bw .gpii-fd-choice input:focus ~ .gpii-fd-choice-label,
+.fl-theme-bw .gpii-fd-choice:focus .gpii-fd-choice-label {
+    box-shadow: 0 0 0 0.4rem rgb(0, 0, 0) !important;
+}
+
+.fl-theme-bw .gpii-fd-mute:focus {
+    box-shadow: 0 0 0 0.4rem rgb(255,255,255) !important;
+}
+
+.fl-theme-bw .gpii-fd-prefsEditor-panel-contrast input:focus ~ label {
+    box-shadow: 0 0 0 0.2rem rgb(255, 255, 255),
+                0 0 0 0.6rem rgb(0,0,0) !important;
+}
+
+.fl-theme-bw input[type="text"].gpii-fd-keyboard-input::-webkit-input-placeholder {
+    color: #000000 !important;
+}
+
+.fl-theme-bw .gpii-fd-statusFill {
+    background-color: #000000 !important;
+}
+
+.fl-theme-bw .gpii-fd *:disabled {
+    background-image: repeating-linear-gradient(
+        -20deg,
+        #000000,
+        #000000 0.3rem,
+        #ffffff 0.3rem,
+        #ffffff 1.5rem
+    );
+}
+
+.fl-theme-bw .gpii-fd-lang-prev:disabled:hover,
+.fl-theme-bw .gpii-fd-lang-next:disabled:hover {
+    color: #000000 !important;
+}
+
+.fl-theme-bw button:disabled:hover * {
+        background-color: transparent !important;
+        color: #000000 !important;
+}
+
+.fl-theme-bw .gpii-fd-stepCount span {
+    color: #fff !important;
+    background-color: #000 !important;
+}
+
+/* high-contrast themes, shared by both */
+.fl-theme-bw .gpii-fd-navButtons-next:hover,
+.fl-theme-bw .gpii-fd-navButtons-back:hover,
+.fl-theme-wb .gpii-fd-navButtons-next:hover,
+.fl-theme-wb .gpii-fd-navButtons-back:hover {
+    box-shadow: none !important;
+}
+
+.fl-theme-wb .gpii-fd-confirmedIndicator,
+.fl-theme-bw .gpii-fd-confirmedIndicator {
+    background-color: transparent !important;
+}
+
+.fl-theme-bw .gpii-fd-theme:focus,
+.fl-theme-bw .gpii-fd-choice input:focus ~ .gpii-fd-choice-label,
+.fl-theme-wb .gpii-fd-theme:focus,
+.fl-theme-wb .gpii-fd-choice input:focus ~ .gpii-fd-choice-label {
+    border: none !important;
+}
+
+.fl-theme-bw .gpii-fd-keyboard-shift-indicator .gpii-fd-keyboard-shift-indicatorLabel,
+.fl-theme-wb .gpii-fd-keyboard-shift-indicator .gpii-fd-keyboard-shift-indicatorLabel {
+    border-style: dashed;
+    border-width: 1px;
+}
+
+.fl-theme-wb .gpii-fd-help:disabled:hover,
+.fl-theme-bw .gpii-fd-help:disabled:hover {
+    border-width: 2px;
+    padding: 1rem;
+}
+
+.fl-theme-wb .gpii-fd-icon,
+.fl-theme-bw .gpii-fd-icon,
+.fl-theme-wb .gpii-fd-icon:hover,
+.fl-theme-bw .gpii-fd-icon:hover {
+        background-color: transparent !important;
+}
+
+/* Override an outline-setting rule in Enactors.css */
+.fl-theme-wb .gpii-fd-lang-controls .selectable,
+.fl-theme-bw .gpii-fd-lang-controls .selectable {
+    outline-style: none;
 }

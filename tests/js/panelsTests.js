@@ -19,40 +19,51 @@ https://github.com/gpii/universal/LICENSE.txt
         gradeNames: ["gpii.firstDiscovery.panel.lang", "autoInit"],
         messageBase: {
             "langInstructions": "Select your preferred language",
-            "lang-en": "English",
-            "lang-fr": "Français",
-            "lang-es": "Español",
-            "lang-de": "Deutsch",
-            "lang-ne": "Nederlands",
-            "lang-sv": "Svenska",
+            "lang-en-US": "English",
+            "lang-fr-FR": "Français",
+            "lang-es-MX": "Español",
+            "lang-de-DE": "Deutsch",
+            "lang-nl-NL": "Nederlands",
+            "lang-sv-SE": "Svenska",
 
             "navButtonTooltip": "Select to view more languages",
-            "lang-en-tooltip": "Select for English",
-            "lang-fr-tooltip": "Sélectionnez pour le Français",
-            "lang-es-tooltip": "Seleccionar para Español",
-            "lang-de-tooltip": "Wählen Sie für die Deutsche",
-            "lang-ne-tooltip": "Select for Nederlands",
-            "lang-sv-tooltip": "Select for Svenska",
+            "lang-en-US-tooltip": "Select for English",
+            "lang-fr-FR-tooltip": "Sélectionnez pour le Français",
+            "lang-es-MX-tooltip": "Seleccionar para Español",
+            "lang-de-DE-tooltip": "Wählen Sie für die Deutsche",
+            "lang-nl-NL-tooltip": "Select for Nederlands",
+            "lang-sv-SE-tooltip": "Select for Svenska",
 
-            "lang-en-tooltipAtSelect": "English is currently selected",
-            "lang-fr-tooltipAtSelect": "Français est actuellement sélectionné",
-            "lang-es-tooltipAtSelect": "Español está seleccionado actualmente",
-            "lang-de-tooltipAtSelect": "Deutsch gegenwärtig ausgewählt ist",
-            "lang-ne-tooltipAtSelect": "Nederlands is currently selected",
-            "lang-sv-tooltipAtSelect": "Svenska is currently selected"
+            "lang-en-US-tooltipAtSelect": "English is currently selected",
+            "lang-fr-FR-tooltipAtSelect": "Français est actuellement sélectionné",
+            "lang-es-MX-tooltipAtSelect": "Español está seleccionado actualmente",
+            "lang-de-DE-tooltipAtSelect": "Deutsch gegenwärtig ausgewählt ist",
+            "lang-nl-NL-tooltipAtSelect": "Nederlands is currently selected",
+            "lang-sv-SE-tooltipAtSelect": "Svenska is currently selected"
         },
         model: {
-            lang: "ne"
+            lang: "nl-NL"
         },
         numOfLangPerPage: 3,
         controlValues: {
-            lang: ["en", "fr", "es", "de", "ne", "sv"]
+            lang: ["en-US", "fr-FR", "es-MX", "de-DE", "nl-NL", "sv-SE"]
         },
         stringArrayIndex: {
-            lang: ["lang-en", "lang-fr", "lang-es", "lang-de", "lang-ne", "lang-sv"],
-            tooltip: ["lang-en-tooltip", "lang-fr-tooltip", "lang-es-tooltip", "lang-de-tooltip", "lang-ne-tooltip", "lang-sv-tooltip"],
-            tooltipAtSelect: ["lang-en-tooltipAtSelect", "lang-fr-tooltipAtSelect", "lang-es-tooltipAtSelect", "lang-de-tooltipAtSelect", "lang-ne-tooltipAtSelect", "lang-sv-tooltipAtSelect"]
-        }
+            lang: ["lang-en-US", "lang-fr-FR", "lang-es-MX", "lang-de-DE", "lang-nl-NL", "lang-sv-SE"],
+            tooltip: ["lang-en-US-tooltip", "lang-fr-FR-tooltip", "lang-es-MX-tooltip", "lang-de-DE-tooltip", "lang-nl-NL-tooltip", "lang-sv-SE-tooltip"],
+            tooltipAtSelect: ["lang-en-US-tooltipAtSelect", "lang-fr-FR-tooltipAtSelect", "lang-es-MX-tooltipAtSelect", "lang-de-DE-tooltipAtSelect", "lang-nl-NL-tooltipAtSelect", "lang-sv-SE-tooltipAtSelect"]
+        },
+        events: {
+            afterTooltipOpen: null
+        },
+        boilTooltipOpenEvent: {
+            listener: "{gpii.tests.firstDiscovery.panel.lang}.events.afterTooltipOpen",
+            priority: "last"
+        },
+        distributeOptions: [{
+            source: "{that}.options.boilTooltipOpenEvent",
+            target: "{that tooltip}.options.listeners.afterOpen"
+        }]
     });
 
     fluid.defaults("gpii.tests.langPanel", {
@@ -73,7 +84,7 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "Test the language settings panel",
             tests: [{
-                expect: 92,
+                expect: 37,
                 name: "Test the language panel",
                 sequence: [{
                     func: "{lang}.refreshView"
@@ -82,63 +93,75 @@ https://github.com/gpii/universal/LICENSE.txt
                     priority: "last",
                     event: "{lang}.events.afterRender"
                 }, {
-                    listener: "gpii.tests.langTester.verifyButtonTopsReady",
-                    args: ["{lang}"],
+                    listener: "gpii.tests.langTester.verifyTopDisplayedLang",
+                    args: ["{lang}", "de-DE"],
                     priority: "last",
-                    event: "{lang}.events.onButtonTopsReady"
+                    event: "{lang}.events.langButtonsReady"
                 }, {
-                    jQueryTrigger: "click",
-                    element: "{lang}.dom.next"
+                    funcName: "gpii.tests.langTester.verifyPrevNextButtonsEnabled",
+                    args: ["{lang}", true, false]
                 }, {
-                    listener: "gpii.tests.langTester.verifyLangModel",
-                    args: ["{lang}", "sv"],
-                    spec: {path: "lang", priority: "last"},
-                    changeEvent: "{lang}.applier.modelChanged"
+                    funcName: "gpii.tests.langTester.hoverElm",
+                    args: ["{lang}.dom.langRow", 0]
                 }, {
-                    func: "{lang}.refreshView"
+                    listener: "gpii.tests.langTester.verifyTooltipLang",
+                    args: ["{arguments}.2", "en-US"],
+                    event: "{lang}.events.afterTooltipOpen"
                 }, {
-                    listener: "gpii.tests.langTester.verifyButtonStates",
-                    args: ["{lang}", "sv", false, true],
-                    priority: "last",
-                    event: "{lang}.events.afterRender"
+                    funcName: "gpii.tests.langTester.hoverElm",
+                    args: ["{lang}.dom.langRow", 4]
+                }, {
+                    listener: "gpii.tests.langTester.verifyTooltipLang",
+                    args: ["{arguments}.2", "nl-NL"],
+                    event: "{lang}.events.afterTooltipOpen"
                 }, {
                     jQueryTrigger: "click",
                     element: "{lang}.dom.prev"
                 }, {
-                    listener: "gpii.tests.langTester.verifyLangModel",
-                    args: ["{lang}", "ne"],
-                    spec: {path: "lang", priority: "last"},
+                    listener: "gpii.tests.langTester.verifyTopDisplayedLang",
+                    args: ["{lang}", "es-MX"],
+                    spec: {path: "displayLangIndex", priority: "last"},
                     changeEvent: "{lang}.applier.modelChanged"
                 }, {
-                    func: "{lang}.refreshView"
+                    funcName: "gpii.tests.langTester.verifyPrevNextButtonsEnabled",
+                    args: ["{lang}", true, true]
                 }, {
-                    listener: "gpii.tests.langTester.verifyButtonStates",
-                    args: ["{lang}", "ne", false, false],
-                    priority: "last",
-                    event: "{lang}.events.afterRender"
+                    jQueryTrigger: "click",
+                    element: "{lang}.dom.next"
                 }, {
-                    func: "{lang}.applier.change",
-                    args: ["lang", "en"]
-                }, {
-                    listener: "gpii.tests.langTester.verifyLangModel",
-                    args: ["{lang}", "en"],
-                    spec: {path: "lang", priority: "last"},
+                    listener: "gpii.tests.langTester.verifyTopDisplayedLang",
+                    args: ["{lang}", "de-DE"],
+                    spec: {path: "displayLangIndex", priority: "last"},
                     changeEvent: "{lang}.applier.modelChanged"
                 }, {
-                    func: "{lang}.refreshView"
+                    funcName: "gpii.tests.langTester.verifyPrevNextButtonsEnabled",
+                    args: ["{lang}", true, false]
                 }, {
-                    listener: "gpii.tests.langTester.verifyButtonStates",
-                    args: ["{lang}", "en", true, false],
-                    priority: "last",
-                    event: "{lang}.events.afterRender"
-                }]
+                    funcName: "gpii.tests.langTester.clickLangButton",
+                    args: ["{lang}", "fr-FR"]
+                }, {
+                    listener: "gpii.tests.langTester.verifyLangModel",
+                    args: ["{lang}", "fr-FR"],
+                    spec: {path: "lang", priority: "last"},
+                    changeEvent: "{lang}.applier.modelChanged"
+                }
+                // TODO Test moving selection with the keyboard
+                // TODO Test activation of language with the keyboard
+                ]
             }]
         }]
     });
 
+    gpii.tests.langTester.hoverElm = function (elms, idx) {
+        $(elms).eq(idx || 0).mouseover();
+    };
+
     gpii.tests.langTester.verifyTooltip = function (that) {
         gpii.tests.utils.verifyTooltipContents("language button row element", that.locate("langRow"), that.model.lang, that.attachTooltipOnLang.tooltip.model.idToContent, that.options.controlValues.lang, that.options.stringArrayIndex.lang, that.options.messageBase);
-        gpii.tests.utils.verifyTooltipContents("language button input element", that.locate("langInput"), that.model.lang, that.attachTooltipOnLang.tooltip.model.idToContent, that.options.controlValues.lang, that.options.stringArrayIndex.lang, that.options.messageBase);
+    };
+
+    gpii.tests.langTester.verifyTooltipLang = function (tooltip, expectedLang) {
+        jqUnit.assertEquals("The lang attribute should be set correctly for the tooltip.", expectedLang, tooltip.attr("lang"));
     };
 
     gpii.tests.langTester.verifyRendering = function (that) {
@@ -150,15 +173,21 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertNotUndefined("The gradechild component \"tooltip\" has been instantiated", that.attachTooltipOnLang.tooltip);
 
         jqUnit.assertEquals("The instruction has been set correctly.", messages.langInstructions, that.locate("instructions").text());
+        var numAriaSelectedTrue = 0;
         fluid.each(that.locate("langRow"), function (langButton, idx) {
             langButton = $(langButton);
             var langLabel = langButton.find(that.options.selectors.langLabel);
             jqUnit.assertEquals("The language button #" + idx + " has the correct label.", messages[stringArray[idx]], langLabel.text());
+            var langButtonLang = langButton.attr("lang");
+            var expectedAriaSelected = "false";
+            if (langButtonLang === that.model.lang) {
+                expectedAriaSelected = "true";
+                numAriaSelectedTrue++;
+            }
+            jqUnit.assertEquals("The language button #" + idx + " (" + langButtonLang + ") has aria-selected=" + expectedAriaSelected, expectedAriaSelected, langButton.attr("aria-selected"));
         });
 
-        jqUnit.assertEquals("The correct language button has been checked", that.model.lang, that.locate("langInput").filter(":checked").val());
-        jqUnit.assertEquals("The previous button is enabled", false, that.locate("prev").is(":disabled"));
-        jqUnit.assertEquals("The next button is enabled", false, that.locate("next").is(":disabled"));
+        jqUnit.assertEquals("Exactly one language button has aria-selected=true", 1, numAriaSelectedTrue);
         jqUnit.assertEquals("The language code has been added to the html \"lang\" attribute", that.model.lang, $("html").attr("lang"));
 
         gpii.tests.langTester.verifyTooltip(that);
@@ -168,49 +197,154 @@ https://github.com/gpii/universal/LICENSE.txt
         });
     };
 
-    gpii.tests.langTester.verifyButtonTopsReady = function (that) {
-        jqUnit.assertNotUndefined("The button positions have been collected", that.buttonTops);
-        jqUnit.assertNotUndefined("The controls div has been scrolled", that.lastMovedHeight);
-        gpii.tests.langTester.verifyButtonInView(that);
+    gpii.tests.langTester.verifyTopDisplayedLang = function (that, expectedTopLang) {
+        var expectedIndex = that.options.controlValues.lang.indexOf(expectedTopLang);
+        var msg = "Language " + expectedTopLang + " (index=" + expectedIndex +
+                ") should be displayed top";
+        jqUnit.assertEquals(msg, expectedIndex, that.model.displayLangIndex);
     };
 
-    gpii.tests.langTester.verifyButtonInView = function (that) {
-        jqUnit.assertNotUndefined("The button positions have been collected", that.buttonTops);
-        var currentButtonInput = that.locate("langInput").filter(":checked");
-        jqUnit.assertEquals("The correct language button has been selected", that.model.lang, currentButtonInput.val());
-        var currentButtonTop = currentButtonInput.closest(that.options.selectors.langRow).position().top,
-            controlsDivScrollTop = $(that.options.selectors.controlsDiv)[0].scrollTop,
-            movedToTop = currentButtonTop + controlsDivScrollTop - that.lastMovedHeight;
-        jqUnit.assertNotEquals("The selected button has been moved to the correct button position", that.buttonTops.indexOf(movedToTop), -1);
+    // TODO See if we can get this scrolling position verification working reliably
+    // TODO Look at test page markup and CSS
+    //
+    // gpii.tests.langTester.verifyLangsInView = function (that, expectedVisibleLangs) {
+    //     fluid.each(that.locate("langRow"), function(langButton) {
+    //         langButton = $(langButton);
+    //         var expected = expectedVisibleLangs.indexOf(langButton.attr("lang")) !== -1;
+    //         gpii.tests.langTester.assertLangButtonInView(that, langButton, expected);
+    //     });
+    // };
+    //
+    // gpii.tests.langTester.assertLangButtonInView = function (that, langButton, expected) {
+    //     var msg = "The button for language " + langButton.attr("lang") +
+    //             " should be " + (expected ? "visible" : "non-visible");
+    //     var langButtonTop = langButton.offset().top;
+    //     var controlsDiv = that.locate("controlsDiv");
+    //     var controlsDivTop = controlsDiv.offset().top;
+    //     var isVisible = (Math.floor(langButtonTop) >= Math.floor(controlsDivTop)) &&
+    //             (Math.floor(langButtonTop) < Math.floor(controlsDivTop + controlsDiv.height()));
+    //     jqUnit.assertEquals(msg, expected, isVisible);
+    // };
+
+    gpii.tests.langTester.verifyPrevNextButtonsEnabled = function (that, prevEnabled, nextEnabled) {
+        var prevEnabledMsg = prevEnabled ? "enabled" : "disabled";
+        var nextEnabledMsg = nextEnabled ? "enabled" : "disabled";
+        jqUnit.assertEquals("The previous button should be " + prevEnabledMsg, prevEnabled, !(that.locate("prev").is(":disabled")));
+        jqUnit.assertEquals("The next button should be " + nextEnabledMsg, nextEnabled, !(that.locate("next").is(":disabled")));
     };
 
     gpii.tests.langTester.clickLangButton = function (that, langCode) {
         var langButtons = that.locate("langRow");
-        $(langButtons).find("input[value='" + langCode + "']").click();
+        $(langButtons).find("[lang='" + langCode + "']").click();
     };
 
     gpii.tests.langTester.verifyLangModel = function (that, expected) {
         jqUnit.assertEquals("The model value for the language is set correctly", expected, that.model.lang);
     };
 
-    gpii.tests.langTester.verifyButtonStates = function (that, expectedLang, prevDisabled, nextDisabled) {
-        var prevDisabledMsg = prevDisabled ? "disabled" : "enabled";
-        var nextDisabledMsg = nextDisabled ? "disabled" : "enabled";
-        jqUnit.assertEquals("The model value for the selected language is set correctly", expectedLang, that.model.lang);
-        jqUnit.assertEquals("The previous button has been " + prevDisabledMsg, prevDisabled, that.locate("prev").is(":disabled"));
-        jqUnit.assertEquals("The next button has been " + nextDisabledMsg, nextDisabled, that.locate("next").is(":disabled"));
-        jqUnit.assertEquals("The language code has been added to the html \"lang\" attribute", that.model.lang, $("html").attr("lang"));
-        gpii.tests.langTester.verifyTooltip(that);
-        gpii.tests.langTester.verifyButtonInView(that);
-    };
+    /*********************
+     * Range panel Tests *
+     *********************/
 
-    jqUnit.test("Test gpii.firstDiscovery.panel.lang.findClosestNumber()", function () {
-        gpii.tests.langTester.testFindClosestNumber(5, [1, 3, 6], 6);
-        gpii.tests.langTester.testFindClosestNumber(0, [-1, -0.5, 1], -0.5);
+    fluid.defaults("gpii.tests.rangePanel", {
+        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        components: {
+            range: {},
+            rangePanelTester: {
+                type: "gpii.tests.rangePanelTester"
+            }
+        }
     });
 
-    gpii.tests.langTester.testFindClosestNumber = function (numberToFind, numbers, expected) {
-        jqUnit.assertEquals("The closes number for " + numberToFind + " in a number array " + numbers + " is " + expected, expected, gpii.firstDiscovery.panel.lang.findClosestNumber(numberToFind, numbers));
+    fluid.defaults("gpii.tests.rangePanelTester", {
+        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        testOptions: {
+            increasedStep: 1.1,
+            decreasedStep: 1.0,
+            testValue: 1.5
+        },
+        expectedModels: {
+            increasedStep: {value: "{that}.options.testOptions.increasedStep", isMax: false, isMin: false},
+            decreasedStep:{value: "{that}.options.testOptions.decreasedStep", isMax: false, isMin: true}
+        },
+        modules: [{
+            name: "Test the range settings panel",
+            tests: [{
+                expect: 19,
+                name: "Test the rendering of the range panel",
+                sequence: [{
+                    func: "{range}.refreshView"
+                }, {
+                    listener: "gpii.tests.rangePanelTester.verifyRendering",
+                    priority: "last",
+                    event: "{range}.events.afterRender"
+                }, {
+                    func: "{range}.stepUp"
+                }, {
+                    listener: "gpii.tests.rangePanelTester.verifyModel",
+                    args: ["{range}.model", "{that}.options.expectedModels.increasedStep"],
+                    spec: {path: "", priority: "last"},
+                    changeEvent: "{range}.applier.modelChanged"
+                }, {
+                    func: "{range}.stepDown"
+                }, {
+                    listener: "gpii.tests.rangePanelTester.verifyModel",
+                    args: ["{range}.model", "{that}.options.expectedModels.decreasedStep"],
+                    spec: {path: "value", priority: "last"},
+                    changeEvent: "{range}.applier.modelChanged"
+                }, {
+                    func: "{range}.applier.change",
+                    args: ["value", "{range}.options.range.max"]
+                }, {
+                    listener: "gpii.tests.rangePanelTester.verifyButtonStates",
+                    args: ["{range}", true, false],
+                    spec: {path: "isMax", priority: "last"},
+                    changeEvent: "{range}.applier.modelChanged"
+                }, {
+                    func: "{range}.applier.change",
+                    args: ["value", "{range}.options.range.min"]
+                }, {
+                    listener: "gpii.tests.rangePanelTester.verifyButtonStates",
+                    args: ["{range}", false, true],
+                    spec: {path: "isMin", priority: "last"},
+                    changeEvent: "{range}.applier.modelChanged"
+                }, {
+                    func: "{range}.applier.change",
+                    args: ["value", "{that}.options.testOptions.testValue"]
+                }, {
+                    listener: "gpii.tests.rangePanelTester.verifyButtonStates",
+                    args: ["{range}", false, false],
+                    spec: {path: "isMin", priority: "last"},
+                    changeEvent: "{range}.applier.modelChanged"
+                }]
+            }]
+        }]
+    });
+
+    gpii.tests.rangePanelTester.verifyRendering = function (that) {
+        var messages = that.options.messageBase;
+        var panelName = that.nickName;
+        jqUnit.assertEquals("The text for " + panelName + " instructions should be rendered.", messages.rangeInstructions, that.locate("rangeInstructions").text());
+        jqUnit.assertEquals("The upper bound label for the " + panelName + " meter should be rendered.", messages.maxLabel, that.locate("max").text());
+        jqUnit.assertEquals("The lower bound label for the " + panelName + " meter should be rendered.", messages.minLabel, that.locate("min").text());
+
+        var increaseId = that.locate("increase").attr("id");
+        var decreaseId = that.locate("decrease").attr("id");
+        jqUnit.assertEquals("The tooltip model for the " + panelName + " increase button has been properly set", that.options.messageBase.increaseLabel, that.tooltip.model.idToContent[increaseId]);
+        jqUnit.assertEquals("The tooltip model for the " + panelName + " decrease button has been properly set", that.options.messageBase.decreaseLabel, that.tooltip.model.idToContent[decreaseId]);
+    };
+
+    gpii.tests.rangePanelTester.verifyModel = function (model, expectedModel) {
+        jqUnit.assertDeepEq("The model value " + expectedModel.value + " should be set correctly", expectedModel, model);
+    };
+
+    gpii.tests.rangePanelTester.verifyButtonStates = function (that, increaseDisabled, decreaseDisabled) {
+        var panelName = that.nickName;
+        jqUnit.assertEquals("The " + panelName + " isMax model value should be set correctly", increaseDisabled, that.model.isMax);
+        jqUnit.assertEquals("The " + panelName + " increase button should have the correct enabled/disabled state", increaseDisabled, that.locate("increase").prop("disabled"));
+
+        jqUnit.assertEquals("The " + panelName + " isMin model value should be set correctly", decreaseDisabled, that.model.isMin);
+        jqUnit.assertEquals("The " + panelName + " decrease button should have the correct enabled/disabled state", decreaseDisabled, that.locate("decrease").prop("disabled"));
     };
 
     /*************************
@@ -220,106 +354,204 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.defaults("gpii.tests.firstDiscovery.panel.textSize", {
         gradeNames: ["gpii.firstDiscovery.panel.textSize", "autoInit"],
         messageBase: {
-            rangeInstructions: "Text size instructions.",
+            rangeInstructions: "Adjust the text and controls to a size you like best.",
+            maxLabel: "max",
+            minLabel: "min",
             increaseLabel: "larger",
             decreaseLabel: "smaller"
         },
         model: {
             value: 1
+        },
+        modelListeners: {
+            // rerenders on modelChange like panel behaves in the prefsEditor
+            "value": "{that}.refreshView"
         }
     });
 
     fluid.defaults("gpii.tests.textSizePanel", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["gpii.tests.rangePanel", "autoInit"],
         components: {
-            textSize: {
+            range: {
                 type: "gpii.tests.firstDiscovery.panel.textSize",
                 container: ".gpiic-fd-textSize"
-            },
-            textSizeTester: {
-                type: "gpii.tests.textSizeTester"
             }
         }
     });
 
-    fluid.defaults("gpii.tests.textSizeTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
-        testOptions: {
-            increasedStep: 1.1,
-            decreasedStep: 1.0,
-            testValue: 1.5
+    /***************************
+     * Speech Rate Panel Tests *
+     ***************************/
+
+    fluid.defaults("gpii.tests.firstDiscovery.panel.speechRate", {
+        gradeNames: ["gpii.firstDiscovery.panel.speechRate", "autoInit"],
+        messageBase: {
+            rangeInstructions: "Adjust the speed at which items on the screen are read out loud.",
+            maxLabel: "fast",
+            minLabel: "slow",
+            increaseLabel: "faster",
+            decreaseLabel: "slower",
+            disabledMsg: "disabled message"
         },
+        model: {
+            enabled: true,
+            value: 1
+        },
+        modelListeners: {
+            // rerenders on modelChange like the panel behaves in the prefsEditor
+            "value": "{that}.refreshView",
+            "enabled": "{that}.refreshView"
+        }
+    });
+
+    fluid.defaults("gpii.tests.speechRatePanel", {
+        gradeNames: ["gpii.tests.rangePanel", "autoInit"],
+        components: {
+            range: {
+                type: "gpii.tests.firstDiscovery.panel.speechRate",
+                container: ".gpiic-fd-speechRate"
+            },
+            speechRatePanelTester: {
+                type: "gpii.tests.speechRatePanelTester"
+            }
+        },
+        expectedModels: {
+            increasedStep: {value: "{that}.options.testOptions.increasedStep", isMax: false, isMin: false, enabled: true},
+            decreasedStep:{value: "{that}.options.testOptions.decreasedStep", isMax: false, isMin: true, enabled: true}
+        },
+        distributeOptions: [{
+            source: "{that}.options.expectedModels",
+            target: "{that rangePanelTester}.options.expectedModels"
+        }]
+    });
+
+    fluid.defaults("gpii.tests.speechRatePanelTester", {
+        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
         modules: [{
-            name: "Test the text sizer settings panel",
+            name: "Test the speech rate settings panel",
             tests: [{
-                expect: 11,
-                name: "Test the rendering of the text size panel",
+                expect: 2,
+                name: "Verify the initial rendering of the speech rate panel",
+                type: "test",
+                func: "gpii.tests.speechRatePanelTester.verifyRendering",
+                args: ["{range}", true]
+            }, {
+                expect: 5,
+                name: "Test the rendering of the speech rate panel after model change",
                 sequence: [{
-                    func: "{textSize}.refreshView"
+                    func: "{range}.applier.change",
+                    args: ["enabled", false]
                 }, {
-                    listener: "gpii.tests.textSizeTester.verifyRendering",
+                    listener: "gpii.tests.speechRatePanelTester.verifyRendering",
+                    args: ["{range}", false],
                     priority: "last",
-                    event: "{textSize}.events.afterRender"
+                    event: "{range}.events.afterRender"
                 }, {
-                    func: "{textSize}.stepUp"
+                    func: "{range}.applier.change",
+                    args: ["enabled", true]
                 }, {
-                    listener: "gpii.tests.textSizeTester.verifyModel",
-                    args: ["{textSize}", "{that}.options.testOptions.increasedStep"],
-                    spec: {path: "value", priority: "last"},
-                    changeEvent: "{textSize}.applier.modelChanged"
-                }, {
-                    func: "{textSize}.stepDown"
-                }, {
-                    listener: "gpii.tests.textSizeTester.verifyModel",
-                    args: ["{textSize}", "{that}.options.testOptions.decreasedStep"],
-                    spec: {path: "value", priority: "last"},
-                    changeEvent: "{textSize}.applier.modelChanged"
-                }, {
-                    func: "{textSize}.applier.change",
-                    args: ["value", "{textSize}.options.range.max"]
-                }, {
-                    listener: "gpii.tests.textSizeTester.verifyButtonStates",
-                    args: ["{textSize}", true, false],
-                    spec: {path: "value", priority: "last"},
-                    changeEvent: "{textSize}.applier.modelChanged"
-                }, {
-                    func: "{textSize}.applier.change",
-                    args: ["value", "{textSize}.options.range.min"]
-                }, {
-                    listener: "gpii.tests.textSizeTester.verifyButtonStates",
-                    args: ["{textSize}", false, true],
-                    spec: {path: "value", priority: "last"},
-                    changeEvent: "{textSize}.applier.modelChanged"
-                }, {
-                    func: "{textSize}.applier.change",
-                    args: ["value", "{that}.options.testOptions.testValue"]
-                }, {
-                    listener: "gpii.tests.textSizeTester.verifyButtonStates",
-                    args: ["{textSize}", false, false],
-                    spec: {path: "value", priority: "last"},
-                    changeEvent: "{textSize}.applier.modelChanged"
+                    listener: "gpii.tests.speechRatePanelTester.verifyRendering",
+                    args: ["{range}", true],
+                    priority: "last",
+                    event: "{range}.events.afterRender"
                 }]
             }]
         }]
     });
 
-    gpii.tests.textSizeTester.verifyRendering = function (that) {
+    gpii.tests.speechRatePanelTester.verifyRendering = function (that, isEnabled) {
+        var controls = that.locate("controls");
+        var disabledMsg = that.locate("disabledMsg");
+
+        if (isEnabled) {
+            jqUnit.isVisible("The controls should be visible.", controls);
+            jqUnit.notVisible("The disabled message should be hidden.", disabledMsg);
+        } else {
+            jqUnit.notVisible("The controls should be hidden.", controls);
+            jqUnit.isVisible("The disabled message should be visible.", disabledMsg);
+            jqUnit.assertEquals("The disabledMsg should be rendered correctly.", that.options.messageBase.disabledMsg, disabledMsg.text());
+        }
+    };
+
+    /**********************
+     * Yes No Panel Tests *
+     **********************/
+
+    fluid.defaults("gpii.tests.yesNoTester", {
+        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        expectedModels: {
+            choiceYes: {
+                choice: "yes",
+                currentSelectedIndex: 0,
+                value: true
+            },
+            choiceNo: {
+                choice: "no",
+                currentSelectedIndex: 1,
+                value: false
+            }
+        },
+        modules: [{
+            name: "Test the yes and no selection panel",
+            tests: [{
+                name: "Test the yes no panel",
+                expect: 22,
+                sequence: [{
+                    func: "{yesNo}.refreshView"
+                }, {
+                    listener: "gpii.tests.yesNoTester.verifyRendering",
+                    args: ["{arguments}.0", "{yesNo}.nickName"],
+                    event: "{yesNo}.events.afterRender"
+                }, {
+                    func: "gpii.tests.utils.triggerRadioButton",
+                    args: ["{yesNo}.dom.choiceInput", 1]
+                }, {
+                    listener: "gpii.tests.yesNoTester.verifyModel",
+                    args: ["{yesNo}", "{yesNo}.nickName", "{that}.options.expectedModels.choiceNo"],
+                    spec: {path: "choice", priority: "last"},
+                    changeEvent: "{yesNo}.applier.modelChanged"
+                }, {
+                    func: "{yesNo}.refreshView"
+                }, {
+                    listener: "gpii.tests.yesNoTester.verifyTooltip",
+                    args: ["{yesNo}", "{yesNo}.nickName"],
+                    event: "{yesNo}.events.afterRender"
+                }, {
+                    func: "gpii.tests.utils.triggerRadioButton",
+                    args: ["{yesNo}.dom.choiceInput", 0]
+                }, {
+                    listener: "gpii.tests.yesNoTester.verifyModel",
+                    args: ["{yesNo}", "{yesNo}.nickName", "{that}.options.expectedModels.choiceYes"],
+                    spec: {path: "choice", priority: "last"},
+                    changeEvent: "{yesNo}.applier.modelChanged"
+                }, {
+                    func: "{yesNo}.refreshView"
+                }, {
+                    listener: "gpii.tests.yesNoTester.verifyTooltip",
+                    args: ["{yesNo}", "{yesNo}.nickName"],
+                    event: "{yesNo}.events.afterRender"
+                }]
+            }]
+        }]
+    });
+
+    gpii.tests.yesNoTester.verifyTooltip = function (that, panelName) {
+        gpii.tests.utils.verifyTooltipContents(panelName + " panel, choice label", that.locate("choiceLabel"), that.model.choice, that.tooltip.model.idToContent, that.options.controlValues.choice, that.options.stringArrayIndex.choice, that.options.messageBase);
+        gpii.tests.utils.verifyTooltipContents(panelName + " panel, choice input", that.locate("choiceInput"), that.model.choice, that.tooltip.model.idToContent, that.options.controlValues.choice, that.options.stringArrayIndex.choice, that.options.messageBase);
+    };
+
+    gpii.tests.yesNoTester.verifyRendering = function (that, panelName) {
         var messages = that.options.messageBase;
-        jqUnit.assertEquals("The text for instructions should be rendered.", messages.rangeInstructions, that.locate("rangeInstructions").text());
-
-        var increaseId = that.locate("increase").attr("id");
-        var decreaseId = that.locate("decrease").attr("id");
-        jqUnit.assertEquals("The tooltip model for the increase button has been properly set", that.options.messageBase.increaseLabel, that.tooltip.model.idToContent[increaseId]);
-        jqUnit.assertEquals("The tooltip model for the decrease button has been properly set", that.options.messageBase.decreaseLabel, that.tooltip.model.idToContent[decreaseId]);
+        var controlValues = that.options.controlValues.choice;
+        jqUnit.assertEquals(panelName + ": The instructions should have been set correctly.", messages.instructions, that.locate("instructions").text());
+        gpii.tests.utils.verifyRadioButtonRendering(that.locate("choiceInput"), that.locate("choiceLabel"), [messages[controlValues[0]], messages[controlValues[1]]], that.model.choice);
+        gpii.tests.yesNoTester.verifyTooltip(that, panelName);
     };
 
-    gpii.tests.textSizeTester.verifyModel = function (that, expectedModel) {
-        jqUnit.assertEquals("The model value should be set correctly", expectedModel, that.model.value);
-    };
-
-    gpii.tests.textSizeTester.verifyButtonStates = function (that, increaseDisabled, decreaseDisabled) {
-        jqUnit.assertEquals("The increase button should have the correct enabled/disabled state", increaseDisabled, that.locate("increase").prop("disabled"));
-        jqUnit.assertEquals("The decrease button should have the correct enabled/disabled state", decreaseDisabled, that.locate("decrease").prop("disabled"));
+    gpii.tests.yesNoTester.verifyModel = function (that, panelName, expectedModel) {
+        fluid.each(expectedModel, function (value, path) {
+            jqUnit.assertEquals(panelName + ": The model value for path " + path + " has been set to " + value, value, fluid.get(that.model, path));
+        });
     };
 
     /**************************
@@ -329,96 +561,130 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.defaults("gpii.tests.firstDiscovery.panel.speakText", {
         gradeNames: ["gpii.firstDiscovery.panel.speakText", "autoInit"],
         messageBase: {
-            "speakTextInstructions": "Speak text instructions",
-            "speakText-no": "no",
-            "speakText-yes": "yes",
-            "speakText-yes-tooltip": "Select to turn voice on",
-            "speakText-no-tooltip": "Select to turn voice off",
-            "speakText-yes-tooltipAtSelect": "Voice is on",
-            "speakText-no-tooltipAtSelect": "Voice is off"
+            "instructions": "Do you prefer to have items on the screen read out loud to you?",
+            "no": "No",
+            "yes": "Yes",
+            "yes-tooltip": "Select to turn voice on",
+            "no-tooltip": "Select to turn voice off",
+            "yes-tooltipAtSelect": "Voice is on",
+            "no-tooltipAtSelect": "Voice is off"
         },
-        choiceLabels: ["yes", "no"],
         model: {
-            speak: true
+            value: true
         }
     });
 
     fluid.defaults("gpii.tests.speakTextPanel", {
         gradeNames: ["fluid.test.testEnvironment", "autoInit"],
         components: {
-            speakText: {
+            yesNo: {
                 type: "gpii.tests.firstDiscovery.panel.speakText",
                 container: ".gpiic-fd-speakText"
             },
-            speakTextTester: {
-                type: "gpii.tests.speakTextTester"
+            yesNoTester: {
+                type: "gpii.tests.yesNoTester"
             }
         }
     });
 
-    fluid.defaults("gpii.tests.speakTextTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
-        modules: [{
-            name: "Test the speak text settings panel",
-            tests: [{
-                expect: 8,
-                name: "The initial rendering of the speak text panel",
-                sequence: [{
-                    func: "{speakText}.refreshView"
-                }, {
-                    listener: "gpii.tests.speakTextTester.verifyRendering",
-                    event: "{speakText}.events.afterRender"
-                }]
-            }, {
-                expect: 10,
-                name: "Selections on the speak text panel",
-                sequence: [{
-                    func: "gpii.tests.utils.triggerRadioButton",
-                    args: ["{speakText}.dom.choiceInput", 1]
-                }, {
-                    listener: "gpii.tests.speakTextTester.verifyModel",
-                    args: ["{speakText}", false],
-                    spec: {path: "speak", priority: "last"},
-                    changeEvent: "{speakText}.applier.modelChanged"
-                }, {
-                    func: "{speakText}.refreshView"
-                }, {
-                    listener: "gpii.tests.speakTextTester.verifyTooltip",
-                    args: ["{speakText}"],
-                    event: "{speakText}.events.afterRender"
-                }, {
-                    func: "gpii.tests.utils.triggerRadioButton",
-                    args: ["{speakText}.dom.choiceInput", 0]
-                }, {
-                    listener: "gpii.tests.speakTextTester.verifyModel",
-                    args: ["{speakText}", true],
-                    spec: {path: "speak", priority: "last"},
-                    changeEvent: "{speakText}.applier.modelChanged"
-                }, {
-                    func: "{speakText}.refreshView"
-                }, {
-                    listener: "gpii.tests.speakTextTester.verifyTooltip",
-                    args: ["{speakText}"],
-                    event: "{speakText}.events.afterRender"
-                }]
-            }]
-        }]
+    /**********************************
+     * On-screen Keyboard Panel Tests *
+     **********************************/
+
+    fluid.defaults("gpii.tests.firstDiscovery.panel.onScreenKeyboard", {
+        gradeNames: ["gpii.firstDiscovery.panel.onScreenKeyboard", "autoInit"],
+        messageBase: {
+            "instructions": "Do you want to use an on-screen keyboard? This would let you type by selecting letters on the screen.",
+            "no": "No",
+            "yes": "Yes",
+            "yes-tooltip": "Select to turn on the on-screen keyboard",
+            "no-tooltip": "Select to turn off the on-screen keyboard",
+            "yes-tooltipAtSelect": "On-screen keyboard is turned on",
+            "no-tooltipAtSelect": "On-screen keyboard is turned off"
+        },
+        model: {
+            value: true
+        }
     });
 
-    gpii.tests.speakTextTester.verifyTooltip = function (that) {
-        gpii.tests.utils.verifyTooltipContents("choice label", that.locate("choiceLabel"), that.model.speakChoice, that.tooltip.model.idToContent, that.options.controlValues.choice, that.options.stringArrayIndex.choice, that.options.messageBase);
-        gpii.tests.utils.verifyTooltipContents("choice input", that.locate("choiceInput"), that.model.speakChoice, that.tooltip.model.idToContent, that.options.controlValues.choice, that.options.stringArrayIndex.choice, that.options.messageBase);
-    };
+    fluid.defaults("gpii.tests.onScreenKeyboardPanel", {
+        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        components: {
+            yesNo: {
+                type: "gpii.tests.firstDiscovery.panel.onScreenKeyboard",
+                container: ".gpiic-fd-onScreenKeyboard"
+            },
+            yesNoTester: {
+                type: "gpii.tests.yesNoTester"
+            }
+        }
+    });
 
-    gpii.tests.speakTextTester.verifyRendering = function (that) {
-        jqUnit.assertEquals("The instructions should have been set correctly.", that.options.messageBase.speakTextInstructions, that.locate("instructions").text());
-        gpii.tests.utils.verifyRadioButtonRendering(that.locate("choiceInput"), that.locate("choiceLabel"), that.options.choiceLabels, that.model.speakChoice);
-        gpii.tests.speakTextTester.verifyTooltip(that);
-    };
+    /************************
+     * Captions Panel Tests *
+     ************************/
 
-    gpii.tests.speakTextTester.verifyModel = function (that, expectedValue) {
-        jqUnit.assertEquals("The model value should have been set correctly", expectedValue, that.model.speak);
-    };
+    fluid.defaults("gpii.tests.firstDiscovery.panel.captions", {
+        gradeNames: ["gpii.firstDiscovery.panel.captions", "autoInit"],
+        messageBase: {
+            "instructions": "Do you want to see text for speech (captions) when playing videos?",
+            "no": "No",
+            "yes": "Yes",
+            "yes-tooltip": "Select to turn video captions on",
+            "no-tooltip": "Select to turn video captions off",
+            "yes-tooltipAtSelect": "Video captions are on",
+            "no-tooltipAtSelect": "Video captions are off"
+        },
+        model: {
+            value: true
+        }
+    });
+
+    fluid.defaults("gpii.tests.captionsPanel", {
+        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        components: {
+            yesNo: {
+                type: "gpii.tests.firstDiscovery.panel.captions",
+                container: ".gpiic-fd-captions"
+            },
+            yesNoTester: {
+                type: "gpii.tests.yesNoTester"
+            }
+        }
+    });
+
+    /***************************
+     * Show Sounds Panel Tests *
+     ***************************/
+
+    fluid.defaults("gpii.tests.firstDiscovery.panel.showSounds", {
+        gradeNames: ["gpii.firstDiscovery.panel.showSounds", "autoInit"],
+        messageBase: {
+            "instructions": "Do you want the screen to flash when a sound is played?",
+            "no": "No",
+            "yes": "Yes",
+            "yes-tooltip": "Select to turn on screen-flash for sounds",
+            "no-tooltip": "Select to turn off screen-flash for sounds",
+            "yes-tooltipAtSelect": "Screen-flash for sounds is on",
+            "no-tooltipAtSelect": "Screen-flash for sounds is off"
+        },
+        model: {
+            value: true
+        }
+    });
+
+    fluid.defaults("gpii.tests.showSoundsPanel", {
+        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        components: {
+            yesNo: {
+                type: "gpii.tests.firstDiscovery.panel.showSounds",
+                container: ".gpiic-fd-showSounds"
+            },
+            yesNoTester: {
+                type: "gpii.tests.yesNoTester"
+            }
+        }
+    });
 
     /************************
      * Contrast Panel Tests *
@@ -762,7 +1028,11 @@ https://github.com/gpii/universal/LICENSE.txt
         fluid.test.runTests([
             "gpii.tests.langPanel",
             "gpii.tests.textSizePanel",
+            "gpii.tests.speechRatePanel",
             "gpii.tests.speakTextPanel",
+            "gpii.tests.onScreenKeyboardPanel",
+            "gpii.tests.captionsPanel",
+            "gpii.tests.showSoundsPanel",
             "gpii.tests.contrastPanel",
             "gpii.tests.keyboardPanel",
             "gpii.tests.welcomePanel",

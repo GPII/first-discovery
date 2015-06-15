@@ -2,7 +2,7 @@ The version of Infusion included in this folder was created using a custom build
 
 https://github.com/fluid-project/infusion
 
-commit#: 76c61899b6f7f17528905490ca1df1f09140cf2e
+commit#: fcb1c18a9f4da94d6564a521175e772f2180e8c5
 
 ```
 grunt custom --source=true --include="preferences, tooltip"
@@ -10,6 +10,8 @@ grunt custom --source=true --include="preferences, tooltip"
 
 The following directories were stripped out of the build since they contain code that is included in the infusion-custom.js file or is not required:
 
+* README.md
+* ReleaseNotes.md
 * src/lib/infusion/src/components/slidingPanel/
 * src/lib/infusion/src/components/tableOfContents/js/
 * src/lib/infusion/src/components/tableOfContents/tableOfContentsDependencies.json
@@ -30,8 +32,6 @@ The following directories were stripped out of the build since they contain code
 * src/lib/infusion/src/lib/jquery/ui/js/
 * src/lib/infusion/src/lib/json/
 * src/lib/infusion/src/lib/normalize/normalizeDependencies.json
-* README.md
-* ReleaseNotes.md
 
 Additionally, the testing framework from Infusion is used (tests/lib/infusion) and should be updated to a matching version. This directory is a copy of
 

@@ -38,16 +38,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "type": "gpii.firstDiscovery.panel.lang",
                     "container": ".gpiic-fd-prefsEditor-panel-lang",
                     "template": "%prefix/lang.html",
-                    "message": "%prefix/lang.json"
-                }
-            },
-            "keyboard": {
-                "type": "gpii.firstDiscovery.stickyKeys",
-                "panel": {
-                    "type": "gpii.firstDiscovery.panel.keyboard",
-                    "container": ".gpiic-fd-prefsEditor-panel-keyboard",
-                    "template": "%prefix/keyboard.html",
-                    "message": "%prefix/keyboard.json"
+                    "message": "%prefix/lang.json",
+                    "stringArrayIndex": {
+                        "lang": ["lang-en-US", "lang-fr-FR", "lang-es-MX", "lang-de-DE", "lang-nl-NL", "lang-sv-SE"],
+                        "tooltip": ["lang-en-US-tooltip", "lang-fr-FR-tooltip", "lang-es-MX-tooltip", "lang-de-DE-tooltip", "lang-nl-NL-tooltip", "lang-sv-SE-tooltip"],
+                        "tooltipAtSelect": ["lang-en-US-tooltipAtSelect", "lang-fr-FR-tooltipAtSelect", "lang-es-MX-tooltipAtSelect", "lang-de-DE-tooltipAtSelect", "lang-nl-NL-tooltipAtSelect", "lang-sv-SE-tooltipAtSelect"]
+                    }
                 }
             },
             "welcome": {
@@ -59,25 +55,23 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "message": "%prefix/welcome.json"
                 }
             },
-            "textSize": {
-                "type": "fluid.prefs.textSize",
-                "enactor": {
-                    "type": "fluid.prefs.enactor.textSize"
-                },
-                "panel": {
-                    "type": "gpii.firstDiscovery.panel.textSize",
-                    "container": ".gpiic-fd-prefsEditor-panel-size",
-                    "template": "%prefix/rangeTemplate.html",
-                    "message": "%prefix/textSize.json"
-                }
-            },
             "speakText": {
                 "type": "gpii.firstDiscovery.speak",
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.speakText",
                     "container": ".gpiic-fd-prefsEditor-panel-speakText",
-                    "template": "%prefix/speakText.html",
+                    "template": "%prefix/yesNo.html",
                     "message": "%prefix/speakText.json"
+                }
+            },
+            "speechRate": {
+                "type": "gpii.firstDiscovery.speechRate",
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.speechRate",
+                    "container": ".gpiic-fd-prefsEditor-panel-speechRate",
+                    "template": "%prefix/rangeWithDisabledMsgTemplate.html",
+                    "message": "%prefix/speechRate.json",
+                    "gradeNames": ["gpii.firstDiscovery.panel.speechRate.prefsEditorConnection"]
                 }
             },
             "contrast": {
@@ -99,6 +93,55 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "message": "%prefix/contrast.json"
                 }
             },
+            "textSize": {
+                "type": "fluid.prefs.textSize",
+                "enactor": {
+                    "type": "fluid.prefs.enactor.textSize"
+                },
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.textSize",
+                    "container": ".gpiic-fd-prefsEditor-panel-size",
+                    "template": "%prefix/rangeTemplate.html",
+                    "message": "%prefix/textSize.json"
+                }
+            },
+            "onScreenKeyboard": {
+                "type": "gpii.firstDiscovery.onScreenKeyboard",
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.onScreenKeyboard",
+                    "container": ".gpiic-fd-prefsEditor-panel-onScreenKeyboard",
+                    "template": "%prefix/yesNo.html",
+                    "message": "%prefix/onScreenKeyboard.json"
+                }
+            },
+            "captions": {
+                "type": "gpii.firstDiscovery.captions",
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.captions",
+                    "container": ".gpiic-fd-prefsEditor-panel-captions",
+                    "template": "%prefix/yesNo.html",
+                    "message": "%prefix/captions.json"
+                }
+            },
+            "showSounds": {
+                "type": "gpii.firstDiscovery.showSounds",
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.showSounds",
+                    "container": ".gpiic-fd-prefsEditor-panel-showSounds",
+                    "template": "%prefix/yesNo.html",
+                    "message": "%prefix/showSounds.json"
+                }
+            },
+            "keyboard": {
+                "type": "gpii.firstDiscovery.stickyKeys",
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.keyboard",
+                    "container": ".gpiic-fd-prefsEditor-panel-keyboard",
+                    "template": "%prefix/keyboard.html",
+                    "message": "%prefix/keyboard.json",
+                    "gradeNames": ["gpii.firstDiscovery.panel.keyboardTts"]
+                }
+            },
             "congratulations": {
                 "type": "gpii.firstDiscovery.congratulations",
                 "panel": {
@@ -115,6 +158,27 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * Primary Schema
     *******************************************************************************/
 
+    fluid.defaults("gpii.firstDiscovery.schemas.language", {
+        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.language": {
+                "type": "string",
+                "default": "en-US",
+                "enum": ["en-US", "fr-FR", "es-MX", "de-DE", "nl-NL", "sv-SE"]
+            }
+        }
+    });
+
+    fluid.defaults("gpii.firstDiscovery.schemas.speak", {
+        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.speak": {
+                "type": "boolean",
+                "default": true
+            }
+        }
+    });
+
     fluid.defaults("gpii.firstDiscovery.schemas.textSize", {
         gradeNames: ["autoInit", "fluid.prefs.schemas"],
         schema: {
@@ -128,33 +192,48 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    fluid.defaults("gpii.firstDiscovery.schemas.language", {
+    fluid.defaults("gpii.firstDiscovery.schemas.speechRate", {
         gradeNames: ["autoInit", "fluid.prefs.schemas"],
         schema: {
-            "gpii.firstDiscovery.language": {
-                "type": "string",
-                "default": "en",
-                "enum": ["en", "fr", "es", "de", "ne", "sv"],
-                "label": ["lang-en", "lang-fr", "lang-es", "lang-de", "lang-ne", "lang-sv"],
-                "tooltip": ["lang-en-tooltip", "lang-fr-tooltip", "lang-es-tooltip", "lang-de-tooltip", "lang-ne-tooltip", "lang-sv-tooltip"],
-                "tooltipAtSelect": ["lang-en-tooltipAtSelect", "lang-fr-tooltipAtSelect", "lang-es-tooltipAtSelect", "lang-de-tooltipAtSelect", "lang-ne-tooltipAtSelect", "lang-sv-tooltipAtSelect"]
+            "gpii.firstDiscovery.speechRate": {
+                "type": "number",
+                "default": 1,
+                "minimum": 0.1,
+                "maximum": 2, // The spec allows for up to 10, but in chrome 2 seems to be the upper bound.
+                "divisibleBy": 0.1
             }
         }
     });
 
-    // TODO: currently to get around an issue where the
-    // boolean value needed to be specified as a string in the speak text
-    // adjuster, the default is set to "true" instead of true
-    fluid.defaults("gpii.firstDiscovery.schemas.speak", {
+    fluid.defaults("gpii.firstDiscovery.schemas.onScreenKeyboard", {
         gradeNames: ["autoInit", "fluid.prefs.schemas"],
         schema: {
-            "gpii.firstDiscovery.speak": {
+            "gpii.firstDiscovery.onScreenKeyboard": {
                 "type": "boolean",
                 "default": true
             }
         }
     });
 
+    fluid.defaults("gpii.firstDiscovery.schemas.captions", {
+        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.captions": {
+                "type": "boolean",
+                "default": true
+            }
+        }
+    });
+
+    fluid.defaults("gpii.firstDiscovery.schemas.showSouns", {
+        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.showSounds": {
+                "type": "boolean",
+                "default": true
+            }
+        }
+    });
 
     fluid.defaults("gpii.firstDiscovery.schemas.stickyKeys", {
         gradeNames: ["autoInit", "fluid.prefs.schemas"],

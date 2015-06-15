@@ -21,6 +21,17 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      */
     fluid.defaults("gpii.firstDiscovery.firstDiscoveryEditor", {
         gradeNames: ["gpii.firstDiscovery.tts.fdHookup", "fluid.prefs.prefsEditorLoader", "autoInit"],
+        defaultLocale: {
+            expander: {
+                funcName: "fluid.get",
+                args: [{
+                    expander: {
+                        funcName: "fluid.defaults",
+                        args: ["gpii.firstDiscovery.schemas.language"]
+                    }
+                }, ["schema", "properties", "gpii.firstDiscovery.language", "default"]]
+            }
+        },
         components: {
             selfVoicing: {
                 container: "{that}.dom.selfVoicing",
@@ -28,8 +39,20 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 type: "gpii.firstDiscovery.selfVoicing",
                 options: {
                     model: {
-                        enabled: true
+                        enabled: "{prefsEditor}.model.gpii_firstDiscovery_speak",
+                        utteranceOpts: {
+                            lang: "{prefsEditor}.model.gpii_firstDiscovery_language",
+                            rate: "{prefsEditor}.model.gpii_firstDiscovery_speechRate"
+                        }
                     },
+                    messageBase: "{messageLoader}.resources.prefsEditor.resourceText"
+                }
+            },
+            helpButton: {
+                type: "gpii.firstDiscovery.helpButton",
+                container: "{that}.dom.helpButton",
+                createOnEvent: "onPrefsEditorReady",
+                options: {
                     messageBase: "{messageLoader}.resources.prefsEditor.resourceText"
                 }
             },
@@ -90,37 +113,18 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     }]
                 }
             },
-            navButtons: {
-                type: "gpii.firstDiscovery.navButtons",
-                container: "{that}.dom.navButtons",
-                createOnEvent: "onCreateNavButtons",
-                options: {
-                    model: {
-                        currentPanelNum: "{firstDiscoveryEditor}.model.currentPanelNum"
-                    },
-                    messageBase: "{messageLoader}.resources.prefsEditor.resourceText",
-                    styles: "{firstDiscoveryEditor}.options.styles",
-                    panelTotalNum: "{firstDiscoveryEditor}.panels.length"
-                }
-            },
-            navIcons: {
-                type: "gpii.firstDiscovery.navIcons",
-                container: "{firstDiscoveryEditor}.dom.navIcons",
-                createOnEvent: "onPrefsEditorReady",
+            nav: {
+                type: "gpii.firstDiscovery.nav",
+                container: "{that}.dom.nav",
+                createOnEvent: "onCreateNav",
                 options: {
                     model: {
                         currentPanelNum: "{firstDiscoveryEditor}.model.currentPanelNum",
                         visitedPanelNums: "{prefsEditor}.model.states.visitedPanelNums"
                     },
-                    styles: "{firstDiscoveryEditor}.options.styles"
-                }
-            },
-            helpButton: {
-                type: "gpii.firstDiscovery.helpButton",
-                container: "{that}.dom.helpButton",
-                createOnEvent: "onPrefsEditorReady",
-                options: {
-                    messageBase: "{messageLoader}.resources.prefsEditor.resourceText"
+                    messageBase: "{messageLoader}.resources.prefsEditor.resourceText",
+                    styles: "{firstDiscoveryEditor}.options.styles",
+                    panelTotalNum: "{firstDiscoveryEditor}.panels.length"
                 }
             },
             messageLoader: {
@@ -133,19 +137,22 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             delay: 0,
             duration: 0,
             position: {
-                my: "left+70 bottom-70"
+                my: "left bottom",
+                at: "right+1 top"
             },
             styles: {
                 tooltip: "gpii-fd-tooltip"
-            }
+            },
+            // This class should be applied to any element that will
+            // be used to show the tooltip.
+            items: ".gpiic-fd-tooltip:not([disabled])"
         },
         selectors: {
             prefsEditor: ".gpiic-fd-prefsEditor",
             panel: ".gpiic-fd-prefsEditor-panel",
-            navButtons: ".gpiic-fd-navButtons",
-            navIcons: ".gpiic-fd-navIcons",
             selfVoicing: ".gpiic-fd-selfVoicing",
-            helpButton: ".gpiic-fd-help"
+            helpButton: ".gpiic-fd-help",
+            nav: ".gpiic-fd-nav"
         },
         styles: {
             active: "gpii-fd-active",
@@ -167,7 +174,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         events: {
             onPrefsEditorReady: null,
-            onCreateNavButtons: null,
+            onCreateNav: null,
             // onPanelShown is fired with one argument that is the id of the panel being shown
             onPanelShown: null
         },
@@ -179,7 +186,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             "onPrefsEditorReady.showInitialPanel": "{that}.showPanel",
             "onPrefsEditorReady.createNavButtons": {
-                listener: "{that}.events.onCreateNavButtons"
+                listener: "{that}.events.onCreateNav"
             }
         },
         invokers: {

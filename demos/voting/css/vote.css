@@ -1,0 +1,101 @@
+/* Page-wide styles */
+@font-face {
+    font-family: 'demo-voting';
+    src:url('../fonts/voting.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/voting.eot'),
+         url('../fonts/voting.ttf');
+}
+
+.demo-vote,
+.demo-vote p {
+    font-size: 2rem;
+    line-height: initial;
+}
+
+.demo-ballot {
+    margin-bottom: 2rem !important;
+}
+
+.demo-ballot div {
+    outline: 0.1rem solid #000;
+    height: 5.5rem;
+}
+
+.demo-vote button,
+.demo-vote header a {
+    background: rgba(200, 200, 200, 1) none repeat scroll 0 0 !important;
+    border: medium none;
+    border-radius: 6px;
+    box-shadow: 0 80px 0 -60px rgba(255, 255, 255, 0.3) inset, 0 2px 0 rgba(255, 255, 255, 0.6) inset, 0 2px 0 rgba(255, 255, 255, 0.3), 0 -2px 0 rgba(0, 0, 0, 0.6) !important;
+    color: #000 !important;
+    cursor: pointer;
+    display: block;
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 1rem 1rem 0;
+    padding: 0.6rem 0 0;
+    text-decoration: none;
+    text-shadow: 0 0.1rem 0 rgba(255, 255, 255, 0.8);
+    width: 10rem;
+    display: inline-block;
+}
+
+.demo-vote button span,
+.demo-vote a span {
+    font-family: 'demo-voting';
+    display: inline-block;
+    padding: 0 0.6rem 0 0;
+}
+
+.demo-vote-settings:before {
+    content: "\e600";
+}
+
+.demo-vote-help:before {
+    content: "\e601";
+}
+
+.demo-vote-back:before {
+    content: "\e603";
+}
+
+.demo-vote-skip:before {
+    content: "\e602";
+    padding: 0 0 0 0.6rem;
+}
+
+.demo-vote header,
+.demo-vote footer {
+    background-color: #000;
+    padding: 1rem;
+    margin: 0;
+    max-width: 100%;
+}
+
+.demo-vote header .show-for-medium-up {
+    min-width: 40rem;
+}
+
+.fl-theme-wb .demo-ballot div {
+    outline-color: #ffffff;
+}
+.fl-theme-wb .demo-vote header a,
+.fl-theme-bw .demo-vote header a,
+.fl-theme-bw .demo-vote button,
+.fl-theme-wb .demo-vote button {
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+.fl-theme-wb .demo-vote header a,
+.fl-theme-wb .demo-vote button {
+    outline: 1px solid #ffffff !important;
+    color: #ffffff !important;
+    background-color: #000000 !important;
+}
+.fl-theme-bw .demo-vote header a,
+.fl-theme-bw .demo-vote button {
+    outline: 1px solid #000000 !important;
+    color: #000000 !important;
+    background-color: #ffffff !important;
+}

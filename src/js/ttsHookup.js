@@ -34,7 +34,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         // content for elements being selected (there are cases of having different tooltip content for unselected
         // and selected states), the updated model info is not accessible in "afterClose".
         setTimeout(function () {
-            that.speak(tooltip.text());
+            that.speak(tooltip.text(), {lang: tooltip.attr("lang")});
         });
     };
 
@@ -48,17 +48,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         components: {
             selfVoicing: {
                 options: {
-                    strings: {
-                        panelMsg: "{that}.msgLookup.panelMsg"
-                    },
                     invokers: {
                         speakPanelMessage: {
                             funcName: "gpii.firstDiscovery.tts.fdHookup.speakPanelMessage",
-                            args: ["{firstDiscoveryEditor}", "{that}.msgLookup.panelMsg", "{that}.queueSpeech"]
+                            args: ["{firstDiscoveryEditor}", "{that}.msgLookup.stepCountMsg", "{that}.msgLookup.panelMsg", "{that}.queueSpeech", "{arguments}.0"]
                         },
                         speakPanelInstructions: {
                             funcName: "gpii.firstDiscovery.tts.fdHookup.speakPanelInstructions",
-                            args: ["{firstDiscoveryEditor}", "{that}.queueSpeech"]
+                            args: ["{firstDiscoveryEditor}", "{that}.queueSpeech", "{arguments}.0"]
                         }
                     },
                     listeners: {
@@ -84,20 +81,23 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         return texts.join(" ");
     };
 
-    gpii.firstDiscovery.tts.fdHookup.speakPanelMessage = function (that, template, speakFn) {
+    gpii.firstDiscovery.tts.fdHookup.speakPanelMessage = function (that, stepCountMsgTemplate, panelMsgTemplate, speakFn, speakOpts) {
         var currentPanelNum = that.model.currentPanelNum;
-        var msg = fluid.stringTemplate(template, {
+        var stepCountMsg = fluid.stringTemplate(stepCountMsgTemplate, {
             currentPanel: currentPanelNum,
-            numPanels: that.panels.length,
+            numPanels: that.panels.length
+        });
+        var msg = fluid.stringTemplate(panelMsgTemplate, {
+            stepCountMsg: stepCountMsg,
             instructions: gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions(that)
         });
-        speakFn(msg);
+        speakFn(msg, speakOpts);
     };
 
-    gpii.firstDiscovery.tts.fdHookup.speakPanelInstructions = function (that, speakFn) {
+    gpii.firstDiscovery.tts.fdHookup.speakPanelInstructions = function (that, speakFn, speakOpts) {
         var msg = gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions(that);
 
-        speakFn(msg);
+        speakFn(msg, speakOpts);
     };
 
 })(jQuery, fluid);

@@ -53,9 +53,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      */
     fluid.defaults("gpii.firstDiscovery.navIcons", {
         gradeNames: ["fluid.viewRelayComponent", "autoInit"],
-        model: {
-            visitedPanelNums: []
-        },
+        pageSize: 5,
+        iconHoles: [2, 8], // a list of all the panel positions which have no nav icons (currently the "welcome" and "congratulations" pages)
         dynamicComponents: {
             icon: {
                 createOnEvent: "onCreateIcon",
@@ -69,8 +68,37 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                             funcName: "gpii.firstDiscovery.navIcons.updateIconModel",
                             args: ["{that}", "{arguments}.0", "{arguments}.1"]
                         }
+                    },
+                    modelListeners: {
+                        // "{navIcons}.model.currentPanelNum": {
+                        //     listener: "gpii.firstDiscovery.navIcons.updateIconModel",
+                        //     args: ["{that}", "{change}.value", "{change}.oldValue"]
+                        // },
+                        "{navIcons}.model.pageNum": {
+                            listener: "gpii.firstDiscovery.icon.measure",
+                            args: ["{that}", "{navIcons}.applier", "iconWidth"],
+                            priority: 10
+                        }
                     }
                 }
+            }
+        },
+        model: {
+            pageNum: 0,
+            iconWidth: 0,
+            visitedPanelNums: []
+        },
+        modelRelay: {
+            source: "currentPanelNum",
+            target: "pageNum",
+            singleTransform: {
+                type: "fluid.transforms.free",
+                args: [
+                    "{that}.model.currentPanelNum",
+                    "{that}.options.pageSize",
+                    "{that}.options.iconHoles"
+                ],
+                func: "gpii.firstDiscovery.navIcons.indexToPage"
             }
         },
         modelListeners: {
@@ -80,10 +108,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }, {
                 funcName: "{that}.events.onSetIconState.fire",
                 args: ["{change}.value", "{change}.oldValue"]
-            }]
+            }],
+            pageNum: {
+                listener: "gpii.firstDiscovery.navIcons.showPage",
+                args: ["{change}.value", "{that}.options.pageSize", "{that}.model.iconWidth", "{that}.dom.pager"],
+                priority: 5
+            }
         },
         selectors: {
-            icon: ".gpiic-fd-navIcon"
+            icon: ".gpiic-fd-navIcon",
+            pager: ".gpii-fd-navIcon-outer"
         },
         events: {
             onCreateIcon: null,
@@ -107,6 +141,28 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
+    gpii.firstDiscovery.icon.measure = function (that, applier, field) {
+        var width = that.container.outerWidth();
+        if (width !== 0) { // avoid storing width of "holes"
+            applier.change(field, width);
+        }
+    };
+
+    gpii.firstDiscovery.navIcons.indexToPage = function (panelNum, pageSize, holes) {
+        var pastHoles = 0;
+        for (var i = 0; i < holes.length; ++ i) {
+            if (panelNum >= holes[i]) {
+                ++ pastHoles;
+            }
+        }
+        return Math.floor((panelNum - 1 - pastHoles) / pageSize);
+    };
+
+    gpii.firstDiscovery.navIcons.showPage = function (pageNum, pageSize, iconWidth, pagerElement) {
+        var newLeft = iconWidth * pageNum * pageSize;
+        pagerElement.scrollLeft(newLeft);
+    };
+
     gpii.firstDiscovery.navIcons.createIcons = function (that) {
         var icons = that.locate("icon");
         fluid.each(icons, function (element, index) {
@@ -117,15 +173,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.navIcons.updateIconModel = function (icon, currentPanelNum, prevPanelNum) {
         var position = icon.options.position;
         icon.applier.change("isActive", currentPanelNum === position);
-        // The part before "||" is to set confirmed state at the page reload. The part after is to set
-        // when users navigate thru panels.
         icon.applier.change("isConfirmed", typeof (prevPanelNum) === "undefined" && currentPanelNum === position || prevPanelNum === position && currentPanelNum > prevPanelNum);
     };
 
     gpii.firstDiscovery.navIcons.saveVisitedPanelNum = function (that, currentPanelNum, prevPanelNum) {
         var visitedPanelNums = that.model.visitedPanelNums;
         if (currentPanelNum > prevPanelNum && $.inArray(prevPanelNum, visitedPanelNums) === -1) {
-            // Cannot fire the change request directly on visitedPanelNums due to this issue: http://issues.fluidproject.org/browse/FLUID-3504
+            // Cannot fire the change request directly on visitedPanelNums due to http://issues.fluidproject.org/browse/FLUID-3504
             that.applier.change("visitedPanelNums." + visitedPanelNums.length, prevPanelNum);
         }
     };
