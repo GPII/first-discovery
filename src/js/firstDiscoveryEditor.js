@@ -39,10 +39,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 type: "gpii.firstDiscovery.selfVoicing",
                 options: {
                     model: {
-                        enabled: "{prefsEditor}.model.gpii_firstDiscovery_speak",
+                        enabled: "{prefsEditor}.model.preferences.gpii_firstDiscovery_speak",
                         utteranceOpts: {
-                            lang: "{prefsEditor}.model.gpii_firstDiscovery_language",
-                            rate: "{prefsEditor}.model.gpii_firstDiscovery_speechRate"
+                            lang: "{prefsEditor}.model.preferences.gpii_firstDiscovery_language",
+                            rate: "{prefsEditor}.model.preferences.gpii_firstDiscovery_speechRate"
                         }
                     },
                     messageBase: "{messageLoader}.resources.prefsEditor.resourceText"
@@ -81,7 +81,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                             listener: "{firstDiscoveryEditor}.events.onPrefsEditorReady",
                             args: "{firstDiscoveryEditor}"
                         },
-                        onAutoSave: "{that}.saveAndApply",
+                        "onAutoSave.save": "{that}.saveAndApply",
                         // the page is reloaded to reset language and etc.
                         "onReset.reload": {
                             "this": "location",
@@ -99,18 +99,17 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         }
                     },
                     autoSave: true,
-                    connectionGradeForLang: "gpii.firstDiscovery.panel.lang.prefEditorConnection",
                     modelRelayForStickyKey: {
                         offerAssistance: "{prefsEditor}.model.states.stickyKey.offerAssistance",
                         tryAccommodation: "{prefsEditor}.model.states.stickyKey.tryAccommodation"
                     },
                     distributeOptions: [{
-                        source: "{that}.options.connectionGradeForLang",
+                        record: "gpii.firstDiscovery.panel.lang.prefEditorConnection",
                         target: "{that > gpii.firstDiscovery.panel.lang}.options.prefsEditorConnection"
-                    }, {
+                    }/*, {
                         source: "{that}.options.modelRelayForStickyKey",
                         target: "{that > gpii.firstDiscovery.panel.keyboard}.options.model"
-                    }]
+                    }*/]
                 }
             },
             nav: {
@@ -129,7 +128,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             messageLoader: {
                 options: {
-                    locale: "{prefsEditorLoader}.settings.gpii_firstDiscovery_language"
+                    locale: "{prefsEditorLoader}.settings.preferences.gpii_firstDiscovery_language"
                 }
             }
         },

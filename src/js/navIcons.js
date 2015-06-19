@@ -110,8 +110,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 args: ["{change}.value", "{change}.oldValue"]
             }],
             pageNum: {
-                listener: "gpii.firstDiscovery.navIcons.showPage",
-                args: ["{change}.value", "{that}.options.pageSize", "{that}.model.iconWidth", "{that}.dom.pager"],
+                listener: "{that}.showIconPage",
                 priority: 5
             }
         },
@@ -133,10 +132,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 args: ["{that}"],
                 priority: 2
             },
-            "onCreate.setInitialActiveState": {
-                funcName: "{that}.events.onSetIconState.fire",
-                args: ["{that}.model.currentPanelNum", 0],
-                priority: 1
+            "onCreate.showIconPage": {
+                funcName: "{that}.showIconPage",
+                priority: 2
+            }
+        },
+        invokers: {
+            showIconPage: {
+                funcName: "gpii.firstDiscovery.navIcons.showIconPage",
+                args: ["{that}.model.pageNum", "{that}.options.pageSize", "{that}.model.iconWidth", "{that}.dom.pager"]
             }
         }
     });
@@ -158,7 +162,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         return Math.floor((panelNum - 1 - pastHoles) / pageSize);
     };
 
-    gpii.firstDiscovery.navIcons.showPage = function (pageNum, pageSize, iconWidth, pagerElement) {
+    gpii.firstDiscovery.navIcons.showIconPage = function (pageNum, pageSize, iconWidth, pagerElement) {
         var newLeft = iconWidth * pageNum * pageSize;
         pagerElement.scrollLeft(newLeft);
     };
@@ -185,12 +189,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     gpii.firstDiscovery.navIcons.setInitialIconState = function (that) {
-        if (that.model.visitedPanelNums.length === 0) {
+        var numOfVisitedPanels = that.model.visitedPanelNums.length;
+        if (numOfVisitedPanels === 0) {
             return;
         }
         fluid.each(that.model.visitedPanelNums, function (panelNum) {
             that.events.onSetIconState.fire(panelNum);
         });
+        that.events.onSetIconState.fire(that.model.currentPanelNum, that.model.visitedPanelNums[numOfVisitedPanels - 1]);
     };
 
 })(jQuery, fluid);

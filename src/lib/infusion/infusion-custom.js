@@ -1,4 +1,4 @@
-/*! infusion - v2.0.0-SNAPSHOT Monday, June 1st, 2015, 2:39:21 PM*/
+/*! infusion - v2.0.0-SNAPSHOT Friday, June 19th, 2015, 10:40:33 AM*/
 /*!
  * jQuery JavaScript Library v1.11.0
  * http://jquery.com/
@@ -32511,7 +32511,9 @@ var fluid_2_0 = fluid_2_0 || {};
             // TODO: This information is supposed to be generated from the JSON
             // schema describing various preferences. For now it's kept in top
             // level prefsEditor to avoid further duplication.
-            initialModel: {}
+            initialModel: {
+                preferences: {}  // To keep initial preferences
+            }
         }
     });
 
@@ -32567,7 +32569,7 @@ var fluid_2_0 = fluid_2_0 || {};
     fluid.pageEnhancer.init = function (that) {
         that.options.originalUserOptions = $.extend(true, that.uiEnhancer.options, fluid.copy(that.options.uiEnhancer));
         fluid.staticEnvironment.originalEnhancerOptions = that;
-        that.uiEnhancer.updateModel(that.getSettings());
+        that.uiEnhancer.updateModel(fluid.get(that.getSettings(), "preferences"));
         fluid.staticEnvironment.uiEnhancer = that.uiEnhancer;
     };
 
@@ -32814,8 +32816,8 @@ var fluid_2_0 = fluid_2_0 || {};
     fluid.defaults("fluid.prefs.uiEnhancerRelay", {
         gradeNames: ["autoInit", "fluid.modelRelayComponent"],
         listeners: {
-            onCreate: "{that}.addListener",
-            onDestroy: "{that}.removeListener"
+            "onCreate.addListener": "{that}.addListener",
+            "onDestroy.removeListener": "{that}.removeListener"
         },
         events: {
             updateEnhancerModel: "{fluid.prefs.prefsEditor}.events.onUpdateEnhancerModel"
@@ -32831,7 +32833,7 @@ var fluid_2_0 = fluid_2_0 || {};
             },
             updateEnhancerModel: {
                 funcName: "fluid.prefs.uiEnhancerRelay.updateEnhancerModel",
-                args: ["{uiEnhancer}", "{fluid.prefs.prefsEditor}.model"]
+                args: ["{uiEnhancer}", "{fluid.prefs.prefsEditor}.model.preferences"]
             }
         }
     });
@@ -32909,8 +32911,8 @@ var fluid_2_0 = fluid_2_0 || {};
             onReady: null
         },
         listeners: {
-            onCreate: "fluid.prefs.prefsEditor.init",
-            onAutoSave: "{that}.save"
+            "onCreate.init": "fluid.prefs.prefsEditor.init",
+            "onAutoSave.save": "{that}.save"
         },
         modelListeners: {
             "": [{
@@ -32953,23 +32955,36 @@ var fluid_2_0 = fluid_2_0 || {};
 
     /**
      * Saves the current model and fires onSave
-     */
+ */
     fluid.prefs.prefsEditor.save = function (that) {
-        var savedSelections = fluid.copy(that.model);
+        var initialModel = that.initialModel,
+            userSelections = fluid.copy(that.model);
 
-        fluid.each(savedSelections, function (value, key) {
-            if (fluid.get(that.initialModel, key) === value) {
-                delete savedSelections[key];
-            }
-        });
-        that.events.onSave.fire(savedSelections);
-        that.setSettings(savedSelections);
+        // Only save the changed preferences so the future default value change on preferences can still be correctly merged with changed preferences
+        if (fluid.model.diff(userSelections.preferences, initialModel.preferences)) {
+            delete userSelections.preferences;
+        } else {
+            fluid.each(userSelections.preferences, function (value, path) {
+                if (fluid.model.diff(value, fluid.get(that.initialModel, ["preferences", path]))) {
+                    delete userSelections.preferences[path];
+                }
+            });
+        }
+
+        that.events.onSave.fire(userSelections);
+        that.setSettings(userSelections);
+        return userSelections;
     };
 
     fluid.prefs.prefsEditor.saveAndApply = function (that) {
-        that.save();
-        that.events.onPrefsEditorRefresh.fire();
-        that.applyChanges();
+        var prevSettings = that.getSettings(),
+            newSelections = that.save();
+
+        // Only when preferences are changed, re-render panels and trigger enactors to apply changes
+        if (!fluid.model.diff(fluid.get(newSelections, "preferences"), fluid.get(prevSettings, "preferences"))) {
+            that.events.onPrefsEditorRefresh.fire();
+            that.applyChanges();
+        }
     };
 
     /**
@@ -33051,7 +33066,7 @@ var fluid_2_0 = fluid_2_0 || {};
                 funcName: "fluid.prefs.preview.updateModel",
                 args: [
                     "{preview}",
-                    "{prefsEditor}.model"
+                    "{prefsEditor}.model.preferences"
                 ]
             }
         },
@@ -33061,18 +33076,18 @@ var fluid_2_0 = fluid_2_0 || {};
         },
         listeners: {
             "{prefsEditor}.events.modelChanged": "{that}.updateModel",
-            onReady: "{that}.updateModel"
+            "onReady.updateModel": "{that}.updateModel"
         },
         templateUrl: "%prefix/PrefsEditorPreview.html"
     });
 
-    fluid.prefs.preview.updateModel = function (that, model) {
+    fluid.prefs.preview.updateModel = function (that, preferences) {
         /**
          * SetTimeout is temp fix for http://issues.fluidproject.org/browse/FLUID-2248
          */
         setTimeout(function () {
             if (that.enhancer) {
-                that.enhancer.updateModel(model);
+                that.enhancer.updateModel(preferences);
             }
         }, 0);
     };
@@ -34682,9 +34697,9 @@ var fluid_2_0 = fluid_2_0 || {};
     "use strict";
 
     /*******************************************************************************
-     * Starter Root Model
+     * Starter prefsEditor Model
      *
-     * Provides the default values for the starter enhancer/panels models
+     * Provides the default values for the starter prefsEditor model
      *******************************************************************************/
 
     fluid.defaults("fluid.prefs.initialModel.starter", {
@@ -34694,13 +34709,15 @@ var fluid_2_0 = fluid_2_0 || {};
             // schema describing various preferences. For now it's kept in top
             // level prefsEditor to avoid further duplication.
             initialModel: {
-                textFont: "default",          // key from classname map
-                theme: "default",             // key from classname map
-                textSize: 1,                  // in points
-                lineSpace: 1,                 // in ems
-                toc: false,                  // boolean
-                links: false,                // boolean
-                inputsLarger: false          // boolean
+                preferences: {
+                    textFont: "default",          // key from classname map
+                    theme: "default",             // key from classname map
+                    textSize: 1,                  // in points
+                    lineSpace: 1,                 // in ems
+                    toc: false,                   // boolean
+                    links: false,                 // boolean
+                    inputsLarger: false           // boolean
+                }
             }
         }
     });
@@ -34764,7 +34781,7 @@ var fluid_2_0 = fluid_2_0 || {};
 
     fluid.defaults("fluid.uiEnhancer.starterEnactors", {
         gradeNames: ["fluid.uiEnhancer", "fluid.uiEnhancer.cssClassEnhancerBase", "fluid.uiEnhancer.browserTextEnhancerBase", "autoInit"],
-        model: "{fluid.prefs.initialModel}.initialModel",
+        model: "{fluid.prefs.initialModel}.initialModel.preferences",
         components: {
             textSize: {
                 type: "fluid.prefs.enactor.textSize",
@@ -34863,7 +34880,7 @@ var fluid_2_0 = fluid_2_0 || {};
                 options: {
                     gradeNames: "fluid.prefs.prefsEditorConnections",
                     model: {
-                        textSize: "{prefsEditor}.model.textSize"
+                        textSize: "{prefsEditor}.model.preferences.textSize"
                     },
                     messageBase: "{messageLoader}.resources.textSize.resourceText",
                     resources: {
@@ -34878,7 +34895,7 @@ var fluid_2_0 = fluid_2_0 || {};
                 options: {
                     gradeNames: "fluid.prefs.prefsEditorConnections",
                     model: {
-                        lineSpace: "{prefsEditor}.model.lineSpace"
+                        lineSpace: "{prefsEditor}.model.preferences.lineSpace"
                     },
                     messageBase: "{messageLoader}.resources.lineSpace.resourceText",
                     resources: {
@@ -34894,7 +34911,7 @@ var fluid_2_0 = fluid_2_0 || {};
                     gradeNames: "fluid.prefs.prefsEditorConnections",
                     classnameMap: "{uiEnhancer}.options.classnameMap",
                     model: {
-                        value: "{prefsEditor}.model.textFont"
+                        value: "{prefsEditor}.model.preferences.textFont"
                     },
                     messageBase: "{messageLoader}.resources.textFont.resourceText",
                     resources: {
@@ -34910,7 +34927,7 @@ var fluid_2_0 = fluid_2_0 || {};
                     gradeNames: "fluid.prefs.prefsEditorConnections",
                     classnameMap: "{uiEnhancer}.options.classnameMap",
                     model: {
-                        value: "{prefsEditor}.model.theme"
+                        value: "{prefsEditor}.model.preferences.theme"
                     },
                     messageBase: "{messageLoader}.resources.contrast.resourceText",
                     resources: {
@@ -34925,7 +34942,7 @@ var fluid_2_0 = fluid_2_0 || {};
                 options: {
                     gradeNames: "fluid.prefs.prefsEditorConnections",
                     model: {
-                        toc: "{prefsEditor}.model.toc"
+                        toc: "{prefsEditor}.model.preferences.toc"
                     },
                     messageBase: "{messageLoader}.resources.layoutControls.resourceText",
                     resources: {
@@ -34945,8 +34962,8 @@ var fluid_2_0 = fluid_2_0 || {};
                     },
                     selectorsToIgnore: ["emphasizeLinks", "inputsLarger"],
                     model: {
-                        fluid_prefs_emphasizeLinks: "{prefsEditor}.model.links",
-                        fluid_prefs_inputsLarger: "{prefsEditor}.model.inputsLarger"
+                        fluid_prefs_emphasizeLinks: "{prefsEditor}.model.preferences.links",
+                        fluid_prefs_inputsLarger: "{prefsEditor}.model.preferences.inputsLarger"
                     },
                     components: {
                         emphasizeLinks: {
@@ -35285,7 +35302,7 @@ var fluid_2_0 = fluid_2_0 || {};
         });
 
         prefsEditor.events.onPrefsEditorRefresh.addListener(function () {
-            iframeEnhancer.updateModel(prefsEditor.model);
+            iframeEnhancer.updateModel(prefsEditor.model.preferences);
         });
         prefsEditor.events.onReset.addListener(function (prefsEditor) {
             fluid.prefs.separatedPanel.updateView(prefsEditor);
@@ -35756,7 +35773,7 @@ var fluid_2_0 = fluid_2_0 || {};
                             internalModelName: internalModelName,
                             externalModelName: flattenedPrefKey
                         });
-                        fluid.set(initialModel, ["members", "initialModel", flattenedPrefKey], prefSchema[primaryPath]);
+                        fluid.set(initialModel, ["members", "initialModel", "preferences", flattenedPrefKey], prefSchema[primaryPath]);
                     } else {
                         fluid.set(opts, internalPath, prefSchema[primaryPath]);
                     }
@@ -35882,7 +35899,7 @@ var fluid_2_0 = fluid_2_0 || {};
                                 internalModelName: safeSubPanelPrefsKey,
                                 externalModelName: safeSubPanelPrefsKey
                             });
-                            fluid.set(initialModel, ["members", "initialModel", safeSubPanelPrefsKey], prefSchema[primaryPath]);
+                            fluid.set(initialModel, ["members", "initialModel", "preferences", safeSubPanelPrefsKey], prefSchema[primaryPath]);
                         } else {
                             opts = opts || {options: {}};
                             fluid.set(opts, "options." + internalPath, prefSchema[primaryPath]);
@@ -36037,7 +36054,7 @@ var fluid_2_0 = fluid_2_0 || {};
                 "options.messageBase": "{messageLoader}.resources.%prefKey.resourceText"
             },
             panelModel: {
-                "%internalModelName": "{prefsEditor}.model.%externalModelName"
+                "%internalModelName": "{prefsEditor}.model.preferences.%externalModelName"
             },
             compositePanelBasedOnSub: {
                 "%subPrefKey": "{templateLoader}.resources.%subPrefKey"

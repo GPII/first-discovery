@@ -161,8 +161,8 @@ https://github.com/gpii/universal/LICENSE.txt
             args: [
                 "The utterance options should be set correctly",
                 {
-                    lang: "{prefsEditorLoader}.settings.gpii_firstDiscovery_language",
-                    rate: "{prefsEditorLoader}.settings.gpii_firstDiscovery_speechRate"
+                    lang: "{prefsEditorLoader}.settings.preferences.gpii_firstDiscovery_language",
+                    rate: "{prefsEditorLoader}.settings.preferences.gpii_firstDiscovery_speechRate"
                 },
                 "{that}.model.utteranceOpts"
             ]
@@ -176,7 +176,7 @@ https://github.com/gpii/universal/LICENSE.txt
     gpii.tests.firstDiscovery.testTTSHookup = function (that) {
         jqUnit.expect(2);
 
-        var expected = that.prefsEditor.gpii_firstDiscovery_panel_speakText.msgResolver.lookup(["instructions"]).template;
+        var expected = that.prefsEditor.preferences.gpii_firstDiscovery_panel_speakText.msgResolver.lookup(["instructions"]).template;
         var actual = gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions(that);
 
         jqUnit.assertEquals("The instruction text should be sourced from the active panel", expected, actual);
@@ -265,17 +265,17 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     gpii.tests.firstDiscovery.testInitialScrolling = function (that, testData) {
-        testData.scrollTop = that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.locate("controlsDiv")[0].scrollTop;
+        testData.scrollTop = that.prefsEditorLoader.prefsEditor.preferences.gpii_firstDiscovery_panel_lang.locate("controlsDiv")[0].scrollTop;
         jqUnit.assertTrue("The control div is scrolled", testData.scrollTop > 0);
     };
 
     gpii.tests.firstDiscovery.testScrollingAtHidden = function (that) {
-        var scrollTop = that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.locate("controlsDiv")[0].scrollTop;
+        var scrollTop = that.prefsEditorLoader.prefsEditor.preferences.gpii_firstDiscovery_panel_lang.locate("controlsDiv")[0].scrollTop;
         jqUnit.assertTrue("The control div is scrolled", scrollTop === 0);
     };
 
     gpii.tests.firstDiscovery.testScrollingAtVisible = function (that, testData) {
-        var scrollTop = that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.locate("controlsDiv")[0].scrollTop;
+        var scrollTop = that.prefsEditorLoader.prefsEditor.preferences.gpii_firstDiscovery_panel_lang.locate("controlsDiv")[0].scrollTop;
         jqUnit.assertTrue("The control div is scrolled", scrollTop > 0);
         jqUnit.assertFalse("The scrolled distance is different from the initial distance", scrollTop === testData.scrollTop);
     };
@@ -400,7 +400,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     event: "{navIconsTests firstDiscovery}.events.onPrefsEditorReady"
                 }, {
                     jQueryTrigger: "click",
-                    element: "{firstDiscovery}.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_textSize.dom.increase"
+                    element: "{firstDiscovery}.prefsEditorLoader.prefsEditor.preferences.gpii_firstDiscovery_panel_textSize.dom.increase"
                 }, {
                     func: "{firstDiscovery}.prefsEditorLoader.applier.change",
                     args: ["currentPanelNum", 8]

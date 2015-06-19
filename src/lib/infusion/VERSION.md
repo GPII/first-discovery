@@ -1,8 +1,8 @@
-The version of Infusion included in this folder was created using a custom build from the infusion master branch:
+The version of Infusion included in this folder was created using a custom build from this branch:
 
-https://github.com/fluid-project/infusion
+https://github.com/cindyli/infusion/tree/FLUID-5665
 
-commit#: fcb1c18a9f4da94d6564a521175e772f2180e8c5
+commit#: a208c4bfdea4930794bf7b4426b4dddf9a5138bc
 
 ```
 grunt custom --source=true --include="preferences, tooltip"
