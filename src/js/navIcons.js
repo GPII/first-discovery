@@ -190,12 +190,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     gpii.firstDiscovery.navIcons.setInitialIconState = function (that) {
         var numOfVisitedPanels = that.model.visitedPanelNums.length;
-        if (numOfVisitedPanels === 0) {
-            return;
+        if (numOfVisitedPanels > 0) {
+            fluid.each(that.model.visitedPanelNums, function (panelNum) {
+                that.events.onSetIconState.fire(panelNum);
+            });
         }
-        fluid.each(that.model.visitedPanelNums, function (panelNum) {
-            that.events.onSetIconState.fire(panelNum);
-        });
         that.events.onSetIconState.fire(that.model.currentPanelNum, that.model.visitedPanelNums[numOfVisitedPanels - 1]);
     };
 
