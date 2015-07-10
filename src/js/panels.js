@@ -181,7 +181,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      */
 
     fluid.defaults("gpii.firstDiscovery.panel.keyboard", {
-        gradeNames: ["fluid.prefs.panel", "autoInit"],
+        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.panel.keyboard.prefEditorConnection", "autoInit"],
         preferenceMap: {
             "gpii.firstDiscovery.stickyKeys": {
                 "model.stickyKeysEnabled": "default"
@@ -305,7 +305,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 excludeSource: "init"
             }, {
                 listener: "gpii.firstDiscovery.panel.keyboard.destroy",
-                args: ["{stickyKeysAssessor}"]
+                args: ["{that}"]
             }]
         }
     });
@@ -326,8 +326,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     gpii.firstDiscovery.panel.keyboard.destroy = function (that) {
-        if (that) {
-            that.destroy();
+        var stickyKeysAssessor = that.stickyKeysAssessor;
+        if (stickyKeysAssessor) {
+            stickyKeysAssessor.destroy();
         }
     };
 
@@ -350,7 +351,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         modelListeners: {
             offerAssistance: {
                 func: "{that}.speakPanelInstructions",
-                args: [{queue: true}]
+                args: [{queue: true}],
+                excludeSource: "init"
             },
             tryAccommodation: {
                 listener: "{that}.speakPanelInstructions",
@@ -363,7 +365,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 stickyKeysEnabled: {
                     listener: "{keyboardTts}.speakStickyKeysState",
                     namespace: "speakStickyKeysState",
-                    args: ["{that}", "{change}.value"]
+                    args: ["{that}", "{change}.value"],
+                    excludeSource: "init"
                 }
             }
         }]
@@ -373,6 +376,27 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         if (that.model.tryAccommodation) {
             speakFn(state ? that.msgResolver.resolve("enabledMsg") : that.msgResolver.resolve("disabledMsg"));
         }
+    };
+
+    // Delete model.offerAssistance at prefsEditor reset so the keyboard panel can be restored to its
+    // initial start page. When model.offerAssistance is presented in the model, it must be a boolean value.
+    // And, either true or false value would trigger a non-start page to render.
+    fluid.defaults("gpii.firstDiscovery.panel.keyboard.prefEditorConnection", {
+        gradeNames: ["fluid.eventedComponent", "autoInit"],
+        listeners: {
+            "{prefsEditor}.events.beforeReset": {
+                funcName: "gpii.firstDiscovery.panel.keyboard.prefEditorConnection.resetModel",
+                args: ["{that}"]
+            }
+        }
+    });
+
+    // When the entire tool is reset to a fresh start, to make the sticky key panel back to its initial page,
+    // model.offerAssistance needs to be non-existing since, 1. true value causes the "try it" button to show;
+    // 2. false value causes "don't need assistance" page to show.
+    gpii.firstDiscovery.panel.keyboard.prefEditorConnection.resetModel = function (that) {
+        that.applier.fireChangeRequest({path: "offerAssistance", type: "DELETE"});
+        that.applier.change("tryAccommodation", false);
     };
 
     /*

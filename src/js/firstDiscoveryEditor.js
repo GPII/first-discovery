@@ -63,6 +63,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         states: {
                             funcName: "{that}.save",
                             excludeSource: "init"
+                        },
+                        preferences: {
+                            funcName: "{that}.saveAndApply",
+                            excludeSource: "init"
                         }
                     },
                     model: {
@@ -81,9 +85,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                             listener: "{firstDiscoveryEditor}.events.onPrefsEditorReady",
                             args: "{firstDiscoveryEditor}"
                         },
-                        "onAutoSave.save": "{that}.saveAndApply",
                         // the page is reloaded to reset language and etc.
-                        "onReset.reload": {
+                        "afterReset.reload": {
                             "this": "location",
                             method: "reload",
                             args: true
@@ -98,18 +101,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                             ]
                         }
                     },
-                    autoSave: true,
-                    modelRelayForStickyKey: {
-                        offerAssistance: "{prefsEditor}.model.states.stickyKey.offerAssistance",
-                        tryAccommodation: "{prefsEditor}.model.states.stickyKey.tryAccommodation"
-                    },
                     distributeOptions: [{
                         record: "gpii.firstDiscovery.panel.lang.prefEditorConnection",
                         target: "{that > gpii.firstDiscovery.panel.lang}.options.prefsEditorConnection"
-                    }/*, {
-                        source: "{that}.options.modelRelayForStickyKey",
+                    }, {
+                        record: {
+                            offerAssistance: "{prefsEditor}.model.states.stickyKey.offerAssistance",
+                            tryAccommodation: "{prefsEditor}.model.states.stickyKey.tryAccommodation"
+                        },
                         target: "{that > gpii.firstDiscovery.panel.keyboard}.options.model"
-                    }*/]
+                    }]
                 }
             },
             nav: {

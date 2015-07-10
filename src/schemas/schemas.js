@@ -25,10 +25,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         auxiliarySchema: {
             "loaderGrades": ["gpii.firstDiscovery.firstDiscoveryEditor"],
             "namespace": "gpii.firstDiscovery",
-            "templatePrefix": "../src/html/",
+            "terms": {
+                "templatePrefix": "../src/html/",
+                "messagePrefix": "../src/messages/"
+            },
             "template": "../src/html/firstDiscovery.html",
-            "messagePrefix": "../src/messages/",
-            "message": "%prefix/firstDiscovery.json",
+            "message": "%messagePrefix/firstDiscovery.json",
             "lang": {
                 "type": "gpii.firstDiscovery.language",
                 "enactor": {
@@ -37,8 +39,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.lang",
                     "container": ".gpiic-fd-prefsEditor-panel-lang",
-                    "template": "%prefix/lang.html",
-                    "message": "%prefix/lang.json",
+                    "template": "%templatePrefix/lang.html",
+                    "message": "%messagePrefix/lang.json",
                     "stringArrayIndex": {
                         "lang": ["lang-en-US", "lang-fr-FR", "lang-es-MX", "lang-de-DE", "lang-nl-NL", "lang-sv-SE"],
                         "tooltip": ["lang-en-US-tooltip", "lang-fr-FR-tooltip", "lang-es-MX-tooltip", "lang-de-DE-tooltip", "lang-nl-NL-tooltip", "lang-sv-SE-tooltip"],
@@ -51,8 +53,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.welcome",
                     "container": ".gpiic-fd-prefsEditor-panel-welcome",
-                    "template": "%prefix/welcomeTemplate.html",
-                    "message": "%prefix/welcome.json"
+                    "template": "%templatePrefix/welcomeTemplate.html",
+                    "message": "%messagePrefix/welcome.json"
                 }
             },
             "speakText": {
@@ -60,8 +62,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.speakText",
                     "container": ".gpiic-fd-prefsEditor-panel-speakText",
-                    "template": "%prefix/yesNo.html",
-                    "message": "%prefix/speakText.json"
+                    "template": "%templatePrefix/yesNo.html",
+                    "message": "%messagePrefix/speakText.json"
                 }
             },
             "speechRate": {
@@ -69,8 +71,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.speechRate",
                     "container": ".gpiic-fd-prefsEditor-panel-speechRate",
-                    "template": "%prefix/rangeWithDisabledMsgTemplate.html",
-                    "message": "%prefix/speechRate.json",
+                    "template": "%templatePrefix/rangeWithDisabledMsgTemplate.html",
+                    "message": "%messagePrefix/speechRate.json",
                     "gradeNames": ["gpii.firstDiscovery.panel.speechRate.prefsEditorConnection"]
                 }
             },
@@ -89,8 +91,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "type": "gpii.firstDiscovery.panel.contrast",
                     "container": ".gpiic-fd-prefsEditor-panel-contrast",
                     "classnameMap": {"theme": "@contrast.classes"},
-                    "template": "%prefix/contrast.html",
-                    "message": "%prefix/contrast.json"
+                    "template": "%templatePrefix/contrast.html",
+                    "message": "%messagePrefix/contrast.json"
                 }
             },
             "textSize": {
@@ -101,8 +103,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.textSize",
                     "container": ".gpiic-fd-prefsEditor-panel-size",
-                    "template": "%prefix/rangeTemplate.html",
-                    "message": "%prefix/textSize.json"
+                    "template": "%templatePrefix/rangeTemplate.html",
+                    "message": "%messagePrefix/textSize.json"
                 }
             },
             "onScreenKeyboard": {
@@ -110,8 +112,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.onScreenKeyboard",
                     "container": ".gpiic-fd-prefsEditor-panel-onScreenKeyboard",
-                    "template": "%prefix/yesNo.html",
-                    "message": "%prefix/onScreenKeyboard.json"
+                    "template": "%templatePrefix/yesNo.html",
+                    "message": "%messagePrefix/onScreenKeyboard.json"
                 }
             },
             "captions": {
@@ -119,8 +121,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.captions",
                     "container": ".gpiic-fd-prefsEditor-panel-captions",
-                    "template": "%prefix/yesNo.html",
-                    "message": "%prefix/captions.json"
+                    "template": "%templatePrefix/yesNo.html",
+                    "message": "%messagePrefix/captions.json"
                 }
             },
             "showSounds": {
@@ -128,8 +130,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.showSounds",
                     "container": ".gpiic-fd-prefsEditor-panel-showSounds",
-                    "template": "%prefix/yesNo.html",
-                    "message": "%prefix/showSounds.json"
+                    "template": "%templatePrefix/yesNo.html",
+                    "message": "%messagePrefix/showSounds.json"
                 }
             },
             "keyboard": {
@@ -137,8 +139,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.keyboard",
                     "container": ".gpiic-fd-prefsEditor-panel-keyboard",
-                    "template": "%prefix/keyboard.html",
-                    "message": "%prefix/keyboard.json",
+                    "template": "%templatePrefix/keyboard.html",
+                    "message": "%messagePrefix/keyboard.json",
                     "gradeNames": ["gpii.firstDiscovery.panel.keyboardTts"]
                 }
             },
@@ -147,8 +149,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.congratulations",
                     "container": ".gpiic-fd-prefsEditor-panel-congratulations",
-                    "template": "%prefix/congratulationsTemplate.html",
-                    "message": "%prefix/congratulations.json"
+                    "template": "%templatePrefix/congratulationsTemplate.html",
+                    "message": "%messagePrefix/congratulations.json"
                 }
             }
         }

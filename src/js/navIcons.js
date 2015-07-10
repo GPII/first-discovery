@@ -70,10 +70,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         }
                     },
                     modelListeners: {
-                        // "{navIcons}.model.currentPanelNum": {
-                        //     listener: "gpii.firstDiscovery.navIcons.updateIconModel",
-                        //     args: ["{that}", "{change}.value", "{change}.oldValue"]
-                        // },
                         "{navIcons}.model.pageNum": {
                             listener: "gpii.firstDiscovery.icon.measure",
                             args: ["{that}", "{navIcons}.applier", "iconWidth"],
