@@ -43,6 +43,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         // transformations are performed using the fluid.transforms.free
         // transformation. Once FLUID-5669 has been addressed, it should be
         // possible to simply make use of fluid.transforms.binaryOp.
+        // see: https://issues.fluidproject.org/browse/FLUID-5669
         }, {
             target: "isMax",
             singleTransform: {
@@ -612,9 +613,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         model: {
             selectedLang: undefined,
-            // TODO the displayLangIndex model property contains the index
-            //      of the top language to display on the panel -- choose
-            //      a better name
+            // TODO: the displayLangIndex model property contains the index
+            //      of the top language to display on the panel.
+            //      see: https://issues.fluidproject.org/browse/FLOE-406
             displayLangIndex: 0,
             atStartOfLangs: false,
             atEndOfLangs: false
@@ -831,6 +832,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         // called from afterRender. This was the practice used in the
         // radio buttons version of the language panel and has been
         // continued in the FLOE-333 reworking.
+        // see: https://issues.fluidproject.org/browse/FLOE-407
         setTimeout(function () {
             that.events.langButtonsReady.fire();
         });
@@ -1015,6 +1017,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         // TODO: A potential further improvement would be to use a utility such as the one in the video player to
         // make this automatically model bound.
         // see: https://github.com/fluid-project/videoPlayer/blob/master/js/VideoPlayer_showHide.js
+        // see: https://issues.fluidproject.org/browse/FLOE-408
         fluid.each(labels, function (label, index) {
             label = $(label);
 
