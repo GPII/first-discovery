@@ -43,6 +43,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         // transformations are performed using the fluid.transforms.free
         // transformation. Once FLUID-5669 has been addressed, it should be
         // possible to simply make use of fluid.transforms.binaryOp.
+        // see: https://issues.fluidproject.org/browse/FLUID-5669
         }, {
             target: "isMax",
             singleTransform: {
