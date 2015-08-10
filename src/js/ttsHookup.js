@@ -44,7 +44,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     // directly. However, it should be reconfigured like the tooltip hookup and placed at the panel level.
     // The issue at the moment is that a given panel doesn't know when this it is visible. All this information
     // is contained at the editor level, which also doesn't really know which panel component is shown.
-    // see: FLOE-409
+    // see: https://issues.fluidproject.org/browse/FLOE-409
     fluid.defaults("gpii.firstDiscovery.tts.fdHookup", {
         components: {
             selfVoicing: {

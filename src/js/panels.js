@@ -614,7 +614,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             selectedLang: undefined,
             // TODO: the displayLangIndex model property contains the index
             //      of the top language to display on the panel.
-            //      see FLOE-406
+            //      see: https://issues.fluidproject.org/browse/FLOE-406
             displayLangIndex: 0,
             atStartOfLangs: false,
             atEndOfLangs: false
@@ -831,7 +831,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         // called from afterRender. This was the practice used in the
         // radio buttons version of the language panel and has been
         // continued in the FLOE-333 reworking.
-        // see: FLOE-407
+        // see: https://issues.fluidproject.org/browse/FLOE-407
         setTimeout(function () {
             that.events.langButtonsReady.fire();
         });
@@ -1013,9 +1013,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     gpii.firstDiscovery.panel.contrast.style = function (labels, theme, defaultThemeName, style) {
-        // TODO: FLOE-408: A potential further improvement would be to use a utility such as the one in the video player to
+        // TODO: A potential further improvement would be to use a utility such as the one in the video player to
         // make this automatically model bound.
         // see: https://github.com/fluid-project/videoPlayer/blob/master/js/VideoPlayer_showHide.js
+        // see: https://issues.fluidproject.org/browse/FLOE-408
         fluid.each(labels, function (label, index) {
             label = $(label);
 
