@@ -798,9 +798,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 var selectedLang = $(elem).attr("lang");
                 that.applier.change("selectedLang", selectedLang);
             },
-            onUnselect: function () {
-                that.applier.change("selectedLang", undefined);
-            },
             rememberSelectionState: false
         });
     };
