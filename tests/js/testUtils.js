@@ -36,7 +36,7 @@ https://github.com/gpii/universal/LICENSE.txt
         radioButtons.eq(idx).click();
     };
 
-    gpii.tests.utils.simulateKeyEvent = function (elm, keyEvent, eventObj) {
+    gpii.tests.utils.triggerKeyEvent = function (elm, keyEvent, eventObj) {
         $(elm).triggerHandler(jQuery.Event(keyEvent, eventObj));
     };
 

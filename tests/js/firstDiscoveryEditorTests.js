@@ -202,7 +202,7 @@ https://github.com/gpii/universal/LICENSE.txt
             ctrlKey: true
         };
 
-        gpii.tests.utils.simulateKeyEvent("body", "keydown", eventObj);
+        gpii.tests.utils.triggerKeyEvent("body", "keydown", eventObj);
     };
 
     gpii.tests.firstDiscovery.runTest("Init and navigation controls", "#gpiic-fd-navControlsTests", 1, gpii.tests.firstDiscovery.testControls);

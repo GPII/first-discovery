@@ -172,7 +172,7 @@ https://github.com/gpii/universal/LICENSE.txt
                             event: "{fdHookup}.events.onTestQueueSpeech"
                         },
                         {
-                            func: "gpii.tests.utils.simulateKeyEvent",
+                            func: "gpii.tests.utils.triggerKeyEvent",
                             args: ["body", "keydown", {which: gpii.firstDiscovery.keyboardShortcut.key.h}]
                         },
                         {
