@@ -105,7 +105,7 @@ https://github.com/gpii/universal/LICENSE.txt
         }, {
             name: "Test the language settings panel",
             tests: [{
-                expect: 3,
+                expect: 2,
                 name: "Tooltips",
                 sequence: [{
                     funcName: "gpii.tests.langTester.hoverElm",
@@ -126,7 +126,7 @@ https://github.com/gpii/universal/LICENSE.txt
         }, {
             name: "Test the language settings panel",
             tests: [{
-                expect: 6,
+                expect: 7,
                 name: "The previous and next buttons",
                 sequence: [{
                     jQueryTrigger: "click",
