@@ -121,14 +121,6 @@ https://github.com/gpii/universal/LICENSE.txt
                     listener: "gpii.tests.langTester.verifyTooltipLang",
                     args: ["{arguments}.2", "nl-NL"],
                     event: "{lang}.events.afterTooltipOpen"
-                }, {
-                    jQueryTrigger: "click",
-                    element: "{lang}.dom.prev"
-                }, {
-                    listener: "gpii.tests.langTester.verifyTopDisplayedLang",
-                    args: ["{lang}", "es-MX"],
-                    spec: {path: "displayLangIndex", priority: "last"},
-                    changeEvent: "{lang}.applier.modelChanged"
                 }]
             }]
         }, {
@@ -137,6 +129,14 @@ https://github.com/gpii/universal/LICENSE.txt
                 expect: 6,
                 name: "The previous and next buttons",
                 sequence: [{
+                    jQueryTrigger: "click",
+                    element: "{lang}.dom.prev"
+                }, {
+                    listener: "gpii.tests.langTester.verifyTopDisplayedLang",
+                    args: ["{lang}", "es-MX"],
+                    spec: {path: "displayLangIndex", priority: "last"},
+                    changeEvent: "{lang}.applier.modelChanged"
+                }, {
                     funcName: "gpii.tests.langTester.verifyPrevNextButtonsEnabled",
                     args: ["{lang}", true, true]
                 }, {
