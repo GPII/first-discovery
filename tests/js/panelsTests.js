@@ -289,7 +289,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.langTester.verifyLangModel = function (that, expected) {
-        jqUnit.assertEquals("The model value for the language is set correctly", expected, that.model.lang);
+        jqUnit.assertEquals("The model value for the language is set correctly to " + expected, expected, that.model.lang);
     };
 
     gpii.tests.langTester.findLangRow = function (that, lang) {
@@ -306,8 +306,8 @@ https://github.com/gpii/universal/LICENSE.txt
         gpii.tests.utils.simulateKeydown(button, keyCode);
     };
 
-    gpii.tests.langTester.verifySelectedLangModel = function (that, lang) {
-        jqUnit.assertEquals("The model value for \"selectedLang\" has been set correctly", lang, that.model.selectedLang);
+    gpii.tests.langTester.verifySelectedLangModel = function (that, expected) {
+        jqUnit.assertEquals("The model value for the \"selectedLang\" is set correctly to " + expected, expected, that.model.selectedLang);
     };
 
     /*********************
