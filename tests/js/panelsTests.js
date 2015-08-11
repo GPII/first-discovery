@@ -303,7 +303,7 @@ https://github.com/gpii/universal/LICENSE.txt
 
     gpii.tests.langTester.keydown = function (that, lang, keyCode) {
         var button = gpii.tests.langTester.findLangRow(that, lang);
-        gpii.tests.utils.simulateKeydown(button, "keydown", keyCode);
+        gpii.tests.utils.simulateKeyEvent(button, "keydown", keyCode);
     };
 
     gpii.tests.langTester.verifySelectedLangModel = function (that, expected) {
