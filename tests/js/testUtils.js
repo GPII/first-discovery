@@ -56,9 +56,9 @@ https://github.com/gpii/universal/LICENSE.txt
         });
     };
 
-    gpii.tests.utils.simulateKeydown = function (onElement, keyCode) {
+    gpii.tests.utils.simulateKeydown = function (onElement, keyEvent, keyCode) {
         var eventObj = document.createEvent("Events");
-        eventObj.initEvent("keydown", true, true);
+        eventObj.initEvent(keyEvent, true, true);
         eventObj.which = keyCode;
         onElement = onElement[0];
         onElement.dispatchEvent(eventObj);
