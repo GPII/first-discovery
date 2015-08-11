@@ -292,14 +292,18 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("The model value for the language is set correctly", expected, that.model.lang);
     };
 
+    gpii.tests.langTester.findLangRow = function (that, lang) {
+        return that.locate("langRow").has("[lang='" + lang + "']");
+    };
+
     gpii.tests.langTester.focus = function (that, lang) {
-        var button = that.locate("langRow").has("[lang='" + lang + "']");
+        var button = gpii.tests.langTester.findLangRow(that, lang);
         fluid.focus(button);
     };
 
     gpii.tests.langTester.keydown = function (that, lang, keyCode) {
-        var button = that.locate("langRow").has("[lang='" + lang + "']");
-        button.simulate("keydown", {keyCode: keyCode});
+        var button = gpii.tests.langTester.findLangRow(that, lang);
+        gpii.tests.utils.simulateKeydown(button, keyCode);
     };
 
     gpii.tests.langTester.verifySelectedLangModel = function (that, lang) {
