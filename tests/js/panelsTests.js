@@ -199,6 +199,65 @@ https://github.com/gpii/universal/LICENSE.txt
                     changeEvent: "{lang}.applier.modelChanged"
                 }]
             }]
+        }, {
+            name: "Test the language settings panel",
+            tests: [{
+                expect: 9,
+                name: "Scroll the language button container to show the selected button",
+                sequence: [{
+                    funcName: "gpii.tests.langTester.focus",
+                    args: ["{lang}", "en-US"]
+                }, {
+                    listener: "gpii.tests.langTester.verifyInitDisplayedLang",
+                    args: ["{lang}", 0],
+                    spec: {path: "displayLangIndex", priority: "last"},
+                    changeEvent: "{lang}.applier.modelChanged"
+                }, {
+                    funcName: "gpii.tests.langTester.keydown",
+                    args: ["{lang}", "en-US", $.ui.keyCode.DOWN]
+                }, {
+                    funcName: "gpii.tests.langTester.keydown",
+                    args: ["{lang}", "fr-FR", $.ui.keyCode.DOWN]
+                }, {
+                    funcName: "gpii.tests.langTester.keydown",
+                    args: ["{lang}", "es-MX", $.ui.keyCode.DOWN]
+                }, {
+                    listener: "gpii.tests.langTester.verifyScrolling",
+                    args: ["{lang}", 1, "up"],
+                    spec: {path: "displayLangIndex", priority: "last"},
+                    changeEvent: "{lang}.applier.modelChanged"
+                }, {
+                    funcName: "gpii.tests.langTester.keydown",
+                    args: ["{lang}", "de-DE", $.ui.keyCode.DOWN]
+                }, {
+                    listener: "gpii.tests.langTester.verifyScrolling",
+                    args: ["{lang}", 2, "up"],
+                    spec: {path: "displayLangIndex", priority: "last"},
+                    changeEvent: "{lang}.applier.modelChanged"
+                }, {
+                    funcName: "gpii.tests.langTester.keydown",
+                    args: ["{lang}", "nl-NL", $.ui.keyCode.UP]
+                }, {
+                    funcName: "gpii.tests.langTester.keydown",
+                    args: ["{lang}", "de-DE", $.ui.keyCode.UP]
+                }, {
+                    funcName: "gpii.tests.langTester.keydown",
+                    args: ["{lang}", "es-MX", $.ui.keyCode.UP]
+                }, {
+                    listener: "gpii.tests.langTester.verifyScrolling",
+                    args: ["{lang}", 1, "down"],
+                    spec: {path: "displayLangIndex", priority: "last"},
+                    changeEvent: "{lang}.applier.modelChanged"
+                }, {
+                    funcName: "gpii.tests.langTester.keydown",
+                    args: ["{lang}", "fr-FR", $.ui.keyCode.UP]
+                }, {
+                    listener: "gpii.tests.langTester.verifyScrolling",
+                    args: ["{lang}", 0, "down"],
+                    spec: {path: "displayLangIndex", priority: "last"},
+                    changeEvent: "{lang}.applier.modelChanged"
+                }]
+            }]
         }]
     });
 
@@ -254,28 +313,6 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals(msg, expectedIndex, that.model.displayLangIndex);
     };
 
-    // TODO See if we can get this scrolling position verification working reliably
-    // TODO Look at test page markup and CSS
-    //
-    // gpii.tests.langTester.verifyLangsInView = function (that, expectedVisibleLangs) {
-    //     fluid.each(that.locate("langRow"), function(langButton) {
-    //         langButton = $(langButton);
-    //         var expected = expectedVisibleLangs.indexOf(langButton.attr("lang")) !== -1;
-    //         gpii.tests.langTester.assertLangButtonInView(that, langButton, expected);
-    //     });
-    // };
-    //
-    // gpii.tests.langTester.assertLangButtonInView = function (that, langButton, expected) {
-    //     var msg = "The button for language " + langButton.attr("lang") +
-    //             " should be " + (expected ? "visible" : "non-visible");
-    //     var langButtonTop = langButton.offset().top;
-    //     var controlsDiv = that.locate("controlsDiv");
-    //     var controlsDivTop = controlsDiv.offset().top;
-    //     var isVisible = (Math.floor(langButtonTop) >= Math.floor(controlsDivTop)) &&
-    //             (Math.floor(langButtonTop) < Math.floor(controlsDivTop + controlsDiv.height()));
-    //     jqUnit.assertEquals(msg, expected, isVisible);
-    // };
-
     gpii.tests.langTester.verifyPrevNextButtonsEnabled = function (that, prevEnabled, nextEnabled) {
         var prevEnabledMsg = prevEnabled ? "enabled" : "disabled";
         var nextEnabledMsg = nextEnabled ? "enabled" : "disabled";
@@ -308,6 +345,29 @@ https://github.com/gpii/universal/LICENSE.txt
 
     gpii.tests.langTester.verifySelectedLangModel = function (that, expected) {
         jqUnit.assertEquals("The model value for the \"selectedLang\" is set correctly to " + expected, expected, that.model.selectedLang);
+    };
+
+    gpii.tests.langTester.verifyDisplayLangIndex = function (that, expected) {
+        jqUnit.assertEquals("The model value for displayLangIndex is set to " + expected, expected, that.model.displayLangIndex);
+    };
+
+    gpii.tests.langTester.getFirstButtonTop = function (that) {
+        return that.locate("langRow").offset().top;
+    };
+
+    gpii.tests.langTester.verifyInitDisplayedLang = function (that, expected) {
+        that.prevFirstButtonTop = gpii.tests.langTester.getFirstButtonTop(that);
+        gpii.tests.langTester.verifyDisplayLangIndex(that, expected);
+    };
+
+    gpii.tests.langTester.verifyScrolling = function (that, expected, action) {
+        gpii.tests.langTester.verifyDisplayLangIndex(that, expected);
+
+        var currentFirstButtonTop = gpii.tests.langTester.getFirstButtonTop(that);
+        var result = (action === "up") ? currentFirstButtonTop < that.prevFirstButtonTop : currentFirstButtonTop > that.prevFirstButtonTop;
+        jqUnit.assertTrue("The container for language buttons has been scrolled " + action, result);
+
+        that.prevFirstButtonTop = currentFirstButtonTop;
     };
 
     /*********************
