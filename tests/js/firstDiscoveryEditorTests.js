@@ -196,13 +196,7 @@ https://github.com/gpii/universal/LICENSE.txt
     gpii.tests.firstDiscovery.testResetShortcut = function () {
         jqUnit.expect(1);
 
-        var eventObj = {
-            which: gpii.firstDiscovery.keyboardShortcut.key.r,
-            altKey: true,
-            ctrlKey: true
-        };
-
-        gpii.tests.utils.triggerKeyEvent("body", "keydown", eventObj);
+        gpii.tests.utils.simulateKeyEvent("body", "keydown", gpii.firstDiscovery.keyboardShortcut.key.r, {ctrlKey: true, altKey: true});
     };
 
     gpii.tests.firstDiscovery.runTest("Init and navigation controls", "#gpiic-fd-navControlsTests", 1, gpii.tests.firstDiscovery.testControls);
