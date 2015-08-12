@@ -85,7 +85,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         var secondLastPanel = currentPanelNum === (that.options.panelTotalNum - 1);
 
         if (isLastPanel) {
-            gpii.firstDiscovery.navButtons.toggleButtonSates(nextButton, !isLastPanel, that.options.styles.show);
+            gpii.firstDiscovery.navButtons.toggleButtonStates(nextButton, !isLastPanel, that.options.styles.show);
         } else if (secondLastPanel) {
             var nextButtonID = fluid.allocateSimpleId(nextButton),
                 nextLabel = that.msgResolver.resolve("next"),
