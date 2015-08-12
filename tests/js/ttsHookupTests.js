@@ -173,7 +173,7 @@ https://github.com/gpii/universal/LICENSE.txt
                         },
                         {
                             func: "gpii.tests.utils.simulateKeyEvent",
-                            args: ["body", "keydown", {which: gpii.firstDiscovery.keyboardShortcut.key.h}]
+                            args: ["body", "keydown", gpii.firstDiscovery.keyboardShortcut.key.h]
                         },
                         {
                             listener: "gpii.tests.ttsHookupTester.assertSpeak",

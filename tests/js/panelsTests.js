@@ -84,8 +84,8 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "Test the language settings panel",
             tests: [{
-                expect: 37,
-                name: "Test the language panel",
+                expect: 28,
+                name: "Rendering",
                 sequence: [{
                     func: "{lang}.refreshView"
                 }, {
@@ -100,7 +100,14 @@ https://github.com/gpii/universal/LICENSE.txt
                 }, {
                     funcName: "gpii.tests.langTester.verifyPrevNextButtonsEnabled",
                     args: ["{lang}", true, false]
-                }, {
+                }]
+            }]
+        }, {
+            name: "Test the language settings panel",
+            tests: [{
+                expect: 2,
+                name: "Tooltips",
+                sequence: [{
                     funcName: "gpii.tests.langTester.hoverElm",
                     args: ["{lang}.dom.langRow", 0]
                 }, {
@@ -114,7 +121,14 @@ https://github.com/gpii/universal/LICENSE.txt
                     listener: "gpii.tests.langTester.verifyTooltipLang",
                     args: ["{arguments}.2", "nl-NL"],
                     event: "{lang}.events.afterTooltipOpen"
-                }, {
+                }]
+            }]
+        }, {
+            name: "Test the language settings panel",
+            tests: [{
+                expect: 7,
+                name: "The previous and next buttons",
+                sequence: [{
                     jQueryTrigger: "click",
                     element: "{lang}.dom.prev"
                 }, {
@@ -144,10 +158,46 @@ https://github.com/gpii/universal/LICENSE.txt
                     args: ["{lang}", "fr-FR"],
                     spec: {path: "lang", priority: "last"},
                     changeEvent: "{lang}.applier.modelChanged"
-                }
-                // TODO Test moving selection with the keyboard
-                // TODO Test activation of language with the keyboard
-                ]
+                }]
+            }]
+        }, {
+            name: "Test the language settings panel",
+            tests: [{
+                expect: 4,
+                name: "The keyboard interaction for language buttons",
+                sequence: [{
+                    funcName: "gpii.tests.langTester.focus",
+                    args: ["{lang}", "de-DE"]
+                }, {
+                    listener: "gpii.tests.langTester.verifySelectedLangModel",
+                    args: ["{lang}", "de-DE"],
+                    spec: {path: "selectedLang", priority: "last"},
+                    changeEvent: "{lang}.applier.modelChanged"
+                }, {
+                    funcName: "gpii.tests.langTester.keydown",
+                    args: ["{lang}", "de-DE", $.ui.keyCode.DOWN]
+                }, {
+                    listener: "gpii.tests.langTester.verifySelectedLangModel",
+                    args: ["{lang}", "nl-NL"],
+                    spec: {path: "selectedLang", priority: "last"},
+                    changeEvent: "{lang}.applier.modelChanged"
+                }, {
+                    funcName: "gpii.tests.langTester.keydown",
+                    args: ["{lang}", "nl-NL", $.ui.keyCode.UP]
+                }, {
+                    listener: "gpii.tests.langTester.verifySelectedLangModel",
+                    args: ["{lang}", "de-DE"],
+                    spec: {path: "selectedLang", priority: "last"},
+                    changeEvent: "{lang}.applier.modelChanged"
+                }, {
+                    funcName: "gpii.tests.langTester.keydown",
+                    args: ["{lang}", "de-DE", $.ui.keyCode.ENTER]
+                }, {
+                    listener: "gpii.tests.langTester.verifyLangModel",
+                    args: ["{lang}", "de-DE"],
+                    spec: {path: "lang", priority: "last"},
+                    changeEvent: "{lang}.applier.modelChanged"
+                }]
             }]
         }]
     });
@@ -239,7 +289,25 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.langTester.verifyLangModel = function (that, expected) {
-        jqUnit.assertEquals("The model value for the language is set correctly", expected, that.model.lang);
+        jqUnit.assertEquals("The model value for the language is set correctly to " + expected, expected, that.model.lang);
+    };
+
+    gpii.tests.langTester.findLangRow = function (that, lang) {
+        return that.locate("langRow").has("[lang='" + lang + "']");
+    };
+
+    gpii.tests.langTester.focus = function (that, lang) {
+        var button = gpii.tests.langTester.findLangRow(that, lang);
+        fluid.focus(button);
+    };
+
+    gpii.tests.langTester.keydown = function (that, lang, keyCode) {
+        var button = gpii.tests.langTester.findLangRow(that, lang);
+        gpii.tests.utils.simulateKeyEvent(button, "keydown", keyCode);
+    };
+
+    gpii.tests.langTester.verifySelectedLangModel = function (that, expected) {
+        jqUnit.assertEquals("The model value for the \"selectedLang\" is set correctly to " + expected, expected, that.model.selectedLang);
     };
 
     /*********************
