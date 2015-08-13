@@ -45,8 +45,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     gpii.firstDiscovery.enactor.lang.switchLang = function (that) {
         // Do NOT reload the page the first time when the initial language model value is received.
-        // excludeSource: "init" does not help because the language model value is passed in via model
-        // relay. At then, the enactor has been instantiated.
+        // excludeSource: "init" does not help because the language model value is passed in via
+        // model relay which occurs after "init" takes place.
         if (that.initialLangSet) {
             that.reloadPage();
         }

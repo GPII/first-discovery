@@ -356,6 +356,8 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.langTester.verifyInitDisplayedLang = function (that, expected) {
+        // Keep track of the previous top position of the first language button to be compared with the next position to
+        // verify the direction of the scrolling (up or down) happens as expected.
         that.prevFirstButtonTop = gpii.tests.langTester.getFirstButtonTop(that);
         gpii.tests.langTester.verifyDisplayLangIndex(that, expected);
     };
