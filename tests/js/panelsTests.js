@@ -1156,7 +1156,6 @@ https://github.com/gpii/universal/LICENSE.txt
 
     $(document).ready(function () {
         fluid.test.runTests([
-            "gpii.tests.langPanel",
             "gpii.tests.textSizePanel",
             "gpii.tests.speechRatePanel",
             "gpii.tests.speakTextPanel",
@@ -1166,7 +1165,10 @@ https://github.com/gpii/universal/LICENSE.txt
             "gpii.tests.contrastPanel",
             "gpii.tests.keyboardPanel",
             "gpii.tests.welcomePanel",
-            "gpii.tests.congratulationsPanel"
+            "gpii.tests.congratulationsPanel",
+            // Run tests for the language panel at the end to work around the Chrome issue that key up/down actions in the scrolling
+            // test somehow interfere the rendering of the contrast panel.
+            "gpii.tests.langPanel"
         ]);
     });
 
