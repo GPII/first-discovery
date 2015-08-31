@@ -1,0 +1,10 @@
+{
+    "instructions": "Voulez-vous voir le sous-titrage lors du visionnement des vidéos?",
+    "no": "Non",
+    "yes": "Oui",
+
+    "yes-tooltip": "Sélectionnez pour activer le sous-titrage",
+    "no-tooltip": "Sélectionnez pour désactiver le sous-titrage",
+    "yes-tooltipAtSelect": "Le sous-titrage est activé",
+    "no-tooltipAtSelect": "Le sous-titrage est désactivé"
+}

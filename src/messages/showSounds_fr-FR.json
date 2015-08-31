@@ -1,0 +1,10 @@
+{
+    "instructions": "Voulez-vous que l'écran clignote lorsqu'un son joue?",
+    "no": "Non",
+    "yes": "Oui",
+
+    "yes-tooltip": "Sélectionnez pour activer le clignotement de l'écran",
+    "no-tooltip": "Sélectionnez pour désactiver le clignotement de l'écran",
+    "yes-tooltipAtSelect": "Le clignotement d'écran est activé lorsque le son joue",
+    "no-tooltipAtSelect": "Le clignotement d'écran est désactivé lorsque le son joue"
+}

@@ -1,0 +1,15 @@
+{
+    "instructions": "Vous pouvez choisir une couleur d'écran pour améliorer le contraste.",
+    "contrastLabel": "Contrast",
+    "contrast-default": "original",
+    "contrast-bw": "noir sur blanc",
+    "contrast-wb": "blanc sur noir",
+
+    "contrast-default-tooltip": "rétablir les couleurs d'origine de l'écran",
+    "contrast-bw-tooltip": "changer la couleur de l'ecran au noir sur blanc",
+    "contrast-wb-tooltip": "changer la couleur de l'ecran au blanc sur noir",
+
+    "contrast-default-tooltipAtSelect": "original est actuellement sélectionné",
+    "contrast-bw-tooltipAtSelect": "noir sur blanc est actuellement sélectionné",
+    "contrast-wb-tooltipAtSelect": "blanc sur noir est actuellement sélectionné"
+}
