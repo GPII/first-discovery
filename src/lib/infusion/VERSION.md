@@ -2,7 +2,7 @@ The version of Infusion included in this folder was created using a custom build
 
 https://github.com/fluid-project/infusion
 
-commit#: fcb1c18a9f4da94d6564a521175e772f2180e8c5
+commit#: f603bdcc2f38232441aaf5e334800a4daa4e420d
 
 ```
 grunt custom --source=true --include="preferences, tooltip"
@@ -30,7 +30,6 @@ The following directories were stripped out of the build since they contain code
 * src/lib/infusion/src/lib/jquery/ui/jQueryUICoreDependencies.json
 * src/lib/infusion/src/lib/jquery/ui/jQueryUIWidgetsDependencies.json
 * src/lib/infusion/src/lib/jquery/ui/js/
-* src/lib/infusion/src/lib/json/
 * src/lib/infusion/src/lib/normalize/normalizeDependencies.json
 
 Additionally, the testing framework from Infusion is used (tests/lib/infusion) and should be updated to a matching version. This directory is a copy of

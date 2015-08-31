@@ -134,6 +134,9 @@
 .fl-prefsEditor .fl-choice .fl-preview-A {
   font-size: 2em;
 }
+.fl-prefsEditor .fl-choice .fl-preview-A:before {
+  content: "a";
+}
 .fl-prefsEditor .fl-choice input:focus ~ label {
   outline: 2px solid #000;
 }
