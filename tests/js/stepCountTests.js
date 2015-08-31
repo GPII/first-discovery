@@ -13,7 +13,7 @@ https://github.com/gpii/universal/LICENSE.txt
     "use strict";
 
     fluid.defaults("gpii.tests.firstDiscovery.stepCount", {
-        gradeNames: ["gpii.firstDiscovery.stepCount", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.stepCount"],
         model: {
             currentPanelNum: 1
         },

@@ -45,7 +45,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * of elements that the left hand selector is attached to.
      */
     fluid.defaults("gpii.firstDiscovery.attachTooltip", {
-        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
+        gradeNames: ["fluid.viewComponent"],
         tooltipOptions: {},
         tooltipContentMap: {},  // Must be provided by integrators
         model: {
@@ -133,7 +133,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     // Updates the tooltip model after rendering to ensure that the mapping
     // between DOM elements and tooltip messages are correct.
     fluid.defaults("gpii.firstDiscovery.attachTooltip.renderer", {
-        gradeNames: ["fluid.rendererRelayComponent", "gpii.firstDiscovery.attachTooltip", "autoInit"],
+        gradeNames: ["fluid.rendererComponent", "gpii.firstDiscovery.attachTooltip"],
         listeners: {
             "afterRender.updateTooltipModel": "{that}.tooltip.updateIdToContent"
         }

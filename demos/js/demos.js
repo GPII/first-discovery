@@ -59,7 +59,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * A grade component to handle the integration customizations for the demos.
      */
     fluid.defaults("demo.firstDiscovery.integration", {
-        gradeNames: ["fluid.littleComponent", "autoInit"],
+        gradeNames: ["fluid.littleComponent"],
         demoURL: "",
         distributeOptions: [{
             target: "{that navButtons}.options.modelListeners.currentPanelNum",
@@ -109,7 +109,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      ***************************/
 
     fluid.defaults("demo.firstDiscovery.integration.voting", {
-        gradeNames: ["demo.firstDiscovery.integration", "autoInit"],
+        gradeNames: ["demo.firstDiscovery.integration"],
         demoURL: "vote.html",
         // remove the step count component
         distributeOptions: [{
@@ -121,7 +121,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     fluid.defaults("demo.firstDiscovery.integration.assessment", {
-        gradeNames: ["demo.firstDiscovery.integration", "autoInit"],
+        gradeNames: ["demo.firstDiscovery.integration"],
         demoURL: "math3-2.html"
     });
 })(jQuery, fluid);

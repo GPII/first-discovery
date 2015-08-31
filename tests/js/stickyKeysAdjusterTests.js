@@ -18,7 +18,7 @@ https://github.com/gpii/universal/LICENSE.txt
      ************************/
 
     fluid.defaults("gpii.tests.firstDiscovery.keyboard.stickyKeysAdjuster", {
-        gradeNames: ["gpii.firstDiscovery.keyboard.stickyKeysAdjuster", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.keyboard.stickyKeysAdjuster"],
         messageBase: {
             "try": "try it",
             "on": "ON",
@@ -65,7 +65,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     fluid.defaults("gpii.tests.keyboard.stickyKeysAdjusterTest", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["fluid.test.testEnvironment"],
         components: {
             stickyKeysAdjuster: {
                 type: "gpii.tests.firstDiscovery.keyboard.stickyKeysAdjuster",
@@ -78,7 +78,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.keyboard.stickyKeysAdjusterTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        gradeNames: ["fluid.test.testCaseHolder"],
         modules: [{
             name: "Tests the sticky keys component",
             tests: [{

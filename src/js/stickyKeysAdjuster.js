@@ -16,7 +16,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.registerNamespace("gpii.firstDiscovery.keyboard");
 
     fluid.defaults("gpii.firstDiscovery.keyboard.stickyKeysAdjuster", {
-        gradeNames: ["fluid.viewRelayComponent", "gpii.firstDiscovery.msgLookup", "gpii.firstDiscovery.attachTooltip", "autoInit"],
+        gradeNames: ["fluid.viewComponent", "gpii.firstDiscovery.msgLookup", "gpii.firstDiscovery.attachTooltip"],
         selectors: {
             description: ".gpiic-fd-keyboard-stickyKeysAdjuster-desc",
             tryButton: ".gpiic-fd-keyboard-stickyKeysAdjuster-try",

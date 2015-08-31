@@ -16,7 +16,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.registerNamespace("gpii.firstDiscovery");
 
     fluid.defaults("gpii.firstDiscovery.selfVoicing", {
-        gradeNames: ["gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.msgLookup", "fluid.textToSpeech", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.msgLookup", "fluid.textToSpeech"],
         selectors: {
             mute: ".gpiic-fd-selfVoicing-mute",
             muteLabel: ".gpiic-fd-selfVoicing-muteLabel"

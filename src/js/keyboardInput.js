@@ -14,7 +14,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     "use strict";
 
     fluid.defaults("gpii.firstDiscovery.usKeymap", {
-        gradeNames: ["fluid.littleComponent", "autoInit"],
+        gradeNames: ["fluid.littleComponent"],
         invokers: {
             isShiftEvent: {
                 funcName: "gpii.firstDiscovery.usKeymap.isShiftEvent",
@@ -87,7 +87,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     fluid.defaults("gpii.firstDiscovery.keyboardInput", {
-        gradeNames: ["fluid.viewRelayComponent", "gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.msgLookup", "autoInit"],
+        gradeNames: ["fluid.viewComponent", "gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.msgLookup"],
         tooltipContentMap: {
             "": "keyboardInputTooltip"  // use "" to select the container
         },

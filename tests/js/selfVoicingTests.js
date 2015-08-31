@@ -44,7 +44,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.firstDiscovery.selfVoicing", {
-        gradeNames: ["gpii.firstDiscovery.selfVoicing", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.selfVoicing"],
         members: {
             queueRecord: []
         },
@@ -70,7 +70,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.selfVoicingTest", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["fluid.test.testEnvironment"],
         components: {
             selfVoicing: {
                 type: "gpii.tests.firstDiscovery.selfVoicing",
@@ -96,7 +96,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.selfVoicingTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        gradeNames: ["fluid.test.testCaseHolder"],
         testOptions: {
             speechQueue: ["Test Text", "Test More Text"]
         },

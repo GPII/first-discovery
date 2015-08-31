@@ -19,7 +19,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.firstDiscovery", {
-        gradeNames: ["fluid.viewRelayComponent", "{that}.assembledPrefsEditorGrade", "autoInit"],
+        gradeNames: ["fluid.viewComponent", "{that}.assembledPrefsEditorGrade"],
         prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor",
         components: {
             prefsEditorLoader: {
@@ -206,7 +206,7 @@ https://github.com/gpii/universal/LICENSE.txt
     // Test the connection between the top level first discovery editor and the language panel: the language panel resets button positions every
     // time when the panel itself becomes visible to accommodate the possible text or control size changes that cause the shift of button positions.
     fluid.defaults("gpii.tests.firstDiscoveryLang", {
-        gradeNames: ["gpii.tests.firstDiscovery", "autoInit"],
+        gradeNames: ["gpii.tests.firstDiscovery"],
         components: {
             prefsEditorLoader: {
                 options: {
@@ -234,7 +234,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.firstDiscovery.langTests", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["fluid.test.testEnvironment"],
         components: {
             firstDiscovery: {
                 type: "gpii.tests.firstDiscoveryLang",
@@ -281,7 +281,7 @@ https://github.com/gpii/universal/LICENSE.txt
 
 
     fluid.defaults("gpii.tests.firstDiscovery.langTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        gradeNames: ["fluid.test.testCaseHolder"],
         testData: {
             scrollTop: null
         },
@@ -331,7 +331,7 @@ https://github.com/gpii/universal/LICENSE.txt
 
     // Re-calculate the nav icon size at text size change
     fluid.defaults("gpii.tests.firstDiscoveryNavIcons", {
-        gradeNames: ["gpii.tests.firstDiscovery", "autoInit"],
+        gradeNames: ["gpii.tests.firstDiscovery"],
         components: {
             prefsEditorLoader: {
                 options: {
@@ -356,7 +356,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.firstDiscovery.navIconsTests", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["fluid.test.testEnvironment"],
         components: {
             firstDiscovery: {
                 type: "gpii.tests.firstDiscoveryNavIcons",
@@ -380,7 +380,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     fluid.defaults("gpii.tests.firstDiscovery.navIconsTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        gradeNames: ["fluid.test.testCaseHolder"],
         initialIconWidth: null,
         modules: [{
             name: "Tests the re-collection of the nav icon size at the text size change",

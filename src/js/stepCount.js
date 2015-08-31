@@ -14,7 +14,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     "use strict";
 
     fluid.defaults("gpii.firstDiscovery.stepCount", {
-        gradeNames: ["fluid.viewRelayComponent", "gpii.firstDiscovery.msgLookup", "autoInit"],
+        gradeNames: ["fluid.viewComponent", "gpii.firstDiscovery.msgLookup"],
         model: {
             // currentPanelNum: integer  // must be supplied by integrators
         },

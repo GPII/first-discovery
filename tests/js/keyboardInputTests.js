@@ -171,7 +171,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.firstDiscovery.keyboardInput", {
-        gradeNames: ["gpii.firstDiscovery.keyboardInput", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.keyboardInput"],
         messageBase: {
             "keyboardInputTooltip": "keyboardInputTooltip message"
         },
@@ -211,7 +211,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.firstDiscovery.keyboardInputTestTree", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["fluid.test.testEnvironment"],
         components: {
             keyboardInput: {
                 type: "gpii.tests.firstDiscovery.keyboardInput",
@@ -224,7 +224,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.firstDiscovery.keyboardInputTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        gradeNames: ["fluid.test.testCaseHolder"],
         modules: [{
             name: "keyboardInput tests",
             tests: [
@@ -623,7 +623,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     fluid.defaults("gpii.tests.firstDiscovery.keyboardInputWithTts", {
-        gradeNames: ["gpii.tests.firstDiscovery.keyboardInput", "gpii.firstDiscovery.keyboardInputTts", "autoInit"],
+        gradeNames: ["gpii.tests.firstDiscovery.keyboardInput", "gpii.firstDiscovery.keyboardInputTts"],
         messageBase: {
             "shiftLatched": "shiftLatched message",
             "shiftUnlatched": "shiftUnlatched message"
@@ -640,7 +640,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.firstDiscovery.keyboardInputWithTtsTestTree", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["fluid.test.testEnvironment"],
         components: {
             keyboardInput: {
                 type: "gpii.tests.firstDiscovery.keyboardInputWithTts",
@@ -656,7 +656,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.firstDiscovery.keyboardInputTtsTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        gradeNames: ["fluid.test.testCaseHolder"],
         modules: [{
             name: "keyboardInputTts tests",
             tests: [

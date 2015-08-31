@@ -13,7 +13,7 @@ https://github.com/gpii/universal/LICENSE.txt
     "use strict";
 
     fluid.defaults("gpii.tests.firstDiscovery.nav", {
-        gradeNames: ["gpii.firstDiscovery.nav", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.nav"],
         model: {
             currentPanelNum: 3
         },

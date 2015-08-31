@@ -36,7 +36,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.mock.firstDiscoveryEditor", {
-        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
+        gradeNames: ["fluid.viewComponent"],
         selectors: {
             panel: ".gpiic-fd-prefsEditor-panel"
         },
@@ -74,11 +74,11 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.firstDiscovery.tts.fdHookup", {
-        gradeNames: ["gpii.tests.mock.firstDiscoveryEditor", "gpii.firstDiscovery.tts.fdHookup", "autoInit"]
+        gradeNames: ["gpii.tests.mock.firstDiscoveryEditor", "gpii.firstDiscovery.tts.fdHookup"]
     });
 
     fluid.defaults("gpii.tests.fdHookupTests", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["fluid.test.testEnvironment"],
         components: {
             fdHookup: {
                 type: "gpii.tests.firstDiscovery.tts.fdHookup",
@@ -91,7 +91,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.ttsHookupTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        gradeNames: ["fluid.test.testCaseHolder"],
         modules: [{
             name: "Tests the fdHookup component",
             tests: [
