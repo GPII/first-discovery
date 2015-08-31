@@ -556,9 +556,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         members: {
-            maxDisplayLangIndex: {
+            maxViewportFirstLangIndex: {
                 expander: {
-                    funcName: "gpii.firstDiscovery.panel.lang.calculateMaxDisplayLangIndex",
+                    funcName: "gpii.firstDiscovery.panel.lang.calculateMaxViewportFirstLangIndex",
                     args: [ "{that}.options.controlValues.lang.length",
                             "{that}.options.numOfLangPerPage" ]
                 }
@@ -613,26 +613,26 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         model: {
             selectedLang: undefined,
-            // TODO: the displayLangIndex model property contains the index
+            // TODO: the viewportFirstLangIndex model property contains the index
             //      of the top language to display on the panel.
             //      see: https://issues.fluidproject.org/browse/FLOE-406
-            displayLangIndex: 0,
+            viewportFirstLangIndex: 0,
             atStartOfLangs: false,
             atEndOfLangs: false
         },
         modelRelay: [{
-            target: "displayLangIndex",
+            target: "viewportFirstLangIndex",
             singleTransform: {
                 type: "fluid.transforms.limitRange",
-                input: "{that}.model.displayLangIndex",
+                input: "{that}.model.viewportFirstLangIndex",
                 min: 0,
-                max: "{that}.maxDisplayLangIndex"
+                max: "{that}.maxViewportFirstLangIndex"
             }
         }, {
             target: "atStartOfLangs",
             singleTransform: {
                 type: "fluid.transforms.binaryOp",
-                left: "{that}.model.displayLangIndex",
+                left: "{that}.model.viewportFirstLangIndex",
                 operator: "===",
                 right: 0
             }
@@ -640,16 +640,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             target: "atEndOfLangs",
             singleTransform: {
                 type: "fluid.transforms.binaryOp",
-                left: "{that}.model.displayLangIndex",
+                left: "{that}.model.viewportFirstLangIndex",
                 operator: "===",
-                right: "{that}.maxDisplayLangIndex"
+                right: "{that}.maxViewportFirstLangIndex"
             }
         }],
         modelListeners: {
             selectedLang: {
                 listener: "{that}.scrollToSelectedLang"
             },
-            displayLangIndex: {
+            viewportFirstLangIndex: {
                 listener: "{that}.updateDisplayedLangs"
             },
             atStartOfLangs: {
@@ -705,7 +705,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             updateDisplayedLangs: {
                 funcName: "gpii.firstDiscovery.panel.lang.updateDisplayedLangs",
-                args: ["{that}", "{that}.model.displayLangIndex"]
+                args: ["{that}", "{that}.model.viewportFirstLangIndex"]
             },
             onActivateLanguage: {
                 funcName: "gpii.firstDiscovery.panel.lang.onActivateLanguage",
@@ -773,7 +773,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    gpii.firstDiscovery.panel.lang.calculateMaxDisplayLangIndex = function (numLangs, numLangsPerPage) {
+    gpii.firstDiscovery.panel.lang.calculateMaxViewportFirstLangIndex = function (numLangs, numLangsPerPage) {
         return Math.max(numLangs - numLangsPerPage, 0);
     };
 
@@ -836,8 +836,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     gpii.firstDiscovery.panel.lang.scrollLangs = function (that, adjustBy) {
-        var newIndex = that.model.displayLangIndex + adjustBy;
-        that.applier.change("displayLangIndex", newIndex);
+        var newIndex = that.model.viewportFirstLangIndex + adjustBy;
+        that.applier.change("viewportFirstLangIndex", newIndex);
     };
 
     gpii.firstDiscovery.panel.lang.scrollLangIntoView = function (that, lang) {
@@ -846,14 +846,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             // Test if the language that we want to scroll to is above
             // or below the currently displayed languages. If it is
             // neither, we don't need to scroll.
-            var startOfNextPage = that.model.displayLangIndex + that.options.numOfLangPerPage;
-            if (langIndex < that.model.displayLangIndex) {
+            var startOfNextPage = that.model.viewportFirstLangIndex + that.options.numOfLangPerPage;
+            if (langIndex < that.model.viewportFirstLangIndex) {
                 // the language that we want to scroll to is above
-                that.applier.change("displayLangIndex", langIndex);
+                that.applier.change("viewportFirstLangIndex", langIndex);
             } else if (langIndex >= startOfNextPage) {
                 // the language that we want to scroll to is below
                 var newIndex = langIndex - that.options.numOfLangPerPage + 1;
-                that.applier.change("displayLangIndex", newIndex);
+                that.applier.change("viewportFirstLangIndex", newIndex);
             }
         }
     };
@@ -865,7 +865,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             // from the start of the list
             langIndex = 0;
         }
-        that.applier.change("displayLangIndex", langIndex);
+        that.applier.change("viewportFirstLangIndex", langIndex);
     };
 
     gpii.firstDiscovery.panel.lang.updateDisplayedLangs = function (that, langIndex) {
@@ -882,7 +882,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         var langPanelId = that.container.attr("id");
         if (langPanelId === shownPanelId) {
             // reset back to the top of the list and refresh
-            that.applier.change("displayLangIndex", 0);
+            that.applier.change("viewportFirstLangIndex", 0);
             that.refreshView();
         }
     };
