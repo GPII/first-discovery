@@ -824,11 +824,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.panel.lang.fireLangButtonsReady = function (that) {
         // TODO: We should investigate the use of setTimeout() here
         //
-        // The positions of the language buttons are not ready at
-        // afterRender but appear to be ready after a setTimeout()
-        // called from afterRender. This was the practice used in the
-        // radio buttons version of the language panel and has been
-        // continued in the FLOE-333 reworking.
+        // setTimeout() breaks the event firing out of the synchronous flow to
+        // ensure the button div scrolling has completed when the event is fired.
+        // Otherwise, buttons.offset() used in listeners for this event returns
+        // position values before scrolling occurs.
         // see: https://issues.fluidproject.org/browse/FLOE-407
         setTimeout(function () {
             that.events.langButtonsReady.fire();
