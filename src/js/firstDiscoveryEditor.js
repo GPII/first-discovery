@@ -72,7 +72,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         },
                         onAutoSave: "{that}.saveAndApply",
                         // the page is reloaded to reset language and etc.
-                        "onReset.reload": {
+                        "afterReset.reload": {
                             "this": "location",
                             method: "reload",
                             args: true

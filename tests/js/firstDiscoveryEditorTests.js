@@ -52,7 +52,7 @@ https://github.com/gpii/universal/LICENSE.txt
             }
         },
         resetListeners: {
-            "onReset.reload": "fluid.identity"
+            "afterReset.reload": "fluid.identity"
         },
         distributeOptions: [{
             source: "{that}.options.resetListeners",
@@ -184,7 +184,7 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.defaults("gpii.tests.firstDiscovery.reset", {
         resetListeners: {
-            "onReset.reload": {
+            "afterReset.reload": {
                 listener: "jqUnit.assert",
                 args: ["The reset should be triggered"],
                 "this": null,
