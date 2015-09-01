@@ -42,7 +42,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 type: "gpii.firstDiscovery.selfVoicingToggle",
                 options: {
                     model: {
-                        enabled: "{prefsEditor}.model.gpii_firstDiscovery_speak"
+                        enabled: "{prefsEditor}.model.preferences.gpii_firstDiscovery_speak"
                     },
                     messageBase: "{messageLoader}.resources.prefsEditor.resourceText"
                 }
@@ -66,9 +66,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     },
                     model: {
                         // share model with selfVoicing
-                        gpii_firstDiscovery_speak: "{gpii.firstDiscovery.selfVoicing}.model.enabled",
-                        gpii_firstDiscovery_language: "{gpii.firstDiscovery.selfVoicing}.model.utteranceOpts.lang",
-                        gpii_firstDiscovery_speechRate: "{gpii.firstDiscovery.selfVoicing}.model.utteranceOpts.rate"
+                        preferences: {
+                            gpii_firstDiscovery_speak: "{gpii.firstDiscovery.selfVoicing}.model.enabled",
+                            gpii_firstDiscovery_language: "{gpii.firstDiscovery.selfVoicing}.model.utteranceOpts.lang",
+                            gpii_firstDiscovery_speechRate: "{gpii.firstDiscovery.selfVoicing}.model.utteranceOpts.rate"
+                        }
                     },
                     listeners: {
                         onReady: {

@@ -408,7 +408,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     fluid.defaults("gpii.firstDiscovery.panel.speechRate.prefsEditorConnection", {
         model: {
-            enabled: "{prefsEditor}.model.gpii_firstDiscovery_speak"
+            enabled: "{prefsEditor}.model.preferences.gpii_firstDiscovery_speak"
         }
     });
 
