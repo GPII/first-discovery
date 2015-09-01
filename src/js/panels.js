@@ -1011,10 +1011,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     gpii.firstDiscovery.panel.contrast.style = function (labels, theme, defaultThemeName, style) {
-        // TODO: A potential further improvement would be to use a utility such as the one in the video player to
-        // make this automatically model bound.
-        // see: https://github.com/fluid-project/videoPlayer/blob/master/js/VideoPlayer_showHide.js
-        // see: https://issues.fluidproject.org/browse/FLOE-408
         fluid.each(labels, function (label, index) {
             label = $(label);
 
