@@ -726,6 +726,10 @@ html:lang(fr-FR) .gpii-fd-prefsEditor-panel-welcome .gpii-fd-instructions p {
   line-height: 1.1;
 }
 
+html:lang(fr-FR) .gpii-fd-range-disabledMsg {
+    font-size: 2.2rem;
+}
+
 html:lang(es-MX) .gpii-fd-theme {
     width: 23rem;
 }
@@ -733,6 +737,10 @@ html:lang(es-MX) .gpii-fd-theme {
 html:lang(fr-FR) .gpii-fd-prefsEditor-panel-keyboard {
     padding-left: 1rem;
     padding-right: 1rem;
+}
+
+html:lang(fr-FR) .gpii-fd-prefsEditor-panel-keyboard input {
+    font-size: 1.75rem;
 }
 
 html:lang(es-MX) .gpii-fd-prefsEditor-panel-keyboard .gpii-fd-instructions {

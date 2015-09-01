@@ -134,7 +134,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 }, {
                     listener: "gpii.tests.langTester.verifyTopDisplayedLang",
                     args: ["{lang}", "es-MX"],
-                    spec: {path: "displayLangIndex", priority: "last"},
+                    spec: {path: "viewportFirstLangIndex", priority: "last"},
                     changeEvent: "{lang}.applier.modelChanged"
                 }, {
                     funcName: "gpii.tests.langTester.verifyPrevNextButtonsEnabled",
@@ -145,7 +145,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 }, {
                     listener: "gpii.tests.langTester.verifyTopDisplayedLang",
                     args: ["{lang}", "de-DE"],
-                    spec: {path: "displayLangIndex", priority: "last"},
+                    spec: {path: "viewportFirstLangIndex", priority: "last"},
                     changeEvent: "{lang}.applier.modelChanged"
                 }, {
                     funcName: "gpii.tests.langTester.verifyPrevNextButtonsEnabled",
@@ -210,7 +210,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 }, {
                     listener: "gpii.tests.langTester.verifyInitDisplayedLang",
                     args: ["{lang}", 0],
-                    spec: {path: "displayLangIndex", priority: "last"},
+                    spec: {path: "viewportFirstLangIndex", priority: "last"},
                     changeEvent: "{lang}.applier.modelChanged"
                 }, {
                     funcName: "gpii.tests.langTester.keydown",
@@ -224,7 +224,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 }, {
                     listener: "gpii.tests.langTester.verifyScrolling",
                     args: ["{lang}", 1, "up"],
-                    spec: {path: "displayLangIndex", priority: "last"},
+                    spec: {path: "viewportFirstLangIndex", priority: "last"},
                     changeEvent: "{lang}.applier.modelChanged"
                 }, {
                     funcName: "gpii.tests.langTester.keydown",
@@ -232,7 +232,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 }, {
                     listener: "gpii.tests.langTester.verifyScrolling",
                     args: ["{lang}", 2, "up"],
-                    spec: {path: "displayLangIndex", priority: "last"},
+                    spec: {path: "viewportFirstLangIndex", priority: "last"},
                     changeEvent: "{lang}.applier.modelChanged"
                 }, {
                     funcName: "gpii.tests.langTester.keydown",
@@ -246,7 +246,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 }, {
                     listener: "gpii.tests.langTester.verifyScrolling",
                     args: ["{lang}", 1, "down"],
-                    spec: {path: "displayLangIndex", priority: "last"},
+                    spec: {path: "viewportFirstLangIndex", priority: "last"},
                     changeEvent: "{lang}.applier.modelChanged"
                 }, {
                     funcName: "gpii.tests.langTester.keydown",
@@ -254,7 +254,7 @@ https://github.com/gpii/universal/LICENSE.txt
                 }, {
                     listener: "gpii.tests.langTester.verifyScrolling",
                     args: ["{lang}", 0, "down"],
-                    spec: {path: "displayLangIndex", priority: "last"},
+                    spec: {path: "viewportFirstLangIndex", priority: "last"},
                     changeEvent: "{lang}.applier.modelChanged"
                 }]
             }]
@@ -310,7 +310,7 @@ https://github.com/gpii/universal/LICENSE.txt
         var expectedIndex = that.options.controlValues.lang.indexOf(expectedTopLang);
         var msg = "Language " + expectedTopLang + " (index=" + expectedIndex +
                 ") should be displayed top";
-        jqUnit.assertEquals(msg, expectedIndex, that.model.displayLangIndex);
+        jqUnit.assertEquals(msg, expectedIndex, that.model.viewportFirstLangIndex);
     };
 
     gpii.tests.langTester.verifyPrevNextButtonsEnabled = function (that, prevEnabled, nextEnabled) {
@@ -347,8 +347,8 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("The model value for the \"selectedLang\" is set correctly to " + expected, expected, that.model.selectedLang);
     };
 
-    gpii.tests.langTester.verifyDisplayLangIndex = function (that, expected) {
-        jqUnit.assertEquals("The model value for displayLangIndex is set to " + expected, expected, that.model.displayLangIndex);
+    gpii.tests.langTester.verifyViewportFirstLangIndex = function (that, expected) {
+        jqUnit.assertEquals("The model value for viewportFirstLangIndex is set to " + expected, expected, that.model.viewportFirstLangIndex);
     };
 
     gpii.tests.langTester.getFirstButtonTop = function (that) {
@@ -359,11 +359,11 @@ https://github.com/gpii/universal/LICENSE.txt
         // Keep track of the previous top position of the first language button to be compared with the next position to
         // verify the direction of the scrolling (up or down) happens as expected.
         that.prevFirstButtonTop = gpii.tests.langTester.getFirstButtonTop(that);
-        gpii.tests.langTester.verifyDisplayLangIndex(that, expected);
+        gpii.tests.langTester.verifyViewportFirstLangIndex(that, expected);
     };
 
     gpii.tests.langTester.verifyScrolling = function (that, expected, action) {
-        gpii.tests.langTester.verifyDisplayLangIndex(that, expected);
+        gpii.tests.langTester.verifyViewportFirstLangIndex(that, expected);
 
         var currentFirstButtonTop = gpii.tests.langTester.getFirstButtonTop(that);
         var result = (action === "up") ? currentFirstButtonTop < that.prevFirstButtonTop : currentFirstButtonTop > that.prevFirstButtonTop;
