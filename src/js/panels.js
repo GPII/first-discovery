@@ -890,25 +890,23 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         $("html").attr("lang", currentLang);
     };
 
-    // This component is needed for the following demands block to be only applied to the language panel "gpii.firstDiscovery.panel.lang".
-    // Without this component being the sub-component of the language panel, according to http://wiki.fluidproject.org/display/docs/Contexts,
-    // when the context component of the demands block was the language panel itself, the demands block would also be applied to siblings of
-    // the language panel. To work around this issue, another layer of containment needs to be added.
-    // This component and the demands block should be removed when the new framework (http://issues.fluidproject.org/browse/FLUID-5249)
-    // is in use.
+    // TODO: Temporary solution to remove the fluid.demands call.
+    // This should be further refactored to make it easier to configure
+    // by an integrator and to simplify the the implementation as a whole.
     fluid.defaults("gpii.firstDiscovery.panel.lang.attachTooltipOnLang", {
-        gradeNames: ["gpii.firstDiscovery.attachTooltip"]
-    });
-
-    fluid.demands("fluid.tooltip", ["gpii.firstDiscovery.panel.lang.attachTooltipOnLang"], {
-        options: {
-            styles: {
-                tooltip: "gpii-fd-tooltip-lang"
-            },
-            listeners: {
-                "afterOpen.setLangAttr": {
-                    priority: -2,
-                    listener: "gpii.firstDiscovery.panel.lang.attachTooltipOnLang.setLangAttr"
+        gradeNames: ["gpii.firstDiscovery.attachTooltip"],
+        components: {
+            tooltip: {
+                options: {
+                    styles: {
+                        tooltip: "gpii-fd-tooltip-lang"
+                    },
+                    listeners: {
+                        "afterOpen.setLangAttr": {
+                            priority: -2,
+                            listener: "gpii.firstDiscovery.panel.lang.attachTooltipOnLang.setLangAttr"
+                        }
+                    }
                 }
             }
         }
