@@ -268,7 +268,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.defaults("gpii.firstDiscovery.keyboardInputTts", {
         invokers: {
             speak: {
-                func: "{fluid.textToSpeech}.queueSpeech"
+                func: "{gpii.firstDiscovery.selfVoicing}.queueSpeech"
             },
             speakOnFocusMessage: {
                 funcName: "gpii.firstDiscovery.keyboardInputTts.speakOnFocusMessage",

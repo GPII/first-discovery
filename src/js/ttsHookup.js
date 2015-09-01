@@ -18,7 +18,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.defaults("gpii.firstDiscovery.tts.tooltipHookup", {
         invokers: {
             speak: {
-                func: "{fluid.textToSpeech}.queueSpeech"
+                func: "{gpii.firstDiscovery.selfVoicing}.queueSpeech"
             }
         },
         listeners: {
@@ -42,33 +42,30 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     // TODO: Currently this hookup is intended to be added to gpii.firstDiscovery.firstDiscoveryEditor
     // directly. However, it should be reconfigured like the tooltip hookup and placed at the panel level.
-    // The issue at the moment is that a given panel doesn't know when this it is visible. All this information
-    // is contained at the editor level, which also doesn't really know which panel component is shown.
+    // The issue at the moment is that a given panel doesn't know when it is visible.
     // see: https://issues.fluidproject.org/browse/FLOE-409
     fluid.defaults("gpii.firstDiscovery.tts.fdHookup", {
-        components: {
-            selfVoicing: {
-                options: {
-                    invokers: {
-                        speakPanelMessage: {
-                            funcName: "gpii.firstDiscovery.tts.fdHookup.speakPanelMessage",
-                            args: ["{firstDiscoveryEditor}", "{that}.msgLookup.stepCountMsg", "{that}.msgLookup.panelMsg", "{that}.queueSpeech", "{arguments}.0"]
-                        },
-                        speakPanelInstructions: {
-                            funcName: "gpii.firstDiscovery.tts.fdHookup.speakPanelInstructions",
-                            args: ["{firstDiscoveryEditor}", "{that}.queueSpeech", "{arguments}.0"]
-                        }
-                    },
-                    listeners: {
-                        "onCreate.bindKeypress": {
-                            listener: "gpii.firstDiscovery.keyboardShortcut.bindShortcut",
-                            args: ["body", gpii.firstDiscovery.keyboardShortcut.key.h, [], "{that}.speakPanelInstructions"]
-                        }
-                    },
-                    modelListeners: {
-                        "{firstDiscoveryEditor}.model.currentPanelNum": "{that}.speakPanelMessage"
-                    }
-                }
+        invokers: {
+            speakPanelMessage: {
+                funcName: "gpii.firstDiscovery.tts.fdHookup.speakPanelMessage",
+                args: ["{that}", "{that}.msgLookup.stepCountMsg", "{that}.msgLookup.panelMsg", "{gpii.firstDiscovery.selfVoicing}.queueSpeech", "{arguments}.0"]
+            },
+            speakPanelInstructions: {
+                funcName: "gpii.firstDiscovery.tts.fdHookup.speakPanelInstructions",
+                args: ["{that}", "{gpii.firstDiscovery.selfVoicing}.queueSpeech", "{arguments}.0"]
+            }
+        },
+        listeners: {
+            "onCreate.bindKeypress": {
+                listener: "gpii.firstDiscovery.keyboardShortcut.bindShortcut",
+                args: ["body", gpii.firstDiscovery.keyboardShortcut.key.h, [], "{that}.speakPanelInstructions"]
+            },
+            "onPrefsEditorReady.speakPanelMessage": "{that}.speakPanelMessage"
+        },
+        modelListeners: {
+            currentPanelNum: {
+                listener: "{that}.speakPanelMessage",
+                excludeSource: "init"
             }
         },
         panelInstructionsSelector: ".gpiic-fd-instructions"

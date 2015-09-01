@@ -16,14 +16,47 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.registerNamespace("gpii.firstDiscovery");
 
     fluid.defaults("gpii.firstDiscovery.selfVoicing", {
-        gradeNames: ["gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.msgLookup", "fluid.textToSpeech"],
+        gradeNames: ["fluid.textToSpeech", "fluid.resolveRootSingle"],
+        singleRootType: "gpii.firstDiscovery.selfVoicing",
+        model: {
+            enabled: false
+        },
+        invokers: {
+            queueSpeech: {
+                funcName: "gpii.firstDiscovery.selfVoicing.queueSpeech",
+                args: ["{that}", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
+            },
+            clearQueue: {
+                funcName: "gpii.firstDiscovery.selfVoicing.clearQueue",
+                args: ["{that}"]
+            }
+        },
+        modelListeners: {
+            "enabled": "{that}.clearQueue"
+        }
+    });
+
+    gpii.firstDiscovery.selfVoicing.queueSpeech = function (that, text, options, force) {
+        if (that.model.enabled || force) {
+            fluid.textToSpeech.queueSpeech(that, text, !fluid.get(options, "queue"), options);
+        }
+    };
+
+    gpii.firstDiscovery.selfVoicing.clearQueue = function (that) {
+        if (!that.model.enabled) {
+            that.cancel();
+        }
+    };
+
+    fluid.defaults("gpii.firstDiscovery.selfVoicingToggle", {
+        gradeNames: ["gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.msgLookup"],
         selectors: {
-            mute: ".gpiic-fd-selfVoicing-mute",
-            muteLabel: ".gpiic-fd-selfVoicing-muteLabel"
+            mute: ".gpiic-fd-selfVoicingToggle-mute",
+            muteLabel: ".gpiic-fd-selfVoicingToggle-muteLabel"
         },
         styles: {
-            muted: "gpii-fd-selfVoicing-muted",
-            unmuted: "gpii-fd-selfVoicing-unmuted"
+            muted: "gpii-fd-selfVoicingToggle-muted",
+            unmuted: "gpii-fd-selfVoicingToggle-unmuted"
         },
         model: {
             enabled: false
@@ -32,33 +65,30 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "mute": "mutedTooltip"
         },
         invokers: {
-            queueSpeech: {
-                funcName: "gpii.firstDiscovery.selfVoicing.queueSpeech",
-                args: ["{that}", "{arguments}.0", "{arguments}.1"]
-            },
             toggleState: {
-                funcName: "gpii.firstDiscovery.selfVoicing.toggleState",
+                funcName: "gpii.firstDiscovery.selfVoicingToggle.toggleState",
                 args: ["{that}"]
             },
             setLabel: {
-                funcName: "gpii.firstDiscovery.selfVoicing.setLabel",
+                funcName: "gpii.firstDiscovery.selfVoicingToggle.setLabel",
                 args: ["{that}.dom.muteLabel", "{that}.msgLookup.unmuted", "{that}.msgLookup.muted", "{that}.model.enabled"]
             },
             setTooltip: {
-                funcName: "gpii.firstDiscovery.selfVoicing.setTooltip",
+                funcName: "gpii.firstDiscovery.selfVoicingToggle.setTooltip",
                 args: ["{that}", "{that}.model.enabled"]
             },
             setMuteStyle: {
-                funcName: "gpii.firstDiscovery.selfVoicing.setMuteStyle",
+                funcName: "gpii.firstDiscovery.selfVoicingToggle.setMuteStyle",
                 args: ["{that}.container", "{that}.options.styles", "{that}.model.enabled"]
             },
-            clearQueue: {
-                funcName: "gpii.firstDiscovery.selfVoicing.clearQueue",
-                args: ["{that}"]
+            setPressedState: {
+                "this": "{that}.dom.mute",
+                "method": "attr",
+                "args": ["aria-pressed", "{arguments}.0"]
             },
             speakVoiceState: {
-                funcName: "gpii.firstDiscovery.selfVoicing.speakVoiceState",
-                args: ["{that}", "{arguments}.0"]
+                funcName: "gpii.firstDiscovery.selfVoicingToggle.speakVoiceState",
+                args: ["{that}", "{gpii.firstDiscovery.selfVoicing}.queueSpeech", "{arguments}.0"]
             }
         },
         listeners: {
@@ -67,20 +97,25 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "method": "click",
                 "args": ["{that}.toggleState"]
             },
+            "onCreate.setRole": {
+                "this": "{that.dom.mute}",
+                "method": "attr",
+                "args": ["role", "button"]
+            },
             // Need to call the handlers onCreate and exclude "init" on the modelListeners
             // because the underlying tooltip widget isn't finished at initialization
-            "onCreate.setTooltip": "{that}.setTooltip",
-            "onCreate.clearQueue": "{that}.clearQueue"
+            "onCreate.setTooltip": "{that}.setTooltip"
         },
         modelListeners: {
             "enabled": [
                 "{that}.setLabel",
                 "{that}.setMuteStyle",
                 {
+                    listener: "{that}.setPressedState",
+                    args: ["{change}.value"]
+                },
+                {
                     listener: "{that}.setTooltip",
-                    excludeSource: "init"
-                }, {
-                    listener: "{that}.clearQueue",
                     excludeSource: "init"
                 }, {
                     listener: "{that}.speakVoiceState",
@@ -90,43 +125,30 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    gpii.firstDiscovery.selfVoicing.queueSpeech = function (that, text, options) {
-        if (that.model.enabled) {
-            fluid.textToSpeech.queueSpeech(that, text, !fluid.get(options, "queue"), options);
-        }
-    };
-
-    gpii.firstDiscovery.selfVoicing.speakVoiceState = function (that, options) {
+    gpii.firstDiscovery.selfVoicingToggle.speakVoiceState = function (that, speechFn, options) {
         var msg = that.msgResolver.resolve(that.model.enabled ? "unmutedMsg" : "mutedMsg");
-        // called directly as it needs to be spoken regardless of enabled state.
-        fluid.textToSpeech.queueSpeech(that, msg, true, options);
+        speechFn(msg, options, true);
     };
 
-    gpii.firstDiscovery.selfVoicing.toggleState = function (that) {
+    gpii.firstDiscovery.selfVoicingToggle.toggleState = function (that) {
         that.applier.change("enabled", !that.model.enabled);
     };
 
-    gpii.firstDiscovery.selfVoicing.setLabel = function (elm, unmutedLabel, mutedLabel, isEnabled) {
+    gpii.firstDiscovery.selfVoicingToggle.setLabel = function (elm, unmutedLabel, mutedLabel, isEnabled) {
         var label = isEnabled ? unmutedLabel : mutedLabel;
         elm.text(label);
     };
 
-    gpii.firstDiscovery.selfVoicing.setTooltip = function (that, isEnabled) {
+    gpii.firstDiscovery.selfVoicingToggle.setTooltip = function (that, isEnabled) {
         that.tooltip.close();
         var str = that.msgResolver.resolve(isEnabled ? "unmutedTooltip" : "mutedTooltip");
         var modelPath = "idToContent." + that.locate("mute").attr("id");
         that.tooltip.applier.change(modelPath, str);
     };
 
-    gpii.firstDiscovery.selfVoicing.setMuteStyle = function (elm, styles, isEnabled) {
+    gpii.firstDiscovery.selfVoicingToggle.setMuteStyle = function (elm, styles, isEnabled) {
         elm.toggleClass(styles.unmuted, isEnabled);
         elm.toggleClass(styles.muted, !isEnabled);
-    };
-
-    gpii.firstDiscovery.selfVoicing.clearQueue = function (that) {
-        if (!that.model.enabled) {
-            that.cancel();
-        }
     };
 
 })(jQuery, fluid);

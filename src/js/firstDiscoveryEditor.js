@@ -34,16 +34,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         components: {
             selfVoicing: {
-                container: "{that}.dom.selfVoicing",
+                type: "gpii.firstDiscovery.selfVoicing"
+            },
+            selfVoicingToggle: {
+                container: "{that}.dom.selfVoicingToggle",
                 createOnEvent: "onPrefsEditorReady",
-                type: "gpii.firstDiscovery.selfVoicing",
+                type: "gpii.firstDiscovery.selfVoicingToggle",
                 options: {
                     model: {
-                        enabled: "{prefsEditor}.model.gpii_firstDiscovery_speak",
-                        utteranceOpts: {
-                            lang: "{prefsEditor}.model.gpii_firstDiscovery_language",
-                            rate: "{prefsEditor}.model.gpii_firstDiscovery_speechRate"
-                        }
+                        enabled: "{prefsEditor}.model.gpii_firstDiscovery_speak"
                     },
                     messageBase: "{messageLoader}.resources.prefsEditor.resourceText"
                 }
@@ -64,6 +63,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     },
                     events: {
                         onPanelShown: "{firstDiscoveryEditor}.events.onPanelShown"
+                    },
+                    model: {
+                        // share model with selfVoicing
+                        gpii_firstDiscovery_speak: "{gpii.firstDiscovery.selfVoicing}.model.enabled",
+                        gpii_firstDiscovery_language: "{gpii.firstDiscovery.selfVoicing}.model.utteranceOpts.lang",
+                        gpii_firstDiscovery_speechRate: "{gpii.firstDiscovery.selfVoicing}.model.utteranceOpts.rate"
                     },
                     listeners: {
                         onReady: {
@@ -131,7 +136,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         selectors: {
             prefsEditor: ".gpiic-fd-prefsEditor",
             panel: ".gpiic-fd-prefsEditor-panel",
-            selfVoicing: ".gpiic-fd-selfVoicing",
+            selfVoicingToggle: ".gpiic-fd-selfVoicingToggle",
             helpButton: ".gpiic-fd-help",
             nav: ".gpiic-fd-nav"
         },
