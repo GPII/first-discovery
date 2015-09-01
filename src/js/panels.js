@@ -346,7 +346,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 funcName: "gpii.firstDiscovery.panel.keyboardTts.speakStickyKeysState",
                 args: ["{arguments}.0", "{gpii.firstDiscovery.selfVoicing}.queueSpeech", "{arguments}.1"]
             },
-            speakPanelInstructions: "{gpii.firstDiscovery.selfVoicing}.speakPanelInstructions"
+            speakPanelInstructions: "{gpii.firstDiscovery.tts.fdHookup}.speakPanelInstructions"
         },
         modelListeners: {
             offerAssistance: {
