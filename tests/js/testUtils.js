@@ -36,10 +36,6 @@ https://github.com/gpii/universal/LICENSE.txt
         radioButtons.eq(idx).click();
     };
 
-    gpii.tests.utils.simulateKeyEvent = function (elm, keyEvent, eventObj) {
-        $(elm).triggerHandler(jQuery.Event(keyEvent, eventObj));
-    };
-
     gpii.tests.utils.verifyRadioButtonRendering = function (inputs, inputLabels, labelText, selection) {
         fluid.each(inputLabels, function (elm, idx) {
             elm = $(elm);
@@ -54,6 +50,17 @@ https://github.com/gpii/universal/LICENSE.txt
             elem = $(elem);
             jqUnit.assertEquals("The tooltip definition for the " + elemName + " #" + idx + " has been populated correctly", messages[stringArray[idx] + tooltipLabelSuffix], idToContent[elem.attr("id")]);
         });
+    };
+
+    gpii.tests.utils.simulateKeyEvent = function (onElement, keyEvent, keyCode, modifiers) {
+        var eventObj = document.createEvent("Events");
+        eventObj.initEvent(keyEvent, true, true);
+        eventObj.which = keyCode;
+
+        $.extend(eventObj, modifiers);
+
+        onElement = $(onElement)[0];
+        onElement.dispatchEvent(eventObj);
     };
 
 })(jQuery, fluid);

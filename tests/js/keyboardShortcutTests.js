@@ -144,8 +144,7 @@ https://github.com/gpii/universal/LICENSE.txt
         // run through key strokes
         fluid.each(gpii.firstDiscovery.keyboardShortcut.key, function (keyCode) {
             fluid.each(gpii.tests.keyboardShortcut.modifiersTestCases, function (modifiers) {
-                var eventObj = $.extend(true, {which: keyCode}, modifiers);
-                gpii.tests.utils.simulateKeyEvent(elm, "keydown", eventObj);
+                gpii.tests.utils.simulateKeyEvent(elm, "keydown", keyCode, modifiers);
             });
         });
 

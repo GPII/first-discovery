@@ -166,6 +166,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             //
             // TODO: once FLUID-5506 has been merged in, use a
             // constraint-based priority rather than fixed numbered
+            // see: https://issues.fluidproject.org/browse/FLUID-5506
             "onCreate.removeMouseover": {
                 "this": "{that}.container",
                 method: "off",
@@ -212,6 +213,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     // this change notification workflow can be fully
                     // realized via model listener, making use of
                     // source tracking.
+                    // see: https://issues.fluidproject.org/browse/FLUID-5490
                     that.events.shiftLatchChange.fire(that);
                 }
             }

@@ -1,0 +1,8 @@
+{
+    "rangeInstructions": "Réglez la vitesse de lecture des éléments lus à voix haute.",
+    "maxLabel": "rapide",
+    "minLabel": "lent",
+    "increaseLabel": "plus rapide",
+    "decreaseLabel": "plus lent",
+    "disabledMsg": "Si vous voulez utiliser cette option, activez \"lecture à voix haute\" sur l'écran précédent. Appuyez sur la touche \"retour\" pour y aller ou sélectionnez la touche au-dessus de \"activer la voix\"."
+}

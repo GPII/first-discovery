@@ -1,0 +1,10 @@
+{
+    "instructions": "Voulez-vous utiliser le clavier affiché sur l'écran? Cela vous permettra de taper en sélectionnant des lettres sur l'écran.",
+    "no": "Non",
+    "yes": "Oui",
+
+    "yes-tooltip": "Sélectionnez pour activer le clavier à l'écran.",
+    "no-tooltip": "Sélectionnez pour désactiver le clavier à l'écran.",
+    "yes-tooltipAtSelect": "Le clavier à l'écran est activé",
+    "no-tooltipAtSelect": "Le clavier à l'écran est désactivé"
+}

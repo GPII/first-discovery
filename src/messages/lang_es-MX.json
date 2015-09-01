@@ -9,14 +9,14 @@
 
     "navButtonTooltip": "Selecciona más idiomas",
     "lang-en-US-tooltip": "Select for English",
-    "lang-fr-FR-tooltip": "Sélectionnez pour le Français",
+    "lang-fr-FR-tooltip": "Sélectionner pour le français",
     "lang-es-MX-tooltip": "Selecciona Español",
     "lang-de-DE-tooltip": "Wählen Sie für die Deutsche",
     "lang-nl-NL-tooltip": "Kies voor Nederlands",
     "lang-sv-SE-tooltip": "Välj för Svenska",
 
     "lang-en-US-tooltipAtSelect": "English is currently selected",
-    "lang-fr-FR-tooltipAtSelect": "Français est actuellement sélectionné",
+    "lang-fr-FR-tooltipAtSelect": "Le français est actuellement sélectionné",
     "lang-es-MX-tooltipAtSelect": "Español es la selección actual",
     "lang-de-DE-tooltipAtSelect": "Deutsch gegenwärtig ausgewählt ist",
     "lang-nl-NL-tooltipAtSelect": "Nederlands is geselecteerd",

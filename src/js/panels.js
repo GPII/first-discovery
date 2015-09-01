@@ -43,6 +43,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         // transformations are performed using the fluid.transforms.free
         // transformation. Once FLUID-5669 has been addressed, it should be
         // possible to simply make use of fluid.transforms.binaryOp.
+        // see: https://issues.fluidproject.org/browse/FLUID-5669
         }, {
             target: "isMax",
             singleTransform: {
@@ -579,9 +580,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         members: {
-            maxDisplayLangIndex: {
+            maxViewportFirstLangIndex: {
                 expander: {
-                    funcName: "gpii.firstDiscovery.panel.lang.calculateMaxDisplayLangIndex",
+                    funcName: "gpii.firstDiscovery.panel.lang.calculateMaxViewportFirstLangIndex",
                     args: [ "{that}.options.controlValues.lang.length",
                             "{that}.options.numOfLangPerPage" ]
                 }
@@ -636,26 +637,26 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         model: {
             selectedLang: undefined,
-            // TODO the displayLangIndex model property contains the index
-            //      of the top language to display on the panel -- choose
-            //      a better name
-            displayLangIndex: 0,
+            // TODO: the viewportFirstLangIndex model property contains the index
+            //      of the top language to display on the panel.
+            //      see: https://issues.fluidproject.org/browse/FLOE-406
+            viewportFirstLangIndex: 0,
             atStartOfLangs: false,
             atEndOfLangs: false
         },
         modelRelay: [{
-            target: "displayLangIndex",
+            target: "viewportFirstLangIndex",
             singleTransform: {
                 type: "fluid.transforms.limitRange",
-                input: "{that}.model.displayLangIndex",
+                input: "{that}.model.viewportFirstLangIndex",
                 min: 0,
-                max: "{that}.maxDisplayLangIndex"
+                max: "{that}.maxViewportFirstLangIndex"
             }
         }, {
             target: "atStartOfLangs",
             singleTransform: {
                 type: "fluid.transforms.binaryOp",
-                left: "{that}.model.displayLangIndex",
+                left: "{that}.model.viewportFirstLangIndex",
                 operator: "===",
                 right: 0
             }
@@ -663,16 +664,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             target: "atEndOfLangs",
             singleTransform: {
                 type: "fluid.transforms.binaryOp",
-                left: "{that}.model.displayLangIndex",
+                left: "{that}.model.viewportFirstLangIndex",
                 operator: "===",
-                right: "{that}.maxDisplayLangIndex"
+                right: "{that}.maxViewportFirstLangIndex"
             }
         }],
         modelListeners: {
             selectedLang: {
                 listener: "{that}.scrollToSelectedLang"
             },
-            displayLangIndex: {
+            viewportFirstLangIndex: {
                 listener: "{that}.updateDisplayedLangs"
             },
             atStartOfLangs: {
@@ -728,7 +729,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             updateDisplayedLangs: {
                 funcName: "gpii.firstDiscovery.panel.lang.updateDisplayedLangs",
-                args: ["{that}", "{that}.model.displayLangIndex"]
+                args: ["{that}", "{that}.model.viewportFirstLangIndex"]
             },
             onActivateLanguage: {
                 funcName: "gpii.firstDiscovery.panel.lang.onActivateLanguage",
@@ -796,7 +797,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    gpii.firstDiscovery.panel.lang.calculateMaxDisplayLangIndex = function (numLangs, numLangsPerPage) {
+    gpii.firstDiscovery.panel.lang.calculateMaxViewportFirstLangIndex = function (numLangs, numLangsPerPage) {
         return Math.max(numLangs - numLangsPerPage, 0);
     };
 
@@ -821,9 +822,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             onSelect: function (elem) {
                 var selectedLang = $(elem).attr("lang");
                 that.applier.change("selectedLang", selectedLang);
-            },
-            onUnselect: function () {
-                that.applier.change("selectedLang", undefined);
             },
             rememberSelectionState: false
         });
@@ -850,19 +848,19 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.panel.lang.fireLangButtonsReady = function (that) {
         // TODO: We should investigate the use of setTimeout() here
         //
-        // The positions of the language buttons are not ready at
-        // afterRender but appear to be ready after a setTimeout()
-        // called from afterRender. This was the practice used in the
-        // radio buttons version of the language panel and has been
-        // continued in the FLOE-333 reworking.
+        // setTimeout() breaks the event firing out of the synchronous flow to
+        // ensure the button div scrolling has completed when the event is fired.
+        // Otherwise, buttons.offset() used in listeners for this event returns
+        // position values before scrolling occurs.
+        // see: https://issues.fluidproject.org/browse/FLOE-407
         setTimeout(function () {
             that.events.langButtonsReady.fire();
         });
     };
 
     gpii.firstDiscovery.panel.lang.scrollLangs = function (that, adjustBy) {
-        var newIndex = that.model.displayLangIndex + adjustBy;
-        that.applier.change("displayLangIndex", newIndex);
+        var newIndex = that.model.viewportFirstLangIndex + adjustBy;
+        that.applier.change("viewportFirstLangIndex", newIndex);
     };
 
     gpii.firstDiscovery.panel.lang.scrollLangIntoView = function (that, lang) {
@@ -871,14 +869,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             // Test if the language that we want to scroll to is above
             // or below the currently displayed languages. If it is
             // neither, we don't need to scroll.
-            var startOfNextPage = that.model.displayLangIndex + that.options.numOfLangPerPage;
-            if (langIndex < that.model.displayLangIndex) {
+            var startOfNextPage = that.model.viewportFirstLangIndex + that.options.numOfLangPerPage;
+            if (langIndex < that.model.viewportFirstLangIndex) {
                 // the language that we want to scroll to is above
-                that.applier.change("displayLangIndex", langIndex);
+                that.applier.change("viewportFirstLangIndex", langIndex);
             } else if (langIndex >= startOfNextPage) {
                 // the language that we want to scroll to is below
                 var newIndex = langIndex - that.options.numOfLangPerPage + 1;
-                that.applier.change("displayLangIndex", newIndex);
+                that.applier.change("viewportFirstLangIndex", newIndex);
             }
         }
     };
@@ -890,7 +888,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             // from the start of the list
             langIndex = 0;
         }
-        that.applier.change("displayLangIndex", langIndex);
+        that.applier.change("viewportFirstLangIndex", langIndex);
     };
 
     gpii.firstDiscovery.panel.lang.updateDisplayedLangs = function (that, langIndex) {
@@ -907,7 +905,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         var langPanelId = that.container.attr("id");
         if (langPanelId === shownPanelId) {
             // reset back to the top of the list and refresh
-            that.applier.change("displayLangIndex", 0);
+            that.applier.change("viewportFirstLangIndex", 0);
             that.refreshView();
         }
     };
@@ -1036,9 +1034,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     gpii.firstDiscovery.panel.contrast.style = function (labels, theme, defaultThemeName, style) {
-        // TODO: A potential further improvement would be to use a utility such as the one in the video player to
-        // make this automatically model bound.
-        // see: https://github.com/fluid-project/videoPlayer/blob/master/js/VideoPlayer_showHide.js
         fluid.each(labels, function (label, index) {
             label = $(label);
 

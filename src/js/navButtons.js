@@ -117,7 +117,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 args: ["{that}"]
             },
             toggleButtonSates: {
-                funcName: "gpii.firstDiscovery.navButtons.toggleButtonSates",
+                funcName: "gpii.firstDiscovery.navButtons.toggleButtonStates",
                 args: ["{arguments}.0", "{arguments}.1", "{that}.options.styles.show"]
             },
             adjustCurrentPanelNum: {
@@ -153,7 +153,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         that.tooltip.applier.change("idToContent." + nextButtonId, nextTooltipContent);
     };
 
-    gpii.firstDiscovery.navButtons.toggleButtonSates = function (element, disabled, showSelector) {
+    gpii.firstDiscovery.navButtons.toggleButtonStates = function (element, disabled, showSelector) {
         element.prop("disabled", disabled);
         element.toggleClass(showSelector, !disabled);
     };
