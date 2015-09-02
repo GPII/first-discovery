@@ -19,7 +19,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.firstDiscovery", {
-        gradeNames: ["fluid.viewComponent", "{that}.assembledPrefsEditorGrade"],
+        gradeNames: ["{that}.assembledPrefsEditorGrade", "fluid.viewComponent"],
         prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor",
         components: {
             prefsEditorLoader: {

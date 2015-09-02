@@ -14,7 +14,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     "use strict";
 
     fluid.defaults("gpii.firstDiscovery.helpButton", {
-        gradeNames: ["fluid.viewComponent", "gpii.firstDiscovery.msgLookup"],
+        gradeNames: ["gpii.firstDiscovery.msgLookup", "fluid.viewComponent"],
         listeners: {
             "onCreate.setContent": {
                 "this": "{that}.container",
