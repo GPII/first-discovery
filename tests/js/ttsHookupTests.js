@@ -45,7 +45,7 @@ https://github.com/gpii/universal/LICENSE.txt
         },
         components: {
             selfVoicing: {
-                type: "fluid.standardComponent",
+                type: "fluid.modelComponent",
                 options: {
                     gradeNames: ["gpii.firstDiscovery.msgLookup"],
                     model: {
