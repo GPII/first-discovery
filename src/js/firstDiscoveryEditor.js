@@ -20,7 +20,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * The new prefs editor type for the first discovery tool
      */
     fluid.defaults("gpii.firstDiscovery.firstDiscoveryEditor", {
-        gradeNames: ["gpii.firstDiscovery.tts.fdHookup", "fluid.prefs.prefsEditorLoader"],
+        gradeNames: ["fluid.prefs.prefsEditorLoader"],
         defaultLocale: {
             expander: {
                 funcName: "fluid.get",
@@ -58,6 +58,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             prefsEditor: {
                 container: "{that}.dom.prefsEditor",
                 options: {
+                    gradeNames: ["gpii.firstDiscovery.tts.prefsEditor"],
                     selectors: {
                         panel: "{firstDiscoveryEditor}.options.selectors.panel"
                     },
