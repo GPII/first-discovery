@@ -59,7 +59,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * A grade component to handle the integration customizations for the demos.
      */
     fluid.defaults("demo.firstDiscovery.integration", {
-        gradeNames: ["fluid.littleComponent"],
+        gradeNames: ["fluid.component"],
         demoURL: "",
         distributeOptions: [{
             target: "{that navButtons}.options.modelListeners.currentPanelNum",

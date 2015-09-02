@@ -14,7 +14,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     "use strict";
 
     fluid.defaults("gpii.firstDiscovery.usKeymap", {
-        gradeNames: ["fluid.littleComponent"],
+        gradeNames: ["fluid.component"],
         invokers: {
             isShiftEvent: {
                 funcName: "gpii.firstDiscovery.usKeymap.isShiftEvent",
