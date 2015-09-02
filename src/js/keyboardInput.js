@@ -87,7 +87,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     fluid.defaults("gpii.firstDiscovery.keyboardInput", {
-        gradeNames: ["fluid.viewComponent", "gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.msgLookup"],
+        gradeNames: ["gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.msgLookup", "fluid.viewComponent"],
         tooltipContentMap: {
             "": "keyboardInputTooltip"  // use "" to select the container
         },
