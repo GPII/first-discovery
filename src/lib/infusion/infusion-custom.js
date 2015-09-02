@@ -1,4 +1,4 @@
-/*! infusion - v2.0.0-SNAPSHOT Monday, August 31st, 2015, 10:33:35 AM*/
+/*! infusion - v2.0.0-SNAPSHOT Wednesday, September 2nd, 2015, 10:16:49 AM*/
 /*!
  * jQuery JavaScript Library v1.11.0
  * http://jquery.com/
@@ -13157,7 +13157,7 @@ var fluid = fluid || fluid_2_0;
             that.listeners = {};
             that.byId = {};
             that.sortedListeners = [];
-            that.addListener = function (listener, namespace, priority, predicate, softNamespace) {
+            that.addListener = function (listener, namespace, priority, softNamespace, listenerId) {
                 if (that.destroyed) {
                     fluid.fail("Cannot add listener to destroyed event firer " + that.name);
                 }
@@ -13167,12 +13167,14 @@ var fluid = fluid || fluid_2_0;
                 if (typeof(listener) === "string") {
                     listener = {globalName: listener};
                 }
-                var id = fluid.event.identifyListener(listener);
+                var id = listenerId || fluid.event.identifyListener(listener);
                 namespace = namespace || id;
-                var record = {listener: listener, predicate: predicate,
+                var record = {listener: listener,
                     namespace: namespace,
                     softNamespace: softNamespace,
-                    priority: fluid.parsePriority(priority, that.sortedListeners.length, false, "listeners")};
+                    listenerId: listenerId,
+                    priority: fluid.parsePriority(priority, that.sortedListeners.length, false, "listeners")
+                };
                 that.byId[id] = record;
 
                 var thisListeners = (that.listeners[namespace] = fluid.makeArray(that.listeners[namespace]));
@@ -13200,8 +13202,9 @@ var fluid = fluid || fluid_2_0;
                 if (typeof (listener) === "string") {
                     namespace = listener;
                     record = that.listeners[namespace];
-                    if (!record) {
-                        return;
+                    if (!record) { // it was an id and not a namespace - take the namespace from its record later
+                        id = namespace;
+                        namespace = null;
                     }
                 }
                 else if (typeof(listener) === "function") {
@@ -13215,18 +13218,17 @@ var fluid = fluid || fluid_2_0;
                 namespace = namespace || (rec && rec.namespace) || id;
                 delete that.byId[id];
                 record = that.listeners[namespace];
-                if (!record) {
-                    return;
-                }
-                if (softNamespace) {
-                    fluid.remove_if(record, function (thisLis) {
-                        return thisLis.listener.$$fluid_guid === id;
-                    });
-                } else {
-                    record.shift();
-                }
-                if (record.length === 0) {
-                    delete that.listeners[namespace];
+                if (record) {
+                    if (softNamespace) {
+                        fluid.remove_if(record, function (thisLis) {
+                            return thisLis.listener.$$fluid_guid === id || thisLis.listenerId === id;
+                        });
+                    } else {
+                        record.shift();
+                    }
+                    if (record.length === 0) {
+                        delete that.listeners[namespace];
+                    }
                 }
                 that.sortedListeners = fluid.event.sortListeners(that.listeners);
             },
@@ -13238,12 +13240,8 @@ var fluid = fluid || fluid_2_0;
                     var lisrec = listeners[i];
                     lisrec.listener = fluid.event.resolveListener(lisrec.listener);
                     var listener = lisrec.listener;
-    
-                    if (lisrec.predicate && !lisrec.predicate(listener, arguments)) {
-                        continue;
-                    }
-                    var value;
                     var ret = listener.apply(null, arguments);
+                    var value;
                     if (options.preventable && ret === false || that.destroyed) {
                         value = false;
                     }
@@ -13266,7 +13264,7 @@ var fluid = fluid || fluid_2_0;
         } else if (typeof (value) === "function" || typeof (value) === "string") {
             wrapper(firer).addListener(value, namespace);
         } else if (value && typeof (value) === "object") {
-            wrapper(firer).addListener(value.listener, namespace || value.namespace, value.priority, value.predicate, value.softNamespace);
+            wrapper(firer).addListener(value.listener, namespace || value.namespace, value.priority, value.softNamespace, value.listenerId);
         }
     };
 
@@ -16338,18 +16336,18 @@ var fluid_2_0 = fluid_2_0 || {};
     fluid.clearListeners = function (shadow) {
         // TODO: bug here - "afterDestroy" listeners will be unregistered already unless they come from this component
         fluid.each(shadow.listeners, function (rec) {
-            rec.event.removeListener(rec.listener);
+            rec.event.removeListener(rec.listenerId || rec.listener);
         });
         delete shadow.listeners;
     };
 
-    fluid.recordListener = function (event, listener, shadow) {
+    fluid.recordListener = function (event, listener, shadow, listenerId) {
         if (event.ownerId !== shadow.that.id) { // don't bother recording listeners registered from this component itself
             var listeners = shadow.listeners;
             if (!listeners) {
                 listeners = shadow.listeners = [];
             }
-            listeners.push({event: event, listener: listener});
+            listeners.push({event: event, listener: listener, listenerId: listenerId});
         }
     };
     
@@ -17046,8 +17044,8 @@ var fluid_2_0 = fluid_2_0 || {};
     fluid.event.makeTrackedListenerAdder = function (source) {
         var shadow = fluid.shadowForComponent(source);
         return function (event) {
-            return {addListener: function (listener) {
-                    fluid.recordListener(event, listener, shadow);
+            return {addListener: function (listener, namespace, priority, softNamespace, listenerId) {
+                    fluid.recordListener(event, listener, shadow, listenerId);
                     event.addListener.apply(null, arguments);
                 }
             };
@@ -17093,7 +17091,7 @@ var fluid_2_0 = fluid_2_0 || {};
             fluid.popActivity();
             return togo;
         };
-        fluid.event.impersonateListener(listener, togo);
+        fluid.event.impersonateListener(listener, togo); // still necessary for FLUID-5254 even though framework's listeners now get explicit guids
         return togo;
     };
 
@@ -17145,6 +17143,7 @@ var fluid_2_0 = fluid_2_0 || {};
                 firer = true;
             }
             expanded.listener = (standard && (expanded.args && listener !== "fluid.notImplemented" || firer)) ? fluid.event.dispatchListener(that, listener, eventName, expanded) : listener;
+            expanded.listenerId = fluid.allocateGuid();
             return expanded;
         });
         var togo = {
@@ -17209,7 +17208,7 @@ var fluid_2_0 = fluid_2_0 || {};
             }
         }
         else {
-            firer = {typeName: "fluid.event.firer"}; // jslint:ok - already defined
+            firer = {typeName: "fluid.event.firer"};
             firer.fire = function () {
                 var outerArgs = fluid.makeArray(arguments);
                 fluid.pushActivity("fireSynthetic", "firing synthetic event %eventName ", {eventName: eventName});
@@ -17217,9 +17216,9 @@ var fluid_2_0 = fluid_2_0 || {};
                 fluid.popActivity();
                 return togo;
             };
-            firer.addListener = function (listener, namespace, priority, predicate, softNamespace) {
+            firer.addListener = function (listener, namespace, priority, softNamespace, listenerId) {
                 var dispatcher = fluid.event.dispatchListener(that, listener, eventName, eventSpec);
-                adder(origin).addListener(dispatcher, namespace, priority, predicate, softNamespace);
+                adder(origin).addListener(dispatcher, namespace, priority, softNamespace, listenerId);
             };
             firer.removeListener = function (listener) {
                 origin.removeListener(listener);
@@ -18710,6 +18709,7 @@ var fluid_2_0 = fluid_2_0 || {};
         if (typeof(a) !== "number" || typeof(b) !== "number") {
             return a === b;
         } else {
+            // Don't use isNaN because of https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/isNaN#Confusing_special-case_behavior
             if (a === b || a !== a && b !== b) { // Either the same concrete number or both NaN
                 return true;
             } else {
