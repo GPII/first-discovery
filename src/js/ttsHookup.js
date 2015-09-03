@@ -43,6 +43,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     // The issue at the moment is that a given panel doesn't know when it is visible.
     // see: https://issues.fluidproject.org/browse/FLOE-409
     fluid.defaults("gpii.firstDiscovery.tts.prefsEditor", {
+        gradeNames: ["gpii.firstDiscovery.msgLookup"],
         invokers: {
             speakPanelMessage: {
                 funcName: "gpii.firstDiscovery.tts.prefsEditor.speakPanelMessage",
@@ -64,11 +65,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         modelListeners: {
-            currentPanelNum: {
+            "{firstDiscoveryEditor}.model.currentPanelNum": {
                 listener: "{that}.speakPanelMessage",
                 excludeSource: "init"
             }
         },
+        messageBase: "{messageLoader}.resources.prefsEditor.resourceText",
         panelInstructionsSelector: ".gpiic-fd-instructions"
     });
 
