@@ -65,28 +65,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     events: {
                         onPanelShown: "{firstDiscoveryEditor}.events.onPanelShown"
                     },
-                    modelRelay: [{
-                        source: "preferences.gpii_firstDiscovery_speak",
-                        target: "{selfVoicing}.model.enabled",
-                        backward: "never",
-                        singleTransform: {
-                            type: "fluid.transforms.identity"
-                        }
-                    }, {
-                        source: "preferences.gpii_firstDiscovery_language",
-                        target: "{selfVoicing}.model.utteranceOpts.lang",
-                        backward: "never",
-                        singleTransform: {
-                            type: "fluid.transforms.identity"
-                        }
-                    }, {
-                        source: "preferences.gpii_firstDiscovery_speechRate",
-                        target: "{selfVoicing}.model.utteranceOpts.rate",
-                        backward: "never",
-                        singleTransform: {
-                            type: "fluid.transforms.identity"
-                        }
-                    }],
                     listeners: {
                         onReady: {
                             listener: "{firstDiscoveryEditor}.events.onPrefsEditorReady",
