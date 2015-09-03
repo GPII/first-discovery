@@ -65,14 +65,28 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     events: {
                         onPanelShown: "{firstDiscoveryEditor}.events.onPanelShown"
                     },
-                    model: {
-                        // share model with selfVoicing
-                        preferences: {
-                            gpii_firstDiscovery_speak: "{gpii.firstDiscovery.selfVoicing}.model.enabled",
-                            gpii_firstDiscovery_language: "{gpii.firstDiscovery.selfVoicing}.model.utteranceOpts.lang",
-                            gpii_firstDiscovery_speechRate: "{gpii.firstDiscovery.selfVoicing}.model.utteranceOpts.rate"
+                    modelRelay: [{
+                        source: "preferences.gpii_firstDiscovery_speak",
+                        target: "{selfVoicing}.model.enabled",
+                        backward: "never",
+                        singleTransform: {
+                            type: "fluid.transforms.identity"
                         }
-                    },
+                    }, {
+                        source: "preferences.gpii_firstDiscovery_language",
+                        target: "{selfVoicing}.model.utteranceOpts.lang",
+                        backward: "never",
+                        singleTransform: {
+                            type: "fluid.transforms.identity"
+                        }
+                    }, {
+                        source: "preferences.gpii_firstDiscovery_speechRate",
+                        target: "{selfVoicing}.model.utteranceOpts.rate",
+                        backward: "never",
+                        singleTransform: {
+                            type: "fluid.transforms.identity"
+                        }
+                    }],
                     listeners: {
                         onReady: {
                             listener: "{firstDiscoveryEditor}.events.onPrefsEditorReady",
