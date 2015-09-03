@@ -49,7 +49,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     fluid.defaults("gpii.firstDiscovery.selfVoicingToggle", {
-        gradeNames: ["gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.msgLookup"],
+        gradeNames: ["gpii.firstDiscovery.msgLookup", "gpii.firstDiscovery.attachTooltip"],
         selectors: {
             mute: ".gpiic-fd-selfVoicingToggle-mute",
             muteLabel: ".gpiic-fd-selfVoicingToggle-muteLabel"
@@ -98,7 +98,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "args": ["{that}.toggleState"]
             },
             "onCreate.setRole": {
-                "this": "{that.dom.mute}",
+                "this": "{that}.dom.mute",
                 "method": "attr",
                 "args": ["role", "button"]
             },
