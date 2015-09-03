@@ -19,7 +19,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * Ranged panel: used as a grade for text size panel and other panels to adjust their preferences in a range
      */
     fluid.defaults("gpii.firstDiscovery.panel.ranged", {
-        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip.renderer"],
+        gradeNames: ["gpii.firstDiscovery.attachTooltip.renderer", "fluid.prefs.panel"],
         // Preferences Maps should direct the default model state
         // to model.value. The component is configured
         // with the expectation that "value" is the salient model property.
@@ -416,7 +416,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * The base component for all yes-no-selection panels
      */
     fluid.defaults("gpii.firstDiscovery.panel.yesNo", {
-        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip.renderer"],
+        gradeNames: ["gpii.firstDiscovery.attachTooltip.renderer", "fluid.prefs.panel"],
         modelRelay: [{
             source: "{that}.model.choice",
             target: "{that}.model.value",
@@ -935,7 +935,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * Contrast panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.contrast", {
-        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip.renderer"],
+        gradeNames: ["gpii.firstDiscovery.attachTooltip.renderer", "fluid.prefs.panel"],
         preferenceMap: {
             "fluid.prefs.contrast": {
                 "model.value": "default"
