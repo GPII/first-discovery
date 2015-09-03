@@ -70,7 +70,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                             listener: "{firstDiscoveryEditor}.events.onPrefsEditorReady",
                             args: "{firstDiscoveryEditor}"
                         },
-                        onAutoSave: "{that}.saveAndApply",
+                        "onAutoSave.save": "{that}.saveAndApply",
                         // the page is reloaded to reset language and etc.
                         "afterReset.reload": {
                             "this": "location",
