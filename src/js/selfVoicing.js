@@ -26,6 +26,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 funcName: "gpii.firstDiscovery.selfVoicing.queueSpeech",
                 args: ["{that}", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
             },
+            queueSpeechImpl: {
+                funcName: "fluid.textToSpeech.queueSpeech",
+                args: ["{that}", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
+            },
             clearQueue: {
                 funcName: "gpii.firstDiscovery.selfVoicing.clearQueue",
                 args: ["{that}"]
@@ -38,7 +42,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     gpii.firstDiscovery.selfVoicing.queueSpeech = function (that, text, options, force) {
         if (that.model.enabled || force) {
-            fluid.textToSpeech.queueSpeech(that, text, !fluid.get(options, "queue"), options);
+            that.queueSpeechImpl(text, !fluid.get(options, "queue"), options);
         }
     };
 
