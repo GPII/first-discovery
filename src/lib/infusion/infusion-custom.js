@@ -1,4 +1,4 @@
-/*! infusion - v2.0.0-SNAPSHOT Wednesday, September 9th, 2015, 8:27:28 AM*/
+/*! infusion - v2.0.0-SNAPSHOT Friday, September 11th, 2015, 3:57:46 PM*/
 /*!
  * jQuery JavaScript Library v1.11.0
  * http://jquery.com/
@@ -12970,10 +12970,10 @@ var fluid = fluid || fluid_2_0;
         var type = segs[0];
         var lookup = fluid.priorityTypes[type];
         if (lookup === undefined) {
-            fluid.fail("Invalid priority constraint type in constraint " + constraint + ": the only supported values are " + fluid.keys(fluid.priorityType).join(", "));
+            fluid.fail("Invalid constraint type in priority field " + constraint + ": the only supported values are " + fluid.keys(fluid.priorityTypes).join(", ") + " or numeric");
         }
         if (fixedOnly && lookup === 0) {
-            fluid.fail("Constraint-based priority in constraint " + constraint + " is not supported in a " + site + " record - you must use either a numeric value or first, last");
+            fluid.fail("Constraint type in priority field " + constraint + " is not supported in a " + site + " record - you must use either a numeric value or first, last");
         }
         return {
             type: segs[0],
