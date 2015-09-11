@@ -141,7 +141,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "container": ".gpiic-fd-prefsEditor-panel-keyboard",
                     "template": "%templatePrefix/keyboard.html",
                     "message": "%messagePrefix/keyboard.json",
-                    "gradeNames": ["gpii.firstDiscovery.panel.keyboardTts"]
+                    "gradeNames": ["gpii.firstDiscovery.panel.keyboardTts"],
+                    "keyboardInputGradeNames": ["gpii.firstDiscovery.keyboardInputTts"]
                 }
             },
             "congratulations": {

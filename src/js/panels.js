@@ -235,7 +235,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 createOnEvent: "onInitInput",
                 container: "{that}.dom.input",
                 options: {
-                    gradeNames: ["gpii.firstDiscovery.keyboardInputTts"],
                     model: {
                         userInput: "{keyboard}.model.userInput",
                         stickyKeysEnabled: "{keyboard}.model.stickyKeysEnabled"
@@ -308,6 +307,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 listener: "gpii.firstDiscovery.panel.keyboard.destroy",
                 args: ["{stickyKeysAssessor}"]
             }]
+        },
+        distributeOptions: {
+            source: "{that}.options.keyboardInputGradeNames",
+            target: "{that > keyboardInput}.options.gradeNames"
         }
     });
 
