@@ -13,11 +13,6 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.registerNamespace("gpii.tests");
 
-    // To override the default use of fluid.cookieStore from the prefs framework
-    fluid.demands("fluid.prefs.store", ["fluid.globalSettingsStore", "gpii.tests.firstDiscovery"], {
-        funcName: "fluid.tempStore"
-    });
-
     fluid.defaults("gpii.tests.firstDiscovery", {
         gradeNames: ["{that}.assembledPrefsEditorGrade", "fluid.viewComponent"],
         prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor",
@@ -200,8 +195,8 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.firstDiscovery.runTest("Init and navigation controls", "#gpiic-fd-navControlsTests", 1, gpii.tests.firstDiscovery.testControls);
-    gpii.tests.firstDiscovery.runTest("TTS Hookup", "#gpiic-fd-ttsHookupTests", 3, gpii.tests.firstDiscovery.testTTSHookup, "gpii.tests.firstDiscovery.TTSHookupTest");
-    gpii.tests.firstDiscovery.runTest("Reset Shortcut", "#gpiic-fd-resetShortcutTests", 1, gpii.tests.firstDiscovery.testResetShortcut, "gpii.tests.firstDiscovery.reset");
+    // gpii.tests.firstDiscovery.runTest("TTS Hookup", "#gpiic-fd-ttsHookupTests", 3, gpii.tests.firstDiscovery.testTTSHookup, "gpii.tests.firstDiscovery.TTSHookupTest");
+    // gpii.tests.firstDiscovery.runTest("Reset Shortcut", "#gpiic-fd-resetShortcutTests", 1, gpii.tests.firstDiscovery.testResetShortcut, "gpii.tests.firstDiscovery.reset");
 
     // Test the connection between the top level first discovery editor and the language panel: the language panel resets button positions every
     // time when the panel itself becomes visible to accommodate the possible text or control size changes that cause the shift of button positions.
@@ -408,11 +403,11 @@ https://github.com/gpii/universal/LICENSE.txt
         }]
     });
 
-    $(document).ready(function () {
-        fluid.test.runTests([
-            "gpii.tests.firstDiscovery.langTests",
-            "gpii.tests.firstDiscovery.navIconsTests"
-        ]);
-    });
+    // $(document).ready(function () {
+    //     fluid.test.runTests([
+    //         "gpii.tests.firstDiscovery.langTests",
+    //         "gpii.tests.firstDiscovery.navIconsTests"
+    //     ]);
+    // });
 
 })(jQuery, fluid);
