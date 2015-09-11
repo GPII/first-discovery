@@ -11,8 +11,6 @@ https://github.com/gpii/universal/LICENSE.txt
 (function ($, fluid) {
     "use strict";
 
-    fluid.registerNamespace("gpii.tests.firstDiscovery.tts.fdHookup");
-
     jqUnit.asyncTest("test 'gpii.firstDiscovery.tts.tooltipHookup.speakTooltip' method", function () {
         jqUnit.expect(4);
 
@@ -35,34 +33,55 @@ https://github.com/gpii/universal/LICENSE.txt
         gpii.firstDiscovery.tts.tooltipHookup.speakTooltip(mockLang, $("#tooltipLang"));
     });
 
+    // In order to override the material defined in the defaults block for "gpii.firstDiscovery.tts.prefsEditor":
+    // messageBase: "{messageLoader}.resources.prefsEditor.resourceText"
+    // put the overriding material into a grade, then the framework will not try to evaluate the original configuration
+    fluid.defaults("gpii.tests.tts.prefsEditorHookup", {
+        gradeNames: ["fluid.component"],
+        messageBase: {
+            "stepCountMsg": "Step %currentPanel of %numPanels",
+            "panelMsg": "This is %stepCountMsg. %instructions Press 'h' for help."
+        },
+        events: {
+            onReady: null
+        },
+        listeners: {
+            "onCreate.fireOnReady": {
+                listener: "{that}.events.onReady.fire"
+            }
+        }
+    });
+
     fluid.defaults("gpii.tests.mock.firstDiscoveryEditor", {
         gradeNames: ["fluid.viewComponent"],
         selectors: {
-            panel: ".gpiic-fd-prefsEditor-panel"
+            panel: ".gpiic-fd-firstDiscoveryEditor-panel"
         },
         model: {
             currentPanelNum: 1
         },
         components: {
             selfVoicing: {
-                type: "fluid.modelComponent",
+                type: "gpii.firstDiscovery.selfVoicing",
                 options: {
-                    gradeNames: ["gpii.firstDiscovery.msgLookup"],
                     model: {
                         enabled: true
-                    },
-                    messageBase: {
-                        "stepCountMsg": "Step %currentPanel of %numPanels",
-                        "panelMsg": "This is %stepCountMsg. %instructions Press 'h' for help."
                     },
                     invokers: {
                         queueSpeech: "{firstDiscoveryEditor}.events.onTestQueueSpeech.fire"
                     }
                 }
+            },
+            prefsEditor: {
+                type: "gpii.firstDiscovery.tts.prefsEditor",
+                createOnEvent: "onCreate",
+                options: {
+                    gradeNames: ["gpii.tests.tts.prefsEditorHookup"]
+                }
             }
         },
         events: {
-            onTestQueueSpeech: null
+            onTestQueueSpeech: null,
         },
         listeners: {
             "onCreate.setPanels": {
@@ -73,16 +92,12 @@ https://github.com/gpii/universal/LICENSE.txt
         }
     });
 
-    fluid.defaults("gpii.tests.firstDiscovery.tts.fdHookup", {
-        gradeNames: ["gpii.tests.mock.firstDiscoveryEditor", "gpii.firstDiscovery.tts.fdHookup"]
-    });
-
-    fluid.defaults("gpii.tests.fdHookupTests", {
+    fluid.defaults("gpii.tests.ttsHookupTests", {
         gradeNames: ["fluid.test.testEnvironment"],
         components: {
             fdHookup: {
-                type: "gpii.tests.firstDiscovery.tts.fdHookup",
-                container: ".gpiic-tests-firstDiscovery-tts-fdHookup"
+                type: "gpii.tests.mock.firstDiscoveryEditor",
+                container: ".gpiic-tests-firstDiscovery-tts-firstDiscoveryEditor"
             },
             ttsHookupTester: {
                 type: "gpii.tests.ttsHookupTester"
@@ -93,11 +108,11 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.defaults("gpii.tests.ttsHookupTester", {
         gradeNames: ["fluid.test.testCaseHolder"],
         modules: [{
-            name: "Tests the fdHookup component",
+            name: "Tests the TTS Prefs Editor Hookup component",
             tests: [
                 {
                     expect: 3,
-                    name: "Test the gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions function",
+                    name: "Test the gpii.firstDiscovery.tts.prefsEditor.getCurrentPanelInstructions function",
                     sequence: [
                         {
                             // Panel 1 has a single instruction
@@ -134,7 +149,7 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["currentPanelNum", 1]
                         },
                         {
-                            func: "{fdHookup}.selfVoicing.speakPanelMessage",
+                            func: "{fdHookup}.prefsEditor.speakPanelMessage",
                             args: [{queue: false}]
                         },
                         {
@@ -153,7 +168,7 @@ https://github.com/gpii/universal/LICENSE.txt
                             event: "{fdHookup}.events.onTestQueueSpeech"
                         },
                         {
-                            func: "{fdHookup}.selfVoicing.speakPanelInstructions",
+                            func: "{fdHookup}.prefsEditor.speakPanelInstructions",
                             args: [{queue: false}]
                         },
                         {
@@ -196,7 +211,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     gpii.tests.ttsHookupTester.verifyGetCurrentPanelInstructions = function (that, expected) {
-        jqUnit.assertEquals("The current panel instructions should be retrieved correctly", expected, gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions(that));
+        jqUnit.assertEquals("The current panel instructions should be retrieved correctly", expected, gpii.firstDiscovery.tts.prefsEditor.getCurrentPanelInstructions(that));
     };
 
     gpii.tests.ttsHookupTester.assertSpeak = function (textType, expected, actual) {
@@ -206,7 +221,7 @@ https://github.com/gpii/universal/LICENSE.txt
 
     $(document).ready(function () {
         fluid.test.runTests([
-            "gpii.tests.fdHookupTests"
+            "gpii.tests.ttsHookupTests"
         ]);
     });
 
