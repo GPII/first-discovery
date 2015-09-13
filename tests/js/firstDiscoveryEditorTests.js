@@ -18,6 +18,28 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.registerNamespace("gpii.tests");
 
+    gpii.tests.checkInTests = function () {
+        return true;
+    };
+
+    fluid.contextAware.makeChecks({
+        "gpii.inTest": "gpii.tests.checkInTests"
+    });
+
+    fluid.defaults("fluid.prefs.store", {
+        gradeNames: ["fluid.component", "fluid.contextAware"],
+        contextAwareness: {
+            testAware: {
+                checks: {
+                    inTest: {
+                        contextValue: "{gpii.inTest}",
+                        gradeNames: "fluid.prefs.tempStore"
+                    }
+                }
+            }
+        }
+    });
+
     fluid.defaults("gpii.tests.firstDiscovery", {
         gradeNames: ["{that}.assembledPrefsEditorGrade", "fluid.viewComponent"],
         prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor",

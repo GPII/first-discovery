@@ -81,7 +81,7 @@ https://github.com/gpii/universal/LICENSE.txt
             }
         },
         events: {
-            onTestQueueSpeech: null,
+            onTestQueueSpeech: null
         },
         listeners: {
             "onCreate.setPanels": {
