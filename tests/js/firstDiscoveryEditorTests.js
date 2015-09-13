@@ -11,6 +11,11 @@ https://github.com/gpii/universal/LICENSE.txt
 (function ($, fluid) {
     "use strict";
 
+    // To override the default use of fluid.cookieStore from the prefs framework
+    // fluid.demands("fluid.prefs.store", ["fluid.globalSettingsStore", "gpii.tests.firstDiscovery"], {
+    //     funcName: "fluid.tempStore"
+    // });
+
     fluid.registerNamespace("gpii.tests");
 
     fluid.defaults("gpii.tests.firstDiscovery", {
@@ -20,7 +25,7 @@ https://github.com/gpii/universal/LICENSE.txt
             prefsEditorLoader: {
                 options: {
                     listeners: {
-                        onPrefsEditorReady: {
+                        "onPrefsEditorReady.escalate": {
                             listener: "{firstDiscovery}.events.onReady",
                             priority: "last"
                         }
@@ -59,9 +64,11 @@ https://github.com/gpii/universal/LICENSE.txt
         var builder = fluid.prefs.builder({
             gradeNames: ["gpii.firstDiscovery.auxSchema"],
             auxiliarySchema: {
-                "templatePrefix": "../../src/html/",
-                "template": "../../src/html/firstDiscovery.html",
-                "messagePrefix": "../../src/messages/"
+                "terms": {
+                    "templatePrefix": "../../src/html/",
+                    "messagePrefix": "../../src/messages/"
+                },
+                "template": "../../src/html/firstDiscovery.html"
             }
         });
         return builder.options.assembledPrefsEditorGrade;
@@ -86,11 +93,11 @@ https://github.com/gpii/universal/LICENSE.txt
                 listeners: {
                     "onReady.addTestFunc": {
                         listener: testFunc,
-                        priority: "10"
+                        priority: "before:startTest"
                     },
                     "onReady.startTest": {
                         listener: "jqUnit.start",
-                        priority: "last"
+                        priority: "last:testing"
                     }
                 }
             });
@@ -150,29 +157,18 @@ https://github.com/gpii/universal/LICENSE.txt
         gpii.tests.firstDiscovery.verifyStates(that, lastPanel, {back: true, active: true});
     };
 
-    fluid.defaults("gpii.tests.firstDiscovery.TTSHookupTest", {
-        ttsUtteranceTest: {
-            listener: "jqUnit.assertDeepEq",
-            args: [
-                "The utterance options should be set correctly",
-                {
-                    lang: "{prefsEditorLoader}.settings.gpii_firstDiscovery_language",
-                    rate: "{prefsEditorLoader}.settings.gpii_firstDiscovery_speechRate"
-                },
-                "{that}.model.utteranceOpts"
-            ]
-        },
-        distributeOptions: {
-            source: "{that}.options.ttsUtteranceTest",
-            target: "{that selfVoicing}.options.listeners.onCreate"
-        }
-    });
-
     gpii.tests.firstDiscovery.testTTSHookup = function (that) {
         jqUnit.expect(2);
 
-        var expected = that.prefsEditor.gpii_firstDiscovery_panel_speakText.msgResolver.lookup(["instructions"]).template;
-        var actual = gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions(that);
+        var expected = {
+            lang: that.settings.preferences.gpii_firstDiscovery_language,
+            rate: that.settings.preferences.gpii_firstDiscovery_speechRate
+        };
+
+        jqUnit.assertDeepEq("The utterance options should be set correctly", expected, that.selfVoicing.model.utteranceOpts);
+
+        var actual = gpii.firstDiscovery.tts.prefsEditor.getCurrentPanelInstructions(that);
+        expected = that.prefsEditor.gpii_firstDiscovery_panel_speakText.msgResolver.lookup(["instructions"]).template;
 
         jqUnit.assertEquals("The instruction text should be sourced from the active panel", expected, actual);
     };
@@ -195,8 +191,8 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.firstDiscovery.runTest("Init and navigation controls", "#gpiic-fd-navControlsTests", 1, gpii.tests.firstDiscovery.testControls);
-    // gpii.tests.firstDiscovery.runTest("TTS Hookup", "#gpiic-fd-ttsHookupTests", 3, gpii.tests.firstDiscovery.testTTSHookup, "gpii.tests.firstDiscovery.TTSHookupTest");
-    // gpii.tests.firstDiscovery.runTest("Reset Shortcut", "#gpiic-fd-resetShortcutTests", 1, gpii.tests.firstDiscovery.testResetShortcut, "gpii.tests.firstDiscovery.reset");
+    gpii.tests.firstDiscovery.runTest("TTS Hookup", "#gpiic-fd-ttsHookupTests", 3, gpii.tests.firstDiscovery.testTTSHookup);
+    gpii.tests.firstDiscovery.runTest("Reset Shortcut", "#gpiic-fd-resetShortcutTests", 1, gpii.tests.firstDiscovery.testResetShortcut, "gpii.tests.firstDiscovery.reset");
 
     // Test the connection between the top level first discovery editor and the language panel: the language panel resets button positions every
     // time when the panel itself becomes visible to accommodate the possible text or control size changes that cause the shift of button positions.
@@ -403,11 +399,11 @@ https://github.com/gpii/universal/LICENSE.txt
         }]
     });
 
-    // $(document).ready(function () {
-    //     fluid.test.runTests([
-    //         "gpii.tests.firstDiscovery.langTests",
-    //         "gpii.tests.firstDiscovery.navIconsTests"
-    //     ]);
-    // });
+    $(document).ready(function () {
+        fluid.test.runTests([
+            "gpii.tests.firstDiscovery.langTests",
+            "gpii.tests.firstDiscovery.navIconsTests"
+        ]);
+    });
 
 })(jQuery, fluid);

@@ -47,10 +47,10 @@
         <!-- Nav Controls Tests -->
         <div id="gpiic-fd-navControlsTests">
             <section class="row gpii-fd-topButtons">
-                <div class="gpiic-fd-selfVoicing gpii-fd-selfVoicing">
-                    <button class="gpiic-fd-selfVoicing-mute left gpii-fd-mute">
+                <div class="gpiic-fd-selfVoicingToggle gpii-fd-selfVoicingToggle">
+                    <button class="gpiic-fd-selfVoicingToggle-mute gpiic-fd-tooltip left gpii-fd-mute">
                         <span class="left gpii-fd-icon"></span>
-                        <span class="gpiic-fd-selfVoicing-muteLabel"></span>
+                        <span class="gpiic-fd-selfVoicingToggle-muteLabel"></span>
                     </button>
                 </div>
                 <button class="gpiic-fd-help right gpii-fd-help" disabled="disabled"></button>
@@ -60,16 +60,16 @@
 
             <nav class="gpiic-fd-nav gpii-fd-nav">
                 <div class="gpiic-fd-navButtons gpii-fd-navButtons">
-                    <button id="gpiic-fd-navButtons-back" class="left gpii-fd-navButtons-back" tabindex="1">
+                    <button id="gpiic-fd-navButtons-back" class="gpiic-fd-tooltip left gpii-fd-navButtons-back">
                         <span class="left gpii-fd-icon"></span>
                         <span class="gpiic-fd-navButtons-backLabel">back</span>
                     </button>
-                    <button id="gpiic-fd-navButtons-next" class="right gpii-fd-navButtons-next" tabindex="1">
+                    <button id="gpiic-fd-navButtons-next" class="gpiic-fd-tooltip right gpii-fd-navButtons-next">
                         <span class="gpiic-fd-navButtons-nextLabel">next</span>
                         <span class="right gpii-fd-icon"></span>
                     </button>
                 </div>
-                <div class="gpiic-fd-navIcons text-center gpii-fd-navIcons">
+                <div class="gpiic-fd-navIcons gpii-fd-navIcons">
                     <ul class="gpii-fd-navIcon-outer">
                         <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-lang">
                             <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
@@ -111,7 +111,9 @@
                         </li>
                         <li class="gpiic-fd-navIcon gpii-fd-navIcon-congratulations">
                         </li>
-                        <li class="gpii-fd-navIcon-spacer">
+                        <li class="gpii-fd-navIcon gpii-fd-navIcon-spacer">
+                            <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                            <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
                         </li>
                     </ul>
                 </div>
@@ -124,10 +126,10 @@
         <!-- TTS Hookup Tests -->
         <div id="gpiic-fd-ttsHookupTests">
             <section class="row gpii-fd-topButtons">
-                <div class="gpiic-fd-selfVoicing gpii-fd-selfVoicing">
-                    <button class="gpiic-fd-selfVoicing-mute left gpii-fd-mute">
+                <div class="gpiic-fd-selfVoicingToggle gpii-fd-selfVoicingToggle">
+                    <button class="gpiic-fd-selfVoicingToggle-mute gpiic-fd-tooltip left gpii-fd-mute">
                         <span class="left gpii-fd-icon"></span>
-                        <span class="gpiic-fd-selfVoicing-muteLabel"></span>
+                        <span class="gpiic-fd-selfVoicingToggle-muteLabel"></span>
                     </button>
                 </div>
                 <button class="gpiic-fd-help right gpii-fd-help" disabled="disabled"></button>
@@ -137,16 +139,16 @@
 
             <nav class="gpiic-fd-nav gpii-fd-nav">
                 <div class="gpiic-fd-navButtons gpii-fd-navButtons">
-                    <button id="gpiic-fd-navButtons-back" class="left gpii-fd-navButtons-back" tabindex="1">
+                    <button id="gpiic-fd-navButtons-back" class="gpiic-fd-tooltip left gpii-fd-navButtons-back">
                         <span class="left gpii-fd-icon"></span>
                         <span class="gpiic-fd-navButtons-backLabel">back</span>
                     </button>
-                    <button id="gpiic-fd-navButtons-next" class="right gpii-fd-navButtons-next" tabindex="1">
+                    <button id="gpiic-fd-navButtons-next" class="gpiic-fd-tooltip right gpii-fd-navButtons-next">
                         <span class="gpiic-fd-navButtons-nextLabel">next</span>
                         <span class="right gpii-fd-icon"></span>
                     </button>
                 </div>
-                <div class="gpiic-fd-navIcons text-center gpii-fd-navIcons">
+                <div class="gpiic-fd-navIcons gpii-fd-navIcons">
                     <ul class="gpii-fd-navIcon-outer">
                         <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-lang">
                             <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
@@ -188,7 +190,9 @@
                         </li>
                         <li class="gpiic-fd-navIcon gpii-fd-navIcon-congratulations">
                         </li>
-                        <li class="gpii-fd-navIcon-spacer">
+                        <li class="gpii-fd-navIcon gpii-fd-navIcon-spacer">
+                            <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                            <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
                         </li>
                     </ul>
                 </div>
@@ -201,10 +205,10 @@
         <!-- Reset Shortcut Tests -->
         <div id="gpiic-fd-resetShortcutTests">
             <section class="row gpii-fd-topButtons">
-                <div class="gpiic-fd-selfVoicing gpii-fd-selfVoicing">
-                    <button class="gpiic-fd-selfVoicing-mute left gpii-fd-mute">
+                <div class="gpiic-fd-selfVoicingToggle gpii-fd-selfVoicingToggle">
+                    <button class="gpiic-fd-selfVoicingToggle-mute gpiic-fd-tooltip left gpii-fd-mute">
                         <span class="left gpii-fd-icon"></span>
-                        <span class="gpiic-fd-selfVoicing-muteLabel"></span>
+                        <span class="gpiic-fd-selfVoicingToggle-muteLabel"></span>
                     </button>
                 </div>
                 <button class="gpiic-fd-help right gpii-fd-help" disabled="disabled"></button>
@@ -214,16 +218,16 @@
 
             <nav class="gpiic-fd-nav gpii-fd-nav">
                 <div class="gpiic-fd-navButtons gpii-fd-navButtons">
-                    <button id="gpiic-fd-navButtons-back" class="left gpii-fd-navButtons-back" tabindex="1">
+                    <button id="gpiic-fd-navButtons-back" class="gpiic-fd-tooltip left gpii-fd-navButtons-back">
                         <span class="left gpii-fd-icon"></span>
                         <span class="gpiic-fd-navButtons-backLabel">back</span>
                     </button>
-                    <button id="gpiic-fd-navButtons-next" class="right gpii-fd-navButtons-next" tabindex="1">
+                    <button id="gpiic-fd-navButtons-next" class="gpiic-fd-tooltip right gpii-fd-navButtons-next">
                         <span class="gpiic-fd-navButtons-nextLabel">next</span>
                         <span class="right gpii-fd-icon"></span>
                     </button>
                 </div>
-                <div class="gpiic-fd-navIcons text-center gpii-fd-navIcons">
+                <div class="gpiic-fd-navIcons gpii-fd-navIcons">
                     <ul class="gpii-fd-navIcon-outer">
                         <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-lang">
                             <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
@@ -265,7 +269,9 @@
                         </li>
                         <li class="gpiic-fd-navIcon gpii-fd-navIcon-congratulations">
                         </li>
-                        <li class="gpii-fd-navIcon-spacer">
+                        <li class="gpii-fd-navIcon gpii-fd-navIcon-spacer">
+                            <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                            <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
                         </li>
                     </ul>
                 </div>
@@ -278,10 +284,10 @@
         <!-- Lang Tests -->
         <div id="gpiic-fd-langTests">
             <section class="row gpii-fd-topButtons">
-                <div class="gpiic-fd-selfVoicing gpii-fd-selfVoicing">
-                    <button class="gpiic-fd-selfVoicing-mute left gpii-fd-mute">
+                <div class="gpiic-fd-selfVoicingToggle gpii-fd-selfVoicingToggle">
+                    <button class="gpiic-fd-selfVoicingToggle-mute gpiic-fd-tooltip left gpii-fd-mute">
                         <span class="left gpii-fd-icon"></span>
-                        <span class="gpiic-fd-selfVoicing-muteLabel"></span>
+                        <span class="gpiic-fd-selfVoicingToggle-muteLabel"></span>
                     </button>
                 </div>
                 <button class="gpiic-fd-help right gpii-fd-help" disabled="disabled"></button>
@@ -291,16 +297,16 @@
 
             <nav class="gpiic-fd-nav gpii-fd-nav">
                 <div class="gpiic-fd-navButtons gpii-fd-navButtons">
-                    <button id="gpiic-fd-navButtons-back" class="left gpii-fd-navButtons-back" tabindex="1">
+                    <button id="gpiic-fd-navButtons-back" class="gpiic-fd-tooltip left gpii-fd-navButtons-back">
                         <span class="left gpii-fd-icon"></span>
                         <span class="gpiic-fd-navButtons-backLabel">back</span>
                     </button>
-                    <button id="gpiic-fd-navButtons-next" class="right gpii-fd-navButtons-next" tabindex="1">
+                    <button id="gpiic-fd-navButtons-next" class="gpiic-fd-tooltip right gpii-fd-navButtons-next">
                         <span class="gpiic-fd-navButtons-nextLabel">next</span>
                         <span class="right gpii-fd-icon"></span>
                     </button>
                 </div>
-                <div class="gpiic-fd-navIcons text-center gpii-fd-navIcons">
+                <div class="gpiic-fd-navIcons gpii-fd-navIcons">
                     <ul class="gpii-fd-navIcon-outer">
                         <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-lang">
                             <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
@@ -342,7 +348,9 @@
                         </li>
                         <li class="gpiic-fd-navIcon gpii-fd-navIcon-congratulations">
                         </li>
-                        <li class="gpii-fd-navIcon-spacer">
+                        <li class="gpii-fd-navIcon gpii-fd-navIcon-spacer">
+                            <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                            <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
                         </li>
                     </ul>
                 </div>
@@ -355,10 +363,10 @@
         <!-- Recalculate Nav Icon Size Tests -->
         <div id="gpiic-fd-recalculateIconSize">
             <section class="row gpii-fd-topButtons">
-                <div class="gpiic-fd-selfVoicing gpii-fd-selfVoicing">
-                    <button class="gpiic-fd-selfVoicing-mute left gpii-fd-mute">
+                <div class="gpiic-fd-selfVoicingToggle gpii-fd-selfVoicingToggle">
+                    <button class="gpiic-fd-selfVoicingToggle-mute gpiic-fd-tooltip left gpii-fd-mute">
                         <span class="left gpii-fd-icon"></span>
-                        <span class="gpiic-fd-selfVoicing-muteLabel"></span>
+                        <span class="gpiic-fd-selfVoicingToggle-muteLabel"></span>
                     </button>
                 </div>
                 <button class="gpiic-fd-help right gpii-fd-help" disabled="disabled"></button>
@@ -368,16 +376,16 @@
 
             <nav class="gpiic-fd-nav gpii-fd-nav">
                 <div class="gpiic-fd-navButtons gpii-fd-navButtons">
-                    <button id="gpiic-fd-navButtons-back" class="left gpii-fd-navButtons-back" tabindex="1">
+                    <button id="gpiic-fd-navButtons-back" class="gpiic-fd-tooltip left gpii-fd-navButtons-back">
                         <span class="left gpii-fd-icon"></span>
                         <span class="gpiic-fd-navButtons-backLabel">back</span>
                     </button>
-                    <button id="gpiic-fd-navButtons-next" class="right gpii-fd-navButtons-next" tabindex="1">
+                    <button id="gpiic-fd-navButtons-next" class="gpiic-fd-tooltip right gpii-fd-navButtons-next">
                         <span class="gpiic-fd-navButtons-nextLabel">next</span>
                         <span class="right gpii-fd-icon"></span>
                     </button>
                 </div>
-                <div class="gpiic-fd-navIcons text-center gpii-fd-navIcons">
+                <div class="gpiic-fd-navIcons gpii-fd-navIcons">
                     <ul class="gpii-fd-navIcon-outer">
                         <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-lang">
                             <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
@@ -419,7 +427,9 @@
                         </li>
                         <li class="gpiic-fd-navIcon gpii-fd-navIcon-congratulations">
                         </li>
-                        <li class="gpii-fd-navIcon-spacer">
+                        <li class="gpii-fd-navIcon gpii-fd-navIcon-spacer">
+                            <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
+                            <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
                         </li>
                     </ul>
                 </div>
