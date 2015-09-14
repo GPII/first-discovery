@@ -11,32 +11,18 @@ https://github.com/gpii/universal/LICENSE.txt
 (function ($, fluid) {
     "use strict";
 
-    // To override the default use of fluid.cookieStore from the prefs framework
-    // fluid.demands("fluid.prefs.store", ["fluid.globalSettingsStore", "gpii.tests.firstDiscovery"], {
-    //     funcName: "fluid.tempStore"
-    // });
-
     fluid.registerNamespace("gpii.tests");
 
-    gpii.tests.checkInTests = function () {
-        return true;
-    };
+    fluid.contextAware.makeChecks({"gpii.tests": true});
 
-    fluid.contextAware.makeChecks({
-        "gpii.inTest": "gpii.tests.checkInTests"
-    });
-
-    fluid.defaults("fluid.prefs.store", {
-        gradeNames: ["fluid.component", "fluid.contextAware"],
-        contextAwareness: {
-            testAware: {
-                checks: {
-                    inTest: {
-                        contextValue: "{gpii.inTest}",
-                        gradeNames: "fluid.prefs.tempStore"
-                    }
-                }
-            }
+    fluid.contextAware.makeAdaptation({
+        distributionName: "fluid.tests.prefs.tempStoreDistributor",
+        targetName: "fluid.prefs.store",
+        adaptationName: "strategy",
+        checkName: "test",
+        record: {
+            contextValue: "{gpii.tests}",
+            gradeNames: "fluid.prefs.tempStore"
         }
     });
 
@@ -218,6 +204,17 @@ https://github.com/gpii/universal/LICENSE.txt
 
     // Test the connection between the top level first discovery editor and the language panel: the language panel resets button positions every
     // time when the panel itself becomes visible to accommodate the possible text or control size changes that cause the shift of button positions.
+    fluid.defaults("gpii.tests.initialModelForLangTests", {
+        gradeNames: ["fluid.component"],
+        members: {
+            initialModel: {
+                preferences: {
+                    gpii_firstDiscovery_language: "nl-NL"
+                }
+            }
+        }
+    });
+
     fluid.defaults("gpii.tests.firstDiscoveryLang", {
         gradeNames: ["gpii.tests.firstDiscovery"],
         components: {
@@ -239,10 +236,8 @@ https://github.com/gpii/universal/LICENSE.txt
                 "langButtonsReady.escalate": "{firstDiscoveryLang}.events.langButtonsReady"
             }
         }, {
-            target: "{that gpii.firstDiscovery.panel.lang}.options.model",
-            record: {
-                "lang": "nl-NL"
-            }
+            target: "{that > prefsEditorLoader}.options.gradeNames",
+            record: "gpii.tests.initialModelForLangTests"
         }]
     });
 
@@ -292,7 +287,6 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("default locale is as expected", "en-US", locale);
     };
 
-
     fluid.defaults("gpii.tests.firstDiscovery.langTester", {
         gradeNames: ["fluid.test.testCaseHolder"],
         testData: {
@@ -312,8 +306,8 @@ https://github.com/gpii/universal/LICENSE.txt
                     func: "{firstDiscovery}.prefsEditorLoader.applier.change",
                     args: ["currentPanelNum", 2]
                 }, {
-                    func: "{firstDiscovery}.prefsEditorLoader.prefsEditor.applier.change",
-                    args: ["fluid_prefs_textSize", 0.2]
+                    func: "{firstDiscovery}.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_textSize.applier.change",
+                    args: ["value", 0.2]
                 }, {
                     // The controls div cannot be scrolled when it remains hidden
                     listener: "gpii.tests.firstDiscovery.testScrollingAtHidden",
