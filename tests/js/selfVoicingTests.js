@@ -13,45 +13,126 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.registerNamespace("gpii.tests");
 
-    jqUnit.test("gpii.firstDiscovery.selfVoicing.setLabel", function () {
+    fluid.defaults("gpii.tests.firstDiscovery.selfVoicing", {
+        gradeNames: ["fluid.mock.textToSpeech", "gpii.firstDiscovery.selfVoicing"],
+        model: {
+            enabled: false
+        },
+        invokers: {
+            queueSpeechImpl: {
+                funcName: "fluid.mock.textToSpeech.queueSpeech",
+                args: ["{that}", "{that}.handleStart", "{that}.handleEnd", "{that}.speechRecord", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
+            }
+        }
+    });
+
+    fluid.defaults("gpii.tests.selfVoicingTest", {
+        gradeNames: ["fluid.test.testEnvironment"],
+        components: {
+            selfVoicing: {
+                type: "gpii.tests.firstDiscovery.selfVoicing"
+            },
+            selfVoicingTester: {
+                type: "gpii.tests.selfVoicingTester"
+            }
+        }
+    });
+
+    fluid.defaults("gpii.tests.selfVoicingTester", {
+        gradeNames: ["fluid.test.testCaseHolder"],
+        testOptions: {
+            forcedSpeech: {
+                text: "forced speech",
+                interrupt: true
+            },
+            enabledSpeech: {
+                text: "enabled speech",
+                interrupt: true
+            },
+            queuedSpeech: {
+                text: "queueud speech",
+                interrupt: false,
+                options: {
+                    queue: true
+                }
+            }
+        },
+        modules: [{
+            name: "Tests the selfVoicing component",
+            tests: [{
+                expect: 4,
+                name: "Test queueSpeech",
+                sequence: [{
+                    func: "{selfVoicing}.queueSpeech",
+                    args: ["{that}.options.testOptions.forcedSpeech.text", null, true]
+                }, {
+                    listener: "jqUnit.assertDeepEq",
+                    args: ["Speaking should have occured - enabled: false, force: true", "{that}.options.testOptions.forcedSpeech", "{selfVoicing}.speechRecord.0"],
+                    event: "{selfVoicing}.events.onStop"
+                }, {
+                    func: "{selfVoicing}.applier.change",
+                    args: ["enabled", true]
+                }, {
+                    listener: "jqUnit.assertTrue",
+                    args: ["The selfVoicing should be enabled", "{selfVoicing}.model.enabled"],
+                    spec: {path: "enabled", priority: "last"},
+                    changeEvent: "{selfVoicing}.applier.modelChanged"
+                }, {
+                    func: "{selfVoicing}.queueSpeech",
+                    args: ["{that}.options.testOptions.enabledSpeech.text"]
+                }, {
+                    listener: "jqUnit.assertDeepEq",
+                    args: ["Speaking should have occured - enabled: true", "{that}.options.testOptions.enabledSpeech", "{selfVoicing}.speechRecord.1"],
+                    event: "{selfVoicing}.events.onStop"
+                }, {
+                    func: "{selfVoicing}.queueSpeech",
+                    args: ["{that}.options.testOptions.queuedSpeech.text", {queue: true}]
+                }, {
+                    listener: "jqUnit.assertDeepEq",
+                    args: ["Speaking should have been queued", "{that}.options.testOptions.queuedSpeech", "{selfVoicing}.speechRecord.2"],
+                    event: "{selfVoicing}.events.onStop"
+                }]
+            }]
+        }]
+    });
+
+    jqUnit.test("gpii.firstDiscovery.selfVoicingToggle.setLabel", function () {
         var elm = $(".setLabel-test");
         var testStrings = {
             muted: "muted",
             unmuted: "unmuted"
         };
 
-        gpii.firstDiscovery.selfVoicing.setLabel(elm, testStrings.unmuted, testStrings.muted, true);
+        gpii.firstDiscovery.selfVoicingToggle.setLabel(elm, testStrings.unmuted, testStrings.muted, true);
         jqUnit.assertEquals("The unmute label should be applied", testStrings.unmuted, elm.text());
 
-        gpii.firstDiscovery.selfVoicing.setLabel(elm, testStrings.unmuted, testStrings.muted, false);
+        gpii.firstDiscovery.selfVoicingToggle.setLabel(elm, testStrings.unmuted, testStrings.muted, false);
         jqUnit.assertEquals("The mute label should be applied", testStrings.muted, elm.text());
     });
 
-    jqUnit.test("gpii.firstDiscovery.selfVoicing.setMuteStyle", function () {
+    jqUnit.test("gpii.firstDiscovery.selfVoicingToggle.setMuteStyle", function () {
         var elm = $(".setMuteStyle-test");
         var testStyles = {
             muted: ".muted",
             unmuted: ".unmuted"
         };
 
-        gpii.firstDiscovery.selfVoicing.setMuteStyle(elm, testStyles, true);
+        gpii.firstDiscovery.selfVoicingToggle.setMuteStyle(elm, testStyles, true);
         jqUnit.assertTrue("The unmuted class should be applied", elm.hasClass(testStyles.unmuted));
         jqUnit.assertFalse("The muted class should not be applied", elm.hasClass(testStyles.muted));
 
-        gpii.firstDiscovery.selfVoicing.setMuteStyle(elm, testStyles, false);
+        gpii.firstDiscovery.selfVoicingToggle.setMuteStyle(elm, testStyles, false);
         jqUnit.assertTrue("The muted class should be applied", elm.hasClass(testStyles.muted));
         jqUnit.assertFalse("The unmuted class should not be applied", elm.hasClass(testStyles.unmuted));
     });
 
-    fluid.defaults("gpii.tests.firstDiscovery.selfVoicing", {
-        gradeNames: ["gpii.firstDiscovery.selfVoicing", "autoInit"],
+    fluid.defaults("gpii.tests.firstDiscovery.selfVoicingToggle", {
+        gradeNames: ["gpii.firstDiscovery.selfVoicingToggle"],
         members: {
-            queueRecord: []
+            speakVoiceStateCalled: false
         },
         model: {
-            utteranceOpts: {
-                volume: 0
-            }
+            enabled: false
         },
         messageBase: {
             "unmuted": "turn voice OFF",
@@ -61,93 +142,74 @@ https://github.com/gpii/universal/LICENSE.txt
             "mutedTooltip": "Select to turn voice on",
             "mutedMsg": "voice is off"
         },
-        listeners: {
-            onSpeechQueued: {
-                "this": "{that}.queueRecord",
-                "method": "push"
+        invokers: {
+            speakVoiceState: {
+                funcName: "fluid.set",
+                args: ["{that}", ["speakVoiceStateCalled"], true]
             }
         }
     });
 
-    fluid.defaults("gpii.tests.selfVoicingTest", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+    fluid.defaults("gpii.tests.selfVoicingToggleTest", {
+        gradeNames: ["fluid.test.testEnvironment"],
         components: {
-            selfVoicing: {
-                type: "gpii.tests.firstDiscovery.selfVoicing",
-                container: ".gpiic-fd-selfVoicing",
-                options: {
-                    model: {
-                        enabled: true
-                    },
-                    messageBase: {
-                        "unmuted": "turn voice OFF",
-                        "unmutedTooltip": "Select to turn voice off",
-                        "unmutedMsg": "voice is on",
-                        "muted": "turn voice ON",
-                        "mutedTooltip": "Select to turn voice on",
-                        "mutedMsg": "voice is off"
-                    }
-                }
+            selfVoicingToggle: {
+                type: "gpii.tests.firstDiscovery.selfVoicingToggle",
+                container: ".gpiic-fd-selfVoicingToggle"
             },
             selfVoicingTester: {
-                type: "gpii.tests.selfVoicingTester"
+                type: "gpii.tests.selfVoicingToggleTester"
             }
         }
     });
 
-    fluid.defaults("gpii.tests.selfVoicingTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
-        testOptions: {
-            speechQueue: ["Test Text", "Test More Text"]
-        },
+    fluid.defaults("gpii.tests.selfVoicingToggleTester", {
+        gradeNames: ["fluid.test.testCaseHolder"],
         invokers: {
             testRendering: {
                 funcName: "gpii.tests.selfVoicingTester.testRendering",
-                args: ["{selfVoicing}", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
+                args: ["{selfVoicingToggle}", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
             },
             testMuted: {
                 funcName: "gpii.tests.selfVoicingTester.testMuted",
-                args: ["{that}", "{selfVoicing}", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
+                args: ["{that}", "{selfVoicingToggle}", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
             }
         },
         modules: [{
             name: "Tests the selfVoicing component",
             tests: [{
-                expect: 3,
+                expect: 5,
                 name: "Test Init",
                 type: "test",
                 func: "{that}.testRendering",
-                args: ["{selfVoicing}.options.messageBase.unmuted", "{selfVoicing}.options.messageBase.unmutedTooltip", "{selfVoicing}.options.styles.unmuted"]
+                args: ["{selfVoicingToggle}.options.messageBase.muted", "{selfVoicingToggle}.options.messageBase.mutedTooltip", "{selfVoicingToggle}.options.styles.muted"]
             }, {
-                expect: 5,
+                expect: 6,
                 name: "Test interaction",
                 sequence: [{
-                    func: "{selfVoicing}.queueSpeech",
-                    args: ["{that}.options.testOptions.speechQueue.0"]
-                }, {
-                    func: "{selfVoicing}.queueSpeech",
-                    args: ["{that}.options.testOptions.speechQueue.1", {queue: true}]
-                }, {
-                    listener: "jqUnit.assertDeepEq",
-                    args: ["The speech queue should have been populated correctly", "{that}.options.testOptions.speechQueue", "{selfVoicing}.queueRecord"],
-                    event: "{selfVoicing}.events.onStop"
-                }, {
                     jQueryTrigger: "click",
-                    element: "{selfVoicing}.dom.mute"
+                    element: "{selfVoicingToggle}.dom.mute"
                 }, {
-                    listener: "{that}.testMuted",
-                    args: ["{selfVoicing}.options.messageBase.muted", "{selfVoicing}.options.messageBase.mutedTooltip", "{selfVoicing}.options.styles.muted"],
-                    event: "{selfVoicing}.events.onStop"
+                    listener: "{that}.testRendering",
+                    args: ["{selfVoicingToggle}.options.messageBase.unmuted", "{selfVoicingToggle}.options.messageBase.unmutedTooltip", "{selfVoicingToggle}.options.styles.unmuted"],
+                    spec: {path: "enabled", priority: "last"},
+                    changeEvent: "{selfVoicingToggle}.applier.modelChanged"
+                }, {
+                    func: "jqUnit.assertTrue",
+                    args: ["The speakVoiceState method should have been called", "{selfVoicingToggle}.speakVoiceStateCalled"]
                 }]
             }]
         }]
     });
 
     gpii.tests.selfVoicingTester.testRendering = function (that, label, tooltipContent, cssClass) {
-        var muteId = that.locate("mute").attr("id");
+        var mute = that.locate("mute");
+        var muteId = mute.attr("id");
         jqUnit.assertEquals("The label should be set correctly", label, that.locate("muteLabel").text());
         jqUnit.assertEquals("The tooltip text should be set correctly", tooltipContent, that.tooltip.model.idToContent[muteId]);
         jqUnit.assertTrue("The class should be applied to the container", that.container.hasClass(cssClass));
+        jqUnit.assertEquals("The aria button role should be set", "button", mute.attr("role"));
+        jqUnit.assertEquals("The aria pressed state should be set correctly", that.model.enabled.toString(), mute.attr("aria-pressed"));
     };
 
     gpii.tests.selfVoicingTester.testMuted = function (that, selfVoicing, label, tooltipContent, cssClass) {
@@ -158,7 +220,8 @@ https://github.com/gpii/universal/LICENSE.txt
 
     $(document).ready(function () {
         fluid.test.runTests([
-            "gpii.tests.selfVoicingTest"
+            "gpii.tests.selfVoicingTest",
+            "gpii.tests.selfVoicingToggleTest"
         ]);
     });
 

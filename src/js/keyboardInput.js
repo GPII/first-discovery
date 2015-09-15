@@ -14,7 +14,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     "use strict";
 
     fluid.defaults("gpii.firstDiscovery.usKeymap", {
-        gradeNames: ["fluid.littleComponent", "autoInit"],
+        gradeNames: ["fluid.component"],
         invokers: {
             isShiftEvent: {
                 funcName: "gpii.firstDiscovery.usKeymap.isShiftEvent",
@@ -87,7 +87,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     fluid.defaults("gpii.firstDiscovery.keyboardInput", {
-        gradeNames: ["fluid.viewRelayComponent", "gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.msgLookup", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.msgLookup", "fluid.viewComponent"],
         tooltipContentMap: {
             "": "keyboardInputTooltip"  // use "" to select the container
         },
@@ -268,7 +268,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.defaults("gpii.firstDiscovery.keyboardInputTts", {
         invokers: {
             speak: {
-                func: "{fluid.textToSpeech}.queueSpeech"
+                func: "{gpii.firstDiscovery.selfVoicing}.queueSpeech"
             },
             speakOnFocusMessage: {
                 funcName: "gpii.firstDiscovery.keyboardInputTts.speakOnFocusMessage",

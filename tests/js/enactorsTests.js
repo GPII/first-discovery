@@ -18,7 +18,7 @@ https://github.com/gpii/universal/LICENSE.txt
      **************************/
 
     fluid.defaults("gpii.tests.enactor.lang", {
-        gradeNames: ["gpii.firstDiscovery.enactor.lang", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.enactor.lang"],
         model: {
             lang: "en"
         },

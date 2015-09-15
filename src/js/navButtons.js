@@ -20,7 +20,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * The back and next navigation buttons
      */
     fluid.defaults("gpii.firstDiscovery.navButtons", {
-        gradeNames: ["fluid.viewRelayComponent", "gpii.firstDiscovery.attachTooltip", "gpii.firstDiscovery.msgLookup", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.msgLookup", "gpii.firstDiscovery.attachTooltip", "fluid.viewComponent"],
         panelTotalNum: null,   // Must be supplied by integrators
         panelStartNum: 1,
         tooltipContentMap: {

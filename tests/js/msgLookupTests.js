@@ -14,7 +14,7 @@ https://github.com/gpii/universal/LICENSE.txt
     fluid.registerNamespace("gpii.tests.firstDiscovery.msgLookup");
 
     fluid.defaults("gpii.tests.firstDiscovery.msgLookup", {
-        gradeNames: ["fluid.rendererRelayComponent", "gpii.firstDiscovery.msgLookup", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.msgLookup", "fluid.rendererComponent"],
         selectors: {
             text: ".gpiic-msgLookup-text"
         },

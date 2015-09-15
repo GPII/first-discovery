@@ -14,7 +14,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     "use strict";
 
     fluid.defaults("gpii.firstDiscovery.nav", {
-        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
+        gradeNames: ["fluid.viewComponent"],
         model: {
             // currentPanelNum: integer  // must be supplied by integrators
         },

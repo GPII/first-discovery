@@ -13,19 +13,27 @@ https://github.com/gpii/universal/LICENSE.txt
 
     fluid.registerNamespace("gpii.tests");
 
-    // To override the default use of fluid.cookieStore from the prefs framework
-    fluid.demands("fluid.prefs.store", ["fluid.globalSettingsStore", "gpii.tests.firstDiscovery"], {
-        funcName: "fluid.tempStore"
+    fluid.contextAware.makeChecks({"gpii.tests": true});
+
+    fluid.contextAware.makeAdaptation({
+        distributionName: "fluid.tests.prefs.tempStoreDistributor",
+        targetName: "fluid.prefs.store",
+        adaptationName: "strategy",
+        checkName: "test",
+        record: {
+            contextValue: "{gpii.tests}",
+            gradeNames: "fluid.prefs.tempStore"
+        }
     });
 
     fluid.defaults("gpii.tests.firstDiscovery", {
-        gradeNames: ["fluid.viewRelayComponent", "{that}.assembledPrefsEditorGrade", "autoInit"],
+        gradeNames: ["{that}.assembledPrefsEditorGrade", "fluid.viewComponent"],
         prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor",
         components: {
             prefsEditorLoader: {
                 options: {
                     listeners: {
-                        onPrefsEditorReady: {
+                        "onPrefsEditorReady.escalate": {
                             listener: "{firstDiscovery}.events.onReady",
                             priority: "last"
                         }
@@ -52,7 +60,7 @@ https://github.com/gpii/universal/LICENSE.txt
             }
         },
         resetListeners: {
-            "onReset.reload": "fluid.identity"
+            "afterReset.reload": "fluid.identity"
         },
         distributeOptions: [{
             source: "{that}.options.resetListeners",
@@ -64,9 +72,11 @@ https://github.com/gpii/universal/LICENSE.txt
         var builder = fluid.prefs.builder({
             gradeNames: ["gpii.firstDiscovery.auxSchema"],
             auxiliarySchema: {
-                "templatePrefix": "../../src/html/",
-                "template": "../../src/html/firstDiscovery.html",
-                "messagePrefix": "../../src/messages/"
+                "terms": {
+                    "templatePrefix": "../../src/html/",
+                    "messagePrefix": "../../src/messages/"
+                },
+                "template": "../../src/html/firstDiscovery.html"
             }
         });
         return builder.options.assembledPrefsEditorGrade;
@@ -91,11 +101,11 @@ https://github.com/gpii/universal/LICENSE.txt
                 listeners: {
                     "onReady.addTestFunc": {
                         listener: testFunc,
-                        priority: "10"
+                        priority: "before:startTest"
                     },
                     "onReady.startTest": {
                         listener: "jqUnit.start",
-                        priority: "last"
+                        priority: "last:testing"
                     }
                 }
             });
@@ -155,36 +165,26 @@ https://github.com/gpii/universal/LICENSE.txt
         gpii.tests.firstDiscovery.verifyStates(that, lastPanel, {back: true, active: true});
     };
 
-    fluid.defaults("gpii.tests.firstDiscovery.TTSHookupTest", {
-        ttsUtteranceTest: {
-            listener: "jqUnit.assertDeepEq",
-            args: [
-                "The utterance options should be set correctly",
-                {
-                    lang: "{prefsEditorLoader}.settings.preferences.gpii_firstDiscovery_language",
-                    rate: "{prefsEditorLoader}.settings.preferences.gpii_firstDiscovery_speechRate"
-                },
-                "{that}.model.utteranceOpts"
-            ]
-        },
-        distributeOptions: {
-            source: "{that}.options.ttsUtteranceTest",
-            target: "{that selfVoicing}.options.listeners.onCreate"
-        }
-    });
 
     gpii.tests.firstDiscovery.testTTSHookup = function (that) {
         jqUnit.expect(2);
 
-        var expected = that.prefsEditor.preferences.gpii_firstDiscovery_panel_speakText.msgResolver.lookup(["instructions"]).template;
-        var actual = gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions(that);
+        var expected = {
+            lang: that.settings.preferences.gpii_firstDiscovery_language,
+            rate: that.settings.preferences.gpii_firstDiscovery_speechRate
+        };
+
+        jqUnit.assertDeepEq("The utterance options should be set correctly", expected, that.selfVoicing.model.utteranceOpts);
+
+        var actual = gpii.firstDiscovery.tts.prefsEditor.getCurrentPanelInstructions(that);
+        expected = that.prefsEditor.gpii_firstDiscovery_panel_speakText.msgResolver.lookup(["instructions"]).template;
 
         jqUnit.assertEquals("The instruction text should be sourced from the active panel", expected, actual);
     };
 
     fluid.defaults("gpii.tests.firstDiscovery.reset", {
         resetListeners: {
-            "onReset.reload": {
+            "afterReset.reload": {
                 listener: "jqUnit.assert",
                 args: ["The reset should be triggered"],
                 "this": null,
@@ -200,13 +200,24 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.firstDiscovery.runTest("Init and navigation controls", "#gpiic-fd-navControlsTests", 1, gpii.tests.firstDiscovery.testControls);
-    gpii.tests.firstDiscovery.runTest("TTS Hookup", "#gpiic-fd-ttsHookupTests", 3, gpii.tests.firstDiscovery.testTTSHookup, "gpii.tests.firstDiscovery.TTSHookupTest");
+    gpii.tests.firstDiscovery.runTest("TTS Hookup", "#gpiic-fd-ttsHookupTests", 3, gpii.tests.firstDiscovery.testTTSHookup);
     gpii.tests.firstDiscovery.runTest("Reset Shortcut", "#gpiic-fd-resetShortcutTests", 1, gpii.tests.firstDiscovery.testResetShortcut, "gpii.tests.firstDiscovery.reset");
 
     // Test the connection between the top level first discovery editor and the language panel: the language panel resets button positions every
     // time when the panel itself becomes visible to accommodate the possible text or control size changes that cause the shift of button positions.
+    fluid.defaults("gpii.tests.initialModelForLangTests", {
+        gradeNames: ["fluid.component"],
+        members: {
+            initialModel: {
+                preferences: {
+                    gpii_firstDiscovery_language: "nl-NL"
+                }
+            }
+        }
+    });
+
     fluid.defaults("gpii.tests.firstDiscoveryLang", {
-        gradeNames: ["gpii.tests.firstDiscovery", "autoInit"],
+        gradeNames: ["gpii.tests.firstDiscovery"],
         components: {
             prefsEditorLoader: {
                 options: {
@@ -226,15 +237,13 @@ https://github.com/gpii/universal/LICENSE.txt
                 "langButtonsReady.escalate": "{firstDiscoveryLang}.events.langButtonsReady"
             }
         }, {
-            target: "{that gpii.firstDiscovery.panel.lang}.options.model",
-            record: {
-                "lang": "nl-NL"
-            }
+            target: "{that > prefsEditorLoader}.options.gradeNames",
+            record: "gpii.tests.initialModelForLangTests"
         }]
     });
 
     fluid.defaults("gpii.tests.firstDiscovery.langTests", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["fluid.test.testEnvironment"],
         components: {
             firstDiscovery: {
                 type: "gpii.tests.firstDiscoveryLang",
@@ -279,9 +288,8 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals("default locale is as expected", "en-US", locale);
     };
 
-
     fluid.defaults("gpii.tests.firstDiscovery.langTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        gradeNames: ["fluid.test.testCaseHolder"],
         testData: {
             scrollTop: null
         },
@@ -299,8 +307,8 @@ https://github.com/gpii/universal/LICENSE.txt
                     func: "{firstDiscovery}.prefsEditorLoader.applier.change",
                     args: ["currentPanelNum", 2]
                 }, {
-                    func: "{firstDiscovery}.prefsEditorLoader.prefsEditor.applier.change",
-                    args: ["fluid_prefs_textSize", 0.2]
+                    func: "{firstDiscovery}.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_textSize.applier.change",
+                    args: ["value", 0.2]
                 }, {
                     // The controls div cannot be scrolled when it remains hidden
                     listener: "gpii.tests.firstDiscovery.testScrollingAtHidden",
@@ -331,7 +339,7 @@ https://github.com/gpii/universal/LICENSE.txt
 
     // Re-calculate the nav icon size at text size change
     fluid.defaults("gpii.tests.firstDiscoveryNavIcons", {
-        gradeNames: ["gpii.tests.firstDiscovery", "autoInit"],
+        gradeNames: ["gpii.tests.firstDiscovery"],
         components: {
             prefsEditorLoader: {
                 options: {
@@ -356,7 +364,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.firstDiscovery.navIconsTests", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["fluid.test.testEnvironment"],
         components: {
             firstDiscovery: {
                 type: "gpii.tests.firstDiscoveryNavIcons",
@@ -380,7 +388,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     fluid.defaults("gpii.tests.firstDiscovery.navIconsTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        gradeNames: ["fluid.test.testCaseHolder"],
         initialIconWidth: null,
         modules: [{
             name: "Tests the re-collection of the nav icon size at the text size change",

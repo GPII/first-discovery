@@ -21,13 +21,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     *******************************************************************************/
 
     fluid.defaults("gpii.firstDiscovery.auxSchema", {
-        gradeNames: ["fluid.prefs.auxSchema", "autoInit"],
+        gradeNames: ["fluid.prefs.auxSchema"],
         auxiliarySchema: {
             "loaderGrades": ["gpii.firstDiscovery.firstDiscoveryEditor"],
             "namespace": "gpii.firstDiscovery",
             "terms": {
-                "templatePrefix": "../src/html/",
-                "messagePrefix": "../src/messages/"
+                "templatePrefix": "../src/html",
+                "messagePrefix": "../src/messages"
             },
             "template": "../src/html/firstDiscovery.html",
             "message": "%messagePrefix/firstDiscovery.json",
@@ -141,7 +141,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "container": ".gpiic-fd-prefsEditor-panel-keyboard",
                     "template": "%templatePrefix/keyboard.html",
                     "message": "%messagePrefix/keyboard.json",
-                    "gradeNames": ["gpii.firstDiscovery.panel.keyboardTts", "gpii.firstDiscovery.panel.keyboard.prefEditorConnection"]
+                    "gradeNames": ["gpii.firstDiscovery.panel.keyboardTts", "gpii.firstDiscovery.panel.keyboard.prefEditorConnection"],
+                    "keyboardInputGradeNames": ["gpii.firstDiscovery.keyboardInputTts"]
                 }
             },
             "congratulations": {
