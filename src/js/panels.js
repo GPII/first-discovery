@@ -386,7 +386,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     // initial start page. When model.offerAssistance is presented in the model, it must be a boolean value.
     // And, either true or false value would trigger a non-start page to render.
     fluid.defaults("gpii.firstDiscovery.panel.keyboard.prefEditorConnection", {
-        gradeNames: ["fluid.eventedComponent", "autoInit"],
+        gradeNames: ["fluid.component"],
         listeners: {
             "{prefsEditor}.events.beforeReset": {
                 funcName: "gpii.firstDiscovery.panel.keyboard.prefEditorConnection.resetModel",
@@ -949,7 +949,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     // available while hidden. Instead, we need to rerender again when
     // the user naviagates back to the language panel.
     fluid.defaults("gpii.firstDiscovery.panel.lang.prefEditorConnection", {
-        gradeNames: ["fluid.eventedComponent"],
+        gradeNames: ["fluid.component"],
         listeners: {
             "{prefsEditor}.events.onPanelShown": {
                 funcName: "gpii.firstDiscovery.panel.lang.refreshDisplayedLangsOnShowPanel",
