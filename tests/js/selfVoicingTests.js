@@ -30,7 +30,7 @@ https://github.com/gpii/universal/LICENSE.txt
             cancel: {
                 funcName: "fluid.mock.textToSpeech.cancel",
                 args: ["{that}", "{that}.handleEnd"]
-            },
+            }
         }
     });
 
