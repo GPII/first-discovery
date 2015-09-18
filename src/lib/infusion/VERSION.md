@@ -2,7 +2,7 @@ The version of Infusion included in this folder was created using a custom build
 
 https://github.com/fluid-project/infusion
 
-commit#: 435c1b0aa5032772602c0c88f282e3c9b52be83d
+commit#: f63bc7741175afaa166cb90e68a735aeae93ed9d
 
 ```
 grunt custom --source=true --include="preferences, tooltip"

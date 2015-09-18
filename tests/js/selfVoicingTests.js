@@ -22,6 +22,14 @@ https://github.com/gpii/universal/LICENSE.txt
             queueSpeechImpl: {
                 funcName: "fluid.mock.textToSpeech.queueSpeech",
                 args: ["{that}", "{that}.handleStart", "{that}.handleEnd", "{that}.speechRecord", "{arguments}.0", "{arguments}.1", "{arguments}.2"]
+            },
+            // Need to manually reapply the mock override of the cancel method,
+            // as it was overwritten by the grade merging. Unfortunately both
+            // the fluid.mock.textToSpeech and gpii.firstDiscovery.selfVoicing
+            // provide overrides for parts of fluid.textToSpeech.
+            cancel: {
+                funcName: "fluid.mock.textToSpeech.cancel",
+                args: ["{that}", "{that}.handleEnd"]
             }
         }
     });
