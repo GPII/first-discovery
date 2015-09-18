@@ -105,6 +105,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     gpii.firstDiscovery.tts.prefsEditor.speakPanelMessage = function (that, stepCountMsgTemplate, panelMsgTemplate, speakFn, speakOpts) {
+        // Prevent the function to run when the model state information is relayed.
+        // At then the component has been instantiated, so using 'excludeSource: "init"'
+        // does not prevent this function to be triggered as a model listener.
+        if (!that.panels) {
+            return;
+        }
+
         var currentPanelNum = that.model.currentPanelNum;
         var stepCountMsg = fluid.stringTemplate(stepCountMsgTemplate, {
             currentPanel: currentPanelNum,
