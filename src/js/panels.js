@@ -925,7 +925,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     // available while hidden. Instead, we need to rerender again when
     // the user naviagates back to the language panel.
     fluid.defaults("gpii.firstDiscovery.panel.lang.prefEditorConnection", {
-        gradeNames: ["fluid.eventedComponent"],
+        gradeNames: ["fluid.component"],
         listeners: {
             "{prefsEditor}.events.onPanelShown": {
                 funcName: "gpii.firstDiscovery.panel.lang.refreshDisplayedLangsOnShowPanel",
