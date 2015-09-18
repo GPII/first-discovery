@@ -162,7 +162,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     *******************************************************************************/
 
     fluid.defaults("gpii.firstDiscovery.schemas.language", {
-        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        gradeNames: ["fluid.prefs.schemas"],
         schema: {
             "gpii.firstDiscovery.language": {
                 "type": "string",
@@ -173,7 +173,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     fluid.defaults("gpii.firstDiscovery.schemas.speak", {
-        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        gradeNames: ["fluid.prefs.schemas"],
         schema: {
             "gpii.firstDiscovery.speak": {
                 "type": "boolean",
@@ -183,7 +183,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     fluid.defaults("gpii.firstDiscovery.schemas.textSize", {
-        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        gradeNames: ["fluid.prefs.schemas"],
         schema: {
             "fluid.prefs.textSize": {
                 "type": "number",
@@ -196,7 +196,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     fluid.defaults("gpii.firstDiscovery.schemas.speechRate", {
-        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        gradeNames: ["fluid.prefs.schemas"],
         schema: {
             "gpii.firstDiscovery.speechRate": {
                 "type": "number",
@@ -209,7 +209,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     fluid.defaults("gpii.firstDiscovery.schemas.onScreenKeyboard", {
-        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        gradeNames: ["fluid.prefs.schemas"],
         schema: {
             "gpii.firstDiscovery.onScreenKeyboard": {
                 "type": "boolean",
@@ -219,7 +219,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     fluid.defaults("gpii.firstDiscovery.schemas.captions", {
-        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        gradeNames: ["fluid.prefs.schemas"],
         schema: {
             "gpii.firstDiscovery.captions": {
                 "type": "boolean",
@@ -229,7 +229,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     fluid.defaults("gpii.firstDiscovery.schemas.showSouns", {
-        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        gradeNames: ["fluid.prefs.schemas"],
         schema: {
             "gpii.firstDiscovery.showSounds": {
                 "type": "boolean",
@@ -239,7 +239,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     });
 
     fluid.defaults("gpii.firstDiscovery.schemas.stickyKeys", {
-        gradeNames: ["autoInit", "fluid.prefs.schemas"],
+        gradeNames: ["fluid.prefs.schemas"],
         schema: {
             "gpii.firstDiscovery.stickyKeys": {
                 "type": "boolean",
