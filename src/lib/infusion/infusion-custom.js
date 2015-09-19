@@ -1,4 +1,4 @@
-/*! infusion - v2.0.0-SNAPSHOT Friday, September 18th, 2015, 10:44:27 AM*/
+/*! infusion - v2.0.0-SNAPSHOT Friday, September 18th, 2015, 11:36:40 AM*/
 /*!
  * jQuery JavaScript Library v1.11.0
  * http://jquery.com/
@@ -32658,7 +32658,7 @@ var fluid_2_0 = fluid_2_0 || {};
 
     /**
      * Saves the current model and fires onSave
- */
+     */
     fluid.prefs.prefsEditor.save = function (that) {
         if (!that.model) {  // Don't save a reset model
             return;
@@ -32666,7 +32666,7 @@ var fluid_2_0 = fluid_2_0 || {};
 
         var initialModel = that.initialModel,
             userSelections = fluid.copy(that.model),
-            changedSelections = {};
+            changedPrefs = {};
 
         // Only save the changed preferences so the future default value change on preferences can still be correctly merged with changed preferences
         if (fluid.model.diff(userSelections.preferences, initialModel.preferences)) {
@@ -32677,13 +32677,17 @@ var fluid_2_0 = fluid_2_0 || {};
             fluid.model.diff(userSelections.preferences, fluid.get(that.initialModel, ["preferences"]), stats);
 
             fluid.each(stats.changeMap, function (state, path) {
-                fluid.set(changedSelections, ["preferences", path], userSelections.preferences[path]);
+                fluid.set(changedPrefs, path, userSelections.preferences[path]);
             });
+
+            if (stats.changes > 0) {
+                userSelections.preferences = changedPrefs;
+            }
         }
 
-        that.events.onSave.fire(changedSelections);
-        that.setSettings(changedSelections);
-        return changedSelections;
+        that.events.onSave.fire(userSelections);
+        that.setSettings(userSelections);
+        return userSelections;
     };
 
     fluid.prefs.prefsEditor.saveAndApply = function (that) {
