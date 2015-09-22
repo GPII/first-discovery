@@ -416,10 +416,92 @@ https://github.com/gpii/universal/LICENSE.txt
         }]
     });
 
+    // Verify the save of state information
+    fluid.defaults("gpii.tests.firstDiscoverySaveStates", {
+        gradeNames: ["gpii.tests.firstDiscovery"],
+        components: {
+            prefsEditorLoader: {
+                options: {
+                    listeners: {
+                        "onPrefsEditorReady.escalate": "{firstDiscoverySaveStates}.events.onPrefsEditorReady",
+                        "onPanelShown.escalate": "{firstDiscoverySaveStates}.events.onPanelShown"
+                    }
+                }
+            }
+        },
+        events: {
+            onPrefsEditorReady: null,
+            onPanelShown: null
+        }
+    });
+
+    fluid.defaults("gpii.tests.firstDiscovery.saveStatesTests", {
+        gradeNames: ["fluid.test.testEnvironment"],
+        components: {
+            firstDiscovery: {
+                type: "gpii.tests.firstDiscoverySaveStates",
+                container: "#gpiic-fd-saveStates",
+                createOnEvent: "{saveStatesTester}.events.onTestCaseStart"
+            },
+            saveStatesTester: {
+                type: "gpii.tests.firstDiscovery.saveStatesTester"
+            }
+        }
+    });
+
+    gpii.tests.firstDiscovery.verifySavedStates = function (msg, statesModel, expected) {
+        jqUnit.assertDeepEq(msg, expected, statesModel);
+    };
+
+    fluid.defaults("gpii.tests.firstDiscovery.saveStatesTester", {
+        gradeNames: ["fluid.test.testCaseHolder"],
+        initialIconWidth: null,
+        modules: [{
+            name: "Tests the save of the state information",
+            tests: [{
+                // expect: 2,
+                name: "Re-collect the nav icon size at the text size change",
+                sequence: [{
+                    listener: "gpii.tests.firstDiscovery.verifySavedStates",
+                    args: ["The initial states are saved",
+                        "{firstDiscovery}.prefsEditorLoader.prefsEditor.model.states",
+                        {
+                            currentPanelNum: 1,
+                            stickyKey: {
+                                tryAccommodation: false
+                            },
+                            visitedPanelNums: []
+                        }
+                    ],
+                    priority: "last",
+                    event: "{saveStatesTests firstDiscovery}.events.onPrefsEditorReady"
+                }, {
+                    jQueryTrigger: "click",
+                    element: "{firstDiscovery}.prefsEditorLoader.nav.navButtons.dom.next"
+                }, {
+                    listener: "gpii.tests.firstDiscovery.verifySavedStates",
+                    args: ["The state change when moving to the next panel is saved",
+                        "{firstDiscovery}.prefsEditorLoader.prefsEditor.model.states",
+                        {
+                            currentPanelNum: 2,
+                            stickyKey: {
+                                tryAccommodation: false
+                            },
+                            visitedPanelNums: [1]
+                        }
+                    ],
+                    spec: {path: "currentPanelNum", priority: "last"},
+                    changeEvent: "{firstDiscovery}.prefsEditorLoader.applier.modelChanged"
+                }]
+            }]
+        }]
+    });
+
     $(document).ready(function () {
         fluid.test.runTests([
             "gpii.tests.firstDiscovery.langTests",
-            "gpii.tests.firstDiscovery.navIconsTests"
+            "gpii.tests.firstDiscovery.navIconsTests",
+            "gpii.tests.firstDiscovery.saveStatesTests"
         ]);
     });
 
