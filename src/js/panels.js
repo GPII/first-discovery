@@ -1004,8 +1004,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "{that}.options.controlValues.theme",
                     "{that}.options.controlValues.theme.0",
                     "{that}.options.classnameMap.theme"
-                ],
-                dynamic: true
+                ]
             }
         }
     });
