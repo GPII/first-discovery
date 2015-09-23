@@ -268,17 +268,17 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     gpii.tests.firstDiscovery.testInitialScrolling = function (that, testData) {
-        testData.scrollTop = that.prefsEditorLoader.prefsEditor.preferences.gpii_firstDiscovery_panel_lang.locate("controlsDiv")[0].scrollTop;
+        testData.scrollTop = that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.locate("controlsDiv")[0].scrollTop;
         jqUnit.assertTrue("The control div is scrolled", testData.scrollTop > 0);
     };
 
     gpii.tests.firstDiscovery.testScrollingAtHidden = function (that) {
-        var scrollTop = that.prefsEditorLoader.prefsEditor.preferences.gpii_firstDiscovery_panel_lang.locate("controlsDiv")[0].scrollTop;
+        var scrollTop = that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.locate("controlsDiv")[0].scrollTop;
         jqUnit.assertTrue("The control div is scrolled", scrollTop === 0);
     };
 
     gpii.tests.firstDiscovery.testScrollingAtVisible = function (that, testData) {
-        var scrollTop = that.prefsEditorLoader.prefsEditor.preferences.gpii_firstDiscovery_panel_lang.locate("controlsDiv")[0].scrollTop;
+        var scrollTop = that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_lang.locate("controlsDiv")[0].scrollTop;
         jqUnit.assertTrue("The control div is scrolled", scrollTop > 0);
         jqUnit.assertFalse("The scrolled distance is different from the initial distance", scrollTop === testData.scrollTop);
     };
@@ -402,7 +402,7 @@ https://github.com/gpii/universal/LICENSE.txt
                     event: "{navIconsTests firstDiscovery}.events.onPrefsEditorReady"
                 }, {
                     jQueryTrigger: "click",
-                    element: "{firstDiscovery}.prefsEditorLoader.prefsEditor.preferences.gpii_firstDiscovery_panel_textSize.dom.increase"
+                    element: "{firstDiscovery}.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_textSize.dom.increase"
                 }, {
                     func: "{firstDiscovery}.prefsEditorLoader.applier.change",
                     args: ["currentPanelNum", 8]
@@ -464,15 +464,14 @@ https://github.com/gpii/universal/LICENSE.txt
                 sequence: [{
                     listener: "gpii.tests.firstDiscovery.verifySavedStates",
                     args: ["The initial states are saved",
-                        "{firstDiscovery}.prefsEditorLoader.prefsEditor.model.states",
-                        {
-                            currentPanelNum: 1,
-                            stickyKey: {
-                                tryAccommodation: false
-                            },
-                            visitedPanelNums: []
-                        }
-                    ],
+                    "{firstDiscovery}.prefsEditorLoader.prefsEditor.model.states",
+                    {
+                        currentPanelNum: 1,
+                        stickyKey: {
+                            tryAccommodation: false
+                        },
+                        visitedPanelNums: []
+                    }],
                     priority: "last",
                     event: "{saveStatesTests firstDiscovery}.events.onPrefsEditorReady"
                 }, {
@@ -481,17 +480,62 @@ https://github.com/gpii/universal/LICENSE.txt
                 }, {
                     listener: "gpii.tests.firstDiscovery.verifySavedStates",
                     args: ["The state change when moving to the next panel is saved",
-                        "{firstDiscovery}.prefsEditorLoader.prefsEditor.model.states",
-                        {
-                            currentPanelNum: 2,
-                            stickyKey: {
-                                tryAccommodation: false
-                            },
-                            visitedPanelNums: [1]
-                        }
-                    ],
+                    "{firstDiscovery}.prefsEditorLoader.prefsEditor.model.states",
+                    {
+                        currentPanelNum: 2,
+                        stickyKey: {
+                            tryAccommodation: false
+                        },
+                        visitedPanelNums: [1]
+                    }],
                     spec: {path: "currentPanelNum", priority: "last"},
                     changeEvent: "{firstDiscovery}.prefsEditorLoader.applier.modelChanged"
+                }, {
+                    func: "{firstDiscovery}.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_keyboard.applier.change",
+                    args: ["tryAccommodation", true]
+                }, {
+                    listener: "gpii.tests.firstDiscovery.verifySavedStates",
+                    args: ["The state change on keyboardPanel model path \"tryAccommodation\" is saved",
+                    "{firstDiscovery}.prefsEditorLoader.prefsEditor.model.states",
+                    {
+                        currentPanelNum: 2,
+                        stickyKey: {
+                            tryAccommodation: true
+                        },
+                        visitedPanelNums: [1]
+                    }],
+                    spec: {path: "tryAccommodation", priority: "last"},
+                    changeEvent: "{firstDiscovery}.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_keyboard.applier.modelChanged"
+                }, {
+                    func: "{firstDiscovery}.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_keyboard.applier.change",
+                    args: ["offerAssistance", true]
+                }, {
+                    listener: "gpii.tests.firstDiscovery.verifySavedStates",
+                    args: ["The state change on keyboardPanel model path \"offerAssistance\" is saved",
+                    "{firstDiscovery}.prefsEditorLoader.prefsEditor.model.states",
+                    {
+                        currentPanelNum: 2,
+                        stickyKey: {
+                            tryAccommodation: true,
+                            offerAssistance: true
+                        },
+                        visitedPanelNums: [1]
+                    }],
+                    spec: {path: "offerAssistance", priority: "last"},
+                    changeEvent: "{firstDiscovery}.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_keyboard.applier.modelChanged"
+                }, {
+                    func: "{firstDiscovery}.prefsEditorLoader.prefsEditor.reset"
+                }, {
+                    listener: "gpii.tests.firstDiscovery.verifySavedStates",
+                    args: ["The state has been reset to the initial state",
+                    "{firstDiscovery}.prefsEditorLoader.prefsEditor.model.states",
+                    {
+                        stickyKey: {
+                            tryAccommodation: false
+                        }
+                    }],
+                    priority: "last",
+                    event: "{firstDiscovery}.prefsEditorLoader.prefsEditor.events.afterReset"
                 }]
             }]
         }]
