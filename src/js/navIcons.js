@@ -195,7 +195,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     gpii.firstDiscovery.navIcons.saveVisitedPanelNum = function (that, currentPanelNum, prevPanelNum) {
         var visitedPanelNums = that.model.visitedPanelNums;
-        if (currentPanelNum > prevPanelNum && $.inArray(prevPanelNum, visitedPanelNums) === -1) {
+        if (currentPanelNum > prevPanelNum && $.inArray(prevPanelNum, visitedPanelNums) === -1 && $.inArray(prevPanelNum, that.options.iconHoles)) {
             // Cannot fire the change request directly on visitedPanelNums due to http://issues.fluidproject.org/browse/FLUID-3504
             that.applier.change("visitedPanelNums." + visitedPanelNums.length, prevPanelNum);
         }
