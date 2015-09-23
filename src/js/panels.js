@@ -551,7 +551,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * language panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.lang", {
-        gradeNames: ["fluid.prefs.panel", "{that}.options.prefsEditorConnection"],
+        gradeNames: ["gpii.firstDiscovery.attachTooltip", "fluid.prefs.panel", "{that}.options.prefsEditorConnection"],
         preferenceMap: {
             "gpii.firstDiscovery.language": {
                 "model.lang": "default",
@@ -567,60 +567,21 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 }
             }
         },
+        tooltipContentMap: {
+            "prev": "navButtonTooltip",
+            "next": "navButtonTooltip",
+            "langRow": {
+                tooltip: "{lang}.options.stringArrayIndex.tooltip",
+                tooltipAtSelect: "{lang}.options.stringArrayIndex.tooltipAtSelect"
+            }
+        },
         components: {
-            attachTooltipOnLang: {
-                type: "gpii.firstDiscovery.attachTooltip",
-                container: "{lang}.container",
+            tooltip: {
                 options: {
-                    selectors: "{lang}.options.selectors",
-                    modelRelay: {
-                        source: "{lang}.model.lang",
-                        target: "currentSelectedIndex",
-                        singleTransform: {
-                            type: "fluid.transforms.indexOf",
-                            array: "{lang}.options.controlValues.lang",
-                            value: "{lang}.model.lang"
-                        }
-                    },
-                    tooltipContentMap: {
-                        "prev": "navButtonTooltip",
-                        "next": "navButtonTooltip",
-                        "langRow": {
-                            tooltip: "{lang}.options.stringArrayIndex.tooltip",
-                            tooltipAtSelect: "{lang}.options.stringArrayIndex.tooltipAtSelect"
-                        }
-                    },
-                    components: {
-                        tooltip: {
-                            options: {
-                                listeners: {
-                                    "afterOpen.setTooltipLang": {
-                                        listener: "gpii.firstDiscovery.panel.lang.setTooltipLang"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    modelListeners: {
-                        // Must close the tooltip before disabling buttons because
-                        // the tooltip is defined not to show for the disabled DOM
-                        // elements, closing the tooltip after the disabling would
-                        // cause the tooltip component not able to find the target.
-                        "{lang}.model.atStartOfLangs": {
-                            listener: "{that}.tooltip.close",
-                            priority: 10
-                        },
-                        "{lang}.model.atEndOfLangs": {
-                            listener: "{that}.tooltip.close",
-                            priority: 10
-                        }
-                    },
                     listeners: {
-                        "{lang}.events.afterRender": {
-                            funcName: "{that}.tooltip.updateIdToContent"
-                        },
-                        // Need to close the tooltip before the DOM elements are removed
-                        "{lang}.events.onRenderTree": "{that}.tooltip.close"
+                        "afterOpen.setTooltipLang": {
+                            listener: "gpii.firstDiscovery.panel.lang.setTooltipLang"
+                        }
                     }
                 }
             }
@@ -658,6 +619,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 operator: "===",
                 right: "{that}.maxViewportFirstLangIndex"
             }
+        }, {
+            source: "lang",
+            target: "currentSelectedIndex",
+            singleTransform: {
+                type: "fluid.transforms.indexOf",
+                array: "{that}.options.controlValues.lang",
+                value: "{that}.model.lang"
+            }
         }],
         modelListeners: {
             selectedLang: {
@@ -666,18 +635,24 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             viewportFirstLangIndex: {
                 listener: "{that}.updateDisplayedLangs"
             },
-            atStartOfLangs: {
+            atStartOfLangs: [{
+                listener: "{that}.tooltip.close",
+                priority: 10
+            }, {
                 "this": "{that}.dom.prev",
                 method: "prop",
                 args: ["disabled", "{that}.model.atStartOfLangs"],
                 priority: 5
-            },
-            atEndOfLangs: {
+            }],
+            atEndOfLangs: [{
+                listener: "{that}.tooltip.close",
+                priority: 10
+            }, {
                 "this": "{that}.dom.next",
                 method: "prop",
                 args: ["disabled", "{that}.model.atEndOfLangs"],
                 priority: 5
-            }
+            }]
         },
         numOfLangPerPage: 3,
         selectors: {
@@ -780,6 +755,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 args: ["{that}"],
                 priority: 10
             },
+            "afterRender.updateIdToContent": {
+                funcName: "{that}.tooltip.updateIdToContent"
+            },
+            // Need to close the tooltip before the DOM elements are removed
+            "onRenderTree.closeTooltip": "{that}.tooltip.close",
             "langButtonsReady.displayActiveLang": {
                 funcName: "gpii.firstDiscovery.panel.lang.displayActiveLang",
                 args: ["{that}", "{that}.model.lang"]
