@@ -569,7 +569,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         components: {
             attachTooltipOnLang: {
-                type: "gpii.firstDiscovery.panel.lang.attachTooltipOnLang",
+                type: "gpii.firstDiscovery.attachTooltip",
                 container: "{lang}.container",
                 options: {
                     selectors: "{lang}.options.selectors",
@@ -588,6 +588,17 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         "langRow": {
                             tooltip: "{lang}.options.stringArrayIndex.tooltip",
                             tooltipAtSelect: "{lang}.options.stringArrayIndex.tooltipAtSelect"
+                        }
+                    },
+                    components: {
+                        tooltip: {
+                            options: {
+                                listeners: {
+                                    "afterOpen.setTooltipLang": {
+                                        listener: "gpii.firstDiscovery.panel.lang.setTooltipLang"
+                                    }
+                                }
+                            }
                         }
                     },
                     modelListeners: {
@@ -893,29 +904,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         $("html").attr("lang", currentLang);
     };
 
-    // TODO: Temporary solution to remove the fluid.demands call.
-    // This should be further refactored to make it easier to configure
-    // by an integrator and to simplify the the implementation as a whole.
-    fluid.defaults("gpii.firstDiscovery.panel.lang.attachTooltipOnLang", {
-        gradeNames: ["gpii.firstDiscovery.attachTooltip"],
-        components: {
-            tooltip: {
-                options: {
-                    styles: {
-                        tooltip: "gpii-fd-tooltip-lang"
-                    },
-                    listeners: {
-                        "afterOpen.setLangAttr": {
-                            priority: -2,
-                            listener: "gpii.firstDiscovery.panel.lang.attachTooltipOnLang.setLangAttr"
-                        }
-                    }
-                }
-            }
-        }
-    });
-
-    gpii.firstDiscovery.panel.lang.attachTooltipOnLang.setLangAttr = function (that, originalTarget, tooltip) {
+    gpii.firstDiscovery.panel.lang.setTooltipLang = function (that, originalTarget, tooltip) {
         tooltip.attr("lang", $(originalTarget).attr("lang"));
     };
 
