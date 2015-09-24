@@ -131,7 +131,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         events: {
             onCreateIcon: null,
-            onSetIconState: null,
             onSetConfirmedIcon: null,
             onSetActiveIcon: null
         },
@@ -202,12 +201,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     gpii.firstDiscovery.navIcons.setInitialIconState = function (that) {
-        var numOfVisitedPanels = that.model.visitedPanelNums.length;
-        if (numOfVisitedPanels > 0) {
-            fluid.each(that.model.visitedPanelNums, function (panelNum) {
-                that.events.onSetConfirmedIcon.fire(panelNum);
-            });
-        }
+        fluid.each(that.model.visitedPanelNums, function (panelNum) {
+            that.events.onSetConfirmedIcon.fire(panelNum);
+        });
         that.events.onSetActiveIcon.fire(that.model.currentPanelNum);
     };
 

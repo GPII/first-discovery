@@ -102,9 +102,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                         }
                     },
                     distributeOptions: [{
-                        record: "gpii.firstDiscovery.panel.lang.prefEditorConnection",
-                        target: "{that > gpii.firstDiscovery.panel.lang}.options.prefsEditorConnection"
-                    }, {
                         record: {
                             offerAssistance: "{prefsEditor}.model.states.stickyKey.offerAssistance",
                             tryAccommodation: "{prefsEditor}.model.states.stickyKey.tryAccommodation"

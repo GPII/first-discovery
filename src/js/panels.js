@@ -382,9 +382,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     };
 
-    // Delete model.offerAssistance at prefsEditor reset so the keyboard panel can be restored to its
-    // initial start page. When model.offerAssistance is presented in the model, it must be a boolean value.
-    // And, either true or false value would trigger a non-start page to render.
+    // Delete the model path "offerAssistance" at prefsEditor reset so the keyboard panel can be restored to its
+    // initial state. The present of an "offerAssistance" model value triggers a non-start page to render:
+    // 1. true value causes the "try it" button to show;
+    // 2. false value causes "don't need assistance" page to show.
     fluid.defaults("gpii.firstDiscovery.panel.keyboard.prefEditorConnection", {
         gradeNames: ["fluid.component"],
         listeners: {
@@ -395,9 +396,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    // When the entire tool is reset to a fresh start, to make the sticky key panel back to its initial page,
-    // model.offerAssistance needs to be non-existing since, 1. true value causes the "try it" button to show;
-    // 2. false value causes "don't need assistance" page to show.
     gpii.firstDiscovery.panel.keyboard.prefEditorConnection.resetModel = function (that) {
         that.applier.fireChangeRequest({path: "offerAssistance", type: "DELETE"});
         that.applier.change("tryAccommodation", false);
@@ -575,7 +573,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * language panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.lang", {
-        gradeNames: ["gpii.firstDiscovery.attachTooltip.renderer", "fluid.prefs.panel", "{that}.options.prefsEditorConnection"],
+        gradeNames: ["gpii.firstDiscovery.attachTooltip.renderer", "fluid.prefs.panel"],
         preferenceMap: {
             "gpii.firstDiscovery.language": {
                 "model.lang": "default",
