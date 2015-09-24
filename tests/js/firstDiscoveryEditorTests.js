@@ -459,7 +459,7 @@ https://github.com/gpii/universal/LICENSE.txt
         modules: [{
             name: "Tests the save of the state information",
             tests: [{
-                // expect: 2,
+                expect: 5,
                 name: "Re-collect the nav icon size at the text size change",
                 sequence: [{
                     listener: "gpii.tests.firstDiscovery.verifySavedStates",

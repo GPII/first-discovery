@@ -305,7 +305,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 excludeSource: "init"
             }, {
                 listener: "gpii.firstDiscovery.panel.keyboard.destroy",
-                args: ["{that}"]
+                args: ["{stickyKeysAssessor}"]
             }]
         },
         distributeOptions: {
@@ -330,9 +330,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     gpii.firstDiscovery.panel.keyboard.destroy = function (that) {
-        var stickyKeysAssessor = that.stickyKeysAssessor;
-        if (stickyKeysAssessor) {
-            stickyKeysAssessor.destroy();
+        if (that) {
+            that.destroy();
         }
     };
 

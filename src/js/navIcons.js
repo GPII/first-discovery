@@ -136,17 +136,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         listeners: {
             "onCreate.createIcons": {
-                funcName: "gpii.firstDiscovery.navIcons.createIcons",
-                priority: 3
+                funcName: "gpii.firstDiscovery.navIcons.createIcons"
             },
             "onCreate.setInitialIconState": {
                 funcName: "gpii.firstDiscovery.navIcons.setInitialIconState",
                 args: ["{that}"],
-                priority: 2
+                priority: "after:createIcons"
             },
             "onCreate.showIconPage": {
                 funcName: "{that}.showIconPage",
-                priority: 2
+                priority: "after:createIcons"
             }
         },
         invokers: {
