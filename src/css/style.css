@@ -628,14 +628,6 @@ button {
     bottom: -1rem;
 }
 
-.gpii-fd-tooltip-lang {
-    width: auto;
-    max-width: 8.5em;
-    font-size: 2rem;
-    padding: 0.5rem;
-    background-color: #fed73a;
-}
-
 /* Keyboard screens */
 input[type="text"].gpii-fd-keyboard-input {
     font-size: 2rem;

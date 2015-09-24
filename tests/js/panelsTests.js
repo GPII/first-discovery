@@ -266,7 +266,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.langTester.verifyTooltip = function (that) {
-        gpii.tests.utils.verifyTooltipContents("language button row element", that.locate("langRow"), that.model.lang, that.attachTooltipOnLang.tooltip.model.idToContent, that.options.controlValues.lang, that.options.stringArrayIndex.lang, that.options.messageBase);
+        gpii.tests.utils.verifyTooltipContents("language button row element", that.locate("langRow"), that.model.lang, that.tooltip.model.idToContent, that.options.controlValues.lang, that.options.stringArrayIndex.lang, that.options.messageBase);
     };
 
     gpii.tests.langTester.verifyTooltipLang = function (tooltip, expectedLang) {
@@ -276,10 +276,10 @@ https://github.com/gpii/universal/LICENSE.txt
     gpii.tests.langTester.verifyRendering = function (that) {
         var messages = that.options.messageBase,
             stringArray = that.options.stringArrayIndex.lang,
-            idToContent = that.attachTooltipOnLang.tooltip.model.idToContent;
+            idToContent = that.tooltip.model.idToContent;
 
-        jqUnit.assertNotUndefined("The subcomponent \"attachTooltipOnLang\" has been instantiated", that.attachTooltipOnLang);
-        jqUnit.assertNotUndefined("The gradechild component \"tooltip\" has been instantiated", that.attachTooltipOnLang.tooltip);
+        jqUnit.assertNotUndefined("The subcomponent \"tooltip\" has been instantiated", that.tooltip);
+        jqUnit.assertNotUndefined("The gradechild component \"tooltip\" has been instantiated", that.tooltip);
 
         jqUnit.assertEquals("The instruction has been set correctly.", messages.langInstructions, that.locate("instructions").text());
         var numAriaSelectedTrue = 0;
