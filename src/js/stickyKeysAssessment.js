@@ -16,7 +16,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.registerNamespace("gpii.firstDiscovery.keyboard");
 
     fluid.defaults("gpii.firstDiscovery.keyboard.stickyKeysAssessment", {
-        gradeNames: ["fluid.modelRelayComponent", "autoInit"],
+        gradeNames: ["fluid.modelComponent"],
         model: {
             // userInput: string, the user input value to compare against the requiredInput value.
             // offerAssistance: boolean

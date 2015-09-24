@@ -18,7 +18,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     fluid.defaults("gpii.firstDiscovery.tts.tooltipHookup", {
         invokers: {
             speak: {
-                func: "{fluid.textToSpeech}.queueSpeech"
+                func: "{gpii.firstDiscovery.selfVoicing}.queueSpeech"
             }
         },
         listeners: {
@@ -38,51 +38,73 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         });
     };
 
-    fluid.registerNamespace("gpii.firstDiscovery.tts.fdHookup");
-
-    // TODO: Currently this hookup is intended to be added to gpii.firstDiscovery.firstDiscoveryEditor
-    // directly. However, it should be reconfigured like the tooltip hookup and placed at the panel level.
-    // The issue at the moment is that a given panel doesn't know when this it is visible. All this information
-    // is contained at the editor level, which also doesn't really know which panel component is shown.
+    // TODO: Currently this hookup is intended to be added to the prefsEditor in gpii.firstDiscovery.firstDiscoveryEditor.
+    // However, it should be reconfigured like the tooltip hookup and placed at the panel level (i.e. added to each panel).
+    // The issue at the moment is that a given panel doesn't know when it is visible.
     // see: https://issues.fluidproject.org/browse/FLOE-409
-    fluid.defaults("gpii.firstDiscovery.tts.fdHookup", {
-        components: {
-            selfVoicing: {
-                options: {
-                    invokers: {
-                        speakPanelMessage: {
-                            funcName: "gpii.firstDiscovery.tts.fdHookup.speakPanelMessage",
-                            args: ["{firstDiscoveryEditor}", "{that}.msgLookup.stepCountMsg", "{that}.msgLookup.panelMsg", "{that}.queueSpeech", "{arguments}.0"]
-                        },
-                        speakPanelInstructions: {
-                            funcName: "gpii.firstDiscovery.tts.fdHookup.speakPanelInstructions",
-                            args: ["{firstDiscoveryEditor}", "{that}.queueSpeech", "{arguments}.0"]
-                        }
-                    },
-                    listeners: {
-                        "onCreate.bindKeypress": {
-                            listener: "gpii.firstDiscovery.keyboardShortcut.bindShortcut",
-                            args: ["body", gpii.firstDiscovery.keyboardShortcut.key.h, [], "{that}.speakPanelInstructions"]
-                        }
-                    },
-                    modelListeners: {
-                        "{firstDiscoveryEditor}.model.currentPanelNum": "{that}.speakPanelMessage"
-                    }
-                }
+    fluid.defaults("gpii.firstDiscovery.tts.prefsEditor", {
+        gradeNames: ["gpii.firstDiscovery.msgLookup"],
+        invokers: {
+            speakPanelMessage: {
+                funcName: "gpii.firstDiscovery.tts.prefsEditor.speakPanelMessage",
+                args: ["{firstDiscoveryEditor}", "{that}.msgLookup.stepCountMsg", "{that}.msgLookup.panelMsg", "{gpii.firstDiscovery.selfVoicing}.queueSpeech", "{arguments}.0"]
+            },
+            speakPanelInstructions: {
+                funcName: "gpii.firstDiscovery.tts.prefsEditor.speakPanelInstructions",
+                args: ["{firstDiscoveryEditor}", "{gpii.firstDiscovery.selfVoicing}.queueSpeech", "{arguments}.0"]
             }
         },
+        listeners: {
+            "onCreate.bindKeypress": {
+                listener: "gpii.firstDiscovery.keyboardShortcut.bindShortcut",
+                args: ["body", gpii.firstDiscovery.keyboardShortcut.key.h, [], "{that}.speakPanelInstructions"]
+            },
+            "onReady.speakPanelMessage": {
+                listener: "{that}.speakPanelMessage",
+                priority: "last"
+            }
+        },
+        modelRelay: [{
+            source: "preferences.gpii_firstDiscovery_speak",
+            target: "{gpii.firstDiscovery.selfVoicing}.model.enabled",
+            backward: "never",
+            singleTransform: {
+                type: "fluid.transforms.identity"
+            }
+        }, {
+            source: "preferences.gpii_firstDiscovery_language",
+            target: "{gpii.firstDiscovery.selfVoicing}.model.utteranceOpts.lang",
+            backward: "never",
+            singleTransform: {
+                type: "fluid.transforms.identity"
+            }
+        }, {
+            source: "preferences.gpii_firstDiscovery_speechRate",
+            target: "{gpii.firstDiscovery.selfVoicing}.model.utteranceOpts.rate",
+            backward: "never",
+            singleTransform: {
+                type: "fluid.transforms.identity"
+            }
+        }],
+        modelListeners: {
+            "{firstDiscoveryEditor}.model.currentPanelNum": {
+                listener: "{that}.speakPanelMessage",
+                excludeSource: "init"
+            }
+        },
+        messageBase: "{messageLoader}.resources.prefsEditor.resourceText",
         panelInstructionsSelector: ".gpiic-fd-instructions"
     });
 
-    gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions = function (that) {
+    gpii.firstDiscovery.tts.prefsEditor.getCurrentPanelInstructions = function (that) {
         var panel = that.panels.eq(that.model.currentPanelNum - 1);
-        var texts = fluid.transform(panel.find(that.options.panelInstructionsSelector).filter(":visible"), function (elem) {
+        var texts = fluid.transform(panel.find(that.prefsEditor.options.panelInstructionsSelector).filter(":visible"), function (elem) {
             return $.text(elem);
         });
         return texts.join(" ");
     };
 
-    gpii.firstDiscovery.tts.fdHookup.speakPanelMessage = function (that, stepCountMsgTemplate, panelMsgTemplate, speakFn, speakOpts) {
+    gpii.firstDiscovery.tts.prefsEditor.speakPanelMessage = function (that, stepCountMsgTemplate, panelMsgTemplate, speakFn, speakOpts) {
         var currentPanelNum = that.model.currentPanelNum;
         var stepCountMsg = fluid.stringTemplate(stepCountMsgTemplate, {
             currentPanel: currentPanelNum,
@@ -90,13 +112,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         });
         var msg = fluid.stringTemplate(panelMsgTemplate, {
             stepCountMsg: stepCountMsg,
-            instructions: gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions(that)
+            instructions: gpii.firstDiscovery.tts.prefsEditor.getCurrentPanelInstructions(that)
         });
         speakFn(msg, speakOpts);
     };
 
-    gpii.firstDiscovery.tts.fdHookup.speakPanelInstructions = function (that, speakFn, speakOpts) {
-        var msg = gpii.firstDiscovery.tts.fdHookup.getCurrentPanelInstructions(that);
+    gpii.firstDiscovery.tts.prefsEditor.speakPanelInstructions = function (that, speakFn, speakOpts) {
+        var msg = gpii.firstDiscovery.tts.prefsEditor.getCurrentPanelInstructions(that);
 
         speakFn(msg, speakOpts);
     };

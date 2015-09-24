@@ -13,7 +13,7 @@ https://github.com/gpii/universal/LICENSE.txt
     "use strict";
 
     fluid.defaults("gpii.tests.firstDiscovery.helpButton", {
-        gradeNames: ["gpii.firstDiscovery.helpButton", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.helpButton"],
         messageBase: {
             help: "help message"
         }

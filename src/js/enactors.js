@@ -19,7 +19,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * Langauge enactor
      */
     fluid.defaults("gpii.firstDiscovery.enactor.lang", {
-        gradeNames: ["fluid.prefs.enactor", "autoInit"],
+        gradeNames: ["fluid.prefs.enactor"],
         preferenceMap: {
             "gpii.firstDiscovery.language": {
                 "model.lang": "default"

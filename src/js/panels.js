@@ -19,7 +19,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * Ranged panel: used as a grade for text size panel and other panels to adjust their preferences in a range
      */
     fluid.defaults("gpii.firstDiscovery.panel.ranged", {
-        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip.renderer", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.attachTooltip.renderer", "fluid.prefs.panel"],
         // Preferences Maps should direct the default model state
         // to model.value. The component is configured
         // with the expectation that "value" is the salient model property.
@@ -147,7 +147,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     };
 
     fluid.defaults("gpii.firstDiscovery.panel.rangedWithDisabledMsg", {
-        gradeNames: ["gpii.firstDiscovery.panel.ranged", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.panel.ranged"],
         selectors: {
             disabledMsg: ".gpiic-fd-range-disabledMsg"
         },
@@ -182,7 +182,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      */
 
     fluid.defaults("gpii.firstDiscovery.panel.keyboard", {
-        gradeNames: ["fluid.prefs.panel", "autoInit"],
+        gradeNames: ["fluid.prefs.panel"],
         preferenceMap: {
             "gpii.firstDiscovery.stickyKeys": {
                 "model.stickyKeysEnabled": "default"
@@ -235,7 +235,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 createOnEvent: "onInitInput",
                 container: "{that}.dom.input",
                 options: {
-                    gradeNames: ["gpii.firstDiscovery.keyboardInputTts"],
                     model: {
                         userInput: "{keyboard}.model.userInput",
                         stickyKeysEnabled: "{keyboard}.model.stickyKeysEnabled"
@@ -308,6 +307,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 listener: "gpii.firstDiscovery.panel.keyboard.destroy",
                 args: ["{stickyKeysAssessor}"]
             }]
+        },
+        distributeOptions: {
+            source: "{that}.options.keyboardInputGradeNames",
+            target: "{that > keyboardInput}.options.gradeNames"
         }
     });
 
@@ -344,9 +347,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         invokers: {
             speakStickyKeysState: {
                 funcName: "gpii.firstDiscovery.panel.keyboardTts.speakStickyKeysState",
-                args: ["{arguments}.0", "{fluid.textToSpeech}.queueSpeech", "{arguments}.1"]
+                args: ["{arguments}.0", "{gpii.firstDiscovery.selfVoicing}.queueSpeech", "{arguments}.1"]
             },
-            speakPanelInstructions: "{fluid.textToSpeech}.speakPanelInstructions"
+            speakPanelInstructions: "{prefsEditor}.speakPanelInstructions"
         },
         modelListeners: {
             offerAssistance: {
@@ -380,7 +383,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * Text size panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.textSize", {
-        gradeNames: ["gpii.firstDiscovery.panel.ranged", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.panel.ranged"],
         preferenceMap: {
             "fluid.prefs.textSize": {
                 "model.value": "default",
@@ -395,7 +398,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * Speech rate panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.speechRate", {
-        gradeNames: ["gpii.firstDiscovery.panel.rangedWithDisabledMsg", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.panel.rangedWithDisabledMsg"],
         preferenceMap: {
             "gpii.firstDiscovery.speechRate": {
                 "model.value": "default",
@@ -408,7 +411,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
 
     fluid.defaults("gpii.firstDiscovery.panel.speechRate.prefsEditorConnection", {
         model: {
-            enabled: "{prefsEditor}.model.gpii_firstDiscovery_speak"
+            enabled: "{prefsEditor}.model.preferences.gpii_firstDiscovery_speak"
         }
     });
 
@@ -416,7 +419,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * The base component for all yes-no-selection panels
      */
     fluid.defaults("gpii.firstDiscovery.panel.yesNo", {
-        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip.renderer", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.attachTooltip.renderer", "fluid.prefs.panel"],
         modelRelay: [{
             source: "{that}.model.choice",
             target: "{that}.model.value",
@@ -500,7 +503,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * Text to speech panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.speakText", {
-        gradeNames: ["gpii.firstDiscovery.panel.yesNo", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.panel.yesNo"],
         preferenceMap: {
             "gpii.firstDiscovery.speak": {
                 "model.value": "default"
@@ -512,7 +515,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * On screen keyboard panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.onScreenKeyboard", {
-        gradeNames: ["gpii.firstDiscovery.panel.yesNo", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.panel.yesNo"],
         preferenceMap: {
             "gpii.firstDiscovery.onScreenKeyboard": {
                 "model.value": "default"
@@ -524,7 +527,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * Captions panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.captions", {
-        gradeNames: ["gpii.firstDiscovery.panel.yesNo", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.panel.yesNo"],
         preferenceMap: {
             "gpii.firstDiscovery.captions": {
                 "model.value": "default"
@@ -536,7 +539,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * Show sounds panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.showSounds", {
-        gradeNames: ["gpii.firstDiscovery.panel.yesNo", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.panel.yesNo"],
         preferenceMap: {
             "gpii.firstDiscovery.showSounds": {
                 "model.value": "default"
@@ -548,7 +551,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * language panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.lang", {
-        gradeNames: ["fluid.prefs.panel", "{that}.options.prefsEditorConnection", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.attachTooltip.renderer", "fluid.prefs.panel", "{that}.options.prefsEditorConnection"],
         preferenceMap: {
             "gpii.firstDiscovery.language": {
                 "model.lang": "default",
@@ -564,49 +567,21 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 }
             }
         },
+        tooltipContentMap: {
+            "prev": "navButtonTooltip",
+            "next": "navButtonTooltip",
+            "langRow": {
+                tooltip: "{lang}.options.stringArrayIndex.tooltip",
+                tooltipAtSelect: "{lang}.options.stringArrayIndex.tooltipAtSelect"
+            }
+        },
         components: {
-            attachTooltipOnLang: {
-                type: "gpii.firstDiscovery.panel.lang.attachTooltipOnLang",
-                container: "{lang}.container",
+            tooltip: {
                 options: {
-                    selectors: "{lang}.options.selectors",
-                    modelRelay: {
-                        source: "{lang}.model.lang",
-                        target: "currentSelectedIndex",
-                        singleTransform: {
-                            type: "fluid.transforms.indexOf",
-                            array: "{lang}.options.controlValues.lang",
-                            value: "{lang}.model.lang"
-                        }
-                    },
-                    tooltipContentMap: {
-                        "prev": "navButtonTooltip",
-                        "next": "navButtonTooltip",
-                        "langRow": {
-                            tooltip: "{lang}.options.stringArrayIndex.tooltip",
-                            tooltipAtSelect: "{lang}.options.stringArrayIndex.tooltipAtSelect"
-                        }
-                    },
-                    modelListeners: {
-                        // Must close the tooltip before disabling buttons because
-                        // the tooltip is defined not to show for the disabled DOM
-                        // elements, closing the tooltip after the disabling would
-                        // cause the tooltip component not able to find the target.
-                        "{lang}.model.atStartOfLangs": {
-                            listener: "{that}.tooltip.close",
-                            priority: 10
-                        },
-                        "{lang}.model.atEndOfLangs": {
-                            listener: "{that}.tooltip.close",
-                            priority: 10
-                        }
-                    },
                     listeners: {
-                        "{lang}.events.afterRender": {
-                            funcName: "{that}.tooltip.updateIdToContent"
-                        },
-                        // Need to close the tooltip before the DOM elements are removed
-                        "{lang}.events.onRenderTree": "{that}.tooltip.close"
+                        "afterOpen.setTooltipLang": {
+                            listener: "gpii.firstDiscovery.panel.lang.setTooltipLang"
+                        }
                     }
                 }
             }
@@ -644,6 +619,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 operator: "===",
                 right: "{that}.maxViewportFirstLangIndex"
             }
+        }, {
+            source: "lang",
+            target: "currentSelectedIndex",
+            singleTransform: {
+                type: "fluid.transforms.indexOf",
+                array: "{that}.options.controlValues.lang",
+                value: "{that}.model.lang"
+            }
         }],
         modelListeners: {
             selectedLang: {
@@ -652,18 +635,24 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             viewportFirstLangIndex: {
                 listener: "{that}.updateDisplayedLangs"
             },
-            atStartOfLangs: {
+            atStartOfLangs: [{
+                listener: "{that}.tooltip.close",
+                priority: 10
+            }, {
                 "this": "{that}.dom.prev",
                 method: "prop",
                 args: ["disabled", "{that}.model.atStartOfLangs"],
                 priority: 5
-            },
-            atEndOfLangs: {
+            }],
+            atEndOfLangs: [{
+                listener: "{that}.tooltip.close",
+                priority: 10
+            }, {
                 "this": "{that}.dom.next",
                 method: "prop",
                 args: ["disabled", "{that}.model.atEndOfLangs"],
                 priority: 5
-            }
+            }]
         },
         numOfLangPerPage: 3,
         selectors: {
@@ -766,6 +755,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 args: ["{that}"],
                 priority: 10
             },
+            // Need to close the tooltip before the DOM elements are removed
+            "onRenderTree.closeTooltip": "{that}.tooltip.close",
             "langButtonsReady.displayActiveLang": {
                 funcName: "gpii.firstDiscovery.panel.lang.displayActiveLang",
                 args: ["{that}", "{that}.model.lang"]
@@ -890,31 +881,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         $("html").attr("lang", currentLang);
     };
 
-    // This component is needed for the following demands block to be only applied to the language panel "gpii.firstDiscovery.panel.lang".
-    // Without this component being the sub-component of the language panel, according to http://wiki.fluidproject.org/display/docs/Contexts,
-    // when the context component of the demands block was the language panel itself, the demands block would also be applied to siblings of
-    // the language panel. To work around this issue, another layer of containment needs to be added.
-    // This component and the demands block should be removed when the new framework (http://issues.fluidproject.org/browse/FLUID-5249)
-    // is in use.
-    fluid.defaults("gpii.firstDiscovery.panel.lang.attachTooltipOnLang", {
-        gradeNames: ["gpii.firstDiscovery.attachTooltip", "autoInit"]
-    });
-
-    fluid.demands("fluid.tooltip", ["gpii.firstDiscovery.panel.lang.attachTooltipOnLang"], {
-        options: {
-            styles: {
-                tooltip: "gpii-fd-tooltip-lang"
-            },
-            listeners: {
-                "afterOpen.setLangAttr": {
-                    priority: -2,
-                    listener: "gpii.firstDiscovery.panel.lang.attachTooltipOnLang.setLangAttr"
-                }
-            }
-        }
-    });
-
-    gpii.firstDiscovery.panel.lang.attachTooltipOnLang.setLangAttr = function (that, originalTarget, tooltip) {
+    gpii.firstDiscovery.panel.lang.setTooltipLang = function (that, originalTarget, tooltip) {
         tooltip.attr("lang", $(originalTarget).attr("lang"));
     };
 
@@ -924,7 +891,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     // available while hidden. Instead, we need to rerender again when
     // the user naviagates back to the language panel.
     fluid.defaults("gpii.firstDiscovery.panel.lang.prefEditorConnection", {
-        gradeNames: ["fluid.eventedComponent", "autoInit"],
+        gradeNames: ["fluid.component"],
         listeners: {
             "{prefsEditor}.events.onPanelShown": {
                 funcName: "gpii.firstDiscovery.panel.lang.refreshDisplayedLangsOnShowPanel",
@@ -937,7 +904,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * Contrast panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.contrast", {
-        gradeNames: ["fluid.prefs.panel", "gpii.firstDiscovery.attachTooltip.renderer", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.attachTooltip.renderer", "fluid.prefs.panel"],
         preferenceMap: {
             "fluid.prefs.contrast": {
                 "model.value": "default"
@@ -1003,8 +970,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                     "{that}.options.controlValues.theme",
                     "{that}.options.controlValues.theme.0",
                     "{that}.options.classnameMap.theme"
-                ],
-                dynamic: true
+                ]
             }
         }
     });
@@ -1022,7 +988,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * Welcome panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.welcome", {
-        gradeNames: ["fluid.prefs.panel", "autoInit"],
+        gradeNames: ["fluid.prefs.panel"],
         preferenceMap: {
             "gpii.firstDiscovery.welcome": {}
         },
@@ -1040,7 +1006,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * Congratulations panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.congratulations", {
-        gradeNames: ["fluid.prefs.panel", "autoInit"],
+        gradeNames: ["fluid.prefs.panel"],
         preferenceMap: {
             "gpii.firstDiscovery.congratulations": {}
         },

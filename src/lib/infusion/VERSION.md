@@ -2,7 +2,7 @@ The version of Infusion included in this folder was created using a custom build
 
 https://github.com/fluid-project/infusion
 
-commit#: fcb1c18a9f4da94d6564a521175e772f2180e8c5
+commit#: f63bc7741175afaa166cb90e68a735aeae93ed9d
 
 ```
 grunt custom --source=true --include="preferences, tooltip"
@@ -16,7 +16,8 @@ The following directories were stripped out of the build since they contain code
 * src/lib/infusion/src/components/tableOfContents/js/
 * src/lib/infusion/src/components/tableOfContents/tableOfContentsDependencies.json
 * src/lib/infusion/src/components/textfieldSlider/
-* src/lib/infusion/src/components/textToSpeech/
+* src/lib/infusion/src/components/textToSpeech/js/TextToSpeech.js
+* src/lib/infusion/src/components/textToSpeech/textToSpeechDependencies.json
 * src/lib/infusion/src/components/tooltip/
 * src/lib/infusion/src/framework/core/frameworkDependencies.json
 * src/lib/infusion/src/framework/core/js/
@@ -30,7 +31,6 @@ The following directories were stripped out of the build since they contain code
 * src/lib/infusion/src/lib/jquery/ui/jQueryUICoreDependencies.json
 * src/lib/infusion/src/lib/jquery/ui/jQueryUIWidgetsDependencies.json
 * src/lib/infusion/src/lib/jquery/ui/js/
-* src/lib/infusion/src/lib/json/
 * src/lib/infusion/src/lib/normalize/normalizeDependencies.json
 
 Additionally, the testing framework from Infusion is used (tests/lib/infusion) and should be updated to a matching version. This directory is a copy of

@@ -95,18 +95,18 @@ button {
     left: -0.8rem;
 }
 
-.gpii-fd-selfVoicing-unmuted .gpii-fd-mute .gpii-fd-icon:before {
+.gpii-fd-selfVoicingToggle-unmuted .gpii-fd-mute .gpii-fd-icon:before {
     content: "\e601";
 }
 
-.gpii-fd-selfVoicing-muted .gpii-fd-mute .gpii-fd-icon:before {
+.gpii-fd-selfVoicingToggle-muted .gpii-fd-mute .gpii-fd-icon:before {
     content: "\e60a";
     font-size: 3.5rem;
     left: -0.5rem;
 }
 
-/* hide the selfVoicing toggle on the congratulations page */
-.gpii-fd-lastPanel .gpii-fd-selfVoicing {
+/* hide the selfVoicingToggle button on the congratulations page */
+.gpii-fd-lastPanel .gpii-fd-selfVoicingToggle {
     display: none;
 }
 
@@ -626,14 +626,6 @@ button {
     padding: 0.5rem;
     background-color: #fed73a;
     bottom: -1rem;
-}
-
-.gpii-fd-tooltip-lang {
-    width: auto;
-    max-width: 8.5em;
-    font-size: 2rem;
-    padding: 0.5rem;
-    background-color: #fed73a;
 }
 
 /* Keyboard screens */

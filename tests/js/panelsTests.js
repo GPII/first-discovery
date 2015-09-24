@@ -16,7 +16,7 @@ https://github.com/gpii/universal/LICENSE.txt
      ************************/
 
     fluid.defaults("gpii.tests.firstDiscovery.panel.lang", {
-        gradeNames: ["gpii.firstDiscovery.panel.lang", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.panel.lang"],
         messageBase: {
             "langInstructions": "Select your preferred language",
             "lang-en-US": "English",
@@ -67,7 +67,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.langPanel", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["fluid.test.testEnvironment"],
         components: {
             lang: {
                 type: "gpii.tests.firstDiscovery.panel.lang",
@@ -80,7 +80,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.langTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        gradeNames: ["fluid.test.testCaseHolder"],
         modules: [{
             name: "Test the language settings panel",
             tests: [{
@@ -266,7 +266,7 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     gpii.tests.langTester.verifyTooltip = function (that) {
-        gpii.tests.utils.verifyTooltipContents("language button row element", that.locate("langRow"), that.model.lang, that.attachTooltipOnLang.tooltip.model.idToContent, that.options.controlValues.lang, that.options.stringArrayIndex.lang, that.options.messageBase);
+        gpii.tests.utils.verifyTooltipContents("language button row element", that.locate("langRow"), that.model.lang, that.tooltip.model.idToContent, that.options.controlValues.lang, that.options.stringArrayIndex.lang, that.options.messageBase);
     };
 
     gpii.tests.langTester.verifyTooltipLang = function (tooltip, expectedLang) {
@@ -276,10 +276,10 @@ https://github.com/gpii/universal/LICENSE.txt
     gpii.tests.langTester.verifyRendering = function (that) {
         var messages = that.options.messageBase,
             stringArray = that.options.stringArrayIndex.lang,
-            idToContent = that.attachTooltipOnLang.tooltip.model.idToContent;
+            idToContent = that.tooltip.model.idToContent;
 
-        jqUnit.assertNotUndefined("The subcomponent \"attachTooltipOnLang\" has been instantiated", that.attachTooltipOnLang);
-        jqUnit.assertNotUndefined("The gradechild component \"tooltip\" has been instantiated", that.attachTooltipOnLang.tooltip);
+        jqUnit.assertNotUndefined("The subcomponent \"tooltip\" has been instantiated", that.tooltip);
+        jqUnit.assertNotUndefined("The gradechild component \"tooltip\" has been instantiated", that.tooltip);
 
         jqUnit.assertEquals("The instruction has been set correctly.", messages.langInstructions, that.locate("instructions").text());
         var numAriaSelectedTrue = 0;
@@ -377,7 +377,7 @@ https://github.com/gpii/universal/LICENSE.txt
      *********************/
 
     fluid.defaults("gpii.tests.rangePanel", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["fluid.test.testEnvironment"],
         components: {
             range: {},
             rangePanelTester: {
@@ -387,7 +387,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.rangePanelTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        gradeNames: ["fluid.test.testCaseHolder"],
         testOptions: {
             increasedStep: 1.1,
             decreasedStep: 1.0,
@@ -482,7 +482,7 @@ https://github.com/gpii/universal/LICENSE.txt
      *************************/
 
     fluid.defaults("gpii.tests.firstDiscovery.panel.textSize", {
-        gradeNames: ["gpii.firstDiscovery.panel.textSize", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.panel.textSize"],
         messageBase: {
             rangeInstructions: "Adjust the text and controls to a size you like best.",
             maxLabel: "max",
@@ -500,7 +500,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.textSizePanel", {
-        gradeNames: ["gpii.tests.rangePanel", "autoInit"],
+        gradeNames: ["gpii.tests.rangePanel"],
         components: {
             range: {
                 type: "gpii.tests.firstDiscovery.panel.textSize",
@@ -514,7 +514,7 @@ https://github.com/gpii/universal/LICENSE.txt
      ***************************/
 
     fluid.defaults("gpii.tests.firstDiscovery.panel.speechRate", {
-        gradeNames: ["gpii.firstDiscovery.panel.speechRate", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.panel.speechRate"],
         messageBase: {
             rangeInstructions: "Adjust the speed at which items on the screen are read out loud.",
             maxLabel: "fast",
@@ -535,7 +535,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.speechRatePanel", {
-        gradeNames: ["gpii.tests.rangePanel", "autoInit"],
+        gradeNames: ["gpii.tests.rangePanel"],
         components: {
             range: {
                 type: "gpii.tests.firstDiscovery.panel.speechRate",
@@ -556,7 +556,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.speechRatePanelTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        gradeNames: ["fluid.test.testCaseHolder"],
         modules: [{
             name: "Test the speech rate settings panel",
             tests: [{
@@ -608,7 +608,7 @@ https://github.com/gpii/universal/LICENSE.txt
      **********************/
 
     fluid.defaults("gpii.tests.yesNoTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        gradeNames: ["fluid.test.testCaseHolder"],
         expectedModels: {
             choiceYes: {
                 choice: "yes",
@@ -689,7 +689,7 @@ https://github.com/gpii/universal/LICENSE.txt
      **************************/
 
     fluid.defaults("gpii.tests.firstDiscovery.panel.speakText", {
-        gradeNames: ["gpii.firstDiscovery.panel.speakText", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.panel.speakText"],
         messageBase: {
             "instructions": "Do you prefer to have items on the screen read out loud to you?",
             "no": "No",
@@ -705,7 +705,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.speakTextPanel", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["fluid.test.testEnvironment"],
         components: {
             yesNo: {
                 type: "gpii.tests.firstDiscovery.panel.speakText",
@@ -722,7 +722,7 @@ https://github.com/gpii/universal/LICENSE.txt
      **********************************/
 
     fluid.defaults("gpii.tests.firstDiscovery.panel.onScreenKeyboard", {
-        gradeNames: ["gpii.firstDiscovery.panel.onScreenKeyboard", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.panel.onScreenKeyboard"],
         messageBase: {
             "instructions": "Do you want to use an on-screen keyboard? This would let you type by selecting letters on the screen.",
             "no": "No",
@@ -738,7 +738,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.onScreenKeyboardPanel", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["fluid.test.testEnvironment"],
         components: {
             yesNo: {
                 type: "gpii.tests.firstDiscovery.panel.onScreenKeyboard",
@@ -755,7 +755,7 @@ https://github.com/gpii/universal/LICENSE.txt
      ************************/
 
     fluid.defaults("gpii.tests.firstDiscovery.panel.captions", {
-        gradeNames: ["gpii.firstDiscovery.panel.captions", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.panel.captions"],
         messageBase: {
             "instructions": "Do you want to see text for speech (captions) when playing videos?",
             "no": "No",
@@ -771,7 +771,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.captionsPanel", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["fluid.test.testEnvironment"],
         components: {
             yesNo: {
                 type: "gpii.tests.firstDiscovery.panel.captions",
@@ -788,7 +788,7 @@ https://github.com/gpii/universal/LICENSE.txt
      ***************************/
 
     fluid.defaults("gpii.tests.firstDiscovery.panel.showSounds", {
-        gradeNames: ["gpii.firstDiscovery.panel.showSounds", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.panel.showSounds"],
         messageBase: {
             "instructions": "Do you want the screen to flash when a sound is played?",
             "no": "No",
@@ -804,7 +804,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.showSoundsPanel", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["fluid.test.testEnvironment"],
         components: {
             yesNo: {
                 type: "gpii.tests.firstDiscovery.panel.showSounds",
@@ -821,7 +821,7 @@ https://github.com/gpii/universal/LICENSE.txt
      ************************/
 
     fluid.defaults("gpii.tests.firstDiscovery.panel.contrast", {
-        gradeNames: ["gpii.firstDiscovery.panel.contrast", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.panel.contrast"],
         classnameMap: {
             theme: {
                 "default": "fl-theme-prefsEditor-default",
@@ -851,7 +851,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.contrastPanel", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["fluid.test.testEnvironment"],
         components: {
             contrast: {
                 type: "gpii.tests.firstDiscovery.panel.contrast",
@@ -864,7 +864,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.contrastTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        gradeNames: ["fluid.test.testCaseHolder"],
         modules: [{
             name: "Test the contrast settings panel",
             tests: [{
@@ -953,7 +953,7 @@ https://github.com/gpii/universal/LICENSE.txt
      ************/
 
     fluid.defaults("gpii.tests.firstDiscovery.panel.keyboard", {
-        gradeNames: ["gpii.firstDiscovery.panel.keyboard", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.panel.keyboard"],
         messageBase: {
             "keyboardInstructions": "Adjustments can be made to help you with using the keyboard.",
             "placeholder": "Type the @ symbol now",
@@ -977,7 +977,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.keyboardPanel", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["fluid.test.testEnvironment"],
         components: {
             keyboard: {
                 type: "gpii.tests.firstDiscovery.panel.keyboard",
@@ -990,7 +990,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.keyboardTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        gradeNames: ["fluid.test.testCaseHolder"],
         modules: [{
             name: "Tests the keyboard panel",
             tests: [{
@@ -1070,14 +1070,14 @@ https://github.com/gpii/universal/LICENSE.txt
      ***********************/
 
     fluid.defaults("gpii.tests.firstDiscovery.panel.welcome", {
-        gradeNames: ["gpii.firstDiscovery.panel.welcome", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.panel.welcome"],
         messageBase: {
             "message": "<p>Welcome!</p> <p>If you need help at any time, press the H key. To continue, select the start button below.</p>"
         }
     });
 
     fluid.defaults("gpii.tests.welcomePanel", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["fluid.test.testEnvironment"],
         components: {
             welcome: {
                 type: "gpii.tests.firstDiscovery.panel.welcome",
@@ -1090,7 +1090,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.welcomeTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        gradeNames: ["fluid.test.testCaseHolder"],
         modules: [{
             name: "Tests the welcome component",
             tests: [{
@@ -1112,14 +1112,14 @@ https://github.com/gpii/universal/LICENSE.txt
      *******************/
 
     fluid.defaults("gpii.tests.firstDiscovery.panel.congratulations", {
-        gradeNames: ["gpii.firstDiscovery.panel.congratulations", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.panel.congratulations"],
         messageBase: {
             "message": "<p>Congratulations!</p><p>Your preferences have been saved to your account.</p>"
         }
     });
 
     fluid.defaults("gpii.tests.congratulationsPanel", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["fluid.test.testEnvironment"],
         components: {
             congratulations: {
                 type: "gpii.tests.firstDiscovery.panel.congratulations",
@@ -1132,7 +1132,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.congratulationsTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        gradeNames: ["fluid.test.testCaseHolder"],
         modules: [{
             name: "Tests the congratulations component",
             tests: [{

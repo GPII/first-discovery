@@ -114,16 +114,17 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals(msg, expected, keyboardInput.container.hasClass(className));
     };
 
-    gpii.tests.firstDiscovery.keyboardInput.checkKeypress = function (expected, actual) {
-        jqUnit.assertEquals("keypress character should be \"" + expected + "\"", expected, actual);
-    };
-
     gpii.tests.firstDiscovery.keyboardInput.checkUserInput = function (keyboardInput, expected) {
         // Check both the model value and the HTML input value
         jqUnit.assertEquals("userInput should be \"" + expected + "\"",
                             expected, keyboardInput.model.userInput);
         jqUnit.assertEquals("HTML input value should be \"" + expected + "\"",
                             expected, keyboardInput.container.val());
+    };
+
+    gpii.tests.firstDiscovery.keyboardInput.checkKeypress = function (keyboardInput, expected) {
+        jqUnit.assertEquals("keypress character should be \"" + expected + "\"", expected, keyboardInput.lastKeyPress);
+        gpii.tests.firstDiscovery.keyboardInput.checkUserInput(keyboardInput, expected);
     };
 
     gpii.tests.firstDiscovery.keyboardInput.setUpTooltipTest = function (keyboardInput) {
@@ -171,7 +172,10 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.firstDiscovery.keyboardInput", {
-        gradeNames: ["gpii.firstDiscovery.keyboardInput", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.keyboardInput"],
+        members: {
+            lastKeyPress: null
+        },
         messageBase: {
             "keyboardInputTooltip": "keyboardInputTooltip message"
         },
@@ -191,6 +195,10 @@ https://github.com/gpii/universal/LICENSE.txt
             tooltipClose: {
                 changePath: "tooltipIsOpen",
                 value: false
+            },
+            "keypress.record": {
+                listener: "fluid.set",
+                args: ["{that}", ["lastKeyPress"], "{arguments}.0"]
             }
         },
         components: {
@@ -211,7 +219,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.firstDiscovery.keyboardInputTestTree", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["fluid.test.testEnvironment"],
         components: {
             keyboardInput: {
                 type: "gpii.tests.firstDiscovery.keyboardInput",
@@ -224,7 +232,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.firstDiscovery.keyboardInputTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        gradeNames: ["fluid.test.testCaseHolder"],
         modules: [{
             name: "keyboardInput tests",
             tests: [
@@ -246,14 +254,9 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["{keyboardInput}.container", "a"]
                         },
                         {
-                            event: "{keyboardInput}.events.keypress",
-                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
-                            args: ["a", "{arguments}.0"]
-                        },
-                        {
                             changeEvent: "{keyboardInput}.applier.modelChanged",
                             spec: {path: "userInput", priority: "last"},
-                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
                             args: ["{keyboardInput}", "a"]
                         },
                         {
@@ -275,14 +278,9 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["{keyboardInput}.container", "b"]
                         },
                         {
-                            event: "{keyboardInput}.events.keypress",
-                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
-                            args: ["b", "{arguments}.0"]
-                        },
-                        {
                             changeEvent: "{keyboardInput}.applier.modelChanged",
                             spec: {path: "userInput", priority: "last"},
-                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
                             args: ["{keyboardInput}", "b"]
                         }
                     ]
@@ -311,14 +309,9 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["{keyboardInput}.container", "a"]
                         },
                         {
-                            event: "{keyboardInput}.events.keypress",
-                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
-                            args: ["a", "{arguments}.0"]
-                        },
-                        {
                             changeEvent: "{keyboardInput}.applier.modelChanged",
                             spec: {path: "userInput", priority: "last"},
-                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
                             args: ["{keyboardInput}", "a"]
                         },
                         {
@@ -342,14 +335,9 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["{keyboardInput}.container", "b"]
                         },
                         {
-                            event: "{keyboardInput}.events.keypress",
-                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
-                            args: ["B", "{arguments}.0"]
-                        },
-                        {
                             changeEvent: "{keyboardInput}.applier.modelChanged",
                             spec: {path: "userInput", priority: "last"},
-                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
                             args: ["{keyboardInput}", "B"]
                         },
                         {
@@ -361,14 +349,9 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["{keyboardInput}.container", "c"]
                         },
                         {
-                            event: "{keyboardInput}.events.keypress",
-                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
-                            args: ["c", "{arguments}.0"]
-                        },
-                        {
                             changeEvent: "{keyboardInput}.applier.modelChanged",
                             spec: {path: "userInput", priority: "last"},
-                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
                             args: ["{keyboardInput}", "c"]
                         }
                     ]
@@ -478,14 +461,9 @@ https://github.com/gpii/universal/LICENSE.txt
                             args: ["{keyboardInput}.container", "a"]
                         },
                         {
-                            event: "{keyboardInput}.events.keypress",
-                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
-                            args: ["a", "{arguments}.0"]
-                        },
-                        {
                             changeEvent: "{keyboardInput}.applier.modelChanged",
                             spec: {path: "userInput", priority: "last"},
-                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkUserInput",
+                            listener: "gpii.tests.firstDiscovery.keyboardInput.checkKeypress",
                             args: ["{keyboardInput}", "a"]
                         },
                         {
@@ -623,12 +601,13 @@ https://github.com/gpii/universal/LICENSE.txt
     };
 
     fluid.defaults("gpii.tests.firstDiscovery.keyboardInputWithTts", {
-        gradeNames: ["gpii.tests.firstDiscovery.keyboardInput", "gpii.firstDiscovery.keyboardInputTts", "autoInit"],
+        gradeNames: ["gpii.tests.firstDiscovery.keyboardInput", "gpii.firstDiscovery.keyboardInputTts"],
         messageBase: {
             "shiftLatched": "shiftLatched message",
             "shiftUnlatched": "shiftUnlatched message"
         },
         invokers: {
+            //TODO: convert to use MockTTS
             speak: {
                 funcName: "gpii.tests.firstDiscovery.keyboardInputTts.recordSpoken",
                 args: ["{that}", "{arguments}.0"]
@@ -640,7 +619,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.firstDiscovery.keyboardInputWithTtsTestTree", {
-        gradeNames: ["fluid.test.testEnvironment", "autoInit"],
+        gradeNames: ["fluid.test.testEnvironment"],
         components: {
             keyboardInput: {
                 type: "gpii.tests.firstDiscovery.keyboardInputWithTts",
@@ -656,7 +635,7 @@ https://github.com/gpii/universal/LICENSE.txt
     });
 
     fluid.defaults("gpii.tests.firstDiscovery.keyboardInputTtsTester", {
-        gradeNames: ["fluid.test.testCaseHolder", "autoInit"],
+        gradeNames: ["fluid.test.testCaseHolder"],
         modules: [{
             name: "keyboardInputTts tests",
             tests: [

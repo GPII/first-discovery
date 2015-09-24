@@ -18,7 +18,7 @@ https://github.com/gpii/universal/LICENSE.txt
      **************************/
 
     fluid.defaults("gpii.tests.firstDiscovery.keyboard.stickyKeysAssessment", {
-        gradeNames: ["gpii.firstDiscovery.keyboard.stickyKeysAssessment", "autoInit"],
+        gradeNames: ["gpii.firstDiscovery.keyboard.stickyKeysAssessment"],
         requiredInput: "@"
     });
 

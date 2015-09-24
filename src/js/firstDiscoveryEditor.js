@@ -20,7 +20,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * The new prefs editor type for the first discovery tool
      */
     fluid.defaults("gpii.firstDiscovery.firstDiscoveryEditor", {
-        gradeNames: ["gpii.firstDiscovery.tts.fdHookup", "fluid.prefs.prefsEditorLoader", "autoInit"],
+        gradeNames: ["fluid.prefs.prefsEditorLoader"],
         defaultLocale: {
             expander: {
                 funcName: "fluid.get",
@@ -34,16 +34,15 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         components: {
             selfVoicing: {
-                container: "{that}.dom.selfVoicing",
+                type: "gpii.firstDiscovery.selfVoicing"
+            },
+            selfVoicingToggle: {
+                container: "{that}.dom.selfVoicingToggle",
                 createOnEvent: "onPrefsEditorReady",
-                type: "gpii.firstDiscovery.selfVoicing",
+                type: "gpii.firstDiscovery.selfVoicingToggle",
                 options: {
                     model: {
-                        enabled: "{prefsEditor}.model.gpii_firstDiscovery_speak",
-                        utteranceOpts: {
-                            lang: "{prefsEditor}.model.gpii_firstDiscovery_language",
-                            rate: "{prefsEditor}.model.gpii_firstDiscovery_speechRate"
-                        }
+                        enabled: "{prefsEditor}.model.preferences.gpii_firstDiscovery_speak"
                     },
                     messageBase: "{messageLoader}.resources.prefsEditor.resourceText"
                 }
@@ -59,6 +58,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             prefsEditor: {
                 container: "{that}.dom.prefsEditor",
                 options: {
+                    gradeNames: ["gpii.firstDiscovery.tts.prefsEditor"],
                     selectors: {
                         panel: "{firstDiscoveryEditor}.options.selectors.panel"
                     },
@@ -70,9 +70,9 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                             listener: "{firstDiscoveryEditor}.events.onPrefsEditorReady",
                             args: "{firstDiscoveryEditor}"
                         },
-                        onAutoSave: "{that}.saveAndApply",
+                        "onAutoSave.save": "{that}.saveAndApply",
                         // the page is reloaded to reset language and etc.
-                        "onReset.reload": {
+                        "afterReset.reload": {
                             "this": "location",
                             method: "reload",
                             args: true
@@ -110,7 +110,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             messageLoader: {
                 options: {
-                    locale: "{prefsEditorLoader}.settings.gpii_firstDiscovery_language"
+                    locale: "{prefsEditorLoader}.settings.preferences.gpii_firstDiscovery_language"
                 }
             }
         },
@@ -131,7 +131,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         selectors: {
             prefsEditor: ".gpiic-fd-prefsEditor",
             panel: ".gpiic-fd-prefsEditor-panel",
-            selfVoicing: ".gpiic-fd-selfVoicing",
+            selfVoicingToggle: ".gpiic-fd-selfVoicingToggle",
             helpButton: ".gpiic-fd-help",
             nav: ".gpiic-fd-nav"
         },

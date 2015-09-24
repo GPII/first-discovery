@@ -20,7 +20,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * The nav icon
      */
     fluid.defaults("gpii.firstDiscovery.icon", {
-        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
+        gradeNames: ["fluid.viewComponent"],
         position: null,  // must be supplied by integrators
         selectors: {
             confirmedIndicator: ".gpiic-fd-confirmedIndicator"
@@ -52,7 +52,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * The navigation icons: the wrapper component to help determine the position of each nav icon.
      */
     fluid.defaults("gpii.firstDiscovery.navIcons", {
-        gradeNames: ["fluid.viewRelayComponent", "autoInit"],
+        gradeNames: ["fluid.viewComponent"],
         pageSize: 5,
         iconHoles: [2, 8], // a list of all the panel positions which have no nav icons (currently the "welcome" and "congratulations" pages)
         dynamicComponents: {
