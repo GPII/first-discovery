@@ -551,7 +551,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * language panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.lang", {
-        gradeNames: ["gpii.firstDiscovery.attachTooltip", "fluid.prefs.panel", "{that}.options.prefsEditorConnection"],
+        gradeNames: ["gpii.firstDiscovery.attachTooltip.renderer", "fluid.prefs.panel", "{that}.options.prefsEditorConnection"],
         preferenceMap: {
             "gpii.firstDiscovery.language": {
                 "model.lang": "default",
@@ -754,9 +754,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 funcName: "gpii.firstDiscovery.panel.lang.fireLangButtonsReady",
                 args: ["{that}"],
                 priority: 10
-            },
-            "afterRender.updateIdToContent": {
-                funcName: "{that}.tooltip.updateIdToContent"
             },
             // Need to close the tooltip before the DOM elements are removed
             "onRenderTree.closeTooltip": "{that}.tooltip.close",
