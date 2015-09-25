@@ -54,8 +54,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     };
 
-    gpii.firstDiscovery.icon.setIconState = function (that, state, panelNum) {
-        that.applier.change(state, panelNum === that.options.position);
+    gpii.firstDiscovery.icon.setIconState = function (that, modelPath, panelNum) {
+        that.applier.change(modelPath, panelNum === that.options.position);
     };
 
     /*
