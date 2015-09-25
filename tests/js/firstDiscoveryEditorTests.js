@@ -453,17 +453,22 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertDeepEq(msg, expected, statesModel);
     };
 
+    gpii.tests.firstDiscovery.verifyInitialStates = function (that, msg, statesModel, expected) {
+        jqUnit.assertNotUndefined("The stickyKeysAssessor component is not destroyed when the initial model doesn't contains a model value for \"stickyKey.offerAssistance\"", that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_keyboard.stickyKeysAssessor);
+        gpii.tests.firstDiscovery.verifySavedStates(msg, statesModel, expected);
+    };
+
     fluid.defaults("gpii.tests.firstDiscovery.saveStatesTester", {
         gradeNames: ["fluid.test.testCaseHolder"],
         initialIconWidth: null,
         modules: [{
             name: "Tests the save of the state information",
             tests: [{
-                expect: 5,
+                expect: 6,
                 name: "Re-collect the nav icon size at the text size change",
                 sequence: [{
-                    listener: "gpii.tests.firstDiscovery.verifySavedStates",
-                    args: ["The initial states are saved",
+                    listener: "gpii.tests.firstDiscovery.verifyInitialStates",
+                    args: ["{firstDiscovery}", "The initial states are saved",
                     "{firstDiscovery}.prefsEditorLoader.prefsEditor.model.states",
                     {
                         currentPanelNum: 1,
@@ -541,11 +546,80 @@ https://github.com/gpii/universal/LICENSE.txt
         }]
     });
 
+    // Test the sticky key assessor component is destroy if the model value
+    // for "offerAssistance" is initially set
+    fluid.defaults("gpii.tests.initialModelForAssessorStateTests", {
+        gradeNames: ["fluid.component"],
+        members: {
+            initialModel: {
+                states: {
+                    stickyKey: {
+                        offerAssistance: true
+                    }
+                }
+            }
+        }
+    });
+
+    fluid.defaults("gpii.tests.firstDiscoveryAssessorState", {
+        gradeNames: ["gpii.tests.firstDiscovery"],
+        components: {
+            prefsEditorLoader: {
+                options: {
+                    listeners: {
+                        "onPrefsEditorReady.escalate": "{firstDiscoveryAssessorState}.events.onPrefsEditorReady"
+                    }
+                }
+            }
+        },
+        events: {
+            onPrefsEditorReady: null
+        },
+        distributeOptions: [{
+            target: "{that > prefsEditorLoader}.options.gradeNames",
+            record: "gpii.tests.initialModelForAssessorStateTests"
+        }]
+    });
+
+    fluid.defaults("gpii.tests.firstDiscovery.assessorStateTests", {
+        gradeNames: ["fluid.test.testEnvironment"],
+        components: {
+            firstDiscovery: {
+                type: "gpii.tests.firstDiscoveryAssessorState",
+                container: "#gpiic-fd-assessorState",
+                createOnEvent: "{assessorStateTester}.events.onTestCaseStart"
+            },
+            assessorStateTester: {
+                type: "gpii.tests.firstDiscovery.assessorStateTester"
+            }
+        }
+    });
+
+    fluid.defaults("gpii.tests.firstDiscovery.assessorStateTester", {
+        gradeNames: ["fluid.test.testCaseHolder"],
+        modules: [{
+            name: "Tests the existence of the sticky key assessor component",
+            tests: [{
+                expect: 1,
+                name: "Re-collect the nav icon size at the text size change",
+                sequence: [{
+                    listener: "jqUnit.assertEquals",
+                    args: ["The sticky key assessor component has been destroyed when the model value for offerAssistance exists",
+                    undefined,
+                    "{firstDiscovery}.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_keyboard.stickyKeysAssessor"],
+                    priority: "last",
+                    event: "{assessorStateTests firstDiscovery}.events.onPrefsEditorReady"
+                }]
+            }]
+        }]
+    });
+
     $(document).ready(function () {
         fluid.test.runTests([
             "gpii.tests.firstDiscovery.langTests",
             "gpii.tests.firstDiscovery.navIconsTests",
-            "gpii.tests.firstDiscovery.saveStatesTests"
+            "gpii.tests.firstDiscovery.saveStatesTests",
+            "gpii.tests.firstDiscovery.assessorStateTests"
         ]);
     });
 

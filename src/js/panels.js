@@ -287,6 +287,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "this": "{that}.dom.assistance",
                 "method": "toggle",
                 "args": ["{arguments}.0"]
+            },
+            destroyAssessor: {
+                funcName: "gpii.firstDiscovery.panel.keyboard.destroy",
+                args: ["{stickyKeysAssessor}"]
             }
         },
         listeners: {
@@ -297,6 +301,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "afterRender.relayEvents": {
                 funcName: "gpii.firstDiscovery.panel.keyboard.relayEvents",
                 args: ["{that}"]
+            },
+            "afterRender.handleAssessor": {
+                funcName: "gpii.firstDiscovery.panel.keyboard.handleAssessor",
+                args: ["{that}.model.offerAssistance", "{that}.destroyAssessor"]
             }
         },
         modelListeners: {
@@ -304,8 +312,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 listener: "{that}.refreshView",
                 excludeSource: "init"
             }, {
-                listener: "gpii.firstDiscovery.panel.keyboard.destroy",
-                args: ["{stickyKeysAssessor}"]
+                listener: "{that}.destroyAssessor"
             }]
         },
         distributeOptions: {
@@ -332,6 +339,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
     gpii.firstDiscovery.panel.keyboard.destroy = function (that) {
         if (that) {
             that.destroy();
+        }
+    };
+
+    gpii.firstDiscovery.panel.keyboard.handleAssessor = function (offerAssistance, destroyAssessorFunc) {
+        if (offerAssistance) {
+            destroyAssessorFunc();
         }
     };
 
