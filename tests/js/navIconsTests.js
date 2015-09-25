@@ -40,8 +40,9 @@ https://github.com/gpii/universal/LICENSE.txt
         gpii.tests.utils.hasClass("The confirmed indicator is still shown", confirmedIndicator, showCss, true);
     });
 
-    gpii.tests.verifyStates = function (that, currentPanelNum, prevPanelNums, pageNum) {
-        jqUnit.assertEquals("The model value has been updated", currentPanelNum, that.model.currentPanelNum);
+    gpii.tests.verifyStates = function (that, currentPanelNum, visitedPanelNums, pageNum) {
+        jqUnit.assertEquals("The model value for \"currentPanelNum\" has been updated", currentPanelNum, that.model.currentPanelNum);
+        jqUnit.assertDeepEq("The model value for \"visitedPanelNums\" has been updated", visitedPanelNums, that.model.visitedPanelNums);
         jqUnit.assertEquals("The icon page index is correct", pageNum, that.model.pageNum);
 
         var icons = that.locate("icon");
@@ -53,26 +54,30 @@ https://github.com/gpii/universal/LICENSE.txt
                 confirmedIndicator = iconComponent.locate("confirmedIndicator");
 
             if (currentPanelNum === index + 1) {
-                jqUnit.assertTrue("The model value for isActive has been set to true", iconComponent.model.isActive);
+                jqUnit.assertTrue("The model value for isActive has been set to true (panel #" + index + ")", iconComponent.model.isActive);
                 gpii.tests.utils.hasClass("The active icon", iconComponent.container, activeCss, true);
             } else {
-                jqUnit.assertFalse("The model value for isActive has been set to false", iconComponent.model.isActive);
-                gpii.tests.utils.hasClass("The inactive icon", iconComponent.container, activeCss, false);
+                jqUnit.assertFalse("The model value for isActive has been set to false (panel #" + index + ")", iconComponent.model.isActive);
+                gpii.tests.utils.hasClass("The inactive icon for panel #" + index, iconComponent.container, activeCss, false);
             }
 
-            if (prevPanelNums.indexOf(position) === -1) {
-                gpii.tests.utils.hasClass("The confirmed indicator for a not-yet-visited panel", confirmedIndicator, showCss, false);
+            if (visitedPanelNums.indexOf(position) === -1) {
+                gpii.tests.utils.hasClass("The confirmed indicator for a not-yet-visited panel #" + index, confirmedIndicator, showCss, false);
             } else {
-                gpii.tests.utils.hasClass("The confirmed indicator for a visited panel", confirmedIndicator, showCss, true);
+                gpii.tests.utils.hasClass("The confirmed indicator for a visited panel #" + index, confirmedIndicator, showCss, true);
             }
         });
     };
 
     jqUnit.test("Nav Icons", function () {
-        jqUnit.expect(180);
+        jqUnit.expect(186);
 
         var that = gpii.firstDiscovery.navIcons(".gpiic-nav", {
-            holes: [4]
+            iconHoles: [4],
+            model: {
+                visitedPanelNums: [1, 2],
+                currentPanelNum: 2
+            }
         }), icons = that.locate("icon");
 
         fluid.each(icons, function (icon, index) {
@@ -82,24 +87,22 @@ https://github.com/gpii/universal/LICENSE.txt
             jqUnit.assertEquals("The position option for the subcomponent " + subcomponentName + " has been set properly", index + 1, that[subcomponentName].options.position);
         });
 
+        gpii.tests.verifyStates(that, 2, [1, 2], 0);
+
         that.applier.change("currentPanelNum", 1);
-        gpii.tests.verifyStates(that, 1, [], 0);
+        gpii.tests.verifyStates(that, 1, [1, 2], 0);
 
         that.applier.change("currentPanelNum", 3);
-        gpii.tests.verifyStates(that, 3, [1], 0);
-
-        // going back doesn't trigger the confirmed indicator to show for the previous panel
-        that.applier.change("currentPanelNum", 2);
-        gpii.tests.verifyStates(that, 2, [1], 0);
+        gpii.tests.verifyStates(that, 3, [1, 2], 0);
 
         that.applier.change("currentPanelNum", 4);
-        gpii.tests.verifyStates(that, 4, [1, 2], 0);
-        
+        gpii.tests.verifyStates(that, 4, [1, 2, 3], 0);
+
         that.applier.change("currentPanelNum", 6);
-        gpii.tests.verifyStates(that, 6, [1, 2], 0); // Still page 1 because of "hole", 4 not visited because of "hole"
-        
+        gpii.tests.verifyStates(that, 6, [1, 2, 3], 0); // Still page 1 because of "hole", 4 not visited because of "hole"
+
         that.applier.change("currentPanelNum", 7);
-        gpii.tests.verifyStates(that, 7, [1, 2, 6], 1);
+        gpii.tests.verifyStates(that, 7, [1, 2, 3, 6], 1);
     });
 
 })(jQuery, fluid);

@@ -59,6 +59,21 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 container: "{that}.dom.prefsEditor",
                 options: {
                     gradeNames: ["gpii.firstDiscovery.tts.prefsEditor"],
+                    modelListeners: {
+                        states: {
+                            funcName: "{that}.save",
+                            excludeSource: "init"
+                        },
+                        preferences: {
+                            funcName: "{that}.saveAndApply",
+                            excludeSource: "init"
+                        }
+                    },
+                    model: {
+                        states: {
+                            currentPanelNum: "{firstDiscoveryEditor}.model.currentPanelNum"
+                        }
+                    },
                     selectors: {
                         panel: "{firstDiscoveryEditor}.options.selectors.panel"
                     },
@@ -70,7 +85,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                             listener: "{firstDiscoveryEditor}.events.onPrefsEditorReady",
                             args: "{firstDiscoveryEditor}"
                         },
-                        "onAutoSave.save": "{that}.saveAndApply",
                         // the page is reloaded to reset language and etc.
                         "afterReset.reload": {
                             "this": "location",
@@ -87,12 +101,13 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                             ]
                         }
                     },
-                    autoSave: true,
-                    connectionGradeForLang: "gpii.firstDiscovery.panel.lang.prefEditorConnection",
-                    distributeOptions: {
-                        source: "{that}.options.connectionGradeForLang",
-                        target: "{that > gpii.firstDiscovery.panel.lang}.options.prefsEditorConnection"
-                    }
+                    distributeOptions: [{
+                        record: {
+                            offerAssistance: "{prefsEditor}.model.states.stickyKey.offerAssistance",
+                            tryAccommodation: "{prefsEditor}.model.states.stickyKey.tryAccommodation"
+                        },
+                        target: "{that > gpii.firstDiscovery.panel.keyboard}.options.model"
+                    }]
                 }
             },
             nav: {
@@ -101,7 +116,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 createOnEvent: "onCreateNav",
                 options: {
                     model: {
-                        currentPanelNum: "{firstDiscoveryEditor}.model.currentPanelNum"
+                        currentPanelNum: "{firstDiscoveryEditor}.model.currentPanelNum",
+                        visitedPanelNums: "{prefsEditor}.model.states.visitedPanelNums"
                     },
                     messageBase: "{messageLoader}.resources.prefsEditor.resourceText",
                     styles: "{firstDiscoveryEditor}.options.styles",

@@ -47,7 +47,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 container: "{nav}.dom.navIcons",
                 options: {
                     model: {
-                        currentPanelNum: "{nav}.model.currentPanelNum"
+                        currentPanelNum: "{nav}.model.currentPanelNum",
+                        visitedPanelNums: "{nav}.model.visitedPanelNums"
                     },
                     styles: "{nav}.options.styles"
                 }

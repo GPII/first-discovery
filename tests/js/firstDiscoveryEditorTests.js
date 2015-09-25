@@ -165,6 +165,7 @@ https://github.com/gpii/universal/LICENSE.txt
         gpii.tests.firstDiscovery.verifyStates(that, lastPanel, {back: true, active: true});
     };
 
+
     gpii.tests.firstDiscovery.testTTSHookup = function (that) {
         jqUnit.expect(2);
 
@@ -415,10 +416,210 @@ https://github.com/gpii/universal/LICENSE.txt
         }]
     });
 
+    // Verify the save of state information
+    fluid.defaults("gpii.tests.firstDiscoverySaveStates", {
+        gradeNames: ["gpii.tests.firstDiscovery"],
+        components: {
+            prefsEditorLoader: {
+                options: {
+                    listeners: {
+                        "onPrefsEditorReady.escalate": "{firstDiscoverySaveStates}.events.onPrefsEditorReady",
+                        "onPanelShown.escalate": "{firstDiscoverySaveStates}.events.onPanelShown"
+                    }
+                }
+            }
+        },
+        events: {
+            onPrefsEditorReady: null,
+            onPanelShown: null
+        }
+    });
+
+    fluid.defaults("gpii.tests.firstDiscovery.saveStatesTests", {
+        gradeNames: ["fluid.test.testEnvironment"],
+        components: {
+            firstDiscovery: {
+                type: "gpii.tests.firstDiscoverySaveStates",
+                container: "#gpiic-fd-saveStates",
+                createOnEvent: "{saveStatesTester}.events.onTestCaseStart"
+            },
+            saveStatesTester: {
+                type: "gpii.tests.firstDiscovery.saveStatesTester"
+            }
+        }
+    });
+
+    gpii.tests.firstDiscovery.verifySavedStates = function (msg, statesModel, expected) {
+        jqUnit.assertDeepEq(msg, expected, statesModel);
+    };
+
+    gpii.tests.firstDiscovery.verifyInitialStates = function (that, msg, statesModel, expected) {
+        jqUnit.assertNotUndefined("The stickyKeysAssessor component is not destroyed when the initial model doesn't contains a model value for \"stickyKey.offerAssistance\"", that.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_keyboard.stickyKeysAssessor);
+        gpii.tests.firstDiscovery.verifySavedStates(msg, statesModel, expected);
+    };
+
+    fluid.defaults("gpii.tests.firstDiscovery.saveStatesTester", {
+        gradeNames: ["fluid.test.testCaseHolder"],
+        initialIconWidth: null,
+        modules: [{
+            name: "Tests the save of the state information",
+            tests: [{
+                expect: 6,
+                name: "Re-collect the nav icon size at the text size change",
+                sequence: [{
+                    listener: "gpii.tests.firstDiscovery.verifyInitialStates",
+                    args: ["{firstDiscovery}", "The initial states are saved",
+                    "{firstDiscovery}.prefsEditorLoader.prefsEditor.model.states",
+                    {
+                        currentPanelNum: 1,
+                        stickyKey: {
+                            tryAccommodation: false
+                        },
+                        visitedPanelNums: []
+                    }],
+                    priority: "last",
+                    event: "{saveStatesTests firstDiscovery}.events.onPrefsEditorReady"
+                }, {
+                    jQueryTrigger: "click",
+                    element: "{firstDiscovery}.prefsEditorLoader.nav.navButtons.dom.next"
+                }, {
+                    listener: "gpii.tests.firstDiscovery.verifySavedStates",
+                    args: ["The state change when moving to the next panel is saved",
+                    "{firstDiscovery}.prefsEditorLoader.prefsEditor.model.states",
+                    {
+                        currentPanelNum: 2,
+                        stickyKey: {
+                            tryAccommodation: false
+                        },
+                        visitedPanelNums: [1]
+                    }],
+                    spec: {path: "currentPanelNum", priority: "last"},
+                    changeEvent: "{firstDiscovery}.prefsEditorLoader.applier.modelChanged"
+                }, {
+                    func: "{firstDiscovery}.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_keyboard.applier.change",
+                    args: ["tryAccommodation", true]
+                }, {
+                    listener: "gpii.tests.firstDiscovery.verifySavedStates",
+                    args: ["The state change on keyboardPanel model path \"tryAccommodation\" is saved",
+                    "{firstDiscovery}.prefsEditorLoader.prefsEditor.model.states",
+                    {
+                        currentPanelNum: 2,
+                        stickyKey: {
+                            tryAccommodation: true
+                        },
+                        visitedPanelNums: [1]
+                    }],
+                    spec: {path: "tryAccommodation", priority: "last"},
+                    changeEvent: "{firstDiscovery}.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_keyboard.applier.modelChanged"
+                }, {
+                    func: "{firstDiscovery}.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_keyboard.applier.change",
+                    args: ["offerAssistance", true]
+                }, {
+                    listener: "gpii.tests.firstDiscovery.verifySavedStates",
+                    args: ["The state change on keyboardPanel model path \"offerAssistance\" is saved",
+                    "{firstDiscovery}.prefsEditorLoader.prefsEditor.model.states",
+                    {
+                        currentPanelNum: 2,
+                        stickyKey: {
+                            tryAccommodation: true,
+                            offerAssistance: true
+                        },
+                        visitedPanelNums: [1]
+                    }],
+                    spec: {path: "offerAssistance", priority: "last"},
+                    changeEvent: "{firstDiscovery}.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_keyboard.applier.modelChanged"
+                }, {
+                    func: "{firstDiscovery}.prefsEditorLoader.prefsEditor.reset"
+                }, {
+                    listener: "gpii.tests.firstDiscovery.verifySavedStates",
+                    args: ["The state has been reset to the initial state",
+                    "{firstDiscovery}.prefsEditorLoader.prefsEditor.model.states",
+                    {
+                        stickyKey: {
+                            tryAccommodation: false
+                        }
+                    }],
+                    priority: "last",
+                    event: "{firstDiscovery}.prefsEditorLoader.prefsEditor.events.afterReset"
+                }]
+            }]
+        }]
+    });
+
+    // Test the sticky key assessor component is destroy if the model value
+    // for "offerAssistance" is initially set
+    fluid.defaults("gpii.tests.initialModelForAssessorStateTests", {
+        gradeNames: ["fluid.component"],
+        members: {
+            initialModel: {
+                states: {
+                    stickyKey: {
+                        offerAssistance: true
+                    }
+                }
+            }
+        }
+    });
+
+    fluid.defaults("gpii.tests.firstDiscoveryAssessorState", {
+        gradeNames: ["gpii.tests.firstDiscovery"],
+        components: {
+            prefsEditorLoader: {
+                options: {
+                    listeners: {
+                        "onPrefsEditorReady.escalate": "{firstDiscoveryAssessorState}.events.onPrefsEditorReady"
+                    }
+                }
+            }
+        },
+        events: {
+            onPrefsEditorReady: null
+        },
+        distributeOptions: [{
+            target: "{that > prefsEditorLoader}.options.gradeNames",
+            record: "gpii.tests.initialModelForAssessorStateTests"
+        }]
+    });
+
+    fluid.defaults("gpii.tests.firstDiscovery.assessorStateTests", {
+        gradeNames: ["fluid.test.testEnvironment"],
+        components: {
+            firstDiscovery: {
+                type: "gpii.tests.firstDiscoveryAssessorState",
+                container: "#gpiic-fd-assessorState",
+                createOnEvent: "{assessorStateTester}.events.onTestCaseStart"
+            },
+            assessorStateTester: {
+                type: "gpii.tests.firstDiscovery.assessorStateTester"
+            }
+        }
+    });
+
+    fluid.defaults("gpii.tests.firstDiscovery.assessorStateTester", {
+        gradeNames: ["fluid.test.testCaseHolder"],
+        modules: [{
+            name: "Tests the existence of the sticky key assessor component",
+            tests: [{
+                expect: 1,
+                name: "Re-collect the nav icon size at the text size change",
+                sequence: [{
+                    listener: "jqUnit.assertEquals",
+                    args: ["The sticky key assessor component has been destroyed when the model value for offerAssistance exists",
+                    undefined,
+                    "{firstDiscovery}.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_keyboard.stickyKeysAssessor"],
+                    priority: "last",
+                    event: "{assessorStateTests firstDiscovery}.events.onPrefsEditorReady"
+                }]
+            }]
+        }]
+    });
+
     $(document).ready(function () {
         fluid.test.runTests([
             "gpii.tests.firstDiscovery.langTests",
-            "gpii.tests.firstDiscovery.navIconsTests"
+            "gpii.tests.firstDiscovery.navIconsTests",
+            "gpii.tests.firstDiscovery.saveStatesTests",
+            "gpii.tests.firstDiscovery.assessorStateTests"
         ]);
     });
 

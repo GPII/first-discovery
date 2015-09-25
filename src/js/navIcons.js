@@ -39,6 +39,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 listener: "gpii.firstDiscovery.icon.setConfirmedState",
                 args: ["{that}", "{change}.value"]
             }
+        },
+        invokers: {
+            setIconState: {
+                funcName: "gpii.firstDiscovery.icon.setIconState",
+                args: ["{that}", "{arguments}.0", "{arguments}.1"]
+            }
         }
     });
 
@@ -46,6 +52,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         if (isConfirmed) {
             that.locate("confirmedIndicator").addClass(that.options.styles.show);
         }
+    };
+
+    gpii.firstDiscovery.icon.setIconState = function (that, modelPath, panelNum) {
+        that.applier.change(modelPath, panelNum === that.options.position);
     };
 
     /*
@@ -63,15 +73,25 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 options: {
                     position: "{arguments}.1",
                     styles: "{navIcons}.options.styles",
-                    modelListeners: {
-                        "{navIcons}.model.currentPanelNum": {
-                            listener: "gpii.firstDiscovery.navIcons.updateIconModel",
-                            args: ["{that}", "{change}.value", "{change}.oldValue"]
+                    listeners: {
+                        "{navIcons}.events.onSetConfirmedIcon": {
+                            funcName: "{that}.setIconState",
+                            args: ["isConfirmed", "{arguments}.0"]
                         },
+                        "{navIcons}.events.onSetActiveIcon": {
+                            funcName: "{that}.setIconState",
+                            args: ["isActive", "{arguments}.0"]
+                        }
+                    },
+                    modelListeners: {
                         "{navIcons}.model.pageNum": {
                             listener: "gpii.firstDiscovery.icon.measure",
                             args: ["{that}", "{navIcons}.applier", "iconWidth"],
                             priority: 10
+                        },
+                        "{navIcons}.model.currentPanelNum": {
+                            listener: "gpii.firstDiscovery.navIcons.updateIconModel",
+                            args: ["{that}", "{change}.value", "{change}.oldValue"]
                         }
                     }
                 }
@@ -79,7 +99,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         },
         model: {
             pageNum: 0,
-            iconWidth: 0
+            iconWidth: 0,
+            visitedPanelNums: []
         },
         modelRelay: {
             source: "currentPanelNum",
@@ -95,9 +116,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             }
         },
         modelListeners: {
+            currentPanelNum: {
+                funcName: "gpii.firstDiscovery.navIcons.saveVisitedPanelNum",
+                args: ["{that}", "{change}.value", "{change}.oldValue"]
+            },
             pageNum: {
-                listener: "gpii.firstDiscovery.navIcons.showPage",
-                args: ["{change}.value", "{that}.options.pageSize", "{that}.model.iconWidth", "{that}.dom.pager"],
+                listener: "{that}.showIconPage",
                 priority: 5
             }
         },
@@ -106,10 +130,29 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             pager: ".gpii-fd-navIcon-outer"
         },
         events: {
-            onCreateIcon: null
+            onCreateIcon: null,
+            onSetConfirmedIcon: null,
+            onSetActiveIcon: null
         },
         listeners: {
-            "onCreate.createIcons": "gpii.firstDiscovery.navIcons.createIcons"
+            "onCreate.createIcons": {
+                funcName: "gpii.firstDiscovery.navIcons.createIcons"
+            },
+            "onCreate.setInitialIconState": {
+                funcName: "gpii.firstDiscovery.navIcons.setInitialIconState",
+                args: ["{that}"],
+                priority: "after:createIcons"
+            },
+            "onCreate.showIconPage": {
+                funcName: "{that}.showIconPage",
+                priority: "after:createIcons"
+            }
+        },
+        invokers: {
+            showIconPage: {
+                funcName: "gpii.firstDiscovery.navIcons.showIconPage",
+                args: ["{that}.model.pageNum", "{that}.options.pageSize", "{that}.model.iconWidth", "{that}.dom.pager"]
+            }
         }
     });
 
@@ -130,7 +173,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         return Math.floor((panelNum - 1 - pastHoles) / pageSize);
     };
 
-    gpii.firstDiscovery.navIcons.showPage = function (pageNum, pageSize, iconWidth, pagerElement) {
+    gpii.firstDiscovery.navIcons.showIconPage = function (pageNum, pageSize, iconWidth, pagerElement) {
         var newLeft = iconWidth * pageNum * pageSize;
         pagerElement.scrollLeft(newLeft);
     };
@@ -146,6 +189,21 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         var position = icon.options.position;
         icon.applier.change("isActive", currentPanelNum === position);
         icon.applier.change("isConfirmed", prevPanelNum === position && currentPanelNum > prevPanelNum);
+    };
+
+    gpii.firstDiscovery.navIcons.saveVisitedPanelNum = function (that, currentPanelNum, prevPanelNum) {
+        var visitedPanelNums = that.model.visitedPanelNums;
+        if (currentPanelNum > prevPanelNum && $.inArray(prevPanelNum, visitedPanelNums) === -1 && $.inArray(prevPanelNum, that.options.iconHoles)) {
+            // Cannot fire the change request directly on visitedPanelNums due to http://issues.fluidproject.org/browse/FLUID-3504
+            that.applier.change("visitedPanelNums." + visitedPanelNums.length, prevPanelNum);
+        }
+    };
+
+    gpii.firstDiscovery.navIcons.setInitialIconState = function (that) {
+        fluid.each(that.model.visitedPanelNums, function (panelNum) {
+            that.events.onSetConfirmedIcon.fire(panelNum);
+        });
+        that.events.onSetActiveIcon.fire(that.model.currentPanelNum);
     };
 
 })(jQuery, fluid);

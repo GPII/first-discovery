@@ -287,6 +287,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 "this": "{that}.dom.assistance",
                 "method": "toggle",
                 "args": ["{arguments}.0"]
+            },
+            destroyAssessor: {
+                funcName: "gpii.firstDiscovery.panel.keyboard.destroy",
+                args: ["{stickyKeysAssessor}"]
             }
         },
         listeners: {
@@ -297,6 +301,10 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             "afterRender.relayEvents": {
                 funcName: "gpii.firstDiscovery.panel.keyboard.relayEvents",
                 args: ["{that}"]
+            },
+            "afterRender.handleAssessor": {
+                funcName: "gpii.firstDiscovery.panel.keyboard.handleAssessor",
+                args: ["{that}.model.offerAssistance", "{that}.destroyAssessor"]
             }
         },
         modelListeners: {
@@ -304,8 +312,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 listener: "{that}.refreshView",
                 excludeSource: "init"
             }, {
-                listener: "gpii.firstDiscovery.panel.keyboard.destroy",
-                args: ["{stickyKeysAssessor}"]
+                listener: "{that}.destroyAssessor"
             }]
         },
         distributeOptions: {
@@ -335,6 +342,12 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     };
 
+    gpii.firstDiscovery.panel.keyboard.handleAssessor = function (offerAssistance, destroyAssessorFunc) {
+        if (offerAssistance) {
+            destroyAssessorFunc();
+        }
+    };
+
     // TODO: Need to add an integration test keyboardTts
     // Will need to construct a mock TTS which will allow for the
     // verification of queued speech.
@@ -354,7 +367,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         modelListeners: {
             offerAssistance: {
                 func: "{that}.speakPanelInstructions",
-                args: [{queue: true}]
+                args: [{queue: true}],
+                excludeSource: "init"
             },
             tryAccommodation: {
                 listener: "{that}.speakPanelInstructions",
@@ -367,7 +381,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 stickyKeysEnabled: {
                     listener: "{keyboardTts}.speakStickyKeysState",
                     namespace: "speakStickyKeysState",
-                    args: ["{that}", "{change}.value"]
+                    args: ["{that}", "{change}.value"],
+                    excludeSource: "init"
                 }
             }
         }]
@@ -377,6 +392,25 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         if (that.model.tryAccommodation) {
             speakFn(state ? that.msgResolver.resolve("enabledMsg") : that.msgResolver.resolve("disabledMsg"));
         }
+    };
+
+    // Delete the model path "offerAssistance" at prefsEditor reset so the keyboard panel can be restored to its
+    // initial state. The present of an "offerAssistance" model value triggers a non-start page to render:
+    // 1. true value causes the "try it" button to show;
+    // 2. false value causes "don't need assistance" page to show.
+    fluid.defaults("gpii.firstDiscovery.panel.keyboard.prefEditorConnection", {
+        gradeNames: ["fluid.component"],
+        listeners: {
+            "{prefsEditor}.events.beforeReset": {
+                funcName: "gpii.firstDiscovery.panel.keyboard.prefEditorConnection.resetModel",
+                args: ["{that}"]
+            }
+        }
+    });
+
+    gpii.firstDiscovery.panel.keyboard.prefEditorConnection.resetModel = function (that) {
+        that.applier.fireChangeRequest({path: "offerAssistance", type: "DELETE"});
+        that.applier.change("tryAccommodation", false);
     };
 
     /*
@@ -551,7 +585,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      * language panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.lang", {
-        gradeNames: ["gpii.firstDiscovery.attachTooltip.renderer", "fluid.prefs.panel", "{that}.options.prefsEditorConnection"],
+        gradeNames: ["gpii.firstDiscovery.attachTooltip.renderer", "fluid.prefs.panel"],
         preferenceMap: {
             "gpii.firstDiscovery.language": {
                 "model.lang": "default",
