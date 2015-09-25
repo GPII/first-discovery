@@ -217,4 +217,16 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         var isLastPanel = currentPanel === panelTotalNum;
         elm.toggleClass(style, isLastPanel);
     };
+
+    /*
+     * To integrate the first discovery tool with the preferences server
+     */
+    fluid.defaults("gpii.firstDiscovery.prefsServerIntegration", {
+        gradeNames: ["fluid.component"],
+        distributeOptions: {
+            record: "gpii.firstDiscovery.navButtons.prefsServerIntegration",
+            target: "{that navButtons}.options.gradeNames"
+        }
+    });
+
 })(jQuery, fluid);
