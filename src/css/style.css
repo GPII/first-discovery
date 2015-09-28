@@ -105,11 +105,6 @@ button {
     left: -0.5rem;
 }
 
-/* hide the selfVoicingToggle button on the congratulations page */
-.gpii-fd-lastPanel .gpii-fd-selfVoicingToggle {
-    display: none;
-}
-
 .gpii-fd-help:hover,
 .gpii-fd-mute:hover {
     background-color: inherit;

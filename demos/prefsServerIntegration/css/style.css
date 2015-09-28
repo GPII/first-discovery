@@ -1,4 +1,0 @@
-/* In the preferences server integration demo, show the selfVoicingToggle button on the congratulations page */
-.gpii-fd-lastPanel.gpii-fd-prefsServerIntegration .gpii-fd-selfVoicingToggle {
-    display: block;
-}

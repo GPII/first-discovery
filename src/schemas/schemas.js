@@ -229,7 +229,7 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
         }
     });
 
-    fluid.defaults("gpii.firstDiscovery.schemas.showSouns", {
+    fluid.defaults("gpii.firstDiscovery.schemas.showSounds", {
         gradeNames: ["fluid.prefs.schemas"],
         schema: {
             "gpii.firstDiscovery.showSounds": {
