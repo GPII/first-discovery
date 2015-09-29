@@ -1053,4 +1053,23 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
         }
     });
 
+    /*
+     * Token panel
+     */
+    fluid.defaults("gpii.firstDiscovery.panel.token", {
+        gradeNames: ["fluid.prefs.panel"],
+        preferenceMap: {
+            "gpii.firstDiscovery.token": {}
+        },
+        selectors: {
+            message: ".gpiic-fd-token-message",
+            token: ".gpiic-fd-token"
+        },
+        protoTree: {
+            message: {
+                markup: {messagekey: "message"}
+            }
+        }
+    });
+
 })(jQuery, fluid);
