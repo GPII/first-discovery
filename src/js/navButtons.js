@@ -135,6 +135,7 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
         }
     });
 
+    // Returns the index of the label (or tooltip) messages array for the current panel. @see line 147, 148
     gpii.firstDiscovery.navButtons.indexToDisposition = function (currentPanelNum, panelStartNum, panelTotalNum) {
         return currentPanelNum === panelStartNum ? 0 : (currentPanelNum < panelTotalNum - 1 ? 1 : 2);
     };
@@ -188,6 +189,7 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
         }
     });
 
+    // Returns the index of the label (or tooltip) messages array for the current panel. @see line 147, 148
     gpii.firstDiscovery.navButtons.prefsServerIntegration.indexToDisposition = function (currentPanelNum, panelStartNum, panelTotalNum) {
         return currentPanelNum === panelStartNum ? 0 : (currentPanelNum < panelTotalNum ? 1 : 2);
     };
