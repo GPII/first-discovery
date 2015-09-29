@@ -5,7 +5,7 @@ Licensed under the New BSD license. You may not use this file except in
 compliance with this License.
 
 You may obtain a copy of the License at
-https://github.com/gpii/universal/LICENSE.txt
+https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
 */
 
 (function ($, fluid) {
@@ -27,7 +27,7 @@ https://github.com/gpii/universal/LICENSE.txt
         jqUnit.assertEquals(msgPrefix + " - The " + selector + " button " + stateMsg + " visible", state, button.hasClass(that.options.styles.show));
     };
 
-    gpii.tests.firstDiscovery.navButtons.verifyLabels = function (msg, that, states) {
+    gpii.tests.firstDiscovery.navButtons.verifyLabels = function (msg, that, labels) {
         var backButton = that.locate("back"),
             backButtonLabel = that.locate("backLabel"),
             backButtonId = backButton.attr("id"),
@@ -35,99 +35,54 @@ https://github.com/gpii/universal/LICENSE.txt
             nextButtonLabel = that.locate("nextLabel"),
             nextButtonId = nextButton.attr("id");
 
-        if (states.backLabel) {
-            jqUnit.assertEquals(msg + " - The text on the back button is properly set", states.backLabel, backButtonLabel.html());
-            jqUnit.assertEquals(msg + " - The tooltip content for the back button is properly set", states.backTooltip, that.tooltip.model.idToContent[backButtonId]);
+        if (labels.backLabel) {
+            jqUnit.assertEquals(msg + " - The text on the back button is properly set", labels.backLabel, backButtonLabel.html());
+            jqUnit.assertEquals(msg + " - The tooltip content for the back button is properly set", labels.backTooltip, that.tooltip.model.idToContent[backButtonId]);
         }
 
-        if (states.nextLabel) {
-            jqUnit.assertEquals(msg + " - The text on the next button is properly set", states.nextLabel, nextButtonLabel.html());
-            jqUnit.assertEquals(msg + " - The tooltip content for the next button is properly set", states.nextTooltip, that.tooltip.model.idToContent[nextButtonId]);
+        if (labels.nextLabel) {
+            jqUnit.assertEquals(msg + " - The text on the next button is properly set", labels.nextLabel, nextButtonLabel.html());
+            jqUnit.assertEquals(msg + " - The tooltip content for the next button is properly set", labels.nextTooltip, that.tooltip.model.idToContent[nextButtonId]);
         }
     };
 
-    gpii.tests.firstDiscovery.navButtons.verifyButtons = function (that, currentPanelNum) {
-        jqUnit.assertEquals("The model value has been updated", currentPanelNum, that.model.currentPanelNum);
+    gpii.tests.firstDiscovery.navButtons.verifyButtons = function (that, msg, expectedPanelNum, expectedStates, expectedLabels) {
+        jqUnit.assertEquals("The model value has been updated", expectedPanelNum, that.model.currentPanelNum);
 
-        var msg,
-            start = that.options.panelStartNum,
-            last = that.options.panelTotalNum;
-
-        if (currentPanelNum === start) {
-            msg = "On the start panel";
-            gpii.tests.firstDiscovery.navButtons.verifyStates(msg, that, {
-                back: false,
-                next: true
-            });
-            gpii.tests.firstDiscovery.navButtons.verifyLabels(msg, that, {
-                backLabel: undefined,
-                backTooltip: undefined,
-                nextLabel: that.options.messageBase.start,
-                nextTooltip: that.options.messageBase.startTooltip
-            });
-        } else if (currentPanelNum === last) {
-            msg = "On the last panel";
-            gpii.tests.firstDiscovery.navButtons.verifyStates(msg, that, {
-                back: true,
-                next: false
-            });
-            gpii.tests.firstDiscovery.navButtons.verifyLabels(msg, that, {
-                backLabel: undefined,
-                backTooltip: undefined,
-                nextLabel: undefined,
-                nextTooltip: undefined
-            });
-        } else if (currentPanelNum === last - 1) {
-            msg = "On the second last panel";
-            gpii.tests.firstDiscovery.navButtons.verifyStates(msg, that, {
-                back: true,
-                next: true
-            });
-            gpii.tests.firstDiscovery.navButtons.verifyLabels(msg, that, {
-                backLabel: that.options.messageBase.back,
-                backTooltip: that.options.messageBase.backTooltip,
-                nextLabel: that.options.messageBase.finish,
-                nextTooltip: that.options.messageBase.finishTooltip
-            });
-        } else {
-            msg = "On a panel in btw the start and the last panels";
-            gpii.tests.firstDiscovery.navButtons.verifyStates(msg, that, {
-                back: true,
-                next: true
-            });
-            gpii.tests.firstDiscovery.navButtons.verifyLabels(msg, that, {
-                backLabel: that.options.messageBase.back,
-                backTooltip: that.options.messageBase.backTooltip,
-                nextLabel: that.options.messageBase.next,
-                nextTooltip: that.options.messageBase.nextTooltip
-            });
-        }
-
-
+        gpii.tests.firstDiscovery.navButtons.verifyStates(msg, that, expectedStates);
+        gpii.tests.firstDiscovery.navButtons.verifyLabels(msg, that, expectedLabels);
     };
 
-    jqUnit.test("Nav buttons", function () {
-        jqUnit.expect(38);
+    var back = "back",
+        backTooltip = "Select to go back to last step",
+        next = "next",
+        nextTooltip = "Select to go to next step",
+        start = "start",
+        startTooltip = "Select to start",
+        finish = "finish",
+        finishTooltip = "Select to finish";
 
+    gpii.tests.firstDiscovery.navButtons.runTest = function (expectedStates, expectedLabels, gradeNames) {
         var firstPanelNum = 1;
         var secondPanelNum = firstPanelNum + 1;
         var panelTotalNum = gpii.tests.utils.firstDiscovery.panels.length;
         var secondLastPanelNum = panelTotalNum - 1;
 
         var that = gpii.firstDiscovery.navButtons(".gpiic-nav", {
+            gradeNames: gradeNames,
             panelTotalNum: panelTotalNum,
             model: {
                 currentPanelNum: null
             },
             messageBase: {
-                "back": "back",
-                "backTooltip": "Select to go back to last step",
-                "next": "next",
-                "nextTooltip": "Select to go to next step",
-                "start": "start",
-                "startTooltip": "Select to start",
-                "finish": "finish",
-                "finishTooltip": "Select to finish"
+                "back": back,
+                "backTooltip": backTooltip,
+                "next": next,
+                "nextTooltip": nextTooltip,
+                "start": start,
+                "startTooltip": startTooltip,
+                "finish": finish,
+                "finishTooltip": finishTooltip
             }
         });
 
@@ -137,23 +92,152 @@ https://github.com/gpii/universal/LICENSE.txt
         // Test button states of being on the first panel
         that.applier.change("currentPanelNum", firstPanelNum);
         jqUnit.assertNotUndefined("The model for tooltip has been populated", that.tooltip.model.idToContent);
-        gpii.tests.firstDiscovery.navButtons.verifyButtons(that, firstPanelNum);
+        gpii.tests.firstDiscovery.navButtons.verifyButtons(
+            that,
+            "On the start panel",
+            firstPanelNum,
+            expectedStates.startPanel,
+            expectedLabels.startPanel);
 
         // Clicking the next button increases the current panel number and changes button states
         nextButton.click();
-        gpii.tests.firstDiscovery.navButtons.verifyButtons(that, secondPanelNum);
+        gpii.tests.firstDiscovery.navButtons.verifyButtons(
+            that,
+            "On a panel in btw the start and the last panels",
+            secondPanelNum,
+            expectedStates.middlePanel,
+            expectedLabels.middlePanel);
 
         // Clicking the back button decreases the current panel number and brings back the states of being on the first panel
         backButton.click();
-        gpii.tests.firstDiscovery.navButtons.verifyButtons(that, firstPanelNum);
+        gpii.tests.firstDiscovery.navButtons.verifyButtons(
+            that,
+            "On the start panel",
+            firstPanelNum,
+            expectedStates.startPanel,
+            expectedLabels.startPanel);
 
         // Test the button states of being on the second last panel
         that.applier.change("currentPanelNum", secondLastPanelNum);
-        gpii.tests.firstDiscovery.navButtons.verifyButtons(that, secondLastPanelNum);
+        gpii.tests.firstDiscovery.navButtons.verifyButtons(
+            that,
+            "On the second last panel",
+            secondLastPanelNum,
+            expectedStates.secondLastPanel,
+            expectedLabels.secondLastPanel);
 
         // Test the button states of being on the last panel
         that.applier.change("currentPanelNum", panelTotalNum);
-        gpii.tests.firstDiscovery.navButtons.verifyButtons(that, panelTotalNum);
+        gpii.tests.firstDiscovery.navButtons.verifyButtons(
+            that,
+            "On the last panel",
+            panelTotalNum,
+            expectedStates.lastPanel,
+            expectedLabels.lastPanel);
+    };
+
+    jqUnit.test("Nav buttons - regular", function () {
+        jqUnit.expect(38);
+
+        var expectedStates = {
+            "startPanel": {
+                back: false,
+                next: true
+            },
+            "lastPanel": {
+                back: true,
+                next: false
+            },
+            "secondLastPanel": {
+                back: true,
+                next: true
+            },
+            "middlePanel": {
+                back: true,
+                next: true
+            }
+        };
+
+        var expectedLabels = {
+            "startPanel": {
+                backLabel: undefined,
+                backTooltip: undefined,
+                nextLabel: start,
+                nextTooltip: startTooltip
+            },
+            "lastPanel": {
+                backLabel: undefined,
+                backTooltip: undefined,
+                nextLabel: undefined,
+                nextTooltip: undefined
+            },
+            "secondLastPanel": {
+                backLabel: back,
+                backTooltip: backTooltip,
+                nextLabel: finish,
+                nextTooltip: finishTooltip
+            },
+            "middlePanel": {
+                backLabel: back,
+                backTooltip: backTooltip,
+                nextLabel: next,
+                nextTooltip: nextTooltip
+            }
+        };
+
+        gpii.tests.firstDiscovery.navButtons.runTest(expectedStates, expectedLabels);
+    });
+
+    jqUnit.test("Nav buttons - preferences server integration", function () {
+        jqUnit.expect(42);
+
+        var expectedStates = {
+            "startPanel": {
+                back: false,
+                next: true
+            },
+            "lastPanel": {
+                back: true,
+                next: true
+            },
+            "secondLastPanel": {
+                back: true,
+                next: true
+            },
+            "middlePanel": {
+                back: true,
+                next: true
+            }
+        };
+
+        var expectedLabels = {
+            "startPanel": {
+                backLabel: undefined,
+                backTooltip: undefined,
+                nextLabel: start,
+                nextTooltip: startTooltip
+            },
+            "lastPanel": {
+                backLabel: back,
+                backTooltip: backTooltip,
+                nextLabel: finish,
+                nextTooltip: finishTooltip
+            },
+            "secondLastPanel": {
+                backLabel: back,
+                backTooltip: backTooltip,
+                nextLabel: next,
+                nextTooltip: nextTooltip
+            },
+            "middlePanel": {
+                backLabel: back,
+                backTooltip: backTooltip,
+                nextLabel: next,
+                nextTooltip: nextTooltip
+            }
+        };
+
+        gpii.tests.firstDiscovery.navButtons.runTest(expectedStates, expectedLabels, "gpii.firstDiscovery.navButtons.prefsServerIntegration");
     });
 
 })(jQuery, fluid);

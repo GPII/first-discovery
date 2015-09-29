@@ -2,11 +2,6 @@
   height: 34rem;
 }
 
-/* show the selfVoicing toggle on the last panel since it's no longer the congratulations page */
-.gpii-fd-lastPanel .gpii-fd-selfVoicing {
-    display: block;
-}
-
 .gpii-fd {
     background-color: #000;
 }

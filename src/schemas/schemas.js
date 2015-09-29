@@ -2,12 +2,11 @@
 
 Copyright 2015 OCAD University
 
-Licensed under the Educational Community License (ECL), Version 2.0 or the New
-BSD license. You may not use this file except in compliance with one these
-Licenses.
+Licensed under the New BSD license. You may not use this file except in
+compliance with this License.
 
-You may obtain a copy of the ECL 2.0 License and BSD License at
-https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
+You may obtain a copy of the License at
+https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
 */
 
 (function ($, fluid) {
@@ -229,7 +228,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         }
     });
 
-    fluid.defaults("gpii.firstDiscovery.schemas.showSouns", {
+    fluid.defaults("gpii.firstDiscovery.schemas.showSounds", {
         gradeNames: ["fluid.prefs.schemas"],
         schema: {
             "gpii.firstDiscovery.showSounds": {

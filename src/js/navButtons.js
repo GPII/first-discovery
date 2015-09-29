@@ -2,12 +2,11 @@
 
 Copyright 2015 OCAD University
 
-Licensed under the Educational Community License (ECL), Version 2.0 or the New
-BSD license. You may not use this file except in compliance with one these
-Licenses.
+Licensed under the New BSD license. You may not use this file except in
+compliance with this License.
 
-You may obtain a copy of the ECL 2.0 License and BSD License at
-https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
+You may obtain a copy of the License at
+https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
 */
 
 (function ($, fluid) {
@@ -21,6 +20,14 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
      */
     fluid.defaults("gpii.firstDiscovery.navButtons", {
         gradeNames: ["gpii.firstDiscovery.msgLookup", "gpii.firstDiscovery.attachTooltip", "fluid.viewComponent"],
+        members: {
+            endPanelNumForNextButton: {
+                expander: {
+                    funcName: "gpii.firstDiscovery.navButtons.getEndPanelNum",
+                    args: ["{that}.options.panelTotalNum"]
+                }
+            }
+        },
         panelTotalNum: null,   // Must be supplied by integrators
         panelStartNum: 1,
         tooltipContentMap: {
@@ -64,7 +71,6 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         modelListeners: {
             currentPanelNum: {
                 listener: "{that}.setButtonLabels",
-                namespace: "setButtonLabels",
                 excludeSource: "init"
             },
             isFirstPanel: [{
@@ -72,9 +78,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 excludeSource: "init",
                 priority: 10
             }, {
-                listener: "{that}.toggleButtonSates",
+                listener: "{that}.toggleButtonStates",
                 args: ["{that}.dom.back", "{change}.value"],
-                namespace: "toggleBackButtonStates",
                 excludeSource: "init",
                 priority: 5
             }],
@@ -83,9 +88,8 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 excludeSource: "init",
                 priority: 10
             }, {
-                listener: "{that}.toggleButtonSates",
+                listener: "{that}.toggleButtonStates",
                 args: ["{that}.dom.next", "{change}.value"],
-                namespace: "toggleNextButtonStates",
                 excludeSource: "init",
                 priority: 5
             }]
@@ -103,11 +107,11 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             },
             "onCreate.setButtonLabels": "{that}.setButtonLabels",
             "onCreate.toggleBackButtonStates": {
-                listener: "{that}.toggleButtonSates",
+                listener: "{that}.toggleButtonStates",
                 args: ["{that}.dom.back", "{that}.model.isFirstPanel"]
             },
             "onCreate.toggleNextButtonStates": {
-                listener: "{that}.toggleButtonSates",
+                listener: "{that}.toggleButtonStates",
                 args: ["{that}.dom.next", "{that}.model.isLastPanel"]
             }
         },
@@ -116,7 +120,7 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
                 funcName: "gpii.firstDiscovery.navButtons.setButtonLabels",
                 args: ["{that}"]
             },
-            toggleButtonSates: {
+            toggleButtonStates: {
                 funcName: "gpii.firstDiscovery.navButtons.toggleButtonStates",
                 args: ["{arguments}.0", "{arguments}.1", "{that}.options.styles.show"]
             },
@@ -131,19 +135,39 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
             nextButtonClicked: {
                 funcName: "gpii.firstDiscovery.navButtons.adjustCurrentPanelNum",
                 args: ["{that}", 1]
+            },
+            indexToDisposition: {
+                funcName: "gpii.firstDiscovery.navButtons.indexToDisposition",
+                args: ["{that}.model.currentPanelNum", "{that}.options.panelStartNum", "{that}.endPanelNumForNextButton"]
             }
         }
     });
 
-    gpii.firstDiscovery.navButtons.indexToDisposition = function (currentPanelNum, panelStartNum, panelTotalNum) {
-        return currentPanelNum === panelStartNum ? 0 : (currentPanelNum < panelTotalNum - 1 ? 1 : 2);
+    gpii.firstDiscovery.navButtons.getEndPanelNum = function (panelTotalNum) {
+        return panelTotalNum - 1;
+    };
+
+    gpii.firstDiscovery.navButtons.buttonPositions = {
+        START: 0,
+        MIDDLE: 1,
+        END: 2
+    };
+
+    // Returns the index of the label (or tooltip) messages array for the current panel. @see line 147, 148
+    gpii.firstDiscovery.navButtons.indexToDisposition = function (currentPanelNum, panelStartNum, endPanelNumForNextButton) {
+        if (currentPanelNum === panelStartNum) {
+            return gpii.firstDiscovery.navButtons.buttonPositions.START;
+        } else if (currentPanelNum < endPanelNumForNextButton) {
+            return gpii.firstDiscovery.navButtons.buttonPositions.MIDDLE;
+        } else {
+            return gpii.firstDiscovery.navButtons.buttonPositions.END;
+        }
     };
 
     gpii.firstDiscovery.navButtons.setButtonLabels = function (that) {
-        var currentPanelNum = that.model.currentPanelNum,
-            nextButton = that.locate("next"),
+        var nextButton = that.locate("next"),
             nextButtonId = fluid.allocateSimpleId(nextButton),
-            disposition = gpii.firstDiscovery.navButtons.indexToDisposition(currentPanelNum, that.options.panelStartNum, that.options.panelTotalNum),
+            disposition = that.indexToDisposition(),
             nextLabel = that.msgResolver.resolve(["start", "next", "finish"][disposition]),
             nextTooltipContent = that.msgResolver.resolve(["startTooltip", "nextTooltip", "finishTooltip"][disposition]);
 
@@ -162,5 +186,28 @@ https://github.com/fluid-project/infusion/raw/master/Infusion-LICENSE.txt
         var newValue = that.model.currentPanelNum + toChange;
         that.applier.change("currentPanelNum", newValue);
     };
+
+    // A grade component for integrating the first discovery tool and the preferences server.
+    // It overrides some definitions on "gpii.firstDiscovery.navButtons"
+    fluid.defaults("gpii.firstDiscovery.navButtons.prefsServerIntegration", {
+        gradeNames: ["fluid.modelComponent"],
+        members: {
+            endPanelNumForNextButton: "{that}.options.panelTotalNum"
+        },
+        modelListeners: {
+            isLastPanel: [{
+                listener: "{that}.toggleButtonStates",
+                args: ["{that}.dom.next", false],
+                excludeSource: "init",
+                priority: 3
+            }]
+        },
+        listeners: {
+            "onCreate.toggleNextButtonStates": {
+                listener: "{that}.toggleButtonStates",
+                args: ["{that}.dom.next", false]
+            }
+        }
+    });
 
 })(jQuery, fluid);
