@@ -13,10 +13,8 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
 
     "use strict";
 
-    fluid.registerNamespace("gpii.firstDiscovery");
-
     /*******************************************************************************
-     * Auxiliary Schema
+     * Auxiliary Schema for integrating with the preferences server
     *******************************************************************************/
 
     fluid.defaults("gpii.firstDiscovery.auxSchemaForPrefsServerIntegration", {
