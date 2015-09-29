@@ -155,9 +155,13 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
 
     // Returns the index of the label (or tooltip) messages array for the current panel. @see line 147, 148
     gpii.firstDiscovery.navButtons.indexToDisposition = function (currentPanelNum, panelStartNum, endPanelNumForNextButton) {
-        return currentPanelNum === panelStartNum ? gpii.firstDiscovery.navButtons.buttonPositions.START :
-            (currentPanelNum < endPanelNumForNextButton ? gpii.firstDiscovery.navButtons.buttonPositions.MIDDLE :
-            gpii.firstDiscovery.navButtons.buttonPositions.END);
+        if (currentPanelNum === panelStartNum) {
+            return gpii.firstDiscovery.navButtons.buttonPositions.START;
+        } else if (currentPanelNum < endPanelNumForNextButton) {
+            return gpii.firstDiscovery.navButtons.buttonPositions.MIDDLE;
+        } else {
+            return gpii.firstDiscovery.navButtons.buttonPositions.END;
+        }
     };
 
     gpii.firstDiscovery.navButtons.setButtonLabels = function (that) {
