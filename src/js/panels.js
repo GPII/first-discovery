@@ -1061,13 +1061,30 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
         preferenceMap: {
             "gpii.firstDiscovery.token": {}
         },
+        model: {
+            token: "aaa"
+        },
         selectors: {
             message: ".gpiic-fd-token-message",
             token: ".gpiic-fd-token"
         },
+        selectorsToIgnore: ["token"],
         protoTree: {
             message: {
                 markup: {messagekey: "message"}
+            }
+        },
+        modelListeners: {
+            token: "{that}.showToken"
+        },
+        listeners: {
+            "afterRender.showToken": "{that}.showToken"
+        },
+        invokers: {
+            showToken: {
+                "this": "{that}.dom.token",
+                method: "html",
+                args: ["{that}.model.token"]
             }
         }
     });

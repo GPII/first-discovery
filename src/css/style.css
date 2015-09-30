@@ -609,6 +609,7 @@ button {
     font-size: 1rem;
     margin-top: -1.1rem;
     text-align: center;
+    line-height: normal;
 }
 
 /* Tooltips */
@@ -870,6 +871,10 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
         color: #ffffff !important;
 }
 
+.fl-theme-wb .gpii-fd-stepCount {
+    background-color: #ffffff !important;
+}
+
 .fl-theme-wb .gpii-fd-stepCount span {
     color: #000 !important;
     background-color: #fff !important;
@@ -979,6 +984,10 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
         color: #000000 !important;
 }
 
+.fl-theme-bw .gpii-fd-stepCount {
+    background-color: #000000 !important;
+}
+
 .fl-theme-bw .gpii-fd-stepCount span {
     color: #fff !important;
     background-color: #000 !important;
@@ -1043,6 +1052,25 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
     background-color: #425165;
 }
 
+/* textarea */
+.gpii-fd-token {
+    resize: none;
+    max-width: 25rem;
+    font-size: 2.25rem;
+}
+
+/* div */
+/*.gpii-fd-token {
+    resize: none;
+    max-width: 25rem;
+    font-size: 2.25rem;
+    border: 3px #425165 solid;
+    display: inline-block;
+    max-width: 25rem;
+    word-wrap: break-word;
+    line-height: 3rem;
+}
+*/
 .fl-theme-bw .gpii-fd-lastPanel .gpii-fd-stepCount {
     background-color: #000000 !important;
 }
