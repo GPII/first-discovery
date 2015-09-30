@@ -164,6 +164,7 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
     fluid.defaults("gpii.firstDiscovery.auxSchema.prefsServerIntegration", {
         gradeNames: ["gpii.firstDiscovery.auxSchema"],
         auxiliarySchema: {
+            "loaderGrades": ["gpii.firstDiscovery.firstDiscoveryEditor", "gpii.firstDiscovery.prefsServerIntegration"],
             "terms": {
                 "templatePrefix": "../../src/html",
                 "messagePrefix": "../../src/messages"
