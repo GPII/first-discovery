@@ -1042,3 +1042,11 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
 .gpii-fd-lastPanel .gpii-fd-stepCount {
     background-color: #425165;
 }
+
+.fl-theme-bw .gpii-fd-lastPanel .gpii-fd-stepCount {
+    background-color: #000000 !important;
+}
+
+.fl-theme-wb .gpii-fd-lastPanel .gpii-fd-stepCount {
+    background-color: #ffffff !important;
+}
