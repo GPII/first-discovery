@@ -1030,7 +1030,8 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
 }
 
 /* Integration of the first discovery tool and the preferences server */
-.gpii-fd-lastPanel .gpii-fd-navButtons .gpii-fd-show {
+.gpii-fd-lastPanel .gpii-fd-show,
+.gpii-fd-lastPanel .gpii-fd-navIcons {
     visibility: hidden;
 }
 
