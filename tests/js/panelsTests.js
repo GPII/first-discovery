@@ -1154,6 +1154,76 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
         jqUnit.assertEquals("The description should be rendered correctly", expectedContent, that.locate("message").text());
     };
 
+    /*********
+     * Token *
+     *********/
+
+    fluid.defaults("gpii.tests.firstDiscovery.panel.token", {
+        gradeNames: ["gpii.firstDiscovery.panel.token"],
+        messageBase: {
+            "message": "To apply your preferences to any device (a computer, a tablet, a mobile phone, etc), record the following token:",
+            "error": "Sorry, a token could not be generated at this time."
+        }
+    });
+
+    fluid.defaults("gpii.tests.tokenPanel", {
+        gradeNames: ["fluid.test.testEnvironment"],
+        components: {
+            token: {
+                type: "gpii.tests.firstDiscovery.panel.token",
+                container: ".gpiic-fd-tokenPanel"
+            },
+            tokenTester: {
+                type: "gpii.tests.tokenTester"
+            }
+        }
+    });
+
+    fluid.defaults("gpii.tests.tokenTester", {
+        gradeNames: ["fluid.test.testCaseHolder"],
+        token: "de305d54-75b4-431b-adb2-eb6b9e546014",
+        modules: [{
+            name: "Tests the token component",
+            tests: [{
+                expect: 1,
+                name: "Initialization",
+                sequence: [{
+                    func: "{token}.refreshView"
+                }, {
+                    listener: "gpii.tests.testMsgRendering",
+                    args: ["{token}"],
+                    event: "{token}.events.afterRender"
+                }]
+            }, {
+                expect: 2,
+                name: "onSuccess and onError event firing",
+                sequence: [{
+                    func: "{token}.events.onSuccess.fire",
+                    args: ["{that}.options.token"]
+                }, {
+                    listener: "gpii.tests.verifyTokenText",
+                    args: ["{token}", "{that}.options.token"],
+                    event: "{token}.events.onSuccess"
+                }, {
+                    func: "{token}.events.onError.fire"
+                }, {
+                    listener: "gpii.tests.verifyTokenText",
+                    args: ["{token}", "{token}.options.messageBase.error"],
+                    event: "{token}.events.onError"
+                }]
+            }]
+        }]
+    });
+
+    gpii.tests.testMsgRendering = function (that) {
+        var expectedContent = that.options.messageBase.message;
+        jqUnit.assertEquals("The description should be rendered correctly", expectedContent, that.locate("message").text());
+    };
+
+    gpii.tests.verifyTokenText = function (that, expectedText) {
+        jqUnit.assertEquals("The token text is set properly", expectedText, that.locate("token").html());
+    };
+
     $(document).ready(function () {
         fluid.test.runTests([
             "gpii.tests.textSizePanel",
@@ -1166,6 +1236,7 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
             "gpii.tests.keyboardPanel",
             "gpii.tests.welcomePanel",
             "gpii.tests.congratulationsPanel",
+            "gpii.tests.tokenPanel",
             // Run tests for the language panel at the end to work around the Chrome issue that key up/down actions in the scrolling
             // test somehow interfere the rendering of the contrast panel.
             "gpii.tests.langPanel"

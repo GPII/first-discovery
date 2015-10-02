@@ -1055,26 +1055,43 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
 /* textarea */
 .gpii-fd-token {
     resize: none;
-    max-width: 25rem;
+    max-width: 29rem;
     font-size: 2.25rem;
+    line-height: 3rem;
+    border: 5px solid #425165;
+    z-index: 99;
 }
 
-/* div */
-/*.gpii-fd-token {
-    resize: none;
-    max-width: 25rem;
-    font-size: 2.25rem;
-    border: 3px #425165 solid;
-    display: inline-block;
-    max-width: 25rem;
-    word-wrap: break-word;
-    line-height: 3rem;
+.gpii-fd-token:focus {
+    border-color: #425165;
+    box-shadow: 0 0 0 0.4rem rgb(244, 215, 75);
+    outline: none;
 }
-*/
+
 .fl-theme-bw .gpii-fd-lastPanel .gpii-fd-stepCount {
     background-color: #000000 !important;
 }
 
+.fl-theme-bw .gpii-fd-token {
+    border-color: #000000 !important;
+}
+
+.fl-theme-bw .gpii-fd-token:focus {
+    border-color: #000000 !important;
+    box-shadow: 0 0 0 0.4rem rgb(255, 255, 255),
+                0 0 0 0.6rem rgb(0, 0, 0) !important;
+}
+
 .fl-theme-wb .gpii-fd-lastPanel .gpii-fd-stepCount {
     background-color: #ffffff !important;
+}
+
+.fl-theme-wb .gpii-fd-token {
+    border-color: #ffffff !important;
+}
+
+.fl-theme-wb .gpii-fd-token:focus {
+    border-color: #ffffff !important;
+    box-shadow: 0 0 0 0.4rem rgb(0, 0, 0),
+                0 0 0 0.6rem rgb(255, 255, 255) !important;
 }

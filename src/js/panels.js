@@ -1061,9 +1061,6 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
         preferenceMap: {
             "gpii.firstDiscovery.token": {}
         },
-        model: {
-            token: "aaa"
-        },
         selectors: {
             message: ".gpiic-fd-token-message",
             token: ".gpiic-fd-token"
@@ -1074,17 +1071,25 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
                 markup: {messagekey: "message"}
             }
         },
-        modelListeners: {
-            token: "{that}.showToken"
+        events: {
+            onSuccess: null,  // argument: token
+            onError: null
         },
         listeners: {
-            "afterRender.showToken": "{that}.showToken"
+            "onSuccess.showToken": {
+                funcName: "{that}.showTokenText",
+                args: ["{arguments}.0"]
+            },
+            "onError.showErrorMsg": {
+                funcName: "{that}.showTokenText",
+                args: ["{that}.msgLookup.error"]
+            }
         },
         invokers: {
-            showToken: {
+            showTokenText: {
                 "this": "{that}.dom.token",
                 method: "html",
-                args: ["{that}.model.token"]
+                args: ["{arguments}.0"]
             }
         }
     });
