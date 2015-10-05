@@ -210,7 +210,7 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
 
     /*
      * To integrate the first discovery tool with the preferences server.
-     * This component should be used as an add-on component for gpii.firstDiscovery.firstDiscoveryEditor
+     * This component should be used as an add-on grade component for gpii.firstDiscovery.firstDiscoveryEditor
      */
     fluid.defaults("gpii.firstDiscovery.prefsServerIntegration", {
         gradeNames: ["fluid.modelComponent"],
