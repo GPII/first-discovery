@@ -20,14 +20,6 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
      */
     fluid.defaults("gpii.firstDiscovery.navButtons", {
         gradeNames: ["gpii.firstDiscovery.msgLookup", "gpii.firstDiscovery.attachTooltip", "fluid.viewComponent"],
-        members: {
-            endPanelNumForNextButton: {
-                expander: {
-                    funcName: "gpii.firstDiscovery.navButtons.getEndPanelNum",
-                    args: ["{that}.options.panelTotalNum"]
-                }
-            }
-        },
         panelTotalNum: null,   // Must be supplied by integrators
         panelStartNum: 1,
         tooltipContentMap: {
@@ -138,14 +130,10 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
             },
             indexToDisposition: {
                 funcName: "gpii.firstDiscovery.navButtons.indexToDisposition",
-                args: ["{that}.model.currentPanelNum", "{that}.options.panelStartNum", "{that}.endPanelNumForNextButton"]
+                args: ["{that}.model.currentPanelNum", "{that}.options.panelStartNum", "{that}.options.panelTotalNum"]
             }
         }
     });
-
-    gpii.firstDiscovery.navButtons.getEndPanelNum = function (panelTotalNum) {
-        return panelTotalNum - 1;
-    };
 
     gpii.firstDiscovery.navButtons.buttonPositions = {
         START: 0,
@@ -154,10 +142,10 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
     };
 
     // Returns the index of the label (or tooltip) messages array for the current panel. @see line 147, 148
-    gpii.firstDiscovery.navButtons.indexToDisposition = function (currentPanelNum, panelStartNum, endPanelNumForNextButton) {
+    gpii.firstDiscovery.navButtons.indexToDisposition = function (currentPanelNum, panelStartNum, panelTotalNum) {
         if (currentPanelNum === panelStartNum) {
             return gpii.firstDiscovery.navButtons.buttonPositions.START;
-        } else if (currentPanelNum < endPanelNumForNextButton) {
+        } else if (currentPanelNum < panelTotalNum - 1) {
             return gpii.firstDiscovery.navButtons.buttonPositions.MIDDLE;
         } else {
             return gpii.firstDiscovery.navButtons.buttonPositions.END;
@@ -186,28 +174,5 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
         var newValue = that.model.currentPanelNum + toChange;
         that.applier.change("currentPanelNum", newValue);
     };
-
-    // A grade component for integrating the first discovery tool and the preferences server.
-    // It overrides some definitions on "gpii.firstDiscovery.navButtons"
-    fluid.defaults("gpii.firstDiscovery.navButtons.prefsServerIntegration", {
-        gradeNames: ["fluid.modelComponent"],
-        members: {
-            endPanelNumForNextButton: "{that}.options.panelTotalNum"
-        },
-        modelListeners: {
-            isLastPanel: [{
-                listener: "{that}.toggleButtonStates",
-                args: ["{that}.dom.next", false],
-                excludeSource: "init",
-                priority: 3
-            }]
-        },
-        listeners: {
-            "onCreate.toggleNextButtonStates": {
-                listener: "{that}.toggleButtonStates",
-                args: ["{that}.dom.next", false]
-            }
-        }
-    });
 
 })(jQuery, fluid);

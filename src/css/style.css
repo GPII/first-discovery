@@ -607,10 +607,9 @@ button {
 /* Step count message */
 .gpii-fd-stepCount {
     font-size: 1rem;
-    position: relative;
-    top: -1.1rem;
-    height: 0;
+    margin-top: -1.1rem;
     text-align: center;
+    line-height: normal;
 }
 
 /* Tooltips */
@@ -872,6 +871,10 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
         color: #ffffff !important;
 }
 
+.fl-theme-wb .gpii-fd-stepCount {
+    background-color: #ffffff !important;
+}
+
 .fl-theme-wb .gpii-fd-stepCount span {
     color: #000 !important;
     background-color: #fff !important;
@@ -981,6 +984,10 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
         color: #000000 !important;
 }
 
+.fl-theme-bw .gpii-fd-stepCount {
+    background-color: #000000 !important;
+}
+
 .fl-theme-bw .gpii-fd-stepCount span {
     color: #fff !important;
     background-color: #000 !important;
@@ -1022,11 +1029,69 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
 .fl-theme-bw .gpii-fd-icon,
 .fl-theme-wb .gpii-fd-icon:hover,
 .fl-theme-bw .gpii-fd-icon:hover {
-        background-color: transparent !important;
+    background-color: transparent !important;
 }
 
 /* Override an outline-setting rule in Enactors.css */
 .fl-theme-wb .gpii-fd-lang-controls .selectable,
 .fl-theme-bw .gpii-fd-lang-controls .selectable {
     outline-style: none;
+}
+
+/* Integration of the first discovery tool and the preferences server */
+.gpii-fd-lastPanel .gpii-fd-show,
+.gpii-fd-lastPanel .gpii-fd-navIcons {
+    visibility: hidden;
+}
+
+.gpii-fd-lastPanel .gpii-fd-nav {
+    background-color: #ffffff;
+}
+
+.gpii-fd-lastPanel .gpii-fd-stepCount {
+    background-color: #425165;
+}
+
+/* textarea */
+.gpii-fd-token {
+    resize: none;
+    max-width: 29rem;
+    font-size: 2.25rem;
+    line-height: 3rem;
+    border: 5px solid #425165;
+    z-index: 99;
+}
+
+.gpii-fd-token:focus {
+    border-color: #425165;
+    box-shadow: 0 0 0 0.4rem rgb(244, 215, 75);
+    outline: none;
+}
+
+.fl-theme-bw .gpii-fd-lastPanel .gpii-fd-stepCount {
+    background-color: #000000 !important;
+}
+
+.fl-theme-bw .gpii-fd-token {
+    border-color: #000000 !important;
+}
+
+.fl-theme-bw .gpii-fd-token:focus {
+    border-color: #000000 !important;
+    box-shadow: 0 0 0 0.4rem rgb(255, 255, 255),
+                0 0 0 0.6rem rgb(0, 0, 0) !important;
+}
+
+.fl-theme-wb .gpii-fd-lastPanel .gpii-fd-stepCount {
+    background-color: #ffffff !important;
+}
+
+.fl-theme-wb .gpii-fd-token {
+    border-color: #ffffff !important;
+}
+
+.fl-theme-wb .gpii-fd-token:focus {
+    border-color: #ffffff !important;
+    box-shadow: 0 0 0 0.4rem rgb(0, 0, 0),
+                0 0 0 0.6rem rgb(255, 255, 255) !important;
 }

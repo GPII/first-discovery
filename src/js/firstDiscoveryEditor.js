@@ -209,14 +209,31 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
     };
 
     /*
-     * To integrate the first discovery tool with the preferences server
+     * To integrate the first discovery tool with the preferences server.
+     * This component should be used as an add-on grade component for gpii.firstDiscovery.firstDiscoveryEditor
      */
     fluid.defaults("gpii.firstDiscovery.prefsServerIntegration", {
-        gradeNames: ["fluid.component"],
-        distributeOptions: {
-            record: "gpii.firstDiscovery.navButtons.prefsServerIntegration",
-            target: "{that navButtons}.options.gradeNames"
+        gradeNames: ["fluid.modelComponent"],
+        styles: {
+            lastPanel: "gpii-fd-lastPanel"
+        },
+        invokers: {
+            setLastPanelStyle: {
+                funcName: "gpii.firstDiscovery.setLastPanelStyle",
+                args: ["{that}.container", "{that}.options.styles.lastPanel", "{that}.panels.length", "{that}.model.currentPanelNum"]
+            }
+        },
+        modelListeners: {
+            currentPanelNum: "{that}.setLastPanelStyle"
+        },
+        listeners: {
+            "onPrefsEditorReady.setLastPanelStyle": "{that}.setLastPanelStyle"
         }
     });
+
+    gpii.firstDiscovery.setLastPanelStyle = function (elm, style, panelTotalNum, currentPanel) {
+        var isLastPanel = currentPanel === panelTotalNum;
+        elm.toggleClass(style, isLastPanel);
+    };
 
 })(jQuery, fluid);

@@ -158,6 +158,36 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
     });
 
     /*******************************************************************************
+     * Auxiliary Schema for integrating with the preferences server
+    *******************************************************************************/
+
+    fluid.defaults("gpii.firstDiscovery.auxSchema.prefsServerIntegration", {
+        gradeNames: ["gpii.firstDiscovery.auxSchema"],
+        auxiliarySchema: {
+            "loaderGrades": ["gpii.firstDiscovery.firstDiscoveryEditor", "gpii.firstDiscovery.prefsServerIntegration"],
+            "terms": {
+                "templatePrefix": "../../src/html",
+                "messagePrefix": "../../src/messages"
+            },
+            "template": "%templatePrefix/firstDiscoveryPrefsServerIntegration.html",
+            "congratulations": {
+                "panel": {
+                    "message": "%messagePrefix/congratulationsPrefsServerIntegration.json"
+                }
+            },
+            "token": {
+                "type": "gpii.firstDiscovery.token",
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.token",
+                    "container": ".gpiic-fd-prefsEditor-panel-token",
+                    "template": "%templatePrefix/token.html",
+                    "message": "%messagePrefix/token.json"
+                }
+            }
+        }
+    });
+
+    /*******************************************************************************
      * Primary Schema
     *******************************************************************************/
 
