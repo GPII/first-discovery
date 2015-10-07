@@ -230,10 +230,10 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
             "onPrefsEditorReady.setLastPanelStyle": "{that}.setLastPanelStyle"
         },
         distributeOptions: {
-            // An example of the "prefsServerConfig" structure:
+            // An example of the "saveRequestConfig" structure:
             // saveRequestConfig: {
             //     url: "/user",
-            //     type: "POST"
+            //     method: "POST"
             // }
             source: "{that}.options.saveRequestConfig",
             target: "{that gpii.firstDiscovery.panel.token}.options.saveRequestConfig"
