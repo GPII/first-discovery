@@ -42,7 +42,6 @@ The following directories were stripped out since they contain code that is not 
 * all-tests.html
 * component-tests/
 * framework-tests/
-* lib/mockjax/
 * manual-tests/
 * node-tests/
 * test-core/testTests/

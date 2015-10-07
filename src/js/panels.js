@@ -1061,6 +1061,19 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
         preferenceMap: {
             "gpii.firstDiscovery.token": {}
         },
+        members: {
+            preferences: "{fluid.prefs.prefsEditor}.model.preferences",
+            data: {
+                expander: {
+                    funcName: "JSON.stringify",
+                    args: ["{that}.preferences"]
+                }
+            }
+        },
+        saveRequestConfig: {
+            url: "/user",
+            method: "POST"
+        },
         selectors: {
             message: ".gpiic-fd-token-message",
             token: ".gpiic-fd-token"
@@ -1076,6 +1089,7 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
             onError: null
         },
         listeners: {
+            "afterRender.savePrefs": "{that}.savePrefs",
             "onSuccess.showToken": {
                 funcName: "{that}.showTokenText",
                 args: ["{arguments}.0"]
@@ -1090,8 +1104,28 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
                 "this": "{that}.dom.token",
                 method: "html",
                 args: ["{arguments}.0"]
+            },
+            savePrefs: {
+                funcName: "gpii.firstDiscovery.panel.token.savePrefs",
+                args: ["{that}", "{that}.options.saveRequestConfig", "{that}.data"]
             }
         }
     });
+
+    gpii.firstDiscovery.panel.token.savePrefs = function (that, saveRequestConfig, data) {
+        $.ajax({
+            url: saveRequestConfig.url,
+            method: saveRequestConfig.method,
+            contentType: "application/json",
+            dataType: "json",
+            data: data,
+            success: function (data) {
+                that.events.onSuccess.fire(data.token);
+            },
+            error: function () {
+                that.events.onError.fire();
+            }
+        });
+    };
 
 })(jQuery, fluid);

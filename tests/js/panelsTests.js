@@ -1158,8 +1158,18 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
      * Token *
      *********/
 
+    fluid.defaults("gpii.tests.preferences", {
+        gradeNames: ["fluid.component"],
+        members: {
+            preferences: {
+                textSize: 1.5,
+                contrast: "bw"
+            }
+        }
+    });
+
     fluid.defaults("gpii.tests.firstDiscovery.panel.token", {
-        gradeNames: ["gpii.firstDiscovery.panel.token"],
+        gradeNames: ["gpii.tests.preferences", "gpii.firstDiscovery.panel.token"],
         messageBase: {
             "message": "To apply your preferences to any device (a computer, a tablet, a mobile phone, etc), record the following token:",
             "error": "Sorry, a token could not be generated at this time."
@@ -1185,12 +1195,12 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
         modules: [{
             name: "Tests the token component",
             tests: [{
-                expect: 1,
+                expect: 2,
                 name: "Initialization",
                 sequence: [{
                     func: "{token}.refreshView"
                 }, {
-                    listener: "gpii.tests.testMsgRendering",
+                    listener: "gpii.tests.testInitialRendering",
                     args: ["{token}"],
                     event: "{token}.events.afterRender"
                 }]
@@ -1211,17 +1221,52 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
                     args: ["{token}", "{token}.options.messageBase.error"],
                     event: "{token}.events.onError"
                 }]
+            }, {
+                expect: 2,
+                name: "Communicate with the prefs server",
+                sequence: [{
+                    func: "gpii.tests.savePrefs",
+                    args: ["{token}", {
+                        dataType: "json",
+                        responseText: {
+                            token: "{that}.options.token"
+                        }
+                    }]
+                }, {
+                    listener: "gpii.tests.verifyTokenText",
+                    args: ["{token}", "{that}.options.token", " (success request)"],
+                    event: "{token}.events.onSuccess"
+                }, {
+                    func: "gpii.tests.savePrefs",
+                    args: ["{token}", {
+                        status: 401
+                    }]
+                }, {
+                    listener: "gpii.tests.verifyTokenText",
+                    args: ["{token}", "{token}.options.messageBase.error", " (failed request)"],
+                    event: "{token}.events.onError"
+                }]
             }]
         }]
     });
 
-    gpii.tests.testMsgRendering = function (that) {
+    gpii.tests.testInitialRendering = function (that) {
         var expectedContent = that.options.messageBase.message;
         jqUnit.assertEquals("The description should be rendered correctly", expectedContent, that.locate("message").text());
+
+        var expectedDataToSave = "{\"textSize\":1.5,\"contrast\":\"bw\"}";
+        jqUnit.assertEquals("The data to save is populated correctly", expectedDataToSave, that.data);
     };
 
-    gpii.tests.verifyTokenText = function (that, expectedText) {
-        jqUnit.assertEquals("The token text is set properly", expectedText, that.locate("token").html());
+    gpii.tests.verifyTokenText = function (that, expectedText, msg) {
+        jqUnit.assertEquals("The token text is set properly" + msg, expectedText, that.locate("token").html());
+    };
+
+    gpii.tests.savePrefs = function (that, requestOptions) {
+        var options = $.extend({}, true, that.options.saveRequestConfig, requestOptions);
+        $.mockjax(options);
+        that.savePrefs();
+        $.mockjaxClear();
     };
 
     $(document).ready(function () {
