@@ -1209,7 +1209,7 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
                 name: "onSuccess and onError event firing",
                 sequence: [{
                     func: "{token}.events.onSuccess.fire",
-                    args: ["{that}.options.token"]
+                    args: [{token: "{that}.options.token"}]
                 }, {
                     listener: "gpii.tests.verifyTokenText",
                     args: ["{token}", "{that}.options.token"],

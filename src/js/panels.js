@@ -1092,7 +1092,7 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
             "afterRender.savePrefsToServer": "{that}.savePrefsToServer",
             "onSuccess.showToken": {
                 funcName: "{that}.showTokenText",
-                args: ["{arguments}.0"]
+                args: ["{arguments}.0.token"]
             },
             "onError.showErrorMsg": {
                 funcName: "{that}.showTokenText",
@@ -1119,11 +1119,11 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
             contentType: "application/json",
             dataType: "json",
             data: data,
-            success: function (data) {
-                that.events.onSuccess.fire(data.token);
+            success: function (data, textStatus, jqXHR) {
+                that.events.onSuccess.fire(data, textStatus, jqXHR);
             },
-            error: function () {
-                that.events.onError.fire();
+            error: function (jqXHR, textStatus, errorThrown) {
+                that.events.onError.fire(jqXHR, textStatus, errorThrown);
             }
         });
     };
