@@ -1061,6 +1061,19 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
         preferenceMap: {
             "gpii.firstDiscovery.token": {}
         },
+        members: {
+            preferences: "{fluid.prefs.prefsEditor}.model.preferences",
+            data: {
+                expander: {
+                    funcName: "JSON.stringify",
+                    args: ["{that}.preferences"]
+                }
+            }
+        },
+        saveRequestConfig: {
+            url: "/user",
+            method: "POST"
+        },
         selectors: {
             message: ".gpiic-fd-token-message",
             token: ".gpiic-fd-token"
@@ -1076,9 +1089,10 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
             onError: null
         },
         listeners: {
+            "afterRender.savePrefsToServer": "{that}.savePrefsToServer",
             "onSuccess.showToken": {
                 funcName: "{that}.showTokenText",
-                args: ["{arguments}.0"]
+                args: ["{arguments}.0.token"]
             },
             "onError.showErrorMsg": {
                 funcName: "{that}.showTokenText",
@@ -1090,8 +1104,28 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
                 "this": "{that}.dom.token",
                 method: "html",
                 args: ["{arguments}.0"]
+            },
+            savePrefsToServer: {
+                funcName: "gpii.firstDiscovery.panel.token.savePrefsToServer",
+                args: ["{that}", "{that}.options.saveRequestConfig", "{that}.data"]
             }
         }
     });
+
+    gpii.firstDiscovery.panel.token.savePrefsToServer = function (that, saveRequestConfig, data) {
+        $.ajax({
+            url: saveRequestConfig.url,
+            method: saveRequestConfig.method,
+            contentType: "application/json",
+            dataType: "json",
+            data: data,
+            success: function (data, textStatus, jqXHR) {
+                that.events.onSuccess.fire(data, textStatus, jqXHR);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                that.events.onError.fire(jqXHR, textStatus, errorThrown);
+            }
+        });
+    };
 
 })(jQuery, fluid);
