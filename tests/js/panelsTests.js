@@ -1225,7 +1225,7 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
                 expect: 2,
                 name: "Communicate with the prefs server",
                 sequence: [{
-                    func: "gpii.tests.savePrefs",
+                    func: "gpii.tests.savePrefsToServer",
                     args: ["{token}", {
                         dataType: "json",
                         responseText: {
@@ -1237,7 +1237,7 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
                     args: ["{token}", "{that}.options.token", " (success request)"],
                     event: "{token}.events.onSuccess"
                 }, {
-                    func: "gpii.tests.savePrefs",
+                    func: "gpii.tests.savePrefsToServer",
                     args: ["{token}", {
                         status: 401
                     }]
@@ -1262,10 +1262,10 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
         jqUnit.assertEquals("The token text is set properly" + msg, expectedText, that.locate("token").html());
     };
 
-    gpii.tests.savePrefs = function (that, requestOptions) {
+    gpii.tests.savePrefsToServer = function (that, requestOptions) {
         var options = $.extend({}, true, that.options.saveRequestConfig, requestOptions);
         $.mockjax(options);
-        that.savePrefs();
+        that.savePrefsToServer();
         $.mockjaxClear();
     };
 

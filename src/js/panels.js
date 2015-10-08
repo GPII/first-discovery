@@ -1089,7 +1089,7 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
             onError: null
         },
         listeners: {
-            "afterRender.savePrefs": "{that}.savePrefs",
+            "afterRender.savePrefsToServer": "{that}.savePrefsToServer",
             "onSuccess.showToken": {
                 funcName: "{that}.showTokenText",
                 args: ["{arguments}.0"]
@@ -1105,14 +1105,14 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
                 method: "html",
                 args: ["{arguments}.0"]
             },
-            savePrefs: {
-                funcName: "gpii.firstDiscovery.panel.token.savePrefs",
+            savePrefsToServer: {
+                funcName: "gpii.firstDiscovery.panel.token.savePrefsToServer",
                 args: ["{that}", "{that}.options.saveRequestConfig", "{that}.data"]
             }
         }
     });
 
-    gpii.firstDiscovery.panel.token.savePrefs = function (that, saveRequestConfig, data) {
+    gpii.firstDiscovery.panel.token.savePrefsToServer = function (that, saveRequestConfig, data) {
         $.ajax({
             url: saveRequestConfig.url,
             method: saveRequestConfig.method,
