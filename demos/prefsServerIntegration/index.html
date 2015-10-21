@@ -116,7 +116,8 @@
 
         </div>
         <script type="text/javascript">
-            demo.firstDiscovery.init("#gpiic-fd", "gpii.firstDiscovery.auxSchema.prefsServerIntegration", "demo-firstDiscovery-integration");
+            // specify the demo-specific version of the aux schema, which overrides the default paths
+            demo.firstDiscovery.init("#gpiic-fd", "demo.firstDiscovery.auxSchema.prefsServerIntegration", "demo-firstDiscovery-integration");
         </script>
     </body>
 </html>
