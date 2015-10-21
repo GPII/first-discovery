@@ -123,4 +123,22 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
         gradeNames: ["demo.firstDiscovery.integration"],
         demoURL: "math3-2.html"
     });
+
+
+    /***************************************
+     * Prefs Server Integration Demo:
+     * override the relative paths in the
+     * prefsServerIntegration aux schema
+     */
+    fluid.defaults("demo.firstDiscovery.auxSchema.prefsServerIntegration", {
+        gradeNames: ["gpii.firstDiscovery.auxSchema.prefsServerIntegration"],
+        auxiliarySchema: {
+            "terms": {
+                // path to templates and messages, relative to where the demo HTML is
+                "templatePrefix": "../../src/html",
+                "messagePrefix": "../../src/messages"
+            }
+        }
+    });
+
 })(jQuery, fluid);

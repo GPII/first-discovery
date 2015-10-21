@@ -162,19 +162,25 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
     *******************************************************************************/
 
     fluid.defaults("gpii.firstDiscovery.auxSchema.prefsServerIntegration", {
+        // using the base auxSchema as the grade inherits everything in there
         gradeNames: ["gpii.firstDiscovery.auxSchema"],
+
         auxiliarySchema: {
+
+            // add the extra grade to the loader grades
             "loaderGrades": ["gpii.firstDiscovery.firstDiscoveryEditor", "gpii.firstDiscovery.prefsServerIntegration"],
-            "terms": {
-                "templatePrefix": "../../src/html",
-                "messagePrefix": "../../src/messages"
-            },
+
+            // override the original template to add the extra panel placeholder
             "template": "%templatePrefix/firstDiscoveryPrefsServerIntegration.html",
+
+            // customize the text on the congratulations panel
             "congratulations": {
                 "panel": {
                     "message": "%messagePrefix/congratulationsPrefsServerIntegration.json"
                 }
             },
+
+            // add the token panel
             "token": {
                 "type": "gpii.firstDiscovery.token",
                 "panel": {
