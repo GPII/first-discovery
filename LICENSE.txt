@@ -1,4 +1,4 @@
-All modules are Copyright 2015 OCAD University except
+All modules are Copyright 2014 Raising the Floor - International except
 where noted otherwise in the code itself, or if the modules reside in a
 separate directory, they may contain explicit declarations of copyright
 in both the LICENSE file in the directory in which they reside and in the
@@ -30,3 +30,6 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+The research leading to these results has received funding from
+the European Union's Seventh Framework Programme (FP7/2007-2013) under grant agreement no. 289016.

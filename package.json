@@ -2,21 +2,13 @@
   "name": "first-discovery",
   "description": "A preferences editor tool that helps users discovery their initial preferences.",
   "version": "0.1.0-SNAPSHOT",
-  "author": "Fluid Project",
+  "author": "GPII",
   "bugs": "http://issues.fluidproject.org/browse/FLOE",
   "homepage": "http://www.floeproject.org",
   "dependencies": {},
-  "licenses": [
-    {
-      "type": "BSD-3-Clause",
-      "url": "http://www.opensource.org/licenses/BSD-3-Clause"
-    },
-    {
-      "type": "ECL-2.0",
-      "url": "http://www.opensource.org/licenses/ECL-2.0"
-    }
-  ],
+  "license": "BSD-3-Clause",
   "keywords": [
+    "gpii",
     "discovery",
     "accessibility",
     "settings",
