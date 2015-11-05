@@ -187,7 +187,8 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
                     "type": "gpii.firstDiscovery.panel.token",
                     "container": ".gpiic-fd-prefsEditor-panel-token",
                     "template": "%templatePrefix/token.html",
-                    "message": "%messagePrefix/token.json"
+                    "message": "%messagePrefix/token.json",
+                    "gradeNames": ["gpii.firstDiscovery.panel.token.prefsServerIntegrationConnection"]
                 }
             }
         }
