@@ -63,4 +63,72 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
         onElement.dispatchEvent(eventObj);
     };
 
+    // A grade component that configs the token panel for testing
+    // the integration with the preferences server
+    fluid.defaults("gpii.tests.utils.panel.tokenConfig", {
+        gradeNames: ["fluid.component"],
+        members: {
+            numOfOnSuccessFired: 0,
+            numOfOnErrorFired: 0
+        },
+        listeners: {
+            "onSuccess.count": {
+                funcName: "{that}.increaseCount",
+                args: ["numOfOnSuccessFired"]
+            },
+            "onError.count": {
+                funcName: "{that}.increaseCount",
+                args: ["numOfOnErrorFired"]
+            }
+        },
+        invokers: {
+            increaseCount: {
+                funcName: "gpii.tests.utils.increaseCount",
+                args: ["{that}", "{arguments}.0"]
+            }
+        }
+    });
+
+    gpii.tests.utils.increaseCount = function (that, path) {
+        fluid.set(that, path, that[path] + 1);
+    };
+
+    gpii.tests.utils.verifyTokenText = function (that, expectedText, msg) {
+        jqUnit.assertEquals("The token text is set properly" + msg, expectedText, that.locate("token").html());
+    };
+
+    gpii.tests.utils.verifyEventFiring = function (that, numOfOnSuccessFired, numOfOnErrorFired) {
+        jqUnit.assertEquals("The number of times that the onSuccess event is fired should be " + numOfOnSuccessFired, numOfOnSuccessFired, that.numOfOnSuccessFired);
+        jqUnit.assertEquals("The number of times that the onError event is fired should be " + numOfOnErrorFired, numOfOnErrorFired, that.numOfOnErrorFired);
+    };
+
+    gpii.tests.utils.view = "myOwnApp";
+    gpii.tests.utils.userToken = "de305d54-75b4-431b-adb2-eb6b9e546014";
+
+    gpii.tests.utils.mockjaxSuccessConfig = {
+        url: "/user?view=" + gpii.tests.utils.view,
+        method: "POST",
+        dataType: "json",
+        response: function (settings) {
+            this.responseText = {
+                userToken: gpii.tests.utils.userToken,
+                requestData: settings.data
+            };
+        }
+    };
+
+    gpii.tests.utils.mockjaxErrorConfig = {
+        url: "/user?view=" + gpii.tests.utils.view,
+        method: "POST",
+        status: 401
+    };
+
+    gpii.tests.utils.addMockjax = function (mockjaxConfig) {
+        $.mockjax(mockjaxConfig);
+    };
+
+    gpii.tests.utils.clearMockjax = function () {
+        $.mockjaxClear();
+    };
+
 })(jQuery, fluid);

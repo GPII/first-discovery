@@ -29,6 +29,7 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
     fluid.defaults("gpii.tests.firstDiscovery", {
         gradeNames: ["{that}.assembledPrefsEditorGrade", "fluid.viewComponent"],
         prefsEditorType: "gpii.firstDiscovery.firstDiscoveryEditor",
+        auxSchemaGrade: "gpii.firstDiscovery.auxSchema",
         components: {
             prefsEditorLoader: {
                 options: {
@@ -56,7 +57,8 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
         },
         invokers: {
             assembledPrefsEditorGrade: {
-                funcName: "gpii.tests.firstDiscovery.getPrefsEditorGrade"
+                funcName: "gpii.tests.firstDiscovery.getPrefsEditorGrade",
+                args: ["{that}.options.auxSchemaGrade"]
             }
         },
         resetListeners: {
@@ -68,15 +70,15 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
         }]
     });
 
-    gpii.tests.firstDiscovery.getPrefsEditorGrade = function () {
+    gpii.tests.firstDiscovery.getPrefsEditorGrade = function (auxSchemaGrade) {
+        auxSchemaGrade = fluid.makeArray(auxSchemaGrade);
         var builder = fluid.prefs.builder({
-            gradeNames: ["gpii.firstDiscovery.auxSchema"],
+            gradeNames: auxSchemaGrade,
             auxiliarySchema: {
                 "terms": {
-                    "templatePrefix": "../../src/html/",
-                    "messagePrefix": "../../src/messages/"
-                },
-                "template": "../../src/html/firstDiscovery.html"
+                    "templatePrefix": "../../src/html",
+                    "messagePrefix": "../../src/messages"
+                }
             }
         });
         return builder.options.assembledPrefsEditorGrade;
@@ -563,6 +565,7 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
 
     fluid.defaults("gpii.tests.firstDiscoveryAssessorState", {
         gradeNames: ["gpii.tests.firstDiscovery"],
+        auxSchemaGrade: "gpii.firstDiscovery.auxSchema.prefsServerIntegration",
         components: {
             prefsEditorLoader: {
                 options: {
@@ -614,12 +617,145 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
         }]
     });
 
+    // Test the integration with the preferences server, to make sure the
+    // http request for saving preference sets is only sent when the token
+    // panel becomes visible.
+    fluid.defaults("gpii.tests.panel.tokenConfig", {
+        gradeNames: ["gpii.tests.utils.panel.tokenConfig"],
+        listeners: {
+            "onSuccess.escalate": "{gpii.tests.serverIntegration}.events.onRequestSuccess",
+            "onError.escalate": "{gpii.tests.serverIntegration}.events.onRequestError"
+        }
+    });
+
+    fluid.defaults("gpii.tests.serverIntegration", {
+        gradeNames: ["gpii.tests.firstDiscovery"],
+        auxSchemaGrade: "gpii.firstDiscovery.auxSchema.prefsServerIntegration",
+        components: {
+            prefsEditorLoader: {
+                options: {
+                    saveRequestConfig: {
+                        view: gpii.tests.utils.view
+                    },
+                    listeners: {
+                        "onPrefsEditorReady.escalate": "{serverIntegration}.events.onPrefsEditorReady"
+                    }
+                }
+            }
+        },
+        events: {
+            onPrefsEditorReady: null,
+            onRequestSuccess: null,
+            onRequestError: null,
+            onPrefsEditorRefresh: null
+        },
+        distributeOptions: [{
+            target: "{that gpii.firstDiscovery.panel.token}.options.gradeNames",
+            record: "gpii.tests.panel.tokenConfig"
+        }, {
+            target: "{that prefsEditor}.options.listeners",
+            record: {
+                "onPrefsEditorRefresh.escalate": "{serverIntegration}.events.onPrefsEditorRefresh"
+            }
+        }]
+    });
+
+    fluid.defaults("gpii.tests.firstDiscovery.prefsServerIntegrationTests", {
+        gradeNames: ["fluid.test.testEnvironment"],
+        components: {
+            firstDiscovery: {
+                type: "gpii.tests.serverIntegration",
+                container: "#gpiic-fd-prefsServerIntegration",
+                createOnEvent: "{prefsServerIntegrationTester}.events.onTestCaseStart"
+            },
+            prefsServerIntegrationTester: {
+                type: "gpii.tests.firstDiscovery.prefsServerIntegrationTester"
+            }
+        }
+    });
+
+    gpii.tests.firstDiscovery.preferences1 = {
+        fluid_prefs_contrast: "default",
+        fluid_prefs_textSize: 1,
+        gpii_firstDiscovery_captions: true,
+        gpii_firstDiscovery_language: "en-US",
+        gpii_firstDiscovery_onScreenKeyboard: true,
+        gpii_firstDiscovery_showSounds: true,
+        gpii_firstDiscovery_speak: true,
+        gpii_firstDiscovery_speechRate: 1,
+        gpii_firstDiscovery_stickyKeys: false
+    };
+
+    gpii.tests.firstDiscovery.preferences2 = {
+        fluid_prefs_contrast: "default",
+        fluid_prefs_textSize: 0.2,
+        gpii_firstDiscovery_captions: true,
+        gpii_firstDiscovery_language: "en-US",
+        gpii_firstDiscovery_onScreenKeyboard: true,
+        gpii_firstDiscovery_showSounds: true,
+        gpii_firstDiscovery_speak: true,
+        gpii_firstDiscovery_speechRate: 1,
+        gpii_firstDiscovery_stickyKeys: false
+    };
+
+    fluid.defaults("gpii.tests.firstDiscovery.prefsServerIntegrationTester", {
+        gradeNames: ["fluid.test.testCaseHolder"],
+        modules: [{
+            name: "Tests the integration with the preferences server",
+            tests: [{
+                expect: 7,
+                name: "Tests the save request is only sent when the token panel becomes visible",
+                sequence: [{
+                    listener: "jqUnit.assertNotUndefined",
+                    args: ["The token panel is included", "{firstDiscovery}.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_token"],
+                    priority: "last",
+                    event: "{prefsServerIntegrationTests firstDiscovery}.events.onPrefsEditorReady"
+                }, {
+                    func: "gpii.tests.utils.addMockjax",
+                    args: [gpii.tests.utils.mockjaxSuccessConfig]
+                }, {
+                    func: "{firstDiscovery}.prefsEditorLoader.applier.change",
+                    args: ["currentPanelNum", 12]
+                }, {
+                    listener: "gpii.tests.firstDiscovery.verifyRequest",
+                    args: ["{firstDiscovery}.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_token", "{arguments}.0", 1, 0, gpii.tests.firstDiscovery.preferences1, "(default)"],
+                    priority: "last",
+                    event: "{firstDiscovery}.events.onRequestSuccess"
+                }, {
+                    // make the text size panel visible
+                    func: "{firstDiscovery}.prefsEditorLoader.applier.change",
+                    args: ["currentPanelNum", 6]
+                }, {
+                    // change the text size value
+                    func: "{firstDiscovery}.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_textSize.applier.change",
+                    args: ["value", 0.2]
+                }, {
+                    func: "{firstDiscovery}.prefsEditorLoader.applier.change",
+                    args: ["currentPanelNum", 12]
+                }, {
+                    listener: "gpii.tests.firstDiscovery.verifyRequest",
+                    args: ["{firstDiscovery}.prefsEditorLoader.prefsEditor.gpii_firstDiscovery_panel_token", "{arguments}.0", 2, 0, gpii.tests.firstDiscovery.preferences2, "(modified)"],
+                    priority: "last",
+                    event: "{firstDiscovery}.events.onRequestSuccess"
+                }, {
+                    func: "gpii.tests.utils.clearMockjax"
+                }]
+            }]
+        }]
+    });
+
+    gpii.tests.firstDiscovery.verifyRequest = function (tokenPanel, responseData, numOfOnSuccessFired, numOfOnErrorFired, expectedData, msg, that) {
+        jqUnit.assertDeepEq("The preference set is expected" + msg, expectedData, JSON.parse(responseData.requestData));
+        gpii.tests.utils.verifyEventFiring(tokenPanel, numOfOnSuccessFired, numOfOnErrorFired);
+    };
+
     $(document).ready(function () {
         fluid.test.runTests([
             "gpii.tests.firstDiscovery.langTests",
             "gpii.tests.firstDiscovery.navIconsTests",
             "gpii.tests.firstDiscovery.saveStatesTests",
-            "gpii.tests.firstDiscovery.assessorStateTests"
+            "gpii.tests.firstDiscovery.assessorStateTests",
+            "gpii.tests.firstDiscovery.prefsServerIntegrationTests"
         ]);
     });
 

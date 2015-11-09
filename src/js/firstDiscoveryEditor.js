@@ -243,12 +243,15 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
         listeners: {
             "onPrefsEditorReady.updateIsLastPanel": "{that}.updateIsLastPanel"
         },
+        saveRequestConfig: {
+            view: "firstDiscovery"
+        },
         distributeOptions: {
             // An example of the "saveRequestConfig" structure:
             // saveRequestConfig: {
             //     url: "/user?view=%view",
             //     method: "POST",
-            //     view: "firstDiscovery"  // Used to replace the "%view" string in the url
+            //     view: "firstDiscovery"  // To define the "%view" used in the url.
             // }
             source: "{that}.options.saveRequestConfig",
             target: "{that gpii.firstDiscovery.panel.token}.options.saveRequestConfig"

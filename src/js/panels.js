@@ -1061,21 +1061,12 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
         preferenceMap: {
             "gpii.firstDiscovery.token": {}
         },
-        members: {
-            preferences: "{fluid.prefs.prefsEditor}.model.preferences",
-            data: {
-                expander: {
-                    funcName: "JSON.stringify",
-                    args: ["{that}.preferences"]
-                }
-            }
-        },
         saveRequestConfig: {
             url: "/user?view=%view",
             method: "POST",
-            // Used to replace the "%view" string in the url.
-            // Leave it blank if no view name needs to be specified.
-            view: "firstDiscovery"
+            // To define the "%view" used in the url.
+            // Leave blank if no view name needs to be specified.
+            view: ""
         },
         selectors: {
             message: ".gpiic-fd-token-message",
@@ -1109,18 +1100,18 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
             },
             savePrefsToServer: {
                 funcName: "gpii.firstDiscovery.panel.token.savePrefsToServer",
-                args: ["{that}", "{arguments}.0"]
+                args: ["{that}", "{fluid.prefs.prefsEditor}.model.preferences", "{arguments}.0"]
             }
         }
     });
 
-    gpii.firstDiscovery.panel.token.savePrefsToServer = function (that, isReadyToSave) {
+    gpii.firstDiscovery.panel.token.savePrefsToServer = function (that, data, isReadyToSave) {
         if (!isReadyToSave) {
             return;
         }
 
         var saveRequestConfig = that.options.saveRequestConfig,
-            data = that.data,
+            data = JSON.stringify(data),
             view = saveRequestConfig.view ? saveRequestConfig.view : "",
             url = fluid.stringTemplate(saveRequestConfig.url, {view: view});
 

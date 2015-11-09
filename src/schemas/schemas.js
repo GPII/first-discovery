@@ -28,7 +28,7 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
                 "templatePrefix": "../src/html",
                 "messagePrefix": "../src/messages"
             },
-            "template": "../src/html/firstDiscovery.html",
+            "template": "%templatePrefix/firstDiscovery.html",
             "message": "%messagePrefix/firstDiscovery.json",
             "lang": {
                 "type": "gpii.firstDiscovery.language",
