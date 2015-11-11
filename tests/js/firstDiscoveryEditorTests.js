@@ -745,7 +745,7 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
     });
 
     gpii.tests.firstDiscovery.verifyRequest = function (tokenPanel, responseData, numOfOnSuccessFired, numOfOnErrorFired, expectedData, msg, that) {
-        jqUnit.assertDeepEq("The preference set is expected" + msg, expectedData, JSON.parse(responseData.requestData));
+        jqUnit.assertDeepEq("The preference set is expected " + msg, expectedData, JSON.parse(responseData.requestData));
         gpii.tests.utils.verifyEventFiring(tokenPanel, numOfOnSuccessFired, numOfOnErrorFired);
     };
 

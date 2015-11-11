@@ -94,7 +94,7 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
     };
 
     gpii.tests.utils.verifyTokenText = function (that, expectedText, msg) {
-        jqUnit.assertEquals("The token text is set properly" + msg, expectedText, that.locate("token").html());
+        jqUnit.assertEquals("The token text is set properly " + msg, expectedText, that.locate("token").html());
     };
 
     gpii.tests.utils.verifyEventFiring = function (that, numOfOnSuccessFired, numOfOnErrorFired) {

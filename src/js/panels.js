@@ -1112,7 +1112,7 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
 
         var saveRequestConfig = that.options.saveRequestConfig,
             data = JSON.stringify(data),
-            view = saveRequestConfig.view ? saveRequestConfig.view : "",
+            view = saveRequestConfig.view || "",
             url = fluid.stringTemplate(saveRequestConfig.url, {view: view});
 
         $.ajax({

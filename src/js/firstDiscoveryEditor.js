@@ -233,8 +233,9 @@ https://github.com/fluid-project/first-discovery/raw/master/LICENSE.txt
                 args: ["{that}.options.styles.lastPanel", "{change}.value"]
             },
             // This model listener cannot be replaced by the model relay because
-            // the calculation of model.isLastPanel requires "{that}.panels" that
-            // is set when the event onPrefsEditorReady is fired.
+            // the calculation of model.isLastPanel requires "{that}.panels" to be
+            // ready. "{that}.panels" is set when onPrefsEditorReady event is fired.
+            // So using model relay is too early.
             currentPanelNum: {
                 funcName: "{that}.updateIsLastPanel",
                 excludeSource: "init"
