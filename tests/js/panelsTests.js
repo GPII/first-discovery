@@ -1158,30 +1158,64 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
      * Token *
      *********/
 
-    fluid.defaults("gpii.tests.preferences", {
-        gradeNames: ["fluid.component"],
-        members: {
-            preferences: {
-                textSize: 1.5,
-                contrast: "bw"
-            }
+    gpii.tests.firstDiscovery.preferences1 = {
+        textSize: 1.5,
+        contrast: "bw"
+    };
+
+    gpii.tests.firstDiscovery.preferences2 = {
+        textSize: 2,
+        contrast: "bw"
+    };
+
+    fluid.defaults("fluid.prefs.prefsEditor", {
+        gradeNames: ["fluid.modelComponent"],
+        model: {
+            preferences: gpii.tests.firstDiscovery.preferences1
         }
     });
 
     fluid.defaults("gpii.tests.firstDiscovery.panel.token", {
-        gradeNames: ["gpii.tests.preferences", "gpii.firstDiscovery.panel.token"],
+        gradeNames: ["gpii.tests.preferences", "gpii.tests.utils.panel.tokenConfig", "gpii.firstDiscovery.panel.token"],
         messageBase: {
             "message": "To apply your preferences to any device (a computer, a tablet, a mobile phone, etc), record the following token:",
             "error": "Sorry, a token could not be generated at this time."
+        },
+        saveRequestConfig: {
+            view: gpii.tests.utils.view
         }
     });
 
-    fluid.defaults("gpii.tests.tokenPanel", {
+    fluid.defaults("gpii.tests.firstDiscovery.tokenPanelInContext", {
+        gradeNames: ["fluid.component"],
+        components: {
+            tokenPanel: {
+                type: "gpii.tests.firstDiscovery.panel.token",
+                container: ".gpiic-fd-tokenPanel",
+                options: {
+                    listeners: {
+                        "afterRender.escalate": "{tokenPanelInContext}.events.tokenPanelRendered",
+                        "onSuccess.escalate": "{tokenPanelInContext}.events.onSuccess",
+                        "onError.escalate": "{tokenPanelInContext}.events.onError"
+                    }
+                }
+            },
+            prefsEditor: {
+                type: "fluid.prefs.prefsEditor"
+            }
+        },
+        events: {
+            tokenPanelRendered: null,
+            onSuccess: null,
+            onError: null
+        }
+    });
+
+    fluid.defaults("gpii.tests.tokenPanelTests", {
         gradeNames: ["fluid.test.testEnvironment"],
         components: {
-            token: {
-                type: "gpii.tests.firstDiscovery.panel.token",
-                container: ".gpiic-fd-tokenPanel"
+            tokenPanelInContext: {
+                type: "gpii.tests.firstDiscovery.tokenPanelInContext"
             },
             tokenTester: {
                 type: "gpii.tests.tokenTester"
@@ -1191,82 +1225,73 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
 
     fluid.defaults("gpii.tests.tokenTester", {
         gradeNames: ["fluid.test.testCaseHolder"],
-        token: "de305d54-75b4-431b-adb2-eb6b9e546014",
         modules: [{
             name: "Tests the token component",
             tests: [{
-                expect: 2,
+                expect: 1,
                 name: "Initialization",
                 sequence: [{
-                    func: "{token}.refreshView"
+                    func: "{tokenPanelInContext}.tokenPanel.refreshView"
                 }, {
                     listener: "gpii.tests.testInitialRendering",
-                    args: ["{token}"],
-                    event: "{token}.events.afterRender"
+                    args: ["{tokenPanelInContext}"],
+                    event: "{tokenPanelInContext}.events.tokenPanelRendered"
                 }]
             }, {
-                expect: 2,
-                name: "onSuccess and onError event firing",
-                sequence: [{
-                    func: "{token}.events.onSuccess.fire",
-                    args: [{token: "{that}.options.token"}]
-                }, {
-                    listener: "gpii.tests.verifyTokenText",
-                    args: ["{token}", "{that}.options.token"],
-                    event: "{token}.events.onSuccess"
-                }, {
-                    func: "{token}.events.onError.fire"
-                }, {
-                    listener: "gpii.tests.verifyTokenText",
-                    args: ["{token}", "{token}.options.messageBase.error"],
-                    event: "{token}.events.onError"
-                }]
-            }, {
-                expect: 2,
-                name: "Communicate with the prefs server",
+                expect: 7,
+                name: "Test savePrefsToServer()",
                 sequence: [{
                     func: "gpii.tests.savePrefsToServer",
-                    args: ["{token}", {
-                        dataType: "json",
-                        responseText: {
-                            token: "{that}.options.token"
-                        }
-                    }]
+                    args: ["{tokenPanelInContext}.tokenPanel", gpii.tests.utils.mockjaxSuccessConfig, true]
                 }, {
-                    listener: "gpii.tests.verifyTokenText",
-                    args: ["{token}", "{that}.options.token", " (success request)"],
-                    event: "{token}.events.onSuccess"
+                    listener: "gpii.tests.verifySuccessResponse",
+                    args: ["{tokenPanelInContext}.tokenPanel", "{arguments}.0", gpii.tests.firstDiscovery.preferences1],
+                    priority: "last",
+                    event: "{tokenPanelInContext}.events.onSuccess"
                 }, {
                     func: "gpii.tests.savePrefsToServer",
-                    args: ["{token}", {
-                        status: 401
-                    }]
+                    args: ["{tokenPanelInContext}.tokenPanel", gpii.tests.utils.mockjaxErrorConfig, true]
                 }, {
-                    listener: "gpii.tests.verifyTokenText",
-                    args: ["{token}", "{token}.options.messageBase.error", " (failed request)"],
-                    event: "{token}.events.onError"
+                    listener: "gpii.tests.utils.verifyTokenText",
+                    args: ["{tokenPanelInContext}.tokenPanel", "{tokenPanelInContext}.tokenPanel.options.messageBase.error", " (failed request)"],
+                    priority: "last",
+                    event: "{tokenPanelInContext}.events.onError"
+                }, {
+                    func: "gpii.tests.savePrefsToServer",
+                    args: ["{tokenPanelInContext}.tokenPanel", gpii.tests.utils.mockjaxSuccessConfig, false]
+                }, {
+                    func: "gpii.tests.utils.verifyEventFiring",
+                    args: ["{tokenPanelInContext}.tokenPanel", 1, 1]
+                }, {
+                    func: "{tokenPanelInContext}.prefsEditor.applier.change",
+                    args: ["preferences.textSize", 2]
+                }, {
+                    func: "gpii.tests.savePrefsToServer",
+                    args: ["{tokenPanelInContext}.tokenPanel", gpii.tests.utils.mockjaxSuccessConfig, true]
+                }, {
+                    listener: "gpii.tests.verifySuccessResponse",
+                    args: ["{tokenPanelInContext}.tokenPanel", "{arguments}.0", gpii.tests.firstDiscovery.preferences2],
+                    priority: "last",
+                    event: "{tokenPanelInContext}.events.onSuccess"
                 }]
             }]
         }]
     });
 
     gpii.tests.testInitialRendering = function (that) {
-        var expectedContent = that.options.messageBase.message;
-        jqUnit.assertEquals("The description should be rendered correctly", expectedContent, that.locate("message").text());
-
-        var expectedDataToSave = "{\"textSize\":1.5,\"contrast\":\"bw\"}";
-        jqUnit.assertEquals("The data to save is populated correctly", expectedDataToSave, that.data);
+        var expectedContent = that.tokenPanel.options.messageBase.message;
+        jqUnit.assertEquals("The description should be rendered correctly", expectedContent, that.tokenPanel.locate("message").text());
     };
 
-    gpii.tests.verifyTokenText = function (that, expectedText, msg) {
-        jqUnit.assertEquals("The token text is set properly" + msg, expectedText, that.locate("token").html());
+    gpii.tests.savePrefsToServer = function (tokenPanel, requestOptions, isReadyToSave) {
+        gpii.tests.utils.addMockjax(requestOptions);
+        tokenPanel.savePrefsToServer(isReadyToSave);
+        gpii.tests.utils.clearMockjax();
     };
 
-    gpii.tests.savePrefsToServer = function (that, requestOptions) {
-        var options = $.extend({}, true, that.options.saveRequestConfig, requestOptions);
-        $.mockjax(options);
-        that.savePrefsToServer();
-        $.mockjaxClear();
+    gpii.tests.verifySuccessResponse = function (tokenPanel, responseData, expectedRequestData) {
+        jqUnit.assertDeepEq("The preference set sent to the server should be expected", expectedRequestData, JSON.parse(responseData.requestData));
+        gpii.tests.utils.verifyTokenText(tokenPanel, gpii.tests.utils.userToken, " (success request)");
     };
 
     $(document).ready(function () {
@@ -1281,7 +1306,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             "gpii.tests.keyboardPanel",
             "gpii.tests.welcomePanel",
             "gpii.tests.congratulationsPanel",
-            "gpii.tests.tokenPanel",
+            "gpii.tests.tokenPanelTests",
             // Run tests for the language panel at the end to work around the Chrome issue that key up/down actions in the scrolling
             // test somehow interfere the rendering of the contrast panel.
             "gpii.tests.langPanel"

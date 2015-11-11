@@ -1061,18 +1061,12 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         preferenceMap: {
             "gpii.firstDiscovery.token": {}
         },
-        members: {
-            preferences: "{fluid.prefs.prefsEditor}.model.preferences",
-            data: {
-                expander: {
-                    funcName: "JSON.stringify",
-                    args: ["{that}.preferences"]
-                }
-            }
-        },
         saveRequestConfig: {
-            url: "/user",
-            method: "POST"
+            url: "/user?view=%view",
+            method: "POST",
+            // To define the "%view" used in the url.
+            // Leave blank if no view name needs to be specified.
+            view: ""
         },
         selectors: {
             message: ".gpiic-fd-token-message",
@@ -1085,14 +1079,13 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             }
         },
         events: {
-            onSuccess: null,  // argument: token
+            onSuccess: null,  // argument: the server returned data
             onError: null
         },
         listeners: {
-            "afterRender.savePrefsToServer": "{that}.savePrefsToServer",
             "onSuccess.showToken": {
                 funcName: "{that}.showTokenText",
-                args: ["{arguments}.0.token"]
+                args: ["{arguments}.0.userToken"]
             },
             "onError.showErrorMsg": {
                 funcName: "{that}.showTokenText",
@@ -1107,14 +1100,23 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             },
             savePrefsToServer: {
                 funcName: "gpii.firstDiscovery.panel.token.savePrefsToServer",
-                args: ["{that}", "{that}.options.saveRequestConfig", "{that}.data"]
+                args: ["{that}", "{fluid.prefs.prefsEditor}.model.preferences", "{arguments}.0"]
             }
         }
     });
 
-    gpii.firstDiscovery.panel.token.savePrefsToServer = function (that, saveRequestConfig, data) {
+    gpii.firstDiscovery.panel.token.savePrefsToServer = function (that, data, isReadyToSave) {
+        if (!isReadyToSave) {
+            return;
+        }
+
+        var saveRequestConfig = that.options.saveRequestConfig,
+            data = JSON.stringify(data),
+            view = saveRequestConfig.view || "",
+            url = fluid.stringTemplate(saveRequestConfig.url, {view: view});
+
         $.ajax({
-            url: saveRequestConfig.url,
+            url: url,
             method: saveRequestConfig.method,
             contentType: "application/json",
             dataType: "json",
@@ -1127,5 +1129,18 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             }
         });
     };
+
+    // A grade component to connect "gpii.firstDiscovery.prefsServerIntegration" and
+    // the token panel (gpii.firstDiscovery.panel.token). It sends the request to the
+    // the first discovery server to save preferences when the token panel becomes visible.
+    fluid.defaults("gpii.firstDiscovery.panel.token.prefsServerIntegrationConnection", {
+        gradeNames: ["fluid.modelComponent"],
+        modelListeners: {
+            "{gpii.firstDiscovery.prefsServerIntegration}.model.isLastPanel": {
+                funcName: "{that}.savePrefsToServer",
+                args: ["{change}.value"]
+            }
+        }
+    });
 
 })(jQuery, fluid);

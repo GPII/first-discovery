@@ -218,31 +218,50 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             lastPanel: "gpii-fd-lastPanel"
         },
         invokers: {
-            setLastPanelStyle: {
-                funcName: "gpii.firstDiscovery.setLastPanelStyle",
-                args: ["{that}.container", "{that}.options.styles.lastPanel", "{that}.panels.length", "{that}.model.currentPanelNum"]
+            updateIsLastPanel: {
+                funcName: "gpii.firstDiscovery.updateIsLastPanel",
+                args: ["{that}"]
             }
         },
+        model: {
+            // isLastPanel: false  // Boolean value of whether or not the current panel is the last panel
+        },
         modelListeners: {
-            currentPanelNum: "{that}.setLastPanelStyle"
+            isLastPanel: {
+                "this": "{that}.container",
+                method: "toggleClass",
+                args: ["{that}.options.styles.lastPanel", "{change}.value"]
+            },
+            // This model listener cannot be replaced by the model relay because
+            // the calculation of model.isLastPanel requires "{that}.panels" to be
+            // ready. "{that}.panels" is set when onPrefsEditorReady event is fired.
+            // So using model relay is too early.
+            currentPanelNum: {
+                funcName: "{that}.updateIsLastPanel",
+                excludeSource: "init"
+            }
         },
         listeners: {
-            "onPrefsEditorReady.setLastPanelStyle": "{that}.setLastPanelStyle"
+            "onPrefsEditorReady.updateIsLastPanel": "{that}.updateIsLastPanel"
+        },
+        saveRequestConfig: {
+            view: "firstDiscovery"
         },
         distributeOptions: {
             // An example of the "saveRequestConfig" structure:
             // saveRequestConfig: {
-            //     url: "/user",
-            //     method: "POST"
+            //     url: "/user?view=%view",
+            //     method: "POST",
+            //     view: "firstDiscovery"  // To define the "%view" used in the url.
             // }
             source: "{that}.options.saveRequestConfig",
             target: "{that gpii.firstDiscovery.panel.token}.options.saveRequestConfig"
         }
     });
 
-    gpii.firstDiscovery.setLastPanelStyle = function (elm, style, panelTotalNum, currentPanel) {
-        var isLastPanel = currentPanel === panelTotalNum;
-        elm.toggleClass(style, isLastPanel);
+    gpii.firstDiscovery.updateIsLastPanel = function (that) {
+        var panelTotalNum = that.panels ? that.panels.length : undefined;
+        that.applier.change("isLastPanel", that.model.currentPanelNum === panelTotalNum);
     };
 
 })(jQuery, fluid);

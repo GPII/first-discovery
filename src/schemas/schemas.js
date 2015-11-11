@@ -28,7 +28,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 "templatePrefix": "../src/html",
                 "messagePrefix": "../src/messages"
             },
-            "template": "../src/html/firstDiscovery.html",
+            "template": "%templatePrefix/firstDiscovery.html",
             "message": "%messagePrefix/firstDiscovery.json",
             "lang": {
                 "type": "gpii.firstDiscovery.language",
@@ -187,7 +187,8 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                     "type": "gpii.firstDiscovery.panel.token",
                     "container": ".gpiic-fd-prefsEditor-panel-token",
                     "template": "%templatePrefix/token.html",
-                    "message": "%messagePrefix/token.json"
+                    "message": "%messagePrefix/token.json",
+                    "gradeNames": ["gpii.firstDiscovery.panel.token.prefsServerIntegrationConnection"]
                 }
             }
         }
