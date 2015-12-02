@@ -1,7 +1,7 @@
 {
-  "name": "first-discovery",
+  "name": "gpii-first-discovery",
   "description": "A preferences editor tool that helps users discovery their initial preferences.",
-  "version": "0.1.0-SNAPSHOT",
+  "version": "1.0.0",
   "author": "GPII",
   "bugs": "https://issues.gpii.net",
   "homepage": "http://gpii.net",
@@ -20,7 +20,7 @@
   "repository": "git@github.com:GPII/first-discovery.git",
   "main": "",
   "engines": {
-    "node": ">=0.1.9"
+    "node": ">=0.8.0"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
