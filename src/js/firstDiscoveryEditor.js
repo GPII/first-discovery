@@ -109,7 +109,8 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                     }]
                 }
             },
-            nav: {
+
+           nav: {
                 type: "gpii.firstDiscovery.nav",
                 container: "{that}.dom.nav",
                 createOnEvent: "onCreateNav",
@@ -123,6 +124,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                     panelTotalNum: "{firstDiscoveryEditor}.panels.length"
                 }
             },
+
             messageLoader: {
                 options: {
                     locale: "{prefsEditorLoader}.settings.preferences.gpii_firstDiscovery_language"

@@ -173,6 +173,10 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     gpii.firstDiscovery.navButtons.adjustCurrentPanelNum = function (that, toChange) {
         var newValue = that.model.currentPanelNum + toChange;
         that.applier.change("currentPanelNum", newValue);
+
+
+
+
     };
 
 })(jQuery, fluid);

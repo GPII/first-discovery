@@ -145,6 +145,28 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                     "keyboardInputGradeNames": ["gpii.firstDiscovery.keyboardInputTts"]
                 }
             },
+
+/*added for 'confirm' and 'save' panels*/
+            "confirm": {
+                         "type": "gpii.firstDiscovery.confirm",
+                         "panel": {
+                             "type": "gpii.firstDiscovery.panel.confirm",
+                             "container": ".gpiic-fd-prefsEditor-panel-confirm",
+                             "template": "%templatePrefix/confirmTemplate.html",
+                             "message": "%messagePrefix/confirm.json"
+                         }
+                     },
+            "save": {
+                          "type": "gpii.firstDiscovery.save",
+                          "panel": {
+                              "type": "gpii.firstDiscovery.panel.save",
+                              "container": ".gpiic-fd-prefsEditor-panel-save",
+                              "template": "%templatePrefix/saveTemplate.html",
+                              "message": "%messagePrefix/save.json"
+                          }
+                      },
+
+
             "congratulations": {
                 "type": "gpii.firstDiscovery.congratulations",
                 "panel": {
@@ -284,5 +306,34 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             }
         }
     });
+
+/*added 'confirm' and 'save' panels*/
+
+    /*
+     *
+
+    fluid.defaults("gpii.firstDiscovery.schemas.confirm", {
+        gradeNames: ["fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.confirm": {
+                "type": "boolean",
+                "default": true
+            }
+        }
+    });
+
+
+
+    fluid.defaults("gpii.firstDiscovery.schemas.save", {
+        gradeNames: ["fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.save": {
+                "type": "boolean",
+                "default": true
+            }
+        }
+    });
+
+    */
 
 })(jQuery, fluid);

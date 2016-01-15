@@ -136,7 +136,7 @@ button {
     color: #425165; /* blue-grey */
     background-color: #ffffff;
     padding: 1.5rem;
-    height: 31rem;
+    height: 38rem;
 }
 
 .gpii-fd-main.gpii-fd-current {
@@ -606,7 +606,7 @@ button {
 
 /* Step count message */
 .gpii-fd-stepCount {
-    font-size: 1rem;
+    font-size: 2rem;
     margin-top: -1.1rem;
     text-align: center;
     line-height: normal;

@@ -9,6 +9,8 @@ You may obtain a copy of the License at
 https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
 */
 
+
+
 (function ($, fluid) {
 
     "use strict";
@@ -17,7 +19,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
 
     /*
      * The nav icon
-     */
+    */
     fluid.defaults("gpii.firstDiscovery.icon", {
         gradeNames: ["fluid.viewComponent"],
         position: null,  // must be supplied by integrators
