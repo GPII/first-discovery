@@ -152,7 +152,7 @@ button {
 }
 
 /* controls */
-/* to try to keep the +/- buttons centred in the page,
+/* to try to keep the +/- buttons centered in the page,
  * look at http://css-tricks.com/snippets/css/a-guide-to-flexbox/
  * for ideas */
 
@@ -408,13 +408,13 @@ button {
     top: 12.4rem;
 }
 
-/* Navigation section at bottom, containing back/next and icons */
+/* Navigation section at bottom, containing back/next/preview and icons */
 .gpii-fd-navButtons {
     color: #425165; /* blue-grey */
     background-color: #ffffff;
 }
 
-.gpii-fd-navButtons-back, .gpii-fd-navButtons-next {
+.gpii-fd-navButtons-back, .gpii-fd-navButtons-next, .gpii-fd-navButtons-preview {
     border-radius: 0.5rem;
     visibility: hidden;
     background-color: #425165; /* blue-grey */
@@ -429,12 +429,17 @@ button {
     margin: 0 0 1rem 1rem;
 }
 
+.gpii-fd-navButtons-preview {
+    margin: 0 0 1rem 1rem;
+}
+
 .gpii-fd-navButtons-next {
     padding-right: 0;
     margin: 0 1rem 1rem 0;
 }
 
 .gpii-fd-navButtons-back:hover,
+.gpii-fd-navButtons-preview:hover,
 .gpii-fd-navButtons-next:hover {
     background-color: #425165; /* blue-grey, to override foundation's blue */
     box-shadow: 0 0 0 0.1rem rgb(255,255,255), /* white */
@@ -442,6 +447,7 @@ button {
 }
 
 .gpii-fd-navButtons-back:focus,
+.gpii-fd-navButtons-preview:focus,
 .gpii-fd-navButtons-next:focus {
     background-color: #425165; /* blue-grey */
     box-shadow: 0 0 0 0.4rem rgb(244, 215, 75), /* Yellow */
@@ -450,9 +456,14 @@ button {
 }
 
 .gpii-fd-navButtons-back .gpii-fd-icon:before,
+.gpii-fd-navButtons-preview .gpii-fd-icon:after,
 .gpii-fd-navButtons-next .gpii-fd-icon:after {
     position: relative;
     font-size: 4rem;
+}
+
+.gpii-fd-navButtons-preview .pgii-fd-icon:before {
+    content: "\e606";
 }
 
 .gpii-fd-navButtons-back .gpii-fd-icon:before {
@@ -770,6 +781,7 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
 /* high-contrast themes: white-on-black */
 .fl-theme-wb .gpii-fd,
 .fl-theme-wb .gpii-fd-navButtons-next,
+.fl-theme-wb .gpii-fd-navButtons-preview,
 .fl-theme-wb .gpii-fd-navButtons-back,
 .fl-theme-wb .gpii-fd-keyboard-try,
 .fl-theme-wb .gpii-fd-keyboard-accommodationToggle,
@@ -796,8 +808,10 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
 .fl-theme-wb .gpii-fd-mute:hover,
 .fl-theme-wb .gpii-fd-mute:hover *,
 .fl-theme-wb .gpii-fd-navButtons-next:hover,
+.fl-theme-wb .gpii-fd-navButtons-preview:hover,
 .fl-theme-wb .gpii-fd-navButtons-back:hover,
 .fl-theme-wb .gpii-fd-navButtons-next:hover *,
+.fl-theme-wb .gpii-fd-navButtons-preview:hover *,
 .fl-theme-wb .gpii-fd-navButtons-back:hover *,
 .fl-theme-wb .gpii-fd-choice-label:hover,
 .fl-theme-wb .gpii-fd-lang-prev:hover,
@@ -826,6 +840,7 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
 .fl-theme-wb .gpii-fd-decrease:focus,
 .fl-theme-wb .gpii-fd-increase:focus,
 .fl-theme-wb .gpii-fd-navButtons-next:focus,
+.fl-theme-wb .gpii-fd-navButtons-preview:focus,
 .fl-theme-wb .gpii-fd-navButtons-back:focus,
 .fl-theme-wb .gpii-fd-keyboard-try:focus,
 .fl-theme-wb .gpii-fd-keyboard-accommodationToggle:focus,
@@ -883,6 +898,7 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
 /* high-contrast themes: black-on-white */
 .fl-theme-bw .gpii-fd,
 .fl-theme-bw .gpii-fd-navButtons-next,
+.fl-theme-bw .gpii-fd-navButtons-preview,
 .fl-theme-bw .gpii-fd-navButtons-back,
 .fl-theme-bw .gpii-fd-keyboard-try,
 .fl-theme-bw .gpii-fd-keyboard-accommodationToggle,
@@ -909,8 +925,10 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
 .fl-theme-bw .gpii-fd-mute:hover,
 .fl-theme-bw .gpii-fd-mute:hover *,
 .fl-theme-bw .gpii-fd-navButtons-next:hover,
+.fl-theme-bw .gpii-fd-navButtons-preview:hover,
 .fl-theme-bw .gpii-fd-navButtons-back:hover,
 .fl-theme-bw .gpii-fd-navButtons-next:hover *,
+.fl-theme-bw .gpii-fd-navButtons-preview:hover *,
 .fl-theme-bw .gpii-fd-navButtons-back:hover *,
 .fl-theme-bw .gpii-fd-choice-label:hover,
 .fl-theme-bw .gpii-fd-lang-prev:hover,
@@ -939,6 +957,7 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
 .fl-theme-bw .gpii-fd-decrease:focus,
 .fl-theme-bw .gpii-fd-increase:focus,
 .fl-theme-bw .gpii-fd-navButtons-next:focus,
+.fl-theme-bw .gpii-fd-navButtons-preview:focus,
 .fl-theme-bw .gpii-fd-navButtons-back:focus,
 .fl-theme-bw .gpii-fd-keyboard-try:focus,
 .fl-theme-bw .gpii-fd-keyboard-accommodationToggle:focus,
@@ -995,8 +1014,10 @@ html:lang(es-MX) .gpii-fd-keyboard-accommodationToggle {
 
 /* high-contrast themes, shared by both */
 .fl-theme-bw .gpii-fd-navButtons-next:hover,
+.fl-theme-bw .gpii-fd-navButtons-preview:hover,
 .fl-theme-bw .gpii-fd-navButtons-back:hover,
 .fl-theme-wb .gpii-fd-navButtons-next:hover,
+.fl-theme-wb .gpii-fd-navButtons-preview:hover,
 .fl-theme-wb .gpii-fd-navButtons-back:hover {
     box-shadow: none !important;
 }
