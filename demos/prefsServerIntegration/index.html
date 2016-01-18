@@ -33,63 +33,11 @@
         <script type="text/javascript" src="../../src/js/nav.js"></script>
         <script type="text/javascript" src="../../src/js/firstDiscoveryEditor.js"></script>
         <script type="text/javascript" src="../js/demos.js"></script>
-                
-        <!-- Temporary Internal CSS for testing sliding box preview pane -->
-        <style>
-            .nowrap {
-                whitespace:nowrap;
-            }
-            .slide {
-                position: relative;
-            }
-            .slide .previewpane {
-              position: absolute;
-              left: 100%;
-              bottom: 0;
-              width:179%;
-              height:100%;
-              background-color:#425165; 
-              margin-left:10px; 
-              padding:20px;
-            }
 
-        </style>
-        
-        <!-- Temporary Internal JQuery for Sliding box preview pane -->
-        <script>
-           /*
-           * configure the prefs editor templateUrl on start up.
-           */
-           
-           /*
-            $(document).ready(function () {
-                demo.initWithPreview("#gpiic-fd-prefsEditor", {
-                    prefsEditor: {
-                        preview: {
-                            templateUrl: "../../src/html/PrefsEditorPreview.html"
-                        }
-                    }
-                });
-            });
-            */
-            
-            /*
-            * display and allow toggling of the previewpane using the preview button on the nav. 
-            */
-            
-            /*
-            $(document).ready(function() {
-              $('#gpiic-fd .preview').click(function() {
-                $('#gpiic-fd .previewpane').animate({width: 'toggle'});
-              });
-            });
-            */
-            
-            
+        <script>              
             /*
             *   Display the previewpane using jquery based on whether the current panel is the welcome panel and whether or not you click the next button.
             */
-            
             $(document).ready(function() {
                 var isOpen = false;
                 // Comment this out for preview on start.
@@ -109,7 +57,7 @@
     </head>
 
     <body>
-        <div id="gpiic-fd" style="margin-left: 6%; width:16.82em;" class="gpii-fd slide">
+        <div id="gpiic-fd" class="gpii-fd slide fdtSize">
             <section class="row gpii-fd-topButtons">
                 <div class="gpiic-fd-selfVoicingToggle gpii-fd-selfVoicingToggle">
                     <button class="gpiic-fd-selfVoicingToggle-mute gpiic-fd-tooltip left gpii-fd-mute">
@@ -128,12 +76,6 @@
                         <span class="left gpii-fd-icon"></span>
                         <span class="gpiic-fd-navButtons-backLabel">back</span>
                     </button>
-                    <!-- 
-                    <button id="gpiic-fd-navButtons-preview" class="gpiic-fd-tooltip left gpii-fd-navButtons-preview  preview">
-                        <span class="left gpii-fd-icon"></span>
-                        <span class="gpiic-fd-navButtons-previewLabel">PREVIEW</span>
-                    </button>
-                    -->
                     <button id="gpiic-fd-navButtons-next" class="gpiic-fd-tooltip right gpii-fd-navButtons-next">
                         <span class="gpiic-fd-navButtons-nextLabel">next</span>
                         <span class="right gpii-fd-icon"></span>
@@ -192,20 +134,12 @@
                 </div>
             </nav>
             
-            <div class="left" style="margin-left: 10px;">     
+            <div class="left leftMarginTen">     
                 <form id="options" class="fl-focus left">
                     <div class="fl-prefsEditor-fullPreview-previewContainer fl-force-right">
                         <div class="fl-prefsEditor-preview">
-                            <!-- <h2>Preview your changes</h2> -->
                             <iframe class="flc-prefsEditor-preview-frame previewpane" ></iframe>
                         </div>
-                        <!-- Uncomment for preview button
-                        <div class="fl-prefsEditor-buttons">
-                            <input class="flc-prefsEditor-save fl-prefsEditor-save" type="button" value="Save and apply" />
-                            <input class="flc-prefsEditor-reset" type="button" value="Reset" />
-                            <input class="flc-prefsEditor-cancel fl-prefsEditor-cancel" type="button" value="Cancel" />
-                        </div>
-                        -->
                     </div>
                 </form>
              </div>
