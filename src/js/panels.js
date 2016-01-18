@@ -1114,10 +1114,6 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 markup: {messagekey: "message"}
             }
         },
-        invokers: {
-
-
-        },
         modelListeners: {
             "{fluid.prefs.prefsEditor}.model.preferences": {
                 funcName: "gpii.firstDiscovery.panel.confirm.updatePreferenceValues",
@@ -1128,262 +1124,133 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     });
 
 
-    gpii.firstDiscovery.panel.confirm.updatePreferenceValues = function(that, changeContext) {
-
-        console.dir(changeContext);
-
-        console.dir(that.locate("language"));
-
-        console.dir(that.dom);
-
-
-//Language Preference and Preference Labels
-        var languageValue = changeContext.value.gpii_firstDiscovery_language;
-        console.log("language: "+ languageValue);
-
-        if(languageValue == "fr-FR") {
-            $("#" + that.options.selectors.languageLabel).text("Langue:");
-            $("#" + that.options.selectors.speakLabel).text("Synthèse Vocale:");
-            $("#" + that.options.selectors.speechRateLabel).text("Débit de Parole:");
-            $("#" + that.options.selectors.contrastLabel).text("Contraste:");
-            $("#" + that.options.selectors.textSizeLabel).text("Taille du Texte:");
-            $("#" + that.options.selectors.onScreenKeyboardLabel).text("Clavier à l'Écran:");
-            $("#" + that.options.selectors.captionsLabel).text("Légendes:");
-            $("#" + that.options.selectors.showSoundsLabel).text("Voir les Sons:");
-            $("#" + that.options.selectors.stickyKeysLabel).text("Touches Rémanentes:");
-            $("#" + that.options.selectors.language).text("Français");
-        } else if(languageValue == "es-MX") {
-            $("#" + that.options.selectors.languageLabel).text("Idioma:");
-            $("#" + that.options.selectors.speakLabel).text("Texto a Voz:");
-            $("#" + that.options.selectors.speechRateLabel).text("Nivel de Conversación:");
-            $("#" + that.options.selectors.contrastLabel).text("Contraste:");
-            $("#" + that.options.selectors.textSizeLabel).text("Tamaño de Texto:");
-            $("#" + that.options.selectors.onScreenKeyboardLabel).text("Teclado en Pantalla:");
-            $("#" + that.options.selectors.captionsLabel).text("Leyendas:");
-            $("#" + that.options.selectors.showSoundsLabel).text("Mostrar Sonidos:");
-            $("#" + that.options.selectors.stickyKeysLabel).text("Teclas Pegajosas:");
-            $("#" + that.options.selectors.language).text("Español");
-        } else {
-            $("#" + that.options.selectors.languageLabel).text("Language:");
-            $("#" + that.options.selectors.speakLabel).text("Text to Speech:");
-            $("#" + that.options.selectors.speechRateLabel).text("Speech Rate:");
-            $("#" + that.options.selectors.contrastLabel).text("Contrast:");
-            $("#" + that.options.selectors.textSizeLabel).text("Text Size:");
-            $("#" + that.options.selectors.onScreenKeyboardLabel).text("On-Screen Keyboard:");
-            $("#" + that.options.selectors.captionsLabel).text("Captions:");
-            $("#" + that.options.selectors.showSoundsLabel).text("Show Sounds:");
-            $("#" + that.options.selectors.stickyKeysLabel).text("Sticky Keys:");
-            $("#" + that.options.selectors.language).text("English");
-        }
-
-//Text to Speech Preference
-        var speakValue = changeContext.value.gpii_firstDiscovery_speak;
-        console.log("text to speech: "+ speakValue);
-
-        if(languageValue == "fr-FR"){
-            if (speakValue == false) {
-                $("#" + that.options.selectors.speak).text("Non");
-            } else if (speakValue == true) {
-                $("#" + that.options.selectors.speak).text("Oui");
-            } else {
-                $("#" + that.options.selectors.speak).text(changeContext.value.gpii_firstDiscovery_speak);
+    var friendlyNames = {
+        "en-US": {
+            labels: {
+                language: "Language:",
+                speak: "Text to Speech:",
+                speechRate: "Speech Rate:",
+                contrast: "Contrast:",
+                textSize: "Text Size:",
+                onScreenKeyboard: "On-Screen Keyboard:",
+                captions: "Captions:",
+                showSounds: "Show Sounds:",
+                stickyKeys: "Sticky Keys:"
+            },
+            values: {
+                onOff: {
+                    "true": "On",
+                    "false": "Off"
+                },
+                language: "English",
+                contrast:{
+                    "default": "Original",
+                    "bw": "Black/White",
+                    "wb": "White/Black"
+                }
             }
-        } else if(languageValue == "es-MX"){
-            if (speakValue == false) {
-                $("#" + that.options.selectors.speak).text("No");
-            } else if (speakValue == true) {
-                $("#" + that.options.selectors.speak).text("Sí");
-            } else {
-                $("#" + that.options.selectors.speak).text(changeContext.value.gpii_firstDiscovery_speak);
+        },
+        "fr-FR": {
+            labels: {
+                language: "Langue:",
+                speak: "Synthèse Vocale:",
+                speechRate: "Débit de Parole:",
+                contrast: "Contraste:",
+                textSize: "Taille du Texte:",
+                onScreenKeyboard: "Clavier à l'Écran:",
+                captions: "Légendes:",
+                showSounds: "Voir les Sons:",
+                stickyKeys: "Touches Rémanentes:"
+            },
+            values: {
+                onOff: {
+                    "true": "Oui",
+                    "false": "Non"
+                },
+                language: "Français",
+                contrast: {
+                    "default": "Original",
+                    "bw": "Noir/Blanc",
+                    "wb": "Blanc/Noir"
+                }
             }
-        } else {
-            if (speakValue == false) {
-                $("#" + that.options.selectors.speak).text("Off");
-            } else if (speakValue == true) {
-                $("#" + that.options.selectors.speak).text("On");
-            } else {
-                $("#" + that.options.selectors.speak).text(changeContext.value.gpii_firstDiscovery_speak);
-            }
-        }
-
-//Speech Rate Preference
-        var speechRateValue = (changeContext.value.gpii_firstDiscovery_speechRate);
-        console.log("speech rate: " +speechRateValue);
-        var roundedSRValue = speechRateValue.toFixed(1);
-
-        $("#" + that.options.selectors.speechRate).text(roundedSRValue + "x");
-
-
-
-//Contrast Preference
-        var contrastValue = changeContext.value.fluid_prefs_contrast;
-        console.log("contrast: "+ contrastValue);
-
-        if(languageValue == "fr-FR"){
-            if(contrastValue == "default"){
-                $("#" + that.options.selectors.contrast).text("Original");
-            }else if(contrastValue == "bw"){
-                $("#" + that.options.selectors.contrast).text("Noir/Blanc");
-            }else if(contrastValue == "wb"){
-                $("#" + that.options.selectors.contrast).text("Blanc/Noir");
-            }else{
-                $("#" + that.options.selectors.contrast).text(changeContext.value.fluid_prefs_contrast);
-            }
-        } else if(languageValue == "es-MX"){
-            if(contrastValue == "default"){
-                $("#" + that.options.selectors.contrast).text("Original");
-            }else if(contrastValue == "bw"){
-                $("#" + that.options.selectors.contrast).text("Negro/Blanco");
-            }else if(contrastValue == "wb"){
-                $("#" + that.options.selectors.contrast).text("Blanco/Negro");
-            }else{
-                $("#" + that.options.selectors.contrast).text(changeContext.value.fluid_prefs_contrast);
-            }
-        } else {
-            if(contrastValue == "default"){
-                $("#" + that.options.selectors.contrast).text("Original");
-            }else if(contrastValue == "bw"){
-                $("#" + that.options.selectors.contrast).text("Black/White");
-            }else if(contrastValue == "wb"){
-                $("#" + that.options.selectors.contrast).text("White/Black");
-            }else{
-                $("#" + that.options.selectors.contrast).text(changeContext.value.fluid_prefs_contrast);
+        },
+        "es-MX": {
+            labels: {
+                language: "Idioma:",
+                speak: "Texto a Voz:",
+                speechRate: "Nivel de Conversación:",
+                contrast: "Contraste:",
+                textSize: "Tamaño de Texto:",
+                onScreenKeyboard: "Teclado en Pantalla:",
+                captions: "Leyendas:",
+                showSounds: "Mostrar Sonidos:",
+                stickyKeys: "Teclas Pegajosas:"
+            },
+            values: {
+                onOff: {
+                    "true": "Sí",
+                    "false": "Non"
+                },
+                language: "Español",
+                contrast: {
+                    "default": "Original",
+                    "bw": "Negro/Blanco",
+                    "wb": "Blanco/Negro"
+                }
             }
         }
-
-//Text Size Preference
-        var textSizeValue = (changeContext.value.fluid_prefs_textSize);
-        console.log("speech rate: " +textSizeValue);
-        var roundedTSValue = textSizeValue.toFixed(1);
-
-        $("#" + that.options.selectors.textSize).text(roundedTSValue + "x");
-
-
-        //On-Screen Keyboard Preference
-        var onScreenKeyboardValue = changeContext.value.gpii_firstDiscovery_onScreenKeyboard;
-        console.log("on-screen keyboard: "+ onScreenKeyboardValue);
-
-        if(languageValue == "fr-FR"){
-            if(onScreenKeyboardValue == false){
-                $("#" + that.options.selectors.onScreenKeyboard).text("Non");
-            }else if(onScreenKeyboardValue == true){
-                $("#" + that.options.selectors.onScreenKeyboard).text("Oui");
-            }else{
-                $("#" + that.options.selectors.onScreenKeyboard).text(changeContext.value.gpii_firstDiscovery_onScreenKeyboard);
-            }
-        } else if(languageValue == "es-MX"){
-            if(onScreenKeyboardValue == false){
-                $("#" + that.options.selectors.onScreenKeyboard).text("No");
-            }else if(onScreenKeyboardValue == true){
-                $("#" + that.options.selectors.onScreenKeyboard).text("Sí");
-            }else{
-                $("#" + that.options.selectors.onScreenKeyboard).text(changeContext.value.gpii_firstDiscovery_onScreenKeyboard);
-            }
-        } else {
-            if(onScreenKeyboardValue == false){
-                $("#" + that.options.selectors.onScreenKeyboard).text("Off");
-            }else if(onScreenKeyboardValue == true){
-                $("#" + that.options.selectors.onScreenKeyboard).text("On");
-            }else{
-                $("#" + that.options.selectors.onScreenKeyboard).text(changeContext.value.gpii_firstDiscovery_onScreenKeyboard);
-            }
-        }
-
-//Captions Preference
-        var captionsValue = changeContext.value.gpii_firstDiscovery_captions;
-        console.log("captions: "+ captionsValue);
-
-        if(languageValue == "fr-FR"){
-            if(captionsValue == false){
-                $("#" + that.options.selectors.captions).text("Non");
-            }else if(captionsValue == true){
-                $("#" + that.options.selectors.captions).text("Oui");
-            }else{
-                $("#" + that.options.selectors.captions).text(changeContext.value.gpii_firstDiscovery_captions);
-            }
-        } else if(languageValue == "es-MX"){
-            if(captionsValue == false){
-                $("#" + that.options.selectors.captions).text("No");
-            }else if(captionsValue == true){
-                $("#" + that.options.selectors.captions).text("Sí");
-            }else{
-                $("#" + that.options.selectors.captions).text(changeContext.value.gpii_firstDiscovery_captions);
-            }
-        } else {
-            if(captionsValue == false){
-                $("#" + that.options.selectors.captions).text("Off");
-            }else if(captionsValue == true){
-                $("#" + that.options.selectors.captions).text("On");
-            }else{
-                $("#" + that.options.selectors.captions).text(changeContext.value.gpii_firstDiscovery_captions);
-            }
-        }
-
-        //Show Sounds Preference
-        var showSoundsValue = changeContext.value.gpii_firstDiscovery_showSounds;
-        console.log("show sounds: "+ showSoundsValue);
-
-        if(languageValue == "fr-FR"){
-            if(showSoundsValue == false){
-                $("#" + that.options.selectors.showSounds).text("Non");
-            }else if(showSoundsValue == true){
-                $("#" + that.options.selectors.showSounds).text("Oui");
-            }else{
-                $("#" + that.options.selectors.showSounds).text(changeContext.value.gpii_firstDiscovery_showSounds);
-            }
-        } else if(languageValue == "es-MX"){
-            if(showSoundsValue == false){
-                $("#" + that.options.selectors.showSounds).text("No");
-            }else if(showSoundsValue == true){
-                $("#" + that.options.selectors.showSounds).text("Sí");
-            }else{
-                $("#" + that.options.selectors.showSounds).text(changeContext.value.gpii_firstDiscovery_showSounds);
-            }
-        } else {
-            if(showSoundsValue == false){
-                $("#" + that.options.selectors.showSounds).text("Off");
-            }else if(showSoundsValue == true){
-                $("#" + that.options.selectors.showSounds).text("On");
-            }else{
-                $("#" + that.options.selectors.showSounds).text(changeContext.value.gpii_firstDiscovery_showSounds);
-            }
-        }
-
-//Sticky Keys Preference
-
-        var stickyKeysValue = changeContext.value.gpii_firstDiscovery_stickyKeys;
-        console.log("sticky keys: "+ stickyKeysValue);
-
-        if(languageValue == "fr-FR"){
-            if(stickyKeysValue == false){
-                $("#" + that.options.selectors.stickyKeys).text("Non");
-            }else if(stickyKeysValue == true){
-                $("#" + that.options.selectors.stickyKeys).text("Oui");
-            }else {
-                $("#" + that.options.selectors.stickyKeys).text(changeContext.value.gpii_firstDiscovery_stickyKeys);
-            }
-        } else if(languageValue == "es-MX"){
-            if(stickyKeysValue == false){
-                $("#" + that.options.selectors.stickyKeys).text("No");
-            }else if(stickyKeysValue == true){
-                $("#" + that.options.selectors.stickyKeys).text("Sí");
-            }else {
-                $("#" + that.options.selectors.stickyKeys).text(changeContext.value.gpii_firstDiscovery_stickyKeys);
-            }
-        } else {
-            if(stickyKeysValue == false){
-                $("#" + that.options.selectors.stickyKeys).text("Off");
-            }else if(stickyKeysValue == true){
-                $("#" + that.options.selectors.stickyKeys).text("On");
-            }else {
-                $("#" + that.options.selectors.stickyKeys).text(changeContext.value.gpii_firstDiscovery_stickyKeys);
-            }
-        }
-
     };
 
-    gpii.firstDiscovery.panel.confirm.log = function(changeContext){
-        console.dir(changeContext);
+
+    gpii.firstDiscovery.panel.confirm.updatePreferenceValues = function(that, changeContext) {
+
+//Language
+        var languageValue = changeContext.value.gpii_firstDiscovery_language;
+        $("#" + that.options.selectors.languageLabel).text(friendlyNames[languageValue].labels.language);
+        $("#" + that.options.selectors.language).text(friendlyNames[languageValue].values.language);
+
+//Text to Speech
+        $("#" + that.options.selectors.speakLabel).text(friendlyNames[languageValue].labels.speak);
+        var speakValue = changeContext.value.gpii_firstDiscovery_speak;
+        $("#" + that.options.selectors.speak).text(friendlyNames[languageValue].values.onOff[speakValue]);
+
+//Speech Rate
+        $("#" + that.options.selectors.speechRateLabel).text(friendlyNames[languageValue].labels.speechRate);
+        var speechRateValue = (changeContext.value.gpii_firstDiscovery_speechRate);
+        var roundedSRValue = speechRateValue.toFixed(1);
+        $("#" + that.options.selectors.speechRate).text(roundedSRValue + "x");
+
+//Contrast
+        $("#" + that.options.selectors.contrastLabel).text(friendlyNames[languageValue].labels.contrast);
+        var contrastValue = changeContext.value.fluid_prefs_contrast;
+        $("#" + that.options.selectors.contrast).text(friendlyNames[languageValue].values.contrast[contrastValue]);
+
+//Text Size
+        $("#" + that.options.selectors.textSizeLabel).text(friendlyNames[languageValue].labels.textSize);
+        var textSizeValue = (changeContext.value.fluid_prefs_textSize);
+        var roundedTSValue = textSizeValue.toFixed(1);
+        $("#" + that.options.selectors.textSize).text(roundedTSValue + "x");
+
+//On-ScreenKeyboard
+        $("#" + that.options.selectors.onScreenKeyboardLabel).text(friendlyNames[languageValue].labels.onScreenKeyboard);
+        var onScreenKeyboardValue = changeContext.value.gpii_firstDiscovery_onScreenKeyboard;
+        $("#" + that.options.selectors.onScreenKeyboard).text(friendlyNames[languageValue].values.onOff[onScreenKeyboardValue]);
+
+//Captions
+        $("#" + that.options.selectors.captionsLabel).text(friendlyNames[languageValue].labels.captions);
+        var captionsValue = changeContext.value.gpii_firstDiscovery_captions;
+        $("#" + that.options.selectors.captions).text(friendlyNames[languageValue].values.onOff[captionsValue]);
+
+//Show Sounds
+        $("#" + that.options.selectors.showSoundsLabel).text(friendlyNames[languageValue].labels.showSounds);
+        var showSoundsValue = changeContext.value.gpii_firstDiscovery_showSounds;
+        $("#" + that.options.selectors.showSounds).text(friendlyNames[languageValue].values.onOff[showSoundsValue]);
+
+//Sticky Keys
+        $("#" + that.options.selectors.stickyKeysLabel).text(friendlyNames[languageValue].labels.stickyKeys);
+        var stickyKeysValue = changeContext.value.gpii_firstDiscovery_stickyKeys;
+        $("#" + that.options.selectors.stickyKeys).text(friendlyNames[languageValue].values.onOff[stickyKeysValue]);
     };
 
 
