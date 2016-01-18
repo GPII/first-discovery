@@ -146,7 +146,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 }
             },
 
-/*added for 'confirm' and 'save' panels*/
+            //added for 'confirm' and 'save' panels
             "confirm": {
                          "type": "gpii.firstDiscovery.confirm",
                          "panel": {
@@ -307,33 +307,5 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         }
     });
 
-/*added 'confirm' and 'save' panels*/
-
-    /*
-     *
-
-    fluid.defaults("gpii.firstDiscovery.schemas.confirm", {
-        gradeNames: ["fluid.prefs.schemas"],
-        schema: {
-            "gpii.firstDiscovery.confirm": {
-                "type": "boolean",
-                "default": true
-            }
-        }
-    });
-
-
-
-    fluid.defaults("gpii.firstDiscovery.schemas.save", {
-        gradeNames: ["fluid.prefs.schemas"],
-        schema: {
-            "gpii.firstDiscovery.save": {
-                "type": "boolean",
-                "default": true
-            }
-        }
-    });
-
-    */
 
 })(jQuery, fluid);

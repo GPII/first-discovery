@@ -1124,130 +1124,129 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     });
 
 
-    var friendlyNames = {
-        "en-US": {
-            labels: {
-                language: "Language:",
-                speak: "Text to Speech:",
-                speechRate: "Speech Rate:",
-                contrast: "Contrast:",
-                textSize: "Text Size:",
-                onScreenKeyboard: "On-Screen Keyboard:",
-                captions: "Captions:",
-                showSounds: "Show Sounds:",
-                stickyKeys: "Sticky Keys:"
-            },
-            values: {
-                onOff: {
-                    "true": "On",
-                    "false": "Off"
-                },
-                language: "English",
-                contrast:{
-                    "default": "Original",
-                    "bw": "Black/White",
-                    "wb": "White/Black"
-                }
-            }
-        },
-        "fr-FR": {
-            labels: {
-                language: "Langue:",
-                speak: "Synthèse Vocale:",
-                speechRate: "Débit de Parole:",
-                contrast: "Contraste:",
-                textSize: "Taille du Texte:",
-                onScreenKeyboard: "Clavier à l'Écran:",
-                captions: "Légendes:",
-                showSounds: "Voir les Sons:",
-                stickyKeys: "Touches Rémanentes:"
-            },
-            values: {
-                onOff: {
-                    "true": "Oui",
-                    "false": "Non"
-                },
-                language: "Français",
-                contrast: {
-                    "default": "Original",
-                    "bw": "Noir/Blanc",
-                    "wb": "Blanc/Noir"
-                }
-            }
-        },
-        "es-MX": {
-            labels: {
-                language: "Idioma:",
-                speak: "Texto a Voz:",
-                speechRate: "Nivel de Conversación:",
-                contrast: "Contraste:",
-                textSize: "Tamaño de Texto:",
-                onScreenKeyboard: "Teclado en Pantalla:",
-                captions: "Leyendas:",
-                showSounds: "Mostrar Sonidos:",
-                stickyKeys: "Teclas Pegajosas:"
-            },
-            values: {
-                onOff: {
-                    "true": "Sí",
-                    "false": "Non"
-                },
-                language: "Español",
-                contrast: {
-                    "default": "Original",
-                    "bw": "Negro/Blanco",
-                    "wb": "Blanco/Negro"
-                }
-            }
-        }
-    };
-
-
     gpii.firstDiscovery.panel.confirm.updatePreferenceValues = function(that, changeContext) {
 
-//Language
+        //Friendly names for Preference names, preference values, and other languages
+        var friendlyNames = {
+            "en-US": {
+                labels: {
+                    language: "Language:",
+                    speak: "Text to Speech:",
+                    speechRate: "Speech Rate:",
+                    contrast: "Contrast:",
+                    textSize: "Text Size:",
+                    onScreenKeyboard: "On-Screen Keyboard:",
+                    captions: "Captions:",
+                    showSounds: "Show Sounds:",
+                    stickyKeys: "Sticky Keys:"
+                },
+                values: {
+                    onOff: {
+                        "true": "On",
+                        "false": "Off"
+                    },
+                    language: "English",
+                    contrast:{
+                        "default": "Original",
+                        "bw": "Black/White",
+                        "wb": "White/Black"
+                    }
+                }
+            },
+            "fr-FR": {
+                labels: {
+                    language: "Langue:",
+                    speak: "Synthèse Vocale:",
+                    speechRate: "Débit de Parole:",
+                    contrast: "Contraste:",
+                    textSize: "Taille du Texte:",
+                    onScreenKeyboard: "Clavier à l'Écran:",
+                    captions: "Légendes:",
+                    showSounds: "Voir les Sons:",
+                    stickyKeys: "Touches Rémanentes:"
+                },
+                values: {
+                    onOff: {
+                        "true": "Oui",
+                        "false": "Non"
+                    },
+                    language: "Français",
+                    contrast: {
+                        "default": "Original",
+                        "bw": "Noir/Blanc",
+                        "wb": "Blanc/Noir"
+                    }
+                }
+            },
+            "es-MX": {
+                labels: {
+                    language: "Idioma:",
+                    speak: "Texto a Voz:",
+                    speechRate: "Nivel de Conversación:",
+                    contrast: "Contraste:",
+                    textSize: "Tamaño de Texto:",
+                    onScreenKeyboard: "Teclado en Pantalla:",
+                    captions: "Leyendas:",
+                    showSounds: "Mostrar Sonidos:",
+                    stickyKeys: "Teclas Pegajosas:"
+                },
+                values: {
+                    onOff: {
+                        "true": "Sí",
+                        "false": "Non"
+                    },
+                    language: "Español",
+                    contrast: {
+                        "default": "Original",
+                        "bw": "Negro/Blanco",
+                        "wb": "Blanco/Negro"
+                    }
+                }
+            }
+        };
+        //Language
         var languageValue = changeContext.value.gpii_firstDiscovery_language;
         $("#" + that.options.selectors.languageLabel).text(friendlyNames[languageValue].labels.language);
         $("#" + that.options.selectors.language).text(friendlyNames[languageValue].values.language);
 
-//Text to Speech
+        //Text to Speech
         $("#" + that.options.selectors.speakLabel).text(friendlyNames[languageValue].labels.speak);
         var speakValue = changeContext.value.gpii_firstDiscovery_speak;
         $("#" + that.options.selectors.speak).text(friendlyNames[languageValue].values.onOff[speakValue]);
 
-//Speech Rate
+        //Speech Rate
         $("#" + that.options.selectors.speechRateLabel).text(friendlyNames[languageValue].labels.speechRate);
         var speechRateValue = (changeContext.value.gpii_firstDiscovery_speechRate);
         var roundedSRValue = speechRateValue.toFixed(1);
         $("#" + that.options.selectors.speechRate).text(roundedSRValue + "x");
 
-//Contrast
+        //Contrast
         $("#" + that.options.selectors.contrastLabel).text(friendlyNames[languageValue].labels.contrast);
         var contrastValue = changeContext.value.fluid_prefs_contrast;
         $("#" + that.options.selectors.contrast).text(friendlyNames[languageValue].values.contrast[contrastValue]);
 
-//Text Size
+        //Text Size
         $("#" + that.options.selectors.textSizeLabel).text(friendlyNames[languageValue].labels.textSize);
         var textSizeValue = (changeContext.value.fluid_prefs_textSize);
         var roundedTSValue = textSizeValue.toFixed(1);
         $("#" + that.options.selectors.textSize).text(roundedTSValue + "x");
 
-//On-ScreenKeyboard
+        //On-ScreenKeyboard
         $("#" + that.options.selectors.onScreenKeyboardLabel).text(friendlyNames[languageValue].labels.onScreenKeyboard);
         var onScreenKeyboardValue = changeContext.value.gpii_firstDiscovery_onScreenKeyboard;
         $("#" + that.options.selectors.onScreenKeyboard).text(friendlyNames[languageValue].values.onOff[onScreenKeyboardValue]);
 
-//Captions
+        //Captions
         $("#" + that.options.selectors.captionsLabel).text(friendlyNames[languageValue].labels.captions);
         var captionsValue = changeContext.value.gpii_firstDiscovery_captions;
         $("#" + that.options.selectors.captions).text(friendlyNames[languageValue].values.onOff[captionsValue]);
 
-//Show Sounds
+        //Show Sounds
         $("#" + that.options.selectors.showSoundsLabel).text(friendlyNames[languageValue].labels.showSounds);
         var showSoundsValue = changeContext.value.gpii_firstDiscovery_showSounds;
         $("#" + that.options.selectors.showSounds).text(friendlyNames[languageValue].values.onOff[showSoundsValue]);
 
-//Sticky Keys
+        //Sticky Keys
         $("#" + that.options.selectors.stickyKeysLabel).text(friendlyNames[languageValue].labels.stickyKeys);
         var stickyKeysValue = changeContext.value.gpii_firstDiscovery_stickyKeys;
         $("#" + that.options.selectors.stickyKeys).text(friendlyNames[languageValue].values.onOff[stickyKeysValue]);
