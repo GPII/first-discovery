@@ -136,7 +136,7 @@ button {
     color: #425165; /* blue-grey */
     background-color: #ffffff;
     padding: 1.5rem;
-    height: 31rem;
+    height: 38rem;
 }
 
 .gpii-fd-main.gpii-fd-current {
@@ -606,8 +606,8 @@ button {
 
 /* Step count message */
 .gpii-fd-stepCount {
-    font-size: 1rem;
-    margin-top: -1.1rem;
+    font-size: 2rem;
+    margin-top: 1rem;
     text-align: center;
     line-height: normal;
 }
@@ -701,6 +701,23 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 .gpii-keyboardInput-shiftLatched ~ .gpii-fd-keyboard-shift-indicator {
     visibility: visible;
 }
+
+
+.gpii-fd-confirm-table {
+    width:100%;
+    margin:auto;
+}
+.gpii-fd-confirm-table-name {
+    font-size:2rem;
+    color:#425165;
+    text-align:right;
+}
+.gpii-fd-confirm-table-value {
+    font-size: 2rem;
+    color: #425165;
+    text-align: left;
+}
+
 
 /* French-specific styles */
 html:lang(fr-FR) .gpii-fd-mute {
