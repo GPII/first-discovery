@@ -1331,29 +1331,39 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                     USB is possible so msg the extension
          */
 
+        // If the plugin hasn't responded in 2 seconds with the version, it is a user without a
+        // plugin installed, so show them the token.
+        var successTimeoutId = setTimeout(function(){
+            that.events.onSuccess.fire(data);
+        }, 2000);
+
         window.chrome.runtime.sendMessage(
             that.options.chromeExtensionId,
             {"message": {"message_type":"request_version"}},
             function onVersionCallback(version){
-                var message = {
-                    message: {
-                        message_type: "write_usb",
-                        message_body: {
-                            userToken: data.userToken,
-                            preferences: data.preferences
+                // If we got a version, the plugin is installed, so clear the timeout and let the plugin write to usb
+                if (version){
+                    clearTimeout(successTimeoutId);
+                    var message = {
+                        message: {
+                            message_type: "write_usb",
+                            message_body: {
+                                userToken: data.userToken,
+                                preferences: data.preferences
+                            }
                         }
-                    }
-                };
-                window.chrome.runtime.sendMessage(
-                    that.options.chromeExtensionId,
-                    message,
-                    function onChromeExtensionResponse(response) {
-                        if (response.is_successful == "true") {
-                            that.events.onSuccess.fire(data);
-                        } else {
-                            that.events.onError.fire();
-                        }
-                    });
+                    };
+                    window.chrome.runtime.sendMessage(
+                        that.options.chromeExtensionId,
+                        message,
+                        function onChromeExtensionResponse(response) {
+                            if (response.is_successful == "true") {
+                                that.events.onSuccess.fire(data);
+                            } else {
+                                that.events.onError.fire();
+                            }
+                        });
+                }
             });
     };
 
