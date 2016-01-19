@@ -1278,11 +1278,17 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 markup: {messagekey: "message"}
             }
         },
+        chromeExtensionId: "oaicfgfcklidgbdcpgfkpmgknkfganok",
         events: {
             onSuccess: null,  // argument: the server returned data
-            onError: null
+            onError: null,
+            onCloudSaveSuccess: null
         },
         listeners: {
+            "onCloudSaveSuccess.writeToken": {
+                funcName: "{that}.savePrefsToUsb",
+                args: ["{arguments}.0"]
+            },
             "onSuccess.showToken": {
                 funcName: "{that}.showTokenText",
                 args: ["{arguments}.0.userToken"]
@@ -1301,9 +1307,36 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             savePrefsToServer: {
                 funcName: "gpii.firstDiscovery.panel.token.savePrefsToServer",
                 args: ["{that}", "{fluid.prefs.prefsEditor}.model.preferences", "{arguments}.0"]
+            },
+            savePrefsToUsb: {
+                funcName: "gpii.firstDiscovery.panel.token.savePrefsToUsb",
+                args: ["{that}", "{arguments}.0"]
+
             }
         }
     });
+
+    gpii.firstDiscovery.panel.token.savePrefsToUsb = function (that, data) {
+
+        var message = {
+            message_type: "write_usb",
+            message_body: {
+                userToken: data.userToken,
+                preferences: data.preferences
+            }
+        };
+
+        window.chrome.runtime.sendMessage(
+            that.options.chromeExtensionId,
+            message,
+            function onChromeExtensionResponse(response) {
+                if (response.is_successful == "true") {
+                    that.events.onSuccess.fire(data);
+                } else {
+                    that.events.onError.fire();
+                }
+            });
+    };
 
     gpii.firstDiscovery.panel.token.savePrefsToServer = function (that, data, isReadyToSave) {
         if (!isReadyToSave) {
@@ -1322,7 +1355,8 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             dataType: "json",
             data: data,
             success: function (data, textStatus, jqXHR) {
-                that.events.onSuccess.fire(data, textStatus, jqXHR);
+                //that.events.onSuccess.fire(data, textStatus, jqXHR);
+                that.events.onCloudSaveSuccess.fire(data, textStatus, jqXHR);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 that.events.onError.fire(jqXHR, textStatus, errorThrown);
