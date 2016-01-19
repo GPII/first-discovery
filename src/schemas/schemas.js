@@ -307,5 +307,4 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         }
     });
 
-
 })(jQuery, fluid);

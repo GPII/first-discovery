@@ -703,6 +703,10 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 }
 
 
+.gpii-fd-confirm-table {
+    width:100%;
+    margin:auto;
+}
 .gpii-fd-confirm-table-name {
     font-size:2rem;
     color:#425165;
