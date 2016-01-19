@@ -1195,7 +1195,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         $("#" + that.options.selectors.speak).text(that.options.friendlyNames[languageValue].values.onOff[speakValue]);
 
         //Speech Rate
-        $("#" + that.options.selectors.speechRateLabel).text(friendlyNames[languageValue].labels.speechRate);
+        $("#" + that.options.selectors.speechRateLabel).text(that.options.friendlyNames[languageValue].labels.speechRate);
         var speechRateValue = (changeContext.value.gpii_firstDiscovery_speechRate);
         var averageWordsPerMinute = 130;
         var wordsPerMinute = Math.round(speechRateValue*averageWordsPerMinute);
