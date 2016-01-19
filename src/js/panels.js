@@ -1331,25 +1331,29 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                     USB is possible so msg the extension
          */
 
-        var message = {
-            message: {
-                message_type: "write_usb",
-                message_body: {
-                    userToken: data.userToken,
-                    preferences: data.preferences
-                }
-            }
-        };
-
         window.chrome.runtime.sendMessage(
             that.options.chromeExtensionId,
-            message,
-            function onChromeExtensionResponse(response) {
-                if (response.is_successful == "true") {
-                    that.events.onSuccess.fire(data);
-                } else {
-                    that.events.onError.fire();
-                }
+            {"message": {"message_type":"request_version"}},
+            function onVersionCallback(version){
+                var message = {
+                    message: {
+                        message_type: "write_usb",
+                        message_body: {
+                            userToken: data.userToken,
+                            preferences: data.preferences
+                        }
+                    }
+                };
+                window.chrome.runtime.sendMessage(
+                    that.options.chromeExtensionId,
+                    message,
+                    function onChromeExtensionResponse(response) {
+                        if (response.is_successful == "true") {
+                            that.events.onSuccess.fire(data);
+                        } else {
+                            that.events.onError.fire();
+                        }
+                    });
             });
     };
 
