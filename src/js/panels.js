@@ -1318,11 +1318,26 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
 
     gpii.firstDiscovery.panel.token.savePrefsToUsb = function (that, data) {
 
+        /*
+            if not chrome:
+                USB is not possible, so just fire success
+
+            if chrome:
+
+                if not extension:
+                    USB is not possible so just fire success
+
+                if extension:
+                    USB is possible so msg the extension
+         */
+
         var message = {
-            message_type: "write_usb",
-            message_body: {
-                userToken: data.userToken,
-                preferences: data.preferences
+            message: {
+                message_type: "write_usb",
+                message_body: {
+                    userToken: data.userToken,
+                    preferences: data.preferences
+                }
             }
         };
 
