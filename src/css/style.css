@@ -507,6 +507,10 @@ button {
     content: "\e608";
 }
 
+.gpii-fd-font:before {
+    content: "\e608";
+}
+
 .gpii-fd-volume:before {
     content: "\e609";
 }
