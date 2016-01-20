@@ -66,15 +66,6 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                     "message": "%messagePrefix/speakText.json"
                 }
             },
-            "font": {
-                "type": "gpii.firstDiscovery.font",
-                "panel": {
-                    "type": "gpii.firstDiscovery.panel.font",
-                    "container": ".gpiic-fd-prefsEditor-panel-font",
-                    "template": "%templatePrefix/yesNo.html",
-                    "message": "%messagePrefix/font.json"
-                }
-            },
             "speechRate": {
                 "type": "gpii.firstDiscovery.speechRate",
                 "panel": {
@@ -224,16 +215,6 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             "gpii.firstDiscovery.speak": {
                 "type": "boolean",
                 "default": true
-            }
-        }
-    });
-
-    fluid.defaults("gpii.firstDiscovery.schemas.font", {
-        gradeNames: ["fluid.prefs.schemas"],
-        schema: {
-            "gpii.firstDiscovery.font": {
-                "type": "boolean",
-                "default": "false"
             }
         }
     });
