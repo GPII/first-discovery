@@ -509,6 +509,38 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         }
     });
 
+    /*************************
+     * Line Space Panel Tests *
+     *************************/
+
+    fluid.defaults("gpii.tests.firstDiscovery.panel.lineSpace", {
+        gradeNames: ["gpii.firstDiscovery.panel.lineSpace"],
+        messageBase: {
+            rangeInstructions: "Adjust the line spacing to a size you like best.",
+            maxLabel: "max",
+            minLabel: "min",
+            increaseLabel: "larger",
+            decreaseLabel: "smaller"
+        },
+        model: {
+            value: 1
+        },
+        modelListeners: {
+            // rerenders on modelChange like panel behaves in the prefsEditor
+            "value": "{that}.refreshView"
+        }
+    });
+
+    fluid.defaults("gpii.tests.lineSpacePanel", {
+        gradeNames: ["gpii.tests.rangePanel"],
+        components: {
+            range: {
+                type: "gpii.tests.firstDiscovery.panel.lineSpace",
+                container: ".gpiic-fd-lineSpace"
+            }
+        }
+    });
+
     /***************************
      * Speech Rate Panel Tests *
      ***************************/
@@ -1297,6 +1329,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     $(document).ready(function () {
         fluid.test.runTests([
             "gpii.tests.textSizePanel",
+            "gpii.tests.lineSpacePanel",
             "gpii.tests.speechRatePanel",
             "gpii.tests.speakTextPanel",
             "gpii.tests.onScreenKeyboardPanel",

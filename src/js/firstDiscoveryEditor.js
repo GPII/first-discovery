@@ -19,7 +19,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
      * The new prefs editor type for the first discovery tool
      */
     fluid.defaults("gpii.firstDiscovery.firstDiscoveryEditor", {
-        gradeNames: ["fluid.prefs.prefsEditorLoader"],
+        gradeNames: ["fluid.prefs.prefsEditorLoader", "fluid.prefs.fullPreview"],
         defaultLocale: {
             expander: {
                 funcName: "fluid.get",
@@ -57,6 +57,24 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             prefsEditor: {
                 container: "{that}.dom.prefsEditor",
                 options: {
+                	components: {
+                        preview: {
+                        	type: "fluid.prefs.preview",
+                        	container: "{firstDiscoveryEditor}.dom.previewFrame",
+                        	createOnEvent: "onReady",
+                        	options: {
+                        		listeners: {
+                        			onReady: "{firstDiscoveryEditor}.events.onPreviewReady"
+                        		},
+            					templateUrl: { 
+            						expander: {
+            							funcName: "fluid.stringTemplate",
+            							args: ["%baseurl%language%filetype", {"baseurl": "../../src/html/phetpreview_", "language": "{prefsEditor}.model.preferences.gpii_firstDiscovery_language", "filetype": ".html"}]
+            						}
+            					}
+                        	}
+                        },
+                	},
                     gradeNames: ["gpii.firstDiscovery.tts.prefsEditor"],
                     modelListeners: {
                         states: {
@@ -148,7 +166,8 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             panel: ".gpiic-fd-prefsEditor-panel",
             selfVoicingToggle: ".gpiic-fd-selfVoicingToggle",
             helpButton: ".gpiic-fd-help",
-            nav: ".gpiic-fd-nav"
+            nav: ".gpiic-fd-nav",
+            previewFrame : ".flc-prefsEditor-preview-frame"
         },
         styles: {
             active: "gpii-fd-active",
@@ -166,6 +185,14 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         },
         events: {
             onPrefsEditorReady: null,
+            onPreviewReady: null,
+            onReady: {
+            	events: {
+            		onPrefsEditorReady: "onPrefsEditorReady",
+            		onPreviewReady: "onPreviewReady"
+            	},
+            	args: "{that}"
+            },
             onCreateNav: null,
             // onPanelShown is fired with one argument that is the id of the panel being shown
             onPanelShown: null
@@ -187,10 +214,22 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 args: ["{that}"]
             }
         },
-        distributeOptions: {
+        distributeOptions: [{
             source: "{that}.options.tooltipOptions",
             target: "{that gpii.firstDiscovery.attachTooltip}.options.tooltipOptions"
-        }
+        }, {
+            source: "{that}.options.outerUiEnhancerOptions",
+            target: "{that enhancer}.options"
+        }, {
+        	source: "{that}.options.preview",
+        	target: "{that preview}.options"
+        },  {
+            source: "{that}.options.previewEnhancer",
+            target: "{that enhancer}.options"
+        },  {
+            source: "{that}.options.outerUiEnhancerGrades",
+            target: "{that enhancer}.options.gradeNames"
+        } ]
     });
 
     gpii.firstDiscovery.showPanel = function (that) {

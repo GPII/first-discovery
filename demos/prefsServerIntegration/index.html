@@ -6,6 +6,7 @@
 
         <link rel="stylesheet" href="../../src/lib/infusion/src/lib/normalize/css/normalize.css" />
         <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.min.css" />
+        <link rel="stylesheet" href="../../src/lib/foundation/css/foundation-icons.css" />
         <link rel="stylesheet" href="../../src/css/style.css" />
         <link rel="stylesheet" href="css/style.css" />
 
@@ -33,11 +34,30 @@
         <script type="text/javascript" src="../../src/js/firstDiscoveryEditor.js"></script>
         <script type="text/javascript" src="../js/demos.js"></script>
 
+        <script>              
+            /*
+            *   Display the previewpane using jquery based on whether the current panel is the welcome panel and whether or not you click the next button.
+            */
+            $(document).ready(function() {
+                var isOpen = false;
+                // Comment this out for preview on start.
+                $('#gpiic-fd .previewpane').animate({width: 'toggle'});             
+
+                $('#gpiic-fd .gpii-fd-navButtons-next').click(function(){
+                    if($('#open').hasClass('gpii-fd-current') && (!isOpen)){
+                        isOpen = true;
+                        $('#gpiic-fd .previewpane').animate({width: 'toggle'});
+                    }
+                });
+            });
+
+        </script>
+        
         <title>First Discovery Tool - Integrated with Preferences Server</title>
     </head>
 
     <body>
-        <div id="gpiic-fd" class="small-12 gpii-fd">
+        <div id="gpiic-fd" class="gpii-fd slide fdtSize">
             <section class="row gpii-fd-topButtons">
                 <div class="gpiic-fd-selfVoicingToggle gpii-fd-selfVoicingToggle">
                     <button class="gpiic-fd-selfVoicingToggle-mute gpiic-fd-tooltip left gpii-fd-mute">
@@ -62,57 +82,21 @@
                     </button>
                 </div>
                 <div class="gpiic-fd-navIcons gpii-fd-navIcons">
-                    <ul class="gpii-fd-navIcon-outer">
-                        <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-lang">
-                            <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
-                            <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
-                        </li>
-                        <li class="gpiic-fd-navIcon gpii-fd-navIcon-welcome">
-                        </li>
-                        <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-volume">
-                            <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
-                            <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
-                        </li>
-                        <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-speechRate">
-                            <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
-                            <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
-                        </li>
-                        <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-contrast">
-                            <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
-                            <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
-                        </li>
-                        <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-text">
-                            <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
-                            <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
-                        </li>
-                        <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-onScreenKeyboard">
-                            <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
-                            <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
-                        </li>
-                        <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-captions">
-                            <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
-                            <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
-                        </li>
-                        <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-showSounds">
-                            <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
-                            <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
-                        </li>
-                        <li class="gpiic-fd-navIcon gpii-fd-navIcon gpii-fd-keyboard">
-                            <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
-                            <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
-                        </li>
-                        <li class="gpiic-fd-navIcon gpii-fd-navIcon-congratulations">
-                        </li>
-                        <li class="gpii-fd-navIcon gpii-fd-navIcon-spacer">
-                            <div class="gpiic-fd-activeIndicator gpii-fd-activeIndicator"></div>
-                            <div class="gpiic-fd-confirmedIndicator gpii-fd-confirmedIndicator"></div>
-                        </li>
-                    </ul>
                 </div>
                 <div class="gpii-fd-stepCount">
                     <span class="gpiic-fd-stepCountMsg"></span>
                 </div>
             </nav>
+            
+            <div class="left leftMarginTen">     
+                <form id="options" class="fl-focus left">
+                    <div class="fl-prefsEditor-fullPreview-previewContainer fl-force-right">
+                        <div class="fl-prefsEditor-preview">
+                            <iframe class="flc-prefsEditor-preview-frame previewpane" ></iframe>
+                        </div>
+                    </div>
+                </form>
+             </div>
 
         </div>
         <script type="text/javascript">

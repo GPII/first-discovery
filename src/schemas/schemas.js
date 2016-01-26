@@ -95,6 +95,27 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                     "message": "%messagePrefix/contrast.json"
                 }
             },
+            "lineSpace": {
+                "type": "fluid.prefs.lineSpace",
+                "enactor": {
+                    "type": "gpii.firstDiscovery.enactor.lineSpace",
+                    "fontSizeMap": {
+                        "xx-small": "9px",
+                        "x-small": "11px",
+                        "small": "13px",
+                        "medium": "15px",
+                        "large": "18px",
+                        "x-large": "23px",
+                        "xx-large": "30px"
+                    }
+                },
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.lineSpace",
+                    "container": ".gpiic-fd-prefsEditor-panel-lineSpace",
+                    "template": "%templatePrefix/rangeTemplate.html",
+                    "message": "%messagePrefix/lineSpace.json"
+                }
+            },
             "textSize": {
                 "type": "fluid.prefs.textSize",
                 "enactor": {
@@ -145,6 +166,28 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                     "keyboardInputGradeNames": ["gpii.firstDiscovery.keyboardInputTts"]
                 }
             },
+
+            //added for 'confirm' and 'save' panels
+            "confirm": {
+                         "type": "gpii.firstDiscovery.confirm",
+                         "panel": {
+                             "type": "gpii.firstDiscovery.panel.confirm",
+                             "container": ".gpiic-fd-prefsEditor-panel-confirm",
+                             "template": "%templatePrefix/confirmTemplate.html",
+                             "message": "%messagePrefix/confirm.json"
+                         }
+                     },
+            "save": {
+                          "type": "gpii.firstDiscovery.save",
+                          "panel": {
+                              "type": "gpii.firstDiscovery.panel.save",
+                              "container": ".gpiic-fd-prefsEditor-panel-save",
+                              "template": "%templatePrefix/saveTemplate.html",
+                              "message": "%messagePrefix/save.json"
+                          }
+                      },
+
+
             "congratulations": {
                 "type": "gpii.firstDiscovery.congratulations",
                 "panel": {
@@ -228,6 +271,19 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 "minimum": 0.2,
                 "maximum": 1.2,
                 "divisibleBy": 0.1
+            }
+        }
+    });
+
+    fluid.defaults("fluid.prefs.schemas.lineSpace", {
+        gradeNames: ["fluid.prefs.schemas"],
+        schema: {
+            "fluid.prefs.lineSpace": {
+                "type": "number",
+                "default": 1,
+                "minimum": 1,
+                "maximum": 1.5,
+                "divisibleBy": 0.05
             }
         }
     });

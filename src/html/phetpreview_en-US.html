@@ -1,0 +1,444 @@
+<html>
+    <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.min.css" />
+    <link rel="stylesheet" href="../../src/lib/foundation/css/foundation-icons/foundation-icons.css" />
+    <!-- CSS required for the Prefs Editor -->
+    <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/Enactors.css" />
+    <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/PrefsEditor.css" />
+    <link rel="stylesheet" type="text/css" href="../../src/css/style.css" />
+
+    <head>
+        <style>
+            body {
+                background-color: #ADCAFF;
+                position:relative;
+            }
+
+            .wrapper {
+              //For center align
+              margin-left: auto;
+              margin-right: auto;
+              // For grow & shrink as per screen size change values as per your requirements
+              width: 80%;
+              height: 50%;
+              position: absolute;
+            }
+
+            body .main {
+                height: 92%;
+            }
+
+            .sideColumn1 {
+                height: 100%;
+                width: 15%;
+            }
+            
+            .sideColumn2 {
+                height: 100%;
+                width: 30%;
+            }
+            
+            .sideColumn2 .box {
+                width: 100%;
+            }
+            
+            .midColumn {
+                height: 100%;
+                width: 55%;
+            }
+            
+            table tr th, table tr td {
+                padding: 0.5625rem 0.625rem;
+                font-size: 0.875rem;
+                color: white;
+            }
+            
+            .largeBox {
+                height: 75%;
+                width: 100%;
+                display: block;
+            }
+
+            .largeBox table, th,  td {
+                border: .25rem solid white;
+                color: white;
+            }           
+
+            .largeBox table {
+                border: .25rem solid white;
+                color: white;
+                margin-top: 10%;
+                border-collapse: collapse;
+            }
+
+            .largeBox td {
+                width:1.5rem;
+                height:4rem;
+                font-size: 2.5rem;
+                text-align: center;
+            }
+
+            .smallBox {
+                height: 25%;
+                width: 100%;
+                padding: 2.0rem;
+            }
+
+            .whiteNumBox {
+                width:18%;
+                height:4rem;
+                font-size: 2.5rem;
+                text-align: center;
+                background-color: #DDDDDD;
+                border-radius: .5rem;
+                padding:.6rem;
+
+            }
+
+            .yellowNumbers {
+                width:18%;
+                height:4rem;
+                font-size: 2.8rem;
+                text-align: center;
+                color:#FFFD38;
+                font-weight: bold;
+            }
+
+            footer {
+                width:100%;
+                background-color:#000;
+                height:8%;
+
+            }
+
+            footer p {
+                color: white;
+            }
+
+            .left {
+                float: left;
+            }
+
+            .right {
+                float: right;
+            }
+
+            .red {
+                background-color:#DC3C21;
+            }
+
+            .blue {
+                background-color:#3246FF; 
+            }
+
+            .purple {
+                background-color:#4D0099;
+            }
+
+            .darkblue {
+                background-color:#000080;
+                color: #FFFD38;
+            }
+
+            .clear {
+                clear:both;
+            }
+
+            .yellowButton {
+                background-color:#F2E916;
+                color:black;
+                border-radius: 5px;
+                box-shadow: 2.5px 2.5px 1px #888888;
+                margin-left: 20%;
+                margin-right: 20%;
+                margin-top:10%;
+                padding: .5rem;
+                width:60%;
+                border: 1px solid #F2E916;
+            }
+
+            .yellowButton:hover {
+                background-color:#F4EE43;
+                color:black;
+            }
+
+            .yellowButton .button:hover, .button:focus {
+                background-color: #d9d10c; 
+            }
+
+            .score {
+                background-color: #DDDDDD;
+                border-radius: .5rem;
+                border: 1px solid black;
+                margin: 1rem 3rem;
+                padding: 2rem;
+            }
+
+            .score h1 {
+                font-size: 1.5rem;
+                font-weight: bold;
+                text-align: center;
+                line-height: 2rem;
+                padding-top: 1rem;
+            }
+
+            .score h2 {
+                font-size: 1.5rem;
+                text-align: center
+            }
+
+            .keypad {               
+                margin: 1rem 3rem;
+                padding: .5rem;
+            }
+            
+            .whiteButton {
+                margin:.25rem;
+                border-radius: .5rem;
+                background-color: #FFFFFF;
+                color:black;
+                border-radius: 5px;
+                box-shadow: 2.5px 2.5px 1px #888888;
+                font-size: 1.5rem;
+                font-weight: bold;
+                padding: 1rem 1.5rem;
+                border: 1px solid white;
+            }
+
+            .whiteButton:hover {
+                margin:.25rem;
+                border-radius: .5rem;
+                background-color: #eFeFeF;
+                color:black;
+                border-radius: 5px;
+                box-shadow: 2.5px 2.5px 1px #888888;
+                font-size: 1.5rem;
+                font-weight: bold;
+                padding: 1rem 1.5rem;
+                
+            }
+
+            .whiteButton:hover .whiteButton:focus .button:hover, .button:focus {
+                background-color: #e6e6e6; 
+                color:black;
+            }
+
+            .wide {
+                width:53%;
+                text-align:center;
+            }
+            
+            .logoButton {
+                font-size:2.75rem; 
+                margin-right:1rem;
+                padding-right: 1px;
+                padding-top: .5rem;
+                color: black;
+                font-weight: bold;
+            }
+
+            .logoButton:hover {
+                color:white;
+            }
+
+            .logoButton span{
+                margin-right:0rem;
+                padding-right: 0px;
+            }
+
+            .footerText {
+                font-size:2.5rem; 
+                margin-right:5rem;
+                padding: .5rem;
+                margin-left:1rem;
+                padding-left: 1px;
+                color: white;
+            }
+            
+            .button.small {
+                padding-top: 0;
+                padding-right: 0;
+                padding-bottom: 0;
+                padding-left: 0;
+                font-size: .75rem;
+            }
+        </style>
+    </head>
+
+        <body>
+            <div id="wrapper"  style="width:65rem;">
+                <header>
+                </header>
+                <div class="main">
+
+                    <div class="row">
+                        <div class="sideColumn1 left">
+                            <a class="small button yellowButton" href="#">
+                                <i class="fi-arrow-left" style="font-size: 2.2rem;"></i>
+                            </a>
+
+                        </div>
+                        <div class="midColumn left">
+                            <div class="largeBox">
+                                 <table style="width:100%">
+                                  <tr>
+                                    <td class="red">x</td>
+                                    <td class="red">1</td>
+                                    <td class="red">2</td>
+                                    <td class="red">3</td>
+                                    <td class="red">4</td>
+                                    <td class="red">5</td>
+                                    <td class="darkblue">6</td>
+                                  </tr>
+                                  <tr>
+                                    <td class="darkblue">1</td>
+                                    <td class="purple"></td>
+                                    <td class="purple"></td>
+                                    <td class="purple"></td>
+                                    <td class="purple"></td>
+                                    <td class="purple"></td>
+                                    <td class="purple">6</td>
+                                  </tr>
+                                  <tr>
+                                    <td class="red">2</td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                  </tr>
+                                  <tr>
+                                    <td class="red">3</td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                  </tr>
+                                  <tr>
+                                    <td class="red">4</td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                  </tr>
+                                  <tr>
+                                    <td class="red">5</td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                  </tr>
+                                  <tr>
+                                    <td class="red">6</td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                    <td class="blue"></td>
+                                  </tr>
+                                </table> 
+                            </div>
+                            <div class="smallBox">
+                                <div class="whiteNumBox left">1</div>
+                                <div class="yellowNumbers left">x</div>
+                                <div class="whiteNumBox left">6</div>
+                                <div class="yellowNumbers left">=</div>
+                                <div class="whiteNumBox left"></div>
+                            </div>
+
+                        </div>
+                        <div class="sideColumn2 left">
+                            <div class="box">
+                                <div class="score">
+                                    <h1>Multiply</h1>
+                                    <h1>Level 1 </h1>
+                                    <h2>Score: 0 </h2>
+                                    <a class="small button yellowButton" href="#">
+                                         <i class="fi-loop" style="font-size: 2.2rem;"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="box">
+                                <div class="keypad">
+                                    <div class="row">
+                                        <a class="whiteButton left" href="#">7</a>
+                                        <a class="whiteButton left" href="#">8</a>
+                                        <a class="whiteButton left" href="#">9</a>
+                                    </div>
+                                    <div class="row">
+                                        <a class="whiteButton left" href="#">4</a>
+                                        <a class="whiteButton left" href="#">5</a>
+                                        <a class="whiteButton left" href="#">6</a>
+                                    </div>
+                                    <div class="row">
+                                        <a class="whiteButton left" href="#">1</a>
+                                        <a class="whiteButton left" href="#">2</a>
+                                        <a class="whiteButton left" href="#">3</a>
+                                    </div>
+                                    <div class="row">
+                                        <a class="wide whiteButton left" href="#">0</a>
+                                        <a class="whiteButton left" href="#">
+                                            <i class="fi-arrow-left" style="font-size: 1.5rem;"></i>
+                                        </a>
+                                    </div>
+                                    <div class="row">
+                                        <a class="large button yellowButton left "style="padding:.5rem;" href="#">Check</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <footer>
+                <div class="row" style="position:relative;">
+                    <div class="footerText left">
+                        Arithmetic
+                    </div>
+                   <a class="left logoButton" href="#">
+                        |
+                        <span style="color:white"><i class="fi-x"></i></span>
+                        |
+                    </a>
+                      <a class="left logoButton" href="#">
+                        |
+                        <span style="color:white"><i class="fi-database"></i></span>
+                        |
+                    </a>
+                     <a class="left logoButton" href="#">
+                        |
+                        <span style="color:white"><i class="fi-share"></i></span>
+                        |
+                    </a>
+                    <a class="left logoButton" href="#">
+                        |
+                        <span style="color:white"><i class="fi-home"></i></span>
+                        |
+                    </a>
+                    <a class="right logoButton" href="#">
+                        |
+                        <span style="color:#6ACEF5">D</span>
+                        <span style="color:#FEE105">E</span>
+                        <span style="color:#6ACEF5">M</span>
+                        <span style="color:#6ACEF5">O</span>
+                        <span style="color:white;">
+                            <i class="fi-align-justify"></i>
+                        </span>
+                        |
+                    </a>
+                </div>
+                </footer>
+            </div>
+
+        </body>
+    </div>
+</html>
