@@ -30,8 +30,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 type: "gpii.firstDiscovery.indicators",
                 container: "{that}.dom.indicators",
                 options: {
-                    messageBase: "{previewIndicator}.options.messageBase",
-                    styles: "{nav}.options.styles"
+                    messageBase: "{previewIndicator}.options.messageBase"
                 }
             }
         }
