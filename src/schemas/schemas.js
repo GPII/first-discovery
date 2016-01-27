@@ -281,7 +281,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             "fluid.prefs.lineSpace": {
                 "type": "number",
                 "default": 1,
-                "minimum": 1,
+                "minimum": 0.8,
                 "maximum": 1.5,
                 "divisibleBy": 0.05
             }
