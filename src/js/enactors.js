@@ -147,7 +147,4 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         return parseFloat(fontSize);
     };
 
-
-
-
 })(jQuery, fluid);

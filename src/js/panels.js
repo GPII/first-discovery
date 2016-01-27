@@ -439,7 +439,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 "range.max": "maximum",
                 "step": "divisibleBy"
             }
-		}
+	}
     });
 
     /*
