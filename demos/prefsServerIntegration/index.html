@@ -34,10 +34,62 @@
         <script type="text/javascript" src="../../src/js/firstDiscoveryEditor.js"></script>
         <script type="text/javascript" src="../js/demos.js"></script>
 
+        <style>
+        
+            .previewTag {
+                background-color: #fed73a;
+                color: black;
+                font-size: 1.25rem;
+                width:100%;
+                height:5%;
+                text-align: center;
+                border: 3px solid white;
+                border-radius: 1rem 1rem 0 0;
+                padding-top: .50rem;
+                padding-bottom: .25rem;
+            }
+
+            .previewTag a {
+                color: black;
+            }
+            .warningTag a {
+                color: black;
+            }
+
+            .previewTag a:hover {
+                color: white;
+            }
+
+            .warningTag a:hover {
+                color: white;
+            }
+
+            .warningTag {
+                background-color: #fed73a;
+                color: black;
+                font-size: 1.25rem;
+                width:100%;
+                height:5%;
+                text-align: center;
+                border: 3px solid white;
+                border-radius: 0 0 1rem 1rem;
+                padding-top: .50rem;
+                padding-bottom: .25rem;
+            }
+
+            .whiteBorder {
+                border-left: 3px solid white;
+                border-right: 3px solid white;
+                border: 3px solid white;
+            }
+		</style>
+
+        
         <script>              
             /*
             *   Display the previewpane using jquery based on whether the current panel is the welcome panel and whether or not you click the next button.
             */
+            /*
             $(document).ready(function() {
                 var isOpen = false;
                 // Comment this out for preview on start.
@@ -50,6 +102,7 @@
                     }
                 });
             });
+            */
 
         </script>
         
@@ -91,8 +144,10 @@
             <div class="left leftMarginTen">     
                 <form id="options" class="fl-focus left">
                     <div class="fl-prefsEditor-fullPreview-previewContainer fl-force-right">
-                        <div class="fl-prefsEditor-preview">
-                            <iframe class="flc-prefsEditor-preview-frame previewpane" ></iframe>
+                        <div class="fl-prefsEditor-preview previewpane">
+                            <div class="previewTag"> <a href="#" alt="This is the preview.">Preview</a> </div>
+                                <iframe class="flc-prefsEditor-preview-frame whiteBorder" style="width:100%; height:90%; display:block;" ></iframe>
+                            <div class="warningTag"> <a href="#" alt="This is Not a live website!">This is not a live website!</a> </div>
                         </div>
                     </div>
                 </form>
