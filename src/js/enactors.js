@@ -126,8 +126,11 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         // @ See getLineHeightMultiplier() & http://issues.fluidproject.org/browse/FLUID-4500
         if (that.initialSize) {
             var targetLineSpace = times * that.initialSize;
-            //TODO: this isn't very infusion-y
+            //TODO: The following line fixes the issue with adjusting spacing on preview
             $("p").css("line-height", targetLineSpace);
+            //TODO: the following line adjusts everything but the instruction text
+            //      the issue is more apparent at a smaller font
+            that.container.css("line-height", targetLineSpace);
         }
     };
 
