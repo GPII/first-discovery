@@ -27,10 +27,12 @@
         <script type="text/javascript" src="../../src/js/enactors.js"></script>
         <script type="text/javascript" src="../../src/schemas/schemas.js"></script>
         <script type="text/javascript" src="../../src/js/navButtons.js"></script>
+        <script type="text/javascript" src="../../src/js/indicators.js"></script>
         <script type="text/javascript" src="../../src/js/navIcons.js"></script>
         <script type="text/javascript" src="../../src/js/helpButton.js"></script>
         <script type="text/javascript" src="../../src/js/stepCount.js"></script>
         <script type="text/javascript" src="../../src/js/nav.js"></script>
+        <script type="text/javascript" src="../../src/js/previewIndicator.js"></script>
         <script type="text/javascript" src="../../src/js/firstDiscoveryEditor.js"></script>
         <script type="text/javascript" src="../js/demos.js"></script>
 
@@ -141,16 +143,39 @@
                 </div>
             </nav>
             
-            <div class="left leftMarginTen">     
-                <form id="options" class="fl-focus left">
+            <!-- 
+            <nav class="gpiic-fd-previewIndicator gpii-fd-previewIndicator">
+                <div class="gpiic-fd-indicators gpii-fd-indicators">
+                    <button id="gpiic-fd-indicators-preview" class="gpiic-fd-tooltip left gpii-fd-indicators-preview">
+                        <span class="left gpii-fd-icon"></span>
+                        <span class="gpiic-fd-indicators-previewLabel"></span>
+                    </button>
+                    <button id="gpiic-fd-indicators-warning" class="gpiic-fd-tooltip right gpii-fd-indicators-warning">
+                        <span class="gpiic-fd-indicators-warningLabel"></span>
+                        <span class="right gpii-fd-icon"></span>
+                    </button>       
+                </div>
+            </nav>
+            -->
+            
+            
+            <div class="left leftMarginTen gpiic-fd-previewIndicator gpii-fd-previewIndicator">
+                <div class="gpiic-fd-indicators gpii-fd-indicators">  
                     <div class="fl-prefsEditor-fullPreview-previewContainer fl-force-right">
                         <div class="fl-prefsEditor-preview previewpane">
-                            <div class="previewTag"> <a href="#" alt="This is the preview.">Preview</a> </div>
-                                <iframe class="flc-prefsEditor-preview-frame whiteBorder" style="width:100%; height:90%; display:block;" ></iframe>
-                            <div class="warningTag"> <a href="#" alt="This is Not a live website!">This is not a live website!</a> </div>
+                            <div class="previewTag"> 
+	                            <a id="gpiic-fd-indicators-preview" class="gpiic-fd-tooltip gpii-fd-indicators-preview" href="#" alt="This is the preview.">
+	                               <span class="gpiic-fd-indicators-previewLabel"></span>
+	                            </a> 
+                            </div>
+                                <iframe class="flc-prefsEditor-preview-frame whiteBorder" style="width:100%; height:90%; display:block;"></iframe>
+                            <div class="warningTag"> 
+                                <a id="gpiic-fd-indicators-warning" class="gpiic-fd-tooltip gpii-fd-indicators-warning" href="#" alt="This is not a live website indicator.">
+                                   <span class="gpiic-fd-indicators-warningLabel"></span>
+                                </a> 
+                            </div>
                         </div>
                     </div>
-                </form>
              </div>
 
         </div>

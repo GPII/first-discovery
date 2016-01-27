@@ -141,6 +141,15 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                     panelTotalNum: "{firstDiscoveryEditor}.panels.length"
                 }
             },
+            previewIndicator: {
+                type: "gpii.firstDiscovery.previewIndicator",
+                container: "{that}.dom.previewIndicator",
+                createOnEvent: "onCreatePreviewIndicator",
+                options: {
+                    messageBase: "{messageLoader}.resources.prefsEditor.resourceText",
+                    styles: "{firstDiscoveryEditor}.options.styles"
+                }
+            },
             messageLoader: {
                 options: {
                     locale: "{prefsEditorLoader}.settings.preferences.gpii_firstDiscovery_language"
@@ -167,6 +176,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             selfVoicingToggle: ".gpiic-fd-selfVoicingToggle",
             helpButton: ".gpiic-fd-help",
             nav: ".gpiic-fd-nav",
+            previewIndicator: ".gpiic-fd-previewIndicator",
             previewFrame : ".flc-prefsEditor-preview-frame"
         },
         styles: {
@@ -194,6 +204,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             	args: "{that}"
             },
             onCreateNav: null,
+            onCreatePreviewIndicator: null,
             // onPanelShown is fired with one argument that is the id of the panel being shown
             onPanelShown: null
         },
@@ -206,6 +217,9 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             "onPrefsEditorReady.showInitialPanel": "{that}.showPanel",
             "onPrefsEditorReady.createNavButtons": {
                 listener: "{that}.events.onCreateNav"
+            },
+            "onPrefsEditorReady.createIndicators": {
+            	listener: "{that}.events.onCreatePreviewIndicator"
             }
         },
         invokers: {
