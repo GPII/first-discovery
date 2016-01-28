@@ -95,6 +95,18 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                     "message": "%messagePrefix/contrast.json"
                 }
             },
+            "letterSpace": {
+                "type": "gpii.firstDiscovery.letterSpace",
+                "enactor": {
+                    "type": "gpii.firstDiscovery.enactor.letterSpace"
+                },
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.letterSpace",
+                    "container": ".gpiic-fd-prefsEditor-panel-letterSpace",
+                    "template": "%templatePrefix/rangeTemplate.html",
+                    "message": "%messagePrefix/letterSpace.json"
+                }
+            },
             "lineSpace": {
                 "type": "fluid.prefs.lineSpace",
                 "enactor": {
@@ -275,6 +287,19 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         }
     });
 
+    fluid.defaults("gpii.firstDiscovery.schemas.letterSpace", {
+        gradeNames: ["fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.letterSpace": {
+                "type": "number",
+                "default": 1,
+                "minimum": 0.5,
+                "maximum": 4,
+                "divisibleBy": 0.5
+            }
+        }
+    });
+
     fluid.defaults("fluid.prefs.schemas.lineSpace", {
         gradeNames: ["fluid.prefs.schemas"],
         schema: {
@@ -283,7 +308,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 "default": 1,
                 "minimum": 0.8,
                 "maximum": 1.5,
-                "divisibleBy": 0.05
+                "divisibleBy": 0.1
             }
         }
     });

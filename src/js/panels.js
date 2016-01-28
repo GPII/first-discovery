@@ -428,6 +428,21 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     });
 
     /*
+     * Letter space panel
+     */
+    fluid.defaults("gpii.firstDiscovery.panel.letterSpace", {
+        gradeNames: ["gpii.firstDiscovery.panel.ranged"],
+        preferenceMap: {
+            "gpii.firstDiscovery.letterSpace": {
+                "model.value": "default",
+                "range.min": "minimum",
+                "range.max": "maximum",
+                "step": "divisibleBy"
+            }
+	}
+    });
+
+    /*
      * Line space panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.lineSpace", {
@@ -1094,6 +1109,9 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             textSize: "textSizeConfirmation",
             textSizeLabel: "textSizeLabel",
 
+            letterSpace: "letterSpaceConfirmation",
+            letterSpaceLabel: "letterSpaceLabel",
+
             lineSpace: "lineSpaceConfirmation",
             lineSpaceLabel: "lineSpaceLabel",
 
@@ -1130,6 +1148,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                         speechRate: "Speech Rate:",
                         contrast: "Contrast:",
                         textSize: "Text Size:",
+                        letterSpace: "Letter Spacing:",
                         lineSpace: "Line Spacing:",
                         onScreenKeyboard: "On-Screen Keyboard:",
                         captions: "Captions:",
@@ -1156,6 +1175,8 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                         speechRate: "Débit de Parole:",
                         contrast: "Contraste:",
                         textSize: "Taille du Texte:",
+                        letterSpace: "L'espacement des Lettres",
+                        lineSpace: "Interligne:",
                         onScreenKeyboard: "Clavier à l'Écran:",
                         captions: "Légendes:",
                         showSounds: "Voir les Sons:",
@@ -1181,6 +1202,8 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                         speechRate: "Nivel de Conversación:",
                         contrast: "Contraste:",
                         textSize: "Tamaño de Texto:",
+                        letterSpace: "Espaciado Carta",
+                        lineSpace: "Interlineado:",
                         onScreenKeyboard: "Teclado en Pantalla:",
                         captions: "Leyendas:",
                         showSounds: "Mostrar Sonidos:",
@@ -1232,11 +1255,17 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         var roundedTSValue = textSizeValue.toFixed(1);
         $("#" + that.options.selectors.textSize).text(roundedTSValue + "x");
 
+        //Letter Space
+        $("#" + that.options.selectors.letterSpaceLabel).text(that.options.friendlyNames[languageValue].labels.letterSpace);
+        var letterSpaceValue = (changeContext.value.gpii_firstDiscovery_letterSpace);
+        var roundedLetterSpaceValue = letterSpaceValue.toFixed(1);
+        $("#" + that.options.selectors.letterSpace).text(roundedLetterSpaceValue + "x");
+
         //Line Space
         $("#" + that.options.selectors.lineSpaceLabel).text(that.options.friendlyNames[languageValue].labels.lineSpace);
         var lineSpaceValue = (changeContext.value.fluid_prefs_lineSpace);
-        var roundedLSValue = lineSpaceValue.toFixed(1);
-        $("#" + that.options.selectors.lineSpace).text(roundedLSValue + "x");
+        var roundedLineSpaceValue = lineSpaceValue.toFixed(1);
+        $("#" + that.options.selectors.lineSpace).text(roundedLineSpaceValue + "x");
 
         //On-ScreenKeyboard
         $("#" + that.options.selectors.onScreenKeyboardLabel).text(that.options.friendlyNames[languageValue].labels.onScreenKeyboard);
