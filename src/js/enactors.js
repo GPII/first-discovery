@@ -127,7 +127,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         if (that.initialSize) {
             var targetLineSpace = times * that.initialSize;
             //TODO: The following line fixes the issue with adjusting spacing on preview
-            $("p").css("line-height", targetLineSpace);
+             $("p").css("line-height", targetLineSpace);
             //TODO: the following line adjusts everything but the instruction text
             //      the issue is more apparent at a smaller font
             that.container.css("line-height", targetLineSpace);
@@ -137,7 +137,8 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
      /**
      * return "font-size" in px
      * @param (Object) container
-     * @param (Object) fontSizeMap: the mapping between the font size string values ("small", "medium" etc) to px values
+     * @param (Object) fontSizeMap: the mapping between the font size string
+     *                  values ("small", "medium" etc) to px values
      */
     gpii.firstDiscovery.enactor.lineSpace.getTextSizeInPx = function (container, fontSizeMap) {
         var fontSize = container.css("font-size");
@@ -150,4 +151,90 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         return parseFloat(fontSize);
     };
 
+//==============================================================================
+//=============================LETTER SPACE=====================================
+//==============================================================================
+
+    fluid.defaults("gpii.firstDiscovery.enactor.letterSpace", {
+        gradeNames: ["fluid.prefs.enactor", "fluid.viewComponent"],
+        preferenceMap: {
+            "gpii.firstDiscovery.letterSpace": {
+                "model.value": "default"
+            }
+        },
+        invokers: {
+            set: {
+                funcName: "gpii.firstDiscovery.enactor.letterSpace.set",
+                args: ["{arguments}.0", "{that}", "{that}.getLetterSpaceMultiplier"]
+            },
+            getTextSizeInPx: {
+                funcName: "gpii.firstDiscovery.enactor.letterSpace.getTextSizeInPx",
+                args: ["{that}.container"]
+            },
+            getLetterSpace: {
+                funcName: "gpii.firstDiscovery.enactor.letterSpace.getLetterSpace",
+                args: "{that}.container"
+            },
+            getLetterSpaceMultiplier: {
+                funcName: "gpii.firstDiscovery.enactor.letterSpace.getLetterSpaceMultiplier",
+                args: [{expander: {func: "{that}.getLetterSpace"}}, {expander: {func: "{that}.getTextSizeInPx"}}]
+            }
+        },
+        modelListeners: {
+            value: {
+                listener: "{that}.set",
+                args: ["{change}.value"]
+            }
+        }
+    });
+
+    gpii.firstDiscovery.enactor.letterSpace.getLetterSpace = function (container) {
+        if (!container.css("letter-spacing")){
+            return "normal";
+        }
+        return container.css("letter-spacing");
+    };
+
+    gpii.firstDiscovery.enactor.letterSpace.getLetterSpaceMultiplier = function (letterSpace, fontSize) {
+        if (!letterSpace) {
+            return 0;
+        }
+
+        if (letterSpace === "normal") {
+            return 1;
+        }
+
+        // Continuing the work-around of jQuery + IE bug - http://bugs.jquery.com/ticket/2671
+        if (letterSpace.match(/[0-9]$/)) {
+            return Number(letterSpace);
+        }
+
+        return Math.round(parseFloat(letterSpace) / fontSize * 100) / 100;
+    };
+
+    gpii.firstDiscovery.enactor.letterSpace.set = function (times, that, getLetterSpaceMultiplierFunc) {
+        if (!that.initialSize) {
+            that.initialSize = getLetterSpaceMultiplierFunc();
+        }
+
+        if (that.initialSize) {
+            var targetLetterSpace = times * that.initialSize;
+            $("p").css("letter-spacing", targetLetterSpace);
+            that.container.css("letter-spacing", targetLetterSpace);
+        }
+    };
+
+     /**
+     * return "font-size" in px
+     * @param (Object) container
+     * @param (Object) fontSizeMap: the mapping between the font size string
+     *                  values ("small", "medium" etc) to px values
+     */
+    gpii.firstDiscovery.enactor.letterSpace.getTextSizeInPx = function (container) {
+        var fontSize = container.css("font-size");
+
+
+        // return fontSize in px
+        return parseFloat(fontSize);
+    };
 })(jQuery, fluid);
