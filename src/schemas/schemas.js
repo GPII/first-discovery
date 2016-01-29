@@ -95,20 +95,8 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                     "message": "%messagePrefix/contrast.json"
                 }
             },
-            "letterSpace": {
-                "type": "gpii.firstDiscovery.letterSpace",
-                "enactor": {
-                    "type": "gpii.firstDiscovery.enactor.letterSpace"
-                },
-                "panel": {
-                    "type": "gpii.firstDiscovery.panel.letterSpace",
-                    "container": ".gpiic-fd-prefsEditor-panel-letterSpace",
-                    "template": "%templatePrefix/rangeTemplate.html",
-                    "message": "%messagePrefix/letterSpace.json"
-                }
-            },
             "lineSpace": {
-                "type": "fluid.prefs.lineSpace",
+                "type": "gpii.firstDiscovery.lineSpace",
                 "enactor": {
                     "type": "gpii.firstDiscovery.enactor.lineSpace",
                     "fontSizeMap": {
@@ -126,6 +114,18 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                     "container": ".gpiic-fd-prefsEditor-panel-lineSpace",
                     "template": "%templatePrefix/rangeTemplate.html",
                     "message": "%messagePrefix/lineSpace.json"
+                }
+            },
+            "letterSpace": {
+                "type": "gpii.firstDiscovery.letterSpace",
+                "enactor": {
+                    "type": "gpii.firstDiscovery.enactor.letterSpace"
+                },
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.letterSpace",
+                    "container": ".gpiic-fd-prefsEditor-panel-letterSpace",
+                    "template": "%templatePrefix/rangeTemplate.html",
+                    "message": "%messagePrefix/letterSpace.json"
                 }
             },
             "textSize": {
@@ -300,10 +300,10 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         }
     });
 
-    fluid.defaults("fluid.prefs.schemas.lineSpace", {
+    fluid.defaults("gpii.firstDiscovery.schemas.lineSpace", {
         gradeNames: ["fluid.prefs.schemas"],
         schema: {
-            "fluid.prefs.lineSpace": {
+            "gpii.firstDiscovery.lineSpace": {
                 "type": "number",
                 "default": 1,
                 "minimum": 0.8,

@@ -52,22 +52,34 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         that.initialLangSet = true;
     };
 
+//==============================================================================
+//===============================LINE SPACE=====================================
+//==============================================================================
+
     fluid.defaults("gpii.firstDiscovery.enactor.lineSpace", {
         gradeNames: ["fluid.prefs.enactor", "fluid.viewComponent"],
         preferenceMap: {
-            "fluid.prefs.lineSpace": {
+            "gpii.firstDiscovery.lineSpace": {
                 "model.value": "default"
             }
         },
-        fontSizeMap: {},  // must be supplied by implementors
+        members:{
+            root:{
+                expander:{
+                    "this": "{that}.container",
+                    "method" : "closest",
+                    "args" : ["html"]
+                }
+            }
+        },
         invokers: {
             set: {
                 funcName: "gpii.firstDiscovery.enactor.lineSpace.set",
-                args: ["{arguments}.0", "{that}", "{that}.getLineHeightMultiplier"]
+                args: ["{arguments}.0", "{that}", "{that}.container", "{that}.getLineHeightMultiplier"]
             },
             getTextSizeInPx: {
                 funcName: "gpii.firstDiscovery.enactor.lineSpace.getTextSizeInPx",
-                args: ["{that}.container", "{that}.options.fontSizeMap"]
+                args: ["{that}.container"]
             },
             getLineHeight: {
                 funcName: "gpii.firstDiscovery.enactor.lineSpace.getLineHeight",
@@ -90,6 +102,9 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     // In IE8 and IE9 this will return the line-height multiplier
     // In other browsers it will return the pixel value of the line height.
     gpii.firstDiscovery.enactor.lineSpace.getLineHeight = function (container) {
+        if (!container.css("line-height")){
+            return 1;
+        }
         return container.css("line-height");
     };
 
@@ -114,7 +129,8 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         return Math.round(parseFloat(lineHeight) / fontSize * 100) / 100;
     };
 
-    gpii.firstDiscovery.enactor.lineSpace.set = function (times, that, getLineHeightMultiplierFunc) {
+    gpii.firstDiscovery.enactor.lineSpace.set = function (times, that, container, getLineHeightMultiplierFunc) {
+        times = times || 1;
         // Calculating the initial size here rather than using a members expand because the "line-height"
         // cannot be detected on hidden containers such as separated paenl iframe.
         if (!that.initialSize) {
@@ -126,11 +142,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         // @ See getLineHeightMultiplier() & http://issues.fluidproject.org/browse/FLUID-4500
         if (that.initialSize) {
             var targetLineSpace = times * that.initialSize;
-            //TODO: The following line fixes the issue with adjusting spacing on preview
              $("p").css("line-height", targetLineSpace);
-            //TODO: the following line adjusts everything but the instruction text
-            //      the issue is more apparent at a smaller font
-            that.container.css("line-height", targetLineSpace);
         }
     };
 
@@ -140,14 +152,9 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
      * @param (Object) fontSizeMap: the mapping between the font size string
      *                  values ("small", "medium" etc) to px values
      */
-    gpii.firstDiscovery.enactor.lineSpace.getTextSizeInPx = function (container, fontSizeMap) {
+    gpii.firstDiscovery.enactor.lineSpace.getTextSizeInPx = function (container) {
         var fontSize = container.css("font-size");
 
-        if (fontSizeMap[fontSize]) {
-            fontSize = fontSizeMap[fontSize];
-        }
-
-        // return fontSize in px
         return parseFloat(fontSize);
     };
 
@@ -162,10 +169,19 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 "model.value": "default"
             }
         },
+        members:{
+            root:{
+                expander:{
+                    "this": "{that}.container",
+                    "method" : "closest",
+                    "args" : ["html"]
+                }
+            }
+        },
         invokers: {
             set: {
                 funcName: "gpii.firstDiscovery.enactor.letterSpace.set",
-                args: ["{arguments}.0", "{that}", "{that}.getLetterSpaceMultiplier"]
+                args: ["{arguments}.0", "{that}", "{that}.container", "{that}.getLetterSpaceMultiplier"]
             },
             getTextSizeInPx: {
                 funcName: "gpii.firstDiscovery.enactor.letterSpace.getTextSizeInPx",
@@ -190,7 +206,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
 
     gpii.firstDiscovery.enactor.letterSpace.getLetterSpace = function (container) {
         if (!container.css("letter-spacing")){
-            return "normal";
+            return "1";
         }
         return container.css("letter-spacing");
     };
@@ -212,15 +228,17 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         return Math.round(parseFloat(letterSpace) / fontSize * 100) / 100;
     };
 
-    gpii.firstDiscovery.enactor.letterSpace.set = function (times, that, getLetterSpaceMultiplierFunc) {
+    gpii.firstDiscovery.enactor.letterSpace.set = function (times, that, container, getLetterSpaceMultiplierFunc) {
+        times = times || 1;
         if (!that.initialSize) {
             that.initialSize = getLetterSpaceMultiplierFunc();
         }
 
         if (that.initialSize) {
             var targetLetterSpace = times * that.initialSize;
-            $("p").css("letter-spacing", targetLetterSpace);
-            that.container.css("letter-spacing", targetLetterSpace);
+            container.css("letter-spacing", targetLetterSpace);
+            $("#gpiic-fd").css("letter-spacing", targetLetterSpace);
+
         }
     };
 

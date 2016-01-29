@@ -448,7 +448,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     fluid.defaults("gpii.firstDiscovery.panel.lineSpace", {
         gradeNames: ["gpii.firstDiscovery.panel.ranged"],
         preferenceMap: {
-            "fluid.prefs.lineSpace": {
+            "gpii.firstDiscovery.lineSpace": {
                 "model.value": "default",
                 "range.min": "minimum",
                 "range.max": "maximum",
@@ -1263,7 +1263,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
 
         //Line Space
         $("#" + that.options.selectors.lineSpaceLabel).text(that.options.friendlyNames[languageValue].labels.lineSpace);
-        var lineSpaceValue = (changeContext.value.fluid_prefs_lineSpace);
+        var lineSpaceValue = (changeContext.value.gpii_firstDiscovery_lineSpace);
         var roundedLineSpaceValue = lineSpaceValue.toFixed(1);
         $("#" + that.options.selectors.lineSpace).text(roundedLineSpaceValue + "x");
 
