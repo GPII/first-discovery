@@ -52,10 +52,9 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         that.initialLangSet = true;
     };
 
-//==============================================================================
-//===============================LINE SPACE=====================================
-//==============================================================================
-
+    /*********************
+     * Line Space enactor*
+     ********************/
     fluid.defaults("gpii.firstDiscovery.enactor.lineSpace", {
         gradeNames: ["fluid.prefs.enactor", "fluid.viewComponent"],
         preferenceMap: {
@@ -142,7 +141,12 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         // @ See getLineHeightMultiplier() & http://issues.fluidproject.org/browse/FLUID-4500
         if (that.initialSize) {
             var targetLineSpace = times * that.initialSize;
-             $("p").css("line-height", targetLineSpace);
+            $("p").css("line-height", targetLineSpace);
+
+            //TODO: the line below applies spacing to tooltips, etc
+            //      but it breaks icons when the textSize == maxAmount - 1
+            //      or when textSize == minAmount + 1
+            //container.css("line-height", targetLineSpace);
         }
     };
 
@@ -158,10 +162,9 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         return parseFloat(fontSize);
     };
 
-//==============================================================================
-//=============================LETTER SPACE=====================================
-//==============================================================================
-
+    /***********************
+     * Letter Space enactor*
+     **********************/
     fluid.defaults("gpii.firstDiscovery.enactor.letterSpace", {
         gradeNames: ["fluid.prefs.enactor", "fluid.viewComponent"],
         preferenceMap: {
@@ -236,8 +239,12 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
 
         if (that.initialSize) {
             var targetLetterSpace = times * that.initialSize;
-            container.css("letter-spacing", targetLetterSpace);
+            //container.css("letter-spacing", targetLetterSpace);
             $("#gpiic-fd").css("letter-spacing", targetLetterSpace);
+            // $("p").css("letter-spacing", targetLetterSpace);
+            // container.css("letter-spacing", targetLetterSpace);
+            //$("#gpiic-fd").css("letter-spacing", targetLetterSpace);
+            // that.root.css("letter-spacing", targetLetterSpace);
 
         }
     };

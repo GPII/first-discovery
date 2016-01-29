@@ -98,16 +98,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             "lineSpace": {
                 "type": "gpii.firstDiscovery.lineSpace",
                 "enactor": {
-                    "type": "gpii.firstDiscovery.enactor.lineSpace",
-                    "fontSizeMap": {
-                        "xx-small": "9px",
-                        "x-small": "11px",
-                        "small": "13px",
-                        "medium": "15px",
-                        "large": "18px",
-                        "x-large": "23px",
-                        "xx-large": "30px"
-                    }
+                    "type": "gpii.firstDiscovery.enactor.lineSpace"
                 },
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.lineSpace",

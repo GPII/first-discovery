@@ -541,6 +541,40 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         }
     });
 
+
+    /****************************
+     * Letter Space Panel Tests *
+     ****************************/
+
+    fluid.defaults("gpii.tests.firstDiscovery.panel.letterSpace", {
+        gradeNames: ["gpii.firstDiscovery.panel.letterSpace"],
+        messageBase: {
+            rangeInstructions: "Adjust the letter spacing to a size you like best.",
+            maxLabel: "max",
+            minLabel: "min",
+            increaseLabel: "larger",
+            decreaseLabel: "smaller"
+        },
+        model: {
+            value: 1
+        },
+        modelListeners: {
+            // rerenders on modelChange like panel behaves in the prefsEditor
+            "value": "{that}.refreshView"
+        }
+    });
+
+    fluid.defaults("gpii.tests.letterSpacePanel", {
+        gradeNames: ["gpii.tests.rangePanel"],
+        components: {
+            range: {
+                type: "gpii.tests.firstDiscovery.panel.letterSpace",
+                container: ".gpiic-fd-letterSpace"
+            }
+        }
+    });
+
+
     /***************************
      * Speech Rate Panel Tests *
      ***************************/
@@ -1330,6 +1364,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         fluid.test.runTests([
             "gpii.tests.textSizePanel",
             "gpii.tests.lineSpacePanel",
+            "gpii.tests.letterSpacePanel",
             "gpii.tests.speechRatePanel",
             "gpii.tests.speakTextPanel",
             "gpii.tests.onScreenKeyboardPanel",
