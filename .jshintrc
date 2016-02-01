@@ -29,6 +29,7 @@
 
     "globals": {
         "fluid": false,
+        "JSON" : true,
         "jqUnit": false,
         "gpii": true,
         "demo": true
