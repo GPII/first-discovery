@@ -35,7 +35,18 @@
         <script type="text/javascript" src="../../src/js/previewIndicator.js"></script>
         <script type="text/javascript" src="../../src/js/firstDiscoveryEditor.js"></script>
         <script type="text/javascript" src="../js/demos.js"></script>
-
+        
+        <!-- JS for foundation -->
+	    <script type="text/javascript" src="../src/lib/foundation/js/vendor/jquery.min.js"></script>
+	    <script type="text/javascript" src="../src/lib/foundation/js/vendor/what-input.min.js"></script>
+	    <script type="text/javascript" src="../src/lib/foundation/js/foundation/foundation.js"></script>
+	    <script type="text/javascript" src="../src/lib/foundation/js/foundation/app.js"></script>
+	    <script type="text/javascript" src="../src/lib/foundation/js/vendor/modernizr.js"></script>
+	    
+	    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	    <script src="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>   
+	     
         <style>
         
             .previewTag {
@@ -87,7 +98,7 @@
 		</style>
 
         
-        <script>              
+        <script>          
             /*
             *   Display the previewpane using jquery based on whether the current panel is the welcome panel and whether or not you click the next button.
             */
@@ -104,6 +115,16 @@
                     }
                 });
             });
+            */
+            /*
+            $(document).ready(function() {
+            	setFocusToPreview()
+            });
+            
+            function setFocusToPreview() {
+            	document.getElementById("thePreview").focus();
+                $("#gpiic-fd .previewpane").css("background-color", "red");
+            }
             */
 
         </script>
@@ -159,16 +180,17 @@
             -->
             
             
-            <div class="left leftMarginTen gpiic-fd-previewIndicator gpii-fd-previewIndicator">
+            <div id="previewBorder" class="left leftMarginTen gpiic-fd-previewIndicator gpii-fd-previewIndicator">
                 <div class="gpiic-fd-indicators gpii-fd-indicators">  
-                    <div class="fl-prefsEditor-fullPreview-previewContainer fl-force-right">
+                
+                   <div class="fl-prefsEditor-fullPreview-previewContainer fl-force-right">
                         <div class="fl-prefsEditor-preview previewpane">
                             <div class="previewTag"> 
 	                            <a id="gpiic-fd-indicators-preview" class="gpiic-fd-tooltip gpii-fd-indicators-preview" href="#" alt="This is the preview.">
 	                               <span class="gpiic-fd-indicators-previewLabel"></span>
 	                            </a> 
                             </div>
-                                <iframe class="flc-prefsEditor-preview-frame whiteBorder" style="width:100%; height:90%; display:block;"></iframe>
+                                <iframe id="thePreview" class="flc-prefsEditor-preview-frame whiteBorder" style="width:100%; height:90%; display:block;"></iframe>
                             <div class="warningTag"> 
                                 <a id="gpiic-fd-indicators-warning" class="gpiic-fd-tooltip gpii-fd-indicators-warning" href="#" alt="This is not a live website indicator.">
                                    <span class="gpiic-fd-indicators-warningLabel"></span>
@@ -176,6 +198,7 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
              </div>
 

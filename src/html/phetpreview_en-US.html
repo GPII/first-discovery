@@ -1,11 +1,23 @@
 <html>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.css">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+    
     <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.min.css" />
+    <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.css" />
     <link rel="stylesheet" href="../../src/lib/foundation/css/foundation-icons/foundation-icons.css" />
     <!-- CSS required for the Prefs Editor -->
     <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/Enactors.css" />
     <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/PrefsEditor.css" />
     <link rel="stylesheet" type="text/css" href="../../src/css/style.css" />
-
+    
+    <script>
+	    $(document).ready(function() {
+		      $(document).foundation();
+		 });
+    </script>
+  
     <head>
         <style>
         		
@@ -263,6 +275,18 @@
                 padding-left: 0;
                 font-size: .75rem;
             }
+            
+			.tooltip {
+			  background-color: #fed73a;
+			  color: black;
+			  border: 1px solid #fed73a;
+			  font-size:1.25rem;
+			}
+			
+			.tooltip > .nub {
+			     display: none;
+			}
+             
         </style>
     </head>
 
@@ -275,7 +299,9 @@
                     <div class="row">
                         <div class="sideColumn1 left">
                             <a class="small button yellowButton" href="#">
-                                <i class="fi-arrow-left" style="font-size: 2.2rem;"></i>
+	                            <span data-tooltip aria-haspopup="true" class="has-tip tip-top" title="Return to simulation list.">
+	                                <i class="fi-arrow-left" style="font-size: 2.2rem;"></i>
+	                            </span>
                             </a>
 
                         </div>
@@ -370,7 +396,7 @@
                             <div class="box">
                                 <div class="keypad">
                                     <div class="row">
-                                        <a class="whiteButton left" href="#">7</a>
+                                        <a class="whiteButton left" href="#"><span data-tooltip aria-haspopup="true" class="has-tip tip-top" title="Seven">7</span></a>
                                         <a class="whiteButton left" href="#">8</a>
                                         <a class="whiteButton left" href="#">9</a>
                                     </div>
@@ -391,7 +417,12 @@
                                         </a>
                                     </div>
                                     <div class="row">
-                                        <a class="large button yellowButton left "style="padding:.5rem;" href="#">Check</a>
+                                        <a class="large button yellowButton left "style="padding:.5rem;" href="#">
+                                            <span data-tooltip aria-haspopup="true" class="has-tip tip-top" title="Check your answer">
+                                                Check
+                                            </span>
+                                            
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -404,14 +435,14 @@
                 <footer>
                 <div class="row" style="position:relative;">
                     <div class="footerText left">
-                        Arithmetic
+                        <span>Arithmetic</span>
                     </div>
                    <a class="left logoButton" href="#">
                         |
-                        <span style="color:white"><i class="fi-x"></i></span>
+                        <span data-tooltip aria-haspopup="true" class="has-tip tip-top" title="Multiplication Simulation"><span style="color:white"><i class="fi-x"></i></span></span>
                         |
                     </a>
-                      <a class="left logoButton" href="#">
+                    <a class="left logoButton" href="#">
                         |
                         <span style="color:white"><i class="fi-database"></i></span>
                         |
@@ -442,5 +473,4 @@
             </div>
 
         </body>
-    </div>
 </html>

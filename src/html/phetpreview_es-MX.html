@@ -1,10 +1,22 @@
 <html>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.css">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+    
     <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.min.css" />
     <link rel="stylesheet" href="../../src/lib/foundation/css/foundation-icons/foundation-icons.css" />
     <!-- CSS required for the Prefs Editor -->
     <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/Enactors.css" />
     <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/PrefsEditor.css" />
     <link rel="stylesheet" type="text/css" href="../../src/css/style.css" />
+    
+    <script>
+        $(document).ready(function() {
+              $(document).foundation();
+         });
+    </script>
 
     <head>
         <style>
@@ -262,6 +274,18 @@
                 padding-left: 0;
                 font-size: .75rem;
             }
+            
+            .tooltip {
+              background-color: #fed73a;
+              color: black;
+              border: 1px solid #fed73a;
+              font-size:1.25rem;
+            }
+            
+            .tooltip > .nub {
+                 display: none;
+            }
+            
         </style>
     </head>
 
@@ -407,7 +431,7 @@
                     </div>
                    <a class="left logoButton" href="#">
                         |
-                        <span style="color:white"><i class="fi-x"></i></span>
+                        <span data-tooltip aria-haspopup="true" class="has-tip tip-top" title="simulacion Multiplicacion"><span style="color:white"><i class="fi-x"></i></span></span>
                         |
                     </a>
                       <a class="left logoButton" href="#">
@@ -441,5 +465,5 @@
             </div>
 
         </body>
-    </div>
+
 </html>

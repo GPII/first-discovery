@@ -116,6 +116,15 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                                 ["ctrlKey", "altKey"],
                                 "{that}.reset"
                             ]
+                        },
+                        "onCreate.bindToggleShortcut": {
+                        	listener: "gpii.firstDiscovery.keyboardShortcut.bindShortcut",
+                        	args: [
+                        	    "body",
+                        	    gpii.firstDiscovery.keyboardShortcut.key.t,
+                        	    [],
+                        	    "{that}.setFocusToPreview"
+                        	]
                         }
                     },
                     distributeOptions: [{
@@ -226,6 +235,10 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             showPanel: {
                 funcName: "gpii.firstDiscovery.showPanel",
                 args: ["{that}"]
+            },
+            setFocusToPreview: {
+            	funcName: "gpii.firstDiscovery.setFocusToPreview",
+            	args: ["{that}"]
             }
         },
         distributeOptions: [{
@@ -260,6 +273,16 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             }
         });
     };
+    
+    /**
+     * Name: setFocusToPreview
+     * Description: switch the focus to the iframe container that houses the preview and highlights the body of the preview.
+     */
+    gpii.firstDiscovery.setFocusToPreview = function (that) {
+    	document.getElementById("thePreview").focus();
+        $("#gpiic-fd").css("background-color", "green");
+        console.log("t was pressed! Its working!");
+    }
 
     /*
      * To integrate the first discovery tool with the preferences server.
