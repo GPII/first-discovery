@@ -8,14 +8,11 @@ You may obtain a copy of the License at
 https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
 */
 
-//TODO: the line and letter spacing values are reverted to default when the 
+//TODO: the line and letter spacing values are reverted to default when the
 //      textSize is adjusted
 (function ($, fluid) {
 
     "use strict";
-
-    //Global vars to keep track of spacing values
-    var targetLineSpace, targetLetterSpace;
 
     fluid.registerNamespace("gpii.firstDiscovery.enactor");
 
@@ -145,7 +142,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         // which occurs when firefox detects "line-height" value on a hidden container.
         // @ See getLineHeightMultiplier() & http://issues.fluidproject.org/browse/FLUID-4500
         if (that.initialSize) {
-            targetLineSpace = times * that.initialSize;
+            var targetLineSpace = times * that.initialSize;
             $("p").css("line-height", targetLineSpace);
             that.container.css("line-height", targetLineSpace);
             $("#gpiic-fd").css("line-height", targetLineSpace);
@@ -186,7 +183,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         invokers: {
             set: {
                 funcName: "gpii.firstDiscovery.enactor.letterSpace.set",
-                args: ["{arguments}.0", "{that}", "{that}.container", "{that}.getLetterSpaceMultiplier"]
+                args: ["{arguments}.0", "{that}", "{that}.getLetterSpaceMultiplier"]
             },
             getTextSizeInPx: {
                 funcName: "gpii.firstDiscovery.enactor.letterSpace.getTextSizeInPx",
@@ -234,22 +231,16 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     };
 
     //We must reset the line-height css values after chaning the letter-spacing
-    gpii.firstDiscovery.enactor.letterSpace.set = function (times, that, container, getLetterSpaceMultiplierFunc) {
+    gpii.firstDiscovery.enactor.letterSpace.set = function (times, that, getLetterSpaceMultiplierFunc) {
         times = times || 1;
         if (!that.initialSize) {
             that.initialSize = getLetterSpaceMultiplierFunc();
         }
 
         if (that.initialSize) {
-            targetLetterSpace = times * that.initialSize;
+            var targetLetterSpace = times * that.initialSize;
             that.container.css("letter-spacing", targetLetterSpace);
-            //$("p").css("letter-spacing", targetLetterSpace);
             $("#gpiic-fd").css("letter-spacing", targetLetterSpace);
-
-            //Reset line-height values
-            $("p").css("line-height", targetLineSpace);
-            that.container.css("line-height", targetLineSpace);
-            $("#gpiic-fd").css("line-height", targetLineSpace);
         }
     };
 

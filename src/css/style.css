@@ -143,11 +143,11 @@ button {
     display: inherit;
 }
 .gpii-fd-instructions {
-    line-height: 1;
+    /* line-height: 1; */
 }
 
 .gpii-fd-instructions p {
-    line-height: 1.4;
+    /* line-height: 1.4; */
     padding: 0;
 }
 
