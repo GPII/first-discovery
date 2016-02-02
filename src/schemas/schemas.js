@@ -296,7 +296,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         schema: {
             "gpii.firstDiscovery.lineSpace": {
                 "type": "number",
-                "default": 0.9,
+                "default": 1,
                 "minimum": 0.8,
                 "maximum": 1.3,
                 "divisibleBy": 0.1
