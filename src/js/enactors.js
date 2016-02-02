@@ -143,8 +143,12 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         // @ See getLineHeightMultiplier() & http://issues.fluidproject.org/browse/FLUID-4500
         if (that.initialSize) {
             var targetLineSpace = times * that.initialSize;
-            $("p").css("line-height", targetLineSpace);
+            // sets line-height for slider and preview
             that.container.css("line-height", targetLineSpace);
+            // sets line-height for instruction text
+            $("p").css("line-height", targetLineSpace);
+            // Sets line-height in a way that voice toggle doesn't
+            // trample the setting
             $("#gpiic-fd").css("line-height", targetLineSpace);
         }
     };
@@ -230,7 +234,6 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         return Math.round(parseFloat(letterSpace) / fontSize * 100) / 100;
     };
 
-    //We must reset the line-height css values after chaning the letter-spacing
     gpii.firstDiscovery.enactor.letterSpace.set = function (times, that, getLetterSpaceMultiplierFunc) {
         times = times || 1;
         if (!that.initialSize) {
@@ -239,7 +242,9 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
 
         if (that.initialSize) {
             var targetLetterSpace = times * that.initialSize;
+            // Applies to tooltips
             that.container.css("letter-spacing", targetLetterSpace);
+            // Applies to instruction text, etc
             $("#gpiic-fd").css("letter-spacing", targetLetterSpace);
         }
     };

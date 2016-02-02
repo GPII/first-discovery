@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link rel="stylesheet" href="../../src/lib/infusion/src/lib/normalize/css/normalize.css" />
-        <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.min.css" />
+        <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.css" />
         <link rel="stylesheet" href="../../src/lib/foundation/css/foundation-icons.css" />
         <link rel="stylesheet" href="../../src/css/style.css" />
         <link rel="stylesheet" href="css/style.css" />
@@ -34,14 +34,14 @@
         <script type="text/javascript" src="../../src/js/firstDiscoveryEditor.js"></script>
         <script type="text/javascript" src="../js/demos.js"></script>
 
-        <script>              
+        <script>
             /*
             *   Display the previewpane using jquery based on whether the current panel is the welcome panel and whether or not you click the next button.
             */
             $(document).ready(function() {
                 var isOpen = false;
                 // Comment this out for preview on start.
-                $('#gpiic-fd .previewpane').animate({width: 'toggle'});             
+                $('#gpiic-fd .previewpane').animate({width: 'toggle'});
 
                 $('#gpiic-fd .gpii-fd-navButtons-next').click(function(){
                     if($('#open').hasClass('gpii-fd-current') && (!isOpen)){
@@ -52,7 +52,7 @@
             });
 
         </script>
-        
+
         <title>First Discovery Tool - Integrated with Preferences Server</title>
     </head>
 
@@ -87,8 +87,8 @@
                     <span class="gpiic-fd-stepCountMsg"></span>
                 </div>
             </nav>
-            
-            <div class="left leftMarginTen">     
+
+            <div class="left leftMarginTen">
                 <form id="options" class="fl-focus left">
                     <div class="fl-prefsEditor-fullPreview-previewContainer fl-force-right">
                         <div class="fl-prefsEditor-preview">

@@ -1163,7 +1163,8 @@ meta.foundation-mq-topbar {
       display: block;
       padding: 0 15px;
       height: 45px;
-      line-height: 45px; }
+      line-height: 45px; 
+    }
     .top-bar .toggle-topbar.menu-icon {
       right: 15px;
       top: 50%;
@@ -1419,7 +1420,8 @@ meta.foundation-mq-topbar {
       top: 1rem;
       margin-top: -1px;
       right: 5px;
-      line-height: 1.2; }
+      line-height: 1.2; 
+    }
     .top-bar-section .dropdown {
       left: 0;
       top: auto;
@@ -1846,7 +1848,8 @@ button, .button {
     line-height: 1;
     margin-bottom: 0.625rem; }
     .panel h1.subheader, .panel h2.subheader, .panel h3.subheader, .panel h4.subheader, .panel h5.subheader, .panel h6.subheader {
-      line-height: 1.4; }
+      line-height: 1.4; 
+    }
   .panel.callout {
     border-style: solid;
     border-width: 1px;
@@ -1864,7 +1867,8 @@ button, .button {
       line-height: 1;
       margin-bottom: 0.625rem; }
       .panel.callout h1.subheader, .panel.callout h2.subheader, .panel.callout h3.subheader, .panel.callout h4.subheader, .panel.callout h5.subheader, .panel.callout h6.subheader {
-        line-height: 1.4; }
+        line-height: 1.4; 
+      }
     .panel.callout a:not(.button) {
       color: #2ba6cb; }
   .panel.radius {
@@ -2373,7 +2377,8 @@ td {
 a {
   color: #2ba6cb;
   text-decoration: none;
-  line-height: inherit; }
+  /* line-height: inherit; */ 
+}
   a:hover, a:focus {
     color: #258faf; }
   a img {
@@ -2384,15 +2389,17 @@ p {
   font-family: inherit;
   font-weight: normal;
   font-size: 1rem;
-  line-height: 1.6;
+  /* MODIFIED BY JTW 2/2/2016 */
+  /* line-height: inherit; */
   margin-bottom: 1.25rem;
   text-rendering: optimizeLegibility; }
   p.lead {
     font-size: 1.21875rem;
-    line-height: 1.6; }
+    /* line-height: 1.6; */ 
+  }
   p aside {
     font-size: 0.875rem;
-    line-height: 1.35;
+    /* line-height: 1.35; */
     font-style: italic; }
 
 /* Default header styles */
@@ -2404,11 +2411,13 @@ h1, h2, h3, h4, h5, h6 {
   text-rendering: optimizeLegibility;
   margin-top: 0.2rem;
   margin-bottom: 0.5rem;
-  line-height: 1.4; }
+  line-height: 1.4; 
+}
   h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
     font-size: 60%;
     color: #6f6f6f;
-    line-height: 0; }
+    line-height: 0; 
+  }
 
 h1 {
   font-size: 2.125rem; }
@@ -2446,16 +2455,19 @@ hr {
 em,
 i {
   font-style: italic;
-  line-height: inherit; }
+  line-height: inherit; 
+}
 
 strong,
 b {
   font-weight: bold;
-  line-height: inherit; }
+  line-height: inherit; 
+}
 
 small {
   font-size: 60%;
-  line-height: inherit; }
+  line-height: inherit; 
+}
 
 code {
   font-family: Consolas, "Liberation Mono", Courier, monospace;
@@ -2572,7 +2584,8 @@ blockquote p {
 
 @media only screen and (min-width: 40.063em) {
   h1, h2, h3, h4, h5, h6 {
-    line-height: 1.4; }
+    line-height: 1.4; 
+  }
 
   h1 {
     font-size: 2.75rem; }
@@ -2884,7 +2897,8 @@ table {
   table tr td,
   table tfoot tr td {
     display: table-cell;
-    line-height: 1.125rem; }
+    line-height: 1.125rem; 
+  }
 
 /* Standard Forms */
 form {
@@ -2975,7 +2989,8 @@ select::-ms-expand {
   overflow: hidden;
   font-size: 0.875rem;
   height: 2.3125rem;
-  line-height: 2.3125rem; }
+  line-height: 2.3125rem; 
+}
 
 /* Adjust padding, alignment and radius if pre/post element is a button */
 .postfix.button {
