@@ -2390,6 +2390,12 @@ p {
   font-weight: normal;
   font-size: 1rem;
   /* MODIFIED BY JTW 2/2/2016 */
+  /* 
+  *  This line must be removed in order to not change the line-height
+  *  when the voice mute button is selected. When the voice mute is toggled,
+  *  these values get applied to Fist Discovery, and as a result, revert the 
+  *  line-height values the user chooses.
+  */
   /* line-height: 1.6; */
   margin-bottom: 1.25rem;
   text-rendering: optimizeLegibility; }

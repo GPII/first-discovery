@@ -143,10 +143,22 @@ button {
     display: inherit;
 }
 .gpii-fd-instructions {
+    /* 
+    *  This line must be removed in order to not change the line-height
+    *  when the voice mute button is selected. When the voice mute is toggled,
+    *  these values get applied to Fist Discovery, and as a result, revert the 
+    *  line-height values the user chooses.
+    */
     /* line-height: 1; */
 }
 
 .gpii-fd-instructions p {
+    /* 
+    *  This line must be removed in order to not change the line-height
+    *  when the voice mute button is selected. When the voice mute is toggled,
+    *  these values get applied to Fist Discovery, and as a result, revert the 
+    *  line-height values the user chooses.
+    */
     /* line-height: 1.4; */
     padding: 0;
 }
@@ -173,7 +185,7 @@ button {
     display: inline-block;
     vertical-align: middle;
     padding-left: 1rem;
-    /* line-height: 5rem; */
+    line-height: 5rem;
     height: 6rem;
 }
 
