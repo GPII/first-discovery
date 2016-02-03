@@ -2377,7 +2377,7 @@ td {
 a {
   color: #2ba6cb;
   text-decoration: none;
-  /* line-height: inherit; */ 
+  line-height: inherit; 
 }
   a:hover, a:focus {
     color: #258faf; }
@@ -2390,16 +2390,16 @@ p {
   font-weight: normal;
   font-size: 1rem;
   /* MODIFIED BY JTW 2/2/2016 */
-  /* line-height: inherit; */
+  /* line-height: 1.6; */
   margin-bottom: 1.25rem;
   text-rendering: optimizeLegibility; }
   p.lead {
     font-size: 1.21875rem;
-    /* line-height: 1.6; */ 
+    line-height: 1.6; 
   }
   p aside {
     font-size: 0.875rem;
-    /* line-height: 1.35; */
+    line-height: 1.35;
     font-style: italic; }
 
 /* Default header styles */
