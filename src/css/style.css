@@ -143,20 +143,20 @@ button {
     display: inherit;
 }
 .gpii-fd-instructions {
-    /* 
+    /*
     *  This line must be removed in order to not change the line-height
     *  when the voice mute button is selected. When the voice mute is toggled,
-    *  these values get applied to Fist Discovery, and as a result, revert the 
+    *  these values get applied to Fist Discovery, and as a result, revert the
     *  line-height values the user chooses.
     */
     /* line-height: 1; */
 }
 
 .gpii-fd-instructions p {
-    /* 
+    /*
     *  This line must be removed in order to not change the line-height
     *  when the voice mute button is selected. When the voice mute is toggled,
-    *  these values get applied to Fist Discovery, and as a result, revert the 
+    *  these values get applied to Fist Discovery, and as a result, revert the
     *  line-height values the user chooses.
     */
     /* line-height: 1.4; */
@@ -433,7 +433,7 @@ button {
     color: #ffffff;
     padding: 1rem;
     line-height: 2rem;
-    /* height: 4.2rem; */
+    height: 4.2rem;
 }
 
 .gpii-fd-navButtons-back {
@@ -619,7 +619,10 @@ button {
 /* Step count message */
 .gpii-fd-stepCount {
     font-size: 2rem;
-    margin-top: 1rem;
+    /* This line must be commented out in order to make the step counter
+     * not have a top margin that is highter than its bottom margin
+     */
+    /* margin-top: 1rem; */
     text-align: center;
     line-height: normal;
 }
@@ -720,7 +723,7 @@ input[type="text"].gpii-fd-keyboard-input:focus {
     margin:auto;
 }
 .gpii-fd-confirm-table-name {
-    font-size:2rem;
+    font-size: 2rem;
     color:#425165;
     text-align:right;
 }
