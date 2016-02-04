@@ -285,7 +285,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 "type": "number",
                 "default": 0,
                 "minimum": 0.5,
-                "maximum": 2.5,
+                "maximum": 3.5,
                 "divisibleBy": 0.5
             }
         }
@@ -296,9 +296,9 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         schema: {
             "gpii.firstDiscovery.lineSpace": {
                 "type": "number",
-                "default": 0.9,
+                "default": 1,
                 "minimum": 0.7,
-                "maximum": 1,
+                "maximum": 1.35,
                 "divisibleBy": 0.05
             }
         }

@@ -146,9 +146,10 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             // sets line-height for slider and preview
             that.container.css("line-height", targetLineSpace);
             // sets line-height for instruction text
-            // $("p").css("line-height", targetLineSpace);
+            //$("p").css("line-height", targetLineSpace);
             // Sets line-height in a way that voice toggle doesn't trample the setting
-            // $("#gpiic-fd").css("line-height", targetLineSpace);
+            //$("#gpiic-fd").css("line-height", targetLineSpace);
+            // $("#main").css("line-height", targetLineSpace);
         }
     };
 
