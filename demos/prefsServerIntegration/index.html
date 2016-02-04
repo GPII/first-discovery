@@ -27,21 +27,76 @@
         <script type="text/javascript" src="../../src/js/enactors.js"></script>
         <script type="text/javascript" src="../../src/schemas/schemas.js"></script>
         <script type="text/javascript" src="../../src/js/navButtons.js"></script>
+        <script type="text/javascript" src="../../src/js/indicators.js"></script>
         <script type="text/javascript" src="../../src/js/navIcons.js"></script>
         <script type="text/javascript" src="../../src/js/helpButton.js"></script>
         <script type="text/javascript" src="../../src/js/stepCount.js"></script>
         <script type="text/javascript" src="../../src/js/nav.js"></script>
+        <script type="text/javascript" src="../../src/js/previewIndicator.js"></script>
         <script type="text/javascript" src="../../src/js/firstDiscoveryEditor.js"></script>
         <script type="text/javascript" src="../js/demos.js"></script>
+        
+	    
+        <style>
+        
+            .previewTag {
+                background-color: #fed73a;
+                color: black;
+                font-size: 1.25rem;
+                width:100%;
+                height:5%;
+                text-align: center;
+                border: 3px solid white;
+                border-radius: 1rem 1rem 0 0;
+                padding-top: .50rem;
+                padding-bottom: .25rem;
+            }
 
-        <script>
+            .previewTag a {
+                color: black;
+            }
+            .warningTag a {
+                color: black;
+            }
+
+            .previewTag a:hover {
+                color: white;
+            }
+
+            .warningTag a:hover {
+                color: white;
+            }
+
+            .warningTag {
+                background-color: #fed73a;
+                color: black;
+                font-size: 1.25rem;
+                width:100%;
+                height:5%;
+                text-align: center;
+                border: 3px solid white;
+                border-radius: 0 0 1rem 1rem;
+                padding-top: .50rem;
+                padding-bottom: .25rem;
+            }
+
+            .whiteBorder {
+                border-left: 3px solid white;
+                border-right: 3px solid white;
+                border: 3px solid white;
+            }
+        </style>
+
+        
+        <script>          
             /*
             *   Display the previewpane using jquery based on whether the current panel is the welcome panel and whether or not you click the next button.
             */
+            /*
             $(document).ready(function() {
                 var isOpen = false;
                 // Comment this out for preview on start.
-                $('#gpiic-fd .previewpane').animate({width: 'toggle'});
+                $('#gpiic-fd .previewpane').animate({width: 'toggle'});             
 
                 $('#gpiic-fd .gpii-fd-navButtons-next').click(function(){
                     if($('#open').hasClass('gpii-fd-current') && (!isOpen)){
@@ -50,9 +105,20 @@
                     }
                 });
             });
+            */
+            /*
+            $(document).ready(function() {
+            	setFocusToPreview()
+            });
+            
+            function setFocusToPreview() {
+            	document.getElementById("thePreview").focus();
+                $("#gpiic-fd .previewpane").css("background-color", "red");
+            }
+            */
 
         </script>
-
+        
         <title>First Discovery Tool - Integrated with Preferences Server</title>
     </head>
 
@@ -87,15 +153,27 @@
                     <span class="gpiic-fd-stepCountMsg"></span>
                 </div>
             </nav>
-
-            <div class="left leftMarginTen">
-                <form id="options" class="fl-focus left">
-                    <div class="fl-prefsEditor-fullPreview-previewContainer fl-force-right">
-                        <div class="fl-prefsEditor-preview">
-                            <iframe class="flc-prefsEditor-preview-frame previewpane" ></iframe>
+             
+            <div id="previewBorder" class="left leftMarginTen gpiic-fd-previewIndicator gpii-fd-previewIndicator">
+                <div class="gpiic-fd-indicators gpii-fd-indicators">  
+                
+                   <div class="fl-prefsEditor-fullPreview-previewContainer fl-force-right">
+                        <div class="fl-prefsEditor-preview previewpane">
+                            <div class="previewTag"> 
+	                            <a id="gpiic-fd-indicators-preview" class="gpiic-fd-tooltip gpii-fd-indicators-preview" href="#" alt="This is the preview.">
+	                               <span class="gpiic-fd-indicators-previewLabel"></span>
+	                            </a> 
+                            </div>
+                                <iframe id="thePreview" class="flc-prefsEditor-preview-frame whiteBorder" style="width:100%; height:90%; display:block;"></iframe>
+                            <div class="warningTag"> 
+                                <a id="gpiic-fd-indicators-warning" class="gpiic-fd-tooltip gpii-fd-indicators-warning" href="#" alt="This is not a live website indicator.">
+                                   <span class="gpiic-fd-indicators-warningLabel"></span>
+                                </a> 
+                            </div>
                         </div>
                     </div>
-                </form>
+                    
+                </div>
              </div>
 
         </div>
