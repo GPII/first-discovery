@@ -12,21 +12,43 @@
     <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/PrefsEditor.css" />
     <link rel="stylesheet" type="text/css" href="../../src/css/style.css" />
     
-    <script>
-        /**
-        * Show Foundation tooltips on focusin or focus and hide them again when focusout or blur occurs(when focus is lost). 
-        * This allows for keyboard navigation control of the preview content that has tooltips. 
-        */
+	<script>
+	    var keys = [];
+	    var messages = [];
+	    var currentMsg;
 	    $(document).ready(function() {
-		      $(document).foundation();
-		        $(".has-tip").focusin(function(){
-		            Foundation.libs.tooltip.showTip( jQuery( $(this) ) );
-		        });
-              $(".has-tip").focusout(function(){
-                    Foundation.libs.tooltip.hide( jQuery( $(this) ) );
-                });
-		 });
-    </script>
+	        $( "a" ).addClass( "has-tip tip-top" );
+	        $( "a" ).attr( "title", "tooltip");
+	        $( "a" ).attr( "data-tooltip", "" );
+	        $( "a" ).attr( "aria-haspopup", "true" );
+	        $( "a" ).attr( "data-options", "disable_for_touch:true" );
+	        $(document).foundation();
+	        $(".has-tip").focusin(function(){
+	            Foundation.libs.tooltip.showTip( jQuery($(this)) );
+	            console.log("the message is: " + getMessage(getKey(this), keys, messages));
+	            currentMsg = getMessage(getKey(this), keys, messages);
+	        });
+	        $(".has-tip").blur(function(){
+	            Foundation.libs.tooltip.hide( jQuery( $(this) ) );
+	        });
+	        $.getJSON( "../messages/phetMessages_en-US.json", function( data ) {
+	            $.each( data, function( key, val ) {
+	                keys.push(key);
+	                messages.push(val);
+	            });
+	        });
+	
+	    });
+	    getKey = function (that) {
+	        var key = $(that).attr("id");
+	        return key;
+	    };
+	    getMessage = function (key, keysArray, messagesArray) {
+	        var index = $.inArray(key, keysArray);
+	        return messagesArray[index];
+	    };
+	</script>
+
   
     <head>
         <style>
