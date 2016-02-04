@@ -69,7 +69,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             					templateUrl: { 
             						expander: {
             							funcName: "fluid.stringTemplate",
-            							args: ["%baseurl%language%filetype", {"baseurl": "../../src/html/phetpreview_", "language": "{prefsEditor}.model.preferences.gpii_firstDiscovery_language", "filetype": ".html"}]
+            							args: ["%baseurl%language%filetype", {"baseurl": "../../src/html/electronpreview_", "language": "{prefsEditor}.model.preferences.gpii_firstDiscovery_language", "filetype": ".html"}]
             						}
             					}
                         	}
@@ -123,7 +123,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                         	    "body",
                         	    gpii.firstDiscovery.keyboardShortcut.key.t,
                         	    [],
-                        	    "{that}.setFocusToPreview"
+                        	    "{that gpii.firstDiscovery.FirstDiscoveyrEditor}.setFocusToPreview"
                         	]
                         }
                     },
@@ -238,7 +238,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             },
             setFocusToPreview: {
             	funcName: "gpii.firstDiscovery.setFocusToPreview",
-            	args: ["{that}"]
+            	args: []
             }
         },
         distributeOptions: [{
@@ -278,7 +278,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
      * Name: setFocusToPreview
      * Description: switch the focus to the iframe container that houses the preview and highlights the body of the preview.
      */
-    gpii.firstDiscovery.setFocusToPreview = function (that) {
+    gpii.firstDiscovery.setFocusToPreview = function () {
     	document.getElementById("thePreview").focus();
         $("#gpiic-fd").css("background-color", "green");
         console.log("t was pressed! Its working!");

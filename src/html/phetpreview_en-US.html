@@ -13,8 +13,18 @@
     <link rel="stylesheet" type="text/css" href="../../src/css/style.css" />
     
     <script>
+        /**
+        * Show Foundation tooltips on focusin or focus and hide them again when focusout or blur occurs(when focus is lost). 
+        * This allows for keyboard navigation control of the preview content that has tooltips. 
+        */
 	    $(document).ready(function() {
 		      $(document).foundation();
+		        $(".has-tip").focusin(function(){
+		            Foundation.libs.tooltip.showTip( jQuery( $(this) ) );
+		        });
+              $(".has-tip").focusout(function(){
+                    Foundation.libs.tooltip.hide( jQuery( $(this) ) );
+                });
 		 });
     </script>
   
@@ -298,12 +308,12 @@
 
                     <div class="row">
                         <div class="sideColumn1 left">
-                            <a class="small button yellowButton" href="#">
-	                            <span data-tooltip aria-haspopup="true" class="has-tip tip-top" title="Return to simulation list.">
-	                                <i class="fi-arrow-left" style="font-size: 2.2rem;"></i>
-	                            </span>
+                            <a  data-tooltip aria-haspopup="true" class="has-tip tip-right small button yellowButton" title="Return to simulation list." href="#">
+	                            <i class="fi-arrow-left" style="font-size: 2.2rem;"></i>
                             </a>
-
+                            <a  data-tooltip aria-haspopup="true" class="has-tip tip-right small button yellowButton" title="Return to simulation list." href="#">
+                                <i class="fi-arrow-left" style="font-size: 2.2rem;"></i>
+                            </a>
                         </div>
                         <div class="midColumn left">
                             <div class="largeBox">
@@ -395,11 +405,11 @@
                             </div>
                             <div class="box">
                                 <div class="keypad">
-                                    <div class="row">
-                                        <a class="whiteButton left" href="#"><span data-tooltip aria-haspopup="true" class="has-tip tip-top" title="Seven">7</span></a>
-                                        <a class="whiteButton left" href="#">8</a>
+                                    <div class="row">   
+                                        <a data-tooltip aria-haspopup="true" data-options="disable_for_touch:true" class="has-tip tip-top whiteButton left" title="Seven" href="#">7</a>
+                                        <a data-tooltip aria-haspopup="true" data-options="disable_for_touch:true" class="has-tip tip-top whiteButton left" title="Eight" href="#">8</a>
                                         <a class="whiteButton left" href="#">9</a>
-                                    </div>
+                                    </div>                              
                                     <div class="row">
                                         <a class="whiteButton left" href="#">4</a>
                                         <a class="whiteButton left" href="#">5</a>
@@ -407,7 +417,7 @@
                                     </div>
                                     <div class="row">
                                         <a class="whiteButton left" href="#">1</a>
-                                        <a class="whiteButton left" href="#">2</a>
+                                        <a class="whiteButton left" href="#">2</a>      
                                         <a class="whiteButton left" href="#">3</a>
                                     </div>
                                     <div class="row">
@@ -417,11 +427,8 @@
                                         </a>
                                     </div>
                                     <div class="row">
-                                        <a class="large button yellowButton left "style="padding:.5rem;" href="#">
-                                            <span data-tooltip aria-haspopup="true" class="has-tip tip-top" title="Check your answer">
-                                                Check
-                                            </span>
-                                            
+                                        <a data-tooltip aria-haspopup="true" data-options="disable_for_touch:true" class="has-tip tip-top large button yellowButton left "style="padding:.5rem;" title="Check your answer" href="#">
+                                            Check
                                         </a>
                                     </div>
                                 </div>
@@ -437,9 +444,9 @@
                     <div class="footerText left">
                         <span>Arithmetic</span>
                     </div>
-                   <a class="left logoButton" href="#">
+                   <a data-tooltip aria-haspopup="true" data-options="disable_for_touch:true" class="has-tip tip-top left logoButton"  title="Check your answer" href="#">
                         |
-                        <span data-tooltip aria-haspopup="true" class="has-tip tip-top" title="Multiplication Simulation"><span style="color:white"><i class="fi-x"></i></span></span>
+                        <span style="color:white"><i class="fi-x"></i></span>
                         |
                     </a>
                     <a class="left logoButton" href="#">
