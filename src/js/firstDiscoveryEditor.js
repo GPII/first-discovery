@@ -73,7 +73,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             						}
             					}
                         	}
-                        },
+                        }
                 	},
                     gradeNames: ["gpii.firstDiscovery.tts.prefsEditor"],
                     modelListeners: {
@@ -281,8 +281,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     gpii.firstDiscovery.setFocusToPreview = function () {
     	document.getElementById("thePreview").focus();
         $("#gpiic-fd").css("background-color", "green");
-        console.log("t was pressed! Its working!");
-    }
+    };
 
     /*
      * To integrate the first discovery tool with the preferences server.

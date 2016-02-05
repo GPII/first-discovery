@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.css">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
@@ -31,7 +32,7 @@
     <script type="text/javascript" src="../../src/shared/lib/infusion/infusion-prefsFramework.js"></script>
     
     <script type="text/javascript" src="../../src/js/demo.js"></script>
-    
+        
     <style>
        .tooltip {
          background-color: #fed73a;
@@ -53,37 +54,73 @@
 	    var keys = [];
 	    var messages = [];
 	    var currentMsg;
-	    $(document).ready(function() {
-	        $( "a" ).addClass( "has-tip tip-top" );
-	        $( "a" ).attr( "title", "tooltip");
-	        $( "a" ).attr( "data-tooltip", "" );
-	        $( "a" ).attr( "aria-haspopup", "true" );
-	        $( "a" ).attr( "data-options", "disable_for_touch:true" );
-	        $(document).foundation();
-	        $(".has-tip").focusin(function(){
-	            Foundation.libs.tooltip.showTip( jQuery($(this)) );
-	            console.log("the message is: " + getMessage(getKey(this), keys, messages));
-	            currentMsg = getMessage(getKey(this), keys, messages);
-	        });
-	        $(".has-tip").blur(function(){
-	            Foundation.libs.tooltip.hide( jQuery( $(this) ) );
-	        });
-	        $.getJSON( "../messages/phetMessages_en-US.json", function( data ) {
-	            $.each( data, function( key, val ) {
-	                keys.push(key);
-	                messages.push(val);
-	            });
-	        });
-	
+	    $(document).ready(function() {  
+	    	
+            // read in json file contents to the key/messages arrays.
+            $.getJSON( "../messages/electronMessages_en-US.json", function( data ) {
+                $.each( data, function( key, val ) {
+                    keys.push(key);
+                    messages.push(val);
+                });
+                
+                // Tool Tip all of the <a> tags
+                $( "a" ).toolTipify(keys, messages,"tip-top");
+                
+                // change position for specified tool tip.
+                $( "#searchSubjects" ).removeClass("tip-top").addClass("tip-bottom");
+                
+                // Tool Tip all of the input tags
+                $( "input" ).toolTipify(keys, messages,"tip-bottom");
+                
+                //Load foundation 
+                $(document).foundation();    
+                
+                $(".has-tip").focus(function(){
+                    Foundation.libs.tooltip.showTip( jQuery($(this)) );
+                    var key = $(this).attr("id");
+                    console.log(key);
+                });
+                $(".has-tip").blur(function(){
+                    Foundation.libs.tooltip.hide( jQuery( $(this) ) );
+                });
+            });
+            
 	    });
-	    getKey = function (that) {
-	        var key = $(that).attr("id");
-	        return key;
-	    };
-	    getMessage = function (key, keysArray, messagesArray) {
-	        var index = $.inArray(key, keysArray);
-	        return messagesArray[index];
-	    };
+	    	    
+	    (function( $ ) {
+
+	        $.fn.toolTipify = function(keysArray, messagesArray, toolTipSetting) {
+                
+	            this.each(function() {
+
+                    var currentId = getKey(this);
+                    var currentMsg = getMessage(currentId, keys, messages);
+	                
+	                //Tool tip the tags
+                    $( this ).addClass( "has-tip" );
+	                $( this ).addClass( toolTipSetting );
+	                $( this ).attr( "title", currentMsg);
+	                $( this ).attr( "data-tooltip", "" );
+	                $( this ).attr( "aria-haspopup", "true" );
+	                $( this ).attr( "data-options", "disable_for_touch:true" );
+	            });
+	            
+	            
+	        };
+	        
+	        // get and return the html element's id if present.
+	        getKey = function (that) {
+	            var key = $(that).attr("id");
+	            return key;
+	        };
+	        
+	        // get the message for the provided key.
+	        getMessage = function (key, keysArray, messagesArray) {
+	            var index = $.inArray(key, keysArray);
+	            return messagesArray[index];
+	        };
+	     
+	    }( jQuery ));
 	</script>
 
 
@@ -91,18 +128,18 @@
     <div class="flc-toc-tocContainer toc"> </div>
 
     <div>
-        <header id="main-header" style="padding: .5rem; padding-top:1.0rem;">
+        <header id="main-header" style="position:relative; padding:.50rem;">
             <div id="main-header-content">
                 <span class="fl-icon-tree" aria-label="Generic Logo" role="img"></span>
-                <span class="fl-header-title">Richmond Open Learning</span>
+                <span class="fl-header-title">Demonstration Open Learning</span>
                 <div style="margin-top:0rem;">
-                    <input type="search" placeholder="SEARCH" style="display:inline;" /> <span class="fl-icon-search" role="presentation"></span><a href="#" class="subjects">Subjects</a>
+                    <input id="searchBar" type="search" placeholder="SEARCH" style="display:inline;"tabindex="0"/> <span class="fl-icon-search" role="presentation"></span><a id="searchSubjects" href="#" class="subjects">Subjects</a>
                 </div>
             </div>
         </header>
 
         <section class="main-content">
-            <header class="fl-clearfix">
+            <header class="fl-clearfix" style=" padding-bottom:1rem;" >
                 <span class="fl-icon-atom" aria-label="Graphic of an atom" role="img"></span>
                 <h1>Electrons</h1>
 
@@ -146,7 +183,7 @@
                     <menu type="toolbar" class="tools">
                         <li><a id="makeACopy" href="#">Make a Copy</a></li>
                         <li><a id="details" href="#">Details</a></li>
-                        <li><a id="resourcesy" href="#">Resources</a></li>
+                        <li><a id="resources" href="#">Resources</a></li>
                         <li><a id="download" href="#">Download <span class="fl-icon-arrow"></span></a></li>
                         <li><a id="share" href="#">Share <span class="fl-icon-arrow"></span></a></li>
                     </menu>
