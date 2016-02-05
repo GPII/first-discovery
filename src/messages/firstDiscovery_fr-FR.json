@@ -18,5 +18,10 @@
     "help": "aide",
 
     "stepCountMsg": "l'étape %currentPanel de %numPanels",
-    "panelMsg": "Ceci est %stepCountMsg. %instructions Appuyez sur la touche H pour de l'aide."
+    "panelMsg": "Ceci est %stepCountMsg. %instructions Appuyez sur la touche H pour de l'aide.",
+    
+    "preview": "Aperçu",
+    "previewTooltip": "Ceci est la prévisualisation ",
+    "warning": "Cela ne veut pas d'un site Web en direct !",
+    "warningTooltip": "Cela ne veut pas d'un site Web en direct !"
 }

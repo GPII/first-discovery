@@ -1139,7 +1139,6 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 args: ["{that}", "{change}"]
             }
         },
-        //TODO: non-english line spacing labels
         friendlyNames: {
                 "en-US": {
                     labels: {
