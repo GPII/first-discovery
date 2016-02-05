@@ -1,15 +1,61 @@
 <html>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.css">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+    
     <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.min.css" />
+    <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.css" />
     <link rel="stylesheet" href="../../src/lib/foundation/css/foundation-icons/foundation-icons.css" />
     <!-- CSS required for the Prefs Editor -->
     <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/Enactors.css" />
     <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/PrefsEditor.css" />
     <link rel="stylesheet" type="text/css" href="../../src/css/style.css" />
+    
+	<script>
+	    var keys = [];
+	    var messages = [];
+	    var currentMsg;
+	    $(document).ready(function() {
+	        $( "a" ).addClass( "has-tip tip-top" );
+	        $( "a" ).attr( "title", "tooltip");
+	        $( "a" ).attr( "data-tooltip", "" );
+	        $( "a" ).attr( "aria-haspopup", "true" );
+	        $( "a" ).attr( "data-options", "disable_for_touch:true" );
+	        $(document).foundation();
+	        $(".has-tip").focusin(function(){
+	            Foundation.libs.tooltip.showTip( jQuery($(this)) );
+	            console.log("the message is: " + getMessage(getKey(this), keys, messages));
+	            currentMsg = getMessage(getKey(this), keys, messages);
+	        });
+	        $(".has-tip").blur(function(){
+	            Foundation.libs.tooltip.hide( jQuery( $(this) ) );
+	        });
+	        $.getJSON( "../messages/phetMessages_en-US.json", function( data ) {
+	            $.each( data, function( key, val ) {
+	                keys.push(key);
+	                messages.push(val);
+	            });
+	        });
+	
+	    });
+	    getKey = function (that) {
+	        var key = $(that).attr("id");
+	        return key;
+	    };
+	    getMessage = function (key, keysArray, messagesArray) {
+	        var index = $.inArray(key, keysArray);
+	        return messagesArray[index];
+	    };
+	</script>
 
+  
     <head>
         <style>
+        		
             body {
                 background-color: #ADCAFF;
+                overflow:hidden;
                 position:relative;
             }
 
@@ -187,7 +233,7 @@
             }
 
             .keypad {               
-                margin: 1rem 3rem;
+                margin: 1.5rem 3rem;
                 padding: .5rem;
             }
             
@@ -200,7 +246,7 @@
                 box-shadow: 2.5px 2.5px 1px #888888;
                 font-size: 1.5rem;
                 font-weight: bold;
-                padding: 1rem 1.5rem;
+                padding: .60rem 1.20rem;
                 border: 1px solid white;
             }
 
@@ -213,7 +259,7 @@
                 box-shadow: 2.5px 2.5px 1px #888888;
                 font-size: 1.5rem;
                 font-weight: bold;
-                padding: 1rem 1.5rem;
+                padding: .60rem 1.20rem;
                 
             }
 
@@ -261,6 +307,18 @@
                 padding-left: 0;
                 font-size: .75rem;
             }
+            
+            .tooltip {
+              background-color: #fed73a;
+              color: black;
+              border: 1px solid #fed73a;
+              font-size:1.25rem;
+            }
+            
+            .tooltip > .nub {
+              display: none;
+            }
+             
         </style>
     </head>
 
@@ -272,10 +330,9 @@
 
                     <div class="row">
                         <div class="sideColumn1 left">
-                            <a class="small button yellowButton" href="#">
-                                <i class="fi-arrow-left" style="font-size: 2.2rem;"></i>
+                            <a  data-tooltip aria-haspopup="true" class="has-tip tip-right small button yellowButton" title="Return to simulation list." href="#">
+	                        <i class="fi-arrow-left" style="font-size: 2.2rem;"></i>
                             </a>
-
                         </div>
                         <div class="midColumn left">
                             <div class="largeBox">
@@ -367,11 +424,11 @@
                             </div>
                             <div class="box">
                                 <div class="keypad">
-                                    <div class="row">
-                                        <a class="whiteButton left" href="#">7</a>
-                                        <a class="whiteButton left" href="#">8</a>
+                                    <div class="row">   
+                                        <a data-tooltip aria-haspopup="true" data-options="disable_for_touch:true" class="has-tip tip-top whiteButton left" title="Seven" href="#">7</a>
+                                        <a data-tooltip aria-haspopup="true" data-options="disable_for_touch:true" class="has-tip tip-top whiteButton left" title="Eight" href="#">8</a>
                                         <a class="whiteButton left" href="#">9</a>
-                                    </div>
+                                    </div>                              
                                     <div class="row">
                                         <a class="whiteButton left" href="#">4</a>
                                         <a class="whiteButton left" href="#">5</a>
@@ -389,7 +446,9 @@
                                         </a>
                                     </div>
                                     <div class="row">
-                                        <a class="large button yellowButton left "style="padding:.5rem;" href="#">Check</a>
+                                        <a data-tooltip aria-haspopup="true" data-options="disable_for_touch:true" class="has-tip tip-top large button yellowButton left "style="padding:.5rem;" title="Check your answer" href="#">
+                                            Check
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -402,19 +461,19 @@
                 <footer>
                 <div class="row" style="position:relative;">
                     <div class="footerText left">
-                        Arithmetic
+                        <span>Arithmetic</span>
                     </div>
-                   <a class="left logoButton" href="#">
+                   <a data-tooltip aria-haspopup="true" data-options="disable_for_touch:true" class="has-tip tip-top left logoButton"  title="Check your answer" href="#">
                         |
                         <span style="color:white"><i class="fi-x"></i></span>
                         |
                     </a>
-                      <a class="left logoButton" href="#">
+                    <a class="left logoButton" href="#">
                         |
                         <span style="color:white"><i class="fi-database"></i></span>
                         |
                     </a>
-                     <a class="left logoButton" href="#">
+                    <a class="left logoButton" href="#">
                         |
                         <span style="color:white"><i class="fi-share"></i></span>
                         |
@@ -440,5 +499,4 @@
             </div>
 
         </body>
-    </div>
 </html>

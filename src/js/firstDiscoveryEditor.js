@@ -69,11 +69,11 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             					templateUrl: { 
             						expander: {
             							funcName: "fluid.stringTemplate",
-            							args: ["%baseurl%language%filetype", {"baseurl": "../../src/html/phetpreview_", "language": "{prefsEditor}.model.preferences.gpii_firstDiscovery_language", "filetype": ".html"}]
+            							args: ["%baseurl%language%filetype", {"baseurl": "../../src/html/electronpreview_", "language": "{prefsEditor}.model.preferences.gpii_firstDiscovery_language", "filetype": ".html"}]
             						}
             					}
                         	}
-                        },
+                        }
                 	},
                     gradeNames: ["gpii.firstDiscovery.tts.prefsEditor"],
                     modelListeners: {
@@ -116,6 +116,15 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                                 ["ctrlKey", "altKey"],
                                 "{that}.reset"
                             ]
+                        },
+                        "onCreate.bindToggleShortcut": {
+                        	listener: "gpii.firstDiscovery.keyboardShortcut.bindShortcut",
+                        	args: [
+                        	    "body",
+                        	    gpii.firstDiscovery.keyboardShortcut.key.t,
+                        	    [],
+                        	    "{that gpii.firstDiscovery.FirstDiscoveyrEditor}.setFocusToPreview"
+                        	]
                         }
                     },
                     distributeOptions: [{
@@ -139,6 +148,15 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                     messageBase: "{messageLoader}.resources.prefsEditor.resourceText",
                     styles: "{firstDiscoveryEditor}.options.styles",
                     panelTotalNum: "{firstDiscoveryEditor}.panels.length"
+                }
+            },
+            previewIndicator: {
+                type: "gpii.firstDiscovery.previewIndicator",
+                container: "{that}.dom.previewIndicator",
+                createOnEvent: "onCreatePreviewIndicator",
+                options: {
+                    messageBase: "{messageLoader}.resources.prefsEditor.resourceText",
+                    styles: "{firstDiscoveryEditor}.options.styles"
                 }
             },
             messageLoader: {
@@ -167,6 +185,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             selfVoicingToggle: ".gpiic-fd-selfVoicingToggle",
             helpButton: ".gpiic-fd-help",
             nav: ".gpiic-fd-nav",
+            previewIndicator: ".gpiic-fd-previewIndicator",
             previewFrame : ".flc-prefsEditor-preview-frame"
         },
         styles: {
@@ -194,6 +213,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             	args: "{that}"
             },
             onCreateNav: null,
+            onCreatePreviewIndicator: null,
             // onPanelShown is fired with one argument that is the id of the panel being shown
             onPanelShown: null
         },
@@ -206,12 +226,19 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             "onPrefsEditorReady.showInitialPanel": "{that}.showPanel",
             "onPrefsEditorReady.createNavButtons": {
                 listener: "{that}.events.onCreateNav"
+            },
+            "onPrefsEditorReady.createIndicators": {
+            	listener: "{that}.events.onCreatePreviewIndicator"
             }
         },
         invokers: {
             showPanel: {
                 funcName: "gpii.firstDiscovery.showPanel",
                 args: ["{that}"]
+            },
+            setFocusToPreview: {
+            	funcName: "gpii.firstDiscovery.setFocusToPreview",
+            	args: []
             }
         },
         distributeOptions: [{
@@ -245,6 +272,15 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 that.events.onPanelShown.fire(panelId);
             }
         });
+    };
+    
+    /**
+     * Name: setFocusToPreview
+     * Description: switch the focus to the iframe container that houses the preview and highlights the body of the preview.
+     */
+    gpii.firstDiscovery.setFocusToPreview = function () {
+    	document.getElementById("thePreview").focus();
+        $("#gpiic-fd").css("background-color", "green");
     };
 
     /*
