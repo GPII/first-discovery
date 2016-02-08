@@ -17,7 +17,6 @@ caption,th{text-align:left;}
 h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
 q:before,q:after{content:'';}
 abbr,acronym {border:0;font-variant:normal;}
-/* to preserve line-height and selector appearance */
 sup {vertical-align:text-top;}
 sub {vertical-align:text-bottom;}
 
