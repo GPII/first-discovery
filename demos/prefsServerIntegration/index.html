@@ -1,185 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="../../src/lib/infusion/src/lib/normalize/css/normalize.css" />
-        <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.css" />
-        <link rel="stylesheet" href="../../src/lib/foundation/css/foundation-icons.css" />
-        <link rel="stylesheet" href="../../src/css/style.css" />
-        <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="../../src/lib/infusion/src/lib/normalize/css/normalize.css" />
+    <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.css" />
+    <link rel="stylesheet" href="../../src/lib/foundation/css/foundation-icons.css" />
+    <link rel="stylesheet" href="../../src/css/style.css" />
+    <link rel="stylesheet" href="css/style.css" />
 
-        <!-- CSS required for the Prefs Editor -->
-        <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/Enactors.css" />
-        <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/PrefsEditor.css" />
+    <!-- CSS required for the Prefs Editor -->
+    <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/Enactors.css" />
+    <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/PrefsEditor.css" />
 
-        <script type="text/javascript" src="../../src/lib/infusion/infusion-custom.js"></script>
-        <script type="text/javascript" src="../../src/js/keyboardShortcut.js"></script>
-        <script type="text/javascript" src="../../src/js/ttsHookup.js"></script>
-        <script type="text/javascript" src="../../src/js/tooltip.js"></script>
-        <script type="text/javascript" src="../../src/js/msgLookup.js"></script>
-        <script type="text/javascript" src="../../src/js/selfVoicing.js"></script>
-        <script type="text/javascript" src="../../src/js/stickyKeysAssessment.js"></script>
-        <script type="text/javascript" src="../../src/js/keyboardInput.js"></script>
-        <script type="text/javascript" src="../../src/js/stickyKeysAdjuster.js"></script>
-        <script type="text/javascript" src="../../src/js/panels.js"></script>
-        <script type="text/javascript" src="../../src/js/enactors.js"></script>
-        <script type="text/javascript" src="../../src/schemas/schemas.js"></script>
-        <script type="text/javascript" src="../../src/js/navButtons.js"></script>
-        <script type="text/javascript" src="../../src/js/indicators.js"></script>
-        <script type="text/javascript" src="../../src/js/navIcons.js"></script>
-        <script type="text/javascript" src="../../src/js/helpButton.js"></script>
-        <script type="text/javascript" src="../../src/js/stepCount.js"></script>
-        <script type="text/javascript" src="../../src/js/nav.js"></script>
-        <script type="text/javascript" src="../../src/js/previewIndicator.js"></script>
-        <script type="text/javascript" src="../../src/js/firstDiscoveryEditor.js"></script>
-        <script type="text/javascript" src="../js/demos.js"></script>
-        
-	    
-        <style>
-        
-            .previewTag {
-                background-color: #fed73a;
-                color: black;
-                font-size: 1.25rem;
-                width:100%;
-                height:5%;
-                text-align: center;
-                border: 3px solid white;
-                border-radius: 1rem 1rem 0 0;
-                padding-top: .50rem;
-                padding-bottom: .25rem;
-            }
+    <script type="text/javascript" src="../../src/lib/infusion/infusion-custom.js"></script>
+    <script type="text/javascript" src="../../src/js/keyboardShortcut.js"></script>
+    <script type="text/javascript" src="../../src/js/ttsHookup.js"></script>
+    <script type="text/javascript" src="../../src/js/tooltip.js"></script>
+    <script type="text/javascript" src="../../src/js/msgLookup.js"></script>
+    <script type="text/javascript" src="../../src/js/selfVoicing.js"></script>
+    <script type="text/javascript" src="../../src/js/stickyKeysAssessment.js"></script>
+    <script type="text/javascript" src="../../src/js/keyboardInput.js"></script>
+    <script type="text/javascript" src="../../src/js/stickyKeysAdjuster.js"></script>
+    <script type="text/javascript" src="../../src/js/panels.js"></script>
+    <script type="text/javascript" src="../../src/js/enactors.js"></script>
+    <script type="text/javascript" src="../../src/schemas/schemas.js"></script>
+    <script type="text/javascript" src="../../src/js/navButtons.js"></script>
+    <script type="text/javascript" src="../../src/js/indicators.js"></script>
+    <script type="text/javascript" src="../../src/js/navIcons.js"></script>
+    <script type="text/javascript" src="../../src/js/helpButton.js"></script>
+    <script type="text/javascript" src="../../src/js/stepCount.js"></script>
+    <script type="text/javascript" src="../../src/js/nav.js"></script>
+    <script type="text/javascript" src="../../src/js/previewIndicator.js"></script>
+    <script type="text/javascript" src="../../src/js/firstDiscoveryEditor.js"></script>
+    <script type="text/javascript" src="../js/demos.js"></script>
 
-            .previewTag a {
-                color: black;
-            }
-            .warningTag a {
-                color: black;
-            }
+    <style>
+        .previewTag {
+            background-color: #fed73a;
+            border-radius:    1rem 1rem 0 0;
+            border:           3px solid white;
+            color:            black;
+            font-size:        1.25rem;
+            height:           5%;
+            line-height:      1;
+            padding-bottom:   .25rem;
+            padding-top:      .50rem;
+            text-align:       center;
+            width:            100%;
+        }
 
-            .previewTag a:hover {
-                color: white;
-            }
+        .previewTag a {
+            color: black;
+        }
+        .warningTag a {
+            color: black;
+        }
 
-            .warningTag a:hover {
-                color: white;
-            }
+        .previewTag a:hover {
+            color: white;
+        }
 
-            .warningTag {
-                background-color: #fed73a;
-                color: black;
-                font-size: 1.25rem;
-                width:100%;
-                height:5%;
-                text-align: center;
-                border: 3px solid white;
-                border-radius: 0 0 1rem 1rem;
-                padding-top: .50rem;
-                padding-bottom: .25rem;
-            }
+        .warningTag a:hover {
+            color: white;
+        }
 
-            .whiteBorder {
-                border-left: 3px solid white;
-                border-right: 3px solid white;
-                border: 3px solid white;
-            }
-        </style>
+        .warningTag {
+            background-color: #fed73a;
+            border-radius:    0 0 1rem 1rem;
+            border:           3px solid white;
+            color:            black;
+            font-size:        1.25rem;
+            height:           5%;
+            line-height:      1;
+            padding-bottom:   .25rem;
+            padding-top:      .50rem;
+            text-align:       center;
+            width:            100%;
+        }
 
-        
-        <script>          
-            /*
-            *   Display the previewpane using jquery based on whether the current panel is the welcome panel and whether or not you click the next button.
-            */
-            /*
-            $(document).ready(function() {
-                var isOpen = false;
-                // Comment this out for preview on start.
-                $('#gpiic-fd .previewpane').animate({width: 'toggle'});             
+        .whiteBorder {
+            border-left:  3px solid white;
+            border-right: 3px solid white;
+            border:       3px solid white;
+        }
+    </style>
 
-                $('#gpiic-fd .gpii-fd-navButtons-next').click(function(){
-                    if($('#open').hasClass('gpii-fd-current') && (!isOpen)){
-                        isOpen = true;
-                        $('#gpiic-fd .previewpane').animate({width: 'toggle'});
-                    }
-                });
-            });
-            */
-            /*
-            $(document).ready(function() {
-            	setFocusToPreview()
-            });
-            
-            function setFocusToPreview() {
-            	document.getElementById("thePreview").focus();
-                $("#gpiic-fd .previewpane").css("background-color", "red");
-            }
-            */
+    <script>
+        /*
+         *   Display the previewpane using jquery based on whether the current panel is the welcome panel and whether or not you click the next button.
+         */
+        /*
+           $(document).ready(function() {
+           var isOpen = false;
+        // Comment this out for preview on start.
+        $('#gpiic-fd .previewpane').animate({width: 'toggle'});
 
-        </script>
-        
-        <title>First Discovery Tool - Integrated with Preferences Server</title>
-    </head>
+        $('#gpiic-fd .gpii-fd-navButtons-next').click(function(){
+        if($('#open').hasClass('gpii-fd-current') && (!isOpen)){
+        isOpen = true;
+        $('#gpiic-fd .previewpane').animate({width: 'toggle'});
+        }
+        });
+        });
+         */
+        /*
+           $(document).ready(function() {
+           setFocusToPreview()
+           });
 
-    <body>
-        <div id="gpiic-fd" class="gpii-fd slide fdtSize">
-            <section class="row gpii-fd-topButtons">
-                <div class="gpiic-fd-selfVoicingToggle gpii-fd-selfVoicingToggle">
-                    <button class="gpiic-fd-selfVoicingToggle-mute gpiic-fd-tooltip left gpii-fd-mute">
-                        <span class="left gpii-fd-icon"></span>
-                        <span class="gpiic-fd-selfVoicingToggle-muteLabel"></span>
-                    </button>
-                </div>
-                <button class="gpiic-fd-help right gpii-fd-help" disabled="disabled"></button>
-            </section>
+           function setFocusToPreview() {
+           document.getElementById("thePreview").focus();
+           $("#gpiic-fd .previewpane").css("background-color", "red");
+           }
+         */
+    </script>
 
-            <section class="gpiic-fd-prefsEditor"></section>
+    <title>First Discovery Tool - Integrated with Preferences Server</title>
+</head>
 
-            <nav class="gpiic-fd-nav gpii-fd-nav">
-                <div class="gpiic-fd-navButtons gpii-fd-navButtons">
-                    <button id="gpiic-fd-navButtons-back" class="gpiic-fd-tooltip left gpii-fd-navButtons-back">
-                        <span class="left gpii-fd-icon"></span>
-                        <span class="gpiic-fd-navButtons-backLabel">back</span>
-                    </button>
-                    <button id="gpiic-fd-navButtons-next" class="gpiic-fd-tooltip right gpii-fd-navButtons-next">
-                        <span class="gpiic-fd-navButtons-nextLabel">next</span>
-                        <span class="right gpii-fd-icon"></span>
-                    </button>
-                </div>
-                <div class="gpiic-fd-navIcons gpii-fd-navIcons">
-                </div>
-                <div class="gpii-fd-stepCount">
-                    <span class="gpiic-fd-stepCountMsg"></span>
-                </div>
-            </nav>
-             
-            <div id="previewBorder" class="left leftMarginTen gpiic-fd-previewIndicator gpii-fd-previewIndicator">
-                <div class="gpiic-fd-indicators gpii-fd-indicators">  
-                
-                   <div class="fl-prefsEditor-fullPreview-previewContainer fl-force-right">
-                        <div class="fl-prefsEditor-preview previewpane">
-                            <div class="previewTag"> 
-	                            <a id="gpiic-fd-indicators-preview" class="gpiic-fd-tooltip gpii-fd-indicators-preview" href="#" alt="This is the preview.">
-	                               <span class="gpiic-fd-indicators-previewLabel"></span>
-	                            </a> 
-                            </div>
-                                <iframe id="thePreview" class="flc-prefsEditor-preview-frame whiteBorder" style="width:100%; height:90%; display:block;"></iframe>
-                            <div class="warningTag"> 
-                                <a id="gpiic-fd-indicators-warning" class="gpiic-fd-tooltip gpii-fd-indicators-warning" href="#" alt="This is not a live website indicator.">
-                                   <span class="gpiic-fd-indicators-warningLabel"></span>
-                                </a> 
-                            </div>
+<body>
+    <div id="gpiic-fd" class="gpii-fd slide fdtSize">
+        <section class="row gpii-fd-topButtons">
+            <div class="gpiic-fd-selfVoicingToggle gpii-fd-selfVoicingToggle">
+                <button class="gpiic-fd-selfVoicingToggle-mute gpiic-fd-tooltip left gpii-fd-mute">
+                    <span class="left gpii-fd-icon"></span>
+                    <span class="gpiic-fd-selfVoicingToggle-muteLabel"></span>
+                </button>
+            </div>
+            <button class="gpiic-fd-help right gpii-fd-help" disabled="disabled"></button>
+        </section>
+
+        <section class="gpiic-fd-prefsEditor"></section>
+
+        <nav class="gpiic-fd-nav gpii-fd-nav">
+            <div class="gpiic-fd-navButtons gpii-fd-navButtons">
+                <button id="gpiic-fd-navButtons-back" class="gpiic-fd-tooltip left gpii-fd-navButtons-back">
+                    <span class="left gpii-fd-icon"></span>
+                    <span class="gpiic-fd-navButtons-backLabel">back</span>
+                </button>
+                <button id="gpiic-fd-navButtons-next" class="gpiic-fd-tooltip right gpii-fd-navButtons-next">
+                    <span class="gpiic-fd-navButtons-nextLabel">next</span>
+                    <span class="right gpii-fd-icon"></span>
+                </button>
+            </div>
+            <div class="gpiic-fd-navIcons gpii-fd-navIcons">
+            </div>
+            <div class="gpii-fd-stepCount">
+                <span class="gpiic-fd-stepCountMsg"></span>
+            </div>
+        </nav>
+
+        <div id="previewBorder" class="left leftMarginTen gpiic-fd-previewIndicator gpii-fd-previewIndicator">
+            <div class="gpiic-fd-indicators gpii-fd-indicators">
+
+                <div class="fl-prefsEditor-fullPreview-previewContainer fl-force-right">
+                    <div class="fl-prefsEditor-preview previewpane">
+                        <div class="previewTag">
+                            <a id="gpiic-fd-indicators-preview" class="gpiic-fd-tooltip gpii-fd-indicators-preview" href="#" alt="This is the preview.">
+                                <span class="gpiic-fd-indicators-previewLabel"></span>
+                            </a>
+                        </div>
+                        <iframe id="thePreview" class="flc-prefsEditor-preview-frame whiteBorder" style="width:100%; height:90%; display:block;"></iframe>
+                        <div class="warningTag">
+                            <a id="gpiic-fd-indicators-warning" class="gpiic-fd-tooltip gpii-fd-indicators-warning" href="#" alt="This is not a live website indicator.">
+                                <span class="gpiic-fd-indicators-warningLabel"></span>
+                            </a>
                         </div>
                     </div>
-                    
                 </div>
-             </div>
 
+            </div>
         </div>
-        <script type="text/javascript">
-            // specify the demo-specific version of the aux schema, which overrides the default paths
-            demo.firstDiscovery.init("#gpiic-fd", "demo.firstDiscovery.auxSchema.prefsServerIntegration", "demo-firstDiscovery-integration");
-        </script>
-    </body>
+
+    </div>
+    <script type="text/javascript">
+        // specify the demo-specific version of the aux schema, which overrides the default paths
+        demo.firstDiscovery.init("#gpiic-fd", "demo.firstDiscovery.auxSchema.prefsServerIntegration", "demo-firstDiscovery-integration");
+    </script>
+</body>
 </html>

@@ -8,8 +8,6 @@ You may obtain a copy of the License at
 https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
 */
 
-//TODO: the line and letter spacing values are reverted to default when the
-//      textSize is adjusted
 (function ($, fluid) {
 
     "use strict";
@@ -76,7 +74,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         invokers: {
             set: {
                 funcName: "gpii.firstDiscovery.enactor.lineSpace.set",
-                args: ["{arguments}.0", "{that}", "{that}.container", "{that}.getLineHeightMultiplier"]
+                args: ["{arguments}.0", "{that}", "{that}.getLineHeightMultiplier"]
             },
             getTextSizeInPx: {
                 funcName: "gpii.firstDiscovery.enactor.lineSpace.getTextSizeInPx",
@@ -104,7 +102,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     // In other browsers it will return the pixel value of the line height.
     gpii.firstDiscovery.enactor.lineSpace.getLineHeight = function (container) {
         if (!container.css("line-height")){
-            return 1;
+            return "1";
         }
         return container.css("line-height");
     };
@@ -119,7 +117,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         // Needs a better solution. For now, "line-height" value "normal" is defaulted to 1.2em
         // according to https://developer.mozilla.org/en/CSS/line-height
         if (lineHeight === "normal") {
-            return 1.2;
+            return "1";
         }
 
         // Continuing the work-around of jQuery + IE bug - http://bugs.jquery.com/ticket/2671
@@ -130,26 +128,15 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         return Math.round(parseFloat(lineHeight) / fontSize * 100) / 100;
     };
 
-    gpii.firstDiscovery.enactor.lineSpace.set = function (times, that, container, getLineHeightMultiplierFunc) {
-        times = times || 1;
-        // Calculating the initial size here rather than using a members expand because the "line-height"
-        // cannot be detected on hidden containers such as separated paenl iframe.
+    gpii.firstDiscovery.enactor.lineSpace.set = function (targetLineSpace, that, getLineHeightMultiplierFunc) {
+        targetLineSpace = targetLineSpace || 1;
         if (!that.initialSize) {
             that.initialSize = getLineHeightMultiplierFunc();
         }
 
-        // that.initialSize === 0 when the browser returned "lineHeight" css value is undefined,
-        // which occurs when firefox detects "line-height" value on a hidden container.
-        // @ See getLineHeightMultiplier() & http://issues.fluidproject.org/browse/FLUID-4500
         if (that.initialSize) {
-            var targetLineSpace = times * that.initialSize;
-            // sets line-height for slider and preview
-            that.container.css("line-height", targetLineSpace);
-            // sets line-height for instruction text
-            //$("p").css("line-height", targetLineSpace);
-            // Sets line-height in a way that voice toggle doesn't trample the setting
-            //$("#gpiic-fd").css("line-height", targetLineSpace);
-            // $("#main").css("line-height", targetLineSpace);
+            that.container.css("line-height", targetLineSpace); 
+            $("p").css("line-height", targetLineSpace);
         }
     };
 
