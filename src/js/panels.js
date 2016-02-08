@@ -1054,6 +1054,207 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     });
 
     /*
+     * Confirm Panel
+     */
+    fluid.defaults("gpii.firstDiscovery.panel.confirm", {
+        gradeNames: ["fluid.prefs.panel"],
+        preferenceMap: {
+            "gpii.firstDiscovery.confirm": {}
+        },
+        selectors: {
+            message: ".gpiic-fd-confirm-message",
+
+            language: "languageConfirmation",
+            languageLabel: "languageLabel",
+
+            speak: "speakConfirmation",
+            speakLabel: "speakLabel",
+
+            speechRate: "speechRateConfirmation",
+            speechRateLabel: "speechRateLabel",
+
+            contrast: "contrastConfirmation",
+            contrastLabel: "contrastLabel",
+
+            textSize: "textSizeConfirmation",
+            textSizeLabel: "textSizeLabel",
+
+            onScreenKeyboard: "onScreenKeyboardConfirmation",
+            onScreenKeyboardLabel: "onScreenKeyboardLabel",
+
+            captions: "captionsConfirmation",
+            captionsLabel: "captionsLabel",
+
+            showSounds: "showSoundsConfirmation",
+            showSoundsLabel: "showSoundsLabel",
+
+            stickyKeys: "stickyKeysConfirmation",
+            stickyKeysLabel: "stickyKeysLabel"
+
+        },
+        protoTree: {
+            message: {
+                markup: {messagekey: "message"}
+            }
+        },
+        modelListeners: {
+            "{fluid.prefs.prefsEditor}.model.preferences": {
+                funcName: "gpii.firstDiscovery.panel.confirm.updatePreferenceValues",
+                args: ["{that}", "{change}"]
+            }
+        },
+        friendlyNames: {
+                "en-US": {
+                    labels: {
+                        language: "Language:",
+                        speak: "Text to Speech:",
+                        speechRate: "Speech Rate:",
+                        contrast: "Contrast:",
+                        textSize: "Text Size:",
+                        onScreenKeyboard: "On-Screen Keyboard:",
+                        captions: "Captions:",
+                        showSounds: "Show Sounds:",
+                        stickyKeys: "Sticky Keys:"
+                    },
+                    values: {
+                        onOff: {
+                            "true": "On",
+                            "false": "Off"
+                        },
+                        language: "English",
+                        contrast:{
+                            "default": "Original",
+                            "bw": "Black/White",
+                            "wb": "White/Black"
+                        }
+                    }
+                },
+                "fr-FR": {
+                    labels: {
+                        language: "Langue:",
+                        speak: "Synthèse Vocale:",
+                        speechRate: "Débit de Parole:",
+                        contrast: "Contraste:",
+                        textSize: "Taille du Texte:",
+                        onScreenKeyboard: "Clavier à l'Écran:",
+                        captions: "Légendes:",
+                        showSounds: "Voir les Sons:",
+                        stickyKeys: "Touches Rémanentes:"
+                    },
+                    values: {
+                        onOff: {
+                            "true": "Oui",
+                            "false": "Non"
+                        },
+                        language: "Français",
+                        contrast: {
+                            "default": "Original",
+                            "bw": "Noir/Blanc",
+                            "wb": "Blanc/Noir"
+                        }
+                    }
+                },
+                "es-MX": {
+                    labels: {
+                        language: "Idioma:",
+                        speak: "Texto a Voz:",
+                        speechRate: "Nivel de Conversación:",
+                        contrast: "Contraste:",
+                        textSize: "Tamaño de Texto:",
+                        onScreenKeyboard: "Teclado en Pantalla:",
+                        captions: "Leyendas:",
+                        showSounds: "Mostrar Sonidos:",
+                        stickyKeys: "Teclas Pegajosas:"
+                    },
+                    values: {
+                        onOff: {
+                            "true": "Sí",
+                            "false": "Non"
+                        },
+                        language: "Español",
+                        contrast: {
+                            "default": "Original",
+                            "bw": "Negro/Blanco",
+                            "wb": "Blanco/Negro"
+                        }
+                    }
+                }
+            }
+    });
+
+    gpii.firstDiscovery.panel.confirm.updatePreferenceValues = function(that, changeContext) {
+
+        //Language
+        var languageValue = changeContext.value.gpii_firstDiscovery_language;
+        $("#" + that.options.selectors.languageLabel).text(that.options.friendlyNames[languageValue].labels.language);
+        $("#" + that.options.selectors.language).text(that.options.friendlyNames[languageValue].values.language);
+
+        //Text to Speech
+        $("#" + that.options.selectors.speakLabel).text(that.options.friendlyNames[languageValue].labels.speak);
+        var speakValue = changeContext.value.gpii_firstDiscovery_speak;
+        $("#" + that.options.selectors.speak).text(that.options.friendlyNames[languageValue].values.onOff[speakValue]);
+
+        //Speech Rate
+        $("#" + that.options.selectors.speechRateLabel).text(that.options.friendlyNames[languageValue].labels.speechRate);
+        var speechRateValue = (changeContext.value.gpii_firstDiscovery_speechRate);
+        var averageWordsPerMinute = 130;
+        var wordsPerMinute = Math.round(speechRateValue*averageWordsPerMinute);
+        $("#" + that.options.selectors.speechRate).text(wordsPerMinute + "wpm");
+
+        //Contrast
+        $("#" + that.options.selectors.contrastLabel).text(that.options.friendlyNames[languageValue].labels.contrast);
+        var contrastValue = changeContext.value.fluid_prefs_contrast;
+        $("#" + that.options.selectors.contrast).text(that.options.friendlyNames[languageValue].values.contrast[contrastValue]);
+
+        //Text Size
+        $("#" + that.options.selectors.textSizeLabel).text(that.options.friendlyNames[languageValue].labels.textSize);
+        var textSizeValue = (changeContext.value.fluid_prefs_textSize);
+        var roundedTSValue = textSizeValue.toFixed(1);
+        $("#" + that.options.selectors.textSize).text(roundedTSValue + "x");
+
+        //On-ScreenKeyboard
+        $("#" + that.options.selectors.onScreenKeyboardLabel).text(that.options.friendlyNames[languageValue].labels.onScreenKeyboard);
+        var onScreenKeyboardValue = changeContext.value.gpii_firstDiscovery_onScreenKeyboard;
+        $("#" + that.options.selectors.onScreenKeyboard).text(that.options.friendlyNames[languageValue].values.onOff[onScreenKeyboardValue]);
+
+        //Captions
+        $("#" + that.options.selectors.captionsLabel).text(that.options.friendlyNames[languageValue].labels.captions);
+        var captionsValue = changeContext.value.gpii_firstDiscovery_captions;
+        $("#" + that.options.selectors.captions).text(that.options.friendlyNames[languageValue].values.onOff[captionsValue]);
+
+        //Show Sounds
+        $("#" + that.options.selectors.showSoundsLabel).text(that.options.friendlyNames[languageValue].labels.showSounds);
+        var showSoundsValue = changeContext.value.gpii_firstDiscovery_showSounds;
+        $("#" + that.options.selectors.showSounds).text(that.options.friendlyNames[languageValue].values.onOff[showSoundsValue]);
+
+        //Sticky Keys
+        $("#" + that.options.selectors.stickyKeysLabel).text(that.options.friendlyNames[languageValue].labels.stickyKeys);
+        var stickyKeysValue = changeContext.value.gpii_firstDiscovery_stickyKeys;
+        $("#" + that.options.selectors.stickyKeys).text(that.options.friendlyNames[languageValue].values.onOff[stickyKeysValue]);
+    };
+
+
+    /*
+     * Save Panel
+     */
+
+    fluid.defaults("gpii.firstDiscovery.panel.save", {
+        gradeNames: ["fluid.prefs.panel"],
+        preferenceMap: {
+            "gpii.firstDiscovery.save": {}
+        },
+        selectors: {
+            message: ".gpiic-fd-save-message"
+        },
+        protoTree: {
+            message: {
+                markup: {messagekey: "message"}
+            }
+        }
+    });
+
+
+    /*
      * Token panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.token", {
@@ -1078,11 +1279,17 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 markup: {messagekey: "message"}
             }
         },
+        chromeExtensionId: "oaicfgfcklidgbdcpgfkpmgknkfganok",
         events: {
             onSuccess: null,  // argument: the server returned data
-            onError: null
+            onError: null,
+            onCloudSaveSuccess: null
         },
         listeners: {
+            "onCloudSaveSuccess.writeToken": {
+                funcName: "{that}.savePrefsToUsb",
+                args: ["{arguments}.0"]
+            },
             "onSuccess.showToken": {
                 funcName: "{that}.showTokenText",
                 args: ["{arguments}.0.userToken"]
@@ -1101,9 +1308,65 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             savePrefsToServer: {
                 funcName: "gpii.firstDiscovery.panel.token.savePrefsToServer",
                 args: ["{that}", "{fluid.prefs.prefsEditor}.model.preferences", "{arguments}.0"]
+            },
+            savePrefsToUsb: {
+                funcName: "gpii.firstDiscovery.panel.token.savePrefsToUsb",
+                args: ["{that}", "{arguments}.0"]
+
             }
         }
     });
+
+    gpii.firstDiscovery.panel.token.savePrefsToUsb = function (that, data) {
+
+        /*
+            if not chrome:
+                USB is not possible, so just fire success
+
+            if chrome:
+
+                if not extension:
+                    USB is not possible so just fire success
+
+                if extension:
+                    USB is possible so msg the extension
+         */
+
+        // If the plugin hasn't responded in 2 seconds with the version, it is a user without a
+        // plugin installed, so show them the token.
+        var successTimeoutId = setTimeout(function(){
+            that.events.onSuccess.fire(data);
+        }, 2000);
+
+        window.chrome.runtime.sendMessage(
+            that.options.chromeExtensionId,
+            {"message": {"message_type":"request_version"}},
+            function onVersionCallback(version){
+                // If we got a version, the plugin is installed, so clear the timeout and let the plugin write to usb
+                if (version){
+                    clearTimeout(successTimeoutId);
+                    var message = {
+                        message: {
+                            message_type: "write_usb",
+                            message_body: {
+                                userToken: data.userToken,
+                                preferences: data.preferences
+                            }
+                        }
+                    };
+                    window.chrome.runtime.sendMessage(
+                        that.options.chromeExtensionId,
+                        message,
+                        function onChromeExtensionResponse(response) {
+                            if (response.is_successful == "true") {
+                                that.events.onSuccess.fire(data);
+                            } else {
+                                that.events.onError.fire();
+                            }
+                        });
+                }
+            });
+    };
 
     gpii.firstDiscovery.panel.token.savePrefsToServer = function (that, data, isReadyToSave) {
         if (!isReadyToSave) {
@@ -1122,7 +1385,8 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             dataType: "json",
             data: data,
             success: function (data, textStatus, jqXHR) {
-                that.events.onSuccess.fire(data, textStatus, jqXHR);
+                //that.events.onSuccess.fire(data, textStatus, jqXHR);
+                that.events.onCloudSaveSuccess.fire(data, textStatus, jqXHR);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 that.events.onError.fire(jqXHR, textStatus, errorThrown);

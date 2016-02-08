@@ -1,0 +1,43 @@
+{
+  "searchBar": "This is a search bar to search this website",
+  "searchSubjects": "Select to search this website",
+
+  "electronsTitle": "This web page is about electrons.",
+  "physicalScience": "Select to go back to the physical science category",
+  "electronsSection": "Select to navigate to electrons page",
+  "back": "Select to go to previous page",
+  "forward": "Select to go to next page",
+
+  "electronsHeader": "This web page is about electrons.",
+  "makeACopy": "Select to make a copy",
+  "details": "Select to get more details",
+  "resources": "Select to see resources",
+  "download": "select to download",
+  "share": "Select to share",
+
+  "storm": "Photo of stormy sky, with lightning striking over a city.",
+
+  "watchOut": "Watch out! Lightning is extremely dangerous. A single bolt of lightning can carry a billion volts of electricity. That’s enough energy to light a 100-watt light bulb—for three months! As impressive as it is, lightning is nothing more than a sudden flow of extremely tiny particles. What are the particles that flow in a lightning bolt? The answer is electrons.",
+  "whatAreElectrons": "What Are Electrons? Electrons are one of three main types of particles that make up atoms. The other two types are protons and neutrons. Unlike protons and neutrons, which consist of smaller, simpler particles, electrons are fundamental particles that do not consist of smaller particles. They are a type of fundamental particles called leptons. All leptons have an electric charge of -1 or 0.",
+  "propertiesOfElectrons": "Properties of Electrons. Electrons are extremely small. The mass of an electron is only about 1/2000 the mass of a proton or neutron, so electrons contribute virtually nothing to the total mass of an atom. Electrons have an electric charge of -1, which is equal but opposite to the charge of proton, which is +1. All atoms have the same number of electrons as protons, so the positive and negative charges “cancel out,” making atoms electrically neutral.",
+  "whereAreElectrons": "Where Are Electrons? Unlike protons and neutrons, which are located inside the nucleus at the center of the atom, electrons are found outside the nucleus. Because opposite electric charges attract each other, negative electrons are attracted to the positive nucleus. This force of attraction keeps electrons constantly moving through the otherwise empty space around the nucleus. The Figure shown below is a common way to represent the structure of an atom. It shows the electron as a particle orbiting the nucleus, similar to the way that planets orbit the sun.",
+  "Structure": "Model of atomic structure: This image illustrates atomic structure: a cluster of three neutrons (labelled '2') and three protons (labelled '3') are surrounded by two rings of electrons (labelled '1'). The inner ring has two electrons on it and the outer ring has one.",
+  "orbitals": "Orbitals. The atomic model above is useful for some purposes, but it’s too simple when it comes to the location of electrons. In reality, it’s impossible to say what path an electron will follow. Instead, it’s only possible to describe the chances of finding an electron in a certain region around the nucleus. The region where an electron is most likely to be is called an orbital. Each orbital can have at most two electrons. Some orbitals, called S orbitals, are shaped like spheres, with the nucleus in the center. An S orbital is pictured in Figure below. Where the dots are denser, the chance of finding an electron is greater. Also pictured in Figure below is a P orbital. P orbitals are shaped like dumbbells, with the nucleus in the pinched part of the dumbbell.",
+  "sorbital": "An image of an S Orbital: a multi-coloured set of rings made of small dots, radiating out from a red coloured centre. The rings closest to the centre are red and close together, the rings further out from the centre are pink and a bit more spaced apart, and the outer-most rings are blue and have more space between them.",
+  "porbital": "An image of an P Orbital: two red coloured centres surrounded by rings, pressed together. The rings closest to each centre are red and close together, the rings further out from each centre are pink and a bit more spaced apart, and the outer-most rings are blue and have more space between them. Where the two meet the rings are bright blue and flattened together.",
+  "qA1": "Question: How many electrons can there be in each type of orbital shown above? Answer: There can be a maximum of two electrons in any orbital, regardless of its shape.Question: Where is the nucleus in each orbital? Answer: The nucleus is at the center of each orbital. It is in the middle of the sphere in the S orbital and in the pinched part of the P orbital.",
+  "whatsYourEnergyLevel": "What’s Your Energy Level? Electrons are located at fixed distances from the nucleus, called energy levels. You can see the first three energy levels in the Figure below. The diagram also shows the maximum possible number of electrons at each energy level. Electrons at lower energy levels, which are closer to the nucleus, have less energy. At the lowest energy level, which has the least energy, there is just one orbital, so this energy level has a maximum of two electrons. Only when a lower energy level is full are electrons added to the next higher energy level. Electrons at higher energy levels, which are farther from the nucleus, have more energy. They also have more orbitals and greater possible numbers of electrons. Electrons at the outermost energy level of an atom are called valence electrons. They determine many of the properties of an element. That’s because these electrons are involved in chemical reactions with other atoms. Atoms may share or transfer valence electrons. Shared electrons bind atoms together to form chemical compounds.",
+  "energylevels": "Energy levels and electrons. Graphic showing energy levels and electrons: This diagram shows a circle (labelled '1') surrounded by three rings, labelled moving outward from the centre '2', '3' and '4'.",
+  "1234": "One. Nucleus - contains protons and neutrons. Two. 1st energy level - can hold a maximum of 2 electrons in one orbital. Three. 2nd energy level - can hold a maximum of 8 electrons over 4 different orbitals. Four. 3rd energy level - can hold a maximum of 18 electrons distributed over 9 different orbitals.",
+  "qA2": "Question: How many electrons can there be in each type of orbital shown above? Answer: There can be a maximum of two electrons in any orbital, regardless of its shape. Question: Where is the nucleus in each orbital? Answer: The nucleus is at the center of each orbital. It is in the middle of the sphere in the S orbital and in the pinched part of the P orbital.",
+  "summary": "Summary. Electrons are one of three main types of particles that make up the atom. They are extremely small and have an electric charge of -1. All atoms have the same number of electrons as protons. Negative electrons are attracted to the positive nucleus. This force of attraction keeps electrons constantly moving around the nucleus. The region where an electron is most likely to be found is called an orbital. Electrons are located at fixed distances from the nucleus, called energy levels. Electrons at lower energy levels have less energy than electrons at higher energy levels.",
+  "vocabulary": "Vocabulary. Electron: Negatively charged atomic particle that moves around the nucleus of an atom.",
+  "practice": "Research the discovery of electrons at the following URLs, and then answer the questions below. Who discovered electrons? When were they discovered? Outline how electrons were discovered. What was the significance of the discovery of electrons? Where did Thomson think electrons were located in the atom? How does this differ from the modern view of electrons presented above?",
+  "review": "What are electrons? Compare and contrast electrons and protons. Sketch a model of a beryllium atom, which has four protons, five neutrons, and four electrons. Your model should include the placement of electrons at the appropriate energy levels. What are valence electrons? Why are they so important? How many valence electrons does a beryllium atom have (see question 3)?",
+
+  "showDetails": "Select to show details",
+  "showResources": "Select to show resources"
+
+
+
+}
