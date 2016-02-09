@@ -1,0 +1,51 @@
+{
+  "logo": "Buscar",
+  "search_query": "2016 directrices fiscales",
+  "search_button": "Buscar",
+  "ad_result_label": "Anuncios relacionados a 2016 Guía de Impuestos:",
+  "search_result_label": "Resultados de la búsqueda:",
+  "ads": [
+    {
+      "title": "Impuestos de archivos en línea GRATUITO",
+      "url": "www.free-tax-on-the-web.com",
+      "description": "Software libre de impuestos para maximizar su retorno con conexión de archivos electrónicos "
+    },
+    {
+      "title": "SúperTributaria",
+      "url": "www.super-tax.com",
+      "description": "20 % de bonificación en su declaración cuando se cumplió a través de tarjeta de regalo !"
+    }
+  ],
+  "results": [
+    {
+      "title": "2016 Publicación 15 - Servicio de Impuestos Internos",
+      "url": "https://www.irs.gov/pub/irs-pdf/p15.pdf",
+      "description": "Dec 23 de , el año 2015 - Departamento de Hacienda . Servicio de Impuestos Internos . 15. Publicación del gato . No. 10000W . ( Circular E ) ,. Del empleador . Guía de Impuestos . Para su uso en el año 2016 ."
+    },
+    {
+    "title": "2016 Límites EITC ganancias, importes máximos de crédito y ...",
+    "url": "https://www.irs.gov/...Tax.../EITC-Income-Limi...",
+    "description": "24 de Nov , el año 2015 - La cantidad máxima de crédito para el Año Fiscal 2016 es : $ 6,269 ... Clasificación Reglas del niño , o ; Publicación 596, Reglas Si usted tiene un hijo calificado ."
+    },
+    {
+      "title": "Últimas noticias del IRS - Servicio de Impuestos Internos",
+      "url": "https://www.irs.gov/uac/Latest-News",
+      "description": "Últimas Noticias . Preparador de Fraude está en la lista anual del IRS 'docena sucia' de estafas fiscales para evitar durante la temporada 2016 Presentación IR - 2016-16 , Feb. 4 , 2016 - El ..."
+    }
+  ],
+  "also_try_label": "Proveedores:",
+  "also_try_link_titles": [
+    "2016 rangos de soporte de impuestos",
+    "2016 límites de contribución 401k",
+    "2016 impuesto sobre cómo",
+    "2016 Formas de impuestos del IRS"
+  ],
+  "footer_copyright": "&copy; Créditos Buscar Inc.",
+  "footer_links": [
+    "Web",
+    "Noticias",
+    "Contacto",
+    "Acerca de",
+    "Desarrolladores"
+  ]
+}

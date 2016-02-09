@@ -1,0 +1,51 @@
+{
+  "logo": "Search",
+  "search_query": "2016 tax guidelines",
+  "search_button": "Search",
+  "ad_result_label": "Ads related to 2016 tax guide:",
+  "search_result_label": "Search results:",
+  "ads": [
+    {
+      "title": "File Taxes FREE Online",
+      "url": "www.free-tax-on-the-web.com",
+      "description": "Free tax software to maximize your return with free e-Filing."
+    },
+    {
+      "title": "SuperTax",
+      "url": "www.super-tax.com",
+      "description": "Bonus 20% on your return when fulfilled via e-gift card!"
+    }
+  ],
+  "results": [
+    {
+      "title": "2016 Publication 15 - Internal Revenue Service",
+      "url": "https://www.irs.gov/pub/irs-pdf/p15.pdf",
+      "description": "Dec 23, 2015 - Department of the Treasury. Internal Revenue Service. Publication 15. Cat. No. 10000W. (Circular E),. Employer's. Tax Guide. For use in 2016."
+    },
+    {
+      "title": "2016 EITC Income Limits, Maximum Credit Amounts and ...",
+      "url": "https://www.irs.gov/...Tax.../EITC-Income-Limi...",
+      "description": "Nov 24, 2015 - The maximum amount of credit for Tax Year 2016 is: $6,269 ... Qualifying Child Rules, or; Publication 596, Rules If You Have a Qualifying Child."
+    },
+    {
+      "title": "Latest News from the IRS - Internal Revenue Service",
+      "url": "https://www.irs.gov/uac/Latest-News",
+      "description": "Latest News . Return Preparer Fraud Is on the IRS Annual “Dirty Dozen” List of Tax Scams to Avoid During the 2016 Filing Season IR-2016-16, Feb. 4, 2016 — The ..."
+    }
+  ],
+  "also_try_label": "Also try:",
+  "also_try_link_titles": [
+    "2016 tax bracket ranges",
+    "2016 401k contribution limits",
+    "2016 tax how to",
+    "2016 IRS Tax Forms"
+  ],
+  "footer_copyright": "&copy; Copyright Search Inc.",
+  "footer_links": [
+    "Web",
+    "News",
+    "Contact",
+    "About",
+    "Developers"
+  ]
+}
