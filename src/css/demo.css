@@ -49,7 +49,6 @@ a:hover {
     top: 0;
     width: 100%;
     padding: 0.25em;
-    z-index: 999; /* to ensure it is above the more-text details in FF */
 }
 
 #main-header #main-header-content {
