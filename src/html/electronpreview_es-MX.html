@@ -70,23 +70,18 @@
                 //self-voicing for the preview
                 var speechQueueFunction = window.parent.fluid.queryIoCSelector(window.parent.fluid.rootComponent, "gpii.firstDiscovery.selfVoicing")[0].queueSpeech;
                 $( "*" ).focus(function () {
-                    console.log(getMessage($(this)));
                     speechQueueFunction(getMessage($(this)), {}, false);
                 });
                 $( "a" ).focusin(function () {
-                    console.log(getMessage($(this)));
                     speechQueueFunction(getMessage($(this)), {}, false);
                 });
                 $( "a" ).mouseenter(function () {
-                    console.log(getMessage($(this)));
                     speechQueueFunction(getMessage($(this)), {}, false);
                 });
                 $( "input" ).focusin(function () {
-                    console.log(getMessage($(this)));
                     speechQueueFunction(getMessage($(this)), {}, false);
                 });
                 $( "input" ).mouseenter(function () {
-                    console.log(getMessage($(this)));
                     speechQueueFunction(getMessage($(this)), {}, false);
                 });
                 
