@@ -19,7 +19,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
      * The new prefs editor type for the first discovery tool
      */
     fluid.defaults("gpii.firstDiscovery.firstDiscoveryEditor", {
-        gradeNames: ["fluid.prefs.prefsEditorLoader"],
+        gradeNames: ["fluid.prefs.prefsEditorLoader", "fluid.prefs.fullPreview"],
         defaultLocale: {
             expander: {
                 funcName: "fluid.get",
@@ -57,6 +57,25 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             prefsEditor: {
                 container: "{that}.dom.prefsEditor",
                 options: {
+                	components: {
+                        preview: {
+                        	type: "fluid.prefs.preview",
+                        	container: "{firstDiscoveryEditor}.dom.previewFrame",
+                        	createOnEvent: "onReady",
+                        	options: {
+                        		listeners: {
+                        			onReady: "{firstDiscoveryEditor}.events.onPreviewReady"
+                        		},
+            					templateUrl: { 
+            						expander: {
+            							funcName: "gpii.firstDiscovery.getPreviewUrl",
+            							args: ["{that}", "{prefsEditor}.model.preferences.gpii_firstDiscovery_language"]
+            						}
+            					}
+
+                        	}
+                        }
+                	},
                     gradeNames: ["gpii.firstDiscovery.tts.prefsEditor"],
                     modelListeners: {
                         states: {
@@ -98,6 +117,15 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                                 ["ctrlKey", "altKey"],
                                 "{that}.reset"
                             ]
+                        },
+                        "onCreate.bindToggleShortcut": {
+                        	listener: "gpii.firstDiscovery.keyboardShortcut.bindShortcut",
+                        	args: [
+                        	    "body",
+                        	    gpii.firstDiscovery.keyboardShortcut.key.t,
+                        	    [],
+                        	    "{that gpii.firstDiscovery.FirstDiscoveyrEditor}.setFocusToPreview"
+                        	]
                         }
                     },
                     distributeOptions: [{
@@ -121,6 +149,15 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                     messageBase: "{messageLoader}.resources.prefsEditor.resourceText",
                     styles: "{firstDiscoveryEditor}.options.styles",
                     panelTotalNum: "{firstDiscoveryEditor}.panels.length"
+                }
+            },
+            previewIndicator: {
+                type: "gpii.firstDiscovery.previewIndicator",
+                container: "{that}.dom.previewIndicator",
+                createOnEvent: "onCreatePreviewIndicator",
+                options: {
+                    messageBase: "{messageLoader}.resources.prefsEditor.resourceText",
+                    styles: "{firstDiscoveryEditor}.options.styles"
                 }
             },
             messageLoader: {
@@ -148,7 +185,9 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             panel: ".gpiic-fd-prefsEditor-panel",
             selfVoicingToggle: ".gpiic-fd-selfVoicingToggle",
             helpButton: ".gpiic-fd-help",
-            nav: ".gpiic-fd-nav"
+            nav: ".gpiic-fd-nav",
+            previewIndicator: ".gpiic-fd-previewIndicator",
+            previewFrame : ".flc-prefsEditor-preview-frame"
         },
         styles: {
             active: "gpii-fd-active",
@@ -166,7 +205,16 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         },
         events: {
             onPrefsEditorReady: null,
+            onPreviewReady: null,
+            onReady: {
+            	events: {
+            		onPrefsEditorReady: "onPrefsEditorReady",
+            		onPreviewReady: "onPreviewReady"
+            	},
+            	args: "{that}"
+            },
             onCreateNav: null,
+            onCreatePreviewIndicator: null,
             // onPanelShown is fired with one argument that is the id of the panel being shown
             onPanelShown: null
         },
@@ -179,19 +227,74 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             "onPrefsEditorReady.showInitialPanel": "{that}.showPanel",
             "onPrefsEditorReady.createNavButtons": {
                 listener: "{that}.events.onCreateNav"
+            },
+            "onPrefsEditorReady.createIndicators": {
+            	listener: "{that}.events.onCreatePreviewIndicator"
             }
         },
         invokers: {
             showPanel: {
                 funcName: "gpii.firstDiscovery.showPanel",
                 args: ["{that}"]
+            },
+            setFocusToPreview: {
+            	funcName: "gpii.firstDiscovery.setFocusToPreview",
+            	args: []
             }
         },
-        distributeOptions: {
+        distributeOptions: [{
             source: "{that}.options.tooltipOptions",
             target: "{that gpii.firstDiscovery.attachTooltip}.options.tooltipOptions"
-        }
+        }, {
+            source: "{that}.options.outerUiEnhancerOptions",
+            target: "{that enhancer}.options"
+        }, {
+        	source: "{that}.options.preview",
+        	target: "{that preview}.options"
+        },  {
+            source: "{that}.options.previewEnhancer",
+            target: "{that enhancer}.options"
+        },  {
+            source: "{that}.options.outerUiEnhancerGrades",
+            target: "{that enhancer}.options.gradeNames"
+        } ]
     });
+
+
+    // Parses the "preview" variable out of the querystring, returning the preview page to use
+    gpii.firstDiscovery.getPreviewName = function () {
+        var previewPage = "searchpreview.html"; //default to search
+        var queryKvps = gpii.firstDiscovery.getQueryStringKeys(window.location.search);
+        if (queryKvps.preview && queryKvps.preview != "undefined") {
+            previewPage = queryKvps["preview"];
+        }
+        return previewPage;
+    };
+
+    gpii.firstDiscovery.getQueryStringKeys = function (querystring) {
+        var queryKvps = {};
+        var kvps = querystring.substring(1).split("&");
+        for (var i = 0; i < kvps.length; i++) {
+            var kvp_pieces = kvps[i].split("=");
+            queryKvps[decodeURIComponent(kvp_pieces[0])] = decodeURIComponent(kvp_pieces[1]);
+        }
+        return queryKvps;
+    };
+
+    gpii.firstDiscovery.getPreviewUrl = function (that, languageCode) {
+        var baseurl = "../../src/html/";
+        var previewname = gpii.firstDiscovery.getPreviewName();
+        var previewpage = "searchpreview.html"; //default
+        if (previewname === "search") {
+            previewpage = "searchpreview.html";
+        } else if (previewname === "electron") {
+            previewpage = "electronpreview.html";
+        }
+
+        var previewQueryString = "?lang=" + languageCode;
+
+        return encodeURI(baseurl + previewpage + previewQueryString);
+    };
 
     gpii.firstDiscovery.showPanel = function (that) {
         var panels = that.panels,
@@ -206,6 +309,15 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 that.events.onPanelShown.fire(panelId);
             }
         });
+    };
+    
+    /**
+     * Name: setFocusToPreview
+     * Description: switch the focus to the iframe container that houses the preview and highlights the body of the preview.
+     */
+    gpii.firstDiscovery.setFocusToPreview = function () {
+    	document.getElementById("thePreview").focus();
+        $("#gpiic-fd").css("background-color", "green");
     };
 
     /*

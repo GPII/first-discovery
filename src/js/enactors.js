@@ -52,4 +52,202 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         that.initialLangSet = true;
     };
 
+    /*********************
+     * Line Space enactor*
+     ********************/
+    fluid.defaults("gpii.firstDiscovery.enactor.lineSpace", {
+        gradeNames: ["fluid.prefs.enactor", "fluid.viewComponent"],
+        preferenceMap: {
+            "gpii.firstDiscovery.lineSpace": {
+                "model.value": "default"
+            }
+        },
+        members:{
+            root:{
+                expander:{
+                    "this": "{that}.container",
+                    "method" : "closest",
+                    "args" : ["html"]
+                }
+            }
+        },
+        invokers: {
+            set: {
+                funcName: "gpii.firstDiscovery.enactor.lineSpace.set",
+                args: ["{arguments}.0", "{that}", "{that}.getLineHeightMultiplier"]
+            },
+            getTextSizeInPx: {
+                funcName: "gpii.firstDiscovery.enactor.lineSpace.getTextSizeInPx",
+                args: ["{that}.container"]
+            },
+            getLineHeight: {
+                funcName: "gpii.firstDiscovery.enactor.lineSpace.getLineHeight",
+                args: "{that}.container"
+            },
+            getLineHeightMultiplier: {
+                funcName: "gpii.firstDiscovery.enactor.lineSpace.getLineHeightMultiplier",
+                args: [{expander: {func: "{that}.getLineHeight"}}, {expander: {func: "{that}.getTextSizeInPx"}}]
+            }
+        },
+        modelListeners: {
+            value: {
+                listener: "{that}.set",
+                args: ["{change}.value"]
+            }
+        }
+    });
+
+    // Get the line-height of an element
+    // In IE8 and IE9 this will return the line-height multiplier
+    // In other browsers it will return the pixel value of the line height.
+    gpii.firstDiscovery.enactor.lineSpace.getLineHeight = function (container) {
+        if (!container.css("line-height")){
+            return "1";
+        }
+        return container.css("line-height");
+    };
+
+    gpii.firstDiscovery.enactor.lineSpace.getLineHeightMultiplier = function (lineHeight, fontSize) {
+        // Handle the given "lineHeight" argument is "undefined", which occurs when firefox detects
+        // "line-height" css value on a hidden container. (http://issues.fluidproject.org/browse/FLUID-4500)
+        if (!lineHeight) {
+            return 0;
+        }
+
+        // Needs a better solution. For now, "line-height" value "normal" is defaulted to 1.2em
+        // according to https://developer.mozilla.org/en/CSS/line-height
+        if (lineHeight === "normal") {
+            return "1";
+        }
+
+        // Continuing the work-around of jQuery + IE bug - http://bugs.jquery.com/ticket/2671
+        if (lineHeight.match(/[0-9]$/)) {
+            return Number(lineHeight);
+        }
+
+        return Math.round(parseFloat(lineHeight) / fontSize * 100) / 100;
+    };
+
+    gpii.firstDiscovery.enactor.lineSpace.set = function (targetLineSpace, that, getLineHeightMultiplierFunc) {
+        targetLineSpace = targetLineSpace || 1;
+        if (!that.initialSize) {
+            that.initialSize = getLineHeightMultiplierFunc();
+        }
+
+        if (that.initialSize) {
+            that.container.css("line-height", targetLineSpace); 
+            $("p").css("line-height", targetLineSpace);
+            $("#thePreview").contents().find("p").css("line-height", targetLineSpace);
+        }
+    };
+
+     /**
+     * return "font-size" in px
+     * @param (Object) container
+     * @param (Object) fontSizeMap: the mapping between the font size string
+     *                  values ("small", "medium" etc) to px values
+     */
+    gpii.firstDiscovery.enactor.lineSpace.getTextSizeInPx = function (container) {
+        var fontSize = container.css("font-size");
+
+        return parseFloat(fontSize);
+    };
+
+    /***********************
+     * Letter Space enactor*
+     **********************/
+    fluid.defaults("gpii.firstDiscovery.enactor.letterSpace", {
+        gradeNames: ["fluid.prefs.enactor", "fluid.viewComponent"],
+        preferenceMap: {
+            "gpii.firstDiscovery.letterSpace": {
+                "model.value": "default"
+            }
+        },
+        members:{
+            root:{
+                expander:{
+                    "this": "{that}.container",
+                    "method" : "closest",
+                    "args" : ["html"]
+                }
+            }
+        },
+        invokers: {
+            set: {
+                funcName: "gpii.firstDiscovery.enactor.letterSpace.set",
+                args: ["{arguments}.0", "{that}", "{that}.getLetterSpaceMultiplier"]
+            },
+            getTextSizeInPx: {
+                funcName: "gpii.firstDiscovery.enactor.letterSpace.getTextSizeInPx",
+                args: ["{that}.container"]
+            },
+            getLetterSpace: {
+                funcName: "gpii.firstDiscovery.enactor.letterSpace.getLetterSpace",
+                args: "{that}.container"
+            },
+            getLetterSpaceMultiplier: {
+                funcName: "gpii.firstDiscovery.enactor.letterSpace.getLetterSpaceMultiplier",
+                args: [{expander: {func: "{that}.getLetterSpace"}}, {expander: {func: "{that}.getTextSizeInPx"}}]
+            }
+        },
+        modelListeners: {
+            value: {
+                listener: "{that}.set",
+                args: ["{change}.value"]
+            }
+        }
+    });
+
+    gpii.firstDiscovery.enactor.letterSpace.getLetterSpace = function (container) {
+        if (!container.css("letter-spacing")){
+            return "1";
+        }
+        return container.css("letter-spacing");
+    };
+
+    gpii.firstDiscovery.enactor.letterSpace.getLetterSpaceMultiplier = function (letterSpace, fontSize) {
+        if (!letterSpace) {
+            return 0;
+        }
+
+        if (letterSpace === "normal") {
+            return 1;
+        }
+
+        // Continuing the work-around of jQuery + IE bug - http://bugs.jquery.com/ticket/2671
+        if (letterSpace.match(/[0-9]$/)) {
+            return Number(letterSpace);
+        }
+
+        return Math.round(parseFloat(letterSpace) / fontSize * 100) / 100;
+    };
+
+    gpii.firstDiscovery.enactor.letterSpace.set = function (times, that, getLetterSpaceMultiplierFunc) {
+        times = times || 1;
+        if (!that.initialSize) {
+            that.initialSize = getLetterSpaceMultiplierFunc();
+        }
+
+        if (that.initialSize) {
+            var targetLetterSpace = times * that.initialSize;
+            // Applies to tooltips
+            that.container.css("letter-spacing", targetLetterSpace);
+            // Applies to instruction text, etc
+            $("#gpiic-fd").css("letter-spacing", targetLetterSpace);
+        }
+    };
+
+     /**
+     * return "font-size" in px
+     * @param (Object) container
+     * @param (Object) fontSizeMap: the mapping between the font size string
+     *                  values ("small", "medium" etc) to px values
+     */
+    gpii.firstDiscovery.enactor.letterSpace.getTextSizeInPx = function (container) {
+        var fontSize = container.css("font-size");
+
+
+        // return fontSize in px
+        return parseFloat(fontSize);
+    };
 })(jQuery, fluid);

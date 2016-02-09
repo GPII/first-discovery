@@ -95,6 +95,30 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                     "message": "%messagePrefix/contrast.json"
                 }
             },
+            "lineSpace": {
+                "type": "gpii.firstDiscovery.lineSpace",
+                "enactor": {
+                    "type": "gpii.firstDiscovery.enactor.lineSpace"
+                },
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.lineSpace",
+                    "container": ".gpiic-fd-prefsEditor-panel-lineSpace",
+                    "template": "%templatePrefix/rangeTemplate.html",
+                    "message": "%messagePrefix/lineSpace.json"
+                }
+            },
+            "letterSpace": {
+                "type": "gpii.firstDiscovery.letterSpace",
+                "enactor": {
+                    "type": "gpii.firstDiscovery.enactor.letterSpace"
+                },
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.letterSpace",
+                    "container": ".gpiic-fd-prefsEditor-panel-letterSpace",
+                    "template": "%templatePrefix/rangeTemplate.html",
+                    "message": "%messagePrefix/letterSpace.json"
+                }
+            },
             "textSize": {
                 "type": "fluid.prefs.textSize",
                 "enactor": {
@@ -145,6 +169,28 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                     "keyboardInputGradeNames": ["gpii.firstDiscovery.keyboardInputTts"]
                 }
             },
+
+            //added for 'confirm' and 'save' panels
+            "confirm": {
+                         "type": "gpii.firstDiscovery.confirm",
+                         "panel": {
+                             "type": "gpii.firstDiscovery.panel.confirm",
+                             "container": ".gpiic-fd-prefsEditor-panel-confirm",
+                             "template": "%templatePrefix/confirmTemplate.html",
+                             "message": "%messagePrefix/confirm.json"
+                         }
+                     },
+            "save": {
+                          "type": "gpii.firstDiscovery.save",
+                          "panel": {
+                              "type": "gpii.firstDiscovery.panel.save",
+                              "container": ".gpiic-fd-prefsEditor-panel-save",
+                              "template": "%templatePrefix/saveTemplate.html",
+                              "message": "%messagePrefix/save.json"
+                          }
+                      },
+
+
             "congratulations": {
                 "type": "gpii.firstDiscovery.congratulations",
                 "panel": {
@@ -226,8 +272,34 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 "type": "number",
                 "default": 1,
                 "minimum": 0.2,
-                "maximum": 1.2,
+                "maximum": 1.1,
                 "divisibleBy": 0.1
+            }
+        }
+    });
+
+    fluid.defaults("gpii.firstDiscovery.schemas.letterSpace", {
+        gradeNames: ["fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.letterSpace": {
+                "type": "number",
+                "default": 0,
+                "minimum": 0.5,
+                "maximum": 2.5,
+                "divisibleBy": 0.25
+            }
+        }
+    });
+
+    fluid.defaults("gpii.firstDiscovery.schemas.lineSpace", {
+        gradeNames: ["fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.lineSpace": {
+                "type": "number",
+                "default": 1.2,
+                "minimum": 0.9,
+                "maximum": 1.6,
+                "divisibleBy": 0.05
             }
         }
     });

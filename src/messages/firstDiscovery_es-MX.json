@@ -18,6 +18,11 @@
     "help": "ayuda",
 
     "stepCountMsg": "Paso del %currentPanel al %numPanels",
-    "panelMsg": "%stepCountMsg. %instructions Para obetener ayuda, presiona la tecla 'H'."
+    "panelMsg": "%stepCountMsg. %instructions Para obetener ayuda, presiona la tecla 'H'.",
+    
+    "preview": "Avance",
+    "previewTooltip": "Esta es la vista previa.",
+    "warning": "Esto no es un sitio web en vivo!",
+    "warningTooltip": "Esto no es un sitio web en vivo!"
 
 }
