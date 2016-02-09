@@ -4,9 +4,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.css">
+    <link rel="stylesheet" type="text/css" href="../../src/lib/foundation/css/tooltip.css">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+    <script src="../../src/lib/foundation/js/foundation/tooltip.js"></script>
+    <script src="../../src/lib/foundation/js/vendor/modernizr.js"></script>
     
     <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.min.css" />
     <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.css" />
@@ -29,22 +30,8 @@
         <link rel="stylesheet" type="text/css" href="ltie9.css" />
     <![endif]-->
 
-    <script type="text/javascript" src="../../src/shared/lib/infusion/infusion-prefsFramework.js"></script>
-    
-    <script type="text/javascript" src="../../src/js/demo.js"></script>
+    <script type="text/javascript" src="../../src/js/toolTipify.js"></script>
         
-    <style>
-       .tooltip {
-         background-color: #fed73a;
-         color: black;
-         border: 1px solid #fed73a;
-         font-size:1.25rem;
-       }
-       
-       .tooltip > .nub {
-            display: none;
-       }
-    </style>
 </head>
 
 
@@ -54,73 +41,36 @@
 	    var keys = [];
 	    var messages = [];
 	    var currentMsg;
-	    $(document).ready(function() {  
-	    	
-            // read in json file contents to the key/messages arrays.
-            $.getJSON( "../messages/electronMessages_en-US.json", function( data ) {
-                $.each( data, function( key, val ) {
-                    keys.push(key);
-                    messages.push(val);
-                });
-                
-                // Tool Tip all of the <a> tags
-                $( "a" ).toolTipify(keys, messages,"tip-top");
-                
-                // change position for specified tool tip.
-                $( "#searchSubjects" ).removeClass("tip-top").addClass("tip-bottom");
-                
-                // Tool Tip all of the input tags
-                $( "input" ).toolTipify(keys, messages,"tip-bottom");
-                
-                //Load foundation 
-                $(document).foundation();    
-                
-                $(".has-tip").focus(function(){
-                    Foundation.libs.tooltip.showTip( jQuery($(this)) );
-                    var key = $(this).attr("id");
-                    console.log(key);
-                });
-                $(".has-tip").blur(function(){
-                    Foundation.libs.tooltip.hide( jQuery( $(this) ) );
-                });
-            });
-            
-	    });
-	    	    
-	    (function( $ ) {
-
-	        $.fn.toolTipify = function(keysArray, messagesArray, toolTipSetting) {
-                
-	            this.each(function() {
-
-                    var currentId = getKey(this);
-                    var currentMsg = getMessage(currentId, keys, messages);
-	                
-	                //Tool tip the tags
-                    $( this ).addClass( "has-tip" );
-	                $( this ).addClass( toolTipSetting );
-	                $( this ).attr( "title", currentMsg);
-	                $( this ).attr( "data-tooltip", "" );
-	                $( this ).attr( "aria-haspopup", "true" );
-	                $( this ).attr( "data-options", "disable_for_touch:true" );
+	    $(document).ready(function() {
+	
+	        // read in json file contents to the key/messages arrays.
+	        $.getJSON( "../messages/electronMessages_fr-FR.json", function( data ) {
+	            $.each( data, function( key, val ) {
+	                keys.push(key);
+	                messages.push(val);
 	            });
-	            
-	            
-	        };
-	        
-	        // get and return the html element's id if present.
-	        getKey = function (that) {
-	            var key = $(that).attr("id");
-	            return key;
-	        };
-	        
-	        // get the message for the provided key.
-	        getMessage = function (key, keysArray, messagesArray) {
-	            var index = $.inArray(key, keysArray);
-	            return messagesArray[index];
-	        };
-	     
-	    }( jQuery ));
+	
+	            // Tool Tip all of the <a> tags
+	            $( "a" ).toolTipify(keys, messages);
+	
+	            // Tool Tip all of the input tags
+	            $( "input" ).toolTipify(keys, messages);
+	
+	            //Load foundation
+	            $(document).foundation();
+	
+	            $(".has-tip").focus(function(){
+	                Foundation.libs.tooltip.showTip( jQuery($(this)) );
+	                var key = $(this).attr("id");
+	                console.log(key);
+	            });
+
+	            $(".has-tip").blur(function(){
+	                Foundation.libs.tooltip.hide( jQuery( $(this) ) );
+	            });
+	        });
+	
+	    });
 
 	</script>
 
@@ -265,21 +215,22 @@
                 <section>
                     <h3>Energy Levels and Electrons</h3>
                     <div id="energylevels" role="img" class="main-content-image" tabindex="0" aria-label="Graphic showing energy levels and electrons: This diagram shows a circle (labelled '1') surrounded by three rings, labelled moving outward from the centre '2', '3' and '4'."></div>
-                    <div id="energy-descrip">
-                    <div id="1234" tabindex="0">
-	                    <ol>
-	                        <li><strong>Nucleus</strong> - contains protons and neutrons</li>
-	                        <li><strong>1st energy level</strong> - can hold a maximum of 2 electrons in one orbital</li>
-	                        <li><strong>2nd energy level</strong> - can hold a maximum of 8 electrons over 4 different orbitals</li>
-	                        <li><strong>3rd energy level</strong> - can hold a maximum of 18 electrons distributed over 9 different orbitals</li>
-	                    </ol>
+                        <div id="energy-descrip">
+                            <div id="1234" tabindex="0">
+	                            <ol>
+                                <li><strong>Nucleus</strong> - contains protons and neutrons</li>
+                                <li><strong>1st energy level</strong> - can hold a maximum of 2 electrons in one orbital</li>
+                                <li><strong>2nd energy level</strong> - can hold a maximum of 8 electrons over 4 different orbitals</li>
+                                <li><strong>3rd energy level</strong> - can hold a maximum of 18 electrons distributed over 9 different orbitals</li>
+	                            </ol>
+                            </div>
+                        <div id="qA2" tabindex="0">
+                            <p><strong>Q:</strong> How many electrons can there be in each type of orbital shown above?</p>
+                            <p><strong>A:</strong> There can be a maximum of two electrons in any orbital, regardless of its shape.</p>
+                            <p><strong>Q:</strong> Where is the nucleus in each orbital?</p>
+                            <p><strong>A:</strong> The nucleus is at the center of each orbital. It is in the middle of the sphere in the S orbital and in the pinched part of the P orbital.</p>
+	                    </div>
                     </div>
-                    <div id="qA2" tabindex="0">
-	                    <p><strong>Q:</strong> How many electrons can there be in each type of orbital shown above?</p>
-	                    <p><strong>A:</strong> There can be a maximum of two electrons in any orbital, regardless of its shape.</p>
-	                    <p><strong>Q:</strong> Where is the nucleus in each orbital?</p>
-	                    <p><strong>A:</strong> The nucleus is at the center of each orbital. It is in the middle of the sphere in the S orbital and in the pinched part of the P orbital.</p>
-	                 </div>
                 </section>
 
                  <section id="summary" tabindex="0">
