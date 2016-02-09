@@ -68,10 +68,11 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                         		},
             					templateUrl: { 
             						expander: {
-            							funcName: "fluid.stringTemplate",
-            							args: ["%baseurl%language%filetype", {"baseurl": "../../src/html/electronpreview_", "language": "{prefsEditor}.model.preferences.gpii_firstDiscovery_language", "filetype": ".html"}]
+            							funcName: "gpii.firstDiscovery.getPreviewUrl",
+            							args: ["{that}", "{prefsEditor}.model.preferences.gpii_firstDiscovery_language"]
             						}
             					}
+
                         	}
                         }
                 	},
@@ -258,6 +259,42 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             target: "{that enhancer}.options.gradeNames"
         } ]
     });
+
+
+    // Parses the "preview" variable out of the querystring, returning the preview page to use
+    gpii.firstDiscovery.getPreviewName = function () {
+        var previewPage = "searchpreview.html"; //default to search
+        var queryKvps = gpii.firstDiscovery.getQueryStringKeys(window.location.search);
+        if (queryKvps.preview && queryKvps.preview != "undefined") {
+            previewPage = queryKvps["preview"];
+        }
+        return previewPage;
+    };
+
+    gpii.firstDiscovery.getQueryStringKeys = function (querystring) {
+        var queryKvps = {};
+        var kvps = querystring.substring(1).split("&");
+        for (var i = 0; i < kvps.length; i++) {
+            var kvp_pieces = kvps[i].split("=");
+            queryKvps[decodeURIComponent(kvp_pieces[0])] = decodeURIComponent(kvp_pieces[1]);
+        }
+        return queryKvps;
+    };
+
+    gpii.firstDiscovery.getPreviewUrl = function (that, languageCode) {
+        var baseurl = "../../src/html/";
+        var previewname = gpii.firstDiscovery.getPreviewName();
+        var previewpage = "searchpreview.html"; //default
+        if (previewname === "search") {
+            previewpage = "searchpreview.html";
+        } else if (previewname === "electron") {
+            previewpage = "electronpreview.html";
+        }
+
+        var previewQueryString = "?lang=" + languageCode;
+
+        return encodeURI(baseurl + previewpage + previewQueryString);
+    };
 
     gpii.firstDiscovery.showPanel = function (that) {
         var panels = that.panels,

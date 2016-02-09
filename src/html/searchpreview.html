@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<!--[if IE 9]>
+<html class="lt-ie10" lang="en"> <![endif]-->
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foundation 5</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/normalize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css">
+    <link href='http://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css' rel='stylesheet'
+          type='text/css'>
+
+
+    <link rel="stylesheet" href="../../src/lib/foundation/css/foundation-icons/foundation-icons.css"/>
+    <!-- CSS required for the Prefs Editor -->
+    <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/Enactors.css"/>
+    <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/PrefsEditor.css"/>
+    <link rel="stylesheet" type="text/css" href="../../src/css/style.css"/>
+
+
+    <style type="text/css">
+
+        html, body {
+            background-color: #FFFFFF;
+        }
+
+        h3.search-result-link {
+            font-size: 1.25rem;
+        }
+
+        p.search-result-url {
+            font-size: .875rem;
+            margin-top: -5px;
+            margin-bottom: 0px;
+            color: green;
+        }
+
+        p.also-try-label {
+            font-size: .8125rem;
+        }
+
+        p.search-result-description {
+            font-size: .8125rem;
+        }
+
+        #search-box-container {
+            padding-top: .5rem;
+            padding-left: 0px;
+        }
+
+        .notice {
+            font-size: .875rem;
+            margin-bottom: 5px;
+        }
+
+        .title-letter-1 {
+            color: red;
+
+        }
+
+        .title-letter-2 {
+
+            color: orange;
+            margin-left: -.5rem;
+
+        }
+
+        .title-letter-3 {
+            color: #ffff4c;
+            margin-left: -.5rem;
+
+        }
+
+        .title-letter-4 {
+            color: green;
+            margin-left: -.5rem;
+
+        }
+
+        .title-letter-5 {
+            color: blue;
+            margin-left: -.5rem;
+
+        }
+
+        .title-letter-6 {
+            color: violet;
+            margin-left: -.5rem;
+
+        }
+
+        .header-panel {
+            margin-bottom: 8px;
+        }
+
+        #logocontainer {
+            padding-right: 0px;
+        }
+
+        .also-try-list {
+            list-style-type: none;
+            margin-left: 0px;
+        }
+
+        .search-button {
+            border: 1px solid #008CBA;
+        }
+
+
+    </style>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+</head>
+<body>
+
+
+<div class="row">
+
+    <div class="small-12 columns">
+
+
+        <div class="panel header-panel">
+            <div class="row">
+                <div id="logocontainer" class="small-3 columns">
+                    <h1><span class="title-letter-1">S</span>
+                        <span class="title-letter-2">e</span>
+                        <span class="title-letter-3">a</span>
+                        <span class="title-letter-4">r</span>
+                        <span class="title-letter-5">c</span>
+                        <span class="title-letter-6">h</span>
+                    </h1>
+                </div>
+
+                <div class="small-7 columns" id="search-box-container">
+                    <input title="Search Box" id="searchbox" class="search-box" type="text"/>
+                </div>
+                <div class="small-2 columns end search-button-container">
+                    <a id="searchbutton" href="#" class="button radius small search-button"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="small-7 columns">
+
+
+        <div class="row">
+            <div class="small-2 columns small-3"></div>
+            <div class="small-10 columns">
+                <p id="ad_result_label" class="notice"></p>
+            </div>
+        </div>
+
+
+        <div id="ad1" class="row">
+            <div class="small-2 columns small-3"></div>
+            <div class="small-10 columns">
+                <h3 class="search-result-link"><a href=""></a></h3>
+
+                <p class="search-result-url"></p>
+
+                <p class="search-result-description"></p>
+            </div>
+        </div>
+
+
+        <div id="ad2" class="row">
+            <div class="small-2 columns small-3"></div>
+            <div class="small-10 columns">
+                <h3 class="search-result-link"><a href=""></a></h3>
+
+                <p class="search-result-url"></p>
+
+                <p class="search-result-description"></p>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="small-2 columns"></div>
+            <div class="small-10 columns">
+                <p id="search_result_label" class="notice"></p>
+            </div>
+        </div>
+
+        <div id="result1" class="row">
+            <div class="small-2 columns small-3"></div>
+            <div class="small-10 columns">
+                <h3 class="search-result-link"><a href=""></a></h3>
+
+                <p class="search-result-url"></p>
+
+                <p class="search-result-description"></p>
+            </div>
+        </div>
+
+        <div id="result2" class="row">
+            <div class="small-2 columns small-3"></div>
+            <div class="small-10 columns">
+                <h3 class="search-result-link"><a href=""></a></h3>
+
+                <p class="search-result-url"></p>
+
+                <p class="search-result-description"></p>
+            </div>
+        </div>
+
+        <div id="result3" class="row">
+            <div class="small-2 columns small-3"></div>
+            <div class="small-10 columns">
+                <h3 class="search-result-link"><a href=""></a></h3>
+
+                <p class="search-result-url"></p>
+
+                <p class="search-result-description"></p>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="small-2 columns"></div>
+            <div class="small-10 columns">
+                <ul class="pagination">
+                    <li class="arrow unavailable"><a href="">«</a></li>
+                    <li class="current"><a href="">1</a></li>
+                    <li><a href="">2</a></li>
+                    <li><a href="">3</a></li>
+                    <li><a href="">4</a></li>
+                    <li class="unavailable"><a href="">…</a></li>
+                    <li><a href="">12</a></li>
+                    <li><a href="">13</a></li>
+                    <li class="arrow"><a href="">»</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+
+    <aside class="small-3 columns hide-for-small">
+        <p id="also_try_label" class="also-try-label"></p>
+        <ul id="also_try_list" class="also-try-list">
+
+        </ul>
+    </aside>
+</div>
+
+<footer class="row">
+    <div class="small-12 columns">
+        <hr/>
+        <div class="row">
+            <div class="small-5 columns">
+                <p id="copyright"></p>
+            </div>
+            <div class="small-7 columns">
+                <ul id="footer_links" class="inline-list right">
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/js/foundation.min.js"></script>
+<script type="text/javascript">
+
+
+    // Parses the query string and returns an object container key-value pairs from
+    // decoded querystring variables
+    function getQueryStringKeys() {
+        var queryKvps = {};
+        var kvps = window.location.search.substring(1).split("&");
+        for (var i = 0; i < kvps.length; i++) {
+            var kvp_pieces = kvps[i].split("=");
+            queryKvps[decodeURIComponent(kvp_pieces[0])] = decodeURIComponent(kvp_pieces[1]);
+        }
+        return queryKvps;
+    }
+
+    // Parses the "lang" variable out of the querystring, returning the languageCode to use
+    // for the page text
+    function getLanguageCode() {
+        var languageCode = "en-US"; //default to english
+        var queryKvps = getQueryStringKeys();
+        if (queryKvps.lang && queryKvps.lang != "undefined") {
+            languageCode = queryKvps["lang"];
+        }
+        return languageCode;
+    }
+
+    // Fetch the language text file based on lang Query String variable, and pass
+    // the returned json data to the function that will place strings in the UI
+    function fetch_and_insert_text() {
+        var langaugeCode = getLanguageCode();
+        var url = '../messages/searchpreview_' + langaugeCode + ".json";
+        $.ajax({
+            type: 'GET',
+            url: url,
+            dataType: 'json',
+            success: insertText,
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("error occured: " + textStatus);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        fetch_and_insert_text();
+
+    });
+
+
+    function setUpTts() {
+        // Find the speech function from the First Discovery Tool, so you can call the speechQueueFunction from where-ever needed in the preview
+        // todo: needs to honor the voice toggle (on/off)
+        // todo: how do we handle languages (utterance options)
+        // todo: handle case where the parent queueSpeech function doesn't exist
+        var speechQueueFunction = window.parent.fluid.queryIoCSelector(window.parent.fluid.rootComponent, "gpii.firstDiscovery.selfVoicing")[0].queueSpeech;
+
+
+        // Add click event to all paragraphs to voice their text
+        $("p").click(function () {
+            speechQueueFunction($(this).text(), {}, true);
+        });
+
+        $("p").on('focus', function () {
+            speechQueueFunction($(this).text(), {}, true);
+        });
+    }
+
+
+    // Place strings into the UI from the given json data in arg 0
+    function insertText(search_preview_text) {
+
+        $("#searchbox").attr("value", search_preview_text.search_query);
+        $("#searchbutton").text(search_preview_text.search_button);
+
+
+        $("#ad_result_label").text(search_preview_text.ad_result_label);
+        $("#ad1 .search-result-link a").text(search_preview_text.ads[0].title);
+        $("#ad1 .search-result-url").text(search_preview_text.ads[0].url);
+        $("#ad1 .search-result-description").text(search_preview_text.ads[0].description);
+
+        $("#ad2 .search-result-link a").text(search_preview_text.ads[1].title);
+        $("#ad2 .search-result-url").text(search_preview_text.ads[1].url);
+        $("#ad2 .search-result-description").text(search_preview_text.ads[1].description);
+
+        $("#search_result_label").text(search_preview_text.search_result_label);
+
+        $("#result1 .search-result-link a").text(search_preview_text.results[0].title);
+        $("#result1 .search-result-url").text(search_preview_text.results[0].url);
+        $("#result1 .search-result-description").text(search_preview_text.results[0].description);
+
+        $("#result2 .search-result-link a").text(search_preview_text.results[1].title);
+        $("#result2 .search-result-url").text(search_preview_text.results[1].url);
+        $("#result2 .search-result-description").text(search_preview_text.results[1].description);
+
+        $("#result3 .search-result-link a").text(search_preview_text.results[2].title);
+        $("#result3 .search-result-url").text(search_preview_text.results[2].url);
+        $("#result3 .search-result-description").text(search_preview_text.results[2].description);
+
+        $("#also_try_label").text(search_preview_text.also_try_label);
+
+
+        // Add each "also try" link to the list
+        for (var i = 0; i < search_preview_text.also_try_link_titles.length; i++) {
+            $("<li>").append(
+                    $("<a>")
+                            .text(search_preview_text.also_try_link_titles[i])
+                            .attr("attr", "#")
+            ).appendTo("#also_try_list");
+        }
+
+        // Add each footer link
+        for (var i = 0; i < search_preview_text.footer_links.length; i++) {
+            $("<li>").append(
+                    $("<a>")
+                            .text(search_preview_text.footer_links[i])
+                            .attr("attr", "#")
+            ).appendTo("#footer_links");
+        }
+
+        $("#copyright").html(search_preview_text.footer_copyright);
+
+    }
+
+
+    $(document).foundation();
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+{
+  "logo": "Chercher",
+  "search_query": "2016 lignes directrices fiscales",
+  "search_button": "Chercher",
+  "ad_result_label": "Annonces correspondantes à 2016 guide d'impôt:",
+  "search_result_label": "Résultats de la recherche:",
+  "ads": [
+    {
+      "title": "Taxes de fichiers en ligne GRATUIT",
+      "url": "www.free-tax-on-the-web.com",
+      "description": "Logiciel libre d'impôt afin de maximiser votre retour avec le dépôt électronique gratuit."
+    },
+    {
+      "title": "SuperTaxe",
+      "url": "www.super-tax.com",
+      "description": "20% de bonus sur votre retour lorsque remplie via une carte -cadeau !"
+    }
+  ],
+  "results": [
+    {
+      "title": "2016 Publication 15 - Internal Revenue Service",
+      "url": "https://www.irs.gov/pub/irs-pdf/p15.pdf",
+      "description": "23 décembre 2015 - Département du Trésor . Internal Revenue Service . Publication 15. Cat . No. 10000W . ( E circulaire ) ,. Employeurs. Guide de la taxe . Pour une utilisation en 2016 ."
+    },
+    {
+      "title": "2016 Limites EITC revenu , les montants de crédit maximum et ...",
+      "url": "https://www.irs.gov/...Tax.../EITC-Income-Limi...",
+      "description": "24 novembre 2015 - Le montant maximal du crédit pour l'année d'imposition 2016 : 6269 $ ... Règles enfant admissible , ou ; Publication 596 , règles Si vous avez un enfant admissible."
+    },
+    {
+      "title": "Dernières Nouvelles de l'IRS - Internal Revenue Service",
+      "url": "https://www.irs.gov/uac/Latest-News",
+      "description": "Dernières Nouvelles . Préparateur de déclaration fraude sur le rapport annuel « Dirty Dozen » Liste IRS des escroqueries fiscales à éviter pendant 2016 Dépôt Saison IR - 2016-16 , février 4 , 2016 - Le ..."
+    }
+  ],
+  "also_try_label": "Essayez aussi:",
+  "also_try_link_titles": [
+    "2016 chaînes de tranches d'imposition",
+    "2016 limites de cotisation 401k",
+    "2016 fiscale comment",
+    "2016 formulaires fiscaux IRS"
+  ],
+  "footer_copyright": "&copy; Droit d'auteur Recherche Inc.",
+  "footer_links": [
+    "Toile",
+    "Nouvelles",
+    "Contact",
+    "Sur",
+    "Développeurs"
+  ]
+}
