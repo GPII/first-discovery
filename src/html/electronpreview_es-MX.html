@@ -61,7 +61,6 @@
 
                 $(".has-tip").focus(function(){
                     Foundation.libs.tooltip.showTip( jQuery($(this)) );
-                    var key = $(this).attr("id");
                 });
 
                 $(".has-tip").blur(function(){
@@ -71,12 +70,26 @@
                 //self-voicing for the preview
                 var speechQueueFunction = window.parent.fluid.queryIoCSelector(window.parent.fluid.rootComponent, "gpii.firstDiscovery.selfVoicing")[0].queueSpeech;
                 $( "*" ).focus(function () {
+                    console.log(getMessage($(this)));
                     speechQueueFunction(getMessage($(this)), {}, false);
                 });
-                $( "*" ).hover(function () {
+                $( "a" ).focusin(function () {
+                    console.log(getMessage($(this)));
                     speechQueueFunction(getMessage($(this)), {}, false);
                 });
-
+                $( "a" ).mouseenter(function () {
+                    console.log(getMessage($(this)));
+                    speechQueueFunction(getMessage($(this)), {}, false);
+                });
+                $( "input" ).focusin(function () {
+                    console.log(getMessage($(this)));
+                    speechQueueFunction(getMessage($(this)), {}, false);
+                });
+                $( "input" ).mouseenter(function () {
+                    console.log(getMessage($(this)));
+                    speechQueueFunction(getMessage($(this)), {}, false);
+                });
+                
                 // get the component id, return corresponding message.
                 getMessage = function (that) {
                     var key = $(that).attr("id");
