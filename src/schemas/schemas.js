@@ -272,7 +272,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 "type": "number",
                 "default": 1,
                 "minimum": 0.2,
-                "maximum": 1.2,
+                "maximum": 1.1,
                 "divisibleBy": 0.1
             }
         }
