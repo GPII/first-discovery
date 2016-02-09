@@ -137,6 +137,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         if (that.initialSize) {
             that.container.css("line-height", targetLineSpace); 
             $("p").css("line-height", targetLineSpace);
+            $("#thePreview").contents().find("p").css("line-height", targetLineSpace);
         }
     };
 
