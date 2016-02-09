@@ -37,41 +37,57 @@
 
 <body class="exploration-tool-demo fl-focus">
 
+
 	<script>
-	    var keys = [];
-	    var messages = [];
-	    var currentMsg;
-	    $(document).ready(function() {
-	
-	        // read in json file contents to the key/messages arrays.
-	        $.getJSON( "../messages/electronMessages_fr-FR.json", function( data ) {
-	            $.each( data, function( key, val ) {
-	                keys.push(key);
-	                messages.push(val);
-	            });
-	
-	            // Tool Tip all of the <a> tags
-	            $( "a" ).toolTipify(keys, messages);
-	
-	            // Tool Tip all of the input tags
-	            $( "input" ).toolTipify(keys, messages);
-	
-	            //Load foundation
-	            $(document).foundation();
-	
-	            $(".has-tip").focus(function(){
-	                Foundation.libs.tooltip.showTip( jQuery($(this)) );
-	                var key = $(this).attr("id");
-	                console.log(key);
-	            });
-	            $(".has-tip").blur(function(){
-	                Foundation.libs.tooltip.hide( jQuery( $(this) ) );
-	            });
-	        });
-	
-	    });
-	
-	</script>
+        var keys = [];
+        var messages = [];
+        var currentMsg;
+        $(document).ready(function() {
+
+            // read in json file contents to the key/messages arrays.
+            $.getJSON( "../messages/electronMessages_fr-FR.json", function( data ) {
+                $.each( data, function( key, val ) {
+                    keys.push(key);
+                    messages.push(val);
+                });
+
+                // Tool Tip all of the <a> tags
+                $( "a" ).toolTipify(keys, messages);
+
+                // Tool Tip all of the input tags
+                $( "input" ).toolTipify(keys, messages);
+
+                //Load foundation
+                $(document).foundation();
+
+                $(".has-tip").focus(function(){
+                    Foundation.libs.tooltip.showTip( jQuery($(this)) );
+                    var key = $(this).attr("id");
+                });
+
+                $(".has-tip").blur(function(){
+                    Foundation.libs.tooltip.hide( jQuery( $(this) ) );
+                });
+
+                //self-voicing for the preview
+                var speechQueueFunction = window.parent.fluid.queryIoCSelector(window.parent.fluid.rootComponent, "gpii.firstDiscovery.selfVoicing")[0].queueSpeech;
+                $( "*" ).focus(function () {
+                    speechQueueFunction(getMessage($(this)), {}, false);
+                });
+                $( "*" ).hover(function () {
+                    speechQueueFunction(getMessage($(this)), {}, false);
+                });
+
+                // get the component id, return corresponding message.
+                getMessage = function (that) {
+                    var key = $(that).attr("id");
+                    var index = $.inArray(key, keys);
+                    return messages[index];
+                };
+            });
+        });
+    </script>
+
 
 
 <div class="flc-overviewPanel fl-overviewPanel-container"></div>
@@ -214,20 +230,21 @@
                 <section>
                     <h3>Les niveaux et les Électrons Énergétiques</h3>
                     <div id="energylevels" role="img" class="main-content-image" tabindex="0" aria-label="Graphic showing energy levels and electrons: This diagram shows a circle (labelled '1') surrounded by three rings, labelled moving outward from the centre '2', '3' and '4'."></div>
-                    <div id="energy-descrip">
-                        <div id="1234" tabindex="0">
-                            <ol>
-                                <li><strong>Noyau</strong> - contient des protons et des neutrons</li>
-                                <li><strong>niveau d'énergie 1er</strong> - peut contenir un maximum de 2 électrons dans une orbitale</li>
-                                <li><strong>2ème niveau d'énergie</strong> - peut contenir un maximum de 8 électrons sur 4 orbitales différentes</li>
-                                <li><strong>niveau d'énergie 3</strong> - peut contenir un maximum de 18 électrons répartis sur 9 orbitales différentes</li>
-                            </ol>
-                        </div>
-                        <div id="qA2" tabindex="0">
-                            <p><strong>Q:</strong> Combien d'électrons peut y avoir dans chaque type d'orbitale ci-dessus?</p>
-                            <p><strong>A:</strong> Il peut y avoir un maximum de deux électrons dans toute orbitale, quelle que soit sa forme.</p>
-                            <p><strong>Q:</strong> Où est le noyau de chaque orbitale?</p>
-                            <p><strong>A:</strong> Le noyau se trouve au centre de chaque orbital. Il est au milieu de la sphère dans le S orbital et dans la partie pincée du P orbital.</p>
+                        <div id="energy-descrip">
+                            <div id="1234" tabindex="0">
+                                <ol>
+                                    <li><strong>Noyau</strong> - contient des protons et des neutrons</li>
+                                    <li><strong>niveau d'énergie 1er</strong> - peut contenir un maximum de 2 électrons dans une orbitale</li>
+                                    <li><strong>2ème niveau d'énergie</strong> - peut contenir un maximum de 8 électrons sur 4 orbitales différentes</li>
+                                    <li><strong>niveau d'énergie 3</strong> - peut contenir un maximum de 18 électrons répartis sur 9 orbitales différentes</li>
+                                </ol>
+                            </div>
+                            <div id="qA2" tabindex="0">
+                                <p><strong>Q:</strong> Combien d'électrons peut y avoir dans chaque type d'orbitale ci-dessus?</p>
+                                <p><strong>A:</strong> Il peut y avoir un maximum de deux électrons dans toute orbitale, quelle que soit sa forme.</p>
+                                <p><strong>Q:</strong> Où est le noyau de chaque orbitale?</p>
+                                <p><strong>A:</strong> Le noyau se trouve au centre de chaque orbital. Il est au milieu de la sphère dans le S orbital et dans la partie pincée du P orbital.</p>
+                            </div>
                         </div>
                 </section>
 

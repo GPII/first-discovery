@@ -44,7 +44,7 @@
 	    $(document).ready(function() {
 	
 	        // read in json file contents to the key/messages arrays.
-	        $.getJSON( "../messages/electronMessages_fr-FR.json", function( data ) {
+	        $.getJSON( "../messages/electronMessages_en-US.json", function( data ) {
 	            $.each( data, function( key, val ) {
 	                keys.push(key);
 	                messages.push(val);
@@ -62,18 +62,30 @@
 	            $(".has-tip").focus(function(){
 	                Foundation.libs.tooltip.showTip( jQuery($(this)) );
 	                var key = $(this).attr("id");
-	                console.log(key);
 	            });
 
 	            $(".has-tip").blur(function(){
 	                Foundation.libs.tooltip.hide( jQuery( $(this) ) );
 	            });
+
+	             //self-voicing for the preview
+                var speechQueueFunction = window.parent.fluid.queryIoCSelector(window.parent.fluid.rootComponent, "gpii.firstDiscovery.selfVoicing")[0].queueSpeech;
+                $( "*" ).focus(function () {
+                    speechQueueFunction(getMessage($(this)), {}, false);
+                });
+                $( "*" ).hover(function () {
+                    speechQueueFunction(getMessage($(this)), {}, false);
+                });
+
+                // get the component id, return corresponding message.
+                getMessage = function (that) {
+                    var key = $(that).attr("id");
+                    var index = $.inArray(key, keys);
+                    return messages[index];
+                };
 	        });
-	
 	    });
-
 	</script>
-
 
     <div class="flc-overviewPanel fl-overviewPanel-container"></div>
     <div class="flc-toc-tocContainer toc"> </div>
@@ -141,9 +153,11 @@
                 </div>
 
                 <article id="content">
-                <section>
+                <section >
                 <div id="storm" role="img" class="main-content-image" tabindex="0" aria-label="Photo of stormy sky, with lightning striking over a city."></div>
-                <p id="watchout" tabindex="0">Watch out! Lightning is extremely dangerous. A single bolt of lightning can carry a billion volts of electricity. That’s enough energy to light a 100-watt light bulb—for three months! As impressive as it is, lightning is nothing more than a sudden flow of extremely tiny particles. What are the particles that flow in a lightning bolt? The answer is electrons.</p>
+                </section>
+                <section id="watchOut" tabindex="0">
+                <p>Watch out! Lightning is extremely dangerous. A single bolt of lightning can carry a billion volts of electricity. That’s enough energy to light a 100-watt light bulb—for three months! As impressive as it is, lightning is nothing more than a sudden flow of extremely tiny particles. What are the particles that flow in a lightning bolt? The answer is electrons.</p>
                 </section>
 
                 <section id="whatAreElectrons" tabindex="0">
