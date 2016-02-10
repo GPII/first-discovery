@@ -111,6 +111,11 @@
             border: 1px solid #008CBA;
         }
 
+        .highlighted {
+            border: 10px solid yellow;
+
+        }
+
 
     </style>
 
@@ -138,10 +143,10 @@
                 </div>
 
                 <div class="small-7 columns" id="search-box-container">
-                    <input title="Search Box" id="searchbox" class="search-box" type="text"/>
+                    <input title="Search Box" id="searchbox" class="search-box" type="text" tabindex="0"/>
                 </div>
                 <div class="small-2 columns end search-button-container">
-                    <a id="searchbutton" href="#" class="button radius small search-button"></a>
+                    <a id="searchbutton" href="#" class="button radius small search-button" tabindex="0"></a>
                 </div>
             </div>
         </div>
@@ -156,15 +161,16 @@
         <div class="row">
             <div class="small-2 columns small-3"></div>
             <div class="small-10 columns">
-                <p id="ad_result_label" class="notice"></p>
+                <p id="ad_result_label" class="notice" tabindex="0"></p>
             </div>
         </div>
 
 
-        <div id="ad1" class="row">
+        <div class="row">
             <div class="small-2 columns small-3"></div>
-            <div class="small-10 columns">
-                <h3 class="search-result-link"><a href=""></a></h3>
+            <div id="ad1" tabindex="0" class="small-10 columns">
+                <h3 class="search-result-link"><a href="" tabindex="-1">
+                    <!-- Skip this link in the tab navigation --></a></h3>
 
                 <p class="search-result-url"></p>
 
@@ -173,10 +179,10 @@
         </div>
 
 
-        <div id="ad2" class="row">
+        <div class="row">
             <div class="small-2 columns small-3"></div>
-            <div class="small-10 columns">
-                <h3 class="search-result-link"><a href=""></a></h3>
+            <div id="ad2" tabindex="0" class="small-10 columns">
+                <h3 class="search-result-link"><a href="" tabindex="-1"></a></h3>
 
                 <p class="search-result-url"></p>
 
@@ -188,14 +194,14 @@
         <div class="row">
             <div class="small-2 columns"></div>
             <div class="small-10 columns">
-                <p id="search_result_label" class="notice"></p>
+                <p id="search_result_label" class="notice" tabindex="0"></p>
             </div>
         </div>
 
-        <div id="result1" class="row">
+        <div class="row">
             <div class="small-2 columns small-3"></div>
-            <div class="small-10 columns">
-                <h3 class="search-result-link"><a href=""></a></h3>
+            <div id="result1" tabindex="0" class="small-10 columns">
+                <h3 class="search-result-link"><a href="" tabindex="-1"></a></h3>
 
                 <p class="search-result-url"></p>
 
@@ -203,10 +209,10 @@
             </div>
         </div>
 
-        <div id="result2" class="row">
+        <div class="row">
             <div class="small-2 columns small-3"></div>
-            <div class="small-10 columns">
-                <h3 class="search-result-link"><a href=""></a></h3>
+            <div id="result2" tabindex="0" class="small-10 columns">
+                <h3 class="search-result-link"><a href="" tabindex="-1"></a></h3>
 
                 <p class="search-result-url"></p>
 
@@ -214,10 +220,10 @@
             </div>
         </div>
 
-        <div id="result3" class="row">
+        <div class="row">
             <div class="small-2 columns small-3"></div>
-            <div class="small-10 columns">
-                <h3 class="search-result-link"><a href=""></a></h3>
+            <div id="result3" tabindex="0" class="small-10 columns">
+                <h3 class="search-result-link"><a href="" tabindex="-1"></a></h3>
 
                 <p class="search-result-url"></p>
 
@@ -230,15 +236,15 @@
             <div class="small-2 columns"></div>
             <div class="small-10 columns">
                 <ul class="pagination">
-                    <li class="arrow unavailable"><a href="">«</a></li>
-                    <li class="current"><a href="">1</a></li>
-                    <li><a href="">2</a></li>
-                    <li><a href="">3</a></li>
-                    <li><a href="">4</a></li>
-                    <li class="unavailable"><a href="">…</a></li>
-                    <li><a href="">12</a></li>
-                    <li><a href="">13</a></li>
-                    <li class="arrow"><a href="">»</a></li>
+                    <li class="arrow unavailable"><a id="pagination-start" href="" tabindex="-1">«</a></li>
+                    <li class="current"><a id="pagination-1" tabindex="-1" href="">1</a></li>
+                    <li><a href="" id="pagination-2" tabindex="0">2</a></li>
+                    <li><a href="" id="pagination-3" tabindex="0">3</a></li>
+                    <li><a href="" id="pagination-4" tabindex="0">4</a></li>
+                    <li class="unavailable"><a tabindex="-1" href="">…</a></li>
+                    <li><a href="" id="pagination-12" tabindex="0">12</a></li>
+                    <li><a href="" id="pagination-13" tabindex="0">13</a></li>
+                    <li class="arrow"><a id="pagination-end" tabindex="0" href="">»</a></li>
                 </ul>
             </div>
         </div>
@@ -247,9 +253,12 @@
 
 
     <aside class="small-3 columns hide-for-small">
-        <p id="also_try_label" class="also-try-label"></p>
+        <p id="also_try_label" class="also-try-label" tabindex="0"></p>
         <ul id="also_try_list" class="also-try-list">
-
+            <li><a id="also_try_1" tabindex="0"></a></li>
+            <li><a id="also_try_2" tabindex="0"></a></li>
+            <li><a id="also_try_3" tabindex="0"></a></li>
+            <li><a id="also_try_4" tabindex="0"></a></li>
         </ul>
     </aside>
 </div>
@@ -259,10 +268,15 @@
         <hr/>
         <div class="row">
             <div class="small-5 columns">
-                <p id="copyright"></p>
+                <p id="copyright" tabindex="0"></p>
             </div>
             <div class="small-7 columns">
                 <ul id="footer_links" class="inline-list right">
+                    <li><a id="footer_link_1" tabindex="0"></a></li>
+                    <li><a id="footer_link_2" tabindex="0"></a></li>
+                    <li><a id="footer_link_3" tabindex="0"></a></li>
+                    <li><a id="footer_link_4" tabindex="0"></a></li>
+                    <li><a id="footer_link_5" tabindex="0"></a></li>
                 </ul>
             </div>
         </div>
@@ -272,6 +286,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/js/foundation.min.js"></script>
 <script type="text/javascript">
 
+
+    $(document).ready(function () {
+        fetch_and_insert_text();
+        $(document).foundation();
+    });
 
     // Parses the query string and returns an object container key-value pairs from
     // decoded querystring variables
@@ -305,35 +324,150 @@
             type: 'GET',
             url: url,
             dataType: 'json',
-            success: insertText,
+            success: function (data) {
+                insertText(data);
+                setUpTts(data)
+            },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("error occured: " + textStatus);
             }
         });
     }
 
-    $(document).ready(function () {
-        fetch_and_insert_text();
 
-    });
-
-
-    function setUpTts() {
-        // Find the speech function from the First Discovery Tool, so you can call the speechQueueFunction from where-ever needed in the preview
-        // todo: needs to honor the voice toggle (on/off)
-        // todo: how do we handle languages (utterance options)
-        // todo: handle case where the parent queueSpeech function doesn't exist
+    // Attach events to page elements so they can self voice when navigated to
+    function setUpTts(text) {
+        // The parent window contains a self voicing function from the First Discovery Tool that
+        // the preview can hook into to voice itself
         var speechQueueFunction = window.parent.fluid.queryIoCSelector(window.parent.fluid.rootComponent, "gpii.firstDiscovery.selfVoicing")[0].queueSpeech;
 
-
-        // Add click event to all paragraphs to voice their text
-        $("p").click(function () {
-            speechQueueFunction($(this).text(), {}, true);
+        $("#searchbox").focus(function () {
+            speechQueueFunction(text.search_query_tts);
         });
 
-        $("p").on('focus', function () {
-            speechQueueFunction($(this).text(), {}, true);
+        $("#searchbutton").focus(function () {
+            speechQueueFunction(text.search_button_tts)
         });
+
+        $("#ad_result_label").focus(function () {
+            speechQueueFunction(text.ad_result_label_tts);
+        });
+
+        $("#ad1").focus(function () {
+            speechQueueFunction(text.ads[0].tts);
+        });
+
+        $("#ad2").focus(function () {
+            speechQueueFunction(text.ads[1].tts);
+        });
+
+        $("#search_result_label").focus(function () {
+            speechQueueFunction(text.search_result_label_tts);
+        });
+
+        $("#result1").focus(function () {
+            speechQueueFunction(text.results[0].tts);
+        });
+
+        $("#result2").focus(function () {
+            speechQueueFunction(text.results[1].tts);
+        });
+
+        $("#result3").focus(function () {
+            speechQueueFunction(text.results[2].tts);
+        });
+
+        $("#pagination-2").focus(function () {
+            speechQueueFunction(text.pagination.page2_tts);
+        });
+        $("#pagination-3").focus(function () {
+            speechQueueFunction(text.pagination.page3_tts);
+        });
+        $("#pagination-4").focus(function () {
+            speechQueueFunction(text.pagination.page4_tts);
+        });
+        $("#pagination-12").focus(function () {
+            speechQueueFunction(text.pagination.page12_tts);
+        });
+        $("#pagination-13").focus(function () {
+            speechQueueFunction(text.pagination.page13_tts);
+        });
+
+        $("#pagination-end").focus(function () {
+            speechQueueFunction(text.pagination.page_end_tts);
+        });
+
+        $("#also_try_label").focus(function () {
+            speechQueueFunction(text.also_try_label_tts);
+        });
+
+        $("#also_try_1").focus(function () {
+            speechQueueFunction(text.also_try_link_titles_tts[0]);
+        });
+        $("#also_try_2").focus(function () {
+            speechQueueFunction(text.also_try_link_titles_tts[1]);
+        });
+
+        $("#also_try_3").focus(function () {
+            speechQueueFunction(text.also_try_link_titles_tts[2]);
+        });
+
+        $("#also_try_4").focus(function () {
+            speechQueueFunction(text.also_try_link_titles_tts[3]);
+        });
+
+        $("#footer_link_1").focus(function () {
+            speechQueueFunction(text.footer_links_tts[0]);
+        });
+        $("#footer_link_2").focus(function () {
+            speechQueueFunction(text.footer_links_tts[1]);
+        });
+        $("#footer_link_3").focus(function () {
+            speechQueueFunction(text.footer_links_tts[2]);
+        });
+        $("#footer_link_4").focus(function () {
+            speechQueueFunction(text.footer_links_tts[3]);
+        });
+        $("#footer_link_5").focus(function () {
+            speechQueueFunction(text.footer_links_tts[4]);
+        });
+        $("#copyright").focus(function () {
+            speechQueueFunction(text.footer_copyright_tts);
+        });
+
+        $("[tabindex='0']").focus(function () {
+
+            $(this).addClass("highlighted");
+
+
+        });
+
+        $("[tabindex='0']").blur(function () {
+
+            $(this).removeClass("highlighted");
+
+
+        });
+
+
+        /*
+
+         // Find the speech function from the First Discovery Tool, so you can call the speechQueueFunction from where-ever needed in the preview
+         // todo: needs to honor the voice toggle (on/off) - done
+         // todo: how do we handle languages (utterance options)
+         // todo: handle case where the parent queueSpeech function doesn't exist -
+         var speechQueueFunction = window.parent.fluid.queryIoCSelector(window.parent.fluid.rootComponent, "gpii.firstDiscovery.selfVoicing")[0].queueSpeech;
+
+
+         // Add click event to all paragraphs to voice their text
+         $("p").click(function () {
+         speechQueueFunction($(this).text(), {}, true);
+         });
+
+         $("p").on('focus', function () {
+         speechQueueFunction($(this).text(), {}, true);
+         });
+         */
     }
 
 
@@ -369,31 +503,20 @@
 
         $("#also_try_label").text(search_preview_text.also_try_label);
 
+        $("#also_try_1").text(search_preview_text.also_try_link_titles[0]);
+        $("#also_try_2").text(search_preview_text.also_try_link_titles[1]);
+        $("#also_try_3").text(search_preview_text.also_try_link_titles[2]);
+        $("#also_try_4").text(search_preview_text.also_try_link_titles[3]);
 
-        // Add each "also try" link to the list
-        for (var i = 0; i < search_preview_text.also_try_link_titles.length; i++) {
-            $("<li>").append(
-                    $("<a>")
-                            .text(search_preview_text.also_try_link_titles[i])
-                            .attr("attr", "#")
-            ).appendTo("#also_try_list");
-        }
-
-        // Add each footer link
-        for (var i = 0; i < search_preview_text.footer_links.length; i++) {
-            $("<li>").append(
-                    $("<a>")
-                            .text(search_preview_text.footer_links[i])
-                            .attr("attr", "#")
-            ).appendTo("#footer_links");
-        }
+        $("#footer_link_1").text(search_preview_text.footer_links[0]);
+        $("#footer_link_2").text(search_preview_text.footer_links[1]);
+        $("#footer_link_3").text(search_preview_text.footer_links[2]);
+        $("#footer_link_4").text(search_preview_text.footer_links[3]);
+        $("#footer_link_5").text(search_preview_text.footer_links[4]);
 
         $("#copyright").html(search_preview_text.footer_copyright);
 
     }
-
-
-    $(document).foundation();
 
 
 </script>
