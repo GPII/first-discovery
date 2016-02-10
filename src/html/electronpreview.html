@@ -61,18 +61,40 @@
 	
 	            $(".has-tip").focus(function(){
 	                Foundation.libs.tooltip.showTip( jQuery($(this)) );
-	                var key = $(this).attr("id");
-	                console.log(key);
 	            });
+
 	            $(".has-tip").blur(function(){
 	                Foundation.libs.tooltip.hide( jQuery( $(this) ) );
 	            });
-	        });
-	
-	    });
-	
-	</script>
 
+	             //self-voicing for the preview
+                var speechQueueFunction = window.parent.fluid.queryIoCSelector(window.parent.fluid.rootComponent, "gpii.firstDiscovery.selfVoicing")[0].queueSpeech;
+                $( "*" ).focus(function () {
+                    speechQueueFunction(getMessage($(this)), {}, false);
+                });
+                $( "a" ).focusin(function () {
+                    speechQueueFunction(getMessage($(this)), {}, false);
+                });
+                $( "a" ).mouseenter(function () {
+
+                    speechQueueFunction(getMessage($(this)), {}, false);
+                });
+                $( "input" ).focusin(function () {
+                    speechQueueFunction(getMessage($(this)), {}, false);
+                });
+                $( "input" ).mouseenter(function () {
+                    speechQueueFunction(getMessage($(this)), {}, false);
+                });
+
+                // get the component id, return corresponding message.
+                getMessage = function (that) {
+                    var key = $(that).attr("id");
+                    var index = $.inArray(key, keys);
+                    return messages[index];
+                };
+	        });
+	    });
+	</script>
 
     <div class="flc-overviewPanel fl-overviewPanel-container"></div>
     <div class="flc-toc-tocContainer toc"> </div>
@@ -140,9 +162,11 @@
                 </div>
 
                 <article id="content">
-                <section>
+                <section >
                 <div id="storm" role="img" class="main-content-image" tabindex="0" aria-label="Photo of stormy sky, with lightning striking over a city."></div>
-                <p id="watchout" tabindex="0">Watch out! Lightning is extremely dangerous. A single bolt of lightning can carry a billion volts of electricity. That’s enough energy to light a 100-watt light bulb—for three months! As impressive as it is, lightning is nothing more than a sudden flow of extremely tiny particles. What are the particles that flow in a lightning bolt? The answer is electrons.</p>
+                </section>
+                <section id="watchOut" tabindex="0">
+                <p>Watch out! Lightning is extremely dangerous. A single bolt of lightning can carry a billion volts of electricity. That’s enough energy to light a 100-watt light bulb—for three months! As impressive as it is, lightning is nothing more than a sudden flow of extremely tiny particles. What are the particles that flow in a lightning bolt? The answer is electrons.</p>
                 </section>
 
                 <section id="whatAreElectrons" tabindex="0">
@@ -214,21 +238,22 @@
                 <section>
                     <h3>Energy Levels and Electrons</h3>
                     <div id="energylevels" role="img" class="main-content-image" tabindex="0" aria-label="Graphic showing energy levels and electrons: This diagram shows a circle (labelled '1') surrounded by three rings, labelled moving outward from the centre '2', '3' and '4'."></div>
-                    <div id="energy-descrip">
-                    <div id="1234" tabindex="0">
-	                    <ol>
-	                        <li><strong>Nucleus</strong> - contains protons and neutrons</li>
-	                        <li><strong>1st energy level</strong> - can hold a maximum of 2 electrons in one orbital</li>
-	                        <li><strong>2nd energy level</strong> - can hold a maximum of 8 electrons over 4 different orbitals</li>
-	                        <li><strong>3rd energy level</strong> - can hold a maximum of 18 electrons distributed over 9 different orbitals</li>
-	                    </ol>
+                        <div id="energy-descrip">
+                            <div id="1234" tabindex="0">
+	                            <ol>
+                                <li><strong>Nucleus</strong> - contains protons and neutrons</li>
+                                <li><strong>1st energy level</strong> - can hold a maximum of 2 electrons in one orbital</li>
+                                <li><strong>2nd energy level</strong> - can hold a maximum of 8 electrons over 4 different orbitals</li>
+                                <li><strong>3rd energy level</strong> - can hold a maximum of 18 electrons distributed over 9 different orbitals</li>
+	                            </ol>
+                            </div>
+                        <div id="qA2" tabindex="0">
+                            <p><strong>Q:</strong> How many electrons can there be in each type of orbital shown above?</p>
+                            <p><strong>A:</strong> There can be a maximum of two electrons in any orbital, regardless of its shape.</p>
+                            <p><strong>Q:</strong> Where is the nucleus in each orbital?</p>
+                            <p><strong>A:</strong> The nucleus is at the center of each orbital. It is in the middle of the sphere in the S orbital and in the pinched part of the P orbital.</p>
+	                    </div>
                     </div>
-                    <div id="qA2" tabindex="0">
-	                    <p><strong>Q:</strong> How many electrons can there be in each type of orbital shown above?</p>
-	                    <p><strong>A:</strong> There can be a maximum of two electrons in any orbital, regardless of its shape.</p>
-	                    <p><strong>Q:</strong> Where is the nucleus in each orbital?</p>
-	                    <p><strong>A:</strong> The nucleus is at the center of each orbital. It is in the middle of the sphere in the S orbital and in the pinched part of the P orbital.</p>
-	                 </div>
                 </section>
 
                  <section id="summary" tabindex="0">
