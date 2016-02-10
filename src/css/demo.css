@@ -654,3 +654,7 @@ div.main-content-image + .fl-explorationTool-moreText {
 .exploration-tool-demo .fl-overviewPanel .fl-overviewPanel-title h1 {
     color: #CCCCCC;
 }
+
+.fontSize1 {
+    font-size:1.0rem;
+}
