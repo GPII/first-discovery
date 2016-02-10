@@ -59,37 +59,43 @@
         }
 
         .title-letter-1 {
-            color: red;
+            color: #ff0137;
 
         }
 
         .title-letter-2 {
 
-            color: orange;
+            color: #ff020c;
             margin-left: -.5rem;
 
         }
 
         .title-letter-3 {
-            color: #ffff4c;
+            color: #ff2101;
             margin-left: -.5rem;
 
         }
 
         .title-letter-4 {
-            color: green;
+            color: #ff4901;
             margin-left: -.5rem;
 
         }
 
         .title-letter-5 {
-            color: blue;
+            color: #ff7603;
             margin-left: -.5rem;
 
         }
 
         .title-letter-6 {
-            color: violet;
+            color: #ff9a03;
+            margin-left: -.5rem;
+
+        }
+
+        .title-letter-7 {
+            color: #ff9904;
             margin-left: -.5rem;
 
         }
@@ -139,6 +145,7 @@
                         <span class="title-letter-4">r</span>
                         <span class="title-letter-5">c</span>
                         <span class="title-letter-6">h</span>
+                        <span class="title-letter-7">!</span>
                     </h1>
                 </div>
 
@@ -436,38 +443,12 @@
         });
 
         $("[tabindex='0']").focus(function () {
-
             $(this).addClass("highlighted");
-
-
         });
 
         $("[tabindex='0']").blur(function () {
-
             $(this).removeClass("highlighted");
-
-
         });
-
-
-        /*
-
-         // Find the speech function from the First Discovery Tool, so you can call the speechQueueFunction from where-ever needed in the preview
-         // todo: needs to honor the voice toggle (on/off) - done
-         // todo: how do we handle languages (utterance options)
-         // todo: handle case where the parent queueSpeech function doesn't exist -
-         var speechQueueFunction = window.parent.fluid.queryIoCSelector(window.parent.fluid.rootComponent, "gpii.firstDiscovery.selfVoicing")[0].queueSpeech;
-
-
-         // Add click event to all paragraphs to voice their text
-         $("p").click(function () {
-         speechQueueFunction($(this).text(), {}, true);
-         });
-
-         $("p").on('focus', function () {
-         speechQueueFunction($(this).text(), {}, true);
-         });
-         */
     }
 
 
