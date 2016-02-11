@@ -23,68 +23,55 @@
   ],
   "buttons": [
     {
-      "tooltip": "Select to go to previous page",
       "tts": "Select to go to previous page"
     },
     {
-      "tooltip": "Select to go to next page",
       "tts": "Select to go to next page"
     }
   ],
   "activeLinks": [
     {
       "text": "SEARCH",
-      "tooltip": "This is a search bar to search this website",
       "tts": "This is a search bar to search this website"
     },
     {
       "text": "Search",
-      "tooltip": "Select to search this website",
       "tts": "Select to search this website"
     },
     {
       "text": "Physical Science",
-      "tooltip": "Select to go back to the physical science category",
       "tts": "Select to go back to the physical science category"
     },
     {
       "text": "Electrons",
-      "tooltip": "Select to navigate to electrons page",
       "tts": "Select to navigate to electrons page"
     },
     {
       "text": "Make a Copy",
-      "tooltip": "Select to make a copy",
       "tts": "Select to make a copy"
     },
     {
       "text": "Details",
-      "tooltip": "Select to see more details",
       "tts": "Select to see more details"
     },
     {
       "text": "Resources",
-      "tooltip": "Select to see resources",
       "tts": "Select to see resources"
     },
     {
       "text": "Download",
-      "tooltip": "Select to download",
       "tts": "Select to download"
     },
     {
       "text": "Share",
-      "tooltip": "Select to share",
       "tts": "Select to share"
     },
     {
       "text": "Show Details",
-      "tooltip": "Select to show page details",
       "tts": "Select to show page details"
     },
     {
       "text": "Show Resources",
-      "tooltip": "Select to show page resources",
       "tts": "Select to show page resources"
     }
   ],
