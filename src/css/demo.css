@@ -226,7 +226,7 @@ a:hover {
 }
 
 .main-content section {
-    border-bottom: 1px solid #E6E6E6;
+   
     margin-bottom: 0.25em;
     padding-bottom: 2em;
 }
@@ -657,4 +657,8 @@ div.main-content-image + .fl-explorationTool-moreText {
 
 .fontSize1 {
     font-size:1.0rem;
+}
+
+.highlighted {
+    border: 5px solid yellow;
 }
