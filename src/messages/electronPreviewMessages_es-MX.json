@@ -1,0 +1,301 @@
+{
+  "pageHeader": "Demostración de Aprendizaje Abierto",
+  "pageTitle": "Los electrones",
+  "inactiveLinks": [
+    {
+      "text": "Leer"
+    },
+    {
+      "text": "Básico"
+    },
+    {
+      "text": "todas las modalidades"
+    },
+    {
+      "text": "Leer"
+    },
+    {
+      "text": "Ha sido útil?"
+    },
+    {
+      "text": "Los electrones"
+    }
+  ],
+  "buttons": [
+    {
+      "tts": "Seleccione para ir a la página anterior."
+    },
+    {
+      "tts": "Seleccione para ir a la página siguiente."
+    }
+  ],
+  "activeLinks": [
+    {
+      "text": "BUSCAR",
+      "tts": "Se trata de una barra de búsqueda para buscar en este sitio web."
+    },
+    {
+      "text": "Buscar",
+      "tts": "Seleccionar para buscar en este sitio web."
+    },
+    {
+      "text": "Ciencia física",
+      "tts": "Seleccione para volver a la categoría de la ciencia física."
+    },
+    {
+      "text": "Los electrones",
+      "tts": "Seleccionar para navegar a la página electrones"
+    },
+    {
+      "text": "Hacer una copia",
+      "tts": "Seleccionar para hacer una copia"
+    },
+    {
+      "text": "Detalles",
+      "tts": "Seleccionar para ver más detalles"
+    },
+    {
+      "text": "Recursos",
+      "tts": "Seleccionar para ver los recursos."
+    },
+    {
+      "text": "Descargar",
+      "tts": "Seleccionar para descargar"
+    },
+    {
+      "text": "Compartir",
+      "tts": "Seleccionar para compartir."
+    },
+    {
+      "text": "Mostrar detalles",
+      "tts": "Seleccionar para mostrar detalles de la página."
+    },
+    {
+      "text": "Mostrar Recursos",
+      "tts": "Seleccionar para mostrar los recursos de página."
+    }
+  ],
+  "content": [
+    {
+      "heading": "",
+      "text": "¡Cuidado! El rayo es extremadamente peligroso. Un solo rayo puede llevar a un billón de voltios de electricidad . Es suficiente energía para encender una bombilla de luz - de 100 vatios tres meses ! Tan impresionante como lo es, el rayo no es más que un flujo repentino de partículas extremadamente pequeñas . ¿Cuáles son las partículas que fluyen en un rayo ? La respuesta es electrones .",
+      "tts": "¡Cuidado! El rayo es extremadamente peligroso. Un solo rayo puede llevar a un billón de voltios de electricidad . Es suficiente energía para encender una bombilla de luz - de 100 vatios tres meses ! Tan impresionante como lo es, el rayo no es más que un flujo repentino de partículas extremadamente pequeñas . ¿Cuáles son las partículas que fluyen en un rayo ? La respuesta es electrones ."
+    },
+    {
+      "heading": "¿Cuáles son los electrones ?",
+      "text": [
+          {
+            "p": "Los electrones son uno de los tres tipos principales de las partículas que componen los átomos. Los otros dos tipos son protones y neutrones. A diferencia de los protones y los neutrones , que consisten en partículas más pequeñas y simples , los electrones son partículas fundamentales que no están formadas por partículas más pequeñas. Son un tipo de partículas fundamentales llamadas leptones . Todos los leptones tienen una carga eléctrica de -1 o 0. Para un excelente video sobre los electrones y otras partículas fundamentales en átomos , vaya a la siguiente dirección:"
+          },
+          {
+            "p": "http://www.youtube.com/watch?v=Vi91qyjuknM (7:44)."
+          },
+          {
+            "p": "REPRODUCTOR DE VIDEO AQUÍ"
+          }
+      ],
+      "tts": "¿Cuáles son los electrones ? Los electrones son uno de los tres tipos principales de las partículas que componen los átomos. Los otros dos tipos son protones y neutrones. A diferencia de los protones y los neutrones , que consisten en partículas más pequeñas y simples , los electrones son partículas fundamentales que no están formadas por partículas más pequeñas. Son un tipo de partículas fundamentales llamadas leptones . Todos los leptones tienen una carga eléctrica de -1 o 0. Para un excelente video sobre los electrones y otras partículas fundamentales en átomos , vaya a la siguiente dirección:"
+    },
+    {
+      "heading": "Propiedades de los electrones",
+      "text": "Los electrones son extremadamente pequeñas . La masa de un electrón es de sólo 1/2000 la masa de un protón o de neutrones, por lo que los electrones contribuyen prácticamente nada a la masa total de un átomo. Los electrones tienen una carga eléctrica de -1 , que es igual pero opuesta a la carga de protones , que es 1 . Todos los átomos tienen el mismo número de electrones como protones , por lo que las cargas positivas y negativas ' cancelan ', haciendo átomos eléctricamente neutros ",
+      "tts": "Propiedades de los electrones. Los electrones son extremadamente pequeñas . La masa de un electrón es de sólo 1/2000 la masa de un protón o de neutrones, por lo que los electrones contribuyen prácticamente nada a la masa total de un átomo. Los electrones tienen una carga eléctrica de -1 , que es igual pero opuesta a la carga de protones , que es 1 . Todos los átomos tienen el mismo número de electrones como protones , por lo que las cargas positivas y negativas ' cancelan ', haciendo átomos eléctricamente neutros."
+    },
+    {
+      "heading": "¿Dónde están los electrones?",
+      "text": "A diferencia de los protones y los neutrones , que se encuentran en el interior del núcleo en el centro del átomo , los electrones se encuentran fuera del núcleo. Debido a que las cargas eléctricas opuestas se atraen entre sí , los electrones negativos son atraídos por el núcleo positivo . Esta fuerza de atracción mantiene electrones en constante movimiento a través del espacio por lo demás vacío alrededor del núcleo. La figura muestra a continuación es una forma común de representar la estructura de un átomo. Muestra el electrón como una partícula en órbita alrededor del núcleo, similar a la forma en que los planetas giran alrededor del sol.",
+      "tts": "¿Dónde están los electrones ? A diferencia de los protones y los neutrones , que se encuentran en el interior del núcleo en el centro del átomo , los electrones se encuentran fuera del núcleo. Debido a que las cargas eléctricas opuestas se atraen entre sí , los electrones negativos son atraídos por el núcleo positivo . Esta fuerza de atracción mantiene electrones en constante movimiento a través del espacio por lo demás vacío alrededor del núcleo. La figura muestra a continuación es una forma común de representar la estructura de un átomo. Muestra el electrón como una partícula en órbita alrededor del núcleo, similar a la forma en que los planetas giran alrededor del sol."
+    },
+    {
+      "heading": "Orbitales",
+      "text": [
+          {
+            "p": "Los electrones son uno de los tres tipos principales de las partículas que componen los átomos. Los otros dos tipos son protones y neutrones. A diferencia de los protones y los neutrones , que consisten en partículas más pequeñas y simples , los electrones son partículas fundamentales que no están formadas por partículas más pequeñas. Son un tipo de partículas fundamentales llamadas leptones . Todos los leptones tienen una carga eléctrica de -1 o 0. Para un excelente video sobre los electrones y otras partículas fundamentales en átomos , vaya a la siguiente dirección:"
+          },
+          {
+            "p": "http://www.youtube.com/watch?v=K-jNgq16jEY (1:37)"
+          },
+          {
+            "p": "REPRODUCTOR DE VIDEO AQUÍ"
+          }
+      ],
+      "tts": "Orbitales. El modelo atómico anterior es útil para algunos fines , pero es demasiado simple cuando se trata de la ubicación de los electrones. En realidad , es imposible decir qué camino va a seguir un electrón . En lugar de ello , sólo es posible describir las posibilidades de encontrar un electrón en una determinada región alrededor del núcleo. La región en la que es más probable que sea un electrón se denomina orbital. Cada orbital puede tener como máximo dos electrones . Algunos orbitales , llamados orbitales s , tienen la forma de esferas , con el núcleo en el centro . Un orbital S se representa en la figura a continuación. Donde los puntos son más densas , la probabilidad de encontrar un electrón es mayor . También representado en la figura a continuación es un orbital p . P orbitales tienen la forma de pesas , con el núcleo en la parte de pinzamiento de la mancuerna."
+    },
+    {
+      "heading": "¿Cuál es su nivel de energía ?",
+      "text": [
+          {
+            "p": "Los electrones se encuentran a distancias fijas del núcleo , llamados niveles de energía. Puede ver los primeros tres niveles de energía en la siguiente figura . El diagrama también muestra el número máximo posible de electrones en cada nivel de energía."
+          },
+          {
+            "p": "Los electrones en los niveles de energía más bajos , que son más cerca del núcleo, tienen menos energía. En el nivel más bajo de energía , que tiene la menor cantidad de energía , no es sólo un orbital , por lo que este nivel de energía tiene un máximo de dos electrones."
+          },
+          {
+            "p": "Sólo cuando un menor nivel de energía está llena electrones son añadidos al siguiente nivel de energía más alto . Los electrones en los niveles más altos de energía , que son más alejado del núcleo , tienen más energía . También tienen más orbitales y mayor número posible de electrones."
+          },
+          {
+            "p": "Los electrones en el nivel de energía más externo de un átomo se llaman electrones de valencia. Ellos determinan muchas de las propiedades de un elemento. Esto se debe a que estos electrones están implicados en reacciones químicas con otros átomos. Los átomos pueden compartir o transferir electrones de valencia. electrones compartidos se unen los átomos entre sí para formar compuestos químicos."
+          },
+          {
+            "p": "Se puede ver todas estas ideas en acción en el siguiente URL ( desplácese hacia abajo a la animación en la parte inferior de la página web) : http://www.brooklyn.cuny.edu/bc/ahp/SDPS/SD.PS.electrons.html"
+          }
+      ],
+      "tts": "¿Cuál es su nivel de energía? Los electrones se encuentran a distancias fijas del núcleo, llamados niveles de energía. Puede ver los primeros tres niveles de energía en la siguiente figura. El diagrama también muestra el número máximo posible de electrones en cada nivel de energía. Los electrones en los niveles de energía más bajos, que son más cerca del núcleo, tienen menos energía. En el nivel más bajo de energía, que tiene la menor cantidad de energía, no es sólo un orbital, por lo que este nivel de energía tiene un máximo de dos electrones. Sólo cuando un menor nivel de energía está llena electrones son añadidos al siguiente nivel de energía más alto. Los electrones en los niveles más altos de energía, que son más alejado del núcleo, tienen más energía. También tienen más orbitales y mayor número posible de electrones. Los electrones en el nivel de energía más externo de un átomo se llaman electrones de valencia. Ellos determinan muchas de las propiedades de un elemento. Esto se debe a que estos electrones están implicados en reacciones químicas con otros átomos. Los átomos pueden compartir o transferir electrones de valencia. electrones compartidos se unen los átomos entre sí para formar compuestos químicos."
+    },
+    {
+      "heading": "Los niveles de energía y electrones",
+      "text": [
+          {
+            "p": "Núcleo - contiene protones y neutrones ."
+          },
+          {
+            "p": "1er nivel de energía - puede contener un máximo de 2 electrones en un orbital."
+          },
+          {
+            "p": "Segundo nivel de energía - puede contener un máximo de 8 electrones de más de 4 orbitales diferentes."
+          },
+          {
+            "p": "3er nivel de energía - puede contener un máximo de 18 electrones distribuidos en 9 orbitales diferentes."
+          }
+      ],
+      "tts": "1. Núcleo - contiene protones y neutrones . 2. 1er nivel de energía - puede contener un máximo de 2 electrones en un orbital . 3. segundo nivel de energía - puede contener un máximo de 8 electrones de más de 4 orbitales diferentes . 4. 3er nivel de energía - puede contener un máximo de 18 electrones distribuidos en 9 orbitales diferentes."
+    },
+    {
+      "heading": "Resumen",
+      "text": [
+          {
+            "p": "Los electrones son uno de los tres tipos principales de partículas que componen el átomo . Ellos son muy pequeñas y tienen una carga eléctrica de -1 . Todos los átomos tienen el mismo número de electrones como protones."
+          },
+          {
+            "p": "electrones negativos son atraídos por el núcleo positivo. Esta fuerza de atracción mantiene en constante movimiento electrones alrededor del núcleo. La región en la que es más probable que se encuentre un electrón se denomina orbital."
+          },
+          {
+            "p": "Los electrones se encuentran a distancias fijas del núcleo, llamados niveles de energía. Los electrones en los niveles de energía más bajos tienen menos energía que los electrones en los niveles más altos de energía."
+          }
+      ],
+      "tts": "Resumen. Los electrones son uno de los tres tipos principales de partículas que componen el átomo . Ellos son muy pequeñas y tienen una carga eléctrica de -1 . Todos los átomos tienen el mismo número de electrones como protones . electrones negativos son atraídos por el núcleo positivo . Esta fuerza de atracción mantiene en constante movimiento electrones alrededor del núcleo. La región en la que es más probable que se encuentre un electrón se denomina orbital. Los electrones se encuentran a distancias fijas del núcleo , llamados niveles de energía. Los electrones en los niveles de energía más bajos tienen menos energía que los electrones en los niveles más altos de energía."
+    },
+    {
+      "heading": "Vocabulario",
+      "text": "Electrón: carga negativa partícula atómica que se mueve alrededor del núcleo de un átomo.",
+      "tts": "Vocabulario. Electrón: carga negativa partícula atómica que se mueve alrededor del núcleo de un átomo."
+    },
+    {
+      "heading": "Práctica",
+      "text": [
+          {
+            "p": "Investigar el descubrimiento de los electrones en las siguientes URL , y luego contestar las siguientes preguntas."
+          },
+          {
+            "p": "http://www.youtube.com/watch?v=IdTxGJjA4Jw (2:54)"
+          },
+          {
+            "p": "REPRODUCTOR DE VIDEO AQUÍ"
+          },
+          {
+            "p": "http://www.aip.org/history/electron/jjhome.htm"
+          },
+          {
+            "p": "¿Quién descubrió los electrones ? Cuando se descubrieron?"
+          },
+          {
+            "p": "Describen cómo se descubrieron los electrones."
+          },
+          {
+            "p": "What was the significance of the discovery of electrons?"
+          },
+          {
+            "p": "¿De dónde Thomson piensa electrones se encuentran en el átomo ? ¿En qué difiere esto desde el punto de vista moderno de electrones presentado anteriormente?"
+          }
+      ],
+      "tts": "Práctica. Investigar el descubrimiento de los electrones en las siguientes URL , y luego contestar las siguientes preguntas. ¿Quién descubrió los electrones ? Cuando se descubrieron ? Describen cómo se descubrieron los electrones . ¿Cuál fue la importancia del descubrimiento de los electrones ? ¿De dónde Thomson piensa electrones se encuentran en el átomo ? ¿En qué difiere esto desde el punto de vista moderno de electrones presentado anteriormente?"
+    },
+    {
+      "heading": "La Crítica",
+      "text": [
+          {
+            "p": "¿Cuáles son los electrones?"
+          },
+          {
+            "p": "Comparar y contrastar los electrones y protones."
+          },
+          {
+            "p": "Esbozo de un modelo de un átomo de berilio, que tiene cuatro protones, neutrones, cinco y cuatro electrones . Su modelo debe incluir la colocación de los electrones en los niveles de energía apropiados."
+          },
+          {
+            "p": "¿Cuáles son los electrones de valencia ? ¿Por qué son tan importantes? ¿Cuántos electrones de valencia tiene un átomo de berilio tiene ( ver pregunta 3) ?"
+          }
+      ],
+      "tts": "La Crítica. ¿Cuáles son los electrones ? Comparar y contrastar los electrones y protones . Esbozo de un modelo de un átomo de berilio, que tiene cuatro protones, neutrones, cinco y cuatro electrones . Su modelo debe incluir la colocación de los electrones en los niveles de energía apropiados . ¿Cuáles son los electrones de valencia ? ¿Por qué son tan importantes? ¿Cuántos electrones de valencia tiene un átomo de berilio tiene ( ver pregunta 3)?"
+    }
+  ],
+  "miscText": [
+    {
+      "heading": "Modelo de la estructura atómica",
+      "text": [
+          {
+            "p": "Electrón"
+          },
+          {
+            "p": "Neutrón"
+          },
+          {
+            "p": "Protón"
+          }
+      ]
+    },
+    {
+      "text": [
+          {
+            "p": "Q: ¿Cuántos electrones puede haber en cada tipo de orbital se muestra arriba?"
+          },
+          {
+            "p": "A: No puede haber un máximo de dos electrones en cualquier orbital, independientemente de su forma."
+          },
+          {
+            "p": "Q: Where is the nucleus in each orbital?"
+          },
+          {
+            "p": "A: ¿Dónde está el núcleo en cada orbital?"
+          }
+      ],
+      "tts": "Pregunta: ¿Cuántos electrones puede haber en cada tipo de orbital se muestra arriba ? Respuesta: Puede haber un máximo de dos electrones en cualquier orbital , independientemente de su forma. Pregunta: ¿Dónde está el núcleo en cada orbital ? Respuesta: El núcleo está en el centro de cada orbital. Es en el centro de la esfera en el S orbital y en la parte pellizcado de la P orbital."
+    },
+    {
+      "text": [
+          {
+            "p": "Q: ¿Cuántos electrones puede haber en cada tipo de orbital se muestra arriba?"
+          },
+          {
+            "p": "A: No puede haber un máximo de dos electrones en cualquier orbital , independientemente de su forma."
+          },
+          {
+            "p": "Q: ¿Dónde está el núcleo en cada orbital?"
+          },
+          {
+            "p": "A: El núcleo está en el centro de cada orbital. Es en el centro de la esfera en el S orbital y en la parte pellizcado de la P orbital."
+          }
+      ],
+      "tts": "Pregunta: ¿Cuántos electrones puede haber en cada tipo de orbital se muestra arriba ? Respuesta: Puede haber un máximo de dos electrones en cualquier orbital , independientemente de su forma. Pregunta: ¿Dónde está el núcleo en cada orbital? Respuesta: El núcleo está en el centro de cada orbital. Es en el centro de la esfera en el S orbital y en la parte pellizcado de la P orbital."
+    }
+  ],
+  "images": [
+    {
+      "tts": "Foto del cielo de tormenta, con caída de un rayo sobre una ciudad."
+    },
+    {
+      "tts": "Modelo de la estructura atómica : Esta imagen ilustra la estructura atómica : un racimo de tres neutrones (con la etiqueta ' 2') y tres protones (con la etiqueta ' 3' ) están rodeados por dos anillos de electrones (con la etiqueta ' 1 ' ). El anillo interior tiene dos electrones en él y el anillo exterior tiene una."
+    },
+    {
+      "heading": "S Orbitales",
+      "tts": "Una imagen de una S orbital: un conjunto de varios colores de los anillos hechos de pequeños puntos , que irradian desde un centro de color rojo. Los anillos más próximos al centro son de color rojo y muy juntas, los anillos más alejados del centro son de color rosa y un poco más separados entre sí, y los más exterior anillos son azules y tienen más espacio entre ellas."
+    },
+    {
+      "heading": "P Orbitales",
+      "tts": "Una imagen de un orbital p : dos centros de color rojo rodeado de anillos, presionan juntos. Los anillos más cercanos a cada centro son el rojo y muy juntas, los anillos más alejados de cada centro son de color rosa y un poco más separados entre sí, y los más exterior anillos son azules y tienen más espacio entre ellas. Donde los dos se encuentran los anillos son de color azul brillante y aplanados juntos."
+    },
+    {
+      "tts": "Gráfico que muestra los niveles de energía y electrones : Este diagrama muestra un círculo (con la etiqueta ' 1 ' ), rodeada por tres anillos, etiquetado moviéndose hacia fuera del centro '2' , '3' y '4'."
+    }
+  ]
+}
