@@ -31829,7 +31829,14 @@ var fluid_2_0 = fluid_2_0 || {};
             onresume: that.handleResume
         };
         $.extend(toSpeak, that.model.utteranceOpts, options, eventBinding);
-
+        
+        toSpeak.voice = speechSynthesis.getVoices().filter(function(voice){return voice.lang == toSpeak.lang;})[0];
+        
+        // Search by language regardless of dialect when a voice couldn't be found
+		if (toSpeak.voice == null) {
+			toSpeak.voice = speechSynthesis.getVoices().filter(function(voice){return voice.lang.substring(0,2) == toSpeak.lang.substring(0,2);})[0];
+		}  
+		
         that.queue.push(text);
         that.events.onSpeechQueued.fire(text);
         speechSynthesis.speak(toSpeak);

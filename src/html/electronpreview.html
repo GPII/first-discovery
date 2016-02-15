@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="../../src/lib/jquery/jquery-2.2.0.min.js"></script>
     
     <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.min.css" />
     <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.css" />
@@ -25,8 +25,6 @@
     <!--[if lt IE 9]>
         <link rel="stylesheet" type="text/css" href="ltie9.css" />
     <![endif]-->
-
-    <script type="text/javascript" src="../../src/js/toolTipify.js"></script>
     
 </head>
 
@@ -59,7 +57,7 @@
 
                 <div id="prevNext">
                     <a id="back" href="#"><span class="fl-icon-prev" aria-label="Previous" role="img"></span></a>
-                    <a id="forward" href="#"><span class="fl-icon-next" aria-label="Next" role="img"></span></a>
+                    <a id="forward"  href="#"><span class="fl-icon-next" aria-label="Next" role="img"></span></a>
                 </div>
             </header>
 
@@ -405,10 +403,10 @@
             // The parent window contains a self voicing function from the First Discovery Tool that
             // the preview can hook into to voice itself
             var speechQueueFunction = window.parent.fluid.queryIoCSelector(window.parent.fluid.rootComponent, "gpii.firstDiscovery.selfVoicing")[0].queueSpeech;
-            
+            var clearQueueFunction = window.parent.fluid.queryIoCSelector(window.parent.fluid.rootComponent, "gpii.firstDiscovery.selfVoicing")[0].queueSpeech;
             //activeLinks
             $("#activeLinks0").focusin(function () {
-                  speechQueueFunction(text.activeLinks[0].tts);
+                speechQueueFunction(text.activeLinks[0].tts);
             }); 
             $("#activeLinks0").mouseenter(function () {
                 speechQueueFunction(text.activeLinks[0].tts);
