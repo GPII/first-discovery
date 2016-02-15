@@ -199,7 +199,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         },
         model: {
             // offerAssistance: boolean
-            tryAccommodation: false,
+            tryAccommodation: true,
             userInput: ""
         },
         components: {
