@@ -18,7 +18,7 @@
     "help": "aide",
 
     "stepCountMsg": "l'étape %currentPanel de %numPanels",
-    "panelMsg": "Ceci est %stepCountMsg. %instructions Appuyez sur la touche H pour de l'aide.",
+    "panelMsg": "Ceci est %stepCountMsg. %instructions Appuyez sur ' h' pour répéter les instructions.",
     
     "preview": "Aperçu",
     "previewTooltip": "Ceci est la prévisualisation ",

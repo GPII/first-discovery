@@ -46,14 +46,6 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                     messageBase: "{messageLoader}.resources.prefsEditor.resourceText"
                 }
             },
-            helpButton: {
-                type: "gpii.firstDiscovery.helpButton",
-                container: "{that}.dom.helpButton",
-                createOnEvent: "onPrefsEditorReady",
-                options: {
-                    messageBase: "{messageLoader}.resources.prefsEditor.resourceText"
-                }
-            },
             prefsEditor: {
                 container: "{that}.dom.prefsEditor",
                 options: {
@@ -184,7 +176,6 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             prefsEditor: ".gpiic-fd-prefsEditor",
             panel: ".gpiic-fd-prefsEditor-panel",
             selfVoicingToggle: ".gpiic-fd-selfVoicingToggle",
-            helpButton: ".gpiic-fd-help",
             nav: ".gpiic-fd-nav",
             previewIndicator: ".gpiic-fd-previewIndicator",
             previewFrame : ".flc-prefsEditor-preview-frame"

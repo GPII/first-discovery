@@ -18,7 +18,7 @@
     "help": "help",
 
     "stepCountMsg": "Step %currentPanel of %numPanels",
-    "panelMsg": "This is %stepCountMsg. %instructions Press 'h' for help.",
+    "panelMsg": "This is %stepCountMsg. %instructions Press 'h' to repeat the instructions.",
     
     "preview": "Preview",
     "previewTooltip": "This is the preview.",
