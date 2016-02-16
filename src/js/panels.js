@@ -1226,6 +1226,12 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
 
     gpii.firstDiscovery.panel.confirm.updatePreferenceValues = function(that, changeContext) {
 
+        // On page load, this modelListener fires but the elements in the page are not yet created.
+        // When this occurs, capture the changeContext and re-run momentarily.
+        if ($("#" + that.options.selectors.languageLabel).length == 0) {
+            setTimeout(function(){gpii.firstDiscovery.panel.confirm.updatePreferenceValues(that, changeContext);}, 500 );
+        }
+
         //Language
         var languageValue = changeContext.value.gpii_firstDiscovery_language;
         $("#" + that.options.selectors.languageLabel).text(that.options.friendlyNames[languageValue].labels.language);
