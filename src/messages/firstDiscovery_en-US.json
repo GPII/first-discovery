@@ -22,6 +22,8 @@
     
     "preview": "Preview",
     "previewTooltip": "This is the preview.",
+    "keyboard": "On-Screen Keyboard",
+    "keyboardTooltip": "This is the On-Screen Keyboard",
     "warning": "This is not a live website!",
     "warningTooltip": "This is not a live website!"
 }

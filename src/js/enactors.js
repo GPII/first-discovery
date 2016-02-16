@@ -250,4 +250,41 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         // return fontSize in px
         return parseFloat(fontSize);
     };
+    
+    /******************************
+     * On-Screen Keyboard enactor *
+     ******************************/
+    
+    fluid.defaults("gpii.firstDiscovery.enactor.onScreenKeyboard", {
+    	gradeNames: ["fluid.prefs.enactor", "fluid.viewComponent"],
+    	preferenceMap: {
+    		"gpii.firstDiscovery.onScreenKeyboard": {
+    			"model.value": "default"
+    		}
+    	},
+    	invokers: {
+    		set: {
+    			funcName: "gpii.firstDiscovery.enactor.onScreenKeyboard.set",
+    			args: ["{arguments}.0", "{that}"]
+    		}
+    	},
+    	modelListeners: {
+    		value: {
+    			listener: "{that}.set",
+    			args: ["{change}.value"]
+    		}
+    	}
+    });
+    
+    gpii.firstDiscovery.enactor.onScreenKeyboard.set = function(OSKeyboardEnabled) {
+    	
+		 if(OSKeyboardEnabled) {
+	         $("#onScreenKeyboard").css("display", "");
+	         $("#thePreview").css("height", "60%");
+	   	 }
+	   	 else {
+	         $("#onScreenKeyboard").css("display", "none");
+	         $("#thePreview").css("height", "90%");
+	   	 }
+    }
 })(jQuery, fluid);

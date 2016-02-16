@@ -22,6 +22,8 @@
     
     "preview": "Aperçu",
     "previewTooltip": "Ceci est la prévisualisation ",
+    "keyboard": "Clavier à l'écran",
+    "keyboardTooltip": "Ceci est le clavier à l'écran",
     "warning": "Cela ne veut pas d'un site Web en direct !",
     "warningTooltip": "Cela ne veut pas d'un site Web en direct !"
 }
