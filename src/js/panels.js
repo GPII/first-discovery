@@ -112,6 +112,10 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 listener: "gpii.firstDiscovery.panel.ranged.updateButtonState",
                 args: ["{that}"]
             },
+            "{prefsEditor}.events.onPanelShown": {
+                funcName: "gpii.firstDiscovery.panel.ranged.setFocus",
+                args: ["{that}", false, "{gpii.firstDiscovery.selfVoicing}"]
+            },
             "afterRender.updateMeter": "{that}.updateMeter"
         },
         modelListeners: {
@@ -132,6 +136,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         var step = reverse ? (that.options.step * -1) : that.options.step;
         var newValue = that.model.value + step;
         that.applier.change("value", newValue);
+        gpii.firstDiscovery.panel.ranged.setFocus(that, reverse);
     };
 
     gpii.firstDiscovery.panel.ranged.updateButtonState = function (that) {
@@ -139,6 +144,20 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         that.locate("decrease").prop("disabled", that.model.isMin);
     };
 
+    //TODO: Keep focus on button if it is clicked
+    //TODO: Make focus work with voicing. Currently this function doesn't do 
+    //      anything if voicing is on
+    gpii.firstDiscovery.panel.ranged.setFocus = function(that, reverse, voicing){
+        if (voicing.model.enabled === false){
+            setTimeout(function(){
+                if (reverse === true){
+                    $(".gpii-fd-current").find("button")[1].focus();
+                }else{
+                    $(".gpii-fd-current").find("button")[0].focus();
+                }
+            }, 100);
+        }
+    };
     gpii.firstDiscovery.panel.ranged.updateMeter = function (that, value) {
         var range = that.options.range;
         var percentage = ((value - range.min) / (range.max - range.min)) * 100;
@@ -537,8 +556,25 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 funcName: "gpii.firstDiscovery.panel.yesNo.produceTree",
                 args: "{that}"
             }
+        },
+        listeners: {
+            "{prefsEditor}.events.onPanelShown": {
+                funcName: "gpii.firstDiscovery.panel.yesNo.setFocus",
+                args: ["{that}", "{gpii.firstDiscovery.selfVoicing}"]
+            }
         }
     });
+
+    //TODO: Fix tab order
+    //TODO: Make focus work with voicing. Currently this function doesn't do 
+    //      anything if voicing is on
+    gpii.firstDiscovery.panel.yesNo.setFocus = function (that, voicing) {
+        if (voicing.model.enabled === false){
+            setTimeout(function(){
+                    $("gpii-fd-current").find("input[type=radio]")[0].focus();
+            }, 100);
+        }
+    };
 
     gpii.firstDiscovery.panel.yesNo.produceTree = function () {
         // Make sure each derived panel using yesNo grade has a unique
@@ -1000,7 +1036,11 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         },
         repeatingSelectors: ["themeRow"],
         listeners: {
-            "afterRender.style": "{that}.style"
+            "afterRender.style": "{that}.style",
+            "{prefsEditor}.events.onPanelShown": {
+                funcName: "gpii.firstDiscovery.panel.contrast.setFocus",
+                args: ["{that}", "{gpii.firstDiscovery.selfVoicing}"]
+            }
         },
         stringArrayIndex: {
             theme: ["contrast-default", "contrast-bw", "contrast-wb"],
@@ -1045,6 +1085,17 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             var labelTheme = theme[index];
             label.addClass(style[labelTheme]);
         });
+    };
+
+    //TODO: tab order on options
+    //TODO: Make focus work with voicing. Currently this function doesn't do 
+    //      anything if voicing is on
+    gpii.firstDiscovery.panel.contrast.setFocus = function(that, voicing){
+        if (voicing.model.enabled === false){
+            setTimeout(function(){
+                    $(".gpiic-fd-prefsEditor-panel-contrast").find("input[type=radio]")[0].focus();
+            }, 100);
+        }
     };
 
     /*
