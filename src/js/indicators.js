@@ -22,11 +22,14 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         gradeNames: ["gpii.firstDiscovery.msgLookup", "gpii.firstDiscovery.attachTooltip", "fluid.viewComponent"],
         tooltipContentMap: {
             "preview": "previewTooltip",
+            "keyboard": "keyboardTooltip",
             "warning": "warningTooltip"
         },
         selectors: {
             preview: "#gpiic-fd-indicators-preview",
             previewLabel: ".gpiic-fd-indicators-previewLabel",
+            keyboard: "#gpiic-fd-indicators-keyboard",
+            keyboardLabel: ".gpiic-fd-indicators-keyboardLabel",
             warning: "#gpiic-fd-indicators-warning",
             warningLabel: ".gpiic-fd-indicators-warningLabel"
         },
@@ -44,6 +47,11 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 "method": "click",
                 args: ["{that}.warningButtonClicked"]
             },
+            "onCreate.bindKeyboard": {
+                "this": "{that}.dom.keyboard",
+                "method": "click",
+                args: ["{that}.keyboardButtonClicked"]
+            },    
             "onCreate.setButtonLabels": "{that}.setButtonLabels"
         },
         invokers: {
@@ -56,6 +64,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     
     gpii.firstDiscovery.indicators.setButtonLabels = function (that) {
         that.locate("previewLabel").html(that.msgResolver.resolve("preview"));
+        that.locate("keyboardLabel").html(that.msgResolver.resolve("keyboard"));
         that.locate("warningLabel").html(that.msgResolver.resolve("warning"));
     };
 

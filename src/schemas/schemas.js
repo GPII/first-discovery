@@ -133,6 +133,9 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             },
             "onScreenKeyboard": {
                 "type": "gpii.firstDiscovery.onScreenKeyboard",
+                "enactor": {
+                	"type": "gpii.firstDiscovery.enactor.onScreenKeyboard"
+                },
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.onScreenKeyboard",
                     "container": ".gpiic-fd-prefsEditor-panel-onScreenKeyboard",

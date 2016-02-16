@@ -1,119 +1,111 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-
-    <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.min.css"/>
-    <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.css"/>
-    <link rel="stylesheet" href="../../src/lib/foundation/css/foundation-icons/foundation-icons.css"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <script src="../../src/lib/jquery/jquery-2.2.0.min.js"></script>
+    
+    <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.min.css" />
+    <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.css" />
+    <link rel="stylesheet" href="../../src/lib/foundation/css/foundation-icons/foundation-icons.css" />
     <!-- CSS required for the Prefs Editor -->
-    <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/Enactors.css"/>
-    <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/PrefsEditor.css"/>
-    <link rel="stylesheet" type="text/css" href="../../src/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/Enactors.css" />
+    <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/PrefsEditor.css" />
+    <link rel="stylesheet" type="text/css" href="../../src/css/style.css" />
 
-    <link rel="stylesheet" type="text/css" href="../../src/css/fss-reset-global.css"/>
-    <link rel="stylesheet" type="text/css" href="../../src/css/fss-base-global.css"/>
-    <link rel="stylesheet" type="text/css" href="../../src/css/fss-layout.css"/>
-    <link rel="stylesheet" type="text/css" href="../../src/css/fss-text.css"/>
-    <link rel="stylesheet" type="text/css" href="../../src/css/fss-theme-bw-prefsEditor.css"/>
-    <link rel="stylesheet" type="text/css" href="../../src/css/fss-theme-wb-prefsEditor.css"/>
+    <link rel="stylesheet" type="text/css" href="../../src/css/fss-reset-global.css" />
+    <link rel="stylesheet" type="text/css" href="../../src/css/fss-base-global.css" />
+    <link rel="stylesheet" type="text/css" href="../../src/css/fss-layout.css" />
+    <link rel="stylesheet" type="text/css" href="../../src/css/fss-text.css" />
+    <link rel="stylesheet" type="text/css" href="../../src/css/fss-theme-bw-prefsEditor.css" />
+    <link rel="stylesheet" type="text/css" href="../../src/css/fss-theme-wb-prefsEditor.css" />
 
-    <link rel="stylesheet" type="text/css" href="../../src/css/ExplorationTool.css"/>
-    <link rel="stylesheet" type="text/css" href="../../src/css/demo.css"/>
+    <link rel="stylesheet" type="text/css" href="../../src/css/ExplorationTool.css" />
+    <link rel="stylesheet" type="text/css" href="../../src/css/demo.css" />
     <!--[if lt IE 9]>
-    <link rel="stylesheet" type="text/css" href="ltie9.css"/>
+        <link rel="stylesheet" type="text/css" href="ltie9.css" />
     <![endif]-->
-
-    <script type="text/javascript" src="../../src/js/toolTipify.js"></script>
 
 </head>
 
 
 <body class="exploration-tool-demo fl-focus">
 
-<div class="flc-overviewPanel fl-overviewPanel-container"></div>
-<div class="flc-toc-tocContainer toc"></div>
+    <div class="flc-overviewPanel fl-overviewPanel-container"></div>
+    <div class="flc-toc-tocContainer toc"> </div>
 
-<div>
-    <header id="main-header" style="position:relative; padding:.50rem;">
-        <div id="main-header-content">
-            <span class="fl-icon-tree" aria-label="Generic Logo" role="img"></span>
-            <span id="pageHeader" class="fl-header-title"></span>
-
-            <div style="margin-top:0rem;">
-                <input id="activeLinks0" type="search" style="display:inline;" tabindex="0"/> <span
-                    class="fl-icon-search" role="presentation"></span><a id="activeLinks1" href="#"
-                                                                         class="subjects"></a>
-            </div>
-        </div>
-    </header>
-
-    <section class="main-content">
-        <header class="fl-clearfix" style=" padding-bottom:1rem;">
-            <span class="fl-icon-atom" aria-label="Graphic of an atom" role="img"></span>
-
-            <h1 id="pageTitle"></h1>
-
-            <div id="breadcrumbs">
-                <a id="activeLinks2" href="#"></a> >
-                <a id="activeLinks3" href="#"></a>
-            </div>
-
-            <div id="prevNext">
-                <a id="back" href="#"><span class="fl-icon-prev" aria-label="Previous" role="img"></span></a>
-                <a id="forward" href="#"><span class="fl-icon-next" aria-label="Next" role="img"></span></a>
+    <div>
+        <header id="main-header" style="position:relative; padding:.50rem;">
+            <div id="main-header-content">
+                <span class="fl-icon-tree" aria-label="Generic Logo" role="img"></span>
+                <span id="pageHeader" class="fl-header-title"></span>
+                <div style="margin-top:0rem;">
+                    <input id="activeLinks0" type="search" style="display:inline;"tabindex="0"/> <span class="fl-icon-search" role="presentation"></span><a id="activeLinks1" href="#" class="subjects"></a>
+                </div>
             </div>
         </header>
 
-        <div id="main">
-            <div id="article-filters" class="flc-explorationTool-simplify-hide fl-clearfix">
-                <div id="article-filter">
-                    <span id="inactiveLinks0" class="fl-font-size-130"></span><br>
-                    <span id="inactiveLinks1"></span>
-                </div>
-                <div class="article-tab">
-                    <span class="fl-icon-light"></span>
-                    <span id="inactiveLinks2" style="font-size:1.0rem"></span>
-                </div>
-                <div class="article-tab">
-                    <span class="fl-icon-book"></span>
-                    <span id="inactiveLinks3" style="font-size:1.0rem"></span>
-                </div>
-            </div>
+        <section class="main-content">
+            <header class="fl-clearfix" style=" padding-bottom:1rem;" >
+                <span class="fl-icon-atom" aria-label="Graphic of an atom" role="img"></span>
+                <h1 id="pageTitle"></h1>
 
-            <div id="helpful" class="flc-explorationTool-simplify-hide fl-clearfix">
-                <h1 id="inactiveLinks5"></h1>
-
-                <div>
-                    <span id="inactiveLinks4"></span>
-                    <span class="fl-icon-thumbsUp" aria-label="Yes, thumbs up" role="img"></span>
-                    <span class="fl-icon-thumbsDown" aria-label="No, thumbs down" role="img"></span>
+                <div id="breadcrumbs">
+                    <a id="activeLinks2" href="#"></a> >
+                    <a id="activeLinks3" href="#"></a>
                 </div>
-            </div>
-            <div class="flc-explorationTool-simplify-hide resource-tools">
-                <menu type="toolbar" class="tools">
-                    <li><a id="activeLinks4" href="#"></a></li>
-                    <li><a id="activeLinks5" href="#"></a></li>
-                    <li><a id="activeLinks6" href="#"></a></li>
-                    <li><a id="activeLinks7" href="#"> <span class="fl-icon-arrow"></span></a></li>
-                    <li><a id="activeLinks8" href="#"> <span class="fl-icon-arrow"></span></a></li>
-                </menu>
-            </div>
 
-            <article id="content">
-                <section>
-                    <div id="storm" role="img" class="image main-content-image" tabindex="0"
-                         aria-label="Photo of stormy sky, with lightning striking over a city."></div>
+                <div id="prevNext">
+                    <a id="back" href="#"><span class="fl-icon-prev" aria-label="Previous" role="img"></span></a>
+                    <a id="forward"  href="#"><span class="fl-icon-next" aria-label="Next" role="img"></span></a>
+                </div>
+            </header>
+
+            <div id="main">
+                <div id="article-filters" class="flc-explorationTool-simplify-hide fl-clearfix">
+                    <div id="article-filter">
+                        <span id="inactiveLinks0" class="fl-font-size-130"></span><br>
+                        <span id="inactiveLinks1"></span>
+                    </div>
+                    <div class="article-tab">
+                        <span class="fl-icon-light"></span>
+                        <span id="inactiveLinks2" style="font-size:1.0rem"></span>
+                    </div>
+                    <div class="article-tab">
+                        <span class="fl-icon-book"></span>
+                        <span id="inactiveLinks3" style="font-size:1.0rem"></span>
+                    </div>
+                </div>
+
+                <div id="helpful" class="flc-explorationTool-simplify-hide fl-clearfix">
+                    <h1 id="inactiveLinks5"></h1>
+
+                    <div>
+                        <span id="inactiveLinks4"></span>
+                        <span class="fl-icon-thumbsUp" aria-label="Yes, thumbs up" role="img"></span>
+                        <span class="fl-icon-thumbsDown" aria-label="No, thumbs down" role="img"></span>
+                    </div>
+                </div>
+                <div class="flc-explorationTool-simplify-hide resource-tools">
+                    <menu type="toolbar" class="tools">
+                        <li><a id="activeLinks4" href="#"></a></li>
+                        <li><a id="activeLinks5" href="#"></a></li>
+                        <li><a id="activeLinks6" href="#"></a></li>
+                        <li><a id="activeLinks7" href="#"> <span class="fl-icon-arrow"></span></a></li>
+                        <li><a id="activeLinks8" href="#"> <span class="fl-icon-arrow"></span></a></li>
+                    </menu>
+                </div>
+
+                <article id="content">
+                <section >
+                <div id="storm" role="img" class="image main-content-image" tabindex="0" aria-label="Photo of stormy sky, with lightning striking over a city."></div>
                 </section>
                 <section id="content0" tabindex="0">
-                    <p class="text"></p>
+                <p class="text"></p>
                 </section>
 
                 <section id="content1" tabindex="0">
                     <h2 class="heading"></h2>
-
                     <p class="p0"></p>
 
                     <div id="yt_holder">
@@ -135,10 +127,7 @@
                 </section>
                 <section id="miscText0">
                     <h3 class="heading"></h3>
-
-                    <div id="structure" role="img" class="main-content-image" tabindex="0"
-                         aria-label="Model of atomic structure: This image illustrates atomic structure: a cluster of three neutrons (labelled '2') and three protons (labelled '3') are surrounded by two rings of electrons (labelled '1'). The inner ring has two electrons on it and the outer ring has one."
-                         aria-describedby="structure-descrip"></div>
+                    <div id="structure" role="img" class="main-content-image" tabindex="0" aria-label="Model of atomic structure: This image illustrates atomic structure: a cluster of three neutrons (labelled '2') and three protons (labelled '3') are surrounded by two rings of electrons (labelled '1'). The inner ring has two electrons on it and the outer ring has one." aria-describedby="structure-descrip"></div>
                     <ol id="structure-descrip">
                         <li class="p0"></li>
                         <li class="p1"></li>
@@ -149,35 +138,26 @@
                     <h2 class="heading"></h2>
 
                     <p class="p0"></p>
-
                     <p class="p1"></p>
-
                     <p class="p2"></p>
                 </section>
                 <section>
                     <div class="fl-clearfix">
                         <div id="images2" class="fl-force-left demo-orbitals">
                             <h3 class="heading"></h3>
-
-                            <div id="sorbital" role="img" class="image main-content-image" tabindex="0"
-                                 aria-label="An image of an S Orbital: a multi-coloured set of rings made of small dots, radiating out from a red coloured centre. The rings closest to the centre are red and close together, the rings further out from the centre are pink and a bit more spaced apart, and the outer-most rings are blue and have more space between them."></div>
+                            <div id="sorbital" role="img" class="image main-content-image" tabindex="0" aria-label="An image of an S Orbital: a multi-coloured set of rings made of small dots, radiating out from a red coloured centre. The rings closest to the centre are red and close together, the rings further out from the centre are pink and a bit more spaced apart, and the outer-most rings are blue and have more space between them."></div>
                         </div>
 
                         <div id="images3" class="fl-force-left demo-orbitals">
                             <h3 class="heading"></h3>
-
-                            <div id="porbital" role="img" class="image main-content-image" tabindex="0"
-                                 aria-label="An image of an P Orbital: two red coloured centres surrounded by rings, pressed together. The rings closest to each centre are red and close together, the rings further out from each centre are pink and a bit more spaced apart, and the outer-most rings are blue and have more space between them. Where the two meet the rings are bright blue and flattened together."></div>
+                            <div id="porbital" role="img" class="image main-content-image" tabindex="0" aria-label="An image of an P Orbital: two red coloured centres surrounded by rings, pressed together. The rings closest to each centre are red and close together, the rings further out from each centre are pink and a bit more spaced apart, and the outer-most rings are blue and have more space between them. Where the two meet the rings are bright blue and flattened together."></div>
                         </div>
                     </div>
                 </section>
                 <section id="miscText1" tabindex="0">
                     <p class="p0"></p>
-
                     <p class="p1"></p>
-
                     <p class="p2"></p>
-
                     <p class="p3"></p>
                 </section>
 
@@ -185,58 +165,47 @@
                     <h2 class="heading"></h2>
 
                     <p class="p0"></p>
-
-                    <p class="p1"></p>
-
-                    <p class="p2"></p>
-
-                    <p class="p3"></p>
-
-                    <p class="p4"></p>
+					<p class="p1"></p>
+					<p class="p2"></p>
+					<p class="p3"></p>
+					<p class="p4"></p>
                 </section>
                 <section id="content6" tabindex="0">
                     <h3 class="heading"></h3>
-
-                    <div id="energylevels" role="img" class="image main-content-image" tabindex="0"
-                         aria-label="Graphic showing energy levels and electrons: This diagram shows a circle (labelled '1') surrounded by three rings, labelled moving outward from the centre '2', '3' and '4'."></div>
-                    <div id="energy-descrip">
-                        <div id="1234">
-                            <ol>
+                    <div id="energylevels" role="img" class="image main-content-image" tabindex="0" aria-label="Graphic showing energy levels and electrons: This diagram shows a circle (labelled '1') surrounded by three rings, labelled moving outward from the centre '2', '3' and '4'."></div>
+                        <div id="energy-descrip">
+                            <div id="1234">
+	                            <ol>
                                 <li class="p0"></li>
                                 <li class="p1"></li>
                                 <li class="p2"></li>
                                 <li class="p3"></li>
-                            </ol>
-                        </div>
+	                            </ol>
+                            </div>
                     </div>
                 </section>
                 <section id="miscText2" tabindex="0">
-                    <p class="p0"></p>
-
-                    <p class="p1"></p>
-
-                    <p class="p2"></p>
-
-                    <p class="p3"></p>
+                     <p class="p0"></p>
+                     <p class="p1"></p>
+                     <p class="p2"></p>
+                     <p class="p3"></p>
                 </section>
 
-                <section id="content7" tabindex="0">
+                 <section id="content7" tabindex="0">
                     <h2 class="heading"></h2>
 
                     <p class="p0"></p>
-
                     <p class="p1"></p>
-
                     <p class="p2"></p>
                 </section>
 
-                <section id="content8" tabindex="0">
+                 <section id="content8" tabindex="0">
                     <h2 class="heading"></h2>
 
                     <p class="text"></p>
                 </section>
 
-                <section id="content9" tabindex="0">
+                 <section id="content9" tabindex="0">
                     <h2 class="heading"></h2>
 
                     <p class="p0"></p>
@@ -248,11 +217,8 @@
                     <p class="p3"></p>
 
                     <p class="p4"></p>
-
                     <p class="p5"></p>
-
                     <p class="p6"></p>
-
                     <p class="p7"></p>
 
                 </section>
@@ -261,11 +227,8 @@
                     <h2 class="heading"></h2>
 
                     <p class="p0"></p>
-
                     <p class="p1"></p>
-
                     <p class="p2"></p>
-
                     <p class="p3"></p>
                 </section>
 
@@ -275,11 +238,11 @@
                 <section>
                     <p><a id="activeLinks10" href="#"></a></p>
                 </section>
-            </article>  <!-- closing content column -->
+                </article>  <!-- closing content column -->
 
-        </div>  <!-- closing main div -->
-    </section>
-</div>
+            </div>  <!-- closing main div -->
+        </section>
+    </div>
 
 <script>
     var keys = [];
@@ -303,35 +266,35 @@
         return queryKvps;
     }
 
-    // Parses the "lang" variable out of the querystring, returning the languageCode to use
-    // for the page text
-    function getLanguageCode() {
-        var languageCode = "en-US"; //default to english
-        var queryKvps = getQueryStringKeys();
-        if (queryKvps.lang && queryKvps.lang != "undefined") {
-            languageCode = queryKvps["lang"];
-        }
-        return languageCode;
-    }
-
-    // Fetch the language text file based on lang Query String variable, and pass
-    // the returned json data to the function that will place strings in the UI
-    function fetch_and_insert_text() {
-        var langaugeCode = getLanguageCode();
-        var url = '../messages/electronPreviewMessages_' + langaugeCode + ".json";
-        $.ajax({
-            type: 'GET',
-            url: url,
-            dataType: 'json',
-            success: function (data) {
-                insertText(data);
-                setUpTts(data);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log("error occured: " + textStatus);
+        // Parses the "lang" variable out of the querystring, returning the languageCode to use
+        // for the page text
+        function getLanguageCode() {
+            var languageCode = "en-US"; //default to english
+            var queryKvps = getQueryStringKeys();
+            if (queryKvps.lang && queryKvps.lang != "undefined") {
+                languageCode = queryKvps["lang"];
             }
-        });
-    }
+            return languageCode;
+        }
+
+        // Fetch the language text file based on lang Query String variable, and pass
+        // the returned json data to the function that will place strings in the UI
+        function fetch_and_insert_text() {
+            var langaugeCode = getLanguageCode();
+            var url = '../messages/electronPreviewMessages_' + langaugeCode + ".json";
+            $.ajax({
+                type: 'GET',
+                url: url,
+                dataType: 'json',
+                success: function (data) {
+                    insertText(data);
+                    setUpTts(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("error occured: " + textStatus);
+                }
+            });
+        }
 
     // Youtube will auto load the captions in the language if they exist, it will not load
     // auto generated captions when using cc_load_policy, so choose a video that supports
