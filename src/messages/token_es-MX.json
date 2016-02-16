@@ -1,3 +1,3 @@
 {
-  "message": "<p>Sus preferencias se han guardado.</p> <p>La próxima vez que utilice un dispositivo o sitio web con una aplicación GPII instalado, usted será capaz de utilizar el código de acceso para descargar sus preferencias. Puede encontrar este código de acceso mediante la búsqueda de un archivo llamado '.gpii-user-token.txt' en su dispositivo USB.</p>"
+"message": "¡Felicitaciones! Sus preferencias se han guardado.<br>En el futuro, usted será capaz de acceder a descargar sus preferencias para utilizarlos.<br>Para salir, cerrar esta ventana del navegador."
 }
