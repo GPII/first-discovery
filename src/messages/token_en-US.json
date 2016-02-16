@@ -1,4 +1,3 @@
 {
-    "message": "To apply your preferences to any device (a computer, a tablet, a mobile phone, etc), record the following token:",
-    "error": "Sorry, a token could not be generated at this time."
+    "message": "<p>Congratulations! Your preferences have been saved, and you have completed First Discovery.</p> <p>The next time you use a device or website with a GPII application installed, you’ll be able to use your passcode to download your preferences. You can find this passcode by looking for a file named '.gpii-user-token.txt' on your USB device.</p> <p>To exit, close this browser window.</p>"
 }
