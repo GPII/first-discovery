@@ -94,7 +94,8 @@
           "p": "REPRODUCTOR DE VIDEO AQUÍ"
         }
       ],
-      "tts": "¿Cuáles son los electrones ? Los electrones son uno de los tres tipos principales de las partículas que componen los átomos. Los otros dos tipos son protones y neutrones. A diferencia de los protones y los neutrones , que consisten en partículas más pequeñas y simples , los electrones son partículas fundamentales que no están formadas por partículas más pequeñas. Son un tipo de partículas fundamentales llamadas leptones . Todos los leptones tienen una carga eléctrica de -1 o 0. Para un excelente video sobre los electrones y otras partículas fundamentales en átomos , vaya a la siguiente dirección:"
+      "tts": "¿Cuáles son los electrones ? Los electrones son uno de los tres tipos principales de las partículas que componen los átomos. Los otros dos tipos son protones y neutrones. A diferencia de los protones y los neutrones , que consisten en partículas más pequeñas y simples , los electrones son partículas fundamentales que no están formadas por partículas más pequeñas. Son un tipo de partículas fundamentales llamadas leptones . Todos los leptones tienen una carga eléctrica de -1 o 0. Para un excelente video sobre los electrones y otras partículas fundamentales en átomos , vaya a la siguiente dirección:",
+      "video_tts": "Este es un video sobre orbitales . Pulsa espacio para reproducir el vídeo"
     },
     {
       "heading": "Propiedades de los Electrones",

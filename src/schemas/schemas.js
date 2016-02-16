@@ -142,6 +142,9 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             },
             "captions": {
                 "type": "gpii.firstDiscovery.captions",
+                "enactor": {
+                    "type": "gpii.firstDiscovery.enactor.captions"
+                },
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.captions",
                     "container": ".gpiic-fd-prefsEditor-panel-captions",

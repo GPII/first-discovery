@@ -98,7 +98,8 @@
           "p": "LECTEUR VIDEO ICI"
         }
       ],
-      "tts": "Qu'est-ce sont des Électrons? Les Électrons sont l'un des trois principaux types de particules qui composent les atomes. Les deux autres types sont des protons et des neutrons. Contrairement à protons et des neutrons, qui sont constitués de particules plus petites, plus simples, les électrons sont des particules fondamentales qui ne sont pas composées de particules plus petites. Ils sont un type de particules fondamentales appelées leptons. Tous les leptons ont une charge électrique de -1 ou 0."
+      "tts": "Qu'est-ce sont des Électrons? Les Électrons sont l'un des trois principaux types de particules qui composent les atomes. Les deux autres types sont des protons et des neutrons. Contrairement à protons et des neutrons, qui sont constitués de particules plus petites, plus simples, les électrons sont des particules fondamentales qui ne sont pas composées de particules plus petites. Ils sont un type de particules fondamentales appelées leptons. Tous les leptons ont une charge électrique de -1 ou 0.",
+      "video_tts": "Ceci est une vidéo sur orbitales . Appuyez sur espace pour lire la vidéo"
     },
     {
       "heading": "Propriétés d'Électrons",

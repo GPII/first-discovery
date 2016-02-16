@@ -1,116 +1,125 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    
-    <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.min.css" />
-    <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.css" />
-    <link rel="stylesheet" href="../../src/lib/foundation/css/foundation-icons/foundation-icons.css" />
+
+    <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.min.css"/>
+    <link rel="stylesheet" href="../../src/lib/foundation/css/foundation.css"/>
+    <link rel="stylesheet" href="../../src/lib/foundation/css/foundation-icons/foundation-icons.css"/>
     <!-- CSS required for the Prefs Editor -->
-    <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/Enactors.css" />
-    <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/PrefsEditor.css" />
-    <link rel="stylesheet" type="text/css" href="../../src/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/Enactors.css"/>
+    <link rel="stylesheet" type="text/css" href="../../src/lib/infusion/src/framework/preferences/css/PrefsEditor.css"/>
+    <link rel="stylesheet" type="text/css" href="../../src/css/style.css"/>
 
-    <link rel="stylesheet" type="text/css" href="../../src/css/fss-reset-global.css" />
-    <link rel="stylesheet" type="text/css" href="../../src/css/fss-base-global.css" />
-    <link rel="stylesheet" type="text/css" href="../../src/css/fss-layout.css" />
-    <link rel="stylesheet" type="text/css" href="../../src/css/fss-text.css" />
-    <link rel="stylesheet" type="text/css" href="../../src/css/fss-theme-bw-prefsEditor.css" />
-    <link rel="stylesheet" type="text/css" href="../../src/css/fss-theme-wb-prefsEditor.css" />
+    <link rel="stylesheet" type="text/css" href="../../src/css/fss-reset-global.css"/>
+    <link rel="stylesheet" type="text/css" href="../../src/css/fss-base-global.css"/>
+    <link rel="stylesheet" type="text/css" href="../../src/css/fss-layout.css"/>
+    <link rel="stylesheet" type="text/css" href="../../src/css/fss-text.css"/>
+    <link rel="stylesheet" type="text/css" href="../../src/css/fss-theme-bw-prefsEditor.css"/>
+    <link rel="stylesheet" type="text/css" href="../../src/css/fss-theme-wb-prefsEditor.css"/>
 
-    <link rel="stylesheet" type="text/css" href="../../src/css/ExplorationTool.css" />
-    <link rel="stylesheet" type="text/css" href="../../src/css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="../../src/css/ExplorationTool.css"/>
+    <link rel="stylesheet" type="text/css" href="../../src/css/demo.css"/>
     <!--[if lt IE 9]>
-        <link rel="stylesheet" type="text/css" href="ltie9.css" />
+    <link rel="stylesheet" type="text/css" href="ltie9.css"/>
     <![endif]-->
 
     <script type="text/javascript" src="../../src/js/toolTipify.js"></script>
-    
+
 </head>
 
 
 <body class="exploration-tool-demo fl-focus">
 
-    <div class="flc-overviewPanel fl-overviewPanel-container"></div>
-    <div class="flc-toc-tocContainer toc"> </div>
+<div class="flc-overviewPanel fl-overviewPanel-container"></div>
+<div class="flc-toc-tocContainer toc"></div>
 
-    <div>
-        <header id="main-header" style="position:relative; padding:.50rem;">
-            <div id="main-header-content">
-                <span class="fl-icon-tree" aria-label="Generic Logo" role="img"></span>
-                <span id="pageHeader" class="fl-header-title"></span>
-                <div style="margin-top:0rem;">
-                    <input id="activeLinks0" type="search" style="display:inline;"tabindex="0"/> <span class="fl-icon-search" role="presentation"></span><a id="activeLinks1" href="#" class="subjects"></a>
-                </div>
+<div>
+    <header id="main-header" style="position:relative; padding:.50rem;">
+        <div id="main-header-content">
+            <span class="fl-icon-tree" aria-label="Generic Logo" role="img"></span>
+            <span id="pageHeader" class="fl-header-title"></span>
+
+            <div style="margin-top:0rem;">
+                <input id="activeLinks0" type="search" style="display:inline;" tabindex="0"/> <span
+                    class="fl-icon-search" role="presentation"></span><a id="activeLinks1" href="#"
+                                                                         class="subjects"></a>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-content">
+        <header class="fl-clearfix" style=" padding-bottom:1rem;">
+            <span class="fl-icon-atom" aria-label="Graphic of an atom" role="img"></span>
+
+            <h1 id="pageTitle"></h1>
+
+            <div id="breadcrumbs">
+                <a id="activeLinks2" href="#"></a> >
+                <a id="activeLinks3" href="#"></a>
+            </div>
+
+            <div id="prevNext">
+                <a id="back" href="#"><span class="fl-icon-prev" aria-label="Previous" role="img"></span></a>
+                <a id="forward" href="#"><span class="fl-icon-next" aria-label="Next" role="img"></span></a>
             </div>
         </header>
 
-        <section class="main-content">
-            <header class="fl-clearfix" style=" padding-bottom:1rem;" >
-                <span class="fl-icon-atom" aria-label="Graphic of an atom" role="img"></span>
-                <h1 id="pageTitle"></h1>
-
-                <div id="breadcrumbs">
-                    <a id="activeLinks2" href="#"></a> >
-                    <a id="activeLinks3" href="#"></a>
+        <div id="main">
+            <div id="article-filters" class="flc-explorationTool-simplify-hide fl-clearfix">
+                <div id="article-filter">
+                    <span id="inactiveLinks0" class="fl-font-size-130"></span><br>
+                    <span id="inactiveLinks1"></span>
                 </div>
-
-                <div id="prevNext">
-                    <a id="back" href="#"><span class="fl-icon-prev" aria-label="Previous" role="img"></span></a>
-                    <a id="forward" href="#"><span class="fl-icon-next" aria-label="Next" role="img"></span></a>
+                <div class="article-tab">
+                    <span class="fl-icon-light"></span>
+                    <span id="inactiveLinks2" style="font-size:1.0rem"></span>
                 </div>
-            </header>
-
-            <div id="main">
-                <div id="article-filters" class="flc-explorationTool-simplify-hide fl-clearfix">
-                    <div id="article-filter">
-                        <span id="inactiveLinks0" class="fl-font-size-130"></span><br>
-                        <span id="inactiveLinks1"></span>
-                    </div>
-                    <div class="article-tab">
-                        <span class="fl-icon-light"></span>
-                        <span id="inactiveLinks2" style="font-size:1.0rem"></span>
-                    </div>
-                    <div class="article-tab">
-                        <span class="fl-icon-book"></span>
-                        <span id="inactiveLinks3" style="font-size:1.0rem"></span>
-                    </div>
+                <div class="article-tab">
+                    <span class="fl-icon-book"></span>
+                    <span id="inactiveLinks3" style="font-size:1.0rem"></span>
                 </div>
+            </div>
 
-                <div id="helpful" class="flc-explorationTool-simplify-hide fl-clearfix">
-                    <h1 id="inactiveLinks5"></h1>
+            <div id="helpful" class="flc-explorationTool-simplify-hide fl-clearfix">
+                <h1 id="inactiveLinks5"></h1>
 
-                    <div>
-                        <span id="inactiveLinks4"></span>
-                        <span class="fl-icon-thumbsUp" aria-label="Yes, thumbs up" role="img"></span>
-                        <span class="fl-icon-thumbsDown" aria-label="No, thumbs down" role="img"></span>
-                    </div>
+                <div>
+                    <span id="inactiveLinks4"></span>
+                    <span class="fl-icon-thumbsUp" aria-label="Yes, thumbs up" role="img"></span>
+                    <span class="fl-icon-thumbsDown" aria-label="No, thumbs down" role="img"></span>
                 </div>
-                <div class="flc-explorationTool-simplify-hide resource-tools">
-                    <menu type="toolbar" class="tools">
-                        <li><a id="activeLinks4" href="#"></a></li>
-                        <li><a id="activeLinks5" href="#"></a></li>
-                        <li><a id="activeLinks6" href="#"></a></li>
-                        <li><a id="activeLinks7" href="#"> <span class="fl-icon-arrow"></span></a></li>
-                        <li><a id="activeLinks8" href="#"> <span class="fl-icon-arrow"></span></a></li>
-                    </menu>
-                </div>
+            </div>
+            <div class="flc-explorationTool-simplify-hide resource-tools">
+                <menu type="toolbar" class="tools">
+                    <li><a id="activeLinks4" href="#"></a></li>
+                    <li><a id="activeLinks5" href="#"></a></li>
+                    <li><a id="activeLinks6" href="#"></a></li>
+                    <li><a id="activeLinks7" href="#"> <span class="fl-icon-arrow"></span></a></li>
+                    <li><a id="activeLinks8" href="#"> <span class="fl-icon-arrow"></span></a></li>
+                </menu>
+            </div>
 
-                <article id="content">
-                <section >
-                <div id="storm" role="img" class="image main-content-image" tabindex="0" aria-label="Photo of stormy sky, with lightning striking over a city."></div>
+            <article id="content">
+                <section>
+                    <div id="storm" role="img" class="image main-content-image" tabindex="0"
+                         aria-label="Photo of stormy sky, with lightning striking over a city."></div>
                 </section>
                 <section id="content0" tabindex="0">
-                <p class="text"></p>
+                    <p class="text"></p>
                 </section>
 
                 <section id="content1" tabindex="0">
                     <h2 class="heading"></h2>
+
                     <p class="p0"></p>
-                    <p class="p1"></p>
-                    <p class="p2"></p>
+
+                    <div id="yt_holder">
+
+                    </div>
+
                 </section>
 
                 <section id="content2" tabindex="0">
@@ -126,7 +135,10 @@
                 </section>
                 <section id="miscText0">
                     <h3 class="heading"></h3>
-                    <div id="structure" role="img" class="main-content-image" tabindex="0" aria-label="Model of atomic structure: This image illustrates atomic structure: a cluster of three neutrons (labelled '2') and three protons (labelled '3') are surrounded by two rings of electrons (labelled '1'). The inner ring has two electrons on it and the outer ring has one." aria-describedby="structure-descrip"></div>
+
+                    <div id="structure" role="img" class="main-content-image" tabindex="0"
+                         aria-label="Model of atomic structure: This image illustrates atomic structure: a cluster of three neutrons (labelled '2') and three protons (labelled '3') are surrounded by two rings of electrons (labelled '1'). The inner ring has two electrons on it and the outer ring has one."
+                         aria-describedby="structure-descrip"></div>
                     <ol id="structure-descrip">
                         <li class="p0"></li>
                         <li class="p1"></li>
@@ -137,74 +149,39 @@
                     <h2 class="heading"></h2>
 
                     <p class="p0"></p>
+
                     <p class="p1"></p>
+
                     <p class="p2"></p>
                 </section>
                 <section>
                     <div class="fl-clearfix">
                         <div id="images2" class="fl-force-left demo-orbitals">
                             <h3 class="heading"></h3>
-                            <div id="sorbital" role="img" class="image main-content-image" tabindex="0" aria-label="An image of an S Orbital: a multi-coloured set of rings made of small dots, radiating out from a red coloured centre. The rings closest to the centre are red and close together, the rings further out from the centre are pink and a bit more spaced apart, and the outer-most rings are blue and have more space between them."></div>
+
+                            <div id="sorbital" role="img" class="image main-content-image" tabindex="0"
+                                 aria-label="An image of an S Orbital: a multi-coloured set of rings made of small dots, radiating out from a red coloured centre. The rings closest to the centre are red and close together, the rings further out from the centre are pink and a bit more spaced apart, and the outer-most rings are blue and have more space between them."></div>
                         </div>
 
                         <div id="images3" class="fl-force-left demo-orbitals">
                             <h3 class="heading"></h3>
-                            <div id="porbital" role="img" class="image main-content-image" tabindex="0" aria-label="An image of an P Orbital: two red coloured centres surrounded by rings, pressed together. The rings closest to each centre are red and close together, the rings further out from each centre are pink and a bit more spaced apart, and the outer-most rings are blue and have more space between them. Where the two meet the rings are bright blue and flattened together."></div>
+
+                            <div id="porbital" role="img" class="image main-content-image" tabindex="0"
+                                 aria-label="An image of an P Orbital: two red coloured centres surrounded by rings, pressed together. The rings closest to each centre are red and close together, the rings further out from each centre are pink and a bit more spaced apart, and the outer-most rings are blue and have more space between them. Where the two meet the rings are bright blue and flattened together."></div>
                         </div>
                     </div>
                 </section>
                 <section id="miscText1" tabindex="0">
                     <p class="p0"></p>
+
                     <p class="p1"></p>
+
                     <p class="p2"></p>
+
                     <p class="p3"></p>
                 </section>
 
                 <section id="content5" tabindex="0">
-                    <h2 class="heading"></h2>
-
-                    <p class="p0"></p>
-					<p class="p1"></p>
-					<p class="p2"></p>
-					<p class="p3"></p>
-					<p class="p4"></p>
-                </section>
-                <section id="content6" tabindex="0">
-                    <h3 class="heading"></h3>
-                    <div id="energylevels" role="img" class="image main-content-image" tabindex="0" aria-label="Graphic showing energy levels and electrons: This diagram shows a circle (labelled '1') surrounded by three rings, labelled moving outward from the centre '2', '3' and '4'."></div>
-                        <div id="energy-descrip">
-                            <div id="1234">
-	                            <ol>
-                                <li class="p0"></li>
-                                <li class="p1"></li>
-                                <li class="p2"></li>
-                                <li class="p3"></li>
-	                            </ol>
-                            </div>
-                    </div>
-                </section>
-                <section id="miscText2" tabindex="0">
-                     <p class="p0"></p>
-                     <p class="p1"></p>
-                     <p class="p2"></p>
-                     <p class="p3"></p>
-                </section>
-
-                 <section id="content7" tabindex="0">
-                    <h2 class="heading"></h2>
-
-                    <p class="p0"></p>
-                    <p class="p1"></p>
-                    <p class="p2"></p>
-                </section>
-
-                 <section id="content8" tabindex="0">
-                    <h2 class="heading"></h2>
-
-                    <p class="text"></p>
-                </section>
-
-                 <section id="content9" tabindex="0">
                     <h2 class="heading"></h2>
 
                     <p class="p0"></p>
@@ -216,8 +193,66 @@
                     <p class="p3"></p>
 
                     <p class="p4"></p>
+                </section>
+                <section id="content6" tabindex="0">
+                    <h3 class="heading"></h3>
+
+                    <div id="energylevels" role="img" class="image main-content-image" tabindex="0"
+                         aria-label="Graphic showing energy levels and electrons: This diagram shows a circle (labelled '1') surrounded by three rings, labelled moving outward from the centre '2', '3' and '4'."></div>
+                    <div id="energy-descrip">
+                        <div id="1234">
+                            <ol>
+                                <li class="p0"></li>
+                                <li class="p1"></li>
+                                <li class="p2"></li>
+                                <li class="p3"></li>
+                            </ol>
+                        </div>
+                    </div>
+                </section>
+                <section id="miscText2" tabindex="0">
+                    <p class="p0"></p>
+
+                    <p class="p1"></p>
+
+                    <p class="p2"></p>
+
+                    <p class="p3"></p>
+                </section>
+
+                <section id="content7" tabindex="0">
+                    <h2 class="heading"></h2>
+
+                    <p class="p0"></p>
+
+                    <p class="p1"></p>
+
+                    <p class="p2"></p>
+                </section>
+
+                <section id="content8" tabindex="0">
+                    <h2 class="heading"></h2>
+
+                    <p class="text"></p>
+                </section>
+
+                <section id="content9" tabindex="0">
+                    <h2 class="heading"></h2>
+
+                    <p class="p0"></p>
+
+                    <p class="p1"></p>
+
+                    <p class="p2"></p>
+
+                    <p class="p3"></p>
+
+                    <p class="p4"></p>
+
                     <p class="p5"></p>
+
                     <p class="p6"></p>
+
                     <p class="p7"></p>
 
                 </section>
@@ -226,8 +261,11 @@
                     <h2 class="heading"></h2>
 
                     <p class="p0"></p>
+
                     <p class="p1"></p>
+
                     <p class="p2"></p>
+
                     <p class="p3"></p>
                 </section>
 
@@ -237,325 +275,344 @@
                 <section>
                     <p><a id="activeLinks10" href="#"></a></p>
                 </section>
-                </article>  <!-- closing content column -->
+            </article>  <!-- closing content column -->
 
-            </div>  <!-- closing main div -->
-        </section>
-    </div>
+        </div>  <!-- closing main div -->
+    </section>
+</div>
 
-    <script>
-        var keys = [];
-        var messages = [];
-        var currentMsg;
-        $(document).ready(function() {
-            // populate the preview's text.
-            fetch_and_insert_text();
+<script>
+    var keys = [];
+    var messages = [];
+    var currentMsg;
+    $(document).ready(function () {
+        // populate the preview's text.
+        fetch_and_insert_text();
+        setVideoUrl(false);
+    });
+
+    // Parses the query string and returns an object container key-value pairs from
+    // decoded querystring variables
+    function getQueryStringKeys() {
+        var queryKvps = {};
+        var kvps = window.location.search.substring(1).split("&");
+        for (var i = 0; i < kvps.length; i++) {
+            var kvp_pieces = kvps[i].split("=");
+            queryKvps[decodeURIComponent(kvp_pieces[0])] = decodeURIComponent(kvp_pieces[1]);
+        }
+        return queryKvps;
+    }
+
+    // Parses the "lang" variable out of the querystring, returning the languageCode to use
+    // for the page text
+    function getLanguageCode() {
+        var languageCode = "en-US"; //default to english
+        var queryKvps = getQueryStringKeys();
+        if (queryKvps.lang && queryKvps.lang != "undefined") {
+            languageCode = queryKvps["lang"];
+        }
+        return languageCode;
+    }
+
+    // Fetch the language text file based on lang Query String variable, and pass
+    // the returned json data to the function that will place strings in the UI
+    function fetch_and_insert_text() {
+        var langaugeCode = getLanguageCode();
+        var url = '../messages/electronPreviewMessages_' + langaugeCode + ".json";
+        $.ajax({
+            type: 'GET',
+            url: url,
+            dataType: 'json',
+            success: function (data) {
+                insertText(data);
+                setUpTts(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("error occured: " + textStatus);
+            }
         });
-        
-        // Parses the query string and returns an object container key-value pairs from
-        // decoded querystring variables
-        function getQueryStringKeys() {
-            var queryKvps = {};
-            var kvps = window.location.search.substring(1).split("&");
-            for (var i = 0; i < kvps.length; i++) {
-                var kvp_pieces = kvps[i].split("=");
-                queryKvps[decodeURIComponent(kvp_pieces[0])] = decodeURIComponent(kvp_pieces[1]);
-            }
-            return queryKvps;
+    }
+
+    // Youtube will auto load the captions in the language if they exist, it will not load
+    // auto generated captions when using cc_load_policy, so choose a video that supports
+    // all needed languages w/ CC.
+    function setVideoUrl(showCaptions) {
+        var youtube_url = "https://www.youtube.com/embed/yBrp8uvNAhI?disablekb=0&start=2";
+
+        if (showCaptions) {
+            var languageCode = getLanguageCode().substring(0, 2);
+            youtube_url = youtube_url + "&cc_load_policy=1" + "&cc_lang_pref=" + encodeURIComponent(languageCode);
         }
 
-        // Parses the "lang" variable out of the querystring, returning the languageCode to use
-        // for the page text
-        function getLanguageCode() {
-            var languageCode = "en-US"; //default to english
-            var queryKvps = getQueryStringKeys();
-            if (queryKvps.lang && queryKvps.lang != "undefined") {
-                languageCode = queryKvps["lang"];
-            }
-            return languageCode;
-        }
-
-        // Fetch the language text file based on lang Query String variable, and pass
-        // the returned json data to the function that will place strings in the UI
-        function fetch_and_insert_text() {
-            var langaugeCode = getLanguageCode();
-            var url = '../messages/electronPreviewMessages_' + langaugeCode + ".json";
-            $.ajax({
-                type: 'GET',
-                url: url,
-                dataType: 'json',
-                success: function (data) {
-                    insertText(data);
-                    setUpTts(data);
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log("error occured: " + textStatus);
-                }
-            });
-        }
+        $("#yt_holder iframe").remove();
+        $('<iframe width="560" height="315" frameborder="0" allowfullscreen></iframe>')
+                .attr("src", youtube_url)
+                .appendTo("#yt_holder");
+    }
 
 
-        // Place strings into the UI from the given json data in arg 0
-        function insertText(electron_preview_text) {
-            //headers
-            $("#pageHeader").text(electron_preview_text.pageHeader);
-            $("#pageTitle").text(electron_preview_text.pageTitle);
-            
-            //inactiveLinks
-            $("#inactiveLinks0").text(electron_preview_text.inactiveLinks[0].text);
-            $("#inactiveLinks1").text(electron_preview_text.inactiveLinks[1].text);
-            $("#inactiveLinks2").text(electron_preview_text.inactiveLinks[2].text);
-            $("#inactiveLinks3").text(electron_preview_text.inactiveLinks[3].text);
-            $("#inactiveLinks4").text(electron_preview_text.inactiveLinks[4].text);
-            $("#inactiveLinks5").text(electron_preview_text.inactiveLinks[5].text); 
-            
-            //activeLinks
-            $("#activeLinks0").attr("placeholder", electron_preview_text.activeLinks[0].text);
-            $("#activeLinks1").text(electron_preview_text.activeLinks[1].text);
-            $("#activeLinks2").text(electron_preview_text.activeLinks[2].text);
-            $("#activeLinks3").text(electron_preview_text.activeLinks[3].text);
-            $("#activeLinks4").text(electron_preview_text.activeLinks[4].text);
-            $("#activeLinks5").text(electron_preview_text.activeLinks[5].text);
-            $("#activeLinks6").text(electron_preview_text.activeLinks[6].text);
-            $("#activeLinks7").text(electron_preview_text.activeLinks[7].text);
-            $("#activeLinks8").text(electron_preview_text.activeLinks[8].text);
-            $("#activeLinks9").text(electron_preview_text.activeLinks[9].text);
-            $("#activeLinks10").text(electron_preview_text.activeLinks[10].text);
-            
-            //Preview content
-            $("#content0 .text").text(electron_preview_text.content[0].text);
-            
-            $("#content1 .p0").text(electron_preview_text.content[1].text[0].p);
-            $("#content1 .p1").text(electron_preview_text.content[1].text[1].p);
-            $("#content1 .p2").text(electron_preview_text.content[1].text[2].p);
-            $("#content1 .heading").text(electron_preview_text.content[1].heading);
-            
-            $("#content2 .text").text(electron_preview_text.content[2].text);
-            $("#content2 .heading").text(electron_preview_text.content[2].heading);
-            
-            $("#content3 .text").text(electron_preview_text.content[3].text);
-            $("#content3 .heading").text(electron_preview_text.content[3].heading);
-            
-            $("#content4 .p0").text(electron_preview_text.content[4].text[0].p);
-            $("#content4 .p1").text(electron_preview_text.content[4].text[1].p);
-            $("#content4 .p2").text(electron_preview_text.content[4].text[2].p);
-            $("#content4 .heading").text(electron_preview_text.content[4].heading);
-            
-            $("#content5 .p0").text(electron_preview_text.content[5].text[0].p);
-            $("#content5 .p1").text(electron_preview_text.content[5].text[1].p);
-            $("#content5 .p2").text(electron_preview_text.content[5].text[2].p);
-            $("#content5 .p3").text(electron_preview_text.content[5].text[3].p);
-            $("#content5 .p4").text(electron_preview_text.content[5].text[4].p);
-            $("#content5 .heading").text(electron_preview_text.content[5].heading);
-            
-            $("#content6 .p0").text(electron_preview_text.content[6].text[0].p);
-            $("#content6 .p1").text(electron_preview_text.content[6].text[1].p);
-            $("#content6 .p2").text(electron_preview_text.content[6].text[2].p);
-            $("#content6 .p3").text(electron_preview_text.content[6].text[3].p);
-            
-            $("#content6 .heading").text(electron_preview_text.content[6].heading);
-            
-            $("#content7 .p0").text(electron_preview_text.content[7].text[0].p);
-            $("#content7 .p1").text(electron_preview_text.content[7].text[1].p);
-            $("#content7 .p2").text(electron_preview_text.content[7].text[2].p);
-            $("#content7 .heading").text(electron_preview_text.content[7].heading);
-            
-            $("#content8 .text").text(electron_preview_text.content[8].text);
-            $("#content8 .heading").text(electron_preview_text.content[8].heading);
-            
-            $("#content9 .p0").text(electron_preview_text.content[9].text[0].p);
-            $("#content9 .p1").text(electron_preview_text.content[9].text[1].p);
-            $("#content9 .p2").text(electron_preview_text.content[9].text[2].p);
-            $("#content9 .p3").text(electron_preview_text.content[9].text[3].p);
-            $("#content9 .p4").text(electron_preview_text.content[9].text[4].p);
-            $("#content9 .p5").text(electron_preview_text.content[9].text[5].p);
-            $("#content9 .p6").text(electron_preview_text.content[9].text[6].p);
-            $("#content9 .p7").text(electron_preview_text.content[9].text[7].p);
-            $("#content9 .heading").text(electron_preview_text.content[9].heading);
-            
-            $("#content10 .p0").text(electron_preview_text.content[10].text[0].p);
-            $("#content10 .p1").text(electron_preview_text.content[10].text[1].p);
-            $("#content10 .p2").text(electron_preview_text.content[10].text[2].p);
-            $("#content10 .p3").text(electron_preview_text.content[10].text[3].p);
-            $("#content10 .heading").text(electron_preview_text.content[10].heading);
-            
-            $("#miscText0 .p0").text(electron_preview_text.miscText[0].text[0].p);
-            $("#miscText0 .p1").text(electron_preview_text.miscText[0].text[1].p);
-            $("#miscText0 .p2").text(electron_preview_text.miscText[0].text[2].p);
-            $("#miscText0 .heading").text(electron_preview_text.miscText[0].heading);
-            
-            $("#miscText1 .p0").text(electron_preview_text.miscText[1].text[0].p);
-            $("#miscText1 .p1").text(electron_preview_text.miscText[1].text[1].p);
-            $("#miscText1 .p2").text(electron_preview_text.miscText[1].text[2].p);
-            $("#miscText1 .p3").text(electron_preview_text.miscText[1].text[3].p);
+    // Place strings into the UI from the given json data in arg 0
+    function insertText(electron_preview_text) {
+        //headers
+        $("#pageHeader").text(electron_preview_text.pageHeader);
+        $("#pageTitle").text(electron_preview_text.pageTitle);
 
-            $("#miscText2 .p0").text(electron_preview_text.miscText[2].text[0].p);
-            $("#miscText2 .p1").text(electron_preview_text.miscText[2].text[1].p);
-            $("#miscText2 .p2").text(electron_preview_text.miscText[2].text[2].p);
-            $("#miscText2 .p3").text(electron_preview_text.miscText[2].text[3].p);
-            
-            //image tts           
-            $("#images2 .heading").text(electron_preview_text.images[2].heading);
-            $("#images3 .heading").text(electron_preview_text.images[3].heading);
-            
-        }
-        
-         // Attach events to page elements so they can self voice when navigated to
-        function setUpTts(text) {
-            // The parent window contains a self voicing function from the First Discovery Tool that
-            // the preview can hook into to voice itself
-            var speechQueueFunction = window.parent.fluid.queryIoCSelector(window.parent.fluid.rootComponent, "gpii.firstDiscovery.selfVoicing")[0].queueSpeech;
-            
-            //activeLinks
-            $("#activeLinks0").focusin(function () {
-                  speechQueueFunction(text.activeLinks[0].tts);
-            }); 
-            $("#activeLinks0").mouseenter(function () {
-                speechQueueFunction(text.activeLinks[0].tts);
-            });
-            $("#activeLinks1").focusin(function () {
-                speechQueueFunction(text.activeLinks[1].tts);
-            }); 
-            $("#activeLinks1").mouseenter(function () {
-                speechQueueFunction(text.activeLinks[1].tts);
-            });
-            $("#activeLinks2").focusin(function () {
-                speechQueueFunction(text.activeLinks[2].tts);
-            }); 
-            $("#activeLinks2").mouseenter(function () {
-                speechQueueFunction(text.activeLinks[2].tts);
-            });
-            $("#activeLinks3").focusin(function () {
-                speechQueueFunction(text.activeLinks[3].tts);
-            }); 
-            $("#activeLinks3").mouseenter(function () {
-                speechQueueFunction(text.activeLinks[3].tts);
-            });
-            $("#activeLinks4").focusin(function () {
-                speechQueueFunction(text.activeLinks[4].tts);
-            }); 
-            $("#activeLinks4").mouseenter(function () {
-                speechQueueFunction(text.activeLinks[4].tts);
-            });
-            $("#activeLinks5").focusin(function () {
-                speechQueueFunction(text.activeLinks[5].tts);
-            }); 
-            $("#activeLinks5").mouseenter(function () {
-                speechQueueFunction(text.activeLinks[5].tts);
-            });
-            $("#activeLinks6").focusin(function () {
-                speechQueueFunction(text.activeLinks[6].tts);
-            }); 
-            $("#activeLinks6").mouseenter(function () {
-                speechQueueFunction(text.activeLinks[6].tts);
-            });
-            $("#activeLinks7").focusin(function () {
-                speechQueueFunction(text.activeLinks[7].tts);
-            }); 
-            $("#activeLinks7").mouseenter(function () {
-                speechQueueFunction(text.activeLinks[7].tts);
-            });
-            $("#activeLinks8").focusin(function () {
-                speechQueueFunction(text.activeLinks[8].tts);
-            }); 
-            $("#activeLinks8").mouseenter(function () {
-                speechQueueFunction(text.activeLinks[8].tts);
-            });
-            $("#activeLinks9").focusin(function () {
-                speechQueueFunction(text.activeLinks[9].tts);
-            }); 
-            $("#activeLinks9").mouseenter(function () {
-                speechQueueFunction(text.activeLinks[9].tts);
-            });
-            $("#activeLinks10").focusin(function () {
-                speechQueueFunction(text.activeLinks[10].tts);
-            }); 
-            $("#activeLinks10").mouseenter(function () {
-                speechQueueFunction(text.activeLinks[10].tts);
-            });
-            
-            //Content 
-            $("#content0").focus(function () {
-                speechQueueFunction(text.content[0].tts);
-            }); 
-            $("#content1").focus(function () {
-                speechQueueFunction(text.content[1].tts);
-            }); 
-            $("#content2").focus(function () {
-                speechQueueFunction(text.content[2].tts);
-            }); 
-            $("#content3").focus(function () {
-                speechQueueFunction(text.content[3].tts);
-            }); 
-            $("#content4").focus(function () {
-                speechQueueFunction(text.content[4].tts);
-            }); 
-            $("#content5").focus(function () {
-                speechQueueFunction(text.content[5].tts);
-            }); 
-            $("#content6").focus(function () {
-                speechQueueFunction(text.content[6].tts);
-            }); 
-            $("#content7").focus(function () {
-                speechQueueFunction(text.content[7].tts);
-            }); 
-            $("#content8").focus(function () {
-                speechQueueFunction(text.content[8].tts);
-            }); 
-            $("#content9").focus(function () {
-                speechQueueFunction(text.content[9].tts);
-            }); 
-            $("#content10").focus(function () {
-                speechQueueFunction(text.content[10].tts);
-            }); 
-            $("#miscText0").focus(function () {
-                speechQueueFunction(text.miscText[0].tts);
-            });
-            
-            //miscText
-            $("#miscText1").focus(function () {
-                speechQueueFunction(text.miscText[1].tts);
-            });  
-            $("#miscText2").focus(function () {
-                speechQueueFunction(text.miscText[2].tts);
-            });
-            
-            
-            //images
-            $("#storm").focus(function () {
-                speechQueueFunction(text.images[0].tts);
-            });  
-            $("#structure").focus(function () {
-                speechQueueFunction(text.images[1].tts);
-            });  
-            $("#images2 .image").focus(function () {
-                speechQueueFunction(text.images[2].tts);
-            });  
-            $("#images3 .image").focus(function () {
-                speechQueueFunction(text.images[3].tts);
-            });
-            $("#energylevels").focus(function () {
-                speechQueueFunction(text.images[4].tts);
-            });  
-            
-            //buttons
-            $("#back").focus(function () {
-                speechQueueFunction(text.buttons[0].tts);
-            });  
-            $("#forward").focus(function () {
-                speechQueueFunction(text.buttons[1].tts);
-            });  
-            
-            //highlight based on focus
-            $("[tabindex='0']").focus(function () {
-                $(this).addClass("highlighted");
-            });
-            $("[tabindex='0']").blur(function () {
-                $(this).removeClass("highlighted");
-            });
-        }
-        
-    </script>
+        //inactiveLinks
+        $("#inactiveLinks0").text(electron_preview_text.inactiveLinks[0].text);
+        $("#inactiveLinks1").text(electron_preview_text.inactiveLinks[1].text);
+        $("#inactiveLinks2").text(electron_preview_text.inactiveLinks[2].text);
+        $("#inactiveLinks3").text(electron_preview_text.inactiveLinks[3].text);
+        $("#inactiveLinks4").text(electron_preview_text.inactiveLinks[4].text);
+        $("#inactiveLinks5").text(electron_preview_text.inactiveLinks[5].text);
+
+        //activeLinks
+        $("#activeLinks0").attr("placeholder", electron_preview_text.activeLinks[0].text);
+        $("#activeLinks1").text(electron_preview_text.activeLinks[1].text);
+        $("#activeLinks2").text(electron_preview_text.activeLinks[2].text);
+        $("#activeLinks3").text(electron_preview_text.activeLinks[3].text);
+        $("#activeLinks4").text(electron_preview_text.activeLinks[4].text);
+        $("#activeLinks5").text(electron_preview_text.activeLinks[5].text);
+        $("#activeLinks6").text(electron_preview_text.activeLinks[6].text);
+        $("#activeLinks7").text(electron_preview_text.activeLinks[7].text);
+        $("#activeLinks8").text(electron_preview_text.activeLinks[8].text);
+        $("#activeLinks9").text(electron_preview_text.activeLinks[9].text);
+        $("#activeLinks10").text(electron_preview_text.activeLinks[10].text);
+
+        //Preview content
+        $("#content0 .text").text(electron_preview_text.content[0].text);
+
+        $("#content1 .p0").text(electron_preview_text.content[1].text[0].p);
+        $("#content1 .p1").text(electron_preview_text.content[1].text[1].p);
+        $("#content1 .p2").text(electron_preview_text.content[1].text[2].p);
+        $("#content1 .heading").text(electron_preview_text.content[1].heading);
+
+
+        $("#content2 .text").text(electron_preview_text.content[2].text);
+        $("#content2 .heading").text(electron_preview_text.content[2].heading);
+
+        $("#content3 .text").text(electron_preview_text.content[3].text);
+        $("#content3 .heading").text(electron_preview_text.content[3].heading);
+
+        $("#content4 .p0").text(electron_preview_text.content[4].text[0].p);
+        $("#content4 .p1").text(electron_preview_text.content[4].text[1].p);
+        $("#content4 .p2").text(electron_preview_text.content[4].text[2].p);
+        $("#content4 .heading").text(electron_preview_text.content[4].heading);
+
+        $("#content5 .p0").text(electron_preview_text.content[5].text[0].p);
+        $("#content5 .p1").text(electron_preview_text.content[5].text[1].p);
+        $("#content5 .p2").text(electron_preview_text.content[5].text[2].p);
+        $("#content5 .p3").text(electron_preview_text.content[5].text[3].p);
+        $("#content5 .p4").text(electron_preview_text.content[5].text[4].p);
+        $("#content5 .heading").text(electron_preview_text.content[5].heading);
+
+        $("#content6 .p0").text(electron_preview_text.content[6].text[0].p);
+        $("#content6 .p1").text(electron_preview_text.content[6].text[1].p);
+        $("#content6 .p2").text(electron_preview_text.content[6].text[2].p);
+        $("#content6 .p3").text(electron_preview_text.content[6].text[3].p);
+
+        $("#content6 .heading").text(electron_preview_text.content[6].heading);
+
+        $("#content7 .p0").text(electron_preview_text.content[7].text[0].p);
+        $("#content7 .p1").text(electron_preview_text.content[7].text[1].p);
+        $("#content7 .p2").text(electron_preview_text.content[7].text[2].p);
+        $("#content7 .heading").text(electron_preview_text.content[7].heading);
+
+        $("#content8 .text").text(electron_preview_text.content[8].text);
+        $("#content8 .heading").text(electron_preview_text.content[8].heading);
+
+        $("#content9 .p0").text(electron_preview_text.content[9].text[0].p);
+        $("#content9 .p1").text(electron_preview_text.content[9].text[1].p);
+        $("#content9 .p2").text(electron_preview_text.content[9].text[2].p);
+        $("#content9 .p3").text(electron_preview_text.content[9].text[3].p);
+        $("#content9 .p4").text(electron_preview_text.content[9].text[4].p);
+        $("#content9 .p5").text(electron_preview_text.content[9].text[5].p);
+        $("#content9 .p6").text(electron_preview_text.content[9].text[6].p);
+        $("#content9 .p7").text(electron_preview_text.content[9].text[7].p);
+        $("#content9 .heading").text(electron_preview_text.content[9].heading);
+
+        $("#content10 .p0").text(electron_preview_text.content[10].text[0].p);
+        $("#content10 .p1").text(electron_preview_text.content[10].text[1].p);
+        $("#content10 .p2").text(electron_preview_text.content[10].text[2].p);
+        $("#content10 .p3").text(electron_preview_text.content[10].text[3].p);
+        $("#content10 .heading").text(electron_preview_text.content[10].heading);
+
+        $("#miscText0 .p0").text(electron_preview_text.miscText[0].text[0].p);
+        $("#miscText0 .p1").text(electron_preview_text.miscText[0].text[1].p);
+        $("#miscText0 .p2").text(electron_preview_text.miscText[0].text[2].p);
+        $("#miscText0 .heading").text(electron_preview_text.miscText[0].heading);
+
+        $("#miscText1 .p0").text(electron_preview_text.miscText[1].text[0].p);
+        $("#miscText1 .p1").text(electron_preview_text.miscText[1].text[1].p);
+        $("#miscText1 .p2").text(electron_preview_text.miscText[1].text[2].p);
+        $("#miscText1 .p3").text(electron_preview_text.miscText[1].text[3].p);
+
+        $("#miscText2 .p0").text(electron_preview_text.miscText[2].text[0].p);
+        $("#miscText2 .p1").text(electron_preview_text.miscText[2].text[1].p);
+        $("#miscText2 .p2").text(electron_preview_text.miscText[2].text[2].p);
+        $("#miscText2 .p3").text(electron_preview_text.miscText[2].text[3].p);
+
+        //image tts
+        $("#images2 .heading").text(electron_preview_text.images[2].heading);
+        $("#images3 .heading").text(electron_preview_text.images[3].heading);
+
+    }
+
+    // Attach events to page elements so they can self voice when navigated to
+    function setUpTts(text) {
+        // The parent window contains a self voicing function from the First Discovery Tool that
+        // the preview can hook into to voice itself
+        var speechQueueFunction = window.parent.fluid.queryIoCSelector(window.parent.fluid.rootComponent, "gpii.firstDiscovery.selfVoicing")[0].queueSpeech;
+
+        //activeLinks
+        $("#activeLinks0").focusin(function () {
+            speechQueueFunction(text.activeLinks[0].tts);
+        });
+        $("#activeLinks0").mouseenter(function () {
+            speechQueueFunction(text.activeLinks[0].tts);
+        });
+        $("#activeLinks1").focusin(function () {
+            speechQueueFunction(text.activeLinks[1].tts);
+        });
+        $("#activeLinks1").mouseenter(function () {
+            speechQueueFunction(text.activeLinks[1].tts);
+        });
+        $("#activeLinks2").focusin(function () {
+            speechQueueFunction(text.activeLinks[2].tts);
+        });
+        $("#activeLinks2").mouseenter(function () {
+            speechQueueFunction(text.activeLinks[2].tts);
+        });
+        $("#activeLinks3").focusin(function () {
+            speechQueueFunction(text.activeLinks[3].tts);
+        });
+        $("#activeLinks3").mouseenter(function () {
+            speechQueueFunction(text.activeLinks[3].tts);
+        });
+        $("#activeLinks4").focusin(function () {
+            speechQueueFunction(text.activeLinks[4].tts);
+        });
+        $("#activeLinks4").mouseenter(function () {
+            speechQueueFunction(text.activeLinks[4].tts);
+        });
+        $("#activeLinks5").focusin(function () {
+            speechQueueFunction(text.activeLinks[5].tts);
+        });
+        $("#activeLinks5").mouseenter(function () {
+            speechQueueFunction(text.activeLinks[5].tts);
+        });
+        $("#activeLinks6").focusin(function () {
+            speechQueueFunction(text.activeLinks[6].tts);
+        });
+        $("#activeLinks6").mouseenter(function () {
+            speechQueueFunction(text.activeLinks[6].tts);
+        });
+        $("#activeLinks7").focusin(function () {
+            speechQueueFunction(text.activeLinks[7].tts);
+        });
+        $("#activeLinks7").mouseenter(function () {
+            speechQueueFunction(text.activeLinks[7].tts);
+        });
+        $("#activeLinks8").focusin(function () {
+            speechQueueFunction(text.activeLinks[8].tts);
+        });
+        $("#activeLinks8").mouseenter(function () {
+            speechQueueFunction(text.activeLinks[8].tts);
+        });
+        $("#activeLinks9").focusin(function () {
+            speechQueueFunction(text.activeLinks[9].tts);
+        });
+        $("#activeLinks9").mouseenter(function () {
+            speechQueueFunction(text.activeLinks[9].tts);
+        });
+        $("#activeLinks10").focusin(function () {
+            speechQueueFunction(text.activeLinks[10].tts);
+        });
+        $("#activeLinks10").mouseenter(function () {
+            speechQueueFunction(text.activeLinks[10].tts);
+        });
+
+        //Content
+        $("#content0").focus(function () {
+            speechQueueFunction(text.content[0].tts);
+        });
+        $("#content1").focus(function () {
+            speechQueueFunction(text.content[1].tts);
+        });
+        $("#content2").focus(function () {
+            speechQueueFunction(text.content[2].tts);
+        });
+        $("#content3").focus(function () {
+            speechQueueFunction(text.content[3].tts);
+        });
+        $("#content4").focus(function () {
+            speechQueueFunction(text.content[4].tts);
+        });
+        $("#content5").focus(function () {
+            speechQueueFunction(text.content[5].tts);
+        });
+        $("#content6").focus(function () {
+            speechQueueFunction(text.content[6].tts);
+        });
+        $("#content7").focus(function () {
+            speechQueueFunction(text.content[7].tts);
+        });
+        $("#content8").focus(function () {
+            speechQueueFunction(text.content[8].tts);
+        });
+        $("#content9").focus(function () {
+            speechQueueFunction(text.content[9].tts);
+        });
+        $("#content10").focus(function () {
+            speechQueueFunction(text.content[10].tts);
+        });
+        $("#miscText0").focus(function () {
+            speechQueueFunction(text.miscText[0].tts);
+        });
+
+        //miscText
+        $("#miscText1").focus(function () {
+            speechQueueFunction(text.miscText[1].tts);
+        });
+        $("#miscText2").focus(function () {
+            speechQueueFunction(text.miscText[2].tts);
+        });
+
+
+        //images
+        $("#storm").focus(function () {
+            speechQueueFunction(text.images[0].tts);
+        });
+        $("#structure").focus(function () {
+            speechQueueFunction(text.images[1].tts);
+        });
+        $("#images2 .image").focus(function () {
+            speechQueueFunction(text.images[2].tts);
+        });
+        $("#images3 .image").focus(function () {
+            speechQueueFunction(text.images[3].tts);
+        });
+        $("#energylevels").focus(function () {
+            speechQueueFunction(text.images[4].tts);
+        });
+
+        //buttons
+        $("#back").focus(function () {
+            speechQueueFunction(text.buttons[0].tts);
+        });
+        $("#forward").focus(function () {
+            speechQueueFunction(text.buttons[1].tts);
+        });
+
+        //highlight based on focus
+        $("[tabindex='0']").focus(function () {
+            $(this).addClass("highlighted");
+        });
+        $("[tabindex='0']").blur(function () {
+            $(this).removeClass("highlighted");
+        });
+    }
+
+</script>
 
 </body>
 </html>

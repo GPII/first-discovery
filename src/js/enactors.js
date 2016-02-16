@@ -52,6 +52,39 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         that.initialLangSet = true;
     };
 
+    /**********************
+     * Captions Enactor
+     ***********************/
+
+    fluid.defaults("gpii.firstDiscovery.enactor.captions", {
+        gradeNames: ["fluid.prefs.enactor", "fluid.viewComponent"],
+        preferenceMap: {
+            "gpii.firstDiscovery.captions": {
+                "model.value": "default"
+            }
+        },
+        invokers: {
+            set: {
+                funcName: "gpii.firstDiscovery.enactor.captions.set",
+                args: ["{arguments}.0", "{that}"]
+            }
+        },
+        modelListeners: {
+            value: {
+                listener: "{that}.set",
+                args: ["{change}.value"]
+            }
+        }
+    });
+
+    gpii.firstDiscovery.enactor.captions.set = function(captionsEnabled){
+        var previewFrame = document.getElementById("thePreview");
+        if (previewFrame && previewFrame.contentWindow && previewFrame.contentWindow.setVideoUrl) {
+            previewFrame.contentWindow.setVideoUrl(captionsEnabled);
+        }
+    };
+
+
     /*********************
      * Line Space enactor*
      ********************/

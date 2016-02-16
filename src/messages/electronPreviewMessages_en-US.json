@@ -119,7 +119,8 @@
             "p": "VIDEO PLAYER HERE"
           }
       ],
-      "tts": "Orbitals. The atomic model above is useful for some purposes, but it’s too simple when it comes to the location of electrons. In reality, it’s impossible to say what path an electron will follow. Instead, it’s only possible to describe the chances of finding an electron in a certain region around the nucleus. The region where an electron is most likely to be is called an orbital. Each orbital can have at most two electrons. Some orbitals, called S orbitals, are shaped like spheres, with the nucleus in the center. An S orbital is pictured in Figure below. Where the dots are denser, the chance of finding an electron is greater. Also pictured in Figure below is a P orbital. P orbitals are shaped like dumbbells, with the nucleus in the pinched part of the dumbbell."
+      "tts": "Orbitals. The atomic model above is useful for some purposes, but it’s too simple when it comes to the location of electrons. In reality, it’s impossible to say what path an electron will follow. Instead, it’s only possible to describe the chances of finding an electron in a certain region around the nucleus. The region where an electron is most likely to be is called an orbital. Each orbital can have at most two electrons. Some orbitals, called S orbitals, are shaped like spheres, with the nucleus in the center. An S orbital is pictured in Figure below. Where the dots are denser, the chance of finding an electron is greater. Also pictured in Figure below is a P orbital. P orbitals are shaped like dumbbells, with the nucleus in the pinched part of the dumbbell.",
+      "video_tts": "This is a video about orbitals. Press space to play the video"
     },
     {
       "heading": "Whats Your Energy Level?",

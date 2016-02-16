@@ -123,6 +123,15 @@
 
         }
 
+        .thumbnail-container {
+            padding-right: .1rem;
+        }
+
+        .thumbnail-description-container {
+            padding-left: .1rem;
+
+        }
+
 
     </style>
 
@@ -222,9 +231,19 @@
             <div id="result2" tabindex="0" class="small-10 columns">
                 <h3 class="search-result-link"><a href="" tabindex="-1"></a></h3>
 
-                <p class="search-result-url"></p>
+                <div class="row">
 
-                <p class="search-result-description"></p>
+                    <div class="small-3 columns thumbnail-container"><img src="../images/searchresult.png"
+                                                                          alt="Thumbnail of video search result"/></div>
+
+                    <div class="small-9 columns thumbnail-description-container">
+
+                        <p class="search-result-url"></p>
+
+                        <p class="search-result-description"></p>
+                    </div>
+
+                </div>
             </div>
         </div>
 
@@ -298,7 +317,20 @@
     $(document).ready(function () {
         fetch_and_insert_text();
         $(document).foundation();
+        adjustTabOrder();
     });
+
+    // The HTML markup places tabindex attributes in elements in a top-down order
+    // This function provides a single place to modify the top-down flow based
+    // on ever flow requirements expected to fluctuate.
+    function adjustTabOrder() {
+        $("#searchbox").attr("tabindex", "-1");
+        $("#searchbutton").attr("tabindex", "-1");
+        $("#ad_result_label").attr("tabindex", "-1");
+        $("#ad1").attr("tabindex", "-1");
+        $("#ad2").attr("tabindex", "-1");
+        $("#search_result_label").attr("tabindex", "-1");
+    }
 
     // Parses the query string and returns an object container key-value pairs from
     // decoded querystring variables
