@@ -899,7 +899,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             value: "default"
         },
         messageBase: {
-            "instructions": "You can choose a screen colour to make things easier to see.",
+            "instructions": "You can choose a screen color to make things easier to see.",
             "contrastLabel": "Contrast",
             "contrast-default": "no change",
             "contrast-bw": "black on white",
