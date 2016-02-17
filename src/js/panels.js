@@ -1422,7 +1422,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 markup: {messagekey: "message"}
             }
         },
-        chromeExtensionId: "oaicfgfcklidgbdcpgfkpmgknkfganok",
+        chromeExtensionId: "nkojgcmaioingjndknblmghefcfijobm",
         events: {
             onSuccess: null,  // argument: the server returned data
             onError: null,
