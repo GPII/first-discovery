@@ -1220,6 +1220,89 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                             "wb": "Blanco/Negro"
                         }
                     }
+                },
+                //unsupported languages will use english friendly names
+                //all languages required to have friendly name selections to avoid FD tool break when selecting these languages
+                "de-DE": {
+                    labels: {
+                        language: "Language:",
+                        speak: "Text to Speech:",
+                        speechRate: "Speech Rate:",
+                        contrast: "Contrast:",
+                        textSize: "Text Size:",
+                        letterSpace: "Letter Spacing:",
+                        lineSpace: "Line Spacing:",
+                        onScreenKeyboard: "On-Screen Keyboard:",
+                        captions: "Captions:",
+                        showSounds: "Show Sounds:",
+                        stickyKeys: "Sticky Keys:"
+                    },
+                    values: {
+                        onOff: {
+                            "true": "On",
+                            "false": "Off"
+                        },
+                        language: "English",
+                        contrast:{
+                            "default": "Original",
+                            "bw": "Black/White",
+                            "wb": "White/Black"
+                        }
+                    }
+                },
+                "nl-NL": {
+                    labels: {
+                        language: "Language:",
+                        speak: "Text to Speech:",
+                        speechRate: "Speech Rate:",
+                        contrast: "Contrast:",
+                        textSize: "Text Size:",
+                        letterSpace: "Letter Spacing:",
+                        lineSpace: "Line Spacing:",
+                        onScreenKeyboard: "On-Screen Keyboard:",
+                        captions: "Captions:",
+                        showSounds: "Show Sounds:",
+                        stickyKeys: "Sticky Keys:"
+                    },
+                    values: {
+                        onOff: {
+                            "true": "On",
+                            "false": "Off"
+                        },
+                        language: "English",
+                        contrast:{
+                            "default": "Original",
+                            "bw": "Black/White",
+                            "wb": "White/Black"
+                        }
+                    }
+                },
+                "sv-SE": {
+                    labels: {
+                        language: "Language:",
+                        speak: "Text to Speech:",
+                        speechRate: "Speech Rate:",
+                        contrast: "Contrast:",
+                        textSize: "Text Size:",
+                        letterSpace: "Letter Spacing:",
+                        lineSpace: "Line Spacing:",
+                        onScreenKeyboard: "On-Screen Keyboard:",
+                        captions: "Captions:",
+                        showSounds: "Show Sounds:",
+                        stickyKeys: "Sticky Keys:"
+                    },
+                    values: {
+                        onOff: {
+                            "true": "On",
+                            "false": "Off"
+                        },
+                        language: "English",
+                        contrast:{
+                            "default": "Original",
+                            "bw": "Black/White",
+                            "wb": "White/Black"
+                        }
+                    }
                 }
             }
     });
