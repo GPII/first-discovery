@@ -1,3 +1,4 @@
 {
-    "message": "<p>Welcome!</p> <p>This tool will guide you through setting up your computer the way you like it best.</p> <p>If voice is on, Press H to repeat the instructions."
+    "message": "<p>Welcome!</p> <p>This tool will guide you through setting up your computer the way you like it best.</p>",
+    "commands": "If voice is on, Press H to repeat the instructions."
 }

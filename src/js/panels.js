@@ -1056,11 +1056,15 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             "gpii.firstDiscovery.welcome": {}
         },
         selectors: {
-            message: ".gpiic-fd-welcome-instructions"
+            message: ".gpiic-fd-welcome-instructions",
+            commands: ".gpiic-fd-welcome-commands"
         },
         protoTree: {
             message: {
                 markup: {messagekey: "message"}
+            },
+            commands: {
+            	markup: {messagekey: "commands"}
             }
         }
     });
