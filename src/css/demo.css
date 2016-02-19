@@ -109,6 +109,11 @@ a:hover {
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2) inset;
     padding: 0px 20px 0px 10px;
 }
+.fl-theme-wb .main-content header #breadcrumbs {
+    background: none;
+    box-shadow: none;
+    border-bottom: none;
+}
 .main-content header #breadcrumbs a:link {
     color: #707070;
 }

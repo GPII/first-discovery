@@ -108,8 +108,10 @@ button {
 .gpii-fd-help:hover,
 .gpii-fd-mute:hover {
     background-color: inherit;
-    border-width: 0.4rem;
-    padding: 0.8rem;
+    border: 2px solid #fff; /* Yellow */
+    box-shadow: 0 0 0 0.4rem rgb(244, 215, 75), /* Yellow */
+                0 0 0 0.6rem rgb(0, 0, 0);
+    outline: none;
 }
 .gpii-fd-help:disabled:hover {
     border-width: 2px;
@@ -118,6 +120,7 @@ button {
 
 .gpii-fd-help:focus,
 .gpii-fd-mute:focus {
+	background-color: inherit;
     border: 2px solid #fff; /* Yellow */
     box-shadow: 0 0 0 0.4rem rgb(244, 215, 75), /* Yellow */
                 0 0 0 0.6rem rgb(0, 0, 0);
@@ -630,7 +633,7 @@ button {
 /* Tooltips */
 .gpii-fd-tooltip {
     width: auto;
-    max-width: 7em;
+    max-width: 9em;
     font-size: 2rem;
     padding: 0.5rem;
     background-color: #fed73a;
@@ -736,7 +739,7 @@ input[type="text"].gpii-fd-keyboard-input:focus {
 
 /* French-specific styles */
 html:lang(fr-FR) .gpii-fd-mute {
-  width: 24rem;
+  width: 35.5rem;
 }
 
 html:lang(es-MX) .gpii-fd-prefsEditor-panel-welcome .gpii-fd-instructions p,
