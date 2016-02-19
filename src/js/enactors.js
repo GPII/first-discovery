@@ -168,7 +168,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         }
 
         if (that.initialSize) {
-            that.container.css("line-height", targetLineSpace); 
+            that.container.css("line-height", targetLineSpace);
             $("p").css("line-height", targetLineSpace);
             $("#thePreview").contents().find("p").css("line-height", targetLineSpace);
         }
@@ -267,6 +267,8 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             that.container.css("letter-spacing", targetLetterSpace);
             // Applies to instruction text, etc
             $("#gpiic-fd").css("letter-spacing", targetLetterSpace);
+            // Applies input box on search preview
+            $("#thePreview").contents().find("input").css("letter-spacing", targetLetterSpace);
         }
     };
 
