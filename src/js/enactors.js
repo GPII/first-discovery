@@ -264,7 +264,6 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         if (that.initialSize) {
             var targetLetterSpace = times * that.initialSize;
             // Applies to tooltips
-            $("p").css("letter-spacing", targetLetterSpace);
             that.container.css("letter-spacing", targetLetterSpace);
             // Applies to instruction text, etc
             $("#gpiic-fd").css("letter-spacing", targetLetterSpace);
