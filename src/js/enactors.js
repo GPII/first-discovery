@@ -268,6 +268,8 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             that.container.css("letter-spacing", targetLetterSpace);
             // Applies to instruction text, etc
             $("#gpiic-fd").css("letter-spacing", targetLetterSpace);
+            // Applies to buttons
+            $("#gpiic-fd").contents().find("button").css("letter-spacing", targetLetterSpace);
             // Applies input box on search preview
             $("#thePreview").contents().find("input").css("letter-spacing", targetLetterSpace);
         }
