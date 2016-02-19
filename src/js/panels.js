@@ -132,6 +132,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         var step = reverse ? (that.options.step * -1) : that.options.step;
         var newValue = that.model.value + step;
         that.applier.change("value", newValue);
+        gpii.firstDiscovery.panel.ranged.setFocus(that, reverse);
     };
 
     gpii.firstDiscovery.panel.ranged.updateButtonState = function (that) {
@@ -139,6 +140,16 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         that.locate("decrease").prop("disabled", that.model.isMin);
     };
 
+    // This method keeps the focus on the + or - button after a click
+    gpii.firstDiscovery.panel.ranged.setFocus = function(that, reverse){
+        setTimeout(function(){
+            if (reverse === true){
+                $(".gpii-fd-current").find("button")[1].focus();
+            }else{
+                $(".gpii-fd-current").find("button")[0].focus();
+            }
+        }, 100);
+    };
     gpii.firstDiscovery.panel.ranged.updateMeter = function (that, value) {
         var range = that.options.range;
         var percentage = ((value - range.min) / (range.max - range.min)) * 100;
