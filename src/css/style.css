@@ -633,7 +633,7 @@ button {
 /* Tooltips */
 .gpii-fd-tooltip {
     width: auto;
-    max-width: 7em;
+    max-width: 9em;
     font-size: 2rem;
     padding: 0.5rem;
     background-color: #fed73a;
