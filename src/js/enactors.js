@@ -310,14 +310,13 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     });
 
     gpii.firstDiscovery.enactor.onScreenKeyboard.set = function(OSKeyboardEnabled) {
-
-		 if(OSKeyboardEnabled) {
-	         $("#onScreenKeyboard").css("display", "");
-	         $("#thePreview").css("height", "60%");
-	   	 }
-	   	 else {
-	         $("#onScreenKeyboard").css("display", "none");
-	         $("#thePreview").css("height", "90%");
-	   	 }
-    }
+        if(OSKeyboardEnabled) {
+            $("#onScreenKeyboard").css("display", "");
+            $("#thePreview").css("height", "60%");
+        }
+        else {
+            $("#onScreenKeyboard").css("display", "none");
+            $("#thePreview").css("height", "90%");
+        }
+    };
 })(jQuery, fluid);
