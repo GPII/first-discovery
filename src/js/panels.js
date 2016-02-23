@@ -103,6 +103,10 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             updateMeter: {
                 funcName: "gpii.firstDiscovery.panel.ranged.updateMeter",
                 args: ["{that}", "{that}.model.value"]
+            },
+            doWarnLimit:{
+                funcName: "gpii.firstDiscovery.panel.ranged.warnAtLimit",
+                args: ["{that}"]
             }
         },
         listeners: {
@@ -111,15 +115,25 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 "method": "click",
                 "args": ["{that}.stepUp"]
             },
-            "afterRender.bindDecrease": {
-                "this": "{that}.dom.decrease",
+            "afterRender.bindWarnIncrease": {
+                "this": "{that}.dom.increase",
                 "method": "click",
-                "args": ["{that}.stepDown"]
+                "args": ["{that}.doWarnLimit"]
             },
             "afterRender.bindFocusIncrease": {
                 "this": "{that}.dom.increase",
                 "method": "click",
                 "args": ["{that}.setFocusUp"]
+            },
+            "afterRender.bindDecrease": {
+                "this": "{that}.dom.decrease",
+                "method": "click",
+                "args": ["{that}.stepDown"]
+            },
+            "afterRender.bindWarnDecrease": {
+                "this": "{that}.dom.decrease",
+                "method": "click",
+                "args": ["{that}.doWarnLimit"]
             },
             "afterRender.bindFocusDecrease": {
                 "this": "{that}.dom.decrease",
@@ -174,16 +188,10 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     };
 
     gpii.firstDiscovery.panel.ranged.warnAtLimit = function(that){
-        var upButton     = $(".gpii-fd-current").find("button")[0];
-        var downButton   = $(".gpii-fd-current").find("button")[1];
-        var currentPanel = $(".gpii-fd-current").contents();
-
-        // If upButton is disable, warn about max setting
-        if (currentPanel.find(upButton).is(":disabled")){
+        if (that.model.isMax){
             that.tooltip.speak(that.msgResolver.resolve("warnMax"));
         }
-        // If downButton is disabled, warn about min setting
-        else if (currentPanel.find(downButton).is(":disabled")){
+        else if (that.model.isMin){
             that.tooltip.speak(that.msgResolver.resolve("warnMin"));
         }
     };
