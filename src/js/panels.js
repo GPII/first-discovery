@@ -149,7 +149,29 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 $(".gpii-fd-current").find("button")[0].focus();
             }
         }, 100);
+
+        gpii.firstDiscovery.panel.ranged.warnAtLimit(that);
+
     };
+
+    gpii.firstDiscovery.panel.ranged.warnAtLimit = function(that){
+        // If there is a disabled button
+        if ($(".gpii-fd-current").contents().find("button").is(":disabled")){
+
+            var upButton = $(".gpii-fd-current").find("button")[0];
+            var downButton = $(".gpii-fd-current").find("button")[1];
+
+            //If upButton is disabled, warn about max setting
+            if ($(".gpii-fd-current").contents().find(upButton).is(":disabled")){
+                that.tooltip.speak(that.msgResolver.resolve("warnMax"));
+            }
+            //If downButton is disabled, warn about min setting
+            else if ($(".gpii-fd-current").contents().find(downButton).is(":disabled")){
+                that.tooltip.speak(that.msgResolver.resolve("warnMin"));
+            }
+        }
+    };
+
     gpii.firstDiscovery.panel.ranged.updateMeter = function (that, value) {
         var range = that.options.range;
         var percentage = ((value - range.min) / (range.max - range.min)) * 100;
