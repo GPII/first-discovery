@@ -2,6 +2,8 @@
     "rangeInstructions": "Adjust the speed at which items on the screen are read out loud.",
     "maxLabel": "fast",
     "minLabel": "slow",
+    "warnMin": "This is the slowest setting",
+    "warnMax": "This is the fastest setting",
     "increaseLabel": "faster",
     "decreaseLabel": "slower",
     "disabledMsg": "If you want to use this option, turn on \"speak text aloud\" on the previous screen. Press the back button to get there or select the \"turn voice ON\" button above."

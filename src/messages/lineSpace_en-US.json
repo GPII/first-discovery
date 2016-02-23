@@ -2,6 +2,8 @@
     "rangeInstructions": "Adjust the line spacing to an amount you like best.",
     "maxLabel": "max",
     "minLabel": "min",
+    "warnMin": "This is the smallest setting",
+    "warnMax": "This is the largest setting",
     "increaseLabel": "larger",
     "decreaseLabel": "smaller"
 }
