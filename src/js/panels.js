@@ -176,15 +176,11 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     };
 
     gpii.firstDiscovery.panel.ranged.setFocusUp = function(that){
-        setTimeout(function(){
-            that.locate("increase").focus();
-        }, 100);
+        that.locate("increase").focus();
     };
 
     gpii.firstDiscovery.panel.ranged.setFocusDown = function(that){
-        setTimeout(function(){
-            that.locate("decrease").focus();
-        }, 100);
+        that.locate("decrease").focus();
     };
 
     gpii.firstDiscovery.panel.ranged.warnAtLimit = function(that){
