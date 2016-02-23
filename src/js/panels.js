@@ -174,7 +174,6 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     };
 
     gpii.firstDiscovery.panel.ranged.warnAtLimit = function(that){
-        console.dir(that);
         var upButton     = $(".gpii-fd-current").find("button")[0];
         var downButton   = $(".gpii-fd-current").find("button")[1];
         var currentPanel = $(".gpii-fd-current").contents();
