@@ -218,7 +218,8 @@ a:hover {
 }
 .main-content .article-tab {
     float: left;
-    padding: 0em;
+    /* padding: 0.5em 1em; */
+    padding: 1em;
     font-size: 0.8em;
     text-align: center;
     border-right: 1px dotted #56544D;
