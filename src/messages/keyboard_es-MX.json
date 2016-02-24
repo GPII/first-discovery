@@ -1,5 +1,5 @@
 {
-    "keyboardInstructions": "Los ajustes se pueden hacer para ayudarle con el uso del teclado.",
+    "keyboardInstructions": "Intente utilizar el teclado en el espacio a continuación.",
     "placeholder": "Escriba aquí el símbolo % ",
 
     "try": "Inténtalo",
@@ -8,8 +8,8 @@
     "turnOn": "Activar",
     "turnOff": "Desactivar",
 
-    "stickyKeysInstructions": "La función <strong>STICKY KEYS</strong> te puede ayudar a mantener oprimidas dos teclas al mismo tiempo.",
-    "stickyKeysAccomInstr": "Con la función STICKY KEYS activada, escribe el símbolo % presionando la tecla SHIFT y luego la tecla 5.",
+    "stickyKeysInstructions": "<Strong>Sticky Keys</strong> puede ayudar a mantener pulsado dos teclas al mismo tiempo. Trate de usar el teclado de nuevo.",
+    "stickyKeysAccomInstr": "Con Sticky Keys : Pulse la tecla de mayúsculas, a continuación, pulse la tecla 5.",
     "stickyKeys": "STICKY KEYS ",
 
     "successInstructions": "Parece que no necesitas hacer ningún ajuste al teclado. Por favor pasa a la siguiente pantalla.",
