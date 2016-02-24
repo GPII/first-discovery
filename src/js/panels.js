@@ -144,10 +144,6 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 listener: "gpii.firstDiscovery.panel.ranged.updateButtonState",
                 args: ["{that}"]
             },
-            "afterRender.warnAtLimit": {
-                listener: "gpii.firstDiscovery.panel.ranged.warnAtLimit",
-                args: ["{that}"]
-            },
             "afterRender.updateMeter": "{that}.updateMeter"
         },
         modelListeners: {
