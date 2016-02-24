@@ -962,6 +962,10 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     gpii.firstDiscovery.panel.lang.setLangOnHtml = function (currentLang) {
         $("html").attr("lang", currentLang);
     };
+    
+    gpii.firstDiscovery.panel.lang.setTooltipLang = function (that, originalTarget, tooltip) {
+    	tooltip.attr("lang", $(originalTarget).attr("lang"));
+    };
 
     gpii.firstDiscovery.panel.lang.setFocusIn = function (that) {
     	var selected = that.locate("controlsDiv").find("div[aria-selected='true']");
