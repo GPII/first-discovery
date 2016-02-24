@@ -58,6 +58,10 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 listener: "gpii.firstDiscovery.keyboardShortcut.bindShortcut",
                 args: ["body", gpii.firstDiscovery.keyboardShortcut.key.h, [], "{that}.speakPanelInstructions"]
             },
+            "onCreate.bindKeyPressPreview": {
+                listener: "gpii.firstDiscovery.keyboardShortcut.bindShortcutInPreviewIFrame",
+                args: ["body", gpii.firstDiscovery.keyboardShortcut.key.h, [], "{that}.speakPanelInstructions", "#thePreview"]
+            },
             "onReady.speakPanelMessage": {
                 listener: "{that}.speakPanelMessage",
                 priority: "last"
