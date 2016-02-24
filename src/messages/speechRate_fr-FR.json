@@ -1,10 +1,10 @@
 {
-    "rangeInstructions": "Réglez la vitesse de lecture des éléments lus à voix haute.",
+    "rangeInstructions": "Changer la vitesse ou de ralentir la voix lit à haute voix.",
     "maxLabel": "rapide",
     "minLabel": "lent",
     "warnMin": "Ceci est le paramètre le plus lent",
     "warnMax": "Ceci est le paramètre le plus rapide",
     "increaseLabel": "plus rapide",
     "decreaseLabel": "plus lent",
-    "disabledMsg": "Si vous voulez utiliser cette option, activez \"lecture à voix haute\" sur l'écran précédent. Appuyez sur la touche \"retour\" pour y aller ou sélectionnez la touche au-dessus de \"activer la voix\"."
+    "disabledMsg": "Vous ne pouvez définir cette option si la voix est activée. Vous pouvez appuyer sur \" tourner voix ON \" en haut de l'écran."
 }
