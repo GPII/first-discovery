@@ -89,6 +89,8 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         that.locate("description").html(resolveFn("stickyKeysInstructions"));
         that.locate("tryButton").text(resolveFn("try"));
         that.locate("accommodationName").text(resolveFn("stickyKeys"));
+
+        gpii.firstDiscovery.keyboard.stickyKeysAdjuster.updateTooltipText(that, that.tooltip, that.model.stickyKeysEnabled);
     };
 
     gpii.firstDiscovery.keyboard.stickyKeysAdjuster.tryAccommodationToggle = function (that, state) {
