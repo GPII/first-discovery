@@ -2,6 +2,8 @@
     "rangeInstructions": "Ajustar el espaciado de línea a una cantidad que más te guste.",
     "maxLabel": "máx.",
     "minLabel": "min.",
+    "warnMin": "Este es el escenario más pequeño",
+    "warnMax": "Este es el escenario más grande",
     "increaseLabel": "grande",
     "decreaseLabel": "menor"
 }

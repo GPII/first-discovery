@@ -92,9 +92,21 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 funcName: "gpii.firstDiscovery.panel.ranged.step",
                 args: ["{that}", true]
             },
+            setFocusUp: {
+                funcName: "gpii.firstDiscovery.panel.ranged.setFocusUp",
+                args: ["{that}"]
+            },
+            setFocusDown: {
+                funcName: "gpii.firstDiscovery.panel.ranged.setFocusDown",
+                args: ["{that}"]
+            },
             updateMeter: {
                 funcName: "gpii.firstDiscovery.panel.ranged.updateMeter",
                 args: ["{that}", "{that}.model.value"]
+            },
+            doWarnLimit:{
+                funcName: "gpii.firstDiscovery.panel.ranged.warnAtLimit",
+                args: ["{that}"]
             }
         },
         listeners: {
@@ -103,13 +115,37 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 "method": "click",
                 "args": ["{that}.stepUp"]
             },
+            "afterRender.bindWarnIncrease": {
+                "this": "{that}.dom.increase",
+                "method": "click",
+                "args": ["{that}.doWarnLimit"]
+            },
+            "afterRender.bindFocusIncrease": {
+                "this": "{that}.dom.increase",
+                "method": "click",
+                "args": ["{that}.setFocusUp"]
+            },
             "afterRender.bindDecrease": {
                 "this": "{that}.dom.decrease",
                 "method": "click",
                 "args": ["{that}.stepDown"]
             },
+            "afterRender.bindWarnDecrease": {
+                "this": "{that}.dom.decrease",
+                "method": "click",
+                "args": ["{that}.doWarnLimit"]
+            },
+            "afterRender.bindFocusDecrease": {
+                "this": "{that}.dom.decrease",
+                "method": "click",
+                "args": ["{that}.setFocusDown"]
+            },
             "afterRender.updateButtonState": {
                 listener: "gpii.firstDiscovery.panel.ranged.updateButtonState",
+                args: ["{that}"]
+            },
+            "afterRender.warnAtLimit": {
+                listener: "gpii.firstDiscovery.panel.ranged.warnAtLimit",
                 args: ["{that}"]
             },
             "afterRender.updateMeter": "{that}.updateMeter"
@@ -132,7 +168,6 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         var step = reverse ? (that.options.step * -1) : that.options.step;
         var newValue = that.model.value + step;
         that.applier.change("value", newValue);
-        gpii.firstDiscovery.panel.ranged.setFocus(that, reverse);
     };
 
     gpii.firstDiscovery.panel.ranged.updateButtonState = function (that) {
@@ -140,16 +175,23 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         that.locate("decrease").prop("disabled", that.model.isMin);
     };
 
-    // This method keeps the focus on the + or - button after a click
-    gpii.firstDiscovery.panel.ranged.setFocus = function(that, reverse){
-        setTimeout(function(){
-            if (reverse === true){
-                $(".gpii-fd-current").find("button")[1].focus();
-            }else{
-                $(".gpii-fd-current").find("button")[0].focus();
-            }
-        }, 100);
+    gpii.firstDiscovery.panel.ranged.setFocusUp = function(that){
+        that.locate("increase").focus();
     };
+
+    gpii.firstDiscovery.panel.ranged.setFocusDown = function(that){
+        that.locate("decrease").focus();
+    };
+
+    gpii.firstDiscovery.panel.ranged.warnAtLimit = function(that){
+        if (that.model.isMax){
+            that.tooltip.speak(that.msgResolver.resolve("warnMax"));
+        }
+        else if (that.model.isMin){
+            that.tooltip.speak(that.msgResolver.resolve("warnMin"));
+        }
+    };
+
     gpii.firstDiscovery.panel.ranged.updateMeter = function (that, value) {
         var range = that.options.range;
         var percentage = ((value - range.min) / (range.max - range.min)) * 100;
