@@ -751,6 +751,14 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 funcName: "gpii.firstDiscovery.panel.lang.scrollLangs",
                 args: ["{that}", 1]
             },
+            focusInSelection: {
+                funcName: "gpii.firstDiscovery.panel.lang.setFocusIn",
+                args: ["{that}"]
+            },
+            focusOutSelection: {
+                funcName: "gpii.firstDiscovery.panel.lang.setFocusOut",
+                args: ["{that}"]
+            },
             scrollToSelectedLang: {
                 funcName: "gpii.firstDiscovery.panel.lang.scrollLangIntoView",
                 args: ["{that}", "{that}.model.selectedLang"]
@@ -787,6 +795,16 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 "this": "{that}.dom.next",
                 method: "prop",
                 args: ["disabled", "{that}.model.atEndOfLangs"]
+            },
+            "afterRender.focusIn": {
+                "this": "{that}.dom.controlsDiv",
+                "method": "focus",
+                "args": ["{that}.focusInSelection"]
+            },
+            "afterRender.focusOut": {
+                "this": "{that}.dom.controlsDiv",
+                "method": "focusout",
+                "args": ["{that}.focusOutSelection"]
             },
             "afterRender.setLangOnHtml": {
                 funcName: "gpii.firstDiscovery.panel.lang.setLangOnHtml",
@@ -887,6 +905,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             that.events.langButtonsReady.fire();
         });
     };
+    
 
     gpii.firstDiscovery.panel.lang.scrollLangs = function (that, adjustBy) {
         var newIndex = that.model.viewportFirstLangIndex + adjustBy;
@@ -944,8 +963,14 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         $("html").attr("lang", currentLang);
     };
 
-    gpii.firstDiscovery.panel.lang.setTooltipLang = function (that, originalTarget, tooltip) {
-        tooltip.attr("lang", $(originalTarget).attr("lang"));
+    gpii.firstDiscovery.panel.lang.setFocusIn = function (that) {
+    	var selected = that.locate("controlsDiv").find("div[aria-selected='true']");
+    	$(selected).focus();
+    	that.locate("controlsDiv").attr("tabindex", "-1");
+    };
+    
+    gpii.firstDiscovery.panel.lang.setFocusOut = function (that) {
+    	that.locate("controlsDiv").attr("tabindex", "0");
     };
 
     // Any change to the model causes all panels to be rerendered. If
