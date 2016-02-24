@@ -18,7 +18,7 @@
     "help": "ayuda",
 
     "stepCountMsg": "Paso del %currentPanel al %numPanels",
-    "panelMsg": "%stepCountMsg. %instructions Pulse ' h ' para repetir las instrucciones.",
+    "panelMsg": "%stepCountMsg. %instructions Pulse H para conocer de este nuevo.",
     
     "preview": "Avance",
     "previewTooltip": "Esta es la vista previa.",
