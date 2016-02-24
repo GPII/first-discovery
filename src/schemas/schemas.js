@@ -315,7 +315,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         schema: {
             "gpii.firstDiscovery.onScreenKeyboard": {
                 "type": "boolean",
-                "default": true
+                "default": false
             }
         }
     });
