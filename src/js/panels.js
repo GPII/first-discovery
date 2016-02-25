@@ -375,13 +375,15 @@
     };
 
     gpii.firstDiscovery.panel.keyboard.relayEvents = function (that) {
-        var offerAssistance = that.model.offerAssistance;
-        if (offerAssistance !== false) {
-            that.events.onInitInput.fire();
-            if (offerAssistance) {
-                that.events.onOfferAssistance.fire();
+        fluid.invokeLater(function () {  // see https://botbot.me/freenode/fluid-work/2016-02-24/?msg=60842530&page=2
+            var offerAssistance = that.model.offerAssistance;
+            if (offerAssistance !== false) {
+                that.events.onInitInput.fire();
+                if (offerAssistance) {
+                    that.events.onOfferAssistance.fire();
+                }
             }
-        }
+        });
     };
 
     gpii.firstDiscovery.panel.keyboard.destroy = function (that) {
@@ -1280,20 +1282,36 @@
     };
 
     gpii.firstDiscovery.panel.confirm.getFriendlyPreferenceNames = function (that, prefs) {
-        var prefText = {
-            "language": that.msgResolver.resolve("language"),
-            "speak": that.convertBoolean(prefs.gpii_firstDiscovery_speak),
-            "speechRate": that.convertSpeechRate(prefs.gpii_firstDiscovery_speechRate),
-            "contrast": that.convertContrast(prefs.fluid_prefs_contrast),
-            "textSize": prefs.fluid_prefs_textSize.toFixed(1),
-            "letterSpace": prefs.gpii_firstDiscovery_letterSpace.toFixed(1),
-            "lineSpace": prefs.gpii_firstDiscovery_lineSpace.toFixed(1),
-            "onScreenKeyboard": that.convertBoolean(prefs.gpii_firstDiscovery_onScreenKeyboard),
-            "captions": that.convertBoolean(prefs.gpii_firstDiscovery_captions),
-            "showSounds": that.convertBoolean(prefs.gpii_firstDiscovery_showSounds),
-            "stickyKeys": that.convertBoolean(prefs.gpii_firstDiscovery_stickyKeys)
 
+        var prefText = {
+            language: that.msgResolver.resolve("language"),
+            speak: "",
+            speechRate: "",
+            contrast: "",
+            textSize: "",
+            letterSpace: "",
+            lineSpace: "",
+            onScreenKeyboard: "",
+            captions: "",
+            showSounds: "",
+            stickyKeys: ""
         };
+
+        if (typeof prefs === 'undefined') {
+            return prefText;
+        }
+        prefText.speak = typeof prefs.gpii_firstDiscovery_speak === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_speak);
+        prefText.speechRate = typeof prefs.gpii_firstDiscovery_speechRate === 'undefined' ? "" : that.convertSpeechRate(prefs.gpii_firstDiscovery_speechRate);
+        prefText.contrast = typeof prefs.fluid_prefs_contrast === 'undefined' ? "" : that.convertContrast(prefs.fluid_prefs_contrast);
+        prefText.textSize = typeof prefs.fluid_prefs_textSize === 'undefined' ? "" : prefs.fluid_prefs_textSize.toFixed(1);
+        prefText.letterSpace = typeof prefs.gpii_firstDiscovery_letterSpace === 'undefined' ? "" : prefs.gpii_firstDiscovery_letterSpace.toFixed(1);
+        prefText.lineSpace = typeof prefs.gpii_firstDiscovery_lineSpace === 'undefined' ? "" : prefs.gpii_firstDiscovery_lineSpace.toFixed(1);
+        prefText.onScreenKeyboard = typeof prefs.gpii_firstDiscovery_onScreenKeyboard === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_onScreenKeyboard);
+        prefText.captions = typeof prefs.gpii_firstDiscovery_captions === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_captions);
+        prefText.showSounds = typeof prefs.gpii_firstDiscovery_showSounds === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_showSounds);
+        prefText.stickyKeys = typeof prefs.gpii_firstDiscovery_stickyKeys === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_stickyKeys);
+
+
         return prefText;
     };
 
@@ -1477,9 +1495,9 @@
         });
     };
 
-    // A grade component to connect "gpii.firstDiscovery.prefsServerIntegration" and
-    // the token panel (gpii.firstDiscovery.panel.token). It sends the request to the
-    // the first discovery server to save preferences when the token panel becomes visible.
+// A grade component to connect "gpii.firstDiscovery.prefsServerIntegration" and
+// the token panel (gpii.firstDiscovery.panel.token). It sends the request to the
+// the first discovery server to save preferences when the token panel becomes visible.
     fluid.defaults("gpii.firstDiscovery.panel.token.prefsServerIntegrationConnection", {
         gradeNames: ["fluid.modelComponent"],
         modelListeners: {
@@ -1490,4 +1508,5 @@
         }
     });
 
-})(jQuery, fluid);
+})
+(jQuery, fluid);
