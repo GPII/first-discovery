@@ -1,3 +1,3 @@
 {
-  "message": "<p>¿Estás listo para guardar sus preferencias ahora? Una vez que haya guardado sus preferencias, usted no será ble para editar em de nuevo.</p> <p>Tenga en cuenta todas las preferencias se guardarán de forma anónima.</p> <p>Seleccione <strong><i>Terminar</i></strong> para <strong>Guardar</strong>.<br>Seleccione <strong><i>Atrás</i></strong> para <strong>Editar</strong>.</p>"
+  "message": "<p>¿Has terminado de configurar las preferencias?</p><p>Pulse Finalizar para guardar y salir.</p><p>Pulse de nuevo para continuar haciendo cambios.</p><p>Sus ajustes se guardarán anónimamente.</p>"
 }
