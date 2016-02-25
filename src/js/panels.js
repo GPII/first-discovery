@@ -1,12 +1,12 @@
 /*
-Copyright 2015 OCAD University
+ Copyright 2015 OCAD University
 
-Licensed under the New BSD license. You may not use this file except in
-compliance with this License.
+ Licensed under the New BSD license. You may not use this file except in
+ compliance with this License.
 
-You may obtain a copy of the License at
-https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
-*/
+ You may obtain a copy of the License at
+ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
+ */
 
 (function ($, fluid) {
 
@@ -38,11 +38,11 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 min: "{that}.options.range.min",
                 max: "{that}.options.range.max"
             }
-        // TODO: Due to FLUID-5669 the isMax and isMin
-        // transformations are performed using the fluid.transforms.free
-        // transformation. Once FLUID-5669 has been addressed, it should be
-        // possible to simply make use of fluid.transforms.binaryOp.
-        // see: https://issues.fluidproject.org/browse/FLUID-5669
+            // TODO: Due to FLUID-5669 the isMax and isMin
+            // transformations are performed using the fluid.transforms.free
+            // transformation. Once FLUID-5669 has been addressed, it should be
+            // possible to simply make use of fluid.transforms.binaryOp.
+            // see: https://issues.fluidproject.org/browse/FLUID-5669
         }, {
             target: "isMax",
             singleTransform: {
@@ -104,7 +104,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 funcName: "gpii.firstDiscovery.panel.ranged.updateMeter",
                 args: ["{that}", "{that}.model.value"]
             },
-            doWarnLimit:{
+            doWarnLimit: {
                 funcName: "gpii.firstDiscovery.panel.ranged.warnAtLimit",
                 args: ["{that}"]
             }
@@ -171,19 +171,19 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         that.locate("decrease").prop("disabled", that.model.isMin);
     };
 
-    gpii.firstDiscovery.panel.ranged.setFocusUp = function(that){
+    gpii.firstDiscovery.panel.ranged.setFocusUp = function (that) {
         that.locate("increase").focus();
     };
 
-    gpii.firstDiscovery.panel.ranged.setFocusDown = function(that){
+    gpii.firstDiscovery.panel.ranged.setFocusDown = function (that) {
         that.locate("decrease").focus();
     };
 
-    gpii.firstDiscovery.panel.ranged.warnAtLimit = function(that){
-        if (that.model.isMax){
+    gpii.firstDiscovery.panel.ranged.warnAtLimit = function (that) {
+        if (that.model.isMax) {
             that.tooltip.speak(that.msgResolver.resolve("warnMax"));
         }
-        else if (that.model.isMin){
+        else if (that.model.isMin) {
             that.tooltip.speak(that.msgResolver.resolve("warnMin"));
         }
     };
@@ -375,13 +375,15 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     };
 
     gpii.firstDiscovery.panel.keyboard.relayEvents = function (that) {
-        var offerAssistance = that.model.offerAssistance;
-        if (offerAssistance !== false) {
-            that.events.onInitInput.fire();
-            if (offerAssistance) {
-                that.events.onOfferAssistance.fire();
+        fluid.invokeLater(function () {  // see https://botbot.me/freenode/fluid-work/2016-02-24/?msg=60842530&page=2
+            var offerAssistance = that.model.offerAssistance;
+            if (offerAssistance !== false) {
+                that.events.onInitInput.fire();
+                if (offerAssistance) {
+                    that.events.onOfferAssistance.fire();
+                }
             }
-        }
+        });
     };
 
     gpii.firstDiscovery.panel.keyboard.destroy = function (that) {
@@ -488,7 +490,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 "range.max": "maximum",
                 "step": "divisibleBy"
             }
-	}
+        }
     });
 
     /*
@@ -503,7 +505,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 "range.max": "maximum",
                 "step": "divisibleBy"
             }
-	}
+        }
     });
 
     /*
@@ -674,8 +676,8 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             maxViewportFirstLangIndex: {
                 expander: {
                     funcName: "gpii.firstDiscovery.panel.lang.calculateMaxViewportFirstLangIndex",
-                    args: [ "{that}.options.controlValues.lang.length",
-                            "{that}.options.numOfLangPerPage" ]
+                    args: ["{that}.options.controlValues.lang.length",
+                        "{that}.options.numOfLangPerPage"]
                 }
             }
         },
@@ -784,9 +786,9 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             langOptions: {
                 expander: {
                     func: "gpii.firstDiscovery.panel.lang.buildLangOptionsMarkup",
-                    args: [ "{that}.msgLookup.lang",
-                            "{that}.options.controlValues.lang",
-                            "{that}.options.markup.langOptionTemplate" ]
+                    args: ["{that}.msgLookup.lang",
+                        "{that}.options.controlValues.lang",
+                        "{that}.options.markup.langOptionTemplate"]
                 }
             },
             langOptionTemplate: "<div class=\"gpiic-fd-lang-row gpiic-fd-tooltip selectable gpii-fd-choice\" role=\"option\" aria-selected=\"false\" lang=\"%langCode\"><span class=\"gpii-fd-indicator gpii-fd-icon\"></span> <span class=\"gpiic-fd-lang-label gpii-fd-lang-label gpii-fd-choice-label\" lang=\"%langCode\">%langName</span></div>"
@@ -900,7 +902,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
 
     gpii.firstDiscovery.panel.lang.buildLangOptionsMarkup = function (langNames, langCodes, langOptionTemplate) {
         var markup = "";
-        for (var i=0; i < langNames.length; i++) {
+        for (var i = 0; i < langNames.length; i++) {
             var langName = langNames[i];
             var langCode = langCodes[i];
             var langOption = fluid.stringTemplate(langOptionTemplate, {
@@ -954,7 +956,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             that.events.langButtonsReady.fire();
         });
     };
-    
+
 
     gpii.firstDiscovery.panel.lang.scrollLangs = function (that, adjustBy) {
         var newIndex = that.model.viewportFirstLangIndex + adjustBy;
@@ -1011,19 +1013,19 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     gpii.firstDiscovery.panel.lang.setLangOnHtml = function (currentLang) {
         $("html").attr("lang", currentLang);
     };
-    
+
     gpii.firstDiscovery.panel.lang.setTooltipLang = function (that, originalTarget, tooltip) {
-    	tooltip.attr("lang", $(originalTarget).attr("lang"));
+        tooltip.attr("lang", $(originalTarget).attr("lang"));
     };
 
     gpii.firstDiscovery.panel.lang.setFocusIn = function (that) {
-    	var selected = that.locate("controlsDiv").find("div[aria-selected='true']");
-    	$(selected).focus();
-    	that.locate("controlsDiv").attr("tabindex", "-1");
+        var selected = that.locate("controlsDiv").find("div[aria-selected='true']");
+        $(selected).focus();
+        that.locate("controlsDiv").attr("tabindex", "-1");
     };
-    
+
     gpii.firstDiscovery.panel.lang.setFocusOut = function (that) {
-    	that.locate("controlsDiv").attr("tabindex", "0");
+        that.locate("controlsDiv").attr("tabindex", "0");
     };
 
     // Any change to the model causes all panels to be rerendered. If
@@ -1142,7 +1144,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 markup: {messagekey: "message"}
             },
             commands: {
-            	markup: {messagekey: "commands"}
+                markup: {messagekey: "commands"}
             }
         }
     });
@@ -1165,6 +1167,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         }
     });
 
+
     /*
      * Confirm Panel
      */
@@ -1173,289 +1176,162 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         preferenceMap: {
             "gpii.firstDiscovery.confirm": {}
         },
+        averageWordsPerMinute: 130,
+        invokers: {
+            convertBoolean: {
+                funcName: "gpii.firstDiscovery.panel.confirm.convertBoolean",
+                args: ["{that}", "{arguments}.0"]
+            },
+            convertSpeechRate: {
+                funcName: "gpii.firstDiscovery.panel.confirm.convertSpeechRate",
+                args: ["{that}", "{arguments}.0"]
+            },
+            convertContrast: {
+                funcName: "gpii.firstDiscovery.panel.confirm.convertContrast",
+                args: ["{that}", "{arguments}.0"]
+            }
+        },
         selectors: {
             message: ".gpiic-fd-confirm-message",
-
-            language: "languageConfirmation",
-            languageLabel: "languageLabel",
-
-            speak: "speakConfirmation",
-            speakLabel: "speakLabel",
-
-            speechRate: "speechRateConfirmation",
-            speechRateLabel: "speechRateLabel",
-
-            contrast: "contrastConfirmation",
-            contrastLabel: "contrastLabel",
-
-            textSize: "textSizeConfirmation",
-            textSizeLabel: "textSizeLabel",
-
-            letterSpace: "letterSpaceConfirmation",
-            letterSpaceLabel: "letterSpaceLabel",
-
-            lineSpace: "lineSpaceConfirmation",
-            lineSpaceLabel: "lineSpaceLabel",
-
-            onScreenKeyboard: "onScreenKeyboardConfirmation",
-            onScreenKeyboardLabel: "onScreenKeyboardLabel",
-
-            captions: "captionsConfirmation",
-            captionsLabel: "captionsLabel",
-
-            showSounds: "showSoundsConfirmation",
-            showSoundsLabel: "showSoundsLabel",
-
-            stickyKeys: "stickyKeysConfirmation",
-            stickyKeysLabel: "stickyKeysLabel"
-
+            languageLabel: ".language .gpii-confirm-label",
+            languageValue: ".language .gpii-confirm-value",
+            speakValue: ".speak .gpii-confirm-value",
+            speakLabel: ".speak .gpii-confirm-label",
+            speechRateValue: ".speechRate .gpii-confirm-value",
+            speechRateLabel: ".speechRate .gpii-confirm-label",
+            speechRateUnit: ".speechRate .gpii-confirm-unit",
+            contrastValue: ".contrast .gpii-confirm-value",
+            contrastLabel: ".contrast .gpii-confirm-label",
+            textSizeValue: ".textSize .gpii-confirm-value",
+            textSizeLabel: ".textSize .gpii-confirm-label",
+            textSizeUnit: ".textSize .gpii-confirm-unit",
+            letterSpaceValue: ".letterSpace .gpii-confirm-value",
+            letterSpaceLabel: ".letterSpace .gpii-confirm-label",
+            letterSpaceUnit: ".letterSpace .gpii-confirm-unit",
+            lineSpaceValue: ".lineSpace .gpii-confirm-value",
+            lineSpaceLabel: ".lineSpace .gpii-confirm-label",
+            lineSpaceUnit: ".lineSpace .gpii-confirm-unit",
+            onScreenKeyboardValue: ".onScreenKeyboard .gpii-confirm-value",
+            onScreenKeyboardLabel: ".onScreenKeyboard .gpii-confirm-label",
+            captionsValue: ".captions .gpii-confirm-value",
+            captionsLabel: ".captions .gpii-confirm-label",
+            showSoundsValue: ".showSounds .gpii-confirm-value",
+            showSoundsLabel: ".showSounds .gpii-confirm-label",
+            stickyKeysValue: ".stickyKeys .gpii-confirm-value",
+            stickyKeysLabel: ".stickyKeys .gpii-confirm-label"
         },
         protoTree: {
             message: {
                 markup: {messagekey: "message"}
-            }
+            },
+            languageLabel: {messagekey: "languageLabel"},
+            languageValue: {messagekey: "languageValue"},
+            speakLabel: {messagekey: "speakLabel"},
+            speakValue: {messagekey: "speakValue"},
+            speechRateLabel: {messagekey: "speechRateLabel"},
+            speechRateValue: {messagekey: "speechRateValue"},
+            speechRateUnit: {messagekey: "speechRateUnit"},
+            contrastLabel: {messagekey: "contrastLabel"},
+            contrastValue: {messagekey: "contrastValue"},
+            textSizeLabel: {messagekey: "textSizeLabel"},
+            textSizeValue: {messagekey: "textSizeValue"},
+            textSizeUnit: {messagekey: "multiplierUnit"},
+            letterSpaceLabel: {messagekey: "letterSpaceLabel"},
+            letterSpaceValue: {messagekey: "letterSpaceValue"},
+            letterSpaceUnit: {messagekey: "multiplierUnit"},
+            lineSpaceLabel: {messagekey: "lineSpaceLabel"},
+            lineSpaceValue: {messagekey: "lineSpaceValue"},
+            lineSpaceUnit: {messagekey: "multiplierUnit"},
+            onScreenKeyboardLabel: {messagekey: "onScreenKeyboardLabel"},
+            onScreenKeyboardValue: {messagekey: "onScreenKeyboardValue"},
+            captionsLabel: {messagekey: "captionsLabel"},
+            captionsValue: {messagekey: "captionsValue"},
+            showSoundsLabel: {messagekey: "showSoundsLabel"},
+            showSoundsValue: {messagekey: "showSoundsValue"},
+            stickyKeysLabel: {messagekey: "stickyKeysLabel"},
+            stickyKeysValue: {messagekey: "stickyKeysValue"}
         },
         modelListeners: {
             "{fluid.prefs.prefsEditor}.model.preferences": {
-                funcName: "gpii.firstDiscovery.panel.confirm.updatePreferenceValues",
-                args: ["{that}", "{change}"]
+                funcName: "gpii.firstDiscovery.panel.confirm.updateConfirmPanel",
+                args: ["{that}", "{change}.value"],
+                excludeSource: "init"
             }
         },
-        friendlyNames: {
-                "en-US": {
-                    labels: {
-                        language: "Language:",
-                        speak: "Text to Speech:",
-                        speechRate: "Speech Rate:",
-                        contrast: "Contrast:",
-                        textSize: "Text Size:",
-                        letterSpace: "Letter Spacing:",
-                        lineSpace: "Line Spacing:",
-                        onScreenKeyboard: "On-Screen Keyboard:",
-                        captions: "Captions:",
-                        showSounds: "Show Sounds:",
-                        stickyKeys: "Sticky Keys:"
-                    },
-                    values: {
-                        onOff: {
-                            "true": "On",
-                            "false": "Off"
-                        },
-                        language: "English",
-                        contrast:{
-                            "default": "Original",
-                            "bw": "Black/White",
-                            "wb": "White/Black"
-                        }
-                    }
-                },
-                "fr-FR": {
-                    labels: {
-                        language: "Langue:",
-                        speak: "Synthèse Vocale:",
-                        speechRate: "Débit de Parole:",
-                        contrast: "Contraste:",
-                        textSize: "Taille du Texte:",
-                        letterSpace: "L'espacement des Lettres",
-                        lineSpace: "Interligne:",
-                        onScreenKeyboard: "Clavier à l'Écran:",
-                        captions: "Légendes:",
-                        showSounds: "Voir les Sons:",
-                        stickyKeys: "Touches Rémanentes:"
-                    },
-                    values: {
-                        onOff: {
-                            "true": "Oui",
-                            "false": "Non"
-                        },
-                        language: "Français",
-                        contrast: {
-                            "default": "Original",
-                            "bw": "Noir/Blanc",
-                            "wb": "Blanc/Noir"
-                        }
-                    }
-                },
-                "es-MX": {
-                    labels: {
-                        language: "Idioma:",
-                        speak: "Texto a Voz:",
-                        speechRate: "Nivel de Conversación:",
-                        contrast: "Contraste:",
-                        textSize: "Tamaño de Texto:",
-                        letterSpace: "Espaciado Carta",
-                        lineSpace: "Interlineado:",
-                        onScreenKeyboard: "Teclado en Pantalla:",
-                        captions: "Leyendas:",
-                        showSounds: "Mostrar Sonidos:",
-                        stickyKeys: "Teclas Pegajosas:"
-                    },
-                    values: {
-                        onOff: {
-                            "true": "Sí",
-                            "false": "Non"
-                        },
-                        language: "Español",
-                        contrast: {
-                            "default": "Original",
-                            "bw": "Negro/Blanco",
-                            "wb": "Blanco/Negro"
-                        }
-                    }
-                },
-                //unsupported languages will use english friendly names
-                //all languages required to have friendly name selections to avoid FD tool break when selecting these languages
-                "de-DE": {
-                    labels: {
-                        language: "Language:",
-                        speak: "Text to Speech:",
-                        speechRate: "Speech Rate:",
-                        contrast: "Contrast:",
-                        textSize: "Text Size:",
-                        letterSpace: "Letter Spacing:",
-                        lineSpace: "Line Spacing:",
-                        onScreenKeyboard: "On-Screen Keyboard:",
-                        captions: "Captions:",
-                        showSounds: "Show Sounds:",
-                        stickyKeys: "Sticky Keys:"
-                    },
-                    values: {
-                        onOff: {
-                            "true": "On",
-                            "false": "Off"
-                        },
-                        language: "English",
-                        contrast:{
-                            "default": "Original",
-                            "bw": "Black/White",
-                            "wb": "White/Black"
-                        }
-                    }
-                },
-                "nl-NL": {
-                    labels: {
-                        language: "Language:",
-                        speak: "Text to Speech:",
-                        speechRate: "Speech Rate:",
-                        contrast: "Contrast:",
-                        textSize: "Text Size:",
-                        letterSpace: "Letter Spacing:",
-                        lineSpace: "Line Spacing:",
-                        onScreenKeyboard: "On-Screen Keyboard:",
-                        captions: "Captions:",
-                        showSounds: "Show Sounds:",
-                        stickyKeys: "Sticky Keys:"
-                    },
-                    values: {
-                        onOff: {
-                            "true": "On",
-                            "false": "Off"
-                        },
-                        language: "English",
-                        contrast:{
-                            "default": "Original",
-                            "bw": "Black/White",
-                            "wb": "White/Black"
-                        }
-                    }
-                },
-                "sv-SE": {
-                    labels: {
-                        language: "Language:",
-                        speak: "Text to Speech:",
-                        speechRate: "Speech Rate:",
-                        contrast: "Contrast:",
-                        textSize: "Text Size:",
-                        letterSpace: "Letter Spacing:",
-                        lineSpace: "Line Spacing:",
-                        onScreenKeyboard: "On-Screen Keyboard:",
-                        captions: "Captions:",
-                        showSounds: "Show Sounds:",
-                        stickyKeys: "Sticky Keys:"
-                    },
-                    values: {
-                        onOff: {
-                            "true": "On",
-                            "false": "Off"
-                        },
-                        language: "English",
-                        contrast:{
-                            "default": "Original",
-                            "bw": "Black/White",
-                            "wb": "White/Black"
-                        }
-                    }
-                }
+        listeners: {
+            // The modelListener does not fire until a preference is changed, so
+            // we use this hook to ensure preference values appear even if no
+            // preference changes
+            "afterRender.initPreferenceText": {
+                funcName: "gpii.firstDiscovery.panel.confirm.updateConfirmPanel",
+                args: ["{that}", "{fluid.prefs.prefsEditor}.model.preferences"]
             }
+        }
     });
 
-    gpii.firstDiscovery.panel.confirm.updatePreferenceValues = function(that, changeContext) {
+    gpii.firstDiscovery.panel.confirm.convertBoolean = function (that, value) {
+        return that.msgResolver.resolve(value ? "true" : "false");
+    };
 
-        // On page load, this modelListener fires but the elements in the page are not yet created.
-        // When this occurs, capture the changeContext and re-run momentarily.
-        if ($("#" + that.options.selectors.languageLabel).length == 0) {
-            setTimeout(function(){gpii.firstDiscovery.panel.confirm.updatePreferenceValues(that, changeContext);}, 500 );
+    gpii.firstDiscovery.panel.confirm.convertSpeechRate = function (that, value) {
+        return Math.round(that.options.averageWordsPerMinute * value);
+    };
+
+    gpii.firstDiscovery.panel.confirm.convertContrast = function (that, value) {
+        return that.msgResolver.resolve("contrast-" + value);
+    };
+
+    gpii.firstDiscovery.panel.confirm.getFriendlyPreferenceNames = function (that, prefs) {
+
+        var prefText = {
+            language: that.msgResolver.resolve("language"),
+            speak: "",
+            speechRate: "",
+            contrast: "",
+            textSize: "",
+            letterSpace: "",
+            lineSpace: "",
+            onScreenKeyboard: "",
+            captions: "",
+            showSounds: "",
+            stickyKeys: ""
+        };
+
+        if (typeof prefs === 'undefined') {
+            return prefText;
         }
+        prefText.speak = typeof prefs.gpii_firstDiscovery_speak === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_speak);
+        prefText.speechRate = typeof prefs.gpii_firstDiscovery_speechRate === 'undefined' ? "" : that.convertSpeechRate(prefs.gpii_firstDiscovery_speechRate);
+        prefText.contrast = typeof prefs.fluid_prefs_contrast === 'undefined' ? "" : that.convertContrast(prefs.fluid_prefs_contrast);
+        prefText.textSize = typeof prefs.fluid_prefs_textSize === 'undefined' ? "" : prefs.fluid_prefs_textSize.toFixed(1);
+        prefText.letterSpace = typeof prefs.gpii_firstDiscovery_letterSpace === 'undefined' ? "" : prefs.gpii_firstDiscovery_letterSpace.toFixed(1);
+        prefText.lineSpace = typeof prefs.gpii_firstDiscovery_lineSpace === 'undefined' ? "" : prefs.gpii_firstDiscovery_lineSpace.toFixed(1);
+        prefText.onScreenKeyboard = typeof prefs.gpii_firstDiscovery_onScreenKeyboard === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_onScreenKeyboard);
+        prefText.captions = typeof prefs.gpii_firstDiscovery_captions === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_captions);
+        prefText.showSounds = typeof prefs.gpii_firstDiscovery_showSounds === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_showSounds);
+        prefText.stickyKeys = typeof prefs.gpii_firstDiscovery_stickyKeys === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_stickyKeys);
 
-        //Language
-        var languageValue = changeContext.value.gpii_firstDiscovery_language;
-        $("#" + that.options.selectors.languageLabel).text(that.options.friendlyNames[languageValue].labels.language);
-        $("#" + that.options.selectors.language).text(that.options.friendlyNames[languageValue].values.language);
 
-        //Text to Speech
-        $("#" + that.options.selectors.speakLabel).text(that.options.friendlyNames[languageValue].labels.speak);
-        var speakValue = changeContext.value.gpii_firstDiscovery_speak;
-        $("#" + that.options.selectors.speak).text(that.options.friendlyNames[languageValue].values.onOff[speakValue]);
+        return prefText;
+    };
 
-        //Speech Rate
-        $("#" + that.options.selectors.speechRateLabel).text(that.options.friendlyNames[languageValue].labels.speechRate);
-        var speechRateValue = (changeContext.value.gpii_firstDiscovery_speechRate);
-        var averageWordsPerMinute = 130;
-        var wordsPerMinute = Math.round(speechRateValue*averageWordsPerMinute);
-        $("#" + that.options.selectors.speechRate).text(wordsPerMinute + "wpm");
+    gpii.firstDiscovery.panel.confirm.updateUiWithPreferences = function (that, prefText) {
+        that.locate("languageValue").text(prefText.language);
+        that.locate("speakValue").text(prefText.speak);
+        that.locate("speechRateValue").text(prefText.speechRate);
+        that.locate("contrastValue").text(prefText.contrast);
+        that.locate("textSizeValue").text(prefText.textSize);
+        that.locate("letterSpaceValue").text(prefText.letterSpace);
+        that.locate("lineSpaceValue").text(prefText.lineSpace);
+        that.locate("onScreenKeyboardValue").text(prefText.onScreenKeyboard);
+        that.locate("captionsValue").text(prefText.captions);
+        that.locate("showSoundsValue").text(prefText.showSounds);
+        that.locate("stickyKeysValue").text(prefText.stickyKeys);
+    };
 
-        //Contrast
-        $("#" + that.options.selectors.contrastLabel).text(that.options.friendlyNames[languageValue].labels.contrast);
-        var contrastValue = changeContext.value.fluid_prefs_contrast;
-        $("#" + that.options.selectors.contrast).text(that.options.friendlyNames[languageValue].values.contrast[contrastValue]);
-
-        //Text Size
-        $("#" + that.options.selectors.textSizeLabel).text(that.options.friendlyNames[languageValue].labels.textSize);
-        var textSizeValue = (changeContext.value.fluid_prefs_textSize);
-        var roundedTSValue = textSizeValue.toFixed(1);
-        $("#" + that.options.selectors.textSize).text(roundedTSValue + "x");
-
-        //Letter Space
-        $("#" + that.options.selectors.letterSpaceLabel).text(that.options.friendlyNames[languageValue].labels.letterSpace);
-        var letterSpaceValue = (changeContext.value.gpii_firstDiscovery_letterSpace);
-        var roundedLetterSpaceValue = letterSpaceValue.toFixed(1);
-        $("#" + that.options.selectors.letterSpace).text(roundedLetterSpaceValue + "x");
-
-        //Line Space
-        $("#" + that.options.selectors.lineSpaceLabel).text(that.options.friendlyNames[languageValue].labels.lineSpace);
-        var lineSpaceValue = (changeContext.value.gpii_firstDiscovery_lineSpace);
-        var roundedLineSpaceValue = lineSpaceValue.toFixed(1);
-        $("#" + that.options.selectors.lineSpace).text(roundedLineSpaceValue + "x");
-
-        //On-ScreenKeyboard
-        $("#" + that.options.selectors.onScreenKeyboardLabel).text(that.options.friendlyNames[languageValue].labels.onScreenKeyboard);
-        var onScreenKeyboardValue = changeContext.value.gpii_firstDiscovery_onScreenKeyboard;
-        $("#" + that.options.selectors.onScreenKeyboard).text(that.options.friendlyNames[languageValue].values.onOff[onScreenKeyboardValue]);
-
-        //Captions
-        $("#" + that.options.selectors.captionsLabel).text(that.options.friendlyNames[languageValue].labels.captions);
-        var captionsValue = changeContext.value.gpii_firstDiscovery_captions;
-        $("#" + that.options.selectors.captions).text(that.options.friendlyNames[languageValue].values.onOff[captionsValue]);
-
-        //Show Sounds
-        $("#" + that.options.selectors.showSoundsLabel).text(that.options.friendlyNames[languageValue].labels.showSounds);
-        var showSoundsValue = changeContext.value.gpii_firstDiscovery_showSounds;
-        $("#" + that.options.selectors.showSounds).text(that.options.friendlyNames[languageValue].values.onOff[showSoundsValue]);
-
-        //Sticky Keys
-        $("#" + that.options.selectors.stickyKeysLabel).text(that.options.friendlyNames[languageValue].labels.stickyKeys);
-        var stickyKeysValue = changeContext.value.gpii_firstDiscovery_stickyKeys;
-        $("#" + that.options.selectors.stickyKeys).text(that.options.friendlyNames[languageValue].values.onOff[stickyKeysValue]);
+    gpii.firstDiscovery.panel.confirm.updateConfirmPanel = function (that, prefs) {
+        var prefText = gpii.firstDiscovery.panel.confirm.getFriendlyPreferenceNames(that, prefs);
+        gpii.firstDiscovery.panel.confirm.updateUiWithPreferences(that, prefText);
     };
 
 
@@ -1545,30 +1421,30 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     gpii.firstDiscovery.panel.token.savePrefsToUsb = function (that, data) {
 
         /*
-            if not chrome:
-                USB is not possible, so just fire success
+         if not chrome:
+         USB is not possible, so just fire success
 
-            if chrome:
+         if chrome:
 
-                if not extension:
-                    USB is not possible so just fire success
+         if not extension:
+         USB is not possible so just fire success
 
-                if extension:
-                    USB is possible so msg the extension
+         if extension:
+         USB is possible so msg the extension
          */
 
         // If the plugin hasn't responded in 2 seconds with the version, it is a user without a
         // plugin installed, so show them the token.
-        var successTimeoutId = setTimeout(function(){
+        var successTimeoutId = setTimeout(function () {
             that.events.onSuccess.fire(data);
         }, 2000);
 
         window.chrome.runtime.sendMessage(
             that.options.chromeExtensionId,
-            {"message": {"message_type":"request_version"}},
-            function onVersionCallback(version){
+            {"message": {"message_type": "request_version"}},
+            function onVersionCallback(version) {
                 // If we got a version, the plugin is installed, so clear the timeout and let the plugin write to usb
-                if (version){
+                if (version) {
                     clearTimeout(successTimeoutId);
                     var message = {
                         message: {
@@ -1619,9 +1495,9 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         });
     };
 
-    // A grade component to connect "gpii.firstDiscovery.prefsServerIntegration" and
-    // the token panel (gpii.firstDiscovery.panel.token). It sends the request to the
-    // the first discovery server to save preferences when the token panel becomes visible.
+// A grade component to connect "gpii.firstDiscovery.prefsServerIntegration" and
+// the token panel (gpii.firstDiscovery.panel.token). It sends the request to the
+// the first discovery server to save preferences when the token panel becomes visible.
     fluid.defaults("gpii.firstDiscovery.panel.token.prefsServerIntegrationConnection", {
         gradeNames: ["fluid.modelComponent"],
         modelListeners: {
@@ -1632,4 +1508,5 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         }
     });
 
-})(jQuery, fluid);
+})
+(jQuery, fluid);
