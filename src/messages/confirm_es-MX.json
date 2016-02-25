@@ -6,6 +6,7 @@
   "speakValue": "",
   "speechRateLabel": "Nivel de Conversación:",
   "speechRateValue": "",
+  "speechRateUnit": "ppm",
   "contrastLabel": "Contraste:",
   "contrastValue": "",
   "textSizeLabel": "Tamaño de Texto:",
@@ -21,5 +22,12 @@
   "showSoundsLabel": "Mostrar Sonidos:",
   "showSoundsValue": "",
   "stickyKeysLabel": "Teclas Pegajosas:",
-  "stickyKeysValue": ""
+  "stickyKeysValue": "",
+  "multiplierUnit": "x",
+  "true": "Sí",
+  "false": "Non",
+  "language": "Español",
+  "contrast-default": "Original",
+  "contrast-bw": "Negro/Blanco",
+  "contrast-wb": "Blanco/Negro"
 }

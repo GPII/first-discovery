@@ -6,6 +6,7 @@
   "speakValue": "",
   "speechRateLabel": "Débit de Parole:",
   "speechRateValue": "",
+  "speechRateUnit": "mpm",
   "contrastLabel": "Contraste:",
   "contrastValue": "",
   "textSizeLabel": "Taille du Texte:",
@@ -21,5 +22,12 @@
   "showSoundsLabel": "Voir les Sons:",
   "showSoundsValue": "",
   "stickyKeysLabel": "Touches Rémanentes:",
-  "stickyKeysValue": ""
+  "stickyKeysValue": "",
+  "multiplierUnit": "x",
+  "true": "Oui",
+  "false": "Non",
+  "language": "Français",
+  "contrast-default": "Original",
+  "contrast-bw": "Noir/Blanc",
+  "contrast-wb": "Blanc/Noir"
 }

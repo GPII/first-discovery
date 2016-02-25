@@ -6,6 +6,7 @@
   "speakValue": "",
   "speechRateLabel": "Speech Rate:",
   "speechRateValue": "",
+  "speechRateUnit": "wpm",
   "contrastLabel": "Contrast:",
   "contrastValue": "",
   "textSizeLabel": "Text Size:",
@@ -21,5 +22,13 @@
   "showSoundsLabel": "Show Sounds:",
   "showSoundsValue": "",
   "stickyKeysLabel": "Sticky Keys:",
-  "stickyKeysValue": ""
+  "stickyKeysValue": "",
+  "multiplierUnit": "x",
+  "true": "ON",
+  "false": "OFF",
+  "language": "English",
+  "contrast-default": "Original",
+  "contrast-bw": "Black/White",
+  "contrast-wb": "White/Black"
+
 }
