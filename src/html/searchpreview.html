@@ -131,7 +131,13 @@
             padding-left: .1rem;
 
         }
-
+        
+		#searchResults {
+		    background-image:url('../images/searchresult.png');
+		    height: 4em;
+		}
+		.fl-theme-bw #searchResults { background-image:url('../images/searchresult_bw.png'); }
+		.fl-theme-wb #searchResults { background-image:url('../images/searchresult_wb.png'); }
 
     </style>
 
@@ -222,9 +228,7 @@
 
                 <div class="row">
 
-                    <div class="small-3 columns thumbnail-container"><img src="../images/searchresult.png"
-                                                                          alt="Thumbnail of video search result"/></div>
-
+                    <div id="searchResults" class="small-3 columns thumbnail-container"></div>
                     <div class="small-9 columns thumbnail-description-container">
 
                         <p class="search-result-url"></p>
