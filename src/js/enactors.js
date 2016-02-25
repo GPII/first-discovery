@@ -168,7 +168,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         }
 
         if (that.initialSize) {
-            that.container.css("line-height", targetLineSpace); 
+            that.container.css("line-height", targetLineSpace);
             $("p").css("line-height", targetLineSpace);
             $("#thePreview").contents().find("p").css("line-height", targetLineSpace);
         }
@@ -267,6 +267,10 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             that.container.css("letter-spacing", targetLetterSpace);
             // Applies to instruction text, etc
             $("#gpiic-fd").css("letter-spacing", targetLetterSpace);
+            // Applies to buttons
+            $("#gpiic-fd").contents().find("button").css("letter-spacing", targetLetterSpace);
+            // Applies input box on search preview
+            $("#thePreview").contents().find("input").css("letter-spacing", targetLetterSpace);
         }
     };
 
@@ -310,14 +314,13 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     });
 
     gpii.firstDiscovery.enactor.onScreenKeyboard.set = function(OSKeyboardEnabled) {
-
-		 if(OSKeyboardEnabled) {
-	         $("#onScreenKeyboard").css("display", "");
-	         $("#thePreview").css("height", "60%");
-	   	 }
-	   	 else {
-	         $("#onScreenKeyboard").css("display", "none");
-	         $("#thePreview").css("height", "90%");
-	   	 }
-    }
+        if(OSKeyboardEnabled) {
+            $("#onScreenKeyboard").css("display", "");
+            $("#thePreview").css("height", "60%");
+        }
+        else {
+            $("#onScreenKeyboard").css("display", "none");
+            $("#thePreview").css("height", "90%");
+        }
+    };
 })(jQuery, fluid);

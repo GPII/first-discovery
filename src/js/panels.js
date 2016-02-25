@@ -92,9 +92,21 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 funcName: "gpii.firstDiscovery.panel.ranged.step",
                 args: ["{that}", true]
             },
+            setFocusUp: {
+                funcName: "gpii.firstDiscovery.panel.ranged.setFocusUp",
+                args: ["{that}"]
+            },
+            setFocusDown: {
+                funcName: "gpii.firstDiscovery.panel.ranged.setFocusDown",
+                args: ["{that}"]
+            },
             updateMeter: {
                 funcName: "gpii.firstDiscovery.panel.ranged.updateMeter",
                 args: ["{that}", "{that}.model.value"]
+            },
+            doWarnLimit:{
+                funcName: "gpii.firstDiscovery.panel.ranged.warnAtLimit",
+                args: ["{that}"]
             }
         },
         listeners: {
@@ -103,10 +115,30 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 "method": "click",
                 "args": ["{that}.stepUp"]
             },
+            "afterRender.bindWarnIncrease": {
+                "this": "{that}.dom.increase",
+                "method": "click",
+                "args": ["{that}.doWarnLimit"]
+            },
+            "afterRender.bindFocusIncrease": {
+                "this": "{that}.dom.increase",
+                "method": "click",
+                "args": ["{that}.setFocusUp"]
+            },
             "afterRender.bindDecrease": {
                 "this": "{that}.dom.decrease",
                 "method": "click",
                 "args": ["{that}.stepDown"]
+            },
+            "afterRender.bindWarnDecrease": {
+                "this": "{that}.dom.decrease",
+                "method": "click",
+                "args": ["{that}.doWarnLimit"]
+            },
+            "afterRender.bindFocusDecrease": {
+                "this": "{that}.dom.decrease",
+                "method": "click",
+                "args": ["{that}.setFocusDown"]
             },
             "afterRender.updateButtonState": {
                 listener: "gpii.firstDiscovery.panel.ranged.updateButtonState",
@@ -137,6 +169,23 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     gpii.firstDiscovery.panel.ranged.updateButtonState = function (that) {
         that.locate("increase").prop("disabled", that.model.isMax);
         that.locate("decrease").prop("disabled", that.model.isMin);
+    };
+
+    gpii.firstDiscovery.panel.ranged.setFocusUp = function(that){
+        that.locate("increase").focus();
+    };
+
+    gpii.firstDiscovery.panel.ranged.setFocusDown = function(that){
+        that.locate("decrease").focus();
+    };
+
+    gpii.firstDiscovery.panel.ranged.warnAtLimit = function(that){
+        if (that.model.isMax){
+            that.tooltip.speak(that.msgResolver.resolve("warnMax"));
+        }
+        else if (that.model.isMin){
+            that.tooltip.speak(that.msgResolver.resolve("warnMin"));
+        }
     };
 
     gpii.firstDiscovery.panel.ranged.updateMeter = function (that, value) {
@@ -1253,6 +1302,89 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                             "wb": "Blanco/Negro"
                         }
                     }
+                },
+                //unsupported languages will use english friendly names
+                //all languages required to have friendly name selections to avoid FD tool break when selecting these languages
+                "de-DE": {
+                    labels: {
+                        language: "Language:",
+                        speak: "Text to Speech:",
+                        speechRate: "Speech Rate:",
+                        contrast: "Contrast:",
+                        textSize: "Text Size:",
+                        letterSpace: "Letter Spacing:",
+                        lineSpace: "Line Spacing:",
+                        onScreenKeyboard: "On-Screen Keyboard:",
+                        captions: "Captions:",
+                        showSounds: "Show Sounds:",
+                        stickyKeys: "Sticky Keys:"
+                    },
+                    values: {
+                        onOff: {
+                            "true": "On",
+                            "false": "Off"
+                        },
+                        language: "English",
+                        contrast:{
+                            "default": "Original",
+                            "bw": "Black/White",
+                            "wb": "White/Black"
+                        }
+                    }
+                },
+                "nl-NL": {
+                    labels: {
+                        language: "Language:",
+                        speak: "Text to Speech:",
+                        speechRate: "Speech Rate:",
+                        contrast: "Contrast:",
+                        textSize: "Text Size:",
+                        letterSpace: "Letter Spacing:",
+                        lineSpace: "Line Spacing:",
+                        onScreenKeyboard: "On-Screen Keyboard:",
+                        captions: "Captions:",
+                        showSounds: "Show Sounds:",
+                        stickyKeys: "Sticky Keys:"
+                    },
+                    values: {
+                        onOff: {
+                            "true": "On",
+                            "false": "Off"
+                        },
+                        language: "English",
+                        contrast:{
+                            "default": "Original",
+                            "bw": "Black/White",
+                            "wb": "White/Black"
+                        }
+                    }
+                },
+                "sv-SE": {
+                    labels: {
+                        language: "Language:",
+                        speak: "Text to Speech:",
+                        speechRate: "Speech Rate:",
+                        contrast: "Contrast:",
+                        textSize: "Text Size:",
+                        letterSpace: "Letter Spacing:",
+                        lineSpace: "Line Spacing:",
+                        onScreenKeyboard: "On-Screen Keyboard:",
+                        captions: "Captions:",
+                        showSounds: "Show Sounds:",
+                        stickyKeys: "Sticky Keys:"
+                    },
+                    values: {
+                        onOff: {
+                            "true": "On",
+                            "false": "Off"
+                        },
+                        language: "English",
+                        contrast:{
+                            "default": "Original",
+                            "bw": "Black/White",
+                            "wb": "White/Black"
+                        }
+                    }
                 }
             }
     });
@@ -1372,7 +1504,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 markup: {messagekey: "message"}
             }
         },
-        chromeExtensionId: "oaicfgfcklidgbdcpgfkpmgknkfganok",
+        chromeExtensionId: "nkojgcmaioingjndknblmghefcfijobm",
         events: {
             onSuccess: null,  // argument: the server returned data
             onError: null,

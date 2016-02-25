@@ -2,6 +2,8 @@
     "rangeInstructions": "Ajuster l'espace entre les lignes pour un montant que vous aimez le plus.",
     "maxLabel": "max",
     "minLabel": "min",
+    "warnMin": "Ceci est le paramètre le plus petit",
+    "warnMax": "Ceci est le paramètre le plus grand",
     "increaseLabel": "plus grande",
     "decreaseLabel": "plus petit"
 }

@@ -2,6 +2,8 @@
     "rangeInstructions": "Cambiar la velocidad con la voz lee en voz alta.",
     "maxLabel": "rápido",
     "minLabel": "lento",
+    "warnMin": "Esta es la configuración más lenta",
+    "warnMax": "Esta es la configuración más rápida",
     "increaseLabel": "Más rápido",
     "decreaseLabel": "Más lento",
     "disabledMsg": "Sólo se puede establecer esta opción si la voz está en ON . Puede pulsar \"giro voz en \" en la parte superior de la pantalla ."

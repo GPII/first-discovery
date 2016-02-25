@@ -2,6 +2,8 @@
     "rangeInstructions": "Adjust the space between the letters to an amount you like best.",
     "maxLabel": "max",
     "minLabel": "min",
+    "warnMin": "This is the smallest setting",
+    "warnMax": "This is the largest setting",
     "increaseLabel": "larger",
     "decreaseLabel": "smaller"
 }

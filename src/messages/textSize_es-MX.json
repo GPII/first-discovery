@@ -2,6 +2,8 @@
     "rangeInstructions": "Personaliza el tamaño del texto y botón.",
     "maxLabel": "máx.",
     "minLabel": "min.",
+    "warnMin": "Este es el escenario más pequeño",
+    "warnMax": "Este es el escenario más grande",
     "increaseLabel": "grande",
     "decreaseLabel": "pequeño "
 }

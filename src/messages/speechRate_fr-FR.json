@@ -2,6 +2,8 @@
     "rangeInstructions": "Changer la vitesse ou de ralentir la voix lit à haute voix.",
     "maxLabel": "rapide",
     "minLabel": "lent",
+    "warnMin": "Ceci est le paramètre le plus lent",
+    "warnMax": "Ceci est le paramètre le plus rapide",
     "increaseLabel": "plus rapide",
     "decreaseLabel": "plus lent",
     "disabledMsg": "Vous ne pouvez définir cette option si la voix est activée. Vous pouvez appuyer sur \" tourner voix ON \" en haut de l'écran."

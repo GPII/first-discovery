@@ -292,6 +292,18 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             previewpage = "electronpreview.html";
         }
 
+        //unsupported languages will return english preview.
+        //TODO: create previews for remaining languages, de-DE, nl-NL, sv-SE
+        if(languageCode == "de-DE"){
+            languageCode = "en-US";
+        }
+        if(languageCode == "nl-NL"){
+            languageCode = "en-US";
+        }
+        if(languageCode == "sv-SE"){
+            languageCode = "en-US";
+        }
+
         var previewQueryString = "?lang=" + languageCode;
 
         return encodeURI(baseurl + previewpage + previewQueryString);
