@@ -1,3 +1,25 @@
 {
-  "message": "<p2>Confirmar la configuración.</p2>"
+  "message": "<p2>Confirmar la configuración.</p2>",
+  "languageLabel": "Idioma:",
+  "languageValue": "",
+  "speakLabel": "Texto a Voz:",
+  "speakValue": "",
+  "speechRateLabel": "Nivel de Conversación:",
+  "speechRateValue": "",
+  "contrastLabel": "Contraste:",
+  "contrastValue": "",
+  "textSizeLabel": "Tamaño de Texto:",
+  "textSizeValue": "",
+  "letterSpaceLabel": "Espaciado Carta",
+  "letterSpaceValue": "",
+  "lineSpaceLabel": "Interlineado:",
+  "lineSpaceValue": "",
+  "onScreenKeyboardLabel": "Teclado en Pantalla:",
+  "onScreenKeyboardValue": "",
+  "captionsLabel": "Leyendas:",
+  "captionsValue": "",
+  "showSoundsLabel": "Mostrar Sonidos:",
+  "showSoundsValue": "",
+  "stickyKeysLabel": "Teclas Pegajosas:",
+  "stickyKeysValue": ""
 }

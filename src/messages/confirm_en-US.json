@@ -1,3 +1,25 @@
 {
-  "message": "<p2>Confirm your settings.</p2>"
+  "message": "<p2>Confirm your settings.</p2>",
+  "languageLabel": "Language:",
+  "languageValue": "",
+  "speakLabel": "Text to Speech:",
+  "speakValue": "",
+  "speechRateLabel": "Speech Rate:",
+  "speechRateValue": "",
+  "contrastLabel": "Contrast:",
+  "contrastValue": "",
+  "textSizeLabel": "Text Size:",
+  "textSizeValue": "",
+  "letterSpaceLabel": "Letter Spacing:",
+  "letterSpaceValue": "",
+  "lineSpaceLabel": "Line Spacing:",
+  "lineSpaceValue": "",
+  "onScreenKeyboardLabel": "On-Screen Keyboard:",
+  "onScreenKeyboardValue": "",
+  "captionsLabel": "Captions:",
+  "captionsValue": "",
+  "showSoundsLabel": "Show Sounds:",
+  "showSoundsValue": "",
+  "stickyKeysLabel": "Sticky Keys:",
+  "stickyKeysValue": ""
 }

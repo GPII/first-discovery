@@ -1,3 +1,25 @@
 {
-  "message": "<p2>Confirmez vos paramètres.</p2>"
+  "message": "<p2>Confirmez vos paramètres.</p2>",
+  "languageLabel": "Langue:",
+  "languageValue": "",
+  "speakLabel": "Synthèse Vocale:",
+  "speakValue": "",
+  "speechRateLabel": "Débit de Parole:",
+  "speechRateValue": "",
+  "contrastLabel": "Contraste:",
+  "contrastValue": "",
+  "textSizeLabel": "Taille du Texte:",
+  "textSizeValue": "",
+  "letterSpaceLabel": "L'espacement des Lettres",
+  "letterSpaceValue": "",
+  "lineSpaceLabel": "Interligne:",
+  "lineSpaceValue": "",
+  "onScreenKeyboardLabel": "Clavier à l'Écran:",
+  "onScreenKeyboardValue": "",
+  "captionsLabel": "Légendes:",
+  "captionsValue": "",
+  "showSoundsLabel": "Voir les Sons:",
+  "showSoundsValue": "",
+  "stickyKeysLabel": "Touches Rémanentes:",
+  "stickyKeysValue": ""
 }
