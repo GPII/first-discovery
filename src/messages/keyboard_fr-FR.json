@@ -1,5 +1,5 @@
 {
-    "keyboardInstructions": "Des modifications peuvent être faites pour vous aider à utiliser le clavier.",
+    "keyboardInstructions": "Essayez d'utiliser le clavier dans l'espace ci-dessous.",
     "placeholder": "Tapez le symbole % maintenant.",
 
     "try": "Essayez-le",
@@ -8,8 +8,8 @@
     "turnOn": "activer",
     "turnOff": "désactiver",
 
-    "stickyKeysInstructions": "<strong>Les touches rémanentes</strong> peuvent aider à la tenue de deux touches enfoncées à la fois.",
-    "stickyKeysAccomInstr": "Maintenant, vous pouvez taper % en appuyant d'abord sur la touche Maj (Shift), puis sur la touche 5.",
+    "stickyKeysInstructions": "<Strong> les touches rémanentes </strong> peut aider vous maintenez deux touches en même temps. Essayez d'utiliser à nouveau le clavier.",
+    "stickyKeysAccomInstr": "Avec les touches rémanentes : Appuyez sur la touche Maj enfoncée, puis appuyez sur la touche 5.",
     "stickyKeys": "Touches rémanentes sont ",
 
     "successInstructions": "Vous ne semblez pas avoir besoin d'ajustements de clavier. S'il vous plaît passez à l'écran suivant.",

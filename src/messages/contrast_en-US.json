@@ -1,5 +1,5 @@
 {
-    "instructions": "You can choose a screen color to make things easier to see.",
+    "instructions": "Choose a screen color to make things easier to see.",
     "contrastLabel": "Contrast",
     "contrast-default": "original",
     "contrast-bw": "black on white",

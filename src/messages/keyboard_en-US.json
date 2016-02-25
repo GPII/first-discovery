@@ -1,5 +1,5 @@
 {
-    "keyboardInstructions": "Adjustments can be made to help you with using the keyboard.",
+    "keyboardInstructions": "Try using the keyboard in the space below.",
     "placeholder": "Type the % symbol here",
 
     "try": "try it",
@@ -8,8 +8,8 @@
     "turnOn": "turn ON",
     "turnOff": "turn OFF",
 
-    "stickyKeysInstructions": "<strong>Sticky Keys</strong> can help with holding two keys down at once.",
-    "stickyKeysAccomInstr": "With Sticky Keys on, type % by first pressing the Shift key and then the 5 key.",
+    "stickyKeysInstructions": "<strong>Sticky Keys</strong> can help you hold down two keys at the same time. Try using the keyboard again.",
+    "stickyKeysAccomInstr": "With Sticky Keys on: Press the Shift key, then press the 5 key.",
     "stickyKeys": "Sticky Keys is",
 
     "successInstructions": "You don’t appear to need any keyboard adjustments. Please proceed to the next screen.",

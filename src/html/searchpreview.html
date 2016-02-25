@@ -131,7 +131,13 @@
             padding-left: .1rem;
 
         }
-
+        
+		#searchResults {
+		    background-image:url('../images/searchresult.png');
+		    height: 4em;
+		}
+		.fl-theme-bw #searchResults { background-image:url('../images/searchresult_bw.png'); }
+		.fl-theme-wb #searchResults { background-image:url('../images/searchresult_wb.png'); }
 
     </style>
 
@@ -214,18 +220,7 @@
                 <p id="search_result_label" class="notice" tabindex="0"></p>
             </div>
         </div>
-
-        <div class="row">
-            <div class="small-2 columns small-3"></div>
-            <div id="result1" tabindex="0" class="small-10 columns">
-                <h3 class="search-result-link"><a href="" tabindex="-1"></a></h3>
-
-                <p class="search-result-url"></p>
-
-                <p class="search-result-description"></p>
-            </div>
-        </div>
-
+        
         <div class="row">
             <div class="small-2 columns small-3"></div>
             <div id="result2" tabindex="0" class="small-10 columns">
@@ -233,9 +228,7 @@
 
                 <div class="row">
 
-                    <div class="small-3 columns thumbnail-container"><img src="../images/searchresult.png"
-                                                                          alt="Thumbnail of video search result"/></div>
-
+                    <div id="searchResults" class="small-3 columns thumbnail-container"></div>
                     <div class="small-9 columns thumbnail-description-container">
 
                         <p class="search-result-url"></p>
@@ -244,6 +237,17 @@
                     </div>
 
                 </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="small-2 columns small-3"></div>
+            <div id="result1" tabindex="0" class="small-10 columns">
+                <h3 class="search-result-link"><a href="" tabindex="-1"></a></h3>
+
+                <p class="search-result-url"></p>
+
+                <p class="search-result-description"></p>
             </div>
         </div>
 

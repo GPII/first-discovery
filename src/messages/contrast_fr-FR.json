@@ -1,5 +1,5 @@
 {
-    "instructions": "Vous pouvez choisir une couleur d'écran pour améliorer le contraste.",
+    "instructions": "Choisissez une couleur de l'écran pour rendre les choses plus faciles à voir.",
     "contrastLabel": "Contrast",
     "contrast-default": "original",
     "contrast-bw": "noir sur blanc",

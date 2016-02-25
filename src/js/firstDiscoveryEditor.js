@@ -176,6 +176,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             prefsEditor: ".gpiic-fd-prefsEditor",
             panel: ".gpiic-fd-prefsEditor-panel",
             selfVoicingToggle: ".gpiic-fd-selfVoicingToggle",
+            selfVoicingToggleButton:".gpiic-fd-selfVoicingToggle-mute",
             nav: ".gpiic-fd-nav",
             previewIndicator: ".gpiic-fd-previewIndicator",
             previewFrame : ".flc-prefsEditor-preview-frame"
@@ -221,11 +222,20 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             },
             "onPrefsEditorReady.createIndicators": {
             	listener: "{that}.events.onCreatePreviewIndicator"
-            }
+            },
+            "onPanelShown.setVoiceToggle": {
+                "this": "{that}.dom.panel",
+                "funcName": "gpii.firstDiscovery.setVoicingToggle",
+                "args": ["{that}"]
+            },
         },
         invokers: {
             showPanel: {
                 funcName: "gpii.firstDiscovery.showPanel",
+                args: ["{that}"]
+            },
+            setVoicingToggle: {
+                funcName: "gpii.firstDiscovery.setVoicingToggle",
                 args: ["{that}"]
             },
             setFocusToPreview: {
@@ -312,6 +322,25 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 that.events.onPanelShown.fire(panelId);
             }
         });
+    };
+    
+    /**
+     * setVoicingToggle
+     * This function disables the voice toggle button on the confirmation panel, congratulations and token panel. It enables the voice toggle on 
+     *     other panels in case the user goes back after seeing the confirmation screen. 
+     */
+    gpii.firstDiscovery.setVoicingToggle = function (that) {
+    	var CONFIRMATION_PANEL_ID=13;
+    	var CONGRATULATIONS_PANEL_ID=14;
+    	var TOKEN_PANEL_ID=15;
+    	var currentPanelId=that.model.currentPanelNum;
+
+    	if(currentPanelId===CONFIRMATION_PANEL_ID || currentPanelId===CONGRATULATIONS_PANEL_ID || currentPanelId===TOKEN_PANEL_ID) {
+    		that.locate("selfVoicingToggleButton").attr("disabled", "");  
+    	}
+    	else  {
+    		that.locate("selfVoicingToggleButton").removeAttr("disabled", ""); 
+    	}
     };
     
     /**
