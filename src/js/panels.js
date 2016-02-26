@@ -1177,6 +1177,8 @@
             "gpii.firstDiscovery.confirm": {}
         },
         averageWordsPerMinute: 130,
+        decimalDigits: 1,
+        /*
         invokers: {
             convertBoolean: {
                 funcName: "gpii.firstDiscovery.panel.confirm.convertBoolean",
@@ -1190,7 +1192,121 @@
                 funcName: "gpii.firstDiscovery.panel.confirm.convertContrast",
                 args: ["{that}", "{arguments}.0"]
             }
-        },
+        },*/
+        modelRelay: [
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_language",
+                target: "friendlyNames.language",
+                singleTransform: {
+                    type: "fluid.transforms.literalValue",
+                    value: "{that}.options.messageBase.language"
+                }
+            },
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_speak",
+                target: "friendlyNames.speak",
+                singleTransform: {
+                    type: "fluid.transforms.valueMapper",
+                    inputPath: "",
+                    options: {
+                        true: "{that}.options.messageBase.true",
+                        false: "{that}.options.messageBase.false"
+                    }
+                }
+            },
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_onScreenKeyboard",
+                target: "friendlyNames.onScreenKeyboard",
+                singleTransform: {
+                    type: "fluid.transforms.valueMapper",
+                    inputPath: "",
+                    options: {
+                        true: "{that}.options.messageBase.true",
+                        false: "{that}.options.messageBase.false"
+                    }
+                }
+            },
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_captions",
+                target: "friendlyNames.captions",
+                singleTransform: {
+                    type: "fluid.transforms.valueMapper",
+                    inputPath: "",
+                    options: {
+                        true: "{that}.options.messageBase.true",
+                        false: "{that}.options.messageBase.false"
+                    }
+                }
+            },
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_showSounds",
+                target: "friendlyNames.showSounds",
+                singleTransform: {
+                    type: "fluid.transforms.valueMapper",
+                    inputPath: "",
+                    options: {
+                        true: "{that}.options.messageBase.true",
+                        false: "{that}.options.messageBase.false"
+                    }
+                }
+            },
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_stickyKeys",
+                target: "friendlyNames.stickyKeys",
+                singleTransform: {
+                    type: "fluid.transforms.valueMapper",
+                    inputPath: "",
+                    options: {
+                        true: "{that}.options.messageBase.true",
+                        false: "{that}.options.messageBase.false"
+                    }
+                }
+            },
+            {
+                target: "friendlyNames.speechRate",
+                singleTransform: {
+                    type: "fluid.transforms.linearScale",
+                    value: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_speechRate",
+                    factor: "{that}.options.averageWordsPerMinute"
+                },
+            },
+            {
+                target: "friendlyNames.textSize",
+                singleTransform: {
+                    type: "fluid.transforms.toFixed",
+                    value: "{fluid.prefs.prefsEditor}.model.preferences.fluid_prefs_textSize",
+                    digits: "{that}.options.decimalDigits"
+                },
+            },
+            {
+                target: "friendlyNames.letterSpace",
+                singleTransform: {
+                    type: "fluid.transforms.toFixed",
+                    value: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_letterSpace",
+                    digits: "{that}.options.decimalDigits"
+                },
+            },
+            {
+                target: "friendlyNames.lineSpace",
+                singleTransform: {
+                    type: "fluid.transforms.toFixed",
+                    value: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_lineSpace",
+                    digits: "{that}.options.decimalDigits"
+                },
+            },
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.fluid_prefs_contrast",
+                target: "friendlyNames.contrast",
+                singleTransform: {
+                    type: "fluid.transforms.valueMapper",
+                    inputPath: "",
+                    options: {
+                        "default": "{that}.options.messageBase.contrast-default",
+                        "wb": "{that}.options.messageBase.contrast-wb",
+                        "bw": "{that}.options.messageBase.contrast-bw"
+                    }
+                }
+            }],
         selectors: {
             message: ".gpiic-fd-confirm-message",
             languageLabel: ".language .gpii-confirm-label",
@@ -1250,14 +1366,15 @@
             showSoundsValue: {messagekey: "showSoundsValue"},
             stickyKeysLabel: {messagekey: "stickyKeysLabel"},
             stickyKeysValue: {messagekey: "stickyKeysValue"}
-        },
+        },/*
         modelListeners: {
             "{fluid.prefs.prefsEditor}.model.preferences": {
                 funcName: "gpii.firstDiscovery.panel.confirm.updateConfirmPanel",
                 args: ["{that}", "{change}.value"],
                 excludeSource: "init"
             }
-        },
+        },*/
+        /*
         listeners: {
             // The modelListener does not fire until a preference is changed, so
             // we use this hook to ensure preference values appear even if no
@@ -1266,8 +1383,26 @@
                 funcName: "gpii.firstDiscovery.panel.confirm.updateConfirmPanel",
                 args: ["{that}", "{fluid.prefs.prefsEditor}.model.preferences"]
             }
+        }*/
+    });
+
+    fluid.defaults("fluid.transforms.toFixed", {
+        gradeNames: ["fluid.multiInputTransformFunction", "fluid.standardOutputTransformFunction"],
+        inputVariables: {
+            value: null,
+            digits: 0
         }
     });
+
+    fluid.transforms.toFixed = function (inputs) {
+        var value = inputs.value();
+        var digits = inputs.digits();
+        return value.toFixed(digits);
+    };
+
+
+
+    /*
 
     gpii.firstDiscovery.panel.confirm.convertBoolean = function (that, value) {
         return that.msgResolver.resolve(value ? "true" : "false");
@@ -1329,11 +1464,12 @@
         that.locate("stickyKeysValue").text(prefText.stickyKeys);
     };
 
+
     gpii.firstDiscovery.panel.confirm.updateConfirmPanel = function (that, prefs) {
         var prefText = gpii.firstDiscovery.panel.confirm.getFriendlyPreferenceNames(that, prefs);
         gpii.firstDiscovery.panel.confirm.updateUiWithPreferences(that, prefText);
     };
-
+*/
 
     /*
      * Save Panel
