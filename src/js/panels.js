@@ -1203,6 +1203,19 @@
                 }
             },
             {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_language",
+                target: "tts.language",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.languageTtsPreamble",
+                        value: "{that}.options.messageBase.language",
+                        units: ""
+                    }
+                }
+            },
+            {
                 source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_speak",
                 target: "friendlyNames.speak",
                 singleTransform: {
@@ -1211,6 +1224,19 @@
                     options: {
                         true: "{that}.options.messageBase.true",
                         false: "{that}.options.messageBase.false"
+                    }
+                }
+            },
+            {
+                source: "friendlyNames.speak",
+                target: "tts.speak",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.speakTtsPreamble",
+                        value: "{that}.model.friendlyNames.speak",
+                        units: ""
                     }
                 }
             },
@@ -1227,6 +1253,19 @@
                 }
             },
             {
+                source: "friendlyNames.onScreenKeyboard",
+                target: "tts.onScreenKeyboard",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.onScreenKeyboardTtsPreamble",
+                        value: "{that}.model.friendlyNames.onScreenKeyboard",
+                        units: ""
+                    }
+                }
+            },
+            {
                 source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_captions",
                 target: "friendlyNames.captions",
                 singleTransform: {
@@ -1235,6 +1274,19 @@
                     options: {
                         true: "{that}.options.messageBase.true",
                         false: "{that}.options.messageBase.false"
+                    }
+                }
+            },
+            {
+                source: "friendlyNames.captions",
+                target: "tts.captions",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.captionsTtsPreamble",
+                        value: "{that}.model.friendlyNames.captions",
+                        units: ""
                     }
                 }
             },
@@ -1251,6 +1303,19 @@
                 }
             },
             {
+                source: "friendlyNames.showSounds",
+                target: "tts.showSounds",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.showSoundsTtsPreamble",
+                        value: "{that}.model.friendlyNames.showSounds",
+                        units: ""
+                    }
+                }
+            },
+            {
                 source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_stickyKeys",
                 target: "friendlyNames.stickyKeys",
                 singleTransform: {
@@ -1263,16 +1328,47 @@
                 }
             },
             {
-                target: "friendlyNames.speechRate",
+                source: "friendlyNames.stickyKeys",
+                target: "tts.stickyKeys",
                 singleTransform: {
-                    type: "fluid.transforms.toFixed",
-                    digits: 0,
-                    value: {
-                        singleTransform: {
-                            type: "fluid.transforms.linearScale",
-                            value: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_speechRate",
-                            factor: "{that}.options.averageWordsPerMinute"
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.stickyKeysTtsPreamble",
+                        value: "{that}.model.friendlyNames.stickyKeys",
+                        units: ""
+                    }
+                }
+            },
+            {
+                target: "",
+                transform: {
+                    "friendlyNames": {
+                        "speechRate": {
+                            "transform": {
+                                "type": "fluid.transforms.round",
+                                "input": {
+                                    "transform": {
+                                        "type": "fluid.transforms.linearScale",
+                                        "value": "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_speechRate",
+                                        "factor": 133
+                                    }
+                                }
+                            }
                         }
+                    }
+                }
+            },
+            {
+                source: "friendlyNames.speechRate",
+                target: "tts.speechRate",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.speechRateTtsPreamble",
+                        value: "{that}.model.friendlyNames.speechRate",
+                        units: "{that}.options.messageBase.speechRateUnit"
                     }
                 }
             },
@@ -1285,6 +1381,19 @@
                 }
             },
             {
+                source: "friendlyNames.textSize",
+                target: "tts.textSize",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.textSizeTtsPreamble",
+                        value: "{that}.model.friendlyNames.textSize",
+                        units: "{that}.options.messageBase.multiplierUnit"
+                    }
+                }
+            },
+            {
                 target: "friendlyNames.letterSpace",
                 singleTransform: {
                     type: "fluid.transforms.toFixed",
@@ -1293,11 +1402,37 @@
                 }
             },
             {
+                source: "friendlyNames.letterSpace",
+                target: "tts.letterSpace",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.letterSpaceTtsPreamble",
+                        value: "{that}.model.friendlyNames.letterSpace",
+                        units: "{that}.options.messageBase.multiplierUnit"
+                    }
+                }
+            },
+            {
                 target: "friendlyNames.lineSpace",
                 singleTransform: {
                     type: "fluid.transforms.toFixed",
                     value: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_lineSpace",
                     digits: "{that}.options.decimalDigits"
+                }
+            },
+            {
+                source: "friendlyNames.lineSpace",
+                target: "tts.lineSpace",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.lineSpaceTtsPreamble",
+                        value: "{that}.model.friendlyNames.lineSpace",
+                        units: "{that}.options.messageBase.multiplierUnit"
+                    }
                 }
             },
             {
@@ -1310,6 +1445,19 @@
                         "default": "{that}.options.messageBase.contrast-default",
                         "wb": "{that}.options.messageBase.contrast-wb",
                         "bw": "{that}.options.messageBase.contrast-bw"
+                    }
+                }
+            },
+            {
+                source: "friendlyNames.contrast",
+                target: "tts.contrast",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.contrastTtsPreamble",
+                        value: "{that}.model.friendlyNames.contrast",
+                        units: ""
                     }
                 }
             }],
@@ -1389,8 +1537,6 @@
             "captionsValue": "friendlyNames.captions",
             "showSoundsValue": "friendlyNames.showSounds",
             "stickyKeysValue": "friendlyNames.stickyKeys"
-
-
         },
         listeners: {
             "afterRender.applyDataBinding": {
@@ -1431,6 +1577,15 @@
         var value = inputs.value();
         var digits = inputs.digits();
         return value.toFixed(digits);
+    };
+
+
+    fluid.defaults("fluid.transforms.stringTemplate", {
+        gradeNames: "fluid.standardOutputTransformFunction"
+    });
+
+    fluid.transforms.stringTemplate = function (transformSpec) {
+        return fluid.stringTemplate(transformSpec.template, transformSpec.terms);
     };
 
 
