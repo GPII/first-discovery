@@ -1265,6 +1265,14 @@
             {
                 target: "friendlyNames.speechRate",
                 singleTransform: {
+                    type: "fluid.transforms.toFixed",
+                    value: "{that}.model.friendlyNames.unRoundedSpeechRate",
+                    digits: 0
+                },
+            },
+            {
+                target: "friendlyNames.unRoundedSpeechRate",
+                singleTransform: {
                     type: "fluid.transforms.linearScale",
                     value: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_speechRate",
                     factor: "{that}.options.averageWordsPerMinute"
@@ -1366,7 +1374,34 @@
             showSoundsValue: {messagekey: "showSoundsValue"},
             stickyKeysLabel: {messagekey: "stickyKeysLabel"},
             stickyKeysValue: {messagekey: "stickyKeysValue"}
-        },/*
+        },
+        bindingOptions:{
+            unidirectional: true,
+            method: "fluid.text"
+        },
+        bindings:{
+            "languageValue": "friendlyNames.language",
+            "speakValue":"friendlyNames.speak",
+            "speechRateValue":"friendlyNames.speechRate",
+            "contrastValue":"friendlyNames.contrast",
+            "textSizeValue":"friendlyNames.textSize",
+            "letterSpaceValue":"friendlyNames.letterSpace",
+            "lineSpaceValue":"friendlyNames.lineSpace",
+            "onScreenKeyboardValue":"friendlyNames.onScreenKeyboard",
+            "captionsValue":"friendlyNames.captions",
+            "showSoundsValue":"friendlyNames.showSounds",
+            "stickyKeysValue":"friendlyNames.stickyKeys"
+
+
+        },
+        listeners:{
+            "afterRender.applyDataBinding":{
+                funcName: "gpii.binder.applyBinding",
+                args: ["{that}"]
+            }
+        }
+
+        /*
         modelListeners: {
             "{fluid.prefs.prefsEditor}.model.preferences": {
                 funcName: "gpii.firstDiscovery.panel.confirm.updateConfirmPanel",
