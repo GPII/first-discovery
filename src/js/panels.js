@@ -1179,20 +1179,20 @@
         averageWordsPerMinute: 130,
         decimalDigits: 1,
         /*
-        invokers: {
-            convertBoolean: {
-                funcName: "gpii.firstDiscovery.panel.confirm.convertBoolean",
-                args: ["{that}", "{arguments}.0"]
-            },
-            convertSpeechRate: {
-                funcName: "gpii.firstDiscovery.panel.confirm.convertSpeechRate",
-                args: ["{that}", "{arguments}.0"]
-            },
-            convertContrast: {
-                funcName: "gpii.firstDiscovery.panel.confirm.convertContrast",
-                args: ["{that}", "{arguments}.0"]
-            }
-        },*/
+         invokers: {
+         convertBoolean: {
+         funcName: "gpii.firstDiscovery.panel.confirm.convertBoolean",
+         args: ["{that}", "{arguments}.0"]
+         },
+         convertSpeechRate: {
+         funcName: "gpii.firstDiscovery.panel.confirm.convertSpeechRate",
+         args: ["{that}", "{arguments}.0"]
+         },
+         convertContrast: {
+         funcName: "gpii.firstDiscovery.panel.confirm.convertContrast",
+         args: ["{that}", "{arguments}.0"]
+         }
+         },*/
         modelRelay: [
             {
                 source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_language",
@@ -1266,17 +1266,15 @@
                 target: "friendlyNames.speechRate",
                 singleTransform: {
                     type: "fluid.transforms.toFixed",
-                    value: "{that}.model.friendlyNames.unRoundedSpeechRate",
-                    digits: 0
-                },
-            },
-            {
-                target: "friendlyNames.unRoundedSpeechRate",
-                singleTransform: {
-                    type: "fluid.transforms.linearScale",
-                    value: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_speechRate",
-                    factor: "{that}.options.averageWordsPerMinute"
-                },
+                    digits: 0,
+                    value: {
+                        singleTransform: {
+                            type: "fluid.transforms.linearScale",
+                            value: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_speechRate",
+                            factor: "{that}.options.averageWordsPerMinute"
+                        }
+                    }
+                }
             },
             {
                 target: "friendlyNames.textSize",
@@ -1284,7 +1282,7 @@
                     type: "fluid.transforms.toFixed",
                     value: "{fluid.prefs.prefsEditor}.model.preferences.fluid_prefs_textSize",
                     digits: "{that}.options.decimalDigits"
-                },
+                }
             },
             {
                 target: "friendlyNames.letterSpace",
@@ -1292,7 +1290,7 @@
                     type: "fluid.transforms.toFixed",
                     value: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_letterSpace",
                     digits: "{that}.options.decimalDigits"
-                },
+                }
             },
             {
                 target: "friendlyNames.lineSpace",
@@ -1300,7 +1298,7 @@
                     type: "fluid.transforms.toFixed",
                     value: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_lineSpace",
                     digits: "{that}.options.decimalDigits"
-                },
+                }
             },
             {
                 source: "{fluid.prefs.prefsEditor}.model.preferences.fluid_prefs_contrast",
@@ -1375,50 +1373,50 @@
             stickyKeysLabel: {messagekey: "stickyKeysLabel"},
             stickyKeysValue: {messagekey: "stickyKeysValue"}
         },
-        bindingOptions:{
+        bindingOptions: {
             unidirectional: true,
             method: "fluid.text"
         },
-        bindings:{
+        bindings: {
             "languageValue": "friendlyNames.language",
-            "speakValue":"friendlyNames.speak",
-            "speechRateValue":"friendlyNames.speechRate",
-            "contrastValue":"friendlyNames.contrast",
-            "textSizeValue":"friendlyNames.textSize",
-            "letterSpaceValue":"friendlyNames.letterSpace",
-            "lineSpaceValue":"friendlyNames.lineSpace",
-            "onScreenKeyboardValue":"friendlyNames.onScreenKeyboard",
-            "captionsValue":"friendlyNames.captions",
-            "showSoundsValue":"friendlyNames.showSounds",
-            "stickyKeysValue":"friendlyNames.stickyKeys"
+            "speakValue": "friendlyNames.speak",
+            "speechRateValue": "friendlyNames.speechRate",
+            "contrastValue": "friendlyNames.contrast",
+            "textSizeValue": "friendlyNames.textSize",
+            "letterSpaceValue": "friendlyNames.letterSpace",
+            "lineSpaceValue": "friendlyNames.lineSpace",
+            "onScreenKeyboardValue": "friendlyNames.onScreenKeyboard",
+            "captionsValue": "friendlyNames.captions",
+            "showSoundsValue": "friendlyNames.showSounds",
+            "stickyKeysValue": "friendlyNames.stickyKeys"
 
 
         },
-        listeners:{
-            "afterRender.applyDataBinding":{
+        listeners: {
+            "afterRender.applyDataBinding": {
                 funcName: "gpii.binder.applyBinding",
                 args: ["{that}"]
             }
         }
 
         /*
-        modelListeners: {
-            "{fluid.prefs.prefsEditor}.model.preferences": {
-                funcName: "gpii.firstDiscovery.panel.confirm.updateConfirmPanel",
-                args: ["{that}", "{change}.value"],
-                excludeSource: "init"
-            }
-        },*/
+         modelListeners: {
+         "{fluid.prefs.prefsEditor}.model.preferences": {
+         funcName: "gpii.firstDiscovery.panel.confirm.updateConfirmPanel",
+         args: ["{that}", "{change}.value"],
+         excludeSource: "init"
+         }
+         },*/
         /*
-        listeners: {
-            // The modelListener does not fire until a preference is changed, so
-            // we use this hook to ensure preference values appear even if no
-            // preference changes
-            "afterRender.initPreferenceText": {
-                funcName: "gpii.firstDiscovery.panel.confirm.updateConfirmPanel",
-                args: ["{that}", "{fluid.prefs.prefsEditor}.model.preferences"]
-            }
-        }*/
+         listeners: {
+         // The modelListener does not fire until a preference is changed, so
+         // we use this hook to ensure preference values appear even if no
+         // preference changes
+         "afterRender.initPreferenceText": {
+         funcName: "gpii.firstDiscovery.panel.confirm.updateConfirmPanel",
+         args: ["{that}", "{fluid.prefs.prefsEditor}.model.preferences"]
+         }
+         }*/
     });
 
     fluid.defaults("fluid.transforms.toFixed", {
@@ -1436,75 +1434,74 @@
     };
 
 
-
     /*
 
-    gpii.firstDiscovery.panel.confirm.convertBoolean = function (that, value) {
-        return that.msgResolver.resolve(value ? "true" : "false");
-    };
+     gpii.firstDiscovery.panel.confirm.convertBoolean = function (that, value) {
+     return that.msgResolver.resolve(value ? "true" : "false");
+     };
 
-    gpii.firstDiscovery.panel.confirm.convertSpeechRate = function (that, value) {
-        return Math.round(that.options.averageWordsPerMinute * value);
-    };
+     gpii.firstDiscovery.panel.confirm.convertSpeechRate = function (that, value) {
+     return Math.round(that.options.averageWordsPerMinute * value);
+     };
 
-    gpii.firstDiscovery.panel.confirm.convertContrast = function (that, value) {
-        return that.msgResolver.resolve("contrast-" + value);
-    };
+     gpii.firstDiscovery.panel.confirm.convertContrast = function (that, value) {
+     return that.msgResolver.resolve("contrast-" + value);
+     };
 
-    gpii.firstDiscovery.panel.confirm.getFriendlyPreferenceNames = function (that, prefs) {
+     gpii.firstDiscovery.panel.confirm.getFriendlyPreferenceNames = function (that, prefs) {
 
-        var prefText = {
-            language: that.msgResolver.resolve("language"),
-            speak: "",
-            speechRate: "",
-            contrast: "",
-            textSize: "",
-            letterSpace: "",
-            lineSpace: "",
-            onScreenKeyboard: "",
-            captions: "",
-            showSounds: "",
-            stickyKeys: ""
-        };
+     var prefText = {
+     language: that.msgResolver.resolve("language"),
+     speak: "",
+     speechRate: "",
+     contrast: "",
+     textSize: "",
+     letterSpace: "",
+     lineSpace: "",
+     onScreenKeyboard: "",
+     captions: "",
+     showSounds: "",
+     stickyKeys: ""
+     };
 
-        if (typeof prefs === 'undefined') {
-            return prefText;
-        }
-        prefText.speak = typeof prefs.gpii_firstDiscovery_speak === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_speak);
-        prefText.speechRate = typeof prefs.gpii_firstDiscovery_speechRate === 'undefined' ? "" : that.convertSpeechRate(prefs.gpii_firstDiscovery_speechRate);
-        prefText.contrast = typeof prefs.fluid_prefs_contrast === 'undefined' ? "" : that.convertContrast(prefs.fluid_prefs_contrast);
-        prefText.textSize = typeof prefs.fluid_prefs_textSize === 'undefined' ? "" : prefs.fluid_prefs_textSize.toFixed(1);
-        prefText.letterSpace = typeof prefs.gpii_firstDiscovery_letterSpace === 'undefined' ? "" : prefs.gpii_firstDiscovery_letterSpace.toFixed(1);
-        prefText.lineSpace = typeof prefs.gpii_firstDiscovery_lineSpace === 'undefined' ? "" : prefs.gpii_firstDiscovery_lineSpace.toFixed(1);
-        prefText.onScreenKeyboard = typeof prefs.gpii_firstDiscovery_onScreenKeyboard === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_onScreenKeyboard);
-        prefText.captions = typeof prefs.gpii_firstDiscovery_captions === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_captions);
-        prefText.showSounds = typeof prefs.gpii_firstDiscovery_showSounds === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_showSounds);
-        prefText.stickyKeys = typeof prefs.gpii_firstDiscovery_stickyKeys === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_stickyKeys);
-
-
-        return prefText;
-    };
-
-    gpii.firstDiscovery.panel.confirm.updateUiWithPreferences = function (that, prefText) {
-        that.locate("languageValue").text(prefText.language);
-        that.locate("speakValue").text(prefText.speak);
-        that.locate("speechRateValue").text(prefText.speechRate);
-        that.locate("contrastValue").text(prefText.contrast);
-        that.locate("textSizeValue").text(prefText.textSize);
-        that.locate("letterSpaceValue").text(prefText.letterSpace);
-        that.locate("lineSpaceValue").text(prefText.lineSpace);
-        that.locate("onScreenKeyboardValue").text(prefText.onScreenKeyboard);
-        that.locate("captionsValue").text(prefText.captions);
-        that.locate("showSoundsValue").text(prefText.showSounds);
-        that.locate("stickyKeysValue").text(prefText.stickyKeys);
-    };
+     if (typeof prefs === 'undefined') {
+     return prefText;
+     }
+     prefText.speak = typeof prefs.gpii_firstDiscovery_speak === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_speak);
+     prefText.speechRate = typeof prefs.gpii_firstDiscovery_speechRate === 'undefined' ? "" : that.convertSpeechRate(prefs.gpii_firstDiscovery_speechRate);
+     prefText.contrast = typeof prefs.fluid_prefs_contrast === 'undefined' ? "" : that.convertContrast(prefs.fluid_prefs_contrast);
+     prefText.textSize = typeof prefs.fluid_prefs_textSize === 'undefined' ? "" : prefs.fluid_prefs_textSize.toFixed(1);
+     prefText.letterSpace = typeof prefs.gpii_firstDiscovery_letterSpace === 'undefined' ? "" : prefs.gpii_firstDiscovery_letterSpace.toFixed(1);
+     prefText.lineSpace = typeof prefs.gpii_firstDiscovery_lineSpace === 'undefined' ? "" : prefs.gpii_firstDiscovery_lineSpace.toFixed(1);
+     prefText.onScreenKeyboard = typeof prefs.gpii_firstDiscovery_onScreenKeyboard === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_onScreenKeyboard);
+     prefText.captions = typeof prefs.gpii_firstDiscovery_captions === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_captions);
+     prefText.showSounds = typeof prefs.gpii_firstDiscovery_showSounds === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_showSounds);
+     prefText.stickyKeys = typeof prefs.gpii_firstDiscovery_stickyKeys === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_stickyKeys);
 
 
-    gpii.firstDiscovery.panel.confirm.updateConfirmPanel = function (that, prefs) {
-        var prefText = gpii.firstDiscovery.panel.confirm.getFriendlyPreferenceNames(that, prefs);
-        gpii.firstDiscovery.panel.confirm.updateUiWithPreferences(that, prefText);
-    };
-*/
+     return prefText;
+     };
+
+     gpii.firstDiscovery.panel.confirm.updateUiWithPreferences = function (that, prefText) {
+     that.locate("languageValue").text(prefText.language);
+     that.locate("speakValue").text(prefText.speak);
+     that.locate("speechRateValue").text(prefText.speechRate);
+     that.locate("contrastValue").text(prefText.contrast);
+     that.locate("textSizeValue").text(prefText.textSize);
+     that.locate("letterSpaceValue").text(prefText.letterSpace);
+     that.locate("lineSpaceValue").text(prefText.lineSpace);
+     that.locate("onScreenKeyboardValue").text(prefText.onScreenKeyboard);
+     that.locate("captionsValue").text(prefText.captions);
+     that.locate("showSoundsValue").text(prefText.showSounds);
+     that.locate("stickyKeysValue").text(prefText.stickyKeys);
+     };
+
+
+     gpii.firstDiscovery.panel.confirm.updateConfirmPanel = function (that, prefs) {
+     var prefText = gpii.firstDiscovery.panel.confirm.getFriendlyPreferenceNames(that, prefs);
+     gpii.firstDiscovery.panel.confirm.updateUiWithPreferences(that, prefText);
+     };
+     */
 
     /*
      * Save Panel
