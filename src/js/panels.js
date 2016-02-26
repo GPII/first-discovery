@@ -1167,9 +1167,18 @@
         }
     });
 
-
     /*
      * Confirm Panel
+     *
+     * This panel uses many modelRelays. The modelRelays populate two model values in this panel:
+     *  "friendlyNames" - each preference is relayed here from the prefsEditor and transformed into a
+     *                    user friendly name. example: en-US becomes English
+     *  "tts" - each friendly name preference from this model is relayed to tts and merged into the
+     *          the string template with its preamble, value, and (occasionally) units. The tts values are
+     *          used for text to speech to voice the contents of the confirmation panel.
+     *          Example: "English" -> "Your language choice is English"
+     *          Example: "true"    -> "Your use captions choice is ON"
+     *
      */
     fluid.defaults("gpii.firstDiscovery.panel.confirm", {
         gradeNames: ["fluid.prefs.panel"],
