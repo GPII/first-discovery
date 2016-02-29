@@ -29,6 +29,17 @@
   "language": "English",
   "contrast-default": "Original",
   "contrast-bw": "Black/White",
-  "contrast-wb": "White/Black"
+  "contrast-wb": "White/Black",
+  "languageTtsPreamble": "Your language choice is",
+  "speakTtsPreamble": "Your text to speech choice is",
+  "onScreenKeyboardTtsPreamble": "Your on screen keyboard choice is",
+  "captionsTtsPreamble": "Your captions choice is",
+  "showSoundsTtsPreamble": "Your show sounds choice is",
+  "stickyKeysTtsPreamble": "Your sticky keys choice is",
+  "speechRateTtsPreamble": "Your speech rate choice is",
+  "contrastTtsPreamble": "Your contrast choice is",
+  "textSizeTtsPreamble": "Your text size is choice is",
+  "letterSpaceTtsPreamble":"Your letter space choice is",
+  "lineSpaceTtsPreamble": "Your line space choice is"
 
 }
