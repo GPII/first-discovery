@@ -140,8 +140,9 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
 
     gpii.firstDiscovery.tts.prefsEditor.speakPanelInstructions = function (that, speakFn, speakOpts) {
         var msg = gpii.firstDiscovery.tts.prefsEditor.getCurrentPanelInstructions(that);
+        var content = gpii.firstDiscovery.tts.prefsEditor.getCurrentPanelContent(that);
 
-        speakFn(msg, speakOpts);
+        speakFn(msg + content, speakOpts);
     };
 
 })(jQuery, fluid);
