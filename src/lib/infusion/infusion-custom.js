@@ -31820,26 +31820,29 @@ var fluid_2_0 = fluid_2_0 || {};
             that.handleError(text);
         };
 
-        var toSpeak = new SpeechSynthesisUtterance(text);
-        var eventBinding = {
-            onstart: that.handleStart,
-            onend: that.handleEnd,
-            onerror: errorFn,
-            onpause: that.handlePause,
-            onresume: that.handleResume
-        };
-        $.extend(toSpeak, that.model.utteranceOpts, options, eventBinding);
+		text.split(". ").forEach(function(sentence){
+			sentence = sentence + ". ";
+			var toSpeak = new SpeechSynthesisUtterance(sentence);
+			var eventBinding = {
+				onstart: that.handleStart,
+				onend: that.handleEnd,
+				onerror: errorFn,
+				onpause: that.handlePause,
+				onresume: that.handleResume
+			};
+			$.extend(toSpeak, that.model.utteranceOpts, options, eventBinding);
 
-        toSpeak.voice = speechSynthesis.getVoices().filter(function(voice){return voice.lang == toSpeak.lang;})[0];
+			toSpeak.voice = speechSynthesis.getVoices().filter(function(voice){return voice.lang == toSpeak.lang;})[0];
 
-        // Search by language regardless of dialect when a voice couldn't be found
-		if (toSpeak.voice == null) {
-			toSpeak.voice = speechSynthesis.getVoices().filter(function(voice){return voice.lang.substring(0,2) == toSpeak.lang.substring(0,2);})[0];
-		}
+			// Search by language regardless of dialect when a voice couldn't be found
+			if (toSpeak.voice == null) {
+				toSpeak.voice = speechSynthesis.getVoices().filter(function(voice){return voice.lang.substring(0,2) == toSpeak.lang.substring(0,2);})[0];
+			}
 
-        that.queue.push(text);
-        that.events.onSpeechQueued.fire(text);
-        speechSynthesis.speak(toSpeak);
+			that.queue.push(text);
+			that.events.onSpeechQueued.fire(text);
+			speechSynthesis.speak(toSpeak);
+		});
     };
 
     fluid.textToSpeech.cancel = function (that) {
