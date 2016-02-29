@@ -1459,78 +1459,110 @@
             message: ".gpiic-fd-confirm-message",
             languageLabel: ".language .gpii-confirm-label",
             languageValue: ".language .gpii-confirm-value",
+            languageTts: ".language-tts",
             speakValue: ".speak .gpii-confirm-value",
             speakLabel: ".speak .gpii-confirm-label",
+            speakTts: ".speak-tts",
             speechRateValue: ".speechRate .gpii-confirm-value",
             speechRateLabel: ".speechRate .gpii-confirm-label",
             speechRateUnit: ".speechRate .gpii-confirm-unit",
+            speechRateTts: ".speechRate-tts",
             contrastValue: ".contrast .gpii-confirm-value",
             contrastLabel: ".contrast .gpii-confirm-label",
+            contrastTts: ".contrast-tts",
             textSizeValue: ".textSize .gpii-confirm-value",
             textSizeLabel: ".textSize .gpii-confirm-label",
             textSizeUnit: ".textSize .gpii-confirm-unit",
+            textSizeTts: ".textSize-tts",
             letterSpaceValue: ".letterSpace .gpii-confirm-value",
             letterSpaceLabel: ".letterSpace .gpii-confirm-label",
             letterSpaceUnit: ".letterSpace .gpii-confirm-unit",
+            letterSpaceTts: ".letterSpace-tts",
             lineSpaceValue: ".lineSpace .gpii-confirm-value",
             lineSpaceLabel: ".lineSpace .gpii-confirm-label",
             lineSpaceUnit: ".lineSpace .gpii-confirm-unit",
+            lineSpaceTts: ".lineSpace-tts",
             onScreenKeyboardValue: ".onScreenKeyboard .gpii-confirm-value",
             onScreenKeyboardLabel: ".onScreenKeyboard .gpii-confirm-label",
+            onScreenKeyboardTts: ".onScreenKeyboard-tts",
             captionsValue: ".captions .gpii-confirm-value",
             captionsLabel: ".captions .gpii-confirm-label",
+            captionsTts: ".captions-tts",
             showSoundsValue: ".showSounds .gpii-confirm-value",
             showSoundsLabel: ".showSounds .gpii-confirm-label",
+            showSoundsTts: ".showSounds-tts",
             stickyKeysValue: ".stickyKeys .gpii-confirm-value",
-            stickyKeysLabel: ".stickyKeys .gpii-confirm-label"
-        },
+            stickyKeysLabel: ".stickyKeys .gpii-confirm-label",
+            stickyKeysTts: ".stickyKeys-tts"
+},
         protoTree: {
             message: {
                 markup: {messagekey: "message"}
             },
             languageLabel: {messagekey: "languageLabel"},
             languageValue: {messagekey: "languageValue"},
+            languageTts: {messagekey: "languageTtsPreamble"},
             speakLabel: {messagekey: "speakLabel"},
             speakValue: {messagekey: "speakValue"},
+            speakTts: {messagekey: "speakTtsPreamble"},
             speechRateLabel: {messagekey: "speechRateLabel"},
             speechRateValue: {messagekey: "speechRateValue"},
             speechRateUnit: {messagekey: "speechRateUnit"},
+            speechRateTts: {messagekey: "speechRateTtsPreamble"},
             contrastLabel: {messagekey: "contrastLabel"},
             contrastValue: {messagekey: "contrastValue"},
+            contrastTts: {messagekey: "contrastTtsPreamble"},
             textSizeLabel: {messagekey: "textSizeLabel"},
             textSizeValue: {messagekey: "textSizeValue"},
             textSizeUnit: {messagekey: "multiplierUnit"},
+            textSizeTts: {messagekey: "textSizeTtsPreamble"},
             letterSpaceLabel: {messagekey: "letterSpaceLabel"},
             letterSpaceValue: {messagekey: "letterSpaceValue"},
             letterSpaceUnit: {messagekey: "multiplierUnit"},
+            letterSpaceTts: {messagekey: "letterSpaceTtsPreamble"},
             lineSpaceLabel: {messagekey: "lineSpaceLabel"},
             lineSpaceValue: {messagekey: "lineSpaceValue"},
             lineSpaceUnit: {messagekey: "multiplierUnit"},
+            lineSpaceTts: {messagekey: "lineSpaceTtsPreamble"},
             onScreenKeyboardLabel: {messagekey: "onScreenKeyboardLabel"},
             onScreenKeyboardValue: {messagekey: "onScreenKeyboardValue"},
+            onScreenKeyboardTts: {messagekey: "onScreenKeyboardTtsPreamble"},
             captionsLabel: {messagekey: "captionsLabel"},
             captionsValue: {messagekey: "captionsValue"},
+            captionsTts: {messagekey: "captionsTtsPreamble"},
             showSoundsLabel: {messagekey: "showSoundsLabel"},
             showSoundsValue: {messagekey: "showSoundsValue"},
+            showSoundsTts: {messagekey: "showSoundsTtsPreamble"},
             stickyKeysLabel: {messagekey: "stickyKeysLabel"},
-            stickyKeysValue: {messagekey: "stickyKeysValue"}
+            stickyKeysValue: {messagekey: "stickyKeysValue"},
+            stickyKeysTts: {messagekey: "stickyKeysTtsPreamble"}
         },
         bindingOptions: {
-            unidirectional: true,
-            method: "fluid.text"
+            method: "text"
         },
         bindings: {
             "languageValue": "friendlyNames.language",
+            "languageTts": "tts.language",
             "speakValue": "friendlyNames.speak",
+            "speakTts": "tts.speak",
             "speechRateValue": "friendlyNames.speechRate",
+            "speechRateTts": "tts.speechRate",
             "contrastValue": "friendlyNames.contrast",
+            "contrastTts": "tts.contrast",
             "textSizeValue": "friendlyNames.textSize",
+            "textSizeTts": "tts.textSize",
             "letterSpaceValue": "friendlyNames.letterSpace",
+            "letterSpaceTts": "tts.letterSpace",
             "lineSpaceValue": "friendlyNames.lineSpace",
+            "lineSpaceTts": "tts.lineSpace",
             "onScreenKeyboardValue": "friendlyNames.onScreenKeyboard",
+            "onScreenKeyboardTts": "tts.onScreenKeyboard",
             "captionsValue": "friendlyNames.captions",
+            "captionsTts": "tts.captions",
             "showSoundsValue": "friendlyNames.showSounds",
-            "stickyKeysValue": "friendlyNames.stickyKeys"
+            "showSoundsTts": "tts.showSounds",
+            "stickyKeysValue": "friendlyNames.stickyKeys",
+            "stickyKeysTts": "tts.stickyKeys"
         },
         listeners: {
             "afterRender.applyDataBinding": {
@@ -1540,6 +1572,9 @@
         }
     });
 
+    /*
+     * toFixed is used by the confirm panel to round model values
+     */
     fluid.defaults("fluid.transforms.toFixed", {
         gradeNames: ["fluid.multiInputTransformFunction", "fluid.standardOutputTransformFunction"],
         inputVariables: {
@@ -1555,6 +1590,10 @@
     };
 
 
+    /*
+     * This is the implementation of fluid.transforms.stringTemplate taken from a later
+     * version of infusion and backported here.
+     */
     fluid.defaults("fluid.transforms.stringTemplate", {
         gradeNames: "fluid.standardOutputTransformFunction"
     });
