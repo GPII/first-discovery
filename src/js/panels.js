@@ -1167,9 +1167,18 @@
         }
     });
 
-
     /*
      * Confirm Panel
+     *
+     * This panel uses many modelRelays. The modelRelays populate two model values in this panel:
+     *  "friendlyNames" - each preference is relayed here from the prefsEditor and transformed into a
+     *                    user friendly name. example: en-US becomes English
+     *  "tts" - each friendly name preference from this model is relayed to tts and merged into the
+     *          the string template with its preamble, value, and (occasionally) units. The tts values are
+     *          used for text to speech to voice the contents of the confirmation panel.
+     *          Example: "English" -> "Your language choice is English"
+     *          Example: "true"    -> "Your use captions choice is ON"
+     *
      */
     fluid.defaults("gpii.firstDiscovery.panel.confirm", {
         gradeNames: ["fluid.prefs.panel"],
@@ -1177,161 +1186,420 @@
             "gpii.firstDiscovery.confirm": {}
         },
         averageWordsPerMinute: 130,
-        invokers: {
-            convertBoolean: {
-                funcName: "gpii.firstDiscovery.panel.confirm.convertBoolean",
-                args: ["{that}", "{arguments}.0"]
+        decimalDigits: 1,
+        modelRelay: [
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_language",
+                target: "friendlyNames.language",
+                singleTransform: {
+                    type: "fluid.transforms.literalValue",
+                    value: "{that}.options.messageBase.language"
+                }
             },
-            convertSpeechRate: {
-                funcName: "gpii.firstDiscovery.panel.confirm.convertSpeechRate",
-                args: ["{that}", "{arguments}.0"]
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_language",
+                target: "tts.language",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.languageTtsPreamble",
+                        value: "{that}.options.messageBase.language",
+                        units: ""
+                    }
+                }
             },
-            convertContrast: {
-                funcName: "gpii.firstDiscovery.panel.confirm.convertContrast",
-                args: ["{that}", "{arguments}.0"]
-            }
-        },
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_speak",
+                target: "friendlyNames.speak",
+                singleTransform: {
+                    type: "fluid.transforms.valueMapper",
+                    inputPath: "",
+                    options: {
+                        true: "{that}.options.messageBase.true",
+                        false: "{that}.options.messageBase.false"
+                    }
+                }
+            },
+            {
+                source: "friendlyNames.speak",
+                target: "tts.speak",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.speakTtsPreamble",
+                        value: "{that}.model.friendlyNames.speak",
+                        units: ""
+                    }
+                }
+            },
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_onScreenKeyboard",
+                target: "friendlyNames.onScreenKeyboard",
+                singleTransform: {
+                    type: "fluid.transforms.valueMapper",
+                    inputPath: "",
+                    options: {
+                        true: "{that}.options.messageBase.true",
+                        false: "{that}.options.messageBase.false"
+                    }
+                }
+            },
+            {
+                source: "friendlyNames.onScreenKeyboard",
+                target: "tts.onScreenKeyboard",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.onScreenKeyboardTtsPreamble",
+                        value: "{that}.model.friendlyNames.onScreenKeyboard",
+                        units: ""
+                    }
+                }
+            },
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_captions",
+                target: "friendlyNames.captions",
+                singleTransform: {
+                    type: "fluid.transforms.valueMapper",
+                    inputPath: "",
+                    options: {
+                        true: "{that}.options.messageBase.true",
+                        false: "{that}.options.messageBase.false"
+                    }
+                }
+            },
+            {
+                source: "friendlyNames.captions",
+                target: "tts.captions",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.captionsTtsPreamble",
+                        value: "{that}.model.friendlyNames.captions",
+                        units: ""
+                    }
+                }
+            },
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_showSounds",
+                target: "friendlyNames.showSounds",
+                singleTransform: {
+                    type: "fluid.transforms.valueMapper",
+                    inputPath: "",
+                    options: {
+                        true: "{that}.options.messageBase.true",
+                        false: "{that}.options.messageBase.false"
+                    }
+                }
+            },
+            {
+                source: "friendlyNames.showSounds",
+                target: "tts.showSounds",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.showSoundsTtsPreamble",
+                        value: "{that}.model.friendlyNames.showSounds",
+                        units: ""
+                    }
+                }
+            },
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_stickyKeys",
+                target: "friendlyNames.stickyKeys",
+                singleTransform: {
+                    type: "fluid.transforms.valueMapper",
+                    inputPath: "",
+                    options: {
+                        true: "{that}.options.messageBase.true",
+                        false: "{that}.options.messageBase.false"
+                    }
+                }
+            },
+            {
+                source: "friendlyNames.stickyKeys",
+                target: "tts.stickyKeys",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.stickyKeysTtsPreamble",
+                        value: "{that}.model.friendlyNames.stickyKeys",
+                        units: ""
+                    }
+                }
+            },
+            {
+                target: "",
+                transform: {
+                    "friendlyNames": {
+                        "speechRate": {
+                            "transform": {
+                                "type": "fluid.transforms.round",
+                                "input": {
+                                    "transform": {
+                                        "type": "fluid.transforms.linearScale",
+                                        "value": "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_speechRate",
+                                        "factor": 133
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                source: "friendlyNames.speechRate",
+                target: "tts.speechRate",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.speechRateTtsPreamble",
+                        value: "{that}.model.friendlyNames.speechRate",
+                        units: "{that}.options.messageBase.speechRateTtsUnits"
+                    }
+                }
+            },
+            {
+                target: "friendlyNames.textSize",
+                singleTransform: {
+                    type: "fluid.transforms.toFixed",
+                    value: "{fluid.prefs.prefsEditor}.model.preferences.fluid_prefs_textSize",
+                    digits: "{that}.options.decimalDigits"
+                }
+            },
+            {
+                source: "friendlyNames.textSize",
+                target: "tts.textSize",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.textSizeTtsPreamble",
+                        value: "{that}.model.friendlyNames.textSize",
+                        units: "{that}.options.messageBase.multiplierUnit"
+                    }
+                }
+            },
+            {
+                target: "friendlyNames.letterSpace",
+                singleTransform: {
+                    type: "fluid.transforms.toFixed",
+                    value: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_letterSpace",
+                    digits: "{that}.options.decimalDigits"
+                }
+            },
+            {
+                source: "friendlyNames.letterSpace",
+                target: "tts.letterSpace",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.letterSpaceTtsPreamble",
+                        value: "{that}.model.friendlyNames.letterSpace",
+                        units: "{that}.options.messageBase.multiplierUnit"
+                    }
+                }
+            },
+            {
+                target: "friendlyNames.lineSpace",
+                singleTransform: {
+                    type: "fluid.transforms.toFixed",
+                    value: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_lineSpace",
+                    digits: "{that}.options.decimalDigits"
+                }
+            },
+            {
+                source: "friendlyNames.lineSpace",
+                target: "tts.lineSpace",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.lineSpaceTtsPreamble",
+                        value: "{that}.model.friendlyNames.lineSpace",
+                        units: "{that}.options.messageBase.multiplierUnit"
+                    }
+                }
+            },
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.fluid_prefs_contrast",
+                target: "friendlyNames.contrast",
+                singleTransform: {
+                    type: "fluid.transforms.valueMapper",
+                    inputPath: "",
+                    options: {
+                        "default": "{that}.options.messageBase.contrast-default",
+                        "wb": "{that}.options.messageBase.contrast-wb",
+                        "bw": "{that}.options.messageBase.contrast-bw"
+                    }
+                }
+            },
+            {
+                source: "friendlyNames.contrast",
+                target: "tts.contrast",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.contrastTtsPreamble",
+                        value: "{that}.model.friendlyNames.contrast",
+                        units: ""
+                    }
+                }
+            }],
         selectors: {
             message: ".gpiic-fd-confirm-message",
             languageLabel: ".language .gpii-confirm-label",
             languageValue: ".language .gpii-confirm-value",
+            languageTts: ".language-tts",
             speakValue: ".speak .gpii-confirm-value",
             speakLabel: ".speak .gpii-confirm-label",
+            speakTts: ".speak-tts",
             speechRateValue: ".speechRate .gpii-confirm-value",
             speechRateLabel: ".speechRate .gpii-confirm-label",
             speechRateUnit: ".speechRate .gpii-confirm-unit",
+            speechRateTts: ".speechRate-tts",
             contrastValue: ".contrast .gpii-confirm-value",
             contrastLabel: ".contrast .gpii-confirm-label",
+            contrastTts: ".contrast-tts",
             textSizeValue: ".textSize .gpii-confirm-value",
             textSizeLabel: ".textSize .gpii-confirm-label",
             textSizeUnit: ".textSize .gpii-confirm-unit",
+            textSizeTts: ".textSize-tts",
             letterSpaceValue: ".letterSpace .gpii-confirm-value",
             letterSpaceLabel: ".letterSpace .gpii-confirm-label",
             letterSpaceUnit: ".letterSpace .gpii-confirm-unit",
+            letterSpaceTts: ".letterSpace-tts",
             lineSpaceValue: ".lineSpace .gpii-confirm-value",
             lineSpaceLabel: ".lineSpace .gpii-confirm-label",
             lineSpaceUnit: ".lineSpace .gpii-confirm-unit",
+            lineSpaceTts: ".lineSpace-tts",
             onScreenKeyboardValue: ".onScreenKeyboard .gpii-confirm-value",
             onScreenKeyboardLabel: ".onScreenKeyboard .gpii-confirm-label",
+            onScreenKeyboardTts: ".onScreenKeyboard-tts",
             captionsValue: ".captions .gpii-confirm-value",
             captionsLabel: ".captions .gpii-confirm-label",
+            captionsTts: ".captions-tts",
             showSoundsValue: ".showSounds .gpii-confirm-value",
             showSoundsLabel: ".showSounds .gpii-confirm-label",
+            showSoundsTts: ".showSounds-tts",
             stickyKeysValue: ".stickyKeys .gpii-confirm-value",
-            stickyKeysLabel: ".stickyKeys .gpii-confirm-label"
-        },
+            stickyKeysLabel: ".stickyKeys .gpii-confirm-label",
+            stickyKeysTts: ".stickyKeys-tts"
+},
         protoTree: {
             message: {
                 markup: {messagekey: "message"}
             },
             languageLabel: {messagekey: "languageLabel"},
             languageValue: {messagekey: "languageValue"},
+            languageTts: {messagekey: "languageTtsPreamble"},
             speakLabel: {messagekey: "speakLabel"},
             speakValue: {messagekey: "speakValue"},
+            speakTts: {messagekey: "speakTtsPreamble"},
             speechRateLabel: {messagekey: "speechRateLabel"},
             speechRateValue: {messagekey: "speechRateValue"},
             speechRateUnit: {messagekey: "speechRateUnit"},
+            speechRateTts: {messagekey: "speechRateTtsPreamble"},
             contrastLabel: {messagekey: "contrastLabel"},
             contrastValue: {messagekey: "contrastValue"},
+            contrastTts: {messagekey: "contrastTtsPreamble"},
             textSizeLabel: {messagekey: "textSizeLabel"},
             textSizeValue: {messagekey: "textSizeValue"},
             textSizeUnit: {messagekey: "multiplierUnit"},
+            textSizeTts: {messagekey: "textSizeTtsPreamble"},
             letterSpaceLabel: {messagekey: "letterSpaceLabel"},
             letterSpaceValue: {messagekey: "letterSpaceValue"},
             letterSpaceUnit: {messagekey: "multiplierUnit"},
+            letterSpaceTts: {messagekey: "letterSpaceTtsPreamble"},
             lineSpaceLabel: {messagekey: "lineSpaceLabel"},
             lineSpaceValue: {messagekey: "lineSpaceValue"},
             lineSpaceUnit: {messagekey: "multiplierUnit"},
+            lineSpaceTts: {messagekey: "lineSpaceTtsPreamble"},
             onScreenKeyboardLabel: {messagekey: "onScreenKeyboardLabel"},
             onScreenKeyboardValue: {messagekey: "onScreenKeyboardValue"},
+            onScreenKeyboardTts: {messagekey: "onScreenKeyboardTtsPreamble"},
             captionsLabel: {messagekey: "captionsLabel"},
             captionsValue: {messagekey: "captionsValue"},
+            captionsTts: {messagekey: "captionsTtsPreamble"},
             showSoundsLabel: {messagekey: "showSoundsLabel"},
             showSoundsValue: {messagekey: "showSoundsValue"},
+            showSoundsTts: {messagekey: "showSoundsTtsPreamble"},
             stickyKeysLabel: {messagekey: "stickyKeysLabel"},
-            stickyKeysValue: {messagekey: "stickyKeysValue"}
+            stickyKeysValue: {messagekey: "stickyKeysValue"},
+            stickyKeysTts: {messagekey: "stickyKeysTtsPreamble"}
         },
-        modelListeners: {
-            "{fluid.prefs.prefsEditor}.model.preferences": {
-                funcName: "gpii.firstDiscovery.panel.confirm.updateConfirmPanel",
-                args: ["{that}", "{change}.value"],
-                excludeSource: "init"
-            }
+        bindingOptions: {
+            method: "text"
+        },
+        bindings: {
+            "languageValue": "friendlyNames.language",
+            "languageTts": "tts.language",
+            "speakValue": "friendlyNames.speak",
+            "speakTts": "tts.speak",
+            "speechRateValue": "friendlyNames.speechRate",
+            "speechRateTts": "tts.speechRate",
+            "contrastValue": "friendlyNames.contrast",
+            "contrastTts": "tts.contrast",
+            "textSizeValue": "friendlyNames.textSize",
+            "textSizeTts": "tts.textSize",
+            "letterSpaceValue": "friendlyNames.letterSpace",
+            "letterSpaceTts": "tts.letterSpace",
+            "lineSpaceValue": "friendlyNames.lineSpace",
+            "lineSpaceTts": "tts.lineSpace",
+            "onScreenKeyboardValue": "friendlyNames.onScreenKeyboard",
+            "onScreenKeyboardTts": "tts.onScreenKeyboard",
+            "captionsValue": "friendlyNames.captions",
+            "captionsTts": "tts.captions",
+            "showSoundsValue": "friendlyNames.showSounds",
+            "showSoundsTts": "tts.showSounds",
+            "stickyKeysValue": "friendlyNames.stickyKeys",
+            "stickyKeysTts": "tts.stickyKeys"
         },
         listeners: {
-            // The modelListener does not fire until a preference is changed, so
-            // we use this hook to ensure preference values appear even if no
-            // preference changes
-            "afterRender.initPreferenceText": {
-                funcName: "gpii.firstDiscovery.panel.confirm.updateConfirmPanel",
-                args: ["{that}", "{fluid.prefs.prefsEditor}.model.preferences"]
+            "afterRender.applyDataBinding": {
+                funcName: "gpii.binder.applyBinding",
+                args: ["{that}"]
             }
         }
     });
 
-    gpii.firstDiscovery.panel.confirm.convertBoolean = function (that, value) {
-        return that.msgResolver.resolve(value ? "true" : "false");
-    };
-
-    gpii.firstDiscovery.panel.confirm.convertSpeechRate = function (that, value) {
-        return Math.round(that.options.averageWordsPerMinute * value);
-    };
-
-    gpii.firstDiscovery.panel.confirm.convertContrast = function (that, value) {
-        return that.msgResolver.resolve("contrast-" + value);
-    };
-
-    gpii.firstDiscovery.panel.confirm.getFriendlyPreferenceNames = function (that, prefs) {
-
-        var prefText = {
-            language: that.msgResolver.resolve("language"),
-            speak: "",
-            speechRate: "",
-            contrast: "",
-            textSize: "",
-            letterSpace: "",
-            lineSpace: "",
-            onScreenKeyboard: "",
-            captions: "",
-            showSounds: "",
-            stickyKeys: ""
-        };
-
-        if (typeof prefs === 'undefined') {
-            return prefText;
+    /*
+     * toFixed is used by the confirm panel to round model values
+     */
+    fluid.defaults("fluid.transforms.toFixed", {
+        gradeNames: ["fluid.multiInputTransformFunction", "fluid.standardOutputTransformFunction"],
+        inputVariables: {
+            value: null,
+            digits: 0
         }
-        prefText.speak = typeof prefs.gpii_firstDiscovery_speak === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_speak);
-        prefText.speechRate = typeof prefs.gpii_firstDiscovery_speechRate === 'undefined' ? "" : that.convertSpeechRate(prefs.gpii_firstDiscovery_speechRate);
-        prefText.contrast = typeof prefs.fluid_prefs_contrast === 'undefined' ? "" : that.convertContrast(prefs.fluid_prefs_contrast);
-        prefText.textSize = typeof prefs.fluid_prefs_textSize === 'undefined' ? "" : prefs.fluid_prefs_textSize.toFixed(1);
-        prefText.letterSpace = typeof prefs.gpii_firstDiscovery_letterSpace === 'undefined' ? "" : prefs.gpii_firstDiscovery_letterSpace.toFixed(1);
-        prefText.lineSpace = typeof prefs.gpii_firstDiscovery_lineSpace === 'undefined' ? "" : prefs.gpii_firstDiscovery_lineSpace.toFixed(1);
-        prefText.onScreenKeyboard = typeof prefs.gpii_firstDiscovery_onScreenKeyboard === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_onScreenKeyboard);
-        prefText.captions = typeof prefs.gpii_firstDiscovery_captions === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_captions);
-        prefText.showSounds = typeof prefs.gpii_firstDiscovery_showSounds === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_showSounds);
-        prefText.stickyKeys = typeof prefs.gpii_firstDiscovery_stickyKeys === 'undefined' ? "" : that.convertBoolean(prefs.gpii_firstDiscovery_stickyKeys);
+    });
 
-
-        return prefText;
+    fluid.transforms.toFixed = function (inputs) {
+        var value = inputs.value();
+        var digits = inputs.digits();
+        return value.toFixed(digits);
     };
 
-    gpii.firstDiscovery.panel.confirm.updateUiWithPreferences = function (that, prefText) {
-        that.locate("languageValue").text(prefText.language);
-        that.locate("speakValue").text(prefText.speak);
-        that.locate("speechRateValue").text(prefText.speechRate);
-        that.locate("contrastValue").text(prefText.contrast);
-        that.locate("textSizeValue").text(prefText.textSize);
-        that.locate("letterSpaceValue").text(prefText.letterSpace);
-        that.locate("lineSpaceValue").text(prefText.lineSpace);
-        that.locate("onScreenKeyboardValue").text(prefText.onScreenKeyboard);
-        that.locate("captionsValue").text(prefText.captions);
-        that.locate("showSoundsValue").text(prefText.showSounds);
-        that.locate("stickyKeysValue").text(prefText.stickyKeys);
-    };
 
-    gpii.firstDiscovery.panel.confirm.updateConfirmPanel = function (that, prefs) {
-        var prefText = gpii.firstDiscovery.panel.confirm.getFriendlyPreferenceNames(that, prefs);
-        gpii.firstDiscovery.panel.confirm.updateUiWithPreferences(that, prefText);
+    /*
+     * This is the implementation of fluid.transforms.stringTemplate taken from a later
+     * version of infusion and backported here.
+     */
+    fluid.defaults("fluid.transforms.stringTemplate", {
+        gradeNames: "fluid.standardOutputTransformFunction"
+    });
+
+    fluid.transforms.stringTemplate = function (transformSpec) {
+        return fluid.stringTemplate(transformSpec.template, transformSpec.terms);
     };
 
 

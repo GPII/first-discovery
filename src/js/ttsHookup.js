@@ -51,7 +51,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             speakPanelInstructions: {
                 funcName: "gpii.firstDiscovery.tts.prefsEditor.speakPanelInstructions",
                 args: ["{firstDiscoveryEditor}", "{gpii.firstDiscovery.selfVoicing}.queueSpeech", "{arguments}.0"]
-            }
+            },
         },
         listeners: {
             "onCreate.bindKeypress": {
@@ -96,12 +96,22 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             }
         },
         messageBase: "{messageLoader}.resources.prefsEditor.resourceText",
-        panelInstructionsSelector: ".gpiic-fd-instructions"
+        panelInstructionsSelector: ".gpiic-fd-instructions",
+        panelContentSelector: ".gpiic-fd-panel-content-tts"
     });
+
 
     gpii.firstDiscovery.tts.prefsEditor.getCurrentPanelInstructions = function (that) {
         var panel = that.panels.eq(that.model.currentPanelNum - 1);
         var texts = fluid.transform(panel.find(that.prefsEditor.options.panelInstructionsSelector).filter(":visible"), function (elem) {
+            return $.text(elem);
+        });
+        return texts.join(" ");
+    };
+
+    gpii.firstDiscovery.tts.prefsEditor.getCurrentPanelContent = function (that) {
+        var panel = that.panels.eq(that.model.currentPanelNum - 1);
+        var texts = fluid.transform(panel.find(that.prefsEditor.options.panelContentSelector).filter(":visible"), function (elem) {
             return $.text(elem);
         });
         return texts.join(" ");
@@ -122,15 +132,17 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         });
         var msg = fluid.stringTemplate(panelMsgTemplate, {
             stepCountMsg: stepCountMsg,
-            instructions: gpii.firstDiscovery.tts.prefsEditor.getCurrentPanelInstructions(that)
+            instructions: gpii.firstDiscovery.tts.prefsEditor.getCurrentPanelInstructions(that),
+            content: gpii.firstDiscovery.tts.prefsEditor.getCurrentPanelContent(that)
         });
         speakFn(msg, speakOpts);
     };
 
     gpii.firstDiscovery.tts.prefsEditor.speakPanelInstructions = function (that, speakFn, speakOpts) {
         var msg = gpii.firstDiscovery.tts.prefsEditor.getCurrentPanelInstructions(that);
+        var content = gpii.firstDiscovery.tts.prefsEditor.getCurrentPanelContent(that);
 
-        speakFn(msg, speakOpts);
+        speakFn(msg + content, speakOpts);
     };
 
 })(jQuery, fluid);

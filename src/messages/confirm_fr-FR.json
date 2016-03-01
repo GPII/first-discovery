@@ -29,5 +29,17 @@
   "language": "Français",
   "contrast-default": "Original",
   "contrast-bw": "Noir/Blanc",
-  "contrast-wb": "Blanc/Noir"
+  "contrast-wb": "Blanc/Noir",
+  "languageTtsPreamble": "Votre choix de la langue est",
+  "speakTtsPreamble": "Votre texte pour le choix de la parole est",
+  "onScreenKeyboardTtsPreamble": "Votre choix sur le clavier de l'écran est",
+  "captionsTtsPreamble": "Captions est votre choix",
+  "showSoundsTtsPreamble": "Votre spectacle est le choix des sons",
+  "stickyKeysTtsPreamble": "Votre choix est touches rémanentes",
+  "speechRateTtsPreamble": "Votre choix est le débit de parole",
+  "speechRateTtsUnits": "mots par minute",
+  "contrastTtsPreamble": "Le contraste est votre choix",
+  "textSizeTtsPreamble": "Votre choix est la taille du texte",
+  "letterSpaceTtsPreamble":"Votre espace de lettre est le choix",
+  "lineSpaceTtsPreamble": "Votre choix est la ligne de l'espace"
 }
