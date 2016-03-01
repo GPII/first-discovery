@@ -1362,7 +1362,7 @@
                     terms: {
                         preamble: "{that}.options.messageBase.speechRateTtsPreamble",
                         value: "{that}.model.friendlyNames.speechRate",
-                        units: "{that}.options.messageBase.speechRateUnit"
+                        units: "{that}.options.messageBase.speechRateTtsUnits"
                     }
                 }
             },

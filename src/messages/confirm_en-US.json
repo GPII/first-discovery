@@ -37,9 +37,9 @@
   "showSoundsTtsPreamble": "Your show sounds choice is",
   "stickyKeysTtsPreamble": "Your sticky keys choice is",
   "speechRateTtsPreamble": "Your speech rate choice is",
+  "speechRateTtsUnits": "words per minute",
   "contrastTtsPreamble": "Your contrast choice is",
   "textSizeTtsPreamble": "Your text size choice is",
   "letterSpaceTtsPreamble":"Your letter space choice is",
   "lineSpaceTtsPreamble": "Your line space choice is"
-
 }
