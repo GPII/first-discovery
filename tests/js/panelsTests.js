@@ -751,72 +751,6 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     });
 
     /************************
-     * Captions Panel Tests *
-     ************************/
-
-    fluid.defaults("gpii.tests.firstDiscovery.panel.captions", {
-        gradeNames: ["gpii.firstDiscovery.panel.captions"],
-        messageBase: {
-            "instructions": "Do you want to see text for speech (captions) when playing videos?",
-            "no": "No",
-            "yes": "Yes",
-            "yes-tooltip": "Select to turn video captions on",
-            "no-tooltip": "Select to turn video captions off",
-            "yes-tooltipAtSelect": "Video captions are on",
-            "no-tooltipAtSelect": "Video captions are off"
-        },
-        model: {
-            value: true
-        }
-    });
-
-    fluid.defaults("gpii.tests.captionsPanel", {
-        gradeNames: ["fluid.test.testEnvironment"],
-        components: {
-            yesNo: {
-                type: "gpii.tests.firstDiscovery.panel.captions",
-                container: ".gpiic-fd-captions"
-            },
-            yesNoTester: {
-                type: "gpii.tests.yesNoTester"
-            }
-        }
-    });
-
-    /***************************
-     * Show Sounds Panel Tests *
-     ***************************/
-
-    fluid.defaults("gpii.tests.firstDiscovery.panel.showSounds", {
-        gradeNames: ["gpii.firstDiscovery.panel.showSounds"],
-        messageBase: {
-            "instructions": "Do you want the screen to flash when a sound is played?",
-            "no": "No",
-            "yes": "Yes",
-            "yes-tooltip": "Select to turn on screen-flash for sounds",
-            "no-tooltip": "Select to turn off screen-flash for sounds",
-            "yes-tooltipAtSelect": "Screen-flash for sounds is on",
-            "no-tooltipAtSelect": "Screen-flash for sounds is off"
-        },
-        model: {
-            value: true
-        }
-    });
-
-    fluid.defaults("gpii.tests.showSoundsPanel", {
-        gradeNames: ["fluid.test.testEnvironment"],
-        components: {
-            yesNo: {
-                type: "gpii.tests.firstDiscovery.panel.showSounds",
-                container: ".gpiic-fd-showSounds"
-            },
-            yesNoTester: {
-                type: "gpii.tests.yesNoTester"
-            }
-        }
-    });
-
-    /************************
      * Contrast Panel Tests *
      ************************/
 
@@ -1300,8 +1234,6 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             "gpii.tests.speechRatePanel",
             "gpii.tests.speakTextPanel",
             "gpii.tests.onScreenKeyboardPanel",
-            "gpii.tests.captionsPanel",
-            "gpii.tests.showSoundsPanel",
             "gpii.tests.contrastPanel",
             "gpii.tests.keyboardPanel",
             "gpii.tests.welcomePanel",

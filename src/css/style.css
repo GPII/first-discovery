@@ -527,14 +527,6 @@ button {
     content: "\e611";
 }
 
-.gpii-fd-captions:before {
-    content: "\e610";
-}
-
-.gpii-fd-showSounds:before {
-    content: "\e60d";
-}
-
 .gpii-fd-navIcon-outer {
     width: 29.77rem; /* Space for 5 icons. This isn't a perfect 30rem,
                         otherwise a white bar appears at the end (FLOE-350). */

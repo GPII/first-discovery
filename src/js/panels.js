@@ -557,30 +557,6 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     });
 
     /*
-     * Captions panel
-     */
-    fluid.defaults("gpii.firstDiscovery.panel.captions", {
-        gradeNames: ["gpii.firstDiscovery.panel.yesNo"],
-        preferenceMap: {
-            "gpii.firstDiscovery.captions": {
-                "model.value": "default"
-            }
-        }
-    });
-
-    /*
-     * Show sounds panel
-     */
-    fluid.defaults("gpii.firstDiscovery.panel.showSounds", {
-        gradeNames: ["gpii.firstDiscovery.panel.yesNo"],
-        preferenceMap: {
-            "gpii.firstDiscovery.showSounds": {
-                "model.value": "default"
-            }
-        }
-    });
-
-    /*
      * language panel
      */
     fluid.defaults("gpii.firstDiscovery.panel.lang", {
@@ -1111,7 +1087,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         }
 
         var saveRequestConfig = that.options.saveRequestConfig,
-            data = JSON.stringify(data),
+            jsonData = JSON.stringify(data),
             view = saveRequestConfig.view || "",
             url = fluid.stringTemplate(saveRequestConfig.url, {view: view});
 
@@ -1120,7 +1096,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             method: saveRequestConfig.method,
             contentType: "application/json",
             dataType: "json",
-            data: data,
+            data: jsonData,
             success: function (data, textStatus, jqXHR) {
                 that.events.onSuccess.fire(data, textStatus, jqXHR);
             },

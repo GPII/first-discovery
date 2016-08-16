@@ -136,7 +136,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     };
 
     gpii.tests.firstDiscovery.testControls = function (that) {
-        jqUnit.expect(79);
+        jqUnit.expect(69);
 
         // Test the instantiated sub-components
         jqUnit.assertNotUndefined("The subcomponent \"prefsEditor\" has been instantiated", that.prefsEditor);
@@ -677,10 +677,8 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     gpii.tests.firstDiscovery.preferences1 = {
         fluid_prefs_contrast: "default",
         fluid_prefs_textSize: 1,
-        gpii_firstDiscovery_captions: true,
         gpii_firstDiscovery_language: "en-US",
         gpii_firstDiscovery_onScreenKeyboard: true,
-        gpii_firstDiscovery_showSounds: true,
         gpii_firstDiscovery_speak: true,
         gpii_firstDiscovery_speechRate: 1,
         gpii_firstDiscovery_stickyKeys: false
@@ -689,10 +687,8 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     gpii.tests.firstDiscovery.preferences2 = {
         fluid_prefs_contrast: "default",
         fluid_prefs_textSize: 0.2,
-        gpii_firstDiscovery_captions: true,
         gpii_firstDiscovery_language: "en-US",
         gpii_firstDiscovery_onScreenKeyboard: true,
-        gpii_firstDiscovery_showSounds: true,
         gpii_firstDiscovery_speak: true,
         gpii_firstDiscovery_speechRate: 1,
         gpii_firstDiscovery_stickyKeys: false
@@ -744,7 +740,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         }]
     });
 
-    gpii.tests.firstDiscovery.verifyRequest = function (tokenPanel, responseData, numOfOnSuccessFired, numOfOnErrorFired, expectedData, msg, that) {
+    gpii.tests.firstDiscovery.verifyRequest = function (tokenPanel, responseData, numOfOnSuccessFired, numOfOnErrorFired, expectedData, msg) {
         jqUnit.assertDeepEq("The preference set is expected " + msg, expectedData, JSON.parse(responseData.requestData));
         gpii.tests.utils.verifyEventFiring(tokenPanel, numOfOnSuccessFired, numOfOnErrorFired);
     };
