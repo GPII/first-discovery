@@ -116,24 +116,6 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                     "message": "%messagePrefix/onScreenKeyboard.json"
                 }
             },
-            "captions": {
-                "type": "gpii.firstDiscovery.captions",
-                "panel": {
-                    "type": "gpii.firstDiscovery.panel.captions",
-                    "container": ".gpiic-fd-prefsEditor-panel-captions",
-                    "template": "%templatePrefix/yesNo.html",
-                    "message": "%messagePrefix/captions.json"
-                }
-            },
-            "showSounds": {
-                "type": "gpii.firstDiscovery.showSounds",
-                "panel": {
-                    "type": "gpii.firstDiscovery.panel.showSounds",
-                    "container": ".gpiic-fd-prefsEditor-panel-showSounds",
-                    "template": "%templatePrefix/yesNo.html",
-                    "message": "%messagePrefix/showSounds.json"
-                }
-            },
             "keyboard": {
                 "type": "gpii.firstDiscovery.stickyKeys",
                 "panel": {
@@ -254,27 +236,6 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             }
         }
     });
-
-    fluid.defaults("gpii.firstDiscovery.schemas.captions", {
-        gradeNames: ["fluid.prefs.schemas"],
-        schema: {
-            "gpii.firstDiscovery.captions": {
-                "type": "boolean",
-                "default": true
-            }
-        }
-    });
-
-    fluid.defaults("gpii.firstDiscovery.schemas.showSounds", {
-        gradeNames: ["fluid.prefs.schemas"],
-        schema: {
-            "gpii.firstDiscovery.showSounds": {
-                "type": "boolean",
-                "default": true
-            }
-        }
-    });
-
     fluid.defaults("gpii.firstDiscovery.schemas.stickyKeys", {
         gradeNames: ["fluid.prefs.schemas"],
         schema: {
