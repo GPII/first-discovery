@@ -95,6 +95,30 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                     "message": "%messagePrefix/contrast.json"
                 }
             },
+            "lineSpace": {
+                "type": "gpii.firstDiscovery.lineSpace",
+                "enactor": {
+                    "type": "gpii.firstDiscovery.enactor.lineSpace"
+                },
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.lineSpace",
+                    "container": ".gpiic-fd-prefsEditor-panel-lineSpace",
+                    "template": "%templatePrefix/rangeTemplate.html",
+                    "message": "%messagePrefix/lineSpace.json"
+                }
+            },
+            "letterSpace": {
+                "type": "gpii.firstDiscovery.letterSpace",
+                "enactor": {
+                    "type": "gpii.firstDiscovery.enactor.letterSpace"
+                },
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.letterSpace",
+                    "container": ".gpiic-fd-prefsEditor-panel-letterSpace",
+                    "template": "%templatePrefix/rangeTemplate.html",
+                    "message": "%messagePrefix/letterSpace.json"
+                }
+            },
             "textSize": {
                 "type": "fluid.prefs.textSize",
                 "enactor": {
@@ -109,6 +133,9 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             },
             "onScreenKeyboard": {
                 "type": "gpii.firstDiscovery.onScreenKeyboard",
+                "enactor": {
+                	"type": "gpii.firstDiscovery.enactor.onScreenKeyboard"
+                },
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.onScreenKeyboard",
                     "container": ".gpiic-fd-prefsEditor-panel-onScreenKeyboard",
@@ -118,6 +145,9 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             },
             "captions": {
                 "type": "gpii.firstDiscovery.captions",
+                "enactor": {
+                    "type": "gpii.firstDiscovery.enactor.captions"
+                },
                 "panel": {
                     "type": "gpii.firstDiscovery.panel.captions",
                     "container": ".gpiic-fd-prefsEditor-panel-captions",
@@ -143,6 +173,15 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                     "message": "%messagePrefix/keyboard.json",
                     "gradeNames": ["gpii.firstDiscovery.panel.keyboardTts", "gpii.firstDiscovery.panel.keyboard.prefEditorConnection"],
                     "keyboardInputGradeNames": ["gpii.firstDiscovery.keyboardInputTts"]
+                }
+            },
+            "confirm": {
+                "type": "gpii.firstDiscovery.confirm",
+                "panel": {
+                    "type": "gpii.firstDiscovery.panel.confirm",
+                    "container": ".gpiic-fd-prefsEditor-panel-confirm",
+                    "template": "%templatePrefix/confirmTemplate.html",
+                    "message": "%messagePrefix/confirm.json"
                 }
             },
             "congratulations": {
@@ -226,8 +265,34 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 "type": "number",
                 "default": 1,
                 "minimum": 0.2,
-                "maximum": 1.2,
+                "maximum": 1.1,
                 "divisibleBy": 0.1
+            }
+        }
+    });
+
+    fluid.defaults("gpii.firstDiscovery.schemas.letterSpace", {
+        gradeNames: ["fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.letterSpace": {
+                "type": "number",
+                "default": 0,
+                "minimum": 0.5,
+                "maximum": 2.5,
+                "divisibleBy": 0.25
+            }
+        }
+    });
+
+    fluid.defaults("gpii.firstDiscovery.schemas.lineSpace", {
+        gradeNames: ["fluid.prefs.schemas"],
+        schema: {
+            "gpii.firstDiscovery.lineSpace": {
+                "type": "number",
+                "default": 1.2,
+                "minimum": 0.9,
+                "maximum": 1.6,
+                "divisibleBy": 0.05
             }
         }
     });
@@ -250,7 +315,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         schema: {
             "gpii.firstDiscovery.onScreenKeyboard": {
                 "type": "boolean",
-                "default": true
+                "default": false
             }
         }
     });

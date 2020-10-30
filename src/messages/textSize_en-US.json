@@ -2,6 +2,8 @@
     "rangeInstructions": "Adjust the text and buttons to a size you like best.",
     "maxLabel": "max",
     "minLabel": "min",
+    "warnMin": "This is the smallest setting",
+    "warnMax": "This is the largest setting",
     "increaseLabel": "larger",
     "decreaseLabel": "smaller"
 }

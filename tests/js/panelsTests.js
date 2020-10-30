@@ -509,6 +509,72 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         }
     });
 
+    /*************************
+     * Line Space Panel Tests *
+     *************************/
+
+    fluid.defaults("gpii.tests.firstDiscovery.panel.lineSpace", {
+        gradeNames: ["gpii.firstDiscovery.panel.lineSpace"],
+        messageBase: {
+            rangeInstructions: "Adjust the line spacing to a size you like best.",
+            maxLabel: "max",
+            minLabel: "min",
+            increaseLabel: "larger",
+            decreaseLabel: "smaller"
+        },
+        model: {
+            value: 1
+        },
+        modelListeners: {
+            // rerenders on modelChange like panel behaves in the prefsEditor
+            "value": "{that}.refreshView"
+        }
+    });
+
+    fluid.defaults("gpii.tests.lineSpacePanel", {
+        gradeNames: ["gpii.tests.rangePanel"],
+        components: {
+            range: {
+                type: "gpii.tests.firstDiscovery.panel.lineSpace",
+                container: ".gpiic-fd-lineSpace"
+            }
+        }
+    });
+
+
+    /****************************
+     * Letter Space Panel Tests *
+     ****************************/
+
+    fluid.defaults("gpii.tests.firstDiscovery.panel.letterSpace", {
+        gradeNames: ["gpii.firstDiscovery.panel.letterSpace"],
+        messageBase: {
+            rangeInstructions: "Adjust the letter spacing to a size you like best.",
+            maxLabel: "max",
+            minLabel: "min",
+            increaseLabel: "larger",
+            decreaseLabel: "smaller"
+        },
+        model: {
+            value: 1
+        },
+        modelListeners: {
+            // rerenders on modelChange like panel behaves in the prefsEditor
+            "value": "{that}.refreshView"
+        }
+    });
+
+    fluid.defaults("gpii.tests.letterSpacePanel", {
+        gradeNames: ["gpii.tests.rangePanel"],
+        components: {
+            range: {
+                type: "gpii.tests.firstDiscovery.panel.letterSpace",
+                container: ".gpiic-fd-letterSpace"
+            }
+        }
+    });
+
+
     /***************************
      * Speech Rate Panel Tests *
      ***************************/
@@ -833,7 +899,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             value: "default"
         },
         messageBase: {
-            "instructions": "You can choose a screen colour to make things easier to see.",
+            "instructions": "You can choose a screen color to make things easier to see.",
             "contrastLabel": "Contrast",
             "contrast-default": "no change",
             "contrast-bw": "black on white",
@@ -1297,6 +1363,8 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     $(document).ready(function () {
         fluid.test.runTests([
             "gpii.tests.textSizePanel",
+            "gpii.tests.lineSpacePanel",
+            "gpii.tests.letterSpacePanel",
             "gpii.tests.speechRatePanel",
             "gpii.tests.speakTextPanel",
             "gpii.tests.onScreenKeyboardPanel",

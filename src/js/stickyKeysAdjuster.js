@@ -51,12 +51,16 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 args: ["{that}", "{change}.value"]
             }, {
                 listener: "gpii.firstDiscovery.keyboard.stickyKeysAdjuster.updateTooltipText",
-                args: ["{that}", "{tooltip}", "{change}.value"]
+                args: ["{that}"]
             }]
         },
         listeners: {
             "onCreate.setText": {
                 listener: "gpii.firstDiscovery.keyboard.stickyKeysAdjuster.renderText",
+                args: ["{that}"]
+            },
+            "onCreate.setTooltipText": {
+                listener: "gpii.firstDiscovery.keyboard.stickyKeysAdjuster.updateTooltipText",
                 args: ["{that}"]
             },
             "onCreate.bindTry": {
@@ -107,9 +111,11 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         that.locate("accommodationToggle").text(buttonText);
     };
 
-    gpii.firstDiscovery.keyboard.stickyKeysAdjuster.updateTooltipText = function (that, tooltip, state) {
+    gpii.firstDiscovery.keyboard.stickyKeysAdjuster.updateTooltipText = function (that) {
+        var state = that.model.stickyKeysEnabled;
         var tooltipText = that.msgResolver.resolve(state ? "turnOffTooltip" : "turnOnTooltip");
-        tooltip.applier.change("idToContent." + fluid.allocateSimpleId(that.locate("accommodationToggle")), tooltipText);
+        var path = "idToContent." + fluid.allocateSimpleId(that.locate("accommodationToggle"));
+        that.tooltip.applier.change(path, tooltipText);
     };
 
     gpii.firstDiscovery.keyboard.stickyKeysAdjuster.toggleState = function (that, path) {

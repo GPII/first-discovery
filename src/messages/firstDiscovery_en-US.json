@@ -18,5 +18,12 @@
     "help": "help",
 
     "stepCountMsg": "Step %currentPanel of %numPanels",
-    "panelMsg": "This is %stepCountMsg. %instructions Press 'h' for help."
+    "panelMsg": "This is %stepCountMsg. %instructions %content Press H to hear this again.",
+    
+    "preview": "Preview",
+    "previewTooltip": "This is the preview.",
+    "keyboard": "On-Screen Keyboard",
+    "keyboardTooltip": "This is the On-Screen Keyboard",
+    "warning": "This is not a live website!",
+    "warningTooltip": "This is not a live website!"
 }

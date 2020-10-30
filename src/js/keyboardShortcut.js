@@ -1,12 +1,12 @@
 /*
-Copyright 2015 OCAD University
+ Copyright 2015 OCAD University
 
-Licensed under the New BSD license. You may not use this file except in
-compliance with this License.
+ Licensed under the New BSD license. You may not use this file except in
+ compliance with this License.
 
-You may obtain a copy of the License at
-https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
-*/
+ You may obtain a copy of the License at
+ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
+ */
 
 (function ($, fluid) {
 
@@ -52,19 +52,49 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
      * func {Object} - the function to call when the shortcut is triggered.
      */
     gpii.firstDiscovery.keyboardShortcut.bindShortcut = function (elm, key, modifiers, func) {
+        var jQueryElement = $(elm);
+        gpii.firstDiscovery.keyboardShortcut.bindShortcutToElement(jQueryElement, key, modifiers, func);
+    };
+
+
+    /**
+     * elm {Object} - any jQueryable selector referring to the element to bind a keypress to
+     * key {Int} - An integer representation of the key to bind as a shortcut (see: gpii.firstDiscovery.keyboardShortcut.key)
+     * modifiers {Array} - an array of modifiers required ("altKey", "ctrlKey", "metaKey", "shiftKey")
+     * func {Object} - the function to call when the shortcut is triggered.
+     * previewIframeSelector - any jQueryable selector referring to the iframe element holding the preview to serve as context for the search in for elm
+     */
+    gpii.firstDiscovery.keyboardShortcut.bindShortcutInPreviewIFrame = function (elm, key, modifiers, func, previewIframeSelector) {
+        // Wait for the preview to load then bind the keyboard shortcut
+        $(previewIframeSelector).load(function () {
+            var jQueryElement = $(previewIframeSelector).contents().find(elm);
+            gpii.firstDiscovery.keyboardShortcut.bindShortcutToElement(jQueryElement, key, modifiers, func);
+        });
+    };
+
+
+    /**
+     * jQueryElement {Object} - any jQueryable element referring to the element to bind a keypress to
+     * key {Int} - An integer representation of the key to bind as a shortcut (see: gpii.firstDiscovery.keyboardShortcut.key)
+     * modifiers {Array} - an array of modifiers required ("altKey", "ctrlKey", "metaKey", "shiftKey")
+     * func {Object} - the function to call when the shortcut is triggered.
+     */
+    gpii.firstDiscovery.keyboardShortcut.bindShortcutToElement = function (jQueryElement, key, modifiers, func) {
         modifiers = fluid.arrayToHash(modifiers || []);
 
-        $(elm).keydown(function (e) {
+        jQueryElement.keydown(function (e) {
             var checkModifier = function (modKey, current) {
-                return current && !!e[modKey] === !!modifiers[modKey]; /* convert to boolean */ /* jshint ignore:line */
+                return current && !!e[modKey] === !!modifiers[modKey];
+                /* convert to boolean */
+                /* jshint ignore:line */
             };
 
             var isCorrectlyModified = fluid.accumulate(gpii.firstDiscovery.keyboardShortcut.modfiers, checkModifier, true);
 
             if (e.which === key && isCorrectlyModified) {
-                func();
+                    func();
             }
         });
-    };
+    }
 
 })(jQuery, fluid);

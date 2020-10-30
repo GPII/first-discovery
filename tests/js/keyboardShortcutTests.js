@@ -1,12 +1,12 @@
 /*!
-Copyright 2015 OCAD University
+ Copyright 2015 OCAD University
 
-Licensed under the New BSD license. You may not use this file except in
-compliance with this License.
+ Licensed under the New BSD license. You may not use this file except in
+ compliance with this License.
 
-You may obtain a copy of the License at
-https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
-*/
+ You may obtain a copy of the License at
+ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
+ */
 
 (function ($, fluid) {
     "use strict";
@@ -114,6 +114,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         };
     };
 
+
     jqUnit.test("gpii.firstDiscovery.keyboardShortcut.bindShortcut", function () {
         var elm = $(".keyboardShortcut-test");
         var fireRecord = {};
@@ -151,4 +152,86 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         jqUnit.assertDeepEq("The shortcuts should have been triggered the correct number of times", expectedRecord, fireRecord);
     });
 
-})(jQuery, fluid);
+    jqUnit.test("gpii.firstDiscovery.keyboardShortcut.bindShortcutToElement", function () {
+        var elm = $(".keyboardShortcut-test");
+        var fireRecord = {};
+        var expectedRecord = {
+            "a": 1,
+            "alt-a": 1,
+            "ctrl-a": 1,
+            "meta-a": 1,
+            "shift-a": 1,
+            "alt-ctrl-a": 1,
+            "alt-meta-a": 1,
+            "alt-shift-a": 1,
+            "ctrl-meta-a": 1,
+            "ctrl-shift-a": 1,
+            "meta-shift-a": 1,
+            "alt-ctrl-meta-a": 1,
+            "alt-ctrl-shift-a": 1,
+            "alt-meta-shift-a": 1,
+            "ctrl-meta-shift-a": 1,
+            "alt-ctrl-meta-shift-a": 1
+        };
+
+        // bind shortcuts
+        fluid.each(gpii.tests.keyboardShortcut.shortcuts, function (shortcuts, shortcutName) {
+            gpii.firstDiscovery.keyboardShortcut.bindShortcutToElement(elm, shortcuts.key, shortcuts.modifiers, gpii.tests.keyboardShortcut.handlerFnCreator(fireRecord, shortcutName));
+        });
+
+        // run through key strokes
+        fluid.each(gpii.firstDiscovery.keyboardShortcut.key, function (keyCode) {
+            fluid.each(gpii.tests.keyboardShortcut.modifiersTestCases, function (modifiers) {
+                gpii.tests.utils.simulateKeyEvent(elm, "keydown", keyCode, modifiers);
+            });
+        });
+
+        jqUnit.assertDeepEq("The shortcuts should have been triggered the correct number of times", expectedRecord, fireRecord);
+    });
+
+
+    // TODO: These tests are broken. The event handlers are wired up on the iFrame but they do not seem to ever
+    // call the callback, thus fireRecord is an empty {}. As of 24-FEB-2016, the tests are failing but manual
+    // tests show the bindShortcutInPreviewIFrame function is working.
+    jqUnit.test("gpii.firstDiscovery.keyboardShortcut.bindShortcutInPreviewIFrame", function () {
+
+        console.log("running bindShortcutInPreviewIframe tests");
+        var elm = "body";
+        var previewIframeSelector = "#thePreview";
+        var simulateElement = $(previewIframeSelector).contents().find(elm);
+        var fireRecord = {};
+        var expectedRecord = {
+            "a": 1,
+            "alt-a": 1,
+            "ctrl-a": 1,
+            "meta-a": 1,
+            "shift-a": 1,
+            "alt-ctrl-a": 1,
+            "alt-meta-a": 1,
+            "alt-shift-a": 1,
+            "ctrl-meta-a": 1,
+            "ctrl-shift-a": 1,
+            "meta-shift-a": 1,
+            "alt-ctrl-meta-a": 1,
+            "alt-ctrl-shift-a": 1,
+            "alt-meta-shift-a": 1,
+            "ctrl-meta-shift-a": 1,
+            "alt-ctrl-meta-shift-a": 1
+        };
+
+        // bind shortcuts
+        fluid.each(gpii.tests.keyboardShortcut.shortcuts, function (shortcuts, shortcutName) {
+            gpii.firstDiscovery.keyboardShortcut.bindShortcutInPreviewIFrame(elm, shortcuts.key, shortcuts.modifiers, gpii.tests.keyboardShortcut.handlerFnCreator(fireRecord, shortcutName), previewIframeSelector);
+        });
+
+        // run through key strokes
+        fluid.each(gpii.firstDiscovery.keyboardShortcut.key, function (keyCode) {
+            fluid.each(gpii.tests.keyboardShortcut.modifiersTestCases, function (modifiers) {
+                gpii.tests.utils.simulateKeyEvent(elm, "keydown", keyCode, modifiers);
+            });
+        });
+
+        jqUnit.assertDeepEq("The shortcuts should have been triggered the correct number of times", expectedRecord, fireRecord);
+    });
+})
+(jQuery, fluid);

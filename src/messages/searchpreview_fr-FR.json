@@ -1,0 +1,83 @@
+{
+  "logo": "Chercher",
+  "search_query": "2016 lignes directrices fiscales",
+  "search_query_tts": "Champ de recherche : 2016 lignes directrices fiscales",
+  "search_button": "Chercher",
+  "search_button_tts": "Sélectionnez à la recherche",
+  "ad_result_label": "Annonces correspondantes à 2016 guide d'impôt:",
+  "ad_result_label_tts": "Liste des annonces en relation avec 2016 lignes directrices fiscales",
+  "search_result_label": "Résultats de la recherche:",
+  "search_result_label_tts": "Liste des résultats de la recherche liée à 2016 lignes directrices fiscales",
+  "ads": [
+    {
+      "tts": "Publicité 1 : Taxes de fichiers en ligne gratuit . wwww.free-tax-on-the-web.com . logiciel libre d'impôt afin de maximiser votre retour avec une connexion e-Filing",
+      "title": "Taxes de fichiers en ligne GRATUIT",
+      "url": "www.free-tax-on-the-web.com",
+      "description": "Logiciel libre d'impôt afin de maximiser votre retour avec le dépôt électronique gratuit."
+    },
+    {
+      "tts": "Publicité 2 : super-taxe . wwww.super-tax.com . Bonus de 20% sur votre retour lorsque remplie via une carte -cadeau !",
+      "title": "SuperTaxe",
+      "url": "www.super-tax.com",
+      "description": "20% de bonus sur votre retour lorsque remplie via une carte -cadeau !"
+    }
+  ],
+  "results": [
+    {
+      "tts": "Résultat de recherche 1 : 2016 Publication 15 - Internal Revenue Service . https://www.irs.gov/pub/irs-pdf/p15.pdf . 23 décembre 2015 - Département du Trésor . Internal Revenue Service . Publication 15. Cat . No. 10000W . ( E circulaire ) ,. Employeurs. Guide de la taxe . Pour une utilisation en 2016 .",
+      "title": "2016 Publication 15 - Internal Revenue Service",
+      "url": "https://www.irs.gov/pub/irs-pdf/p15.pdf",
+      "description": "23 décembre 2015 - Département du Trésor . Internal Revenue Service . Publication 15. Cat . No. 10000W . ( E circulaire ) ,. Employeurs. Guide de la taxe . Pour une utilisation en 2016 ."
+    },
+    {
+      "tts": "Résultat de la recherche 2 : Calendrier fiscale IRS - Vidéo . https://www.youtube.com/watch?v=AdtNcKueEW4 . 16 décembre 2015 - Téléchargé par IRSvideos . Voir entreprise échéances avec le calendrier fiscal IRS . Pour commencer à l'utiliser , aller à IRS.gov/taxcalendar .",
+      "title": "IRS impôt Calendrier - Vidéo",
+      "url": "https://www.youtube.com/watch?v=AdtNcKueEW4",
+      "description": "16 décembre 2015 - Téléchargé par IRSvideos . Voir entreprise échéances avec le calendrier fiscal IRS . Pour commencer à l'utiliser , aller à IRS.gov/taxcalendar."
+    },
+    {
+      "tts": "Résultat de la recherche 3 : Dernières Nouvelles de l'IRS - Internal Revenue Service . https://www.irs.gov/uac/Latest-News . Dernières nouvelles . Retour préparateur fraude sur l'IRS annuel Liste 'Dirty Dozen'' des escroqueries fiscales à éviter pendant 2016 Dépôt Saison IR - 2016-16 , 4 février 2016 - Le ... .",
+      "title": "Dernières Nouvelles de l'IRS - Internal Revenue Service",
+      "url": "https://www.irs.gov/uac/Latest-News",
+      "description": "Dernières Nouvelles . Préparateur de déclaration fraude sur le rapport annuel « Dirty Dozen » Liste IRS des escroqueries fiscales à éviter pendant 2016 Dépôt Saison IR - 2016-16 , février 4 , 2016 - Le ..."
+    }
+  ],
+  "pagination": {
+    "page2_tts": "aller à la page 2",
+    "page3_tts": "aller à la page 3",
+    "page4_tts": "aller à la page 4",
+    "page12_tts": "aller à la page 12",
+    "page13_tts": "aller à la page 13",
+    "page_end_tts": "aller à la dernière page"
+  },
+  "also_try_label": "Essayez aussi:",
+  "also_try_label_tts": "Liste des requêtes de recherche pour essayer aussi",
+  "also_try_link_titles": [
+    "2016 chaînes de tranches d'imposition",
+    "2016 limites de cotisation 401k",
+    "2016 fiscale comment",
+    "2016 formulaires fiscaux IRS"
+  ],
+  "also_try_link_titles_tts": [
+    "lié à: 2016 chaînes de tranches d'imposition",
+    "lié à: 2016 limites de cotisation 401k",
+    "lié à: 2016 fiscale comment",
+    "lié à: 2016 formulaires fiscaux IRS"
+  ],
+  "footer_copyright": "&copy; Droit d'auteur Recherche Inc.",
+  "footer_copyright_tts": "Copyright Search Inc.",
+  "footer_links": [
+    "Toile",
+    "Nouvelles",
+    "Contact",
+    "Sur",
+    "Développeurs"
+  ],
+  "footer_links_tts": [
+    "lié à: Toile",
+    "lié à: Nouvelles",
+    "lié à: Contact",
+    "lié à: Sur",
+    "lié à: Développeurs"
+  ]
+}

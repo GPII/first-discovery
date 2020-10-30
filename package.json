@@ -17,7 +17,7 @@
     "modules",
     "feedback"
   ],
-  "repository": "git@github.com:GPII/first-discovery.git",
+  "repository": "git@github.com:jworkmeister0/first-discovery.git",
   "main": "",
   "engines": {
     "node": ">=0.8.0"

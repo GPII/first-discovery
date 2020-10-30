@@ -1,3 +1,4 @@
 {
-    "message": "<p>Welcome!</p> <p>This tool will guide you through setting up your computer the way you like it best.</p> <p>For help at any time, press the H key. To continue, select the next button or press the N key.</p>"
+    "message": "<p>Welcome!</p> <p>This tool will guide you through setting up your computer the way you like it best.</p>",
+    "commands": "If voice is on, press H to repeat the instructions."
 }

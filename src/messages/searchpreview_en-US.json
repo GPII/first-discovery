@@ -1,0 +1,83 @@
+{
+  "logo": "Search",
+  "search_query": "2016 tax guidelines",
+  "search_query_tts": "Search box: 2016 tax guidelines",
+  "search_button": "Search",
+  "search_button_tts": "Select to search",
+  "ad_result_label": "Ads related to 2016 tax guidelines:",
+  "ad_result_label_tts": "List of advertisements related to 2016 tax guidelines",
+  "search_result_label": "Search results:",
+  "search_result_label_tts": "List of search results related to 2016 tax guidelines",
+  "ads": [
+    {
+      "tts": "Advertisement 1: File Taxes FREE Online. wwww.free-tax-on-the-web.com. Free tax software to maximize your return with free e-Filing",
+      "title": "File Taxes FREE Online",
+      "url": "www.free-tax-on-the-web.com",
+      "description": "Free tax software to maximize your return with free e-Filing."
+    },
+    {
+      "tts": "Advertisement 2: Super Tax. wwww.super-tax.com. Bonus 20% on your return when fulfilled via e-gift card!",
+      "title": "SuperTax",
+      "url": "www.super-tax.com",
+      "description": "Bonus 20% on your return when fulfilled via e-gift card!"
+    }
+  ],
+  "results": [
+    {
+      "tts": "Search result 1: 2016 Publication 15 - Internal Revenue Service. https://www.irs.gov/pub/irs-pdf/p15.pdf. Dec 23, 2015 - Department of the Treasury. Internal Revenue Service. Publication 15. Cat. No. 10000W. (Circular E),. Employer's. Tax Guide. For use in 2016.",
+      "title": "2016 Publication 15 - Internal Revenue Service",
+      "url": "https://www.irs.gov/pub/irs-pdf/p15.pdf",
+      "description": "Dec 23, 2015 - Department of the Treasury. Internal Revenue Service. Publication 15. Cat. No. 10000W. (Circular E),. Employer's. Tax Guide. For use in 2016."
+    },
+    {
+      "tts": "Search result 2: IRS Tax Calendar - Video. https://www.youtube.com/watch?v=AdtNcKueEW4. Dec 16, 2015 - Uploaded by IRSvideos. View business due dates with the IRS tax calendar. To start using it, go to IRS.gov/taxcalendar.",
+      "title": "IRS Tax Calendar - Video",
+      "url": "https://www.youtube.com/watch?v=AdtNcKueEW4",
+      "description": "Dec 16, 2015 - Uploaded by IRSvideos. View business due dates with the IRS tax calendar. To start using it, go to IRS.gov/taxcalendar."
+    },
+    {
+      "tts": "Search result 3: Latest News from the IRS - Internal Revenue Service. https://www.irs.gov/uac/Latest-News. Latest News . Return Preparer Fraud Is on the IRS Annual “Dirty Dozen” List of Tax Scams to Avoid During the 2016 Filing Season IR-2016-16, Feb. 4, 2016 — The ... .",
+      "title": "Latest News from the IRS - Internal Revenue Service",
+      "url": "https://www.irs.gov/uac/Latest-News",
+      "description": "Latest News . Return Preparer Fraud Is on the IRS Annual “Dirty Dozen” List of Tax Scams to Avoid During the 2016 Filing Season IR-2016-16, Feb. 4, 2016 — The ..."
+    }
+  ],
+  "pagination": {
+    "page2_tts": "Go to page 2",
+    "page3_tts": "Go to page 3",
+    "page4_tts": "Go to page 4",
+    "page12_tts": "Go to page 12",
+    "page13_tts": "Go to page 13",
+    "page_end_tts": "Go to last page"
+  },
+  "also_try_label": "Also try:",
+  "also_try_label_tts": "List of search queries to also try",
+  "also_try_link_titles": [
+    "2016 tax bracket ranges",
+    "2016 401k contribution limits",
+    "2016 tax how to",
+    "2016 IRS Tax Forms"
+  ],
+  "also_try_link_titles_tts": [
+    "Link to: 2016 tax bracket ranges",
+    "Link to: 2016 401k contribution limits",
+    "Link to: 2016 tax how to",
+    "Link to: 2016 IRS Tax Forms"
+  ],
+  "footer_copyright": "&copy; Copyright Search Inc.",
+  "footer_copyright_tts": "Copyright Search Inc.",
+  "footer_links": [
+    "Web",
+    "News",
+    "Contact",
+    "About",
+    "Developers"
+  ],
+  "footer_links_tts": [
+    "Link to: Web",
+    "Link to: News",
+    "Link to: Contact",
+    "Link to: About",
+    "Link to: Developers"
+  ]
+}

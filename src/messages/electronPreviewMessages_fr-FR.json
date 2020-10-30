@@ -1,0 +1,304 @@
+{
+  "pageHeader": "Démonstration de l'Apprentissage Ouvert",
+  "pageTitle": "Les Électrons",
+
+  "inactiveLinks": [
+    {
+      "text": "Lis"
+    },
+    {
+      "text": "de Base"
+    },
+    {
+      "text": "Toutes les Modalités"
+    },
+    {
+      "text": "Lis"
+    },
+    {
+      "text": "Est-ce que cela a été utile??"
+    },
+    {
+      "text": "Les Électrons"
+    }
+
+  ],
+  "buttons": [
+    {
+      "tts": "Sélectionnez pour aller à la page précédente"
+    },
+    {
+      "tts": "Sélectionnez pour aller à la page suivante"
+    }
+  ],
+
+  "activeLinks": [
+    {
+      "text": "CHERCHER",
+      "tts": "Ceci est une barre de recherche pour rechercher ce site"
+    },
+    {
+      "text": "Chercher",
+      "tts": "Choisir de rechercher ce site"
+    },
+    {
+      "text": "Science Physique",
+      "tts": "Sélectionnez pour revenir à la catégorie de la science physique"
+    },
+    {
+      "text": "Les Électrons",
+      "tts": "Sélectionnez pour accéder à la page des électrons"
+    },
+    {
+      "text": "Faire une Copie",
+      "tts": "Sélectionnez pour faire une copie"
+    },
+    {
+      "text": "Détails",
+      "tts": "Sélectionnez cette option pour obtenir plus de détails"
+    },
+    {
+      "text": "Ressources",
+      "tts": "Choisir de voir les ressources"
+    },
+    {
+      "text": "Télécharger ",
+      "tts": "Sélectionnez à télécharger"
+    },
+    {
+      "text": "Partagez",
+      "tts": "Sélectionnez à partager"
+    },
+    {
+      "text": "Afficher les Détails",
+      "tts": "Sélectionnez pour afficher les détails"
+    },
+    {
+      "text": "Afficher Ressources",
+      "tts": "Choisir d'afficher les ressources"
+    }
+  ],
+
+  "content": [
+    {
+      "heading": "",
+      "text": "Fais attention! La foudre est extrêmement dangereux. Un seul boulon de la foudre peut transporter un milliard de volts d'électricité. Voilà assez d'énergie pour allumer une ampoule-pour 100 watts trois mois! Aussi impressionnant soit-elle, la foudre est rien de plus qu'un flux soudain de particules extrêmement petites. Quelles sont les particules qui se jettent dans un éclair? La réponse est électrons.",
+      "tts": "Fais attention! La foudre est extrêmement dangereux. Un seul boulon de la foudre peut transporter un milliard de volts d'électricité. Voilà assez d'énergie pour allumer une ampoule-pour 100 watts trois mois! Aussi impressionnant soit-elle, la foudre est rien de plus qu'un flux soudain de particules extrêmement petites. Quelles sont les particules qui se jettent dans un éclair? La réponse est électrons."
+    },
+    {
+      "heading": "Qu'est-ce sont des Électrons?",
+      "text": [
+        {
+          "p": "Les Électrons sont l'un des trois principaux types de particules qui composent les atomes. Les deux autres types sont des protons et des neutrons. Contrairement à protons et des neutrons, qui sont constitués de particules plus petites, plus simples, les électrons sont des particules fondamentales qui ne sont pas composées de particules plus petites. Ils sont un type de particules fondamentales appelées leptons. Tous les leptons ont une charge électrique de -1 ou 0. Pour une excellente vidéo sur les électrons et autres particules fondamentales dans les atomes, aller à l'adresse suivante:"
+        },
+        {
+          "p": "http://www.youtube.com/watch?v=Vi91qyjuknM (7:44)."
+        },
+        {
+          "p": "LECTEUR VIDEO ICI"
+        }
+      ],
+      "tts": "Qu'est-ce sont des Électrons? Les Électrons sont l'un des trois principaux types de particules qui composent les atomes. Les deux autres types sont des protons et des neutrons. Contrairement à protons et des neutrons, qui sont constitués de particules plus petites, plus simples, les électrons sont des particules fondamentales qui ne sont pas composées de particules plus petites. Ils sont un type de particules fondamentales appelées leptons. Tous les leptons ont une charge électrique de -1 ou 0.",
+      "video_tts": "Ceci est une vidéo sur orbitales . Appuyez sur espace pour lire la vidéo"
+    },
+    {
+      "heading": "Propriétés d'Électrons",
+      "text": "Les électrons sont extrêmement faibles. La masse d'un électron est seulement d'environ 1/2000 la masse d'un proton ou un neutron, alors les électrons contribuent pratiquement rien à la masse totale d'un atome. Les électrons ont une charge électrique de -1, qui est égale mais opposée à la charge du proton, qui est +1. Tous les atomes ont le même nombre d'électrons que de protons, de sorte que les charges positives et négatives 'annulent', faisant atomes électriquement neutres.",
+      "tts": "Propriétés d'Électrons. Les électrons sont extrêmement faibles. La masse d'un électron est seulement d'environ 1/2000 la masse d'un proton ou un neutron, alors les électrons contribuent pratiquement rien à la masse totale d'un atome. Les électrons ont une charge électrique de -1, qui est égale mais opposée à la charge du proton, qui est +1. Tous les atomes ont le même nombre d'électrons que de protons, de sorte que les charges positives et négatives 'annulent', faisant atomes électriquement neutres."
+    },
+    {
+      "heading": "Où sont des Électrons?",
+      "text": "Contrairement à protons et des neutrons, qui sont situés à l'intérieur du noyau au centre de l'atome, les électrons se trouvent à l'extérieur du noyau. Parce que des charges électriques opposées attirent, électrons négatifs sont attirés par le noyau positif. Cette force d'attraction maintient électrons constamment en mouvement à travers l'espace vide par ailleurs autour du noyau. La figure ci-dessous est un moyen courant de représenter la structure de l'atome. Il montre l'électron comme une particule en orbite autour du noyau, semblable à la façon dont les planètes tournent autour du soleil.",
+      "tts": "Où sont des Électrons? Contrairement à protons et des neutrons, qui sont situés à l'intérieur du noyau au centre de l'atome, les électrons se trouvent à l'extérieur du noyau. Parce que des charges électriques opposées attirent, électrons négatifs sont attirés par le noyau positif. Cette force d'attraction maintient électrons constamment en mouvement à travers l'espace vide par ailleurs autour du noyau. La figure ci-dessous est un moyen courant de représenter la structure de l'atome. Il montre l'électron comme une particule en orbite autour du noyau, semblable à la façon dont les planètes tournent autour du soleil."
+    },
+    {
+      "heading": "Les Orbitales",
+      "text": [
+        {
+          "p": "Le modèle atomique ci-dessus est utile pour certaines applications, mais il est trop simple en ce qui concerne l'emplacement des électrons. En réalité, il est impossible de dire quel chemin un électron suivra. Au lieu de cela, il est seulement possible de décrire les chances de trouver un électron dans une certaine région autour du noyau. La région dans laquelle un électron est le plus susceptible d'être est appelée une orbitale. Chaque orbitale peut avoir au plus deux électrons. Certains orbitales, appelées orbitales S, sont en forme de sphères, avec le noyau dans le centre. Un S orbitale est représenté dans la figure ci-dessous. Où les points sont plus denses, les chances de trouver un électron est plus grande. Également sur la photo de la figure ci-dessous est un P orbital. P orbitales sont en forme de haltères, avec le noyau dans la partie pincée de l'haltère. Vous pouvez voir d'animation des modèles en trois dimensions de orbitales à l'adresse suivante."
+        },
+        {
+          "p": "http://www.youtube.com/watch?v=K-jNgq16jEY (1:37)"
+        },
+        {
+          "p": "LECTEUR VIDEO ICI"
+        }
+      ],
+      "tts": "Les Orbitales. Le modèle atomique ci-dessus est utile pour certaines applications, mais il est trop simple en ce qui concerne l'emplacement des électrons. En réalité, il est impossible de dire quel chemin un électron suivra. Au lieu de cela, il est seulement possible de décrire les chances de trouver un électron dans une certaine région autour du noyau. La région dans laquelle un électron est le plus susceptible d'être est appelée une orbitale. Chaque orbitale peut avoir au plus deux électrons. Certains orbitales, appelées orbitales S, sont en forme de sphères, avec le noyau dans le centre. Un S orbitale est représenté dans la figure ci-dessous. Où les points sont plus denses, les chances de trouver un électron est plus grande. Également sur la photo de la figure ci-dessous est un P orbital. P orbitales sont en forme de haltères, avec le noyau dans la partie pincée de l'haltère."
+    },
+    {
+      "heading": "Quel est votre niveau d'énergie?",
+      "text": [
+        {
+          "p": "Les électrons sont situés à des distances fixes du noyau, les niveaux d'énergie appelés. Vous pouvez voir les trois premiers niveaux d'énergie dans la figure ci-dessous. Le diagramme montre également le nombre maximum possible d'électrons à chaque niveau d'énergie."
+        },
+        {
+          "p": "Les électrons énergétiques à des niveaux inférieurs, qui sont plus proches du noyau ont moins d'énergie. Au niveau de plus basse énergie, qui a le moins d'énergie, il est juste un orbital, donc ce niveau d'énergie a un maximum de deux électrons."
+        },
+        {
+          "p": "Seulement quand un niveau d'énergie inférieur est plein sont des électrons ajoutés au niveau d'énergie supérieur. Électrons à des niveaux élevés de l'énergie, qui sont plus loin du noyau, ont plus d'énergie. Ils ont aussi plus orbitales et un plus grand nombre possibles d'électrons."
+        },
+        {
+          "p": "Électrons au niveau de l'énergie la plus extérieure d'un atome sont appelés valence électrons. Ils déterminent un grand nombre des propriétés d'un élément. En effet, ces électrons sont impliqués dans des réactions chimiques avec d'autres atomes. Atomes peuvent partager ou transférer des électrons de valence. atomes électrons partagés se lient ensemble pour former des composés chimiques."
+        },
+        {
+          "p": "Vous pouvez voir toutes ces idées en action à l'adresse suivante (faites défiler jusqu'à l'animation en bas de la page Web): http://www.brooklyn.cuny.edu/bc/ahp/SDPS/SD.PS.electrons.html"
+        }
+      ],
+      "tts": "Quel est votre niveau d'énergie? Les électrons sont situés à des distances fixes du noyau, les niveaux d'énergie appelés. Vous pouvez voir les trois premiers niveaux d'énergie dans la figure ci-dessous. Le diagramme montre également le nombre maximum possible d'électrons à chaque niveau d'énergie. Les électrons énergétiques à des niveaux inférieurs, qui sont plus proches du noyau ont moins d'énergie. Au niveau de plus basse énergie, qui a le moins d'énergie, il est juste un orbital, donc ce niveau d'énergie a un maximum de deux électrons. Seulement quand un niveau d'énergie inférieur est plein sont des électrons ajoutés au niveau d'énergie supérieur. Électrons à des niveaux élevés de l'énergie, qui sont plus loin du noyau, ont plus d'énergie. Ils ont aussi plus orbitales et un plus grand nombre possibles d'électrons. Électrons au niveau de l'énergie la plus extérieure d'un atome sont appelés valence électrons. Ils déterminent un grand nombre des propriétés d'un élément. En effet, ces électrons sont impliqués dans des réactions chimiques avec d'autres atomes. Atomes peuvent partager ou transférer des électrons de valence. atomes électrons partagés se lient ensemble pour former des composés chimiques."
+    },
+    {
+      "heading": "Les niveaux et les Électrons Énergétiques",
+      "text": [
+        {
+          "p": "Noyau - contient des protons et des neutrons"
+        },
+        {
+          "p": "Niveau d'énergie 1er - peut contenir un maximum de 2 électrons dans une orbitale"
+        },
+        {
+          "p": "2ème niveau d'énergie - peut contenir un maximum de 8 électrons sur 4 orbitales différentes"
+        },
+        {
+          "p": "Niveau d'énergie 3 - peut contenir un maximum de 18 électrons répartis sur 9 orbitales différentes"
+        }
+      ],
+      "tts": "Les niveaux et les Électrons Énergétiques. 1. Noyau - contient des protons et des neutron. 2. niveau d'énergie 1er - peut contenir un maximum de 2 électrons dans une orbitale. 3. 2ème niveau d'énergie - peut contenir un maximum de 8 électrons sur 4 orbitales différentes. 4. niveau d'énergie 3 - peut contenir un maximum de 18 électrons répartis sur 9 orbitales différentes"
+    },
+    {
+      "heading": "Récapitulatif",
+      "text": [
+        {
+          "p": "Les électrons sont l'un des trois principaux types de particules qui composent l'atome. Ils sont extrêmement petites et ont une charge électrique de -1. Tous les atomes ont le même nombre d'électrons que des protons."
+        },
+        {
+          "p": "Électrons négatifs sont attirés par le noyau positif. Cette force d'attraction maintient électrons constamment en mouvement autour du noyau. La région dans laquelle un électron est plus susceptible d'être trouvé est appelée une orbitale."
+        },
+        {
+          "p": "Les électrons sont situés à des distances fixes du noyau, les niveaux d'énergie appelés. Électrons à des niveaux d'énergie plus faibles ont moins d'énergie que les électrons à des niveaux élevés de l'énergie."
+        }
+      ],
+      "tts": "Récapitulatif. Les électrons sont l'un des trois principaux types de particules qui composent l'atome. Ils sont extrêmement petites et ont une charge électrique de -1. Tous les atomes ont le même nombre d'électrons que des protons. Électrons négatifs sont attirés par le noyau positif. Cette force d'attraction maintient électrons constamment en mouvement autour du noyau. La région dans laquelle un électron est plus susceptible d'être trouvé est appelée une orbitale. Les électrons sont situés à des distances fixes du noyau, les niveaux d'énergie appelés. Électrons à des niveaux d'énergie plus faibles ont moins d'énergie que les électrons à des niveaux élevés de l'énergie."
+    },
+    {
+      "heading": "Vocabulaire",
+      "text": "Électron: Chargé négativement particule atomique qui se déplace autour du noyau d'un atome.",
+      "tts": "Vocabulaire. Électron: Chargé négativement particule atomique qui se déplace autour du noyau d'un atome."
+    },
+    {
+      "heading": "Entraine toi",
+      "text": [
+        {
+          "p": "La recherche de la découverte des électrons aux adresses suivantes, puis répondre aux questions ci-dessous."
+        },
+        {
+          "p": "http://www.youtube.com/watch?v=IdTxGJjA4Jw (2:54)"
+        },
+        {
+          "p": "LECTEUR VIDEO ICI"
+        },
+        {
+          "p": "http://www.aip.org/history/electron/jjhome.htm"
+        },
+        {
+          "p": "Qui a découvert électrons? Quand ont-ils découvert?"
+        },
+        {
+          "p": "Décrivent comment les électrons ont été découverts."
+        },
+        {
+          "p": "Quelle était la signification de la découverte d'électrons?"
+        },
+        {
+          "p": "Où Thomson ne pense électrons se trouvaient dans l'atome? Quelle est la différence de la vision moderne d'électrons présenté ci-dessus?"
+        }
+
+      ],
+      "tts": "Entraine Toi. La recherche de la découverte des électrons aux adresses suivantes, puis répondre aux questions ci-dessous. Qui a découvert électrons? Quand ont-ils découvert? Décrivent comment les électrons ont été découverts. Quelle était la signification de la découverte d'électrons? Où Thomson ne pense électrons se trouvaient dans l'atome? Quelle est la différence de la vision moderne d'électrons présenté ci-dessus?"
+    },
+    {
+      "heading": "La Revue",
+      "text": [
+        {
+          "p": "Quels sont les électrons?"
+        },
+        {
+          "p": "Comparer et contraster les électrons et les protons."
+        },
+        {
+          "p": "Dessiner un modèle d'un atome de béryllium, qui comporte quatre, cinq protons et quatre neutrons, électrons. Votre modèle doit inclure la mise en place d'électrons à des niveaux d'énergie appropriées."
+        },
+        {
+          "p": "Quels sont les électrons de valence? Pourquoi sont-ils si importants? Combien d'électrons de valence ne un atome de béryllium ont (voir question 3)?"
+        }
+      ],      "tts": "La Revue. Quels sont les électrons? Comparer et contraster les électrons et les protons. Dessiner un modèle d'un atome de béryllium, qui comporte quatre, cinq protons et quatre neutrons, électrons. Votre modèle doit inclure la mise en place d'électrons à des niveaux d'énergie appropriées. Quels sont les électrons de valence? Pourquoi sont-ils si importants? Combien d'électrons de valence ne un atome de béryllium ont (voir question 3)?"
+    }
+  ],
+  "miscText": [
+    {
+      "text": [
+        {
+          "p": "Électron"
+        },
+        {
+          "p": "Neutron"
+        },
+        {
+          "p": "Proton"
+        }
+      ],      "tts": "1. Électron. 2. Neutron. 3. Proton"
+    },
+    {
+      "text": [
+        {
+          "p": "Question: Combien d'électrons peut y avoir dans chaque type d'orbitale ci-dessus?"
+        },
+        {
+          "p": "Répondre: Il peut y avoir un maximum de deux électrons dans toute orbitale, quelle que soit sa forme."
+        },
+        {
+          "p": "Question: Où est le noyau de chaque orbitale?"
+        },
+        {
+          "p": "Répondre: Le noyau se trouve au centre de chaque orbital. Il est au milieu de la sphère dans le S orbital et dans la partie pincée du P orbital."
+        }
+      ],      "tts": "Question: Combien d'électrons peut y avoir dans chaque type d'orbitale ci-dessus? Répondre: Il peut y avoir un maximum de deux électrons dans toute orbitale, quelle que soit sa forme. Question: Où est le noyau de chaque orbitale? Répondre: Le noyau se trouve au centre de chaque orbital. Il est au milieu de la sphère dans le S orbital et dans la partie pincée du P orbital."
+    },
+    {
+      "text": [
+        {
+          "p": "Question: Combien d'électrons peut y avoir dans chaque type d'orbitale ci-dessus?"
+        },
+        {
+          "p": "Répondre: Il peut y avoir un maximum de deux électrons dans toute orbitale, quelle que soit sa forme."
+        },
+        {
+          "p": "Question: Où est le noyau de chaque orbitale?"
+        },
+        {
+          "p": "Répondre: Le noyau se trouve au centre de chaque orbital. Il est au milieu de la sphère dans le S orbital et dans la partie pincée du P orbital."
+        }
+      ],      "tts": "Question: Combien d'électrons peut y avoir dans chaque type d'orbitale ci-dessus? Répondre: Il peut y avoir un maximum de deux électrons dans toute orbitale, quelle que soit sa forme. Question: Où est le noyau de chaque orbitale? Répondre: Le noyau se trouve au centre de chaque orbital. Il est au milieu de la sphère dans le S orbital et dans la partie pincée du P orbital."
+    }
+  ],
+
+  "images": [
+    {
+      "tts": "Photo de ciel d'orage, la foudre frappe sur une ville."
+    },
+    {
+      "tts": "Modèle de la structure atomique: Cette image illustre la structure atomique: un groupe de trois neutrons (étiqueté «2») et trois protons (étiqueté «3») sont entourés par deux anneaux d'électrons (étiqueté «1»). La bague intérieure possède deux électrons sur elle et la bague extérieure a un."
+    },
+    {
+      "heading": "S Orbitale",
+      "tts": "Une image d'un S Orbital: un ensemble multi-couleur des anneaux en petits points, rayonnant à partir d'un centre de couleur rouge. Les anneaux les plus proches du centre sont rouges et rapprochées, les anneaux plus loin du centre sont de couleur rose et un peu plus espacées, et les plus externe des anneaux sont bleu et avoir plus d'espace entre eux."
+    },
+    {
+      "heading": "P Orbitale",
+      "tts": "Une image d'un P Orbital: deux centres de couleur rouge entourée par des anneaux, pressées ensemble. Les anneaux les plus proches de chaque centre sont rouges et rapprochées, les anneaux plus loin de chaque centre sont de couleur rose et un peu plus espacées, et les plus externe des anneaux sont bleu et avoir plus d'espace entre eux. Où les deux se rencontrent les anneaux sont bleu vif et aplaties ensemble."
+    },
+    {
+      "tts": "Graphique montrant des niveaux et des électrons énergétiques: Ce diagramme montre un cercle (marqué '1') entouré de trois anneaux, étiqueté déplaçant vers l'extérieur du centre «2», «3» et «4»."
+    }
+  ]
+}

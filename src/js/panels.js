@@ -1,12 +1,12 @@
 /*
-Copyright 2015 OCAD University
+ Copyright 2015 OCAD University
 
-Licensed under the New BSD license. You may not use this file except in
-compliance with this License.
+ Licensed under the New BSD license. You may not use this file except in
+ compliance with this License.
 
-You may obtain a copy of the License at
-https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
-*/
+ You may obtain a copy of the License at
+ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
+ */
 
 (function ($, fluid) {
 
@@ -38,11 +38,11 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 min: "{that}.options.range.min",
                 max: "{that}.options.range.max"
             }
-        // TODO: Due to FLUID-5669 the isMax and isMin
-        // transformations are performed using the fluid.transforms.free
-        // transformation. Once FLUID-5669 has been addressed, it should be
-        // possible to simply make use of fluid.transforms.binaryOp.
-        // see: https://issues.fluidproject.org/browse/FLUID-5669
+            // TODO: Due to FLUID-5669 the isMax and isMin
+            // transformations are performed using the fluid.transforms.free
+            // transformation. Once FLUID-5669 has been addressed, it should be
+            // possible to simply make use of fluid.transforms.binaryOp.
+            // see: https://issues.fluidproject.org/browse/FLUID-5669
         }, {
             target: "isMax",
             singleTransform: {
@@ -92,9 +92,21 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 funcName: "gpii.firstDiscovery.panel.ranged.step",
                 args: ["{that}", true]
             },
+            setFocusUp: {
+                funcName: "gpii.firstDiscovery.panel.ranged.setFocusUp",
+                args: ["{that}"]
+            },
+            setFocusDown: {
+                funcName: "gpii.firstDiscovery.panel.ranged.setFocusDown",
+                args: ["{that}"]
+            },
             updateMeter: {
                 funcName: "gpii.firstDiscovery.panel.ranged.updateMeter",
                 args: ["{that}", "{that}.model.value"]
+            },
+            doWarnLimit: {
+                funcName: "gpii.firstDiscovery.panel.ranged.warnAtLimit",
+                args: ["{that}"]
             }
         },
         listeners: {
@@ -103,10 +115,30 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 "method": "click",
                 "args": ["{that}.stepUp"]
             },
+            "afterRender.bindWarnIncrease": {
+                "this": "{that}.dom.increase",
+                "method": "click",
+                "args": ["{that}.doWarnLimit"]
+            },
+            "afterRender.bindFocusIncrease": {
+                "this": "{that}.dom.increase",
+                "method": "click",
+                "args": ["{that}.setFocusUp"]
+            },
             "afterRender.bindDecrease": {
                 "this": "{that}.dom.decrease",
                 "method": "click",
                 "args": ["{that}.stepDown"]
+            },
+            "afterRender.bindWarnDecrease": {
+                "this": "{that}.dom.decrease",
+                "method": "click",
+                "args": ["{that}.doWarnLimit"]
+            },
+            "afterRender.bindFocusDecrease": {
+                "this": "{that}.dom.decrease",
+                "method": "click",
+                "args": ["{that}.setFocusDown"]
             },
             "afterRender.updateButtonState": {
                 listener: "gpii.firstDiscovery.panel.ranged.updateButtonState",
@@ -137,6 +169,23 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     gpii.firstDiscovery.panel.ranged.updateButtonState = function (that) {
         that.locate("increase").prop("disabled", that.model.isMax);
         that.locate("decrease").prop("disabled", that.model.isMin);
+    };
+
+    gpii.firstDiscovery.panel.ranged.setFocusUp = function (that) {
+        that.locate("increase").focus();
+    };
+
+    gpii.firstDiscovery.panel.ranged.setFocusDown = function (that) {
+        that.locate("decrease").focus();
+    };
+
+    gpii.firstDiscovery.panel.ranged.warnAtLimit = function (that) {
+        if (that.model.isMax) {
+            that.tooltip.speak(that.msgResolver.resolve("warnMax"));
+        }
+        else if (that.model.isMin) {
+            that.tooltip.speak(that.msgResolver.resolve("warnMin"));
+        }
     };
 
     gpii.firstDiscovery.panel.ranged.updateMeter = function (that, value) {
@@ -199,7 +248,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         },
         model: {
             // offerAssistance: boolean
-            tryAccommodation: false,
+            tryAccommodation: true,
             userInput: ""
         },
         components: {
@@ -326,13 +375,15 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
     };
 
     gpii.firstDiscovery.panel.keyboard.relayEvents = function (that) {
-        var offerAssistance = that.model.offerAssistance;
-        if (offerAssistance !== false) {
-            that.events.onInitInput.fire();
-            if (offerAssistance) {
-                that.events.onOfferAssistance.fire();
+        fluid.invokeLater(function () {  // see https://botbot.me/freenode/fluid-work/2016-02-24/?msg=60842530&page=2
+            var offerAssistance = that.model.offerAssistance;
+            if (offerAssistance !== false) {
+                that.events.onInitInput.fire();
+                if (offerAssistance) {
+                    that.events.onOfferAssistance.fire();
+                }
             }
-        }
+        });
     };
 
     gpii.firstDiscovery.panel.keyboard.destroy = function (that) {
@@ -419,6 +470,36 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         gradeNames: ["gpii.firstDiscovery.panel.ranged"],
         preferenceMap: {
             "fluid.prefs.textSize": {
+                "model.value": "default",
+                "range.min": "minimum",
+                "range.max": "maximum",
+                "step": "divisibleBy"
+            }
+        }
+    });
+
+    /*
+     * Letter space panel
+     */
+    fluid.defaults("gpii.firstDiscovery.panel.letterSpace", {
+        gradeNames: ["gpii.firstDiscovery.panel.ranged"],
+        preferenceMap: {
+            "gpii.firstDiscovery.letterSpace": {
+                "model.value": "default",
+                "range.min": "minimum",
+                "range.max": "maximum",
+                "step": "divisibleBy"
+            }
+        }
+    });
+
+    /*
+     * Line space panel
+     */
+    fluid.defaults("gpii.firstDiscovery.panel.lineSpace", {
+        gradeNames: ["gpii.firstDiscovery.panel.ranged"],
+        preferenceMap: {
+            "gpii.firstDiscovery.lineSpace": {
                 "model.value": "default",
                 "range.min": "minimum",
                 "range.max": "maximum",
@@ -595,8 +676,8 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             maxViewportFirstLangIndex: {
                 expander: {
                     funcName: "gpii.firstDiscovery.panel.lang.calculateMaxViewportFirstLangIndex",
-                    args: [ "{that}.options.controlValues.lang.length",
-                            "{that}.options.numOfLangPerPage" ]
+                    args: ["{that}.options.controlValues.lang.length",
+                        "{that}.options.numOfLangPerPage"]
                 }
             }
         },
@@ -705,9 +786,9 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             langOptions: {
                 expander: {
                     func: "gpii.firstDiscovery.panel.lang.buildLangOptionsMarkup",
-                    args: [ "{that}.msgLookup.lang",
-                            "{that}.options.controlValues.lang",
-                            "{that}.options.markup.langOptionTemplate" ]
+                    args: ["{that}.msgLookup.lang",
+                        "{that}.options.controlValues.lang",
+                        "{that}.options.markup.langOptionTemplate"]
                 }
             },
             langOptionTemplate: "<div class=\"gpiic-fd-lang-row gpiic-fd-tooltip selectable gpii-fd-choice\" role=\"option\" aria-selected=\"false\" lang=\"%langCode\"><span class=\"gpii-fd-indicator gpii-fd-icon\"></span> <span class=\"gpiic-fd-lang-label gpii-fd-lang-label gpii-fd-choice-label\" lang=\"%langCode\">%langName</span></div>"
@@ -720,6 +801,14 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             scrollLangsNext: {
                 funcName: "gpii.firstDiscovery.panel.lang.scrollLangs",
                 args: ["{that}", 1]
+            },
+            focusInSelection: {
+                funcName: "gpii.firstDiscovery.panel.lang.setFocusIn",
+                args: ["{that}"]
+            },
+            focusOutSelection: {
+                funcName: "gpii.firstDiscovery.panel.lang.setFocusOut",
+                args: ["{that}"]
             },
             scrollToSelectedLang: {
                 funcName: "gpii.firstDiscovery.panel.lang.scrollLangIntoView",
@@ -757,6 +846,16 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 "this": "{that}.dom.next",
                 method: "prop",
                 args: ["disabled", "{that}.model.atEndOfLangs"]
+            },
+            "afterRender.focusIn": {
+                "this": "{that}.dom.controlsDiv",
+                "method": "focus",
+                "args": ["{that}.focusInSelection"]
+            },
+            "afterRender.focusOut": {
+                "this": "{that}.dom.controlsDiv",
+                "method": "focusout",
+                "args": ["{that}.focusOutSelection"]
             },
             "afterRender.setLangOnHtml": {
                 funcName: "gpii.firstDiscovery.panel.lang.setLangOnHtml",
@@ -803,7 +902,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
 
     gpii.firstDiscovery.panel.lang.buildLangOptionsMarkup = function (langNames, langCodes, langOptionTemplate) {
         var markup = "";
-        for (var i=0; i < langNames.length; i++) {
+        for (var i = 0; i < langNames.length; i++) {
             var langName = langNames[i];
             var langCode = langCodes[i];
             var langOption = fluid.stringTemplate(langOptionTemplate, {
@@ -857,6 +956,7 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             that.events.langButtonsReady.fire();
         });
     };
+
 
     gpii.firstDiscovery.panel.lang.scrollLangs = function (that, adjustBy) {
         var newIndex = that.model.viewportFirstLangIndex + adjustBy;
@@ -916,6 +1016,16 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
 
     gpii.firstDiscovery.panel.lang.setTooltipLang = function (that, originalTarget, tooltip) {
         tooltip.attr("lang", $(originalTarget).attr("lang"));
+    };
+
+    gpii.firstDiscovery.panel.lang.setFocusIn = function (that) {
+        var selected = that.locate("controlsDiv").find("div[aria-selected='true']");
+        $(selected).focus();
+        that.locate("controlsDiv").attr("tabindex", "-1");
+    };
+
+    gpii.firstDiscovery.panel.lang.setFocusOut = function (that) {
+        that.locate("controlsDiv").attr("tabindex", "0");
     };
 
     // Any change to the model causes all panels to be rerendered. If
@@ -1026,11 +1136,15 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             "gpii.firstDiscovery.welcome": {}
         },
         selectors: {
-            message: ".gpiic-fd-welcome-instructions"
+            message: ".gpiic-fd-welcome-instructions",
+            commands: ".gpiic-fd-welcome-commands"
         },
         protoTree: {
             message: {
                 markup: {messagekey: "message"}
+            },
+            commands: {
+                markup: {messagekey: "commands"}
             }
         }
     });
@@ -1052,6 +1166,462 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             }
         }
     });
+
+    /*
+     * Confirm Panel
+     *
+     * This panel uses many modelRelays. The modelRelays populate two model values in this panel:
+     *  "friendlyNames" - each preference is relayed here from the prefsEditor and transformed into a
+     *                    user friendly name. example: en-US becomes English
+     *  "tts" - each friendly name preference from this model is relayed to tts and merged into the
+     *          the string template with its preamble, value, and (occasionally) units. The tts values are
+     *          used for text to speech to voice the contents of the confirmation panel.
+     *          Example: "English" -> "Your language choice is English"
+     *          Example: "true"    -> "Your use captions choice is ON"
+     *
+     */
+    fluid.defaults("gpii.firstDiscovery.panel.confirm", {
+        gradeNames: ["fluid.prefs.panel"],
+        preferenceMap: {
+            "gpii.firstDiscovery.confirm": {}
+        },
+        averageWordsPerMinute: 130,
+        decimalDigits: 1,
+        modelRelay: [
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_language",
+                target: "friendlyNames.language",
+                singleTransform: {
+                    type: "fluid.transforms.literalValue",
+                    value: "{that}.options.messageBase.language"
+                }
+            },
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_language",
+                target: "tts.language",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.languageTtsPreamble",
+                        value: "{that}.options.messageBase.language",
+                        units: ""
+                    }
+                }
+            },
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_speak",
+                target: "friendlyNames.speak",
+                singleTransform: {
+                    type: "fluid.transforms.valueMapper",
+                    inputPath: "",
+                    options: {
+                        true: "{that}.options.messageBase.true",
+                        false: "{that}.options.messageBase.false"
+                    }
+                }
+            },
+            {
+                source: "friendlyNames.speak",
+                target: "tts.speak",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.speakTtsPreamble",
+                        value: "{that}.model.friendlyNames.speak",
+                        units: ""
+                    }
+                }
+            },
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_onScreenKeyboard",
+                target: "friendlyNames.onScreenKeyboard",
+                singleTransform: {
+                    type: "fluid.transforms.valueMapper",
+                    inputPath: "",
+                    options: {
+                        true: "{that}.options.messageBase.true",
+                        false: "{that}.options.messageBase.false"
+                    }
+                }
+            },
+            {
+                source: "friendlyNames.onScreenKeyboard",
+                target: "tts.onScreenKeyboard",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.onScreenKeyboardTtsPreamble",
+                        value: "{that}.model.friendlyNames.onScreenKeyboard",
+                        units: ""
+                    }
+                }
+            },
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_captions",
+                target: "friendlyNames.captions",
+                singleTransform: {
+                    type: "fluid.transforms.valueMapper",
+                    inputPath: "",
+                    options: {
+                        true: "{that}.options.messageBase.true",
+                        false: "{that}.options.messageBase.false"
+                    }
+                }
+            },
+            {
+                source: "friendlyNames.captions",
+                target: "tts.captions",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.captionsTtsPreamble",
+                        value: "{that}.model.friendlyNames.captions",
+                        units: ""
+                    }
+                }
+            },
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_showSounds",
+                target: "friendlyNames.showSounds",
+                singleTransform: {
+                    type: "fluid.transforms.valueMapper",
+                    inputPath: "",
+                    options: {
+                        true: "{that}.options.messageBase.true",
+                        false: "{that}.options.messageBase.false"
+                    }
+                }
+            },
+            {
+                source: "friendlyNames.showSounds",
+                target: "tts.showSounds",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.showSoundsTtsPreamble",
+                        value: "{that}.model.friendlyNames.showSounds",
+                        units: ""
+                    }
+                }
+            },
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_stickyKeys",
+                target: "friendlyNames.stickyKeys",
+                singleTransform: {
+                    type: "fluid.transforms.valueMapper",
+                    inputPath: "",
+                    options: {
+                        true: "{that}.options.messageBase.true",
+                        false: "{that}.options.messageBase.false"
+                    }
+                }
+            },
+            {
+                source: "friendlyNames.stickyKeys",
+                target: "tts.stickyKeys",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.stickyKeysTtsPreamble",
+                        value: "{that}.model.friendlyNames.stickyKeys",
+                        units: ""
+                    }
+                }
+            },
+            {
+                target: "",
+                transform: {
+                    "friendlyNames": {
+                        "speechRate": {
+                            "transform": {
+                                "type": "fluid.transforms.round",
+                                "input": {
+                                    "transform": {
+                                        "type": "fluid.transforms.linearScale",
+                                        "value": "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_speechRate",
+                                        "factor": 133
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                source: "friendlyNames.speechRate",
+                target: "tts.speechRate",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.speechRateTtsPreamble",
+                        value: "{that}.model.friendlyNames.speechRate",
+                        units: "{that}.options.messageBase.speechRateTtsUnits"
+                    }
+                }
+            },
+            {
+                target: "friendlyNames.textSize",
+                singleTransform: {
+                    type: "fluid.transforms.toFixed",
+                    value: "{fluid.prefs.prefsEditor}.model.preferences.fluid_prefs_textSize",
+                    digits: "{that}.options.decimalDigits"
+                }
+            },
+            {
+                source: "friendlyNames.textSize",
+                target: "tts.textSize",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.textSizeTtsPreamble",
+                        value: "{that}.model.friendlyNames.textSize",
+                        units: "{that}.options.messageBase.multiplierUnit"
+                    }
+                }
+            },
+            {
+                target: "friendlyNames.letterSpace",
+                singleTransform: {
+                    type: "fluid.transforms.toFixed",
+                    value: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_letterSpace",
+                    digits: "{that}.options.decimalDigits"
+                }
+            },
+            {
+                source: "friendlyNames.letterSpace",
+                target: "tts.letterSpace",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.letterSpaceTtsPreamble",
+                        value: "{that}.model.friendlyNames.letterSpace",
+                        units: "{that}.options.messageBase.multiplierUnit"
+                    }
+                }
+            },
+            {
+                target: "friendlyNames.lineSpace",
+                singleTransform: {
+                    type: "fluid.transforms.toFixed",
+                    value: "{fluid.prefs.prefsEditor}.model.preferences.gpii_firstDiscovery_lineSpace",
+                    digits: "{that}.options.decimalDigits"
+                }
+            },
+            {
+                source: "friendlyNames.lineSpace",
+                target: "tts.lineSpace",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.lineSpaceTtsPreamble",
+                        value: "{that}.model.friendlyNames.lineSpace",
+                        units: "{that}.options.messageBase.multiplierUnit"
+                    }
+                }
+            },
+            {
+                source: "{fluid.prefs.prefsEditor}.model.preferences.fluid_prefs_contrast",
+                target: "friendlyNames.contrast",
+                singleTransform: {
+                    type: "fluid.transforms.valueMapper",
+                    inputPath: "",
+                    options: {
+                        "default": "{that}.options.messageBase.contrast-default",
+                        "wb": "{that}.options.messageBase.contrast-wb",
+                        "bw": "{that}.options.messageBase.contrast-bw"
+                    }
+                }
+            },
+            {
+                source: "friendlyNames.contrast",
+                target: "tts.contrast",
+                singleTransform: {
+                    type: "fluid.transforms.stringTemplate",
+                    template: "%preamble %value %units.",
+                    terms: {
+                        preamble: "{that}.options.messageBase.contrastTtsPreamble",
+                        value: "{that}.model.friendlyNames.contrast",
+                        units: ""
+                    }
+                }
+            }],
+        selectors: {
+            message: ".gpiic-fd-confirm-message",
+            languageLabel: ".language .gpii-confirm-label",
+            languageValue: ".language .gpii-confirm-value",
+            languageTts: ".language-tts",
+            speakValue: ".speak .gpii-confirm-value",
+            speakLabel: ".speak .gpii-confirm-label",
+            speakTts: ".speak-tts",
+            speechRateValue: ".speechRate .gpii-confirm-value",
+            speechRateLabel: ".speechRate .gpii-confirm-label",
+            speechRateUnit: ".speechRate .gpii-confirm-unit",
+            speechRateTts: ".speechRate-tts",
+            contrastValue: ".contrast .gpii-confirm-value",
+            contrastLabel: ".contrast .gpii-confirm-label",
+            contrastTts: ".contrast-tts",
+            textSizeValue: ".textSize .gpii-confirm-value",
+            textSizeLabel: ".textSize .gpii-confirm-label",
+            textSizeUnit: ".textSize .gpii-confirm-unit",
+            textSizeTts: ".textSize-tts",
+            letterSpaceValue: ".letterSpace .gpii-confirm-value",
+            letterSpaceLabel: ".letterSpace .gpii-confirm-label",
+            letterSpaceUnit: ".letterSpace .gpii-confirm-unit",
+            letterSpaceTts: ".letterSpace-tts",
+            lineSpaceValue: ".lineSpace .gpii-confirm-value",
+            lineSpaceLabel: ".lineSpace .gpii-confirm-label",
+            lineSpaceUnit: ".lineSpace .gpii-confirm-unit",
+            lineSpaceTts: ".lineSpace-tts",
+            onScreenKeyboardValue: ".onScreenKeyboard .gpii-confirm-value",
+            onScreenKeyboardLabel: ".onScreenKeyboard .gpii-confirm-label",
+            onScreenKeyboardTts: ".onScreenKeyboard-tts",
+            captionsValue: ".captions .gpii-confirm-value",
+            captionsLabel: ".captions .gpii-confirm-label",
+            captionsTts: ".captions-tts",
+            showSoundsValue: ".showSounds .gpii-confirm-value",
+            showSoundsLabel: ".showSounds .gpii-confirm-label",
+            showSoundsTts: ".showSounds-tts",
+            stickyKeysValue: ".stickyKeys .gpii-confirm-value",
+            stickyKeysLabel: ".stickyKeys .gpii-confirm-label",
+            stickyKeysTts: ".stickyKeys-tts"
+},
+        protoTree: {
+            message: {
+                markup: {messagekey: "message"}
+            },
+            languageLabel: {messagekey: "languageLabel"},
+            languageValue: {messagekey: "languageValue"},
+            languageTts: {messagekey: "languageTtsPreamble"},
+            speakLabel: {messagekey: "speakLabel"},
+            speakValue: {messagekey: "speakValue"},
+            speakTts: {messagekey: "speakTtsPreamble"},
+            speechRateLabel: {messagekey: "speechRateLabel"},
+            speechRateValue: {messagekey: "speechRateValue"},
+            speechRateUnit: {messagekey: "speechRateUnit"},
+            speechRateTts: {messagekey: "speechRateTtsPreamble"},
+            contrastLabel: {messagekey: "contrastLabel"},
+            contrastValue: {messagekey: "contrastValue"},
+            contrastTts: {messagekey: "contrastTtsPreamble"},
+            textSizeLabel: {messagekey: "textSizeLabel"},
+            textSizeValue: {messagekey: "textSizeValue"},
+            textSizeUnit: {messagekey: "multiplierUnit"},
+            textSizeTts: {messagekey: "textSizeTtsPreamble"},
+            letterSpaceLabel: {messagekey: "letterSpaceLabel"},
+            letterSpaceValue: {messagekey: "letterSpaceValue"},
+            letterSpaceUnit: {messagekey: "multiplierUnit"},
+            letterSpaceTts: {messagekey: "letterSpaceTtsPreamble"},
+            lineSpaceLabel: {messagekey: "lineSpaceLabel"},
+            lineSpaceValue: {messagekey: "lineSpaceValue"},
+            lineSpaceUnit: {messagekey: "multiplierUnit"},
+            lineSpaceTts: {messagekey: "lineSpaceTtsPreamble"},
+            onScreenKeyboardLabel: {messagekey: "onScreenKeyboardLabel"},
+            onScreenKeyboardValue: {messagekey: "onScreenKeyboardValue"},
+            onScreenKeyboardTts: {messagekey: "onScreenKeyboardTtsPreamble"},
+            captionsLabel: {messagekey: "captionsLabel"},
+            captionsValue: {messagekey: "captionsValue"},
+            captionsTts: {messagekey: "captionsTtsPreamble"},
+            showSoundsLabel: {messagekey: "showSoundsLabel"},
+            showSoundsValue: {messagekey: "showSoundsValue"},
+            showSoundsTts: {messagekey: "showSoundsTtsPreamble"},
+            stickyKeysLabel: {messagekey: "stickyKeysLabel"},
+            stickyKeysValue: {messagekey: "stickyKeysValue"},
+            stickyKeysTts: {messagekey: "stickyKeysTtsPreamble"}
+        },
+        bindingOptions: {
+            method: "text"
+        },
+        bindings: {
+            "languageValue": "friendlyNames.language",
+            "languageTts": "tts.language",
+            "speakValue": "friendlyNames.speak",
+            "speakTts": "tts.speak",
+            "speechRateValue": "friendlyNames.speechRate",
+            "speechRateTts": "tts.speechRate",
+            "contrastValue": "friendlyNames.contrast",
+            "contrastTts": "tts.contrast",
+            "textSizeValue": "friendlyNames.textSize",
+            "textSizeTts": "tts.textSize",
+            "letterSpaceValue": "friendlyNames.letterSpace",
+            "letterSpaceTts": "tts.letterSpace",
+            "lineSpaceValue": "friendlyNames.lineSpace",
+            "lineSpaceTts": "tts.lineSpace",
+            "onScreenKeyboardValue": "friendlyNames.onScreenKeyboard",
+            "onScreenKeyboardTts": "tts.onScreenKeyboard",
+            "captionsValue": "friendlyNames.captions",
+            "captionsTts": "tts.captions",
+            "showSoundsValue": "friendlyNames.showSounds",
+            "showSoundsTts": "tts.showSounds",
+            "stickyKeysValue": "friendlyNames.stickyKeys",
+            "stickyKeysTts": "tts.stickyKeys"
+        },
+        listeners: {
+            "afterRender.applyDataBinding": {
+                funcName: "gpii.binder.applyBinding",
+                args: ["{that}"]
+            }
+        }
+    });
+
+    /*
+     * toFixed is used by the confirm panel to round model values
+     */
+    fluid.defaults("fluid.transforms.toFixed", {
+        gradeNames: ["fluid.multiInputTransformFunction", "fluid.standardOutputTransformFunction"],
+        inputVariables: {
+            value: null,
+            digits: 0
+        }
+    });
+
+    fluid.transforms.toFixed = function (inputs) {
+        var value = inputs.value();
+        var digits = inputs.digits();
+        return value.toFixed(digits);
+    };
+
+
+    /*
+     * This is the implementation of fluid.transforms.stringTemplate taken from a later
+     * version of infusion and backported here.
+     */
+    fluid.defaults("fluid.transforms.stringTemplate", {
+        gradeNames: "fluid.standardOutputTransformFunction"
+    });
+
+    fluid.transforms.stringTemplate = function (transformSpec) {
+        return fluid.stringTemplate(transformSpec.template, transformSpec.terms);
+    };
+
+
+    /*
+     * Save Panel
+     */
+
+    fluid.defaults("gpii.firstDiscovery.panel.save", {
+        gradeNames: ["fluid.prefs.panel"],
+        preferenceMap: {
+            "gpii.firstDiscovery.save": {}
+        },
+        selectors: {
+            message: ".gpiic-fd-save-message"
+        },
+        protoTree: {
+            message: {
+                markup: {messagekey: "message"}
+            }
+        }
+    });
+
 
     /*
      * Token panel
@@ -1078,11 +1648,17 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
                 markup: {messagekey: "message"}
             }
         },
+        chromeExtensionId: "nkojgcmaioingjndknblmghefcfijobm",
         events: {
             onSuccess: null,  // argument: the server returned data
-            onError: null
+            onError: null,
+            onCloudSaveSuccess: null
         },
         listeners: {
+            "onCloudSaveSuccess.writeToken": {
+                funcName: "{that}.savePrefsToUsb",
+                args: ["{arguments}.0"]
+            },
             "onSuccess.showToken": {
                 funcName: "{that}.showTokenText",
                 args: ["{arguments}.0.userToken"]
@@ -1101,9 +1677,65 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             savePrefsToServer: {
                 funcName: "gpii.firstDiscovery.panel.token.savePrefsToServer",
                 args: ["{that}", "{fluid.prefs.prefsEditor}.model.preferences", "{arguments}.0"]
+            },
+            savePrefsToUsb: {
+                funcName: "gpii.firstDiscovery.panel.token.savePrefsToUsb",
+                args: ["{that}", "{arguments}.0"]
+
             }
         }
     });
+
+    gpii.firstDiscovery.panel.token.savePrefsToUsb = function (that, data) {
+
+        /*
+         if not chrome:
+         USB is not possible, so just fire success
+
+         if chrome:
+
+         if not extension:
+         USB is not possible so just fire success
+
+         if extension:
+         USB is possible so msg the extension
+         */
+
+        // If the plugin hasn't responded in 2 seconds with the version, it is a user without a
+        // plugin installed, so show them the token.
+        var successTimeoutId = setTimeout(function () {
+            that.events.onSuccess.fire(data);
+        }, 2000);
+
+        window.chrome.runtime.sendMessage(
+            that.options.chromeExtensionId,
+            {"message": {"message_type": "request_version"}},
+            function onVersionCallback(version) {
+                // If we got a version, the plugin is installed, so clear the timeout and let the plugin write to usb
+                if (version) {
+                    clearTimeout(successTimeoutId);
+                    var message = {
+                        message: {
+                            message_type: "write_usb",
+                            message_body: {
+                                userToken: data.userToken,
+                                preferences: data.preferences
+                            }
+                        }
+                    };
+                    window.chrome.runtime.sendMessage(
+                        that.options.chromeExtensionId,
+                        message,
+                        function onChromeExtensionResponse(response) {
+                            if (response.is_successful == "true") {
+                                that.events.onSuccess.fire(data);
+                            } else {
+                                that.events.onError.fire();
+                            }
+                        });
+                }
+            });
+    };
 
     gpii.firstDiscovery.panel.token.savePrefsToServer = function (that, data, isReadyToSave) {
         if (!isReadyToSave) {
@@ -1122,7 +1754,8 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
             dataType: "json",
             data: data,
             success: function (data, textStatus, jqXHR) {
-                that.events.onSuccess.fire(data, textStatus, jqXHR);
+                //that.events.onSuccess.fire(data, textStatus, jqXHR);
+                that.events.onCloudSaveSuccess.fire(data, textStatus, jqXHR);
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 that.events.onError.fire(jqXHR, textStatus, errorThrown);
@@ -1130,9 +1763,9 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         });
     };
 
-    // A grade component to connect "gpii.firstDiscovery.prefsServerIntegration" and
-    // the token panel (gpii.firstDiscovery.panel.token). It sends the request to the
-    // the first discovery server to save preferences when the token panel becomes visible.
+// A grade component to connect "gpii.firstDiscovery.prefsServerIntegration" and
+// the token panel (gpii.firstDiscovery.panel.token). It sends the request to the
+// the first discovery server to save preferences when the token panel becomes visible.
     fluid.defaults("gpii.firstDiscovery.panel.token.prefsServerIntegrationConnection", {
         gradeNames: ["fluid.modelComponent"],
         modelListeners: {
@@ -1143,4 +1776,5 @@ https://raw.githubusercontent.com/GPII/first-discovery/master/LICENSE.txt
         }
     });
 
-})(jQuery, fluid);
+})
+(jQuery, fluid);

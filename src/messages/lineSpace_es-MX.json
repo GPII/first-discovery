@@ -1,0 +1,9 @@
+{
+    "rangeInstructions": "Ajustar el espacio entre las líneas de una cantidad que más le guste.",
+    "maxLabel": "máx.",
+    "minLabel": "min.",
+    "warnMin": "Este es el escenario más pequeño",
+    "warnMax": "Este es el escenario más grande",
+    "increaseLabel": "grande",
+    "decreaseLabel": "menor"
+}

@@ -1,0 +1,83 @@
+{
+  "logo": "Buscar",
+  "search_query": "2016 directrices fiscales",
+  "search_query_tts": "cuadro de búsqueda: 2016 directrices fiscales",
+  "search_button": "Buscar",
+  "search_button_tts": "Seleccionar para buscar",
+  "ad_result_label": "Anuncios relacionados a 2016 Guía de Impuestos:",
+  "ad_result_label_tts": "Lista de anuncios relacionados con las directrices de 2016 de impuestos",
+  "search_result_label": "Resultados de la búsqueda:",
+  "search_result_label_tts": "Lista de resultados de búsqueda relacionados con las directrices de 2016 de impuestos",
+  "ads": [
+    {
+      "tts": "Publicidad 1: Presentación de impuestos gratuitamente por Internet . wwww.free-tax-on-the-web.com . software libre de impuestos para maximizar su retorno con conexión de archivos electrónicos",
+      "title": "Impuestos de archivos en línea GRATUITO",
+      "url": "www.free-tax-on-the-web.com",
+      "description": "Software libre de impuestos para maximizar su retorno con conexión de archivos electrónicos "
+    },
+    {
+      "tts": "Publicidad 2 : Super Tributaria. wwww.super-tax.com . Bonificación del 20 % en su declaración cuando se cumplió a través de tarjeta de regalo !",
+      "title": "SúperTributaria",
+      "url": "www.super-tax.com",
+      "description": "20 % de bonificación en su declaración cuando se cumplió a través de tarjeta de regalo !"
+    }
+  ],
+  "results": [
+    {
+      "tts": "Resultado 1 : 2016 Publicación 15 - Servicio de Impuestos Internos . https://www.irs.gov/pub/irs-pdf/p15.pdf . Dec 23 de , el año 2015 - Departamento de Hacienda . Servicio de Impuestos Internos . 15. Publicación del gato . No. 10000W . ( Circular E ) ,. El empleador de . Guía de Impuestos . Para su uso en el año 2016 .",
+      "title": "2016 Publicación 15 - Servicio de Impuestos Internos",
+      "url": "https://www.irs.gov/pub/irs-pdf/p15.pdf",
+      "description": "Dec 23 de , el año 2015 - Departamento de Hacienda . Servicio de Impuestos Internos . 15. Publicación del gato . No. 10000W . ( Circular E ) ,. Del empleador . Guía de Impuestos . Para su uso en el año 2016 ."
+    },
+    {
+      "tts": "Resultado de la búsqueda 2 : Calendario de Impuestos del IRS - Vídeo . https://www.youtube.com/watch?v=AdtNcKueEW4 . Dec 16 de , el año 2015 - Subido por IRSvideos . Ver fechas de vencimiento de negocios con el calendario de impuestos del IRS . Para comenzar a usarlo, ir a IRS.gov/taxcalendar .",
+      "title": "Impuestos del IRS Calendario - Vídeo",
+      "url": "https://www.youtube.com/watch?v=AdtNcKueEW4",
+      "description": "Dec 16 de , el año 2015 - Subido por IRSvideos . Ver fechas de vencimiento de negocios con el calendario de impuestos del IRS . Para comenzar a usarlo, ir a IRS.gov/taxcalendar."
+    },
+    {
+      "tts": "Resultado de la búsqueda 3 : Las últimas noticias del IRS - Servicio de Impuestos Internos . https://www.irs.gov/uac/Latest-News . Últimas noticias . Preparador de fraude es en la anual 'docena sucia' Lista de estafas de impuestos del IRS para evitar durante la temporada 2016 Presentación IR - 2016-16 4 de febrero , 2016 - El ... .",
+      "title": "Últimas noticias del IRS - Servicio de Impuestos Internos",
+      "url": "https://www.irs.gov/uac/Latest-News",
+      "description": "Últimas Noticias . Preparador de Fraude está en la lista anual del IRS 'docena sucia' de estafas fiscales para evitar durante la temporada 2016 Presentación IR - 2016-16 , Feb. 4 , 2016 - El ..."
+    }
+  ],
+  "pagination": {
+    "page2_tts": "Ir a la página 2",
+    "page3_tts": "Ir a la página 3",
+    "page4_tts": "Ir a la página 4",
+    "page12_tts": "Ir a la página 12",
+    "page13_tts": "Ir a la página 13",
+    "page_end_tts": "Ir a la última página"
+  },
+  "also_try_label": "Proveedores:",
+  "also_try_label_tts": "Lista de las consultas de búsqueda que también tratan",
+  "also_try_link_titles": [
+    "2016 rangos de soporte de impuestos",
+    "2016 límites de contribución 401k",
+    "2016 impuesto sobre cómo",
+    "2016 Formas de impuestos del IRS"
+  ],
+  "also_try_link_titles_tts": [
+    "Enlace a: 2016 rangos de soporte de impuestos",
+    "Enlace a: 2016 límites de contribución 401k",
+    "Enlace a : Impuesto sobre cómo 2016",
+    "Enlace a: 2016 Formas de impuestos del IRS"
+  ],
+  "footer_copyright": "&copy; Créditos Buscar Inc.",
+  "footer_copyright_tts": "Créditos Buscar Inc.",
+  "footer_links": [
+    "Web",
+    "Noticias",
+    "Contacto",
+    "Acerca de",
+    "Desarrolladores"
+  ],
+  "footer_links_tts": [
+    "Enlace a: Web",
+    "Enlace a: Noticias",
+    "Enlace a: Contacto",
+    "Enlace a: Acerca de",
+    "Enlace a: Desarrolladores"
+  ]
+}

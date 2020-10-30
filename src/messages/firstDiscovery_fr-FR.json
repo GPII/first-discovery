@@ -18,5 +18,12 @@
     "help": "aide",
 
     "stepCountMsg": "l'étape %currentPanel de %numPanels",
-    "panelMsg": "Ceci est %stepCountMsg. %instructions Appuyez sur la touche H pour de l'aide."
+    "panelMsg": "Ceci est %stepCountMsg. %instructions %content Appuyez sur H pour entendre à nouveau ce.",
+    
+    "preview": "Aperçu",
+    "previewTooltip": "Ceci est la prévisualisation ",
+    "keyboard": "Clavier à l'écran",
+    "keyboardTooltip": "Ceci est le clavier à l'écran",
+    "warning": "Cela ne veut pas d'un site Web en direct !",
+    "warningTooltip": "Cela ne veut pas d'un site Web en direct !"
 }

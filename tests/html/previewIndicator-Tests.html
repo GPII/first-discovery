@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Preview Indicator Tests</title>
+
+        <link rel="stylesheet" media="screen" href="../lib/infusion/lib/qunit/css/qunit.css" />
+
+        <script src="../lib/infusion/lib/qunit/js/qunit.js"></script>
+        <script src="../../src/lib/infusion/infusion-custom.js"></script>
+        <script src="../lib/infusion/test-core/jqUnit/js/jqUnit.js"></script>
+
+        <script src="../../src/js/msgLookup.js"></script>
+        <script src="../../src/js/tooltip.js"></script>
+        <script src="../../src/js/indicators.js"></script>
+        <script src="../../src/js/previewIndicator.js"></script>     
+        <script src="../js/previewIndicatorTests.js"></script>
+    </head>
+
+    <body id="body">
+        <h1 id="qunit-header">Preview Indicator Tests</h1>
+        <h2 id="qunit-banner"></h2>
+        <div id="qunit-testrunner-toolbar"></div>
+        <h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests"></ol>
+
+        <!-- Test HTML -->
+        <section id="gpiic-tests-previewIndicator">
+            <div class="left leftMarginTen gpiic-fd-previewIndicator gpii-fd-previewIndicator">
+                <div class="gpiic-fd-indicators gpii-fd-indicators">  
+                    <div class="fl-prefsEditor-fullPreview-previewContainer fl-force-right">
+                        <div class="fl-prefsEditor-preview previewpane">
+                            <div class="previewTag"> 
+                                <a id="gpiic-fd-indicators-preview" class="gpiic-fd-tooltip gpii-fd-indicators-preview" href="#" alt="This is the preview.">
+                                   <span class="gpiic-fd-indicators-previewLabel"></span>
+                                </a> 
+                            </div>
+                                <iframe class="flc-prefsEditor-preview-frame whiteBorder" style="width:100%; height:90%; display:block;"></iframe>
+                            <div class="warningTag"> 
+                                <a id="gpiic-fd-indicators-warning" class="gpiic-fd-tooltip gpii-fd-indicators-warning" href="#" alt="This is not a live website indicator.">
+                                   <span class="gpiic-fd-indicators-warningLabel"></span>
+                                </a> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </section>
+    </body>
+</html>

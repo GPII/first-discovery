@@ -1,3 +1,4 @@
 {
-    "message": "<p>Bienvenido!</p> <p>Esta herramienta te guiará por el proceso de configuración de tu equipo de acuerdo con tus preferencias.</p> <p>Para obetener ayuda, selecciona el botón de Ayuda, o presiona la tecla 'H'. Para continuar, selecciona el botón Siguiente, o presiona la tecla 'S'.</p>"
+    "message": "<p>Bienvenido!</p> <p>Esta herramienta te guiará por el proceso de configuración de tu equipo de acuerdo con tus preferencias.</p>",
+    "commands": "Si la voz está activado, pulse 'H' para repetir las instrucciones."
 }
